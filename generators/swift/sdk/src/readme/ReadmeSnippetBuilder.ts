@@ -13,6 +13,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId =
         "CUSTOM_NETWORKING_CLIENT";
+    private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<string, FernIr.HttpEndpoint>;
@@ -57,6 +58,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.buildAdditionalQueryStringParametersSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_NETWORKING_CLIENT_FEATURE_ID] = this.buildCustomNetworkingClientSnippets();
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        }
         return snippets;
     }
 
@@ -313,6 +317,54 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             })
         ]);
         return [content];
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
+
+        const content = SwiftFile.getRawContents([
+            swift.Statement.import(moduleSymbol.name),
+            swift.LineBreak.single(),
+            swift.Statement.constantDeclaration({
+                unsafeName: "client",
+                value: swift.Expression.structInitialization({
+                    unsafeName: rootClientSymbol.name,
+                    arguments_: [
+                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        swift.functionArgument({
+                            label: "environment",
+                            value: swift.Expression.rawValue(`.${defaultEnvName}`)
+                        })
+                    ],
+                    multiline: true
+                })
+            })
+        ]);
+        return [content];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.camelCase.unsafeName;
+            }
+        }
+        return envs[0]?.name.camelCase.unsafeName;
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

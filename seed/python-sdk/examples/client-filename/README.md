@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -42,6 +43,19 @@ client = SeedExhaustive(
 
 client.echo(
     request="Hello world!\\n\\nwith\\n\\tnewlines",
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
+
+client = SeedExhaustive(
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 ```
 

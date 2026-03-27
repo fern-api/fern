@@ -18,6 +18,7 @@ split across multiple lines.
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -76,6 +77,19 @@ client.service.create_movie(
         "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
     },
     revenue=1000000,
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedExamples
+from seed.environment import SeedExamplesEnvironment
+
+client = SeedExamples(
+    environment=SeedExamplesEnvironment.PRODUCTION,
 )
 ```
 

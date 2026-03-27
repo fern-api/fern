@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.1.6
+- version: 1.1.7
   changelogEntry:
     - summary: |
         Fix generated CI workflow triggering duplicate GitHub Actions runs. The workflow
@@ -23,6 +23,14 @@
   createdAt: "2026-03-27"
   irVersion: 61
 
+- version: 1.1.6
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 61
 - version: 1.1.5
   changelogEntry:
     - summary: |

@@ -10,6 +10,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -62,6 +63,20 @@ async fn main() {
         )
         .await;
 }
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```rust
+use seed_multi_url_environment_no_default::prelude::{*};
+
+let config = ClientConfig {
+    base_url: Environment::Production.url().to_string(),
+    ..Default::default()
+};
+let client = Client::new(config).expect("Failed to build client");
 ```
 
 ## Errors

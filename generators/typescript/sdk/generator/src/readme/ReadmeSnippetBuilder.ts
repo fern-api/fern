@@ -39,6 +39,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
     private static readonly CUSTOM_FETCH_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCH";
     private static readonly CUSTOM_FETCHER_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCHER";
+    private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -105,6 +106,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_FETCH_FEATURE_ID] = this.buildCustomFetchSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_FETCHER_FEATURE_ID] = this.buildCustomFetcherSnippets();
+
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        }
 
         if (this.isPaginationEnabled) {
             const paginationSnippets = this.buildPaginationSnippets();
@@ -565,6 +570,44 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 
     private buildRuntimeCompatibilitySnippets(): string[] {
         return [];
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const environmentEnumName = `${this.context.namespaceExport}Environment`;
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        return [
+            this.writeCode(
+                code`
+import { ${this.rootClientConstructorName}, ${environmentEnumName} } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    environment: ${environmentEnumName}.${defaultEnvName},
+});
+`
+            )
+        ];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.pascalCase.unsafeName;
+            }
+        }
+        return envs[0]?.name.pascalCase.unsafeName;
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
