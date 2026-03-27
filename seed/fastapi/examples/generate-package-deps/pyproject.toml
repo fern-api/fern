@@ -44,7 +44,7 @@ Repository = 'https://github.com/examples/fern'
 python = "^3.10"
 fastapi = ">=0.123.5"
 pydantic = ">= 1.9.2"
-pydantic-core = ">=2.18.2"
+pydantic-core = ">=2.18.2,<2.44.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
