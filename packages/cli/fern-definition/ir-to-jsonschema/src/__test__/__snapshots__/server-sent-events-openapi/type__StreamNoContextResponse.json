@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "heartbeat",
+        "entity"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "heartbeat"
+        },
+        "timestamp": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "entity"
+        },
+        "entityId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/EntityEventPayloadEventType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedTime": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event"
+      ]
+    }
+  ],
+  "definitions": {
+    "EntityEventPayloadEventType": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "UPDATED",
+        "DELETED",
+        "PREEXISTING"
+      ]
+    }
+  }
+}
