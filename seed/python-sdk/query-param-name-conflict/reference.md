@@ -66,7 +66,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**assigned_to:** `typing.Optional[str]` 
+**bulk_update_tasks_request_assigned_to:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**date:** `typing.Optional[datetime.date]` 
+**bulk_update_tasks_request_date:** `typing.Optional[datetime.date]` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**is_complete:** `typing.Optional[bool]` 
+**bulk_update_tasks_request_is_complete:** `typing.Optional[bool]` 
     
 </dd>
 </dl>

@@ -28,9 +28,9 @@ class RawSeedApi:
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
-        assigned_to: typing.Optional[str] = OMIT,
-        date: typing.Optional[dt.date] = OMIT,
-        is_complete: typing.Optional[bool] = OMIT,
+        bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
+        bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
+        bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
         text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BulkUpdateTasksResponse]:
@@ -46,11 +46,11 @@ class RawSeedApi:
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
-        assigned_to : typing.Optional[str]
+        bulk_update_tasks_request_assigned_to : typing.Optional[str]
 
-        date : typing.Optional[dt.date]
+        bulk_update_tasks_request_date : typing.Optional[dt.date]
 
-        is_complete : typing.Optional[bool]
+        bulk_update_tasks_request_is_complete : typing.Optional[bool]
 
         text : typing.Optional[str]
 
@@ -72,9 +72,9 @@ class RawSeedApi:
                 "_fields": fields,
             },
             json={
-                "assigned_to": assigned_to,
-                "date": date,
-                "is_complete": is_complete,
+                "assigned_to": bulk_update_tasks_request_assigned_to,
+                "date": bulk_update_tasks_request_date,
+                "is_complete": bulk_update_tasks_request_is_complete,
                 "text": text,
             },
             headers={
@@ -114,9 +114,9 @@ class AsyncRawSeedApi:
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
-        assigned_to: typing.Optional[str] = OMIT,
-        date: typing.Optional[dt.date] = OMIT,
-        is_complete: typing.Optional[bool] = OMIT,
+        bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
+        bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
+        bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
         text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BulkUpdateTasksResponse]:
@@ -132,11 +132,11 @@ class AsyncRawSeedApi:
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
-        assigned_to : typing.Optional[str]
+        bulk_update_tasks_request_assigned_to : typing.Optional[str]
 
-        date : typing.Optional[dt.date]
+        bulk_update_tasks_request_date : typing.Optional[dt.date]
 
-        is_complete : typing.Optional[bool]
+        bulk_update_tasks_request_is_complete : typing.Optional[bool]
 
         text : typing.Optional[str]
 
@@ -158,9 +158,9 @@ class AsyncRawSeedApi:
                 "_fields": fields,
             },
             json={
-                "assigned_to": assigned_to,
-                "date": date,
-                "is_complete": is_complete,
+                "assigned_to": bulk_update_tasks_request_assigned_to,
+                "date": bulk_update_tasks_request_date,
+                "is_complete": bulk_update_tasks_request_is_complete,
                 "text": text,
             },
             headers={
