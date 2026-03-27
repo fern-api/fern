@@ -8,6 +8,14 @@ import {
     RequestPropertyValue
 } from "@fern-api/ir-sdk";
 
+const HTTP_METHOD_MAP: Record<string, HttpMethod | undefined> = {
+    GET: HttpMethod.Get,
+    POST: HttpMethod.Post,
+    PUT: HttpMethod.Put,
+    PATCH: HttpMethod.Patch,
+    DELETE: HttpMethod.Delete
+};
+
 /**
  * Resolves OAuth endpoint references in the IR auth schemes.
  *
@@ -22,10 +30,7 @@ export function resolveOAuthEndpointReferences({
     ir: IntermediateRepresentation;
     authOverrides: RawSchemas.WithAuthSchema;
 }): IntermediateRepresentation {
-    if (!authOverrides["auth-schemes"]) {
-        return ir;
-    }
-    if (!ir.auth) {
+    if (!authOverrides["auth-schemes"] || !ir.auth) {
         return ir;
     }
 
@@ -33,7 +38,6 @@ export function resolveOAuthEndpointReferences({
     const updatedSchemes: AuthScheme[] = [];
 
     for (const scheme of ir.auth.schemes) {
-        // Only replace bearer schemes that were placeholders for OAuth
         if (scheme.type !== "bearer") {
             updatedSchemes.push(scheme);
             continue;
@@ -50,21 +54,13 @@ export function resolveOAuthEndpointReferences({
             basic: () => undefined,
             tokenBearer: () => undefined,
             inferredBearer: () => undefined,
-            oauth: (oauthScheme) => {
-                return resolveOAuthScheme({ ir, key: scheme.key, oauthScheme });
-            }
+            oauth: (oauthScheme) => resolveOAuthScheme({ ir, key: scheme.key, oauthScheme })
         });
 
         updatedSchemes.push(resolvedScheme ?? scheme);
     }
 
-    return {
-        ...ir,
-        auth: {
-            ...ir.auth,
-            schemes: updatedSchemes
-        }
-    };
+    return { ...ir, auth: { ...ir.auth, schemes: updatedSchemes } };
 }
 
 function resolveOAuthScheme({
@@ -81,51 +77,33 @@ function resolveOAuthScheme({
     }
 
     const tokenEndpointConfig = oauthScheme["get-token"];
-
-    const parsed = parseEndpointReference(tokenEndpointConfig.endpoint);
-    if (parsed == null) {
-        return undefined;
-    }
-
-    const { method, path } = parsed;
-
-    const resolved = findEndpointInIr({ ir, method, path });
+    const resolved = resolveEndpointFromReference({ ir, endpointRef: tokenEndpointConfig.endpoint });
     if (resolved == null) {
         return undefined;
     }
 
     const { endpoint, serviceId, subpackageId } = resolved;
+    const reqProps = tokenEndpointConfig["request-properties"];
+    const resProps = tokenEndpointConfig["response-properties"];
 
-    const requestProperties = tokenEndpointConfig["request-properties"];
-    const responseProperties = tokenEndpointConfig["response-properties"];
-
-    const clientIdWire = extractPropertyName(requestProperties?.["client-id"]) ?? "client_id";
-    const clientSecretWire = extractPropertyName(requestProperties?.["client-secret"]) ?? "client_secret";
-    const accessTokenWire = extractPropertyName(responseProperties?.["access-token"]) ?? "access_token";
-
-    const clientIdProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientIdWire });
-    const clientSecretProp = findRequestBodyProperty({ ir, endpoint, wireValue: clientSecretWire });
-    const accessTokenProp = findResponseProperty({ ir, endpoint, wireValue: accessTokenWire });
+    const clientIdProp = findRequestBodyProperty({
+        ir,
+        endpoint,
+        wireValue: extractWireName(reqProps?.["client-id"], "client_id")
+    });
+    const clientSecretProp = findRequestBodyProperty({
+        ir,
+        endpoint,
+        wireValue: extractWireName(reqProps?.["client-secret"], "client_secret")
+    });
+    const accessTokenProp = findResponseProperty({
+        ir,
+        endpoint,
+        wireValue: extractWireName(resProps?.["access-token"], "access_token")
+    });
 
     if (clientIdProp == null || clientSecretProp == null || accessTokenProp == null) {
         return undefined;
-    }
-
-    const expiresInProp = findResponseProperty({
-        ir,
-        endpoint,
-        wireValue: extractPropertyName(responseProperties?.["expires-in"]) ?? "expires_in"
-    });
-    const refreshTokenProp = findResponseProperty({
-        ir,
-        endpoint,
-        wireValue: extractPropertyName(responseProperties?.["refresh-token"]) ?? "refresh_token"
-    });
-
-    let refreshEndpoint: FernIr.OAuthRefreshEndpoint | undefined;
-    const refreshTokenConfig = oauthScheme["refresh-token"];
-    if (refreshTokenConfig != null) {
-        refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig });
     }
 
     return AuthScheme.oauth({
@@ -138,11 +116,7 @@ function resolveOAuthScheme({
             tokenHeader: oauthScheme["token-header"],
             scopes: oauthScheme.scopes,
             tokenEndpoint: {
-                endpointReference: {
-                    endpointId: endpoint.id,
-                    serviceId,
-                    subpackageId
-                },
+                endpointReference: { endpointId: endpoint.id, serviceId, subpackageId },
                 requestProperties: {
                     clientId: clientIdProp,
                     clientSecret: clientSecretProp,
@@ -151,11 +125,22 @@ function resolveOAuthScheme({
                 },
                 responseProperties: {
                     accessToken: accessTokenProp,
-                    expiresIn: expiresInProp,
-                    refreshToken: refreshTokenProp
+                    expiresIn: findResponseProperty({
+                        ir,
+                        endpoint,
+                        wireValue: extractWireName(resProps?.["expires-in"], "expires_in")
+                    }),
+                    refreshToken: findResponseProperty({
+                        ir,
+                        endpoint,
+                        wireValue: extractWireName(resProps?.["refresh-token"], "refresh_token")
+                    })
                 }
             },
-            refreshEndpoint
+            refreshEndpoint:
+                oauthScheme["refresh-token"] != null
+                    ? resolveRefreshEndpoint({ ir, refreshTokenConfig: oauthScheme["refresh-token"] })
+                    : undefined
         })
     });
 }
@@ -167,111 +152,74 @@ function resolveRefreshEndpoint({
     ir: IntermediateRepresentation;
     refreshTokenConfig: RawSchemas.OAuthRefreshTokenEndpointSchema;
 }): FernIr.OAuthRefreshEndpoint | undefined {
-    const parsed = parseEndpointReference(refreshTokenConfig.endpoint);
-    if (parsed == null) {
-        return undefined;
-    }
-
-    const resolved = findEndpointInIr({ ir, ...parsed });
+    const resolved = resolveEndpointFromReference({ ir, endpointRef: refreshTokenConfig.endpoint });
     if (resolved == null) {
         return undefined;
     }
 
     const { endpoint, serviceId, subpackageId } = resolved;
-    const responseProperties = refreshTokenConfig["response-properties"];
-    const requestProperties = refreshTokenConfig["request-properties"];
+    const reqProps = refreshTokenConfig["request-properties"];
+    const resProps = refreshTokenConfig["response-properties"];
 
     const refreshTokenReqProp = findRequestBodyProperty({
         ir,
         endpoint,
-        wireValue: extractPropertyName(requestProperties?.["refresh-token"]) ?? "refresh_token"
+        wireValue: extractWireName(reqProps?.["refresh-token"], "refresh_token")
     });
     const accessTokenProp = findResponseProperty({
         ir,
         endpoint,
-        wireValue: extractPropertyName(responseProperties?.["access-token"]) ?? "access_token"
+        wireValue: extractWireName(resProps?.["access-token"], "access_token")
     });
 
     if (refreshTokenReqProp == null || accessTokenProp == null) {
         return undefined;
     }
 
-    const expiresInProp = findResponseProperty({
-        ir,
-        endpoint,
-        wireValue: extractPropertyName(responseProperties?.["expires-in"]) ?? "expires_in"
-    });
-    const refreshTokenRespProp = findResponseProperty({
-        ir,
-        endpoint,
-        wireValue: extractPropertyName(responseProperties?.["refresh-token"]) ?? "refresh_token"
-    });
-
     return {
-        endpointReference: {
-            endpointId: endpoint.id,
-            serviceId,
-            subpackageId
-        },
-        requestProperties: {
-            refreshToken: refreshTokenReqProp
-        },
+        endpointReference: { endpointId: endpoint.id, serviceId, subpackageId },
+        requestProperties: { refreshToken: refreshTokenReqProp },
         responseProperties: {
             accessToken: accessTokenProp,
-            expiresIn: expiresInProp,
-            refreshToken: refreshTokenRespProp
+            expiresIn: findResponseProperty({
+                ir,
+                endpoint,
+                wireValue: extractWireName(resProps?.["expires-in"], "expires_in")
+            }),
+            refreshToken: findResponseProperty({
+                ir,
+                endpoint,
+                wireValue: extractWireName(resProps?.["refresh-token"], "refresh_token")
+            })
         }
     };
 }
 
-function parseEndpointReference(endpointRef: string): { method: HttpMethod; path: string } | undefined {
+function resolveEndpointFromReference({
+    ir,
+    endpointRef
+}: {
+    ir: IntermediateRepresentation;
+    endpointRef: string;
+}): { endpoint: FernIr.HttpEndpoint; serviceId: string; subpackageId: string | undefined } | undefined {
     const parts = endpointRef.trim().split(/\s+/);
     if (parts.length !== 2) {
         return undefined;
     }
-    const [methodStr, path] = parts;
-    const method = parseHttpMethod(methodStr ?? "");
-    if (method == null || path == null) {
+    const method = HTTP_METHOD_MAP[parts[0]?.toUpperCase() ?? ""];
+    const targetPath = parts[1]?.replace(/\/+$/, "");
+    if (method == null || targetPath == null) {
         return undefined;
     }
-    return { method, path };
-}
-
-function parseHttpMethod(method: string): HttpMethod | undefined {
-    switch (method.toUpperCase()) {
-        case "GET":
-            return HttpMethod.Get;
-        case "POST":
-            return HttpMethod.Post;
-        case "PUT":
-            return HttpMethod.Put;
-        case "PATCH":
-            return HttpMethod.Patch;
-        case "DELETE":
-            return HttpMethod.Delete;
-        default:
-            return undefined;
-    }
-}
-
-function findEndpointInIr({ ir, method, path }: { ir: IntermediateRepresentation; method: HttpMethod; path: string }):
-    | {
-          endpoint: FernIr.HttpEndpoint;
-          serviceId: string;
-          subpackageId: string | undefined;
-      }
-    | undefined {
-    const normalizedPath = path.replace(/\/+$/, "");
 
     for (const [serviceId, service] of Object.entries(ir.services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.method !== method) {
                 continue;
             }
-
             const endpointPath = reconstructPath(endpoint.fullPath);
-            if (endpointPath === normalizedPath) {
-                const subpackageId = findSubpackageForService(ir, serviceId);
+            if (endpointPath === targetPath) {
+                const subpackageId = Object.entries(ir.subpackages).find(([, sp]) => sp.service === serviceId)?.[0];
                 return { endpoint, serviceId, subpackageId };
             }
         }
@@ -287,22 +235,33 @@ function reconstructPath(httpPath: FernIr.HttpPath): string {
     return result.replace(/\/+$/, "");
 }
 
-function findSubpackageForService(ir: IntermediateRepresentation, serviceId: string): string | undefined {
-    for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
-        if (subpackage.service === serviceId) {
-            return subpackageId;
-        }
-    }
-    return undefined;
-}
-
-function extractPropertyName(value: string | undefined): string | undefined {
+/** Extracts the wire name from a `$request.propName` or `$response.propName` string, falling back to a default. */
+function extractWireName(value: string | undefined, defaultName: string): string {
     if (value == null) {
-        return undefined;
+        return defaultName;
     }
-    // Handle $request.propertyName or $response.propertyName format
     const match = value.match(/^\$(?:request|response)\.(.+)$/);
     return match?.[1] ?? value;
+}
+
+/** Looks up an object property by wire value from a list of IR object properties. */
+function findObjectPropertyByWireValue(
+    properties: FernIr.ObjectProperty[],
+    wireValue: string
+): FernIr.ObjectProperty | undefined {
+    return properties.find((prop) => prop.name.wireValue === wireValue);
+}
+
+/** Resolves object properties from a named type in the IR. */
+function getObjectPropertiesForNamedType(
+    ir: IntermediateRepresentation,
+    typeId: string
+): FernIr.ObjectProperty[] | undefined {
+    const typeDecl = ir.types[typeId];
+    if (typeDecl?.shape.type === "object") {
+        return typeDecl.shape.properties;
+    }
+    return undefined;
 }
 
 function findRequestBodyProperty({
@@ -318,50 +277,21 @@ function findRequestBodyProperty({
         return undefined;
     }
 
+    let properties: FernIr.ObjectProperty[] | undefined;
     if (endpoint.requestBody.type === "inlinedRequestBody") {
-        for (const prop of endpoint.requestBody.properties) {
-            if (prop.name.wireValue === wireValue) {
-                return {
-                    propertyPath: undefined,
-                    property: RequestPropertyValue.body({
-                        name: prop.name,
-                        valueType: prop.valueType,
-                        availability: prop.availability,
-                        docs: prop.docs,
-                        propertyAccess: prop.propertyAccess,
-                        v2Examples: prop.v2Examples
-                    })
-                };
-            }
-        }
+        properties = endpoint.requestBody.properties;
+    } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
+        properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
     }
 
-    // Handle reference-type request bodies by resolving the referenced type
-    if (endpoint.requestBody.type === "reference") {
-        const bodyType = endpoint.requestBody.requestBodyType;
-        if (bodyType.type === "named") {
-            const typeDecl = ir.types[bodyType.typeId];
-            if (typeDecl?.shape.type === "object") {
-                for (const prop of typeDecl.shape.properties) {
-                    if (prop.name.wireValue === wireValue) {
-                        return {
-                            propertyPath: undefined,
-                            property: RequestPropertyValue.body({
-                                name: prop.name,
-                                valueType: prop.valueType,
-                                availability: prop.availability,
-                                docs: prop.docs,
-                                propertyAccess: prop.propertyAccess,
-                                v2Examples: prop.v2Examples
-                            })
-                        };
-                    }
-                }
-            }
-        }
+    const prop = properties != null ? findObjectPropertyByWireValue(properties, wireValue) : undefined;
+    if (prop == null) {
+        return undefined;
     }
-
-    return undefined;
+    return {
+        propertyPath: undefined,
+        property: RequestPropertyValue.body({ ...prop })
+    };
 }
 
 function findResponseProperty({
@@ -373,29 +303,17 @@ function findResponseProperty({
     endpoint: FernIr.HttpEndpoint;
     wireValue: string;
 }): FernIr.ResponseProperty | undefined {
-    if (endpoint.response?.body == null) {
+    if (endpoint.response?.body?.type !== "json") {
         return undefined;
     }
-
-    if (endpoint.response.body.type === "json") {
-        const jsonResponse = endpoint.response.body;
-        if (jsonResponse.value.responseBodyType.type === "named") {
-            const typeId = jsonResponse.value.responseBodyType.typeId;
-            if (typeId != null) {
-                const typeDecl = ir.types[typeId];
-                if (typeDecl?.shape.type === "object") {
-                    for (const prop of typeDecl.shape.properties) {
-                        if (prop.name.wireValue === wireValue) {
-                            return {
-                                propertyPath: undefined,
-                                property: prop
-                            };
-                        }
-                    }
-                }
-            }
-        }
+    const responseBodyType = endpoint.response.body.value.responseBodyType;
+    if (responseBodyType.type !== "named") {
+        return undefined;
     }
-
-    return undefined;
+    const properties = getObjectPropertiesForNamedType(ir, responseBodyType.typeId);
+    const prop = properties != null ? findObjectPropertyByWireValue(properties, wireValue) : undefined;
+    if (prop == null) {
+        return undefined;
+    }
+    return { propertyPath: undefined, property: prop };
 }
