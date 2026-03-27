@@ -205,6 +205,18 @@ export declare class ObjectClient {
     getAndReturnMapOfDocumentedUnknownType(request: SeedExhaustive.types.MapOfDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.MapOfDocumentedUnknownType>;
     private __getAndReturnMapOfDocumentedUnknownType;
     /**
+     * Tests that a POST endpoint with an unknown request body sends {}
+     * instead of undefined when the caller omits the body argument entirely.
+     *
+     * @param {unknown} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.postOptionalBody()
+     */
+    postOptionalBody(request?: unknown, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    private __postOptionalBody;
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

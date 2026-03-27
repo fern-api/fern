@@ -86,6 +86,20 @@ service:
       request: objects.MapOfDocumentedUnknownType
       response: objects.MapOfDocumentedUnknownType
 
+    postOptionalBody:
+      docs: |
+        Tests that a POST endpoint with an unknown request body sends {}
+        instead of undefined when the caller omits the body argument entirely.
+      path: /post-optional-body
+      method: POST
+      request: unknown
+      response: objects.ObjectWithOptionalField
+      examples:
+        - name: EmptyBody
+          request: {}
+          response:
+            body: {}
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

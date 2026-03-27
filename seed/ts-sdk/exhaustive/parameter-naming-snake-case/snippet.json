@@ -278,6 +278,18 @@
         },
         {
             "id": {
+                "path": "/object/post-optional-body",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.postOptionalBody"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.postOptionalBody();\n"
+            },
+            "example_identifier": "EmptyBody"
+        },
+        {
+            "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
