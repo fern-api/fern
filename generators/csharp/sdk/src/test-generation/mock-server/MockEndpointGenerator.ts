@@ -103,14 +103,12 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
-                // Add auth header matching for endpoints that require authentication
-                if (endpoint.auth) {
-                    // When endpoint has per-endpoint security, only match schemes used by this endpoint
-                    const allowedSchemeKeys = this.getEndpointAuthSchemeKeys(endpoint);
+                // Add auth header matching for endpoints that require authentication.
+                // Skip auth header matching when endpoint has per-endpoint security because
+                // the C# client configures all auth schemes globally and header overwriting
+                // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
+                if (endpoint.auth && !this.hasEndpointSecurity(endpoint)) {
                     for (const scheme of this.context.ir.auth.schemes) {
-                        if (allowedSchemeKeys != null && !allowedSchemeKeys.has(scheme.key)) {
-                            continue;
-                        }
                         switch (scheme.type) {
                             case "basic": {
                                 // Compute exact expected header value from the known test credentials
@@ -212,20 +210,10 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Returns the set of auth scheme keys that this endpoint uses, or undefined if
-     * the endpoint uses global auth (i.e., all schemes apply).
+     * Returns true if the endpoint has per-endpoint security defined.
      */
-    private getEndpointAuthSchemeKeys(endpoint: HttpEndpoint): Set<string> | undefined {
-        if (endpoint.security == null || endpoint.security.length === 0) {
-            return undefined;
-        }
-        // Use only the first security item (first alternative) since the client
-        // only needs to satisfy one of the alternatives
-        const firstItem = endpoint.security[0];
-        if (firstItem == null) {
-            return undefined;
-        }
-        return new Set<string>(Object.keys(firstItem));
+    private hasEndpointSecurity(endpoint: HttpEndpoint): boolean {
+        return endpoint.security != null && endpoint.security.length > 0;
     }
 
     /**

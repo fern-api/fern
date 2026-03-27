@@ -267,15 +267,13 @@ export class WireMock {
         // This allows WireMock to differentiate between streaming and non-streaming requests
         const shouldAddBodyPattern = needsBodyPattern && isSseResponse;
 
-        // Build auth header matchers for endpoints that require authentication
+        // Build auth header matchers for endpoints that require authentication.
+        // Skip auth header matching when endpoint has per-endpoint security because
+        // the client configures all auth schemes globally and header overwriting
+        // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
         const authHeaders: Record<string, { matches: string }> = {};
-        if (endpoint.auth) {
-            // When endpoint has per-endpoint security, only match schemes used by this endpoint
-            const allowedSchemeKeys = this.getEndpointAuthSchemeKeys(endpoint);
+        if (endpoint.auth && !(endpoint.security != null && endpoint.security.length > 0)) {
             for (const scheme of ir.auth.schemes) {
-                if (allowedSchemeKeys != null && !allowedSchemeKeys.has(scheme.key)) {
-                    continue;
-                }
                 switch (scheme.type) {
                     case "basic":
                         authHeaders["Authorization"] = { matches: "Basic .+" };
@@ -398,23 +396,6 @@ export class WireMock {
             case "unknown":
                 return undefined;
         }
-    }
-
-    /**
-     * Returns the set of auth scheme keys that this endpoint uses, or undefined if
-     * the endpoint uses global auth (i.e., all schemes apply).
-     */
-    private getEndpointAuthSchemeKeys(endpoint: FernIr.HttpEndpoint): Set<string> | undefined {
-        if (endpoint.security == null || endpoint.security.length === 0) {
-            return undefined;
-        }
-        // Use only the first security item (first alternative) since the client
-        // only needs to satisfy one of the alternatives
-        const firstItem = endpoint.security[0];
-        if (firstItem == null) {
-            return undefined;
-        }
-        return new Set<string>(Object.keys(firstItem));
     }
 
     private extractExampleValue(

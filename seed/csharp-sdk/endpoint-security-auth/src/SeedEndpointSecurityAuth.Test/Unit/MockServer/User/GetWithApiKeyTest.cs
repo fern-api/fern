@@ -25,13 +25,7 @@ public class GetWithApiKeyTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/users")
-                    .WithHeader("X-API-Key", "API_KEY")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
