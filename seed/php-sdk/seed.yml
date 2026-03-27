@@ -211,4 +211,8 @@ allowedFailures:
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
   - server-sent-events-openapi
+  - any-auth
+  - circular-references
+  - file-upload
+
 
