@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk preview` command for publishing preview SDK packages.
+        Generates an SDK via Docker and publishes it to the Fern preview
+        registry (`npm.buildwithfern.com`). Outputs an `npm install` alias
+        command so consumers can test the preview with zero import changes.
+
+        ```bash
+        fern sdk preview --group my-sdk
+        fern sdk preview --group my-sdk --json
+        ```
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.46.7
   changelogEntry:
     - summary: |

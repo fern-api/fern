@@ -1040,7 +1040,10 @@ def test_literal_discriminant_strict_matching_figure_details() -> None:
         "title": "Mixed content",
         "blocks": [
             {"type": "text", "details": {"type": "text", "content": "Some text"}},
-            {"type": "figure", "details": {"type": "figure", "imageUrl": "https://example.com/img.png", "figureType": "chart"}},
+            {
+                "type": "figure",
+                "details": {"type": "figure", "imageUrl": "https://example.com/img.png", "figureType": "chart"},
+            },
         ],
     }
 
@@ -1131,6 +1134,4 @@ def test_empty_details_does_not_greedily_match_figure() -> None:
 
     # An empty dict should NOT become a FigureDetails (or TextDetails)
     # because the Literal 'type' field is absent
-    assert not isinstance(block.details, FigureDetails), (
-        "Empty dict should not greedily match FigureDetails"
-    )
+    assert not isinstance(block.details, FigureDetails), "Empty dict should not greedily match FigureDetails"

@@ -68,6 +68,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -245,6 +246,8 @@ async function tryRunCli(cliContext: CliContext) {
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
+
+    addSdkCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -2143,6 +2146,53 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 overridesPath: AbsoluteFilePath.of(overridesPath),
                 outputPath: AbsoluteFilePath.of(outputPath),
                 cliContext
+            });
+        }
+    );
+}
+
+function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("sdk", false, (yargs) => {
+        addSdkPreviewCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "The generator group to preview"
+                })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "Only run the command on the provided API"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk preview"
+            });
+            const generatorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            await sdkPreview({
+                cliContext,
+                groupName: argv.group,
+                generatorFilter,
+                apiName: argv.api,
+                json: argv.json
             });
         }
     );
