@@ -284,7 +284,7 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageNode {
-        const overviewPageId =
+        const explicitOverviewPageId =
             pkg.overviewAbsolutePath != null
                 ? FernNavigation.V1.PageId(toRelativeFilepath(this.docsWorkspace, pkg.overviewAbsolutePath))
                 : undefined;
@@ -298,6 +298,8 @@ export class ApiReferenceNodeConverter {
 
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
+            // Fall back to tag description page when no explicit overview is provided
+            const overviewPageId = explicitOverviewPageId ?? this.createTagDescriptionPageId(subpackage);
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
@@ -359,14 +361,14 @@ export class ApiReferenceNodeConverter {
             });
             const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, undefined, slug, pkgAvailability);
             return {
-                id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
+                id: this.#idgen.get(explicitOverviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
                 icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
-                overviewPageId,
+                overviewPageId: explicitOverviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
                 availability: pkgAvailability,
