@@ -11,6 +11,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -64,6 +65,19 @@ private func main() async throws {
 }
 
 try await main()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Audiences
+
+let client = AudiencesClient(
+    ...,
+    environment: .environmentA
+)
 ```
 
 ## Errors

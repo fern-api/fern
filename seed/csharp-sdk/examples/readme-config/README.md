@@ -17,6 +17,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -90,6 +91,19 @@ await client.Service.CreateMovieAsync(
         Revenue = 1000000,
     }
 );
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedExamples;
+
+var client = new SeedExamplesClient(new ClientOptions
+{
+    BaseUrl = SeedExamplesEnvironment.Production
+});
 ```
 
 ## Exception Handling

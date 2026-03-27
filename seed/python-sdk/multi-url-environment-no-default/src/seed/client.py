@@ -109,6 +109,9 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    async_token : typing.Optional[typing.Callable[[], typing.Awaitable[str]]]
+        An async callable that returns a bearer token. Use this for async token acquisition (e.g., OAuth 2.0 client credentials with an async HTTP client). When provided, this is used instead of the synchronous token for async requests.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -138,6 +141,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
         environment: SeedMultiUrlEnvironmentNoDefaultEnvironment,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -150,6 +154,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
             environment=environment,
             token=token,
             headers=headers,
+            async_token=async_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
