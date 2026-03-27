@@ -264,6 +264,9 @@ fixtures:
     - customConfig:
         unified-client-options: true
       outputFolder: unified-client-options
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -397,4 +400,6 @@ allowedFailures:
   - unions:no-custom-config
   - unions-with-local-date
   - server-sent-event-examples
+  - oauth-client-credentials-openapi
   - server-sent-events-openapi
+  - streaming-parameter

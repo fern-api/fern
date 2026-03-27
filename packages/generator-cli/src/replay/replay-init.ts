@@ -1,24 +1,19 @@
-import { cloneRepository, parseRepository } from "@fern-api/github";
-import { type BootstrapResult, bootstrap, FERN_BOT_EMAIL, FERN_BOT_NAME, GitClient } from "@fern-api/replay";
-import { Octokit } from "@octokit/rest";
-import { existsSync } from "fs";
+import { cloneRepository } from "@fern-api/github";
+import { type BootstrapResult, bootstrap } from "@fern-api/replay";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-import { ensureReplayFernignoreEntriesSync } from "./fernignore";
+import { ensureReplayFernignoreEntriesSync, REPLAY_FERNIGNORE_ENTRIES } from "./fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
     githubRepo: string;
-    /** GitHub token with push + PR permissions */
+    /** GitHub token for clone (read access) */
     token: string;
     /** Report what would happen but don't create PR */
     dryRun?: boolean;
     /** Max commits to scan for generation history */
     maxCommitsToScan?: number;
-    /** Title for the PR */
-    prTitle?: string;
-    /** Body for the PR */
-    prBody?: string;
     /** Overwrite existing lockfile if present. Default: false */
     force?: boolean;
     /** Scan git history for existing patches (migration). Default: false */
@@ -28,26 +23,27 @@ export interface ReplayInitParams {
 export interface ReplayInitResult {
     /** Bootstrap result from fern-replay */
     bootstrap: BootstrapResult;
-    /** URL of the created PR, if not dry-run */
-    prUrl?: string;
-    /** Branch name used for the PR */
-    branch?: string;
+    /** Raw lockfile YAML content, present when bootstrap succeeded and not dry-run */
+    lockfileContent?: string;
+    /** Raw replay.yml content, present only when fernignore migration created it */
+    replayYmlContent?: string;
+    /** Fernignore entries that the server should ensure exist */
+    fernignoreEntries: string[];
+    /** Generated PR body markdown for the server to use */
+    prBody?: string;
 }
 
 /**
  * Initialize Replay for an SDK repository.
  *
- * Creates a branch and opens a PR with the replay lockfile.
+ * Runs bootstrap locally (read-only) and returns the lockfile content
+ * for the caller to send to Fiddle for server-side PR creation.
  *
  * Flow:
- * 1. Clone the SDK repo
+ * 1. Clone the SDK repo (read-only)
  * 2. Run bootstrap() to scan history and create lockfile
  * 3. Ensure .fernignore has replay entries
- * 4. Commit with [fern-replay] prefix (recognized by isGenerationCommit)
- * 5. Push branch and open PR
- *
- * The [fern-replay] commit message prefix ensures the bootstrap commit
- * is NOT treated as a user customization patch by ReplayDetector.
+ * 4. Read lockfile content from disk and return it
  */
 export async function replayInit(params: ReplayInitParams): Promise<ReplayInitResult> {
     const { githubRepo, token, dryRun } = params;
@@ -55,13 +51,11 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
     // 1. Clone the repo into a temp directory
     const tmpDir = await tmp.dir({ unsafeCleanup: true });
     const repoPath = tmpDir.path;
-    const repository = await cloneRepository({
+    await cloneRepository({
         githubRepository: githubRepo,
         installationToken: token,
         targetDirectory: repoPath
     });
-
-    const defaultBranch = await repository.getDefaultBranch();
 
     // 2. Run bootstrap
     const bootstrapResult = await bootstrap(repoPath, {
@@ -73,63 +67,29 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
     });
 
     if (!bootstrapResult.generationCommit) {
-        return { bootstrap: bootstrapResult };
+        return { bootstrap: bootstrapResult, fernignoreEntries: [] };
     }
 
     if (dryRun) {
-        return { bootstrap: bootstrapResult };
+        return { bootstrap: bootstrapResult, fernignoreEntries: [] };
     }
 
     // 3. Ensure .fernignore has replay entries
     ensureReplayFernignoreEntriesSync(repoPath);
 
-    const commitMessage = `[fern-replay] Initialize Replay\n\nTracked ${bootstrapResult.patchesCreated} customization patch(es).\nBase generation: ${bootstrapResult.generationCommit.sha.slice(0, 7)}`;
+    // 4. Read lockfile content from disk
+    const lockfilePath = join(repoPath, ".fern", "replay.lock");
+    const lockfileContent = existsSync(lockfilePath) ? readFileSync(lockfilePath, "utf-8") : undefined;
 
-    // Only add files that actually exist (replay.yml is only created during fernignore migration)
-    const filesToAdd = [".fern/replay.lock", ".fern/replay.yml", ".fernignore"].filter((f) =>
-        existsSync(join(repoPath, f))
-    );
-
-    // Create branch, commit, push, create PR
-    const branchName = `fern-replay/init-${Date.now()}`;
-    await repository.checkoutOrCreateLocal(branchName);
-
-    const git = new GitClient(repoPath);
-    await git.exec(["add", ...filesToAdd]);
-    await git.exec([
-        "-c",
-        `user.name=${FERN_BOT_NAME}`,
-        "-c",
-        `user.email=${FERN_BOT_EMAIL}`,
-        "-c",
-        "commit.gpgsign=false",
-        "commit",
-        "--no-verify",
-        "-m",
-        commitMessage
-    ]);
-
-    await repository.pushUpstream(branchName);
-
-    // Create PR
-    const parsed = parseRepository(githubRepo);
-    const octokit = new Octokit({ auth: token });
-    const prTitle = params.prTitle ?? "[fern-replay] Initialize Replay for SDK customizations";
-    const prBody = params.prBody ?? buildPrBody(bootstrapResult);
-
-    const { data: pr } = await octokit.pulls.create({
-        owner: parsed.owner,
-        repo: parsed.repo,
-        head: branchName,
-        base: defaultBranch,
-        title: prTitle,
-        body: prBody
-    });
+    const replayYmlPath = join(repoPath, ".fern", "replay.yml");
+    const replayYmlContent = existsSync(replayYmlPath) ? readFileSync(replayYmlPath, "utf-8") : undefined;
 
     return {
         bootstrap: bootstrapResult,
-        prUrl: pr.html_url,
-        branch: branchName
+        lockfileContent,
+        replayYmlContent,
+        fernignoreEntries: REPLAY_FERNIGNORE_ENTRIES,
+        prBody: buildPrBody(bootstrapResult)
     };
 }
 
@@ -202,13 +162,6 @@ export function formatBootstrapSummary(result: ReplayInitResult): BootstrapLogEn
         for (const w of bs.warnings) {
             entries.push({ level: "warn", message: `  ${w}` });
         }
-    }
-
-    if (result.prUrl) {
-        entries.push({ level: "info", message: `\nPR created: ${result.prUrl}` });
-        entries.push({ level: "info", message: "Merge the PR to enable Replay for this repository." });
-    } else if (result.branch) {
-        entries.push({ level: "info", message: `\nPushed to branch: ${result.branch}` });
     }
 
     return entries;
