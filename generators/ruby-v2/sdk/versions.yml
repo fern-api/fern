@@ -1,5 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.5
+  changelogEntry:
+    - summary: |
+        Prevent `additional_headers` in request options from overriding
+        SDK-set headers such as Authorization, Content-Type, and SDK
+        metadata. Headers set by the SDK or the API definition are now
+        protected (case-insensitively) and silently filtered from
+        additional_headers.
+      type: fix
+    - summary: |
+        Reject HTTP URLs for non-localhost hosts. Requests to `http://`
+        URLs now raise `ArgumentError` unless the host is localhost,
+        127.0.0.1, or [::1], preventing accidental transmission of
+        authentication credentials in plaintext.
+      type: fix
+    - summary: |
+        Explicitly set `verify_mode = OpenSSL::SSL::VERIFY_PEER` on
+        HTTPS connections. This was already the Ruby default but is now
+        stated in code to satisfy security audits.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 61
+
 - version: 1.1.4
   changelogEntry:
     - summary: |
