@@ -41,6 +41,15 @@ describe("sanitizeBranchName", () => {
         expect(sanitizeBranchName("jsmith/my-feature")).toBe("jsmith-my-feature");
     });
 
+    it("does not leave trailing hyphen after truncation", () => {
+        // 39 alphanumeric chars + a slash at position 40 → after sanitization the
+        // slash becomes a hyphen, then truncation at 40 would leave a trailing "-"
+        const branch = "a".repeat(39) + "/b";
+        const result = sanitizeBranchName(branch);
+        expect(result).not.toMatch(/-$/);
+        expect(result.length).toBeLessThanOrEqual(40);
+    });
+
     it("returns empty string for branches with only special characters", () => {
         expect(sanitizeBranchName("///")).toBe("");
         expect(sanitizeBranchName("---")).toBe("");

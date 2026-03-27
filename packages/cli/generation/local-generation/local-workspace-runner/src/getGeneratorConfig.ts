@@ -394,8 +394,8 @@ function buildRegistriesFromPublishTarget(publishTarget: FernGeneratorExec.Gener
     registries: FernGeneratorExec.GeneratorRegistriesConfig;
     registriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2;
 } {
-    const registries: FernGeneratorExec.GeneratorRegistriesConfig = { ...emptyRegistriesConfig };
-    const registriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = { ...emptyRegistriesConfigV2 };
+    const registries: FernGeneratorExec.GeneratorRegistriesConfig = structuredClone(emptyRegistriesConfig);
+    const registriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = structuredClone(emptyRegistriesConfigV2);
 
     if (publishTarget == null) {
         return { registries, registriesV2 };

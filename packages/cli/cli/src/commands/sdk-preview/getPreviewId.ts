@@ -32,7 +32,8 @@ export function sanitizeBranchName(branch: string): string {
         .replace(/[^a-z0-9-]/g, "-")
         .replace(/-+/g, "-")
         .replace(/^-|-$/g, "")
-        .slice(0, MAX_PREVIEW_ID_LENGTH);
+        .slice(0, MAX_PREVIEW_ID_LENGTH)
+        .replace(/-$/, "");
 }
 
 function generateRandomId(): string {

@@ -192,7 +192,6 @@ export async function sdkPreview({
                 message: error instanceof Error ? error.message : String(error)
             };
             process.stdout.write(JSON.stringify(result, null, 2) + "\n");
-            process.exit(1);
         }
         throw error;
     }
@@ -204,7 +203,7 @@ export async function sdkPreview({
             org: organization ?? "",
             previews
         };
-        process.stdout.write(JSON.stringify(result, null, 2));
+        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
     } else if (previews.length > 0) {
         cliContext.logger.info("");
         cliContext.logger.info(`Published ${previews.length} preview package${previews.length > 1 ? "s" : ""}:`);
