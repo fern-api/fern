@@ -101,8 +101,30 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
+        // Check if basic auth is configured so we can conditionally add the Authorization header
+        const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
+        const hasBasicAuth = basicAuthScheme != null && basicAuthScheme.type === "basic";
+        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+
         method.addStatement(
             ruby.codeblock((writer) => {
+                if (hasBasicAuth) {
+                    // Build headers in a variable so we can conditionally add basic auth
+                    writer.write(`headers = `);
+                    writer.writeNode(this.getRawClientHeaders());
+                    writer.newLine();
+                    const usernameName = basicAuthScheme.username.snakeCase.safeName;
+                    const passwordName = basicAuthScheme.password.snakeCase.safeName;
+                    if (isAuthOptional) {
+                        writer.writeLine(
+                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}" if !${usernameName}.nil? && !${passwordName}.nil?`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                        );
+                    }
+                }
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
@@ -125,8 +147,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     writer.writeLine(`,`);
                 }
-                writer.write(`headers: `);
-                writer.writeNode(this.getRawClientHeaders());
+                if (hasBasicAuth) {
+                    writer.write(`headers: headers`);
+                } else {
+                    writer.write(`headers: `);
+                    writer.writeNode(this.getRawClientHeaders());
+                }
                 if (inferredAuth != null) {
                     writer.writeLine(`.merge(@auth_provider.auth_headers)`);
                 } else {
@@ -299,6 +325,33 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(param);
                     break;
                 }
+                case "basic": {
+                    const usernameParam = ruby.parameters.keyword({
+                        name: scheme.username.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.usernameEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(usernameParam);
+                    const passwordParam = ruby.parameters.keyword({
+                        name: scheme.password.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.passwordEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(passwordParam);
+                    break;
+                }
                 case "inferred": {
                     const inferredParams = this.getParametersForInferredAuth(scheme);
                     for (const inferredParam of inferredParams) {
@@ -425,6 +478,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 }
+                case "basic":
+                    // Basic auth header is added conditionally in the constructor body
+                    // to guard against nil credentials when auth is optional.
+                    break;
                 default:
                     break;
             }
