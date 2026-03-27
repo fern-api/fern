@@ -256,21 +256,40 @@ export class WireMock {
             }
         }
 
+        // Determine the SSE discriminator context from the endpoint's response type
+        const isProtocolContext = isSseResponse && this.isSseProtocolContext(ir, endpoint);
+
         // Format response body with validation and fallback
         let body = "";
         if (bodyObj !== null && bodyObj !== undefined) {
             if (isSseResponse && Array.isArray(bodyObj)) {
                 // Format SSE response according to the SSE protocol
-                // Each event should be formatted as: event: <event_name>\ndata: <json_data>\n\n
                 const sseEvents = bodyObj as Array<{ event: string; data: { jsonExample?: unknown } }>;
                 body = sseEvents
                     .map((sseEvent) => {
                         const eventName = sseEvent.event;
-                        // Access jsonExample from the data field
                         const eventData = sseEvent.data?.jsonExample ?? {};
-                        const dataJson = JSON.stringify(eventData);
-                        // SSE protocol requires each event to end with a blank line (\n\n)
-                        return `event: ${eventName}\ndata: ${dataJson}\n\n`;
+                        if (isProtocolContext) {
+                            // Protocol context: event name goes in SSE event: line,
+                            // only the data value goes in the data: line.
+                            // The jsonExample is the full envelope (e.g., {"event":"number_data","data":1.1}),
+                            // so we extract just the "data" field for the SSE data: line.
+                            const envelopeData =
+                                typeof eventData === "object" && eventData !== null && "data" in eventData
+                                    ? (eventData as Record<string, unknown>).data
+                                    : undefined;
+                            if (envelopeData !== undefined) {
+                                const dataJson = JSON.stringify(envelopeData);
+                                return `event: ${eventName}\ndata: ${dataJson}\n\n`;
+                            }
+                            // No data field (e.g., heartbeat) - just the event line
+                            return `event: ${eventName}\ndata:\n\n`;
+                        } else {
+                            // Data context: no SSE event: line, the full JSON object
+                            // (including the discriminator field) goes in data: line
+                            const dataJson = JSON.stringify(eventData);
+                            return `data: ${dataJson}\n\n`;
+                        }
                     })
                     .join("");
             } else if (typeof bodyObj === "object") {
@@ -346,6 +365,47 @@ export class WireMock {
         }
 
         return mapping;
+    }
+
+    /**
+     * Determines if the SSE endpoint uses protocol-level discrimination.
+     * Protocol context means the discriminator (e.g., "event") is at the SSE protocol level,
+     * so it goes in the SSE `event:` line. Data context means the discriminator is inside
+     * the JSON data payload.
+     */
+    private isSseProtocolContext(ir: FernIr.IntermediateRepresentation, endpoint: FernIr.HttpEndpoint): boolean {
+        // Navigate: endpoint.response.body -> streaming -> sse -> payload (TypeReference)
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return false;
+        }
+
+        let ssePayload: FernIr.TypeReference | undefined;
+        if (responseBody.type === "streaming" && responseBody.value.type === "sse") {
+            ssePayload = responseBody.value.payload;
+        } else if (responseBody.type === "streamParameter") {
+            const streamResponse = responseBody.streamResponse;
+            if (streamResponse.type === "sse") {
+                ssePayload = streamResponse.payload;
+            }
+        }
+
+        if (ssePayload == null || ssePayload.type !== "named") {
+            return false;
+        }
+
+        // Look up the type declaration in the IR
+        const typeId = ssePayload.typeId;
+        const typeDecl = ir.types[typeId];
+        if (typeDecl == null || typeDecl.shape.type !== "union") {
+            return false;
+        }
+
+        // The discriminatorContext field was added in a newer IR version.
+        // Access it via type assertion since the runtime IR data will contain it
+        // even if the TypeScript declaration file hasn't been updated yet.
+        const unionShape = typeDecl.shape as { discriminatorContext?: string };
+        return unionShape.discriminatorContext === "protocol";
     }
 
     private buildUrlPathTemplate(endpoint: FernIr.HttpEndpoint): string {

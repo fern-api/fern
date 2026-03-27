@@ -5,16 +5,9 @@ import com.seed.api.types.StreamRequest;
 
 public class Example5 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.streamDataContext(
-            StreamRequest
-                .builder()
-                .query("query")
-                .build()
-        );
+        client.streamDataContext(StreamRequest.builder().query("query").build());
     }
 }
