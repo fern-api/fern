@@ -27,18 +27,6 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
-    - uses: bufbuild/buf-setup-action@v1.50.0
-      with:
-        github_token: ${{ github.token }}
-
-    - uses: actions/setup-go@v6
-      with:
-        go-version: "stable"
-
-    - name: Install protoc-gen-openapi
-      shell: bash
-      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
-
     - name: Seed Test
       shell: bash
       env:

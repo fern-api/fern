@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.4
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials auth from generators.yml being converted to
+        bearer token instead of proper OAuth in the new OpenAPI parser. The
+        `convertApiAuth` in `ir-utils` had a TODO stub that fell back to bearer auth
+        for OAuth schemes. A post-processing step in `OpenAPIConverter` now resolves
+        OAuth endpoint references after paths are converted, constructing the full
+        `AuthScheme.oauth` with resolved endpoint and property references.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 4.46.3
   changelogEntry:
     - summary: |
