@@ -240,7 +240,8 @@ export class WireTestGenerator {
     ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
-        // Add raw imports for pytest (not supported by AST)
+        // Add raw imports for pytest and json (not supported by AST)
+        statements.push(python.codeBlock("import json"));
         statements.push(python.codeBlock("import pytest"));
 
         // Add an import registration statement (for "from X import Y" style imports)
@@ -376,7 +377,7 @@ export class WireTestGenerator {
                             const expectedJson = JSON.stringify(sseEvents[i]?.data.jsonExample);
                             statements.push(
                                 python.codeBlock(
-                                    `event_${i}_json = events[${i}].model_dump(mode="json")  # type: ignore`
+                                    `event_${i}_json = json.loads(events[${i}].json())  # type: ignore`
                                 )
                             );
                             statements.push(

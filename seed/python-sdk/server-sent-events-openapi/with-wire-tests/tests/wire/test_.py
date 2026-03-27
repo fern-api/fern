@@ -1,3 +1,5 @@
+import json
+
 from .conftest import get_client, verify_request_count
 
 
@@ -11,13 +13,13 @@ def test__stream_protocol_no_collision() -> None:
         )
     )
     assert len(events) == 4, f"Expected 4 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {"event": "string_data", "data": "data"}, "Event 1 mismatch"
-    event_2_json = events[2].model_dump(mode="json")  # type: ignore
+    event_2_json = json.loads(events[2].json())  # type: ignore
     assert event_2_json == {"event": "number_data", "data": 1.1}, "Event 2 mismatch"
-    event_3_json = events[3].model_dump(mode="json")  # type: ignore
+    event_3_json = json.loads(events[3].json())  # type: ignore
     assert event_3_json == {
         "event": "object_data",
         "data": {"message": "message", "timestamp": "2024-01-15T09:30:00Z"},
@@ -35,13 +37,13 @@ def test__stream_protocol_collision() -> None:
         )
     )
     assert len(events) == 4, f"Expected 4 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {"event": "string_data", "data": "data"}, "Event 1 mismatch"
-    event_2_json = events[2].model_dump(mode="json")  # type: ignore
+    event_2_json = json.loads(events[2].json())  # type: ignore
     assert event_2_json == {"event": "number_data", "data": 1.1}, "Event 2 mismatch"
-    event_3_json = events[3].model_dump(mode="json")  # type: ignore
+    event_3_json = json.loads(events[3].json())  # type: ignore
     assert event_3_json == {"event": "object_data", "data": {"id": "id", "name": "name", "event": "event"}}, (
         "Event 3 mismatch"
     )
@@ -58,9 +60,9 @@ def test__stream_data_context() -> None:
         )
     )
     assert len(events) == 2, f"Expected 2 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat", "timestamp": "2024-01-15T09:30:00Z"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {
         "event": "entity",
         "entityId": "entityId",
@@ -80,9 +82,9 @@ def test__stream_no_context() -> None:
         )
     )
     assert len(events) == 2, f"Expected 2 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat", "timestamp": "2024-01-15T09:30:00Z"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {
         "event": "entity",
         "entityId": "entityId",
@@ -102,9 +104,9 @@ def test__stream_protocol_with_flat_schema() -> None:
         )
     )
     assert len(events) == 2, f"Expected 2 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat", "timestamp": "2024-01-15T09:30:00Z"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {
         "event": "entity",
         "entityId": "entityId",
@@ -124,13 +126,13 @@ def test__stream_data_context_with_envelope_schema() -> None:
         )
     )
     assert len(events) == 4, f"Expected 4 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"event": "heartbeat"}, "Event 0 mismatch"
-    event_1_json = events[1].model_dump(mode="json")  # type: ignore
+    event_1_json = json.loads(events[1].json())  # type: ignore
     assert event_1_json == {"event": "string_data", "data": "data"}, "Event 1 mismatch"
-    event_2_json = events[2].model_dump(mode="json")  # type: ignore
+    event_2_json = json.loads(events[2].json())  # type: ignore
     assert event_2_json == {"event": "number_data", "data": 1.1}, "Event 2 mismatch"
-    event_3_json = events[3].model_dump(mode="json")  # type: ignore
+    event_3_json = json.loads(events[3].json())  # type: ignore
     assert event_3_json == {
         "event": "object_data",
         "data": {"message": "message", "timestamp": "2024-01-15T09:30:00Z"},
@@ -144,6 +146,6 @@ def test__stream_oas_spec_native() -> None:
     client = get_client(test_id)
     events = list(client.stream_oas_spec_native())
     assert len(events) == 1, f"Expected 1 events, got {len(events)}"
-    event_0_json = events[0].model_dump(mode="json")  # type: ignore
+    event_0_json = json.loads(events[0].json())  # type: ignore
     assert event_0_json == {"data": "data", "event": "event", "id": "id", "retry": 1}, "Event 0 mismatch"
     verify_request_count(test_id, "POST", "/stream/oas-spec-native", None, 1)
