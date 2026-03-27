@@ -12,6 +12,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
     extractErrorMessage,
@@ -2340,7 +2341,48 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
                 if (argv.dryRun) {
                     cliContext.logger.info("\nDry run complete. No changes made.");
+                    return;
                 }
+
+                if (result.lockfileContent == null) {
+                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.");
+                }
+
+                // Send lockfile to Fiddle for server-side PR creation
+                const fernToken = await cliContext.runTask((context) => askToLogin(context));
+
+                const { owner, repo } = parseOwnerRepo(githubRepo);
+                const fiddleOrigin = getFiddleOrigin();
+
+                const response = await fetch(`${fiddleOrigin}/api/remote-gen/replay/init`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${fernToken.value}`
+                    },
+                    body: JSON.stringify({
+                        owner,
+                        repo,
+                        lockfileContents: result.lockfileContent,
+                        fernignoreEntries: result.fernignoreEntries,
+                        prBody: result.prBody
+                    })
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return cliContext.failAndThrow(
+                            "The Fern GitHub App is not installed on this repository. " +
+                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation."
+                        );
+                    }
+                    const body = await response.text();
+                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`);
+                }
+
+                const data = (await response.json()) as { prUrl: string };
+                cliContext.logger.info(`\nPR created: ${data.prUrl}`);
+                cliContext.logger.info("Merge the PR to enable Replay for this repository.");
             } catch (error) {
                 cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
@@ -2418,4 +2460,18 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             }
         }
     );
+}
+
+function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
+    const cleaned = githubRepo
+        .replace(/^https?:\/\//, "")
+        .replace(/\.git$/, "")
+        .replace(/^github\.com\//, "");
+    const parts = cleaned.split("/");
+    const owner = parts[parts.length - 2];
+    const repo = parts[parts.length - 1];
+    if (owner == null || repo == null) {
+        throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
+    }
+    return { owner, repo };
 }
