@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.9
+  changelogEntry:
+    - summary: |
+        Simplify `parse_sse_obj` to always perform data-level discrimination.
+        Removes runtime heuristics that incorrectly treated data-level SSE unions
+        as event-level when the discriminant field name collided with an SSE envelope
+        field (e.g., `event`). Protocol-level discrimination will be handled at
+        code-generation time in a follow-up.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 5.0.8
   changelogEntry:
     - summary: |
