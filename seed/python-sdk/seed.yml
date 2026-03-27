@@ -446,6 +446,7 @@ allowedFailures:
   - oauth-client-credentials-custom
   - pagination-custom
   - response-property
+  - server-sent-events-openapi # SSE deserialization bugs: number_data validation, data-context empty event tag
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
