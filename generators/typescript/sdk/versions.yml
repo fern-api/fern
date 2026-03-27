@@ -2,12 +2,12 @@
 - version: 3.59.5
   changelogEntry:
     - summary: |
-        Optimize ESM import fixup to use a single in-memory ts-morph project.
-        All file generation (source files, core utilities, public exports, and
-        template processing) now happens in the memfs Volume before a single
-        write to disk. This eliminates the post-persist disk passes for
-        fixImportsForCoreFiles and generatePublicExports entirely.
-        At Stripe scale (5K files), import fixup time drops from ~511ms to ~111ms (78% faster).
+        Optimize ESM import fixup to process all files in a single memfs Volume
+        before writing to disk. All file generation (source files, core utilities,
+        public exports, and template rendering) now happens in-memory, eliminating
+        the post-persist disk passes for fixImportsForCoreFiles and
+        generatePublicExports entirely.
+        At Stripe scale (5K files), import fixup time drops from ~777ms to ~158ms (80% faster).
       type: chore
   createdAt: "2026-03-26"
   irVersion: 65

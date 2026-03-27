@@ -259,9 +259,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         });
         const typescriptProject = await sdkGenerator.generate();
         // When not using legacy exports, enable in-memory ESM import fixup.
-        // The hook copies core utility files into the Volume AFTER writeSrcToVolume
-        // so they overwrite ts-morph files at overlapping paths (preserving
-        // the old semantic), then fixImportsInVolume processes all imports together.
+        // The hook runs AFTER writeSrcToVolume inside persist(). Operations
+        // MUST execute in this order:
+        //   1. copyCoreUtilitiesToVolume — populates Volume with core files
+        //      (overwrites ts-morph barrel exports at overlapping paths)
+        //   2. writeTemplateFilesToVolume — renders .template.ts → .ts
+        //      (needs core files from step 1 to exist)
+        //   3. generatePublicExportsToVolume — creates exports.ts re-export chain
+        //      (needs core/*/exports.ts from step 1)
+        // Then persist() calls fixImportsInVolume (needs all files from steps 1-3).
         const templateVariables = this.getTemplateVariables(customConfig);
         const esmImportHook = customConfig.useLegacyExports
             ? undefined
@@ -272,7 +278,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
               };
         const persistedTypescriptProject = await typescriptProject.persist(esmImportHook);
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
-        // For legacy exports, core utilities and public exports are handled on disk.
+        // For legacy exports, core utilities, public exports, and template
+        // rendering are handled on disk (the non-legacy path does all of
+        // this in-memory via the esmImportHook above).
         if (customConfig.useLegacyExports) {
             await sdkGenerator.copyCoreUtilities({
                 pathToRoot: rootDirectory
@@ -280,8 +288,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             await sdkGenerator.generatePublicExports({
                 pathToSrc: persistedTypescriptProject.getSrcDirectory()
             });
+            await writeTemplateFiles(rootDirectory, templateVariables);
         }
-        await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
         await this.writeLicenseFile(config, rootDirectory, generatorContext.logger);
         await this.postProcess(persistedTypescriptProject, customConfig);
 
