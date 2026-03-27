@@ -42,7 +42,6 @@ public class PostJsonPatchContentTypeTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/foo/bar")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .WithHeader("Content-Type", "application/json-patch+json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)

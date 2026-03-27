@@ -42,7 +42,6 @@ public class CreatePlaylistTest : BaseMockServerTest
                     .WithPath("/v2/playlist/1/create")
                     .WithParam("datetime", "2024-01-15T09:30:00.000Z")
                     .WithParam("optionalDatetime", "2024-01-15T09:30:00.000Z")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

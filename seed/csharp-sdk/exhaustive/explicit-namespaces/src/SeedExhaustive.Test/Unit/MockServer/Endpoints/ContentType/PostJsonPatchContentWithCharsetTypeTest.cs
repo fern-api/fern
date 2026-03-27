@@ -42,7 +42,6 @@ public class PostJsonPatchContentWithCharsetTypeTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/foo/baz")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .WithHeader("Content-Type", "application/json-patch+json; charset=utf-8")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)

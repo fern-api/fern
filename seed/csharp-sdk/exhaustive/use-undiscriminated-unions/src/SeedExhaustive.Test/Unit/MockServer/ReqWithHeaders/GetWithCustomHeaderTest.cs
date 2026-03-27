@@ -21,7 +21,6 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
                     .WithPath("/test-headers/custom-header")
                     .WithHeader("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
                     .WithHeader("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingPost()
                     .WithBody(requestJson)
             )

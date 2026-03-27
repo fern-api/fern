@@ -16,13 +16,7 @@ public class GetWithBearerTokenTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/apiKey")
-                    .WithHeader("Authorization", "Bearer API_KEY")
-                    .UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/apiKey").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

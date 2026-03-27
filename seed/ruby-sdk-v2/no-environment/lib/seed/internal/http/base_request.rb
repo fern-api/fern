@@ -31,6 +31,20 @@ module Seed
         # Child classes should implement:
         # - encode_headers: Returns the encoded HTTP request headers.
         # - encode_body: Returns the encoded HTTP request body.
+
+        private
+
+        # Merges additional_headers from request_options into sdk_headers, filtering out
+        # any keys that collide with SDK-set or client-protected headers (case-insensitive).
+        # @param sdk_headers [Hash] Headers set by the SDK for this request type.
+        # @param protected_keys [Array<String>] Additional header keys that must not be overridden.
+        # @return [Hash] The merged headers.
+        def merge_additional_headers(sdk_headers, protected_keys: [])
+          additional_headers = @request_options&.dig(:additional_headers) || @request_options&.dig("additional_headers") || {}
+          all_protected = (sdk_headers.keys + protected_keys).to_set { |k| k.to_s.downcase }
+          filtered = additional_headers.reject { |key, _| all_protected.include?(key.to_s.downcase) }
+          sdk_headers.merge(filtered)
+        end
       end
     end
   end

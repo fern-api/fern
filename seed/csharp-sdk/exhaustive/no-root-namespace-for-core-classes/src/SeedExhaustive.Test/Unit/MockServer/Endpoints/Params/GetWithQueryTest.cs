@@ -18,7 +18,6 @@ public class GetWithQueryTest : BaseMockServerTest
                     .WithPath("/params")
                     .WithParam("query", "query")
                     .WithParam("number", "1")
-                    .WithHeader("Authorization", "Bearer TOKEN")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
