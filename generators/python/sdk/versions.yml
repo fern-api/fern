@@ -3,11 +3,15 @@
 - version: 5.0.9
   changelogEntry:
     - summary: |
-        Simplify `parse_sse_obj` to always perform data-level discrimination.
-        Removes runtime heuristics that incorrectly treated data-level SSE unions
-        as event-level when the discriminant field name collided with an SSE envelope
-        field (e.g., `event`). Protocol-level discrimination will be handled at
-        code-generation time in a follow-up.
+        Fix SSE union discrimination for both data-level and protocol-level contexts.
+
+        Data-level: Simplify `parse_sse_obj` to always parse the SSE `data` field as
+        JSON instead of using runtime heuristics. This fixes incorrect routing when the
+        discriminant field name (e.g., `event`) collides with an SSE envelope field.
+
+        Protocol-level: Generate an if/elif dispatch chain at code-generation time that
+        routes on `_sse.event`, parsing each variant's data payload into its concrete
+        type. No runtime "if casing" — the generator decides the code path statically.
       type: fix
   createdAt: "2026-03-27"
   irVersion: 65
