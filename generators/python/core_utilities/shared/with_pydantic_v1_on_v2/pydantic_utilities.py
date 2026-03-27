@@ -89,8 +89,20 @@ def parse_sse_protocol(sse: "ServerSentEvent", type_: Type[T]) -> T:
     envelope: Dict[str, Any] = {"event": sse.event}
     if sse.data is not None:
         try:
-            envelope["data"] = json.loads(sse.data)
+            parsed_data = json.loads(sse.data)
         except (json.JSONDecodeError, ValueError):
+            parsed_data = None
+
+        if parsed_data is not None:
+            envelope["data"] = parsed_data
+            try:
+                return parse_obj_as(type_, envelope)
+            except Exception:
+                # If validation fails with JSON-parsed data (e.g. variant expects str
+                # but data was valid JSON like '{"status": "processing"}'), fall back
+                # to the raw string so string-typed variants work correctly.
+                envelope["data"] = sse.data
+        else:
             envelope["data"] = sse.data
     return parse_obj_as(type_, envelope)
 
