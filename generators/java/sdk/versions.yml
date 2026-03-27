@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.8
+  changelogEntry:
+    - summary: |
+        Replace reflection-based SSE discrimination with IR-driven `discriminatorContext`.
+        The Java SDK previously used runtime reflection (`SseEventParser`) to determine
+        whether an SSE discriminated union's discriminator lives at the protocol envelope
+        level or inside the data payload. This was slow and produced incorrect results when
+        a data-context union used "event" as its discriminant property. The generator now
+        reads `discriminatorContext` from the IR (matching TypeScript and Go generators),
+        and the `SseEventParser` utility class has been removed. Three endpoints that were
+        previously misclassified as protocol-level are now correctly classified as data-level.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.0.7
   changelogEntry:
     - summary: |
