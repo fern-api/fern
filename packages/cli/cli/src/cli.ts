@@ -12,6 +12,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
     extractErrorMessage,
@@ -80,7 +81,7 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
-import { fetchInstallationToken, resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
+import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 
 void runCli();
@@ -2303,25 +2304,10 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 token = token ?? resolved.token;
             }
 
-            // Always try to get Fern App installation token for write operations (push + PR).
-            // The user's GITHUB_TOKEN may not have write access to the target repo,
-            // but the Fern GitHub App installation token will.
-            let writeToken: string | undefined;
-            if (githubRepo != null) {
-                try {
-                    const fernToken = await cliContext.runTask((context) => askToLogin(context));
-                    writeToken = await fetchInstallationToken(cliContext, githubRepo, fernToken);
-                } catch {
-                    cliContext.logger.debug("Could not obtain Fern App installation token for write operations.");
-                }
-            }
-
-            // Need at least one token (for clone) and writeToken or token (for push)
-            const readToken = token ?? writeToken;
-            if (githubRepo == null || readToken == null) {
+            if (githubRepo == null || token == null) {
                 const hint =
                     githubRepo != null
-                        ? "Repository found but no token. Ensure the Fern GitHub App (https://github.com/apps/fern-api) is installed on the repository, or pass --token / set GITHUB_TOKEN."
+                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
                         : "Either use --group to read from generators.yml, or provide --github and --token directly.";
                 return cliContext.failAndThrow(`Missing required github config. ${hint}`);
             }
@@ -2334,8 +2320,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             try {
                 const result = await replayInit({
                     githubRepo,
-                    token: readToken,
-                    writeToken,
+                    token,
                     dryRun: argv.dryRun,
                     maxCommitsToScan: argv.maxCommits,
                     force: argv.force
@@ -2356,7 +2341,48 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
                 if (argv.dryRun) {
                     cliContext.logger.info("\nDry run complete. No changes made.");
+                    return;
                 }
+
+                if (result.lockfileContent == null) {
+                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.");
+                }
+
+                // Send lockfile to Fiddle for server-side PR creation
+                const fernToken = await cliContext.runTask((context) => askToLogin(context));
+
+                const { owner, repo } = parseOwnerRepo(githubRepo);
+                const fiddleOrigin = getFiddleOrigin();
+
+                const response = await fetch(`${fiddleOrigin}/api/remote-gen/replay/init`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${fernToken.value}`
+                    },
+                    body: JSON.stringify({
+                        owner,
+                        repo,
+                        lockfileContents: result.lockfileContent,
+                        fernignoreEntries: result.fernignoreEntries,
+                        prBody: result.prBody
+                    })
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return cliContext.failAndThrow(
+                            "The Fern GitHub App is not installed on this repository. " +
+                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation."
+                        );
+                    }
+                    const body = await response.text();
+                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`);
+                }
+
+                const data = (await response.json()) as { prUrl: string };
+                cliContext.logger.info(`\nPR created: ${data.prUrl}`);
+                cliContext.logger.info("Merge the PR to enable Replay for this repository.");
             } catch (error) {
                 cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
@@ -2434,4 +2460,18 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             }
         }
     );
+}
+
+function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
+    const cleaned = githubRepo
+        .replace(/^https?:\/\//, "")
+        .replace(/\.git$/, "")
+        .replace(/^github\.com\//, "");
+    const parts = cleaned.split("/");
+    const owner = parts[parts.length - 2];
+    const repo = parts[parts.length - 1];
+    if (owner == null || repo == null) {
+        throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
+    }
+    return { owner, repo };
 }

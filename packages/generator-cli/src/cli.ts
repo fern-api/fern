@@ -284,14 +284,6 @@ void yargs(hideBin(process.argv))
                                 type: "number",
                                 description: "Max commits to scan for generation history"
                             })
-                            .option("pr-title", {
-                                type: "string",
-                                description: "Custom title for the PR"
-                            })
-                            .option("pr-body", {
-                                type: "string",
-                                description: "Custom body for the PR"
-                            })
                             .option("force", {
                                 type: "boolean",
                                 default: false,
@@ -317,8 +309,6 @@ void yargs(hideBin(process.argv))
                                 token: argv.token,
                                 dryRun: argv["dry-run"],
                                 maxCommitsToScan: argv["max-commits"],
-                                prTitle: argv["pr-title"],
-                                prBody: argv["pr-body"],
                                 force: argv.force,
                                 importHistory: argv["import-history"]
                             });

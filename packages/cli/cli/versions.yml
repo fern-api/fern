@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.5
+  changelogEntry:
+    - summary: |
+        Internal improvements to GitHub integration for server-side operations.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.46.4
   changelogEntry:
     - summary: |
@@ -25,7 +33,7 @@
       type: fix
   createdAt: "2026-03-26"
   irVersion: 65
-      
+
 - version: 4.46.2
   changelogEntry:
     - summary: |
