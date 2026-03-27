@@ -599,9 +599,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 RootClientConstructorParameter(
                     constructor_parameter_name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
                     type_hint=AST.TypeHint.optional(
-                        AST.TypeHint.callable(
-                            parameters=[], return_type=AST.TypeHint.awaitable(AST.TypeHint.str_())
-                        )
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()))
                     ),
                     initializer=AST.Expression(AST.TypeHint.none()),
                     exclude_from_wrapper_construction=True,
