@@ -589,12 +589,17 @@ class ModuleFile {
     private project: RubyProject;
     public readonly filePath: AbsoluteFilePath;
     public readonly fileName: string;
-    private readonly baseContents: string = dedent`
-        # frozen_string_literal: true
+    private get baseContents(): string {
+        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+        const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (hasBasicAuth) {
+            requires.push('"base64"');
+        }
+        return dedent`
+            # frozen_string_literal: true
 
-        require "json"
-        require "net/http"
-        require "securerandom"\n\n`;
+            ${requires.map((r) => `require ${r}`).join("\n")}\n\n`;
+    }
 
     public constructor({ context, project }: ModuleFile.Args) {
         this.context = context;
