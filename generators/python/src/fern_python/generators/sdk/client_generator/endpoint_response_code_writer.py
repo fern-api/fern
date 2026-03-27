@@ -824,14 +824,13 @@ class EndpointResponseCodeWriter:
         """Get the type hint for a single union variant's data shape."""
         shape_union = variant.shape.get_as_union()
         if shape_union.properties_type == "samePropertiesAsObject":
-            declared_type_name = ir_types.DeclaredTypeName(
+            named_type = ir_types.NamedType(
                 type_id=shape_union.type_id,
                 fern_filepath=shape_union.fern_filepath,
                 name=shape_union.name,
-                display_name=shape_union.display_name,
             )
             return self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                ir_types.TypeReference.factory.named(declared_type_name)
+                ir_types.TypeReference.factory.named(named_type)
             )
         if shape_union.properties_type == "singleProperty":
             return self._context.pydantic_generator_context.get_type_hint_for_type_reference(shape_union.type)
