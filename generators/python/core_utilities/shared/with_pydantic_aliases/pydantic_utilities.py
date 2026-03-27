@@ -1,6 +1,5 @@
 # nopycln: file
 import datetime as dt
-import inspect
 import json
 import logging
 from collections import defaultdict

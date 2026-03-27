@@ -1,9 +1,6 @@
 from typing import Any, Callable, Optional
 
-import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
-from fern.ir.resources.types import UnionDiscriminatorContext
-
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
@@ -29,6 +26,9 @@ from fern_python.generators.sdk.client_generator.pagination.uri import (
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
+
+import fern.ir.resources as ir_types
+from fern.ir.resources.types import UnionDiscriminatorContext
 
 
 class EndpointResponseCodeWriter:

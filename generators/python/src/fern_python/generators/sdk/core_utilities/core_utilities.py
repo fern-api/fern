@@ -924,7 +924,9 @@ class CoreUtilities:
             ),
         )
 
-    def get_construct_sse(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression, *, is_protocol: bool = False) -> AST.Expression:
+    def get_construct_sse(
+        self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression, *, is_protocol: bool = False
+    ) -> AST.Expression:
         """Generate a parse_sse_data or parse_sse_protocol call for SSE handling."""
         ref = self.get_parse_sse_protocol() if is_protocol else self.get_parse_sse_data()
 
