@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.27.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for extended objects with `additionalProperties`.
+        The `convertExtendedObject` code path now passes `useDefault` to `structConstruction`,
+        ensuring `..Default::default()` is emitted for types like `AchSetup` that have an
+        `extra: HashMap<String, serde_json::Value>` field. Also skips optional fields without
+        values when `useDefault` is true, producing cleaner output.
+      type: fix
+  createdAt: "2026-03-28"
+  irVersion: 65
+
 - version: 0.27.1
   changelogEntry:
     - summary: |
