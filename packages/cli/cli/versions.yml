@@ -9,6 +9,18 @@
   createdAt: "2026-03-17"
   irVersion: 65
 
+- version: 4.46.6
+  changelogEntry:
+    - summary: |
+        Fix tag description pages not being generated when a tag reference in
+        `docs.yml` uses a `title` override. Tags with title overrides are parsed
+        as `Package` type items, but the `#convertPackage` method did not call
+        `createTagDescriptionPageId`, so the overview page was silently dropped.
+        The method now falls back to creating a tag description page when no
+        explicit overview is provided.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
 - version: 4.46.5
   changelogEntry:
     - summary: |
