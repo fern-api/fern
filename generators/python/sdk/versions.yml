@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.1.1
+  changelogEntry:
+    - summary: |
+        Ensure `async_token` is accepted and forwarded in generated async client constructors
+        for bearer token auth. Previously, `AsyncClientWrapper` supported `async_token` but
+        the top-level async client only exposed it for OAuth client credentials flows, causing
+        sync token callables to block the event loop in async contexts.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 5.1.0
   changelogEntry:
     - summary: |
