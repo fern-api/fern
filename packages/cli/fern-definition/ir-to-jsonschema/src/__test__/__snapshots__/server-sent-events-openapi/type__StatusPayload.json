@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "message",
+    "timestamp"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

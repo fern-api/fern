@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/identity/token",
+                "method": "POST",
+                "identifier_override": "endpoint_identity.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.identity.getToken({\n    username: \"username\",\n    password: \"password\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.plants.list();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "GET",
+                "identifier_override": "endpoint_plants.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.plants.get({\n    plantId: \"plantId\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

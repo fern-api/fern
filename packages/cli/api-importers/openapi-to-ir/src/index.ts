@@ -1,2 +1,3 @@
 export { OpenAPIConverter as OpenAPI3_1Converter } from "./3.1/OpenAPIConverter.js";
 export { OpenAPIConverterContext3_1 } from "./3.1/OpenAPIConverterContext3_1.js";
+export { resolveOAuthEndpointReferences } from "./resolveOAuthEndpointReferences.js";

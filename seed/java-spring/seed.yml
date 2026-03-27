@@ -59,6 +59,7 @@ allowedFailures:
   - streaming
   - server-sent-events
   - server-sent-event-examples
+  - server-sent-events-openapi
   - alias-extends
   - any-auth
   - streaming-parameter
