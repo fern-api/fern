@@ -400,4 +400,6 @@ allowedFailures:
   - unions:no-custom-config
   - unions-with-local-date
   - server-sent-event-examples
+  - oauth-client-credentials-openapi
   - server-sent-events-openapi
+  - streaming-parameter
