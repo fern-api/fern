@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Query Param Name Conflict API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Bulk-update tasks. Query params and body share some property names.",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/task",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "task"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/task",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "task"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successful response",
+          "body": "{\n    \"updated_count\": 1\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/task?assigned_to=filter_assigned_to&is_complete=filter_is_complete&date=filter_date&_fields=_fields",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "task"
+              ],
+              "query": [
+                {
+                  "key": "assigned_to",
+                  "description": null,
+                  "value": "filter_assigned_to",
+                  "disabled": true
+                },
+                {
+                  "key": "is_complete",
+                  "description": null,
+                  "value": "filter_is_complete",
+                  "disabled": true
+                },
+                {
+                  "key": "date",
+                  "description": null,
+                  "value": "filter_date",
+                  "disabled": true
+                },
+                {
+                  "key": "_fields",
+                  "description": "Comma-separated list of fields to include in the response.",
+                  "value": "_fields",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"assigned_to\": \"assigned_to\",\n    \"date\": \"2023-01-15\",\n    \"is_complete\": true,\n    \"text\": \"text\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successful response",
+          "body": "{\n    \"updated_count\": 1\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}
