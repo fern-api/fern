@@ -385,16 +385,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
+        const args: NamedArgument[] = [
             {
                 name: this.context.getParameterName(auth.username),
                 assignment: this.csharp.Literal.string(values.username)
-            },
-            {
-                name: this.context.getParameterName(auth.password),
-                assignment: this.csharp.Literal.string(values.password)
             }
         ];
+        if (!auth.passwordOmit) {
+            args.push({
+                name: this.context.getParameterName(auth.password),
+                assignment: this.csharp.Literal.string(values.password)
+            });
+        }
+        return args;
     }
 
     private getConstructorBearerAuthArgs({

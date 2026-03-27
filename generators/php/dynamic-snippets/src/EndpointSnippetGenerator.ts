@@ -321,16 +321,19 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
+        const args: NamedArgument[] = [
             {
                 name: this.context.getPropertyName(auth.username),
                 assignment: php.TypeLiteral.string(values.username)
-            },
-            {
-                name: this.context.getPropertyName(auth.password),
-                assignment: php.TypeLiteral.string(values.password)
             }
         ];
+        if (!auth.passwordOmit) {
+            args.push({
+                name: this.context.getPropertyName(auth.password),
+                assignment: php.TypeLiteral.string(values.password)
+            });
+        }
+        return args;
     }
 
     private getConstructorEnvironmentArg({

@@ -385,6 +385,9 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): go.AstNode {
+        const arguments_ = auth.passwordOmit
+            ? [go.TypeInstantiation.string(values.username)]
+            : [go.TypeInstantiation.string(values.username), go.TypeInstantiation.string(values.password)];
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeFunc({
@@ -392,10 +395,7 @@ export class EndpointSnippetGenerator {
                         name: "WithBasicAuth",
                         importPath: this.context.getOptionImportPath()
                     }),
-                    arguments_: [
-                        go.TypeInstantiation.string(values.username),
-                        go.TypeInstantiation.string(values.password)
-                    ]
+                    arguments_
                 })
             );
         });

@@ -23,6 +23,9 @@ types:
     properties:
       username: commons.Name
       password: commons.Name
+      passwordOmit:
+        type: optional<boolean>
+        docs: If true, the password should be omitted from the snippet.
 
   BasicAuthValues:
     properties:

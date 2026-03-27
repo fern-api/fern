@@ -697,7 +697,10 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic":
-                return DynamicSnippets.Auth.basic(scheme);
+                return DynamicSnippets.Auth.basic({
+                    ...scheme,
+                    passwordOmit: scheme.passwordOmit ?? undefined
+                });
             case "bearer":
                 return DynamicSnippets.Auth.bearer(scheme);
             case "header":
@@ -736,7 +739,7 @@ export class DynamicSnippetsConverter {
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
                     username: "<username>",
-                    password: "<password>"
+                    password: scheme.passwordOmit ? "" : "<password>"
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({

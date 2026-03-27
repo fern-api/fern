@@ -293,16 +293,19 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): python.NamedValue[] {
-        return [
+        const fields: python.NamedValue[] = [
             {
                 name: this.context.getPropertyName(auth.username),
                 value: python.TypeInstantiation.str(values.username)
-            },
-            {
-                name: this.context.getPropertyName(auth.password),
-                value: python.TypeInstantiation.str(values.password)
             }
         ];
+        if (!auth.passwordOmit) {
+            fields.push({
+                name: this.context.getPropertyName(auth.password),
+                value: python.TypeInstantiation.str(values.password)
+            });
+        }
+        return fields;
     }
 
     private getConstructorBearerAuthArgs({

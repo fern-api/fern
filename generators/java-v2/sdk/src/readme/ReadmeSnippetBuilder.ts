@@ -906,14 +906,18 @@ ${clientClassName} client = ${clientClassName}.builder()
                     value: java.TypeLiteral.string("<token>")
                 });
             } else if (authScheme?.type === "basic") {
-                builderParameters.push({
-                    name: "username",
-                    value: java.TypeLiteral.string("<username>")
-                });
-                builderParameters.push({
-                    name: "password",
-                    value: java.TypeLiteral.string("<password>")
-                });
+                if (!authScheme.usernameOmit) {
+                    builderParameters.push({
+                        name: "username",
+                        value: java.TypeLiteral.string("<username>")
+                    });
+                }
+                if (!authScheme.passwordOmit) {
+                    builderParameters.push({
+                        name: "password",
+                        value: java.TypeLiteral.string("<password>")
+                    });
+                }
             } else if (authScheme?.type === "header") {
                 const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
                 builderParameters.push({
