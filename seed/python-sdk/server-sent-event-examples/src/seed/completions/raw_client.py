@@ -10,7 +10,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.http_sse._api import EventSource
 from ..core.parse_error import ParsingError
-from ..core.pydantic_utilities import parse_obj_as, parse_sse_obj
+from ..core.pydantic_utilities import parse_obj_as, parse_sse_data, parse_sse_protocol
 from ..core.request_options import RequestOptions
 from .errors.bad_request_error import BadRequestError
 from .types.stream_event import StreamEvent
@@ -64,7 +64,7 @@ class RawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamedCompletion,  # type: ignore
                                         ),
@@ -148,7 +148,7 @@ class RawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamEvent,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamEvent,  # type: ignore
                                         ),
@@ -232,7 +232,7 @@ class RawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamEventContextProtocol,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamEventContextProtocol,  # type: ignore
                                         ),
@@ -321,7 +321,7 @@ class AsyncRawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamedCompletion,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamedCompletion,  # type: ignore
                                         ),
@@ -405,7 +405,7 @@ class AsyncRawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamEvent,
-                                        parse_sse_obj(
+                                        parse_sse_data(
                                             sse=_sse,
                                             type_=StreamEvent,  # type: ignore
                                         ),
@@ -489,7 +489,7 @@ class AsyncRawCompletionsClient:
                                 try:
                                     yield typing.cast(
                                         StreamEventContextProtocol,
-                                        parse_sse_obj(
+                                        parse_sse_protocol(
                                             sse=_sse,
                                             type_=StreamEventContextProtocol,  # type: ignore
                                         ),
