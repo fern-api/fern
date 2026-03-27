@@ -8,7 +8,7 @@
         `titleCase` to the raw tag name. This prevents tag names like "WhatsApp"
         from being mangled to "Whats App".
       type: fix
-  createdAt: "2026-03-26"
+  createdAt: "2026-03-27"
   irVersion: 65
 
 - version: 4.46.6

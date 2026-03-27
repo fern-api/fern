@@ -411,7 +411,7 @@ export function generateIr({
                 (openApi.tags ?? []).map((tag) => {
                     const xDisplayName = (tag as unknown as Record<string, unknown>)["x-displayName"];
                     const displayName =
-                        typeof xDisplayName === "string" && xDisplayName.trim().length > 0 ? xDisplayName : undefined;
+                        typeof xDisplayName === "string" && xDisplayName.trim().length > 0 ? xDisplayName.trim() : undefined;
                     return [tag.name, { id: tag.name, description: tag.description, displayName }];
                 })
             ),
