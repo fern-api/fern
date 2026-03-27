@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { WireMockMapping } from "@fern-api/mock-utils";
+import { getBestEndpointExample, getSseExampleEvents, WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
@@ -687,40 +687,100 @@ export class WireTestGenerator {
                 })
             );
 
-            // For streaming endpoints, consume the stream and assert we received events
+            // For streaming endpoints, consume the stream and assert per-event content
             if (isStreaming) {
+                const sseEvents = getSseExampleEvents(
+                    getBestEndpointExample(endpoint) ?? ({} as FernIr.ExampleEndpointCall)
+                );
+
                 writer.writeLine();
-                writer.write("eventCount := 0");
+                writer.write("var events []json.RawMessage");
                 writer.writeLine();
                 writer.write("for {");
                 writer.writeLine();
-                writer.write("\t_, err := stream.Recv()");
+                writer.write("\tval, recvErr := stream.Recv()");
                 writer.writeLine();
-                writer.write("\tif err != nil {");
+                writer.write("\tif recvErr != nil {");
                 writer.writeLine();
                 writer.write("\t\tbreak");
                 writer.writeLine();
                 writer.write("\t}");
                 writer.writeLine();
-                writer.write("\teventCount++");
-                writer.writeLine();
-                writer.write("}");
+                writer.write("\tb, marshalErr := json.Marshal(val)");
                 writer.writeLine();
                 writer.writeNode(
                     go.invokeFunc({
                         func: go.typeReference({
-                            name: "Greater",
+                            name: "NoError",
                             importPath: "github.com/stretchr/testify/require"
                         }),
                         arguments_: [
                             go.codeblock("t"),
-                            go.codeblock("eventCount"),
-                            go.codeblock("0"),
-                            go.TypeInstantiation.string("Expected at least one event")
+                            go.codeblock("marshalErr"),
+                            go.TypeInstantiation.string("Failed to marshal event")
                         ],
                         multiline: false
                     })
                 );
+                writer.writeLine();
+                writer.write("\tevents = append(events, b)");
+                writer.writeLine();
+                writer.write("}");
+
+                if (sseEvents != null && sseEvents.length > 0) {
+                    writer.writeLine();
+                    writer.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "Equal",
+                                importPath: "github.com/stretchr/testify/require"
+                            }),
+                            arguments_: [
+                                go.codeblock("t"),
+                                go.codeblock(`${sseEvents.length}`),
+                                go.codeblock("len(events)"),
+                                go.TypeInstantiation.string(`Expected ${sseEvents.length} events`)
+                            ],
+                            multiline: false
+                        })
+                    );
+                    for (let i = 0; i < sseEvents.length; i++) {
+                        const expectedJson = JSON.stringify(JSON.stringify(sseEvents[i]?.data.jsonExample));
+                        writer.writeLine();
+                        writer.writeNode(
+                            go.invokeFunc({
+                                func: go.typeReference({
+                                    name: "JSONEq",
+                                    importPath: "github.com/stretchr/testify/require"
+                                }),
+                                arguments_: [
+                                    go.codeblock("t"),
+                                    go.codeblock(expectedJson),
+                                    go.codeblock(`string(events[${i}])`),
+                                    go.TypeInstantiation.string(`Event ${i} mismatch`)
+                                ],
+                                multiline: false
+                            })
+                        );
+                    }
+                } else {
+                    writer.writeLine();
+                    writer.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "Greater",
+                                importPath: "github.com/stretchr/testify/require"
+                            }),
+                            arguments_: [
+                                go.codeblock("t"),
+                                go.codeblock("len(events)"),
+                                go.codeblock("0"),
+                                go.TypeInstantiation.string("Expected at least one event")
+                            ],
+                            multiline: false
+                        })
+                    );
+                }
             }
 
             writer.writeLine();
@@ -846,15 +906,7 @@ export class WireTestGenerator {
     }
 
     private getEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
-        const firstUserSpecifiedExample = endpoint.userSpecifiedExamples?.[0]?.example;
-        const firstAutogeneratedExample = endpoint.autogeneratedExamples?.[0]?.example;
-        const firstExample = firstUserSpecifiedExample ?? firstAutogeneratedExample;
-
-        if (!firstExample) {
-            return null;
-        }
-
-        return firstExample;
+        return getBestEndpointExample(endpoint) ?? null;
     }
 
     private getJsonSchemaType(valueType: FernIr.TypeReference): string {

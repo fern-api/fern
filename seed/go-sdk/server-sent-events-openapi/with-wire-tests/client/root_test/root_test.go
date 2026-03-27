@@ -83,15 +83,21 @@ func TestStreamProtocolNoCollisionWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 4, len(events), "Expected 4 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"string_data\",\"data\":\"data\"}", string(events[1]), "Event 1 mismatch")
+	require.JSONEq(t, "{\"event\":\"number_data\",\"data\":1.1}", string(events[2]), "Event 2 mismatch")
+	require.JSONEq(t, "{\"event\":\"object_data\",\"data\":{\"message\":\"message\",\"timestamp\":\"2024-01-15T09:30:00Z\"}}", string(events[3]), "Event 3 mismatch")
 	VerifyRequestCount(t, "TestStreamProtocolNoCollisionWithWireMock", "POST", "/stream/protocol-no-collision", nil, 1)
 }
 
@@ -115,15 +121,21 @@ func TestStreamProtocolCollisionWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 4, len(events), "Expected 4 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"string_data\",\"data\":\"data\"}", string(events[1]), "Event 1 mismatch")
+	require.JSONEq(t, "{\"event\":\"number_data\",\"data\":1.1}", string(events[2]), "Event 2 mismatch")
+	require.JSONEq(t, "{\"event\":\"object_data\",\"data\":{\"id\":\"id\",\"name\":\"name\",\"event\":\"event\"}}", string(events[3]), "Event 3 mismatch")
 	VerifyRequestCount(t, "TestStreamProtocolCollisionWithWireMock", "POST", "/stream/protocol-collision", nil, 1)
 }
 
@@ -147,15 +159,19 @@ func TestStreamDataContextWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 2, len(events), "Expected 2 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\",\"timestamp\":\"2024-01-15T09:30:00Z\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"entity\",\"entityId\":\"entityId\",\"eventType\":\"CREATED\",\"updatedTime\":\"2024-01-15T09:30:00Z\"}", string(events[1]), "Event 1 mismatch")
 	VerifyRequestCount(t, "TestStreamDataContextWithWireMock", "POST", "/stream/data-context", nil, 1)
 }
 
@@ -179,15 +195,19 @@ func TestStreamNoContextWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 2, len(events), "Expected 2 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\",\"timestamp\":\"2024-01-15T09:30:00Z\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"entity\",\"entityId\":\"entityId\",\"eventType\":\"CREATED\",\"updatedTime\":\"2024-01-15T09:30:00Z\"}", string(events[1]), "Event 1 mismatch")
 	VerifyRequestCount(t, "TestStreamNoContextWithWireMock", "POST", "/stream/no-context", nil, 1)
 }
 
@@ -211,15 +231,19 @@ func TestStreamProtocolWithFlatSchemaWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 2, len(events), "Expected 2 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\",\"timestamp\":\"2024-01-15T09:30:00Z\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"entity\",\"entityId\":\"entityId\",\"eventType\":\"CREATED\",\"updatedTime\":\"2024-01-15T09:30:00Z\"}", string(events[1]), "Event 1 mismatch")
 	VerifyRequestCount(t, "TestStreamProtocolWithFlatSchemaWithWireMock", "POST", "/stream/protocol-with-flat-schema", nil, 1)
 }
 
@@ -243,15 +267,21 @@ func TestStreamDataContextWithEnvelopeSchemaWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 4, len(events), "Expected 4 events")
+	require.JSONEq(t, "{\"event\":\"heartbeat\"}", string(events[0]), "Event 0 mismatch")
+	require.JSONEq(t, "{\"event\":\"string_data\",\"data\":\"data\"}", string(events[1]), "Event 1 mismatch")
+	require.JSONEq(t, "{\"event\":\"number_data\",\"data\":1.1}", string(events[2]), "Event 2 mismatch")
+	require.JSONEq(t, "{\"event\":\"object_data\",\"data\":{\"message\":\"message\",\"timestamp\":\"2024-01-15T09:30:00Z\"}}", string(events[3]), "Event 3 mismatch")
 	VerifyRequestCount(t, "TestStreamDataContextWithEnvelopeSchemaWithWireMock", "POST", "/stream/data-context-with-envelope-schema", nil, 1)
 }
 
@@ -275,14 +305,17 @@ func TestStreamOasSpecNativeWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	eventCount := 0
+	var events []json.RawMessage
 	for {
-		_, err := stream.Recv()
-		if err != nil {
+		val, recvErr := stream.Recv()
+		if recvErr != nil {
 			break
 		}
-		eventCount++
+		b, marshalErr := json.Marshal(val)
+		require.NoError(t, marshalErr, "Failed to marshal event")
+		events = append(events, b)
 	}
-	require.Greater(t, eventCount, 0, "Expected at least one event")
+	require.Equal(t, 1, len(events), "Expected 1 events")
+	require.JSONEq(t, "{\"data\":\"data\",\"event\":\"event\",\"id\":\"id\",\"retry\":1}", string(events[0]), "Event 0 mismatch")
 	VerifyRequestCount(t, "TestStreamOasSpecNativeWithWireMock", "POST", "/stream/oas-spec-native", nil, 1)
 }
