@@ -149,6 +149,7 @@ export declare namespace SdkContextImpl {
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -373,7 +374,8 @@ export class SdkContextImpl implements SdkContext {
             enableInlineTypes: this.enableInlineTypes,
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
-            parameterNaming: this.initParams.parameterNaming
+            parameterNaming: this.initParams.parameterNaming,
+            resolveQueryParameterNameConflicts: this.initParams.resolveQueryParameterNameConflicts
         }));
     }
 

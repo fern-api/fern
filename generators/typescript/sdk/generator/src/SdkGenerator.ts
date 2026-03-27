@@ -169,6 +169,7 @@ export declare namespace SdkGenerator {
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -2015,7 +2016,8 @@ export class SdkGenerator {
                 useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
                 generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
                 flattenRequestParameters: this.config.flattenRequestParameters,
-                parameterNaming: this.config.parameterNaming
+                parameterNaming: this.config.parameterNaming,
+                resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
             } satisfies Omit<SdkContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;
         }
         return this.cachedSharedContextParams;

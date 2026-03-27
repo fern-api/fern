@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.46.7
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-Fern conversion using wire names instead of SDK names
+        (from `x-fern-parameter-name`) for query parameter conflict detection.
+        When a query parameter has a name override, the override name is now used
+        to check for conflicts with body properties, preventing unnecessary body
+        property renames.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.46.6
   changelogEntry:
     - summary: |

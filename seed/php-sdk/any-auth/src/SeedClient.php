@@ -78,6 +78,9 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($username !== null && $password !== null) {
+            $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $password);
+        }
 
         $this->options = $options ?? [];
 
