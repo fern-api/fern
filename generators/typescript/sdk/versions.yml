@@ -2,13 +2,12 @@
 - version: 3.59.5
   changelogEntry:
     - summary: |
-        Optimize ESM import fixup by processing imports in-memory (memfs Volume)
-        before writing to disk, eliminating the full disk read+write pass. Core
-        utility files are now written into the Volume via a `beforeFixImports`
-        hook so their imports are processed alongside generated source files.
-        At Stripe scale (5K files), this reduces import fixup time by ~47%.
-        Also removes dead code, deduplicates shared logic between Volume-based
-        and disk-based copy flows, and keeps the Volume field encapsulated.
+        Optimize ESM import fixup to use a single in-memory ts-morph project.
+        All file generation (source files, core utilities, public exports, and
+        template processing) now happens in the memfs Volume before a single
+        write to disk. This eliminates the post-persist disk passes for
+        fixImportsForCoreFiles and generatePublicExports entirely.
+        At Stripe scale (5K files), import fixup time drops from ~511ms to ~111ms (78% faster).
       type: chore
   createdAt: "2026-03-26"
   irVersion: 65

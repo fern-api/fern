@@ -7,11 +7,11 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,
-    fixImportsForCoreFiles,
     type MemfsVolume,
     NpmPackage,
     PersistedTypescriptProject,
-    writeTemplateFiles
+    writeTemplateFiles,
+    writeTemplateFilesToVolume
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
@@ -262,20 +262,25 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         // The hook copies core utility files into the Volume AFTER writeSrcToVolume
         // so they overwrite ts-morph files at overlapping paths (preserving
         // the old semantic), then fixImportsInVolume processes all imports together.
+        const templateVariables = this.getTemplateVariables(customConfig);
         const esmImportHook = customConfig.useLegacyExports
             ? undefined
-            : async (volume: MemfsVolume) => sdkGenerator.copyCoreUtilitiesToVolume(volume);
+            : async (volume: MemfsVolume) => {
+                  await sdkGenerator.copyCoreUtilitiesToVolume(volume);
+                  writeTemplateFilesToVolume(volume, templateVariables);
+                  sdkGenerator.generatePublicExportsToVolume(volume);
+              };
         const persistedTypescriptProject = await typescriptProject.persist(esmImportHook);
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
-        // For legacy exports, core utilities are still copied to disk the traditional way.
+        // For legacy exports, core utilities and public exports are handled on disk.
         if (customConfig.useLegacyExports) {
             await sdkGenerator.copyCoreUtilities({
                 pathToRoot: rootDirectory
             });
+            await sdkGenerator.generatePublicExports({
+                pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            });
         }
-        await sdkGenerator.generatePublicExports({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
-        });
         await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
         await this.writeLicenseFile(config, rootDirectory, generatorContext.logger);
         await this.postProcess(persistedTypescriptProject, customConfig);
@@ -335,15 +340,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         _customConfig: SdkCustomConfig
     ): Promise<void> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
-        if (customConfig.useLegacyExports === false) {
-            // Generated source files and core utilities were already processed
-            // in-memory during persist(). This targeted pass only fixes imports
-            // in files written to disk after persist:
-            //   - src/core/ (recursive) — already processed in-memory, included for existence cache; re-processed but results in no-ops
-            //   - src/*.ts (shallow) — public exports written by generatePublicExports
-            const srcDir = persistedTypescriptProject.getSrcDirectory();
-            await fixImportsForCoreFiles([path.join(srcDir, "core")], [srcDir]);
-        }
         if (customConfig.testFramework === "vitest") {
             await convertJestImportsToVitest(
                 persistedTypescriptProject.getRootDirectory(),

@@ -12,6 +12,12 @@ import { SourceFile } from "ts-morph";
 export interface MemfsVolume {
     mkdirSync(path: string, options?: { recursive?: boolean }): unknown;
     writeFileSync(file: string, data: string | Buffer): void;
+    // biome-ignore lint/suspicious/noExplicitAny: must be compatible with memfs Volume's overloaded signatures
+    readFileSync(file: string, encoding: string): any;
+    // biome-ignore lint/suspicious/noExplicitAny: must be compatible with memfs Volume's overloaded signatures
+    readdirSync(path: string, options: { withFileTypes: true }): any;
+    existsSync(path: string): boolean;
+    unlinkSync(path: string): void;
 }
 
 import { DependencyManager } from "../dependency-manager/DependencyManager.js";
