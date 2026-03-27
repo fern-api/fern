@@ -989,29 +989,23 @@ public abstract class AbstractHttpResponseParserGenerator {
                     com.squareup.javapoet.ClassName streamClassName =
                             clientGeneratorContext.getPoetClassNameFactory().getStreamClassName();
                     com.squareup.javapoet.ClassName responseBodyReaderClassName =
-                            clientGeneratorContext
-                                    .getPoetClassNameFactory()
-                                    .getResponseBodyReaderClassName();
+                            clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName();
                     String responseName = variables.getResponseName();
 
-                    if (discriminationInfo.getType()
-                                    == SseDiscriminationAnalyzer.DiscriminationType.PROTOCOL_LEVEL
+                    if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.PROTOCOL_LEVEL
                             || discriminationInfo.getType()
                                     == SseDiscriminationAnalyzer.DiscriminationType.DATA_LEVEL) {
                         String discriminatorProperty =
                                 discriminationInfo.getDiscriminatorProperty().orElse("event");
                         com.squareup.javapoet.ClassName sseDiscriminatorContextClassName =
                                 streamClassName.nestedClass("SseDiscriminatorContext");
-                        String contextValue =
-                                discriminationInfo.getType()
-                                                == SseDiscriminationAnalyzer.DiscriminationType
-                                                        .PROTOCOL_LEVEL
-                                        ? "PROTOCOL"
-                                        : "DATA";
+                        String contextValue = discriminationInfo.getType()
+                                        == SseDiscriminationAnalyzer.DiscriminationType.PROTOCOL_LEVEL
+                                ? "PROTOCOL"
+                                : "DATA";
                         if (terminator != null) {
                             return CodeBlock.of(
-                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue
-                                            + ", $S)",
+                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue + ", $S)",
                                     streamClassName,
                                     bodyTypeName,
                                     responseBodyReaderClassName,
@@ -1021,8 +1015,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                     terminator);
                         } else {
                             return CodeBlock.of(
-                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue
-                                            + ")",
+                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue + ")",
                                     streamClassName,
                                     bodyTypeName,
                                     responseBodyReaderClassName,

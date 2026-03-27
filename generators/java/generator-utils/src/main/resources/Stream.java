@@ -387,12 +387,23 @@ public final class Stream<T> implements Iterable<T>, Closeable {
             throw new UnsupportedOperationException();
         }
 
+        private Object parseData(String data) {
+            if (data != null && !data.isEmpty()) {
+                try {
+                    return ObjectMappers.JSON_MAPPER.readValue(data, Object.class);
+                } catch (Exception e) {
+                    return data;
+                }
+            }
+            return data;
+        }
+
         private T parseProtocolLevelUnion(
                 String eventType, String data, String id, Long retry) {
             try {
                 Map<String, Object> envelope = new HashMap<>();
                 envelope.put(discriminatorProperty, eventType);
-                envelope.put("data", data);
+                envelope.put("data", parseData(data));
                 if (id != null) {
                     envelope.put("id", id);
                 }

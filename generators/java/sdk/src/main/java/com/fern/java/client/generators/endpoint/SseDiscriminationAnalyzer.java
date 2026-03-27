@@ -13,10 +13,9 @@ import java.util.Optional;
 /**
  * Analyzes SSE payload types to determine if protocol-level or data-level discrimination is needed.
  *
- * <p>Uses the IR's {@code discriminatorContext} on the union declaration: if the context is
- * {@code PROTOCOL}, the discriminator lives at the SSE envelope level and requires custom handling.
- * Otherwise (including absent/default), the discriminator is inside the JSON data payload and
- * Jackson handles it automatically.
+ * <p>Uses the IR's {@code discriminatorContext} on the union declaration: if the context is {@code PROTOCOL}, the
+ * discriminator lives at the SSE envelope level and requires custom handling. Otherwise (including absent/default), the
+ * discriminator is inside the JSON data payload and Jackson handles it automatically.
  */
 public final class SseDiscriminationAnalyzer {
 
@@ -87,8 +86,7 @@ public final class SseDiscriminationAnalyzer {
         String discriminatorProperty = unionDeclaration.get().getDiscriminant().getWireValue();
 
         // Use the IR's discriminatorContext to determine discrimination level
-        Optional<UnionDiscriminatorContext> context =
-                unionDeclaration.get().getDiscriminatorContext();
+        Optional<UnionDiscriminatorContext> context = unionDeclaration.get().getDiscriminatorContext();
         if (context.isPresent() && context.get().equals(UnionDiscriminatorContext.PROTOCOL)) {
             return SseDiscriminationInfo.protocolLevel(discriminatorProperty);
         } else {
