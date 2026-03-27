@@ -82,14 +82,15 @@ def parse_sse_protocol(sse: "ServerSentEvent", type_: Type[T]) -> T:
     Returns:
         The parsed object of type T
     """
+    _PARSE_FAILED = object()
     envelope: Dict[str, Any] = {"event": sse.event}
     if sse.data is not None:
         try:
-            parsed_data = json.loads(sse.data)
+            parsed_data: Any = json.loads(sse.data)
         except (json.JSONDecodeError, ValueError):
-            parsed_data = None
+            parsed_data = _PARSE_FAILED
 
-        if parsed_data is not None:
+        if parsed_data is not _PARSE_FAILED:
             envelope["data"] = parsed_data
             try:
                 return parse_obj_as(type_, envelope)
