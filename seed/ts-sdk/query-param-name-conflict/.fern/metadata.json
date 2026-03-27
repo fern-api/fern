@@ -2,6 +2,11 @@
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
+    "generatorConfig": {
+        "noSerdeLayer": true,
+        "enableInlineTypes": true,
+        "resolveQueryParameterNameConflicts": true
+    },
     "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }
