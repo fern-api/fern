@@ -78,4 +78,5 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
     customPagerName: string | undefined;
+    resolveQueryParameterNameConflicts: boolean;
 }

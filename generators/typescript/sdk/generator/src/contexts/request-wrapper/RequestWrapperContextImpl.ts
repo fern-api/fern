@@ -24,6 +24,7 @@ export declare namespace RequestWrapperContextImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -42,6 +43,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly resolveQueryParameterNameConflicts: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -57,7 +59,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        resolveQueryParameterNameConflicts
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -73,6 +76,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
+        this.resolveQueryParameterNameConflicts = resolveQueryParameterNameConflicts;
     }
 
     public shouldInlinePathParameters(sdkRequest: FernIr.SdkRequest | undefined | null): boolean {
@@ -122,7 +126,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
-            parameterNaming: this.parameterNaming
+            parameterNaming: this.parameterNaming,
+            resolveQueryParameterNameConflicts: this.resolveQueryParameterNameConflicts
         });
     }
 

@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ACCESS_RAW_RESPONSE_DATA_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
     private static OAUTH_TOKEN_OVERRIDE_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH_TOKEN_OVERRIDE";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
@@ -121,6 +122,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Always add custom client snippet (not endpoint-specific)
         snippetsByFeatureId[FernGeneratorCli.StructuredFeatureId.CustomClient] = [this.renderCustomClientSnippet()];
+
+        // Environments snippet (not endpoint-specific)
+        if (this.context.ir.environments != null) {
+            const envSnippet = this.buildEnvironmentsSnippet();
+            if (envSnippet != null) {
+                snippetsByFeatureId[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = [envSnippet];
+            }
+        }
 
         return snippetsByFeatureId;
     }
@@ -527,6 +536,25 @@ client = ${this.clientClassName}(
     client_id="your-client-id",
     client_secret="your-client-secret",
 )`
+        );
+    }
+
+    private buildEnvironmentsSnippet(): string | undefined {
+        const environmentInfo = this.getEnvironmentInfo();
+        if (environmentInfo == null) {
+            return undefined;
+        }
+
+        const { importLine, constructorArg } = environmentInfo;
+
+        return this.writeCode(
+            `from ${this.packageName} import ${this.clientClassName}
+${importLine}
+
+client = ${this.clientClassName}(
+${constructorArg}
+)
+`
         );
     }
 

@@ -44,6 +44,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -61,6 +62,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly resolveQueryParameterNameConflicts: boolean;
 
     constructor({
         service,
@@ -73,7 +75,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        resolveQueryParameterNameConflicts
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -86,6 +89,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
+        this.resolveQueryParameterNameConflicts = resolveQueryParameterNameConflicts;
     }
 
     public shouldInlinePathParameters(context: SdkContext): boolean {
@@ -177,6 +181,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
+        // When resolveQueryParameterNameConflicts is enabled, pre-compute body property names
+        // so we can detect collisions between query param wire values and body property names.
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
@@ -193,7 +203,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
-            const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            const propertyName = collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                : this.getPropertyNameOfQueryParameter(queryParameter);
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
@@ -946,6 +958,71 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         return properties;
+    }
+
+    /**
+     * When resolveQueryParameterNameConflicts is enabled, computes the set of query parameter
+     * wire values that collide with body property names. Only these colliding query params
+     * will use their SDK override names instead of wire values.
+     */
+    private getCollidingQueryParamWireValues(context: SdkContext): Set<string> {
+        const bodyPropertyNames = new Set<string>();
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            FernIr.HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        const propKey = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+                        bodyPropertyNames.add(propKey.propertyName);
+                    }
+                    for (const extension of inlinedRequestBody.extends) {
+                        const typeDeclaration = context.type.getTypeDeclaration(extension);
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                bodyPropertyNames.add(propName.propertyName);
+                            }
+                        }
+                    }
+                },
+                reference: () => {
+                    // noop — reference body types don't produce individual property names
+                },
+                fileUpload: () => {
+                    // noop
+                },
+                bytes: () => {
+                    // noop
+                },
+                _other: () => {
+                    // noop
+                }
+            });
+        }
+
+        const collidingWireValues = new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
+                collidingWireValues.add(queryParameter.name.wireValue);
+            }
+        }
+        return collidingWireValues;
+    }
+
+    /**
+     * Returns the overridden property name for a query parameter, using the SDK name
+     * (from x-fern-parameter-name) instead of the wire value. Used only when a collision
+     * with a body property is detected.
+     */
+    private getOverriddenPropertyNameOfQueryParameter(
+        queryParameter: FernIr.QueryParameter
+    ): RequestWrapperNonBodyProperty {
+        const name = queryParameter.name;
+        return {
+            safeName: name.name.camelCase.safeName,
+            propertyName: this.retainOriginalCasing ? name.name.originalName : name.name.camelCase.unsafeName
+        };
     }
 
     private createNamespacedPropertyType(

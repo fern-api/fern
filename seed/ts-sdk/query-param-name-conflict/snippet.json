@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/task/",
+                "method": "PUT",
+                "identifier_override": "endpoint_.bulkUpdateTasks"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/query-param-name-conflict\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bulkUpdateTasks();\n"
+            }
+        }
+    ],
+    "types": {}
+}
