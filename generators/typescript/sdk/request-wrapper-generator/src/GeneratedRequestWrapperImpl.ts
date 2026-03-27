@@ -568,19 +568,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: FernIr.NameAndWireValue): RequestWrapperBodyProperty {
-        let propertyName: string;
-        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            propertyName = name.name.camelCase.unsafeName;
-        } else if (name.name.snakeCase.unsafeName !== name.wireValue) {
-            // Explicit name override (e.g., x-fern-parameter-name) detected by comparing
-            // the snake_case form against the wireValue. Respect the override to avoid
-            // duplicate property names when query params and body props share wire names.
-            propertyName = name.name.camelCase.unsafeName;
-        } else {
-            propertyName = name.wireValue;
-        }
         return {
-            propertyName,
+            propertyName:
+                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue,
             safeName: name.name.camelCase.safeName
         };
     }
