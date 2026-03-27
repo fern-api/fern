@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.48.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer handling of `security: []` on endpoints. Previously,
+        endpoints with an explicit empty security array (meaning no auth required)
+        inherited the global auth scheme instead of being marked as unauthenticated.
+        This caused generated SDKs to require auth tokens at construction time,
+        preventing use of unauthenticated endpoints like signup or signin.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.48.0
   changelogEntry:
     - summary: |
