@@ -30,11 +30,11 @@ public final class BulkUpdateTasksRequest {
 
     private final Optional<String> fields;
 
-    private final Optional<String> assignedTo;
+    private final Optional<String> bulkUpdateTasksRequestAssignedTo;
 
-    private final Optional<String> date;
+    private final Optional<String> bulkUpdateTasksRequestDate;
 
-    private final Optional<Boolean> isComplete;
+    private final Optional<Boolean> bulkUpdateTasksRequestIsComplete;
 
     private final Optional<String> text;
 
@@ -45,18 +45,18 @@ public final class BulkUpdateTasksRequest {
             Optional<String> filterIsComplete,
             Optional<String> filterDate,
             Optional<String> fields,
-            Optional<String> assignedTo,
-            Optional<String> date,
-            Optional<Boolean> isComplete,
+            Optional<String> bulkUpdateTasksRequestAssignedTo,
+            Optional<String> bulkUpdateTasksRequestDate,
+            Optional<Boolean> bulkUpdateTasksRequestIsComplete,
             Optional<String> text,
             Map<String, Object> additionalProperties) {
         this.filterAssignedTo = filterAssignedTo;
         this.filterIsComplete = filterIsComplete;
         this.filterDate = filterDate;
         this.fields = fields;
-        this.assignedTo = assignedTo;
-        this.date = date;
-        this.isComplete = isComplete;
+        this.bulkUpdateTasksRequestAssignedTo = bulkUpdateTasksRequestAssignedTo;
+        this.bulkUpdateTasksRequestDate = bulkUpdateTasksRequestDate;
+        this.bulkUpdateTasksRequestIsComplete = bulkUpdateTasksRequestIsComplete;
         this.text = text;
         this.additionalProperties = additionalProperties;
     }
@@ -94,18 +94,18 @@ public final class BulkUpdateTasksRequest {
     }
 
     @JsonProperty("assigned_to")
-    public Optional<String> getAssignedTo() {
-        return assignedTo;
+    public Optional<String> getBulkUpdateTasksRequestAssignedTo() {
+        return bulkUpdateTasksRequestAssignedTo;
     }
 
     @JsonProperty("date")
-    public Optional<String> getDate() {
-        return date;
+    public Optional<String> getBulkUpdateTasksRequestDate() {
+        return bulkUpdateTasksRequestDate;
     }
 
     @JsonProperty("is_complete")
-    public Optional<Boolean> getIsComplete() {
-        return isComplete;
+    public Optional<Boolean> getBulkUpdateTasksRequestIsComplete() {
+        return bulkUpdateTasksRequestIsComplete;
     }
 
     @JsonProperty("text")
@@ -129,9 +129,9 @@ public final class BulkUpdateTasksRequest {
                 && filterIsComplete.equals(other.filterIsComplete)
                 && filterDate.equals(other.filterDate)
                 && fields.equals(other.fields)
-                && assignedTo.equals(other.assignedTo)
-                && date.equals(other.date)
-                && isComplete.equals(other.isComplete)
+                && bulkUpdateTasksRequestAssignedTo.equals(other.bulkUpdateTasksRequestAssignedTo)
+                && bulkUpdateTasksRequestDate.equals(other.bulkUpdateTasksRequestDate)
+                && bulkUpdateTasksRequestIsComplete.equals(other.bulkUpdateTasksRequestIsComplete)
                 && text.equals(other.text);
     }
 
@@ -142,9 +142,9 @@ public final class BulkUpdateTasksRequest {
                 this.filterIsComplete,
                 this.filterDate,
                 this.fields,
-                this.assignedTo,
-                this.date,
-                this.isComplete,
+                this.bulkUpdateTasksRequestAssignedTo,
+                this.bulkUpdateTasksRequestDate,
+                this.bulkUpdateTasksRequestIsComplete,
                 this.text);
     }
 
@@ -167,11 +167,11 @@ public final class BulkUpdateTasksRequest {
 
         private Optional<String> fields = Optional.empty();
 
-        private Optional<String> assignedTo = Optional.empty();
+        private Optional<String> bulkUpdateTasksRequestAssignedTo = Optional.empty();
 
-        private Optional<String> date = Optional.empty();
+        private Optional<String> bulkUpdateTasksRequestDate = Optional.empty();
 
-        private Optional<Boolean> isComplete = Optional.empty();
+        private Optional<Boolean> bulkUpdateTasksRequestIsComplete = Optional.empty();
 
         private Optional<String> text = Optional.empty();
 
@@ -185,9 +185,9 @@ public final class BulkUpdateTasksRequest {
             filterIsComplete(other.getFilterIsComplete());
             filterDate(other.getFilterDate());
             fields(other.getFields());
-            assignedTo(other.getAssignedTo());
-            date(other.getDate());
-            isComplete(other.getIsComplete());
+            bulkUpdateTasksRequestAssignedTo(other.getBulkUpdateTasksRequestAssignedTo());
+            bulkUpdateTasksRequestDate(other.getBulkUpdateTasksRequestDate());
+            bulkUpdateTasksRequestIsComplete(other.getBulkUpdateTasksRequestIsComplete());
             text(other.getText());
             return this;
         }
@@ -273,35 +273,35 @@ public final class BulkUpdateTasksRequest {
         }
 
         @JsonSetter(value = "assigned_to", nulls = Nulls.SKIP)
-        public Builder assignedTo(Optional<String> assignedTo) {
-            this.assignedTo = assignedTo;
+        public Builder bulkUpdateTasksRequestAssignedTo(Optional<String> bulkUpdateTasksRequestAssignedTo) {
+            this.bulkUpdateTasksRequestAssignedTo = bulkUpdateTasksRequestAssignedTo;
             return this;
         }
 
-        public Builder assignedTo(String assignedTo) {
-            this.assignedTo = Optional.ofNullable(assignedTo);
+        public Builder bulkUpdateTasksRequestAssignedTo(String bulkUpdateTasksRequestAssignedTo) {
+            this.bulkUpdateTasksRequestAssignedTo = Optional.ofNullable(bulkUpdateTasksRequestAssignedTo);
             return this;
         }
 
         @JsonSetter(value = "date", nulls = Nulls.SKIP)
-        public Builder date(Optional<String> date) {
-            this.date = date;
+        public Builder bulkUpdateTasksRequestDate(Optional<String> bulkUpdateTasksRequestDate) {
+            this.bulkUpdateTasksRequestDate = bulkUpdateTasksRequestDate;
             return this;
         }
 
-        public Builder date(String date) {
-            this.date = Optional.ofNullable(date);
+        public Builder bulkUpdateTasksRequestDate(String bulkUpdateTasksRequestDate) {
+            this.bulkUpdateTasksRequestDate = Optional.ofNullable(bulkUpdateTasksRequestDate);
             return this;
         }
 
         @JsonSetter(value = "is_complete", nulls = Nulls.SKIP)
-        public Builder isComplete(Optional<Boolean> isComplete) {
-            this.isComplete = isComplete;
+        public Builder bulkUpdateTasksRequestIsComplete(Optional<Boolean> bulkUpdateTasksRequestIsComplete) {
+            this.bulkUpdateTasksRequestIsComplete = bulkUpdateTasksRequestIsComplete;
             return this;
         }
 
-        public Builder isComplete(Boolean isComplete) {
-            this.isComplete = Optional.ofNullable(isComplete);
+        public Builder bulkUpdateTasksRequestIsComplete(Boolean bulkUpdateTasksRequestIsComplete) {
+            this.bulkUpdateTasksRequestIsComplete = Optional.ofNullable(bulkUpdateTasksRequestIsComplete);
             return this;
         }
 
@@ -322,9 +322,9 @@ public final class BulkUpdateTasksRequest {
                     filterIsComplete,
                     filterDate,
                     fields,
-                    assignedTo,
-                    date,
-                    isComplete,
+                    bulkUpdateTasksRequestAssignedTo,
+                    bulkUpdateTasksRequestDate,
+                    bulkUpdateTasksRequestIsComplete,
                     text,
                     additionalProperties);
         }
