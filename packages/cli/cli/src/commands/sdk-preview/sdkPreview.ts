@@ -192,6 +192,8 @@ export async function sdkPreview({
                 message: error instanceof Error ? error.message : String(error)
             };
             process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+            process.exitCode = 1;
+            return;
         }
         throw error;
     }
