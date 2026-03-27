@@ -1005,23 +1005,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                                 : "DATA";
                         if (terminator != null) {
                             return CodeBlock.of(
-                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue + ", $S)",
+                                    "$T.fromSse($T.class, new $T($L), $S, $T.$L, $S)",
                                     streamClassName,
                                     bodyTypeName,
                                     responseBodyReaderClassName,
                                     responseName,
                                     discriminatorProperty,
                                     sseDiscriminatorContextClassName,
+                                    contextValue,
                                     terminator);
                         } else {
                             return CodeBlock.of(
-                                    "$T.fromSse($T.class, new $T($L), $S, $T." + contextValue + ")",
+                                    "$T.fromSse($T.class, new $T($L), $S, $T.$L)",
                                     streamClassName,
                                     bodyTypeName,
                                     responseBodyReaderClassName,
                                     responseName,
                                     discriminatorProperty,
-                                    sseDiscriminatorContextClassName);
+                                    sseDiscriminatorContextClassName,
+                                    contextValue);
                         }
                     }
 

@@ -96,14 +96,30 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         return new Stream<>(valueType, reader, NEWLINE);
     }
 
+    /** Creates an SSE stream with no terminator and no discrimination. */
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader) {
         return new Stream<>(valueType, sseReader, null, null, null);
     }
 
+    /**
+     * Creates an SSE stream with a stream terminator (e.g., "[DONE]") and no discrimination.
+     *
+     * @param streamTerminator the data value that signals end-of-stream
+     */
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader, String streamTerminator) {
         return new Stream<>(valueType, sseReader, streamTerminator, null, null);
     }
 
+    /**
+     * Creates an SSE stream with discriminated-union support and no stream terminator.
+     * <p>
+     * Note: the third parameter here is {@code discriminatorProperty} (not a stream terminator).
+     * The presence of {@code discriminatorContext} distinguishes this overload from
+     * {@link #fromSse(Class, Reader, String)}.
+     *
+     * @param discriminatorProperty the property name used for discrimination (e.g., "event")
+     * @param discriminatorContext  where the discriminator lives relative to the SSE envelope
+     */
     public static <T> Stream<T> fromSse(
             Class<T> valueType,
             Reader sseReader,
@@ -112,6 +128,13 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         return new Stream<>(valueType, sseReader, null, discriminatorProperty, discriminatorContext);
     }
 
+    /**
+     * Creates an SSE stream with discriminated-union support and a stream terminator.
+     *
+     * @param discriminatorProperty the property name used for discrimination (e.g., "event")
+     * @param discriminatorContext  where the discriminator lives relative to the SSE envelope
+     * @param streamTerminator      the data value that signals end-of-stream (e.g., "[DONE]")
+     */
     public static <T> Stream<T> fromSse(
             Class<T> valueType,
             Reader sseReader,
@@ -151,6 +174,9 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 if (sseDiscriminatorContext == SseDiscriminatorContext.PROTOCOL) {
                     return new SSEProtocolDiscriminatedIterator();
                 }
+                // For DATA-level discrimination (or no discrimination), the discriminator
+                // lives inside the JSON data payload, so Jackson handles it automatically
+                // during deserialization — no special iterator logic is needed.
                 return new SSEIterator();
             case JSON:
             default:
@@ -393,10 +419,16 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
         private Object parseData(String data) {
             if (data != null && !data.isEmpty()) {
-                try {
-                    return ObjectMappers.JSON_MAPPER.readValue(data, Object.class);
-                } catch (Exception e) {
-                    return data;
+                String trimmed = data.trim();
+                // Only attempt JSON deserialization for structured types (objects/arrays).
+                // This avoids misinterpreting raw strings that happen to be valid JSON
+                // primitives (e.g., "42", "true", "null") as non-string types.
+                if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+                    try {
+                        return ObjectMappers.JSON_MAPPER.readValue(data, Object.class);
+                    } catch (Exception e) {
+                        return data;
+                    }
                 }
             }
             return data;
