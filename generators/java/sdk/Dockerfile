@@ -114,6 +114,36 @@ RUN for dir in \
       fi; \
     done
 
+# Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob quantifiers),
+# GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character Classes)
+# Location: npm's bundled tinyglobby depends on picomatch
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done
+
+# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
+# (Zero-step sequence causes process hang and memory exhaustion)
+# Location: npm bundles its own copy of brace-expansion
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
+
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
