@@ -13,9 +13,9 @@ public class Example1 {
                 .filterIsComplete("filter_is_complete")
                 .filterDate("filter_date")
                 .fields("_fields")
-                .assignedTo("assigned_to")
-                .date("2023-01-15")
-                .isComplete(true)
+                .bulkUpdateTasksRequestAssignedTo("assigned_to")
+                .bulkUpdateTasksRequestDate("2023-01-15")
+                .bulkUpdateTasksRequestIsComplete(true)
                 .text("text")
                 .build());
     }

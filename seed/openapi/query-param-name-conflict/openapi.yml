@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: Query Param Name Conflict API
+  version: ''
+paths:
+  /task/:
+    put:
+      operationId: bulkUpdateTasks
+      tags:
+        - ''
+      parameters:
+        - name: assigned_to
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: is_complete
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: _fields
+          in: query
+          description: Comma-separated list of fields to include in the response.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkUpdateTasksResponse'
+              examples:
+                Example1:
+                  value:
+                    updated_count: 1
+      summary: Bulk-update tasks. Query params and body share some property names.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assigned_to:
+                  type: string
+                  nullable: true
+                date:
+                  type: string
+                  format: date
+                  nullable: true
+                is_complete:
+                  type: boolean
+                  nullable: true
+                text:
+                  type: string
+                  nullable: true
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    BulkUpdateTasksResponse:
+      title: BulkUpdateTasksResponse
+      type: object
+      properties:
+        updated_count:
+          type: integer
+          nullable: true
+  securitySchemes: {}
