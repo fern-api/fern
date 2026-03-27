@@ -1,0 +1,3 @@
+rootProject.name = 'oauth-client-credentials-openapi'
+
+include 'sample-app'

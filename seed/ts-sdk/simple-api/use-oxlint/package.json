@@ -64,8 +64,8 @@
         "@types/node": "^18.19.70",
         "typescript": "~5.9.3",
         "@biomejs/biome": "2.4.9",
-        "oxlint": "1.50.0",
-        "oxlint-tsgolint": "0.14.2"
+        "oxlint": "1.57.0",
+        "oxlint-tsgolint": "0.17.4"
     },
     "browser": {
         "fs": false,

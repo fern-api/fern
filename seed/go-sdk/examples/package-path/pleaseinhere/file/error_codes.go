@@ -3,7 +3,15 @@
 package file
 
 import (
+	pleaseinhere "github.com/examples/fern/pleaseinhere"
+	core "github.com/examples/fern/pleaseinhere/core"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	404: func(apiError *core.APIError) error {
+		return &pleaseinhere.NotFoundError{
+			APIError: apiError,
+		}
+	},
+}

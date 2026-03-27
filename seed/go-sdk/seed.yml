@@ -229,6 +229,10 @@ fixtures:
         packageName: sse
         module:
           path: github.com/fern-api/sse-go
+  server-sent-events-openapi:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1

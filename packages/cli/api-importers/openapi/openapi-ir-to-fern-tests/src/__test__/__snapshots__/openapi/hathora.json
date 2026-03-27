@@ -234,8 +234,10 @@
           "ConnectionInfo": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "status",
+            "discriminant": {
+              "context": "data",
+              "value": "status",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -925,14 +927,15 @@ types:
     source:
       openapi: ../openapi.json
   ConnectionInfo:
-    discriminant: status
+    discriminant:
+      value: status
+      context: data
     base-properties: {}
     union:
       starting: StartingConnectionInfo
       active: ActiveConnectionInfo
     source:
       openapi: ../openapi.json
-    context: data
 ",
     },
     "appV1.yml": {

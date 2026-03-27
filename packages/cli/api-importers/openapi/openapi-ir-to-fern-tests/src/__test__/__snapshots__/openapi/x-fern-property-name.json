@@ -48,8 +48,8 @@
           "TestIdentity": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": {
+              "context": "data",
               "name": "type",
               "value": "@type",
             },
@@ -66,8 +66,8 @@
           "UnionWithDiscriminant": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": {
+              "context": "data",
               "name": "type",
               "value": "@type",
             },
@@ -117,6 +117,7 @@
     discriminant:
       name: type
       value: '@type'
+      context: data
     base-properties: {}
     docs: A union type with a discriminant property.
     union:
@@ -124,7 +125,6 @@
       VariantTwo: VariantTwo
     source:
       openapi: ../openapi.yml
-    context: data
   VariantOne:
     properties:
       featureOne: optional<string>
@@ -139,6 +139,7 @@
     discriminant:
       name: type
       value: '@type'
+      context: data
     base-properties: {}
     docs: Test description
     union:
@@ -146,7 +147,6 @@
       TestB: TestB
     source:
       openapi: ../openapi.yml
-    context: data
   TestA:
     properties:
       aFeature: optional<string>

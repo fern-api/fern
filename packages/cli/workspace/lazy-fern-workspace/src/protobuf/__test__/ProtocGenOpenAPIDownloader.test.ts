@@ -420,62 +420,60 @@ describe("ProtocGenOpenAPIDownloader (real e2e)", () => {
         return `protoc-gen-openapi-${version}${ext}`;
     }
 
-    it(
-        "downloads real binary from GitHub Releases, caches it, and reuses on second call",
-        { timeout: 60_000 },
-        async () => {
-            // Do NOT mock fetch — use the real network
-            const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
+    it("downloads real binary from GitHub Releases, caches it, and reuses on second call", {
+        timeout: 60_000
+    }, async () => {
+        // Do NOT mock fetch — use the real network
+        const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
 
-            // --- First call: should download from GitHub Releases ---
-            const result1 = await resolveProtocGenOpenAPI(logger);
+        // --- First call: should download from GitHub Releases ---
+        const result1 = await resolveProtocGenOpenAPI(logger);
 
-            expect(result1).toBe(AbsoluteFilePath.of(getCacheDir()));
+        expect(result1).toBe(AbsoluteFilePath.of(getCacheDir()));
 
-            // Verify download log messages
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading protoc-gen-openapi"));
-            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded protoc-gen-openapi"));
+        // Verify download log messages
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloading protoc-gen-openapi"));
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("Downloaded protoc-gen-openapi"));
 
-            // Verify cache structure
-            const cacheDir = getCacheDir();
-            const canonicalPath = path.join(cacheDir, getBinaryName());
-            const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
-            const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
+        // Verify cache structure
+        const cacheDir = getCacheDir();
+        const canonicalPath = path.join(cacheDir, getBinaryName());
+        const versionedPath = path.join(cacheDir, getVersionedBinaryName("v0.1.13"));
+        const markerPath = path.join(cacheDir, "protoc-gen-openapi.version");
 
-            // All cache files should exist
-            expect(await fileExists(canonicalPath)).toBe(true);
-            expect(await fileExists(versionedPath)).toBe(true);
-            expect(await fileExists(markerPath)).toBe(true);
+        // All cache files should exist
+        expect(await fileExists(canonicalPath)).toBe(true);
+        expect(await fileExists(versionedPath)).toBe(true);
+        expect(await fileExists(markerPath)).toBe(true);
 
-            // Version marker should contain v0.1.13
-            const markerContent = await readFile(markerPath, "utf-8");
-            expect(markerContent.trim()).toBe("v0.1.13");
+        // Version marker should contain v0.1.13
+        const markerContent = await readFile(markerPath, "utf-8");
+        expect(markerContent.trim()).toBe("v0.1.13");
 
-            // Binary should be a real executable (not empty or truncated)
-            const binaryStat = await stat(canonicalPath);
-            expect(binaryStat.size).toBeGreaterThan(1_000_000); // Real binary is ~11MB
+        // Binary should be a real executable (not empty or truncated)
+        const binaryStat = await stat(canonicalPath);
+        expect(binaryStat.size).toBeGreaterThan(1_000_000); // Real binary is ~11MB
 
-            // Binary should have executable permissions
-            expect(binaryStat.mode & 0o100).toBeTruthy();
+        // Binary should have executable permissions
+        expect(binaryStat.mode & 0o100).toBeTruthy();
 
-            // Lock should be cleaned up
-            const lockPath = path.join(cacheDir, "protoc-gen-openapi.lock");
-            expect(await fileExists(lockPath)).toBe(false);
+        // Lock should be cleaned up
+        const lockPath = path.join(cacheDir, "protoc-gen-openapi.lock");
+        expect(await fileExists(lockPath)).toBe(false);
 
-            // --- Second call: should use cache (no re-download) ---
-            const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
-            const result2 = await resolveProtocGenOpenAPI(logger);
+        // --- Second call: should use cache (no re-download) ---
+        const infoCallsBefore = (logger.info as ReturnType<typeof vi.fn>).mock.calls.length;
+        const result2 = await resolveProtocGenOpenAPI(logger);
 
-            expect(result2).toBe(AbsoluteFilePath.of(cacheDir));
+        expect(result2).toBe(AbsoluteFilePath.of(cacheDir));
 
-            // Should log cache hit, not download
-            const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
-            const newCalls = infoCallsAfter.slice(infoCallsBefore);
-            const newMessages = newCalls.map((call) => call[0] as string);
-            expect(newMessages.some((msg) => msg.includes("Using cached"))).toBe(true);
-            expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
-        }
-    );
+        // Should log cache hit, not download
+        const infoCallsAfter = (logger.info as ReturnType<typeof vi.fn>).mock.calls;
+        const newCalls = infoCallsAfter.slice(infoCallsBefore);
+        const newMessages = newCalls.map((call) => call[0] as string);
+        expect(newMessages.some((msg) => msg.includes("Using cached"))).toBe(true);
+        expect(newMessages.some((msg) => msg.includes("Downloading"))).toBe(false);
+    });
 
     it("downloaded binary is a valid ELF/Mach-O executable", { timeout: 60_000 }, async () => {
         const { resolveProtocGenOpenAPI } = await import("../ProtocGenOpenAPIDownloader.js");
