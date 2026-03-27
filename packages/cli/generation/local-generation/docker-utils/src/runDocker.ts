@@ -105,7 +105,12 @@ export async function runContainer({
         containerId = await tryRun();
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
-            await pullImage(imageName, runner, signal);
+            try {
+                await pullImage(imageName, runner, signal);
+            } catch (pullError) {
+                await cleanup();
+                throw pullError;
+            }
             try {
                 containerId = await tryRun();
             } catch (retryError) {
