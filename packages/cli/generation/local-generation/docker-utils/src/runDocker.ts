@@ -18,15 +18,19 @@ export declare namespace runContainer {
         runner?: ContainerRunner;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
-        /** tmpfs mounts to add to the container (e.g. ["/fern/output:rw,size=512m"]) */
-        tmpfsMounts?: string[];
         /**
-         * Paths to copy back from the container after it exits.
-         * Each entry maps a container path to a host path.
-         * This is needed when using tmpfs mounts, since tmpfs overlays bind mounts
-         * and the host directory won't receive writes directly.
+         * When set, a Docker volume is created and mounted at the specified container path
+         * instead of using a bind mount. After the container exits, files are copied back
+         * to the host path via `docker cp`, then the volume is removed.
+         *
+         * Docker volumes are stored inside the Docker VM (on macOS) or directly on the
+         * host filesystem (on Linux), avoiding the per-file virtiofs/gRPC-FUSE overhead
+         * that makes bind mounts slow on macOS/Docker Desktop.
          */
-        copyBackPaths?: Array<{ containerPath: string; hostPath: string }>;
+        volumeMount?: {
+            containerPath: string;
+            hostPath: string;
+        };
     }
 
     export interface Result {
@@ -45,32 +49,57 @@ export async function runContainer({
     removeAfterCompletion = false,
     runner,
     signal,
-    tmpfsMounts = [],
-    copyBackPaths = []
+    volumeMount
 }: runContainer.Args): Promise<void> {
-    // When tmpfs + copyBack is used, we cannot use --rm because we need the container
-    // to still exist after it exits so we can docker cp files out.
-    const needsCopyBack = tmpfsMounts.length > 0 && copyBackPaths.length > 0;
-    const effectiveRemoveAfterCompletion = needsCopyBack ? false : removeAfterCompletion;
+    const containerRunner = runner ?? "docker";
 
-    // Generate a unique container name when we need to reference the container after it exits
-    const containerName = needsCopyBack ? `fern-gen-${crypto.randomUUID().slice(0, 8)}` : undefined;
+    // When a volume mount is requested, create a Docker volume and use it instead of
+    // a bind mount for the specified container path. We skip --rm so the container
+    // survives for the docker-cp step, then clean up manually.
+    let volumeName: string | undefined;
+    let containerName: string | undefined;
+    if (volumeMount != null) {
+        volumeName = `fern-vol-${crypto.randomUUID().slice(0, 8)}`;
+        containerName = `fern-gen-${crypto.randomUUID().slice(0, 8)}`;
+        await loggingExeca(logger, containerRunner, ["volume", "create", volumeName], {
+            reject: false,
+            doNotPipeOutput: true
+        });
+    }
+
+    const useVolume = volumeMount != null && volumeName != null;
+    const effectiveRemoveAfterCompletion = useVolume ? false : removeAfterCompletion;
+
+    // When using a volume, add it as a -v mount instead of a host bind mount
+    const effectiveBinds = useVolume ? [...binds, `${volumeName}:${volumeMount.containerPath}`] : binds;
 
     const tryRun = () =>
         tryRunContainer({
             logger,
             imageName,
             args,
-            binds,
+            binds: effectiveBinds,
             envVars,
             ports,
             removeAfterCompletion: effectiveRemoveAfterCompletion,
             writeLogsToFile,
             runner,
             signal,
-            tmpfsMounts,
             containerName
         });
+
+    const cleanup = async () => {
+        if (containerName != null && removeAfterCompletion) {
+            await stopContainer({ logger, containerId: containerName, runner });
+        }
+        if (volumeName != null) {
+            await loggingExeca(logger, containerRunner, ["volume", "rm", "-f", volumeName], {
+                reject: false,
+                doNotPipeOutput: true
+            });
+        }
+    };
+
     let containerId: string | undefined;
     try {
         containerId = await tryRun();
@@ -80,37 +109,27 @@ export async function runContainer({
             try {
                 containerId = await tryRun();
             } catch (retryError) {
-                if (needsCopyBack && containerName != null && removeAfterCompletion) {
-                    await stopContainer({ logger, containerId: containerName, runner });
-                }
+                await cleanup();
                 throw retryError;
             }
         } else {
-            // Clean up the named container that was started without --rm
-            if (needsCopyBack && containerName != null && removeAfterCompletion) {
-                await stopContainer({ logger, containerId: containerName, runner });
-            }
+            await cleanup();
             throw e;
         }
     }
 
-    // Copy back files from the container if needed (tmpfs output)
-    if (needsCopyBack && containerId != null) {
+    // Copy back files from the Docker volume via the exited container
+    if (useVolume && containerId != null) {
         try {
-            for (const { containerPath, hostPath } of copyBackPaths) {
-                await copyFromContainer({
-                    logger,
-                    containerId,
-                    containerPath: `${containerPath}/.`,
-                    hostPath,
-                    runner
-                });
-            }
+            await copyFromContainer({
+                logger,
+                containerId,
+                containerPath: `${volumeMount.containerPath}/.`,
+                hostPath: volumeMount.hostPath,
+                runner
+            });
         } finally {
-            // Clean up the container since we skipped --rm
-            if (removeAfterCompletion) {
-                await stopContainer({ logger, containerId, runner });
-            }
+            await cleanup();
         }
     }
 }
@@ -154,7 +173,6 @@ async function tryRunContainer({
     writeLogsToFile,
     runner,
     signal,
-    tmpfsMounts = [],
     containerName
 }: {
     logger: Logger;
@@ -167,7 +185,6 @@ async function tryRunContainer({
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
     signal?: AbortSignal;
-    tmpfsMounts?: string[];
     containerName?: string;
 }): Promise<string | undefined> {
     if (process.env["FERN_STACK_TRACK"]) {
@@ -178,7 +195,6 @@ async function tryRunContainer({
         "--user",
         "root",
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...tmpfsMounts.flatMap((mount) => ["--tmpfs", mount]),
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",

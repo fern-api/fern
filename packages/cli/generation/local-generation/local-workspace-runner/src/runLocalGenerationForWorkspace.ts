@@ -49,7 +49,7 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace,
     requireEnvVars,
     skipFernignore,
-    useTmpfs
+    useDockerVolume
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -67,7 +67,7 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
-    useTmpfs?: boolean;
+    useDockerVolume?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -349,7 +349,7 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
-                    useTmpfs
+                    useDockerVolume
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

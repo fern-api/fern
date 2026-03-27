@@ -38,7 +38,7 @@ export async function generateAPIWorkspaces({
     noReplay,
     retryRateLimited,
     requireEnvVars,
-    useTmpfs
+    useDockerVolume
 }: {
     project: Project;
     cliContext: CliContext;
@@ -61,7 +61,7 @@ export async function generateAPIWorkspaces({
     noReplay: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
-    useTmpfs: boolean;
+    useDockerVolume: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -162,7 +162,7 @@ export async function generateAPIWorkspaces({
                     noReplay,
                     retryRateLimited,
                     requireEnvVars,
-                    useTmpfs
+                    useDockerVolume
                 });
             });
         })

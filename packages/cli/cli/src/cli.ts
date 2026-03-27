@@ -761,11 +761,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 })
-                .option("tmpfs", {
+                .option("use-docker-volume", {
                     boolean: true,
                     default: true,
                     description:
-                        "Mount the generator output directory as tmpfs for faster I/O during local generation (use --no-tmpfs to disable)"
+                        "Use a Docker volume for the generator output directory during local generation for faster I/O on macOS (use --no-use-docker-volume to disable)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -842,7 +842,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
-                    useTmpfs: argv.tmpfs
+                    useDockerVolume: argv.useDockerVolume
                 });
             }
             if (argv.docs != null) {
@@ -902,7 +902,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
-                useTmpfs: argv.tmpfs
+                useDockerVolume: argv.useDockerVolume
             });
         }
     );

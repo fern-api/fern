@@ -48,16 +48,17 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         context,
         inspect,
         runner,
-        useTmpfs
+        useDockerVolume
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
 
         const binds = [`${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`, `${irPath}:${CONTAINER_PATH_TO_IR}:ro`];
 
-        // When tmpfs is enabled, the output directory is mounted as tmpfs inside the container
-        // for faster I/O. Files are copied back via docker cp after the container exits.
-        // When tmpfs is disabled, use the traditional bind mount.
-        if (!useTmpfs) {
+        // When useDockerVolume is enabled, the output directory uses a Docker volume
+        // instead of a bind mount. This avoids per-file virtiofs/gRPC-FUSE overhead
+        // on macOS/Docker Desktop. Files are copied back via docker cp after the
+        // container exits. When disabled, use the traditional bind mount.
+        if (!useDockerVolume) {
             binds.push(`${outputPath}:${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`);
         }
 
@@ -83,13 +84,12 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             ports[DEFAULT_NODE_DEBUG_PORT] = DEFAULT_NODE_DEBUG_PORT;
         }
 
-        const tmpfsMounts = useTmpfs ? [`${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}:rw,size=512m`] : [];
-        const copyBackPaths = useTmpfs
-            ? [{ containerPath: CONTAINER_CODEGEN_OUTPUT_DIRECTORY, hostPath: `${outputPath}` }]
-            : [];
+        const volumeMount = useDockerVolume
+            ? { containerPath: CONTAINER_CODEGEN_OUTPUT_DIRECTORY, hostPath: `${outputPath}` }
+            : undefined;
 
-        if (useTmpfs) {
-            context.logger.debug("Using tmpfs mount for generator output directory");
+        if (useDockerVolume) {
+            context.logger.debug("Using Docker volume for generator output directory");
         }
 
         await runContainer({
@@ -101,8 +101,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             ports,
             removeAfterCompletion: !this.keepContainer,
             runner: this.runner ?? runner,
-            tmpfsMounts,
-            copyBackPaths
+            volumeMount
         });
     }
 }
