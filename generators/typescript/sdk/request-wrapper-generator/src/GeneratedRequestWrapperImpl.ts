@@ -571,9 +571,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         let propertyName: string;
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             propertyName = name.name.camelCase.unsafeName;
-        } else if (name.name.originalName !== name.wireValue) {
-            // Explicit name override - always respect it to avoid duplicate property names.
-            propertyName = name.name.originalName;
+        } else if (name.name.snakeCase.unsafeName !== name.wireValue) {
+            // Explicit name override (e.g., x-fern-parameter-name) detected by comparing
+            // the snake_case form against the wireValue. Respect the override to avoid
+            // duplicate property names when query params and body props share wire names.
+            propertyName = name.name.camelCase.unsafeName;
         } else {
             propertyName = name.wireValue;
         }
