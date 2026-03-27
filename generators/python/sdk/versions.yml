@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.1.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 5.0.8
   changelogEntry:
     - summary: |
