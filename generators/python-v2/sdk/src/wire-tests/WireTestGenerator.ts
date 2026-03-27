@@ -376,9 +376,7 @@ export class WireTestGenerator {
                         for (let i = 0; i < sseEvents.length; i++) {
                             const expectedJson = JSON.stringify(sseEvents[i]?.data.jsonExample);
                             statements.push(
-                                python.codeBlock(
-                                    `event_${i}_json = json.loads(events[${i}].json())  # type: ignore`
-                                )
+                                python.codeBlock(`event_${i}_json = json.loads(events[${i}].json())  # type: ignore`)
                             );
                             statements.push(
                                 python.codeBlock(`assert event_${i}_json == ${expectedJson}, f"Event ${i} mismatch"`)
