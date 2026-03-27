@@ -9,7 +9,7 @@ pub struct InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequ
 
 impl InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
     pub fn builder() -> InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder {
-        InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder::default()
+        <InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder as Default>::default()
     }
 }
 

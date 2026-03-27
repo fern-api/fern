@@ -14,7 +14,7 @@ pub struct FileInfoV22 {
 
 impl FileInfoV22 {
     pub fn builder() -> FileInfoV22Builder {
-        FileInfoV22Builder::default()
+        <FileInfoV22Builder as Default>::default()
     }
 }
 

@@ -10,7 +10,7 @@ pub struct NestedType {
 
 impl NestedType {
     pub fn builder() -> NestedTypeBuilder {
-        NestedTypeBuilder::default()
+        <NestedTypeBuilder as Default>::default()
     }
 }
 

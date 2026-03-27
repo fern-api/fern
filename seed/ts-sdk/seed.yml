@@ -489,6 +489,12 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+  query-param-name-conflict:
+    - outputFolder: .
+      customConfig:
+        noSerdeLayer: true
+        enableInlineTypes: true
+        resolveQueryParameterNameConflicts: true
   ts-extra-properties:
     - outputFolder: .
       customConfig:

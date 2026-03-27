@@ -16,7 +16,7 @@ pub struct ListUsersOptionalDataPaginationResponse {
 
 impl ListUsersOptionalDataPaginationResponse {
     pub fn builder() -> ListUsersOptionalDataPaginationResponseBuilder {
-        ListUsersOptionalDataPaginationResponseBuilder::default()
+        <ListUsersOptionalDataPaginationResponseBuilder as Default>::default()
     }
 }
 

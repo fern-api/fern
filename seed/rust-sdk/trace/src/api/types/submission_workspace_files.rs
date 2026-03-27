@@ -12,7 +12,7 @@ pub struct WorkspaceFiles {
 
 impl WorkspaceFiles {
     pub fn builder() -> WorkspaceFilesBuilder {
-        WorkspaceFilesBuilder::default()
+        <WorkspaceFilesBuilder as Default>::default()
     }
 }
 

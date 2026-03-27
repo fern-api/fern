@@ -8,7 +8,7 @@ pub struct BootInstanceRequest {
 
 impl BootInstanceRequest {
     pub fn builder() -> BootInstanceRequestBuilder {
-        BootInstanceRequestBuilder::default()
+        <BootInstanceRequestBuilder as Default>::default()
     }
 }
 

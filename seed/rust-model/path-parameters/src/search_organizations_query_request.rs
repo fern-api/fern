@@ -9,7 +9,7 @@ pub struct SearchOrganizationsQueryRequest {
 
 impl SearchOrganizationsQueryRequest {
     pub fn builder() -> SearchOrganizationsQueryRequestBuilder {
-        SearchOrganizationsQueryRequestBuilder::default()
+        <SearchOrganizationsQueryRequestBuilder as Default>::default()
     }
 }
 

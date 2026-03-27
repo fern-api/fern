@@ -8,6 +8,11 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_protocol_with_flat_schema(&StreamRequest { query: None }, None)
+        .stream_protocol_with_flat_schema(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

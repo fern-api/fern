@@ -9,7 +9,7 @@ pub struct Generateequest {
 
 impl Generateequest {
     pub fn builder() -> GenerateequestBuilder {
-        GenerateequestBuilder::default()
+        <GenerateequestBuilder as Default>::default()
     }
 }
 

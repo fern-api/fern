@@ -9,7 +9,7 @@ pub struct InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
 
 impl InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
     pub fn builder() -> InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequestBuilder {
-        InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequestBuilder::default()
+        <InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequestBuilder as Default>::default()
     }
 }
 

@@ -20,7 +20,7 @@ pub struct GetDefaultStarterFilesRequest {
 
 impl GetDefaultStarterFilesRequest {
     pub fn builder() -> GetDefaultStarterFilesRequestBuilder {
-        GetDefaultStarterFilesRequestBuilder::default()
+        <GetDefaultStarterFilesRequestBuilder as Default>::default()
     }
 }
 

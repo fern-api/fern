@@ -11,7 +11,7 @@ pub struct UpdatePlaylistRequest {
 
 impl UpdatePlaylistRequest {
     pub fn builder() -> UpdatePlaylistRequestBuilder {
-        UpdatePlaylistRequestBuilder::default()
+        <UpdatePlaylistRequestBuilder as Default>::default()
     }
 }
 

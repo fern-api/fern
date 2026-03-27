@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 using SeedPaginationUriPath;
 using SeedPaginationUriPath.Core;
@@ -50,7 +50,6 @@ public static class AdditionalPropertiesComparerExtensions
 
         return constraint;
     }
-
 
     /// <summary>
     /// Modifies the EqualConstraint to handle Dictionary&lt;string, object?&gt; values by comparing

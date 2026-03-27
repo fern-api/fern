@@ -44,7 +44,7 @@ impl WithContentTypeRequest {
 
 impl WithContentTypeRequest {
     pub fn builder() -> WithContentTypeRequestBuilder {
-        WithContentTypeRequestBuilder::default()
+        <WithContentTypeRequestBuilder as Default>::default()
     }
 }
 

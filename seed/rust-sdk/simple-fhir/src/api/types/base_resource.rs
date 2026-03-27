@@ -12,7 +12,7 @@ pub struct BaseResource {
 
 impl BaseResource {
     pub fn builder() -> BaseResourceBuilder {
-        BaseResourceBuilder::default()
+        <BaseResourceBuilder as Default>::default()
     }
 }
 

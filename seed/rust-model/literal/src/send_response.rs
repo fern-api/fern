@@ -11,7 +11,7 @@ pub struct SendResponse {
 
 impl SendResponse {
     pub fn builder() -> SendResponseBuilder {
-        SendResponseBuilder::default()
+        <SendResponseBuilder as Default>::default()
     }
 }
 

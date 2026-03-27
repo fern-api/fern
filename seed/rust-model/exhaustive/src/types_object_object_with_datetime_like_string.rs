@@ -18,7 +18,7 @@ pub struct ObjectWithDatetimeLikeString {
 
 impl ObjectWithDatetimeLikeString {
     pub fn builder() -> ObjectWithDatetimeLikeStringBuilder {
-        ObjectWithDatetimeLikeStringBuilder::default()
+        <ObjectWithDatetimeLikeStringBuilder as Default>::default()
     }
 }
 

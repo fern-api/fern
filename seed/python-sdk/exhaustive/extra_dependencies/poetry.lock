@@ -2077,4 +2077,4 @@ telemetry = ["boto3", "langchain"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "6077576be9ee6c228a0bc1c3e198c0bb3024477368c5fcd2e9866f0097a73db3"
+content-hash = "a0e87cedccf3d7cbdb1af8739e7e90d65168efe47b789a0880b52402efb8071f"

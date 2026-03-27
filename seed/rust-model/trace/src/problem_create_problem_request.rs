@@ -24,7 +24,7 @@ pub struct CreateProblemRequest {
 
 impl CreateProblemRequest {
     pub fn builder() -> CreateProblemRequestBuilder {
-        CreateProblemRequestBuilder::default()
+        <CreateProblemRequestBuilder as Default>::default()
     }
 }
 

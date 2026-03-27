@@ -8,7 +8,7 @@ pub struct Acai {
 
 impl Acai {
     pub fn builder() -> AcaiBuilder {
-        AcaiBuilder::default()
+        <AcaiBuilder as Default>::default()
     }
 }
 

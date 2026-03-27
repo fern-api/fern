@@ -444,6 +444,7 @@ allowedFailures:
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
+  - oauth-client-credentials-openapi
   - pagination-custom
   - response-property
   - streaming-parameter

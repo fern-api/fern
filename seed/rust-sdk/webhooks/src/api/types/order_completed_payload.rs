@@ -13,7 +13,7 @@ pub struct OrderCompletedPayload {
 
 impl OrderCompletedPayload {
     pub fn builder() -> OrderCompletedPayloadBuilder {
-        OrderCompletedPayloadBuilder::default()
+        <OrderCompletedPayloadBuilder as Default>::default()
     }
 }
 

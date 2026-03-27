@@ -8,7 +8,7 @@ pub struct CreateOrganizationRequest {
 
 impl CreateOrganizationRequest {
     pub fn builder() -> CreateOrganizationRequestBuilder {
-        CreateOrganizationRequestBuilder::default()
+        <CreateOrganizationRequestBuilder as Default>::default()
     }
 }
 

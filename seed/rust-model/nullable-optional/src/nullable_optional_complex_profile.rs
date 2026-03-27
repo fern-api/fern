@@ -63,7 +63,7 @@ pub struct ComplexProfile {
 
 impl ComplexProfile {
     pub fn builder() -> ComplexProfileBuilder {
-        ComplexProfileBuilder::default()
+        <ComplexProfileBuilder as Default>::default()
     }
 }
 

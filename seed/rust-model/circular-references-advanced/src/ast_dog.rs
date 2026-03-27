@@ -8,7 +8,7 @@ pub struct Dog {
 
 impl Dog {
     pub fn builder() -> DogBuilder {
-        DogBuilder::default()
+        <DogBuilder as Default>::default()
     }
 }
 
