@@ -51,7 +51,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            resolveQueryParameterNameConflicts: false
         });
         expect(result).toBeDefined();
     });
@@ -70,7 +71,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            resolveQueryParameterNameConflicts: false
         });
         expect(result).toBeDefined();
     });
@@ -89,7 +91,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node16",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            resolveQueryParameterNameConflicts: false
         });
         expect(result).toBeDefined();
     });
@@ -108,7 +111,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: true,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            resolveQueryParameterNameConflicts: false
         });
         expect(result).toBeDefined();
     });
@@ -127,7 +131,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "wireValue"
+            parameterNaming: "wireValue",
+            resolveQueryParameterNameConflicts: false
         });
         expect(result).toBeDefined();
     });
