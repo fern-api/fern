@@ -31,7 +31,16 @@ export function getSdkParameterPropertyName({
     }
 
     if (isNameAndWireValue(name)) {
-        return includeSerdeLayer && !retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue;
+        if (includeSerdeLayer && !retainOriginalCasing) {
+            return name.name.camelCase.unsafeName;
+        }
+        // Without serde layer, use wire value unless there's an explicit name override
+        // (e.g., x-fern-parameter-name). Respecting overrides avoids duplicate property
+        // names when query parameters and body properties share the same wire name.
+        if (name.name.originalName !== name.wireValue) {
+            return name.name.originalName;
+        }
+        return name.wireValue;
     } else {
         return includeSerdeLayer && !retainOriginalCasing ? name.camelCase.unsafeName : name.originalName;
     }
