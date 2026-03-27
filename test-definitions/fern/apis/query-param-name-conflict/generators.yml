@@ -2,3 +2,12 @@
 api:
   specs:
     - openapi: ./openapi.yml
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: latest
+        config:
+          noSerdeLayer: true
+          enableInlineTypes: true
+          resolveQueryParameterNameConflicts: true

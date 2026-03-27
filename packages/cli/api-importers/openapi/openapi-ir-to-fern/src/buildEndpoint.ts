@@ -75,13 +75,7 @@ export function buildEndpoint({
             continue;
         }
         queryParameters[queryParameter.name] = convertedQueryParameter;
-        // Use the SDK name (from x-fern-parameter-name) for conflict detection when available,
-        // so that renamed parameters don't cause false conflicts with body properties.
-        if (typeof convertedQueryParameter !== "string" && convertedQueryParameter.name != null) {
-            names.add(convertedQueryParameter.name);
-        } else {
-            names.add(queryParameter.name);
-        }
+        names.add(queryParameter.name);
     }
 
     let pagination: RawSchemas.PaginationSchema | undefined = undefined;
