@@ -502,6 +502,8 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 
 	// Track which package aliases are actually referenced in the generated test code.
 	usedAliases := make(map[string]struct{})
+	// Track whether any setter tests were written (they use json and require).
+	wroteSetterTests := false
 
 	// Write tests for each type
 	for _, testData := range f.testData {
@@ -542,6 +544,10 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 
 		if len(localPropertyNames) == 0 {
 			continue
+		}
+
+		if testData.hasSetters {
+			wroteSetterTests = true
 		}
 
 		testWriter.WriteGetterSetterTests(
@@ -609,7 +615,10 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		"testing":                            "testing",
 		"github.com/stretchr/testify/assert": "assert",
 	}
-	if len(f.jsonMarshalingTests) > 0 {
+	// json and require are needed by WriteJSONMarshalingTests AND by
+	// WriteGetterSetterTests (the TestSettersMarkExplicit section uses
+	// json.Marshal/json.Unmarshal and require.NoError).
+	if len(f.jsonMarshalingTests) > 0 || wroteSetterTests {
 		preciseImports["encoding/json"] = "json"
 		preciseImports["github.com/stretchr/testify/require"] = "require"
 	}

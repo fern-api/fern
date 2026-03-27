@@ -3,7 +3,9 @@
 package contenttypes
 
 import (
+	json "encoding/json"
 	assert "github.com/stretchr/testify/assert"
+	require "github.com/stretchr/testify/require"
 	testing "testing"
 )
 
