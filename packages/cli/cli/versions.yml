@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.46.5
+- version: 4.46.6
   changelogEntry:
     - summary: |
         Fix OpenAPI-to-Fern conversion using wire names instead of SDK names
@@ -7,6 +7,14 @@
         When a query parameter has a name override, the override name is now used
         to check for conflicts with body properties, preventing unnecessary body
         property renames.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.46.5
+  changelogEntry:
+    - summary: |
+        Internal improvements to GitHub integration for server-side operations.
       type: fix
   createdAt: "2026-03-27"
   irVersion: 65
@@ -37,7 +45,7 @@
       type: fix
   createdAt: "2026-03-26"
   irVersion: 65
-      
+
 - version: 4.46.2
   changelogEntry:
     - summary: |
