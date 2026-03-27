@@ -97,8 +97,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamProtocolNoCollisionResponse.class, new ResponseBodyReader(response), "event"),
+                        Stream.fromSse(
+                                StreamProtocolNoCollisionResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                Stream.SseDiscriminatorContext.PROTOCOL),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -169,8 +172,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamProtocolCollisionResponse.class, new ResponseBodyReader(response), "event"),
+                        Stream.fromSse(
+                                StreamProtocolCollisionResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                Stream.SseDiscriminatorContext.PROTOCOL),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -239,8 +245,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamDataContextResponse.class, new ResponseBodyReader(response), "event"),
+                        Stream.fromSse(
+                                StreamDataContextResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                Stream.SseDiscriminatorContext.DATA),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -309,8 +318,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamNoContextResponse.class, new ResponseBodyReader(response), "event"),
+                        Stream.fromSse(
+                                StreamNoContextResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                Stream.SseDiscriminatorContext.DATA),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -381,8 +393,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamProtocolWithFlatSchemaResponse.class, new ResponseBodyReader(response), "event"),
+                        Stream.fromSse(
+                                StreamProtocolWithFlatSchemaResponse.class,
+                                new ResponseBodyReader(response),
+                                "event",
+                                Stream.SseDiscriminatorContext.PROTOCOL),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -454,10 +469,11 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
+                        Stream.fromSse(
                                 StreamDataContextWithEnvelopeSchemaResponse.class,
                                 new ResponseBodyReader(response),
-                                "event"),
+                                "event",
+                                Stream.SseDiscriminatorContext.DATA),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

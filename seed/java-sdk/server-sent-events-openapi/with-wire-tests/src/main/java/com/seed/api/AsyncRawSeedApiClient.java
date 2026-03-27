@@ -106,10 +106,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
+                                Stream.fromSse(
                                         StreamProtocolNoCollisionResponse.class,
                                         new ResponseBodyReader(response),
-                                        "event"),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.PROTOCOL),
                                 response));
                         return;
                     }
@@ -194,10 +195,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
+                                Stream.fromSse(
                                         StreamProtocolCollisionResponse.class,
                                         new ResponseBodyReader(response),
-                                        "event"),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.PROTOCOL),
                                 response));
                         return;
                     }
@@ -281,8 +283,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
-                                        StreamDataContextResponse.class, new ResponseBodyReader(response), "event"),
+                                Stream.fromSse(
+                                        StreamDataContextResponse.class,
+                                        new ResponseBodyReader(response),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.DATA),
                                 response));
                         return;
                     }
@@ -366,8 +371,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
-                                        StreamNoContextResponse.class, new ResponseBodyReader(response), "event"),
+                                Stream.fromSse(
+                                        StreamNoContextResponse.class,
+                                        new ResponseBodyReader(response),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.DATA),
                                 response));
                         return;
                     }
@@ -453,10 +461,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
+                                Stream.fromSse(
                                         StreamProtocolWithFlatSchemaResponse.class,
                                         new ResponseBodyReader(response),
-                                        "event"),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.PROTOCOL),
                                 response));
                         return;
                     }
@@ -542,10 +551,11 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
+                                Stream.fromSse(
                                         StreamDataContextWithEnvelopeSchemaResponse.class,
                                         new ResponseBodyReader(response),
-                                        "event"),
+                                        "event",
+                                        Stream.SseDiscriminatorContext.DATA),
                                 response));
                         return;
                     }

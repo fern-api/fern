@@ -76,7 +76,7 @@ public final class StreamTest {
                 mapToSseWithEvent("end", createMap("status", "complete")));
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
-        Stream<Map> sseStream = Stream.fromSseWithEventDiscrimination(Map.class, sseInput, "event");
+        Stream<Map> sseStream = Stream.fromSse(Map.class, sseInput, "event", Stream.SseDiscriminatorContext.PROTOCOL);
         int expectedEvents = 2;
         int actualEvents = 0;
         for (Map eventData : sseStream) {
