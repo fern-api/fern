@@ -11,6 +11,7 @@ async fn main() {
         .stream_oas_spec_native(
             &StreamRequest {
                 query: Some("query".to_string()),
+                ..Default::default()
             },
             None,
         )

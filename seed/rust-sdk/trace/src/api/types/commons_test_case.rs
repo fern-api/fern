@@ -10,7 +10,7 @@ pub struct TestCase {
 
 impl TestCase {
     pub fn builder() -> TestCaseBuilder {
-        TestCaseBuilder::default()
+        <TestCaseBuilder as Default>::default()
     }
 }
 

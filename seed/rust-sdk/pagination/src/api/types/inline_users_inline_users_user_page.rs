@@ -10,7 +10,7 @@ pub struct UserPage {
 
 impl UserPage {
     pub fn builder() -> UserPageBuilder {
-        UserPageBuilder::default()
+        <UserPageBuilder as Default>::default()
     }
 }
 

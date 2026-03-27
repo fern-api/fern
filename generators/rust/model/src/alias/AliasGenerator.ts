@@ -6,6 +6,7 @@ import { generateRustTypeForTypeReference } from "../converters/index.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     getInnerTypeFromOptional,
+    hasDefaultImpl,
     isDateTimeOnlyType,
     isOptionalType,
     typeSupportsHashAndEq
@@ -79,6 +80,11 @@ export class AliasGenerator {
             derives.push("Eq", "Hash");
         }
 
+        // Add Default if the aliased type supports it
+        if (this.canDeriveDefault()) {
+            derives.push("Default");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         return attributes;
@@ -118,5 +124,10 @@ export class AliasGenerator {
     private canDeriveHashAndEq(): boolean {
         // Check if the aliased type can support Hash and Eq derives
         return typeSupportsHashAndEq(this.aliasTypeDeclaration.aliasOf, this.context);
+    }
+
+    private canDeriveDefault(): boolean {
+        // Check if the aliased type supports Default in Rust
+        return hasDefaultImpl(this.aliasTypeDeclaration.aliasOf, this.context);
     }
 }

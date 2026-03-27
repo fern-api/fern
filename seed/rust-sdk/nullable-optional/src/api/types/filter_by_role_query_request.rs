@@ -14,7 +14,7 @@ pub struct FilterByRoleQueryRequest {
 
 impl FilterByRoleQueryRequest {
     pub fn builder() -> FilterByRoleQueryRequestBuilder {
-        FilterByRoleQueryRequestBuilder::default()
+        <FilterByRoleQueryRequestBuilder as Default>::default()
     }
 }
 

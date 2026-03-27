@@ -10,7 +10,7 @@ pub struct ObjectFieldValue {
 
 impl ObjectFieldValue {
     pub fn builder() -> ObjectFieldValueBuilder {
-        ObjectFieldValueBuilder::default()
+        <ObjectFieldValueBuilder as Default>::default()
     }
 }
 

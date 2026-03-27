@@ -10,6 +10,7 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -47,6 +48,29 @@ $client->admin->updateTestSubmissionStatus(
     TestSubmissionStatus::stopped(),
 );
 
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+The SDK defaults to the `Prod` environment. To use a different environment, pass it to the client constructor:
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    options: [
+        'baseUrl' => Environments::Staging->value
+    ]
+);
+```
+
+Available environments:
+- `Environments::Prod`
 ```
 
 ## Exception Handling

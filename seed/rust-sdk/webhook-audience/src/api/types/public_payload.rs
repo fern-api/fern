@@ -8,7 +8,7 @@ pub struct PublicPayload {
 
 impl PublicPayload {
     pub fn builder() -> PublicPayloadBuilder {
-        PublicPayloadBuilder::default()
+        <PublicPayloadBuilder as Default>::default()
     }
 }
 

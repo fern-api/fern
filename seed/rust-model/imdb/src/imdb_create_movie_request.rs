@@ -10,7 +10,7 @@ pub struct CreateMovieRequest {
 
 impl CreateMovieRequest {
     pub fn builder() -> CreateMovieRequestBuilder {
-        CreateMovieRequestBuilder::default()
+        <CreateMovieRequestBuilder as Default>::default()
     }
 }
 

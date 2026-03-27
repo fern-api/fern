@@ -13,7 +13,7 @@ pub struct GetClientQueryRequest {
 
 impl GetClientQueryRequest {
     pub fn builder() -> GetClientQueryRequestBuilder {
-        GetClientQueryRequestBuilder::default()
+        <GetClientQueryRequestBuilder as Default>::default()
     }
 }
 

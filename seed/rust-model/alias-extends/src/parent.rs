@@ -8,7 +8,7 @@ pub struct Parent {
 
 impl Parent {
     pub fn builder() -> ParentBuilder {
-        ParentBuilder::default()
+        <ParentBuilder as Default>::default()
     }
 }
 

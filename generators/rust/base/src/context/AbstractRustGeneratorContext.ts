@@ -199,6 +199,19 @@ export abstract class AbstractRustGeneratorContext<
                         if (this.typeReferenceUsesBuiltin(endpoint.requestBody.requestBodyType, typeName, visited)) {
                             return true;
                         }
+                    } else if (endpoint.requestBody.type === "fileUpload") {
+                        // File upload properties are implicitly base64-encoded bytes
+                        if (typeName === "BASE_64") {
+                            return true;
+                        }
+                        // Also check body properties within file upload requests
+                        for (const property of endpoint.requestBody.properties) {
+                            if (property.type === "bodyProperty") {
+                                if (this.typeReferenceUsesBuiltin(property.valueType, typeName, visited)) {
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
 

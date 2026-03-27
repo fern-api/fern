@@ -9,7 +9,7 @@ pub struct TestCaseImplementation {
 
 impl TestCaseImplementation {
     pub fn builder() -> TestCaseImplementationBuilder {
-        TestCaseImplementationBuilder::default()
+        <TestCaseImplementationBuilder as Default>::default()
     }
 }
 

@@ -13,7 +13,7 @@ pub struct ObjectPayloadWithEventField {
 
 impl ObjectPayloadWithEventField {
     pub fn builder() -> ObjectPayloadWithEventFieldBuilder {
-        ObjectPayloadWithEventFieldBuilder::default()
+        <ObjectPayloadWithEventFieldBuilder as Default>::default()
     }
 }
 

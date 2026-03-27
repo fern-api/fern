@@ -8,7 +8,7 @@ pub struct Fig {
 
 impl Fig {
     pub fn builder() -> FigBuilder {
-        FigBuilder::default()
+        <FigBuilder as Default>::default()
     }
 }
 

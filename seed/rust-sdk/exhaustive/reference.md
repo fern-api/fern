@@ -68,9 +68,11 @@ async fn main() {
             &vec![
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             ],
             None,
@@ -155,6 +157,7 @@ async fn main() {
         .get_and_return_set_of_objects(
             &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }]),
             None,
         )
@@ -243,6 +246,7 @@ async fn main() {
                 "string".to_string(),
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             )]),
             None,
@@ -330,6 +334,7 @@ async fn main() {
         .get_and_return_optional(
             &Some(ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }),
             None,
         )
@@ -391,6 +396,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -451,6 +457,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -590,6 +597,7 @@ async fn main() {
         .test_post(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -635,6 +643,7 @@ async fn main() {
             &"id".to_string(),
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -711,6 +720,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -841,6 +851,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -885,6 +896,7 @@ async fn main() {
         .get_and_return_with_required_field(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -932,6 +944,7 @@ async fn main() {
                     "map".to_string(),
                     HashMap::from([("map".to_string(), "map".to_string())]),
                 )]),
+                ..Default::default()
             },
             None,
         )
@@ -994,7 +1007,9 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -1058,7 +1073,9 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )
@@ -1141,7 +1158,9 @@ async fn main() {
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
                 NestedObjectWithRequiredField {
                     string: "string".to_string(),
@@ -1167,7 +1186,9 @@ async fn main() {
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
             ],
             None,
@@ -1213,6 +1234,7 @@ async fn main() {
         .get_and_return_with_unknown_field(
             &ObjectWithUnknownField {
                 unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
+                ..Default::default()
             },
             None,
         )
@@ -1257,6 +1279,7 @@ async fn main() {
         .get_and_return_with_documented_unknown_type(
             &ObjectWithDocumentedUnknownType {
                 documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+                ..Default::default()
             },
             None,
         )
@@ -1363,6 +1386,7 @@ async fn main() {
             &ObjectWithDatetimeLikeString {
                 datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
                 actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+                ..Default::default()
             },
             None,
         )
@@ -1423,6 +1447,7 @@ async fn main() {
             &ListItemsQueryRequest {
                 cursor: Some("cursor".to_string()),
                 limit: Some(1),
+                ..Default::default()
             },
             None,
         )
@@ -2583,6 +2608,7 @@ async fn main() {
                 data: Dog {
                     name: "name".to_string(),
                     likes_to_woof: true,
+                    ..Default::default()
                 },
             },
             None,
@@ -2802,6 +2828,7 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 },
             },
             None,

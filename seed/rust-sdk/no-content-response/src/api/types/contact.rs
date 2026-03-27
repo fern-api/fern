@@ -12,7 +12,7 @@ pub struct Contact {
 
 impl Contact {
     pub fn builder() -> ContactBuilder {
-        ContactBuilder::default()
+        <ContactBuilder as Default>::default()
     }
 }
 

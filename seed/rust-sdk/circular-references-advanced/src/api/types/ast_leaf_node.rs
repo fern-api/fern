@@ -5,7 +5,7 @@ pub struct LeafNode {}
 
 impl LeafNode {
     pub fn builder() -> LeafNodeBuilder {
-        LeafNodeBuilder::default()
+        <LeafNodeBuilder as Default>::default()
     }
 }
 

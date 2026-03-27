@@ -8,7 +8,7 @@ pub struct ProtocolObjectEvent {
 
 impl ProtocolObjectEvent {
     pub fn builder() -> ProtocolObjectEventBuilder {
-        ProtocolObjectEventBuilder::default()
+        <ProtocolObjectEventBuilder as Default>::default()
     }
 }
 

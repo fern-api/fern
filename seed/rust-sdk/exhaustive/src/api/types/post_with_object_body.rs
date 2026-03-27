@@ -13,7 +13,7 @@ pub struct PostWithObjectBody {
 
 impl PostWithObjectBody {
     pub fn builder() -> PostWithObjectBodyBuilder {
-        PostWithObjectBodyBuilder::default()
+        <PostWithObjectBodyBuilder as Default>::default()
     }
 }
 

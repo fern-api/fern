@@ -21,7 +21,7 @@ pub struct SendLiteralsInlinedRequest {
 
 impl SendLiteralsInlinedRequest {
     pub fn builder() -> SendLiteralsInlinedRequestBuilder {
-        SendLiteralsInlinedRequestBuilder::default()
+        <SendLiteralsInlinedRequestBuilder as Default>::default()
     }
 }
 

@@ -35,7 +35,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_protocol_no_collision(&StreamRequest { query: None }, None)
+        .stream_protocol_no_collision(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -85,7 +90,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_protocol_collision(&StreamRequest { query: None }, None)
+        .stream_protocol_collision(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -135,7 +145,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_data_context(&StreamRequest { query: None }, None)
+        .stream_data_context(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -185,7 +200,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_no_context(&StreamRequest { query: None }, None)
+        .stream_no_context(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -235,7 +255,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_protocol_with_flat_schema(&StreamRequest { query: None }, None)
+        .stream_protocol_with_flat_schema(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -285,7 +310,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_data_context_with_envelope_schema(&StreamRequest { query: None }, None)
+        .stream_data_context_with_envelope_schema(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -335,7 +365,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_oas_spec_native(&StreamRequest { query: None }, None)
+        .stream_oas_spec_native(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```

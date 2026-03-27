@@ -5,7 +5,7 @@ pub struct ProtocolHeartbeat {}
 
 impl ProtocolHeartbeat {
     pub fn builder() -> ProtocolHeartbeatBuilder {
-        ProtocolHeartbeatBuilder::default()
+        <ProtocolHeartbeatBuilder as Default>::default()
     }
 }
 
