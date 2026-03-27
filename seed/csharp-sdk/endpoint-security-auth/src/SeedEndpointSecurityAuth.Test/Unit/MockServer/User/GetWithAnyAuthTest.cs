@@ -30,8 +30,6 @@ public class GetWithAnyAuthTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/users")
                     .WithHeader("Authorization", "Bearer TOKEN")
-                    .WithHeader("X-API-Key", "API_KEY")
-                    .WithHeader("Authorization", "Basic VVNFUk5BTUU6UEFTU1dPUkQ=")
                     .UsingGet()
             )
             .RespondWith(

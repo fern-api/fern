@@ -408,13 +408,13 @@ export class WireMock {
         if (endpoint.security == null || endpoint.security.length === 0) {
             return undefined;
         }
-        const keys = new Set<string>();
-        for (const securityItem of endpoint.security) {
-            for (const key of Object.keys(securityItem)) {
-                keys.add(key);
-            }
+        // Use only the first security item (first alternative) since the client
+        // only needs to satisfy one of the alternatives
+        const firstItem = endpoint.security[0];
+        if (firstItem == null) {
+            return undefined;
         }
-        return keys;
+        return new Set<string>(Object.keys(firstItem));
     }
 
     private extractExampleValue(
