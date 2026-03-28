@@ -39,7 +39,7 @@ service:
               refresh_token: "refresh_token"
 
     refreshToken:
-      path: /token/refresh
+      path: /token
       method: POST
       request:
         name: RefreshTokenRequest

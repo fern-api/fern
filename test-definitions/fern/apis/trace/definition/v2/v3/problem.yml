@@ -191,19 +191,19 @@ service:
     getLightweightProblems:
       docs: Returns lightweight versions of all problems
       method: GET
-      path: /v3/lightweight-problem-info
+      path: /lightweight-problem-info
       response: list<LightweightProblemInfoV2>
 
     getProblems:
       docs: Returns latest versions of all problems
       method: GET
-      path: /v3/problem-info
+      path: /problem-info
       response: list<ProblemInfoV2>
 
     getLatestProblem:
       docs: Returns latest version of a problem
       method: GET
-      path: /v3/problem-info/{problemId}
+      path: /problem-info/{problemId}
       path-parameters:
         problemId: commons.ProblemId
       response: ProblemInfoV2
@@ -211,7 +211,7 @@ service:
     getProblemVersion:
       docs: Returns requested version of a problem
       method: GET
-      path: /v3/problem-info/{problemId}/version/{problemVersion}
+      path: /problem-info/{problemId}/version/{problemVersion}
       path-parameters:
         problemId: commons.ProblemId
         problemVersion: integer

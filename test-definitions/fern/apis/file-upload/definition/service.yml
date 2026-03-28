@@ -103,7 +103,7 @@ service:
               style: form
 
     withFormEncodedContainers:
-      path: /form-encoded-containers
+      path: ""
       method: POST
       request:
         name: MyOtherRequest

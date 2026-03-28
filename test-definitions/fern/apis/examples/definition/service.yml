@@ -3,7 +3,7 @@ imports:
 
 service:
   auth: false
-  base-path: /service
+  base-path: /
   endpoints:
     getMovie:
       method: GET

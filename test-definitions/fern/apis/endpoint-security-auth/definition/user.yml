@@ -10,37 +10,37 @@ service:
   base-path: ""
   endpoints:
     getWithBearer:
-      path: /users/bearer
+      path: /users
       method: GET
       response: list<User>
       auth:
         - Bearer: []
     getWithApiKey:
-      path: /users/api-key
+      path: /users
       method: GET
       response: list<User>
       auth:
         - ApiKey: []
     getWithOAuth:
-      path: /users/oauth
+      path: /users
       method: GET
       response: list<User>
       auth:
         - OAuth: [read-only]
     getWithBasic:
-      path: /users/basic
+      path: /users
       method: GET
       response: list<User>
       auth:
         - Basic: []
     getWithInferredAuth:
-      path: /users/inferred
+      path: /users
       method: GET
       response: list<User>
       auth:
         - InferredAuth: []
     getWithAnyAuth:
-      path: /users/any-auth
+      path: /users
       method: GET
       response: list<User>
       auth:
@@ -50,7 +50,7 @@ service:
         - Basic: []
         - InferredAuth: []
     getWithAllAuth:
-      path: /users/all-auth
+      path: /users
       method: GET
       response: list<User>
       auth:

@@ -19,7 +19,7 @@ types:
 
 service:
   auth: false
-  base-path: /system/users
+  base-path: /users
   endpoints:
     createUser:
       method: POST
@@ -28,7 +28,7 @@ service:
       response: User
     createTask:
       method: POST
-      path: /create-task
+      path: ""
       request: Task
       response: Task
     getUser:

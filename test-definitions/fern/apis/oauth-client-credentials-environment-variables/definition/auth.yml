@@ -26,7 +26,7 @@ service:
       response: TokenResponse
 
     refreshToken:
-      path: /token/refresh
+      path: /token
       method: POST
       request:
         name: RefreshTokenRequest
