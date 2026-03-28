@@ -54,22 +54,18 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
         }
     }
 
-    // Process files in batches to balance parallelism with I/O backpressure.
-    // Unbounded Promise.all on 10K+ files causes slower throughput due to
-    // excessive concurrent I/O; batching at 100 keeps the event loop responsive.
-    const BATCH_SIZE = 100;
-    for (let i = 0; i < tsFiles.length; i += BATCH_SIZE) {
-        const batch = tsFiles.slice(i, i + BATCH_SIZE);
-        await Promise.all(
-            batch.map(async (filePath) => {
-                const content = await readFile(filePath, "utf-8");
-                const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
-                if (newContent !== content) {
-                    await writeFile(filePath, newContent);
-                }
-            })
-        );
-    }
+    // Process all files in parallel. This is the legacy disk-based path
+    // (useLegacyExports=true); the primary path now uses fixImportsInVolume
+    // which processes everything in-memory before writing to disk.
+    await Promise.all(
+        tsFiles.map(async (filePath) => {
+            const content = await readFile(filePath, "utf-8");
+            const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
+            if (newContent !== content) {
+                await writeFile(filePath, newContent);
+            }
+        })
+    );
 }
 
 /**

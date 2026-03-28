@@ -1,9 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { existsSync } from "fs";
 import { glob } from "glob";
+import type { Volume } from "memfs/lib/volume";
 import path from "path";
 import { Directory, Project } from "ts-morph";
-import type { MemfsVolume } from "../core-utilities/CoreUtilitiesManager.js";
 
 export class PublicExportsManager {
     /**
@@ -14,7 +14,7 @@ export class PublicExportsManager {
      * @param volume - The memfs Volume containing the project files.
      * @param packagePath - The source directory path within the volume (e.g. "src").
      */
-    public generatePublicExportsToVolume(volume: MemfsVolume, packagePath: string): void {
+    public generatePublicExportsToVolume(volume: Volume, packagePath: string): void {
         const srcDir = "/" + packagePath;
         const coreDir = path.join(srcDir, "core");
 
@@ -58,7 +58,7 @@ export class PublicExportsManager {
     }
 
     /** Recursively find all exports.ts files in a Volume directory. */
-    private findExportsFilesInVolume(volume: MemfsVolume, dir: string, results: string[]): void {
+    private findExportsFilesInVolume(volume: Volume, dir: string, results: string[]): void {
         const entries = volume.readdirSync(dir, { withFileTypes: true });
         for (const entry of entries) {
             const name = typeof entry.name === "string" ? entry.name : entry.name.toString();
@@ -72,7 +72,7 @@ export class PublicExportsManager {
     }
 
     /** Generate a parent exports.ts file in the Volume if one doesn't already exist. */
-    private generateParentExportsFileInVolume(volume: MemfsVolume, directoryPath: string): void {
+    private generateParentExportsFileInVolume(volume: Volume, directoryPath: string): void {
         const parentExportsPath = path.join(directoryPath, "exports.ts");
 
         if (volume.existsSync(parentExportsPath)) {
@@ -113,7 +113,7 @@ export class PublicExportsManager {
     }
 
     /** Add `export * from "./exports"` to src/index.ts in the Volume if not already present. */
-    private addExportsToIndexFileInVolume(volume: MemfsVolume, srcDir: string): void {
+    private addExportsToIndexFileInVolume(volume: Volume, srcDir: string): void {
         const indexFilePath = path.join(srcDir, "index.ts");
 
         if (!volume.existsSync(indexFilePath)) {

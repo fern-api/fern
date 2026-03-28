@@ -1,24 +1,9 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
+import type { Volume } from "memfs/lib/volume";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
-
-/**
- * Minimal interface for an in-memory filesystem volume.
- * Structurally compatible with memfs Volume so consumers don't need a
- * direct dependency on the memfs package.
- */
-export interface MemfsVolume {
-    mkdirSync(path: string, options?: { recursive?: boolean }): unknown;
-    writeFileSync(file: string, data: string | Buffer): void;
-    // biome-ignore lint/suspicious/noExplicitAny: must be compatible with memfs Volume's overloaded signatures
-    readFileSync(file: string, encoding: string): any;
-    // biome-ignore lint/suspicious/noExplicitAny: must be compatible with memfs Volume's overloaded signatures
-    readdirSync(path: string, options: { withFileTypes: true }): any;
-    existsSync(path: string): boolean;
-    unlinkSync(path: string): void;
-}
 
 import { DependencyManager } from "../dependency-manager/DependencyManager.js";
 import { ExportsManager } from "../exports-manager/index.js";
@@ -181,7 +166,7 @@ export class CoreUtilitiesManager {
      * alongside generated source files, eliminating the need for a post-persist
      * disk pass on core utility files.
      */
-    public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
+    public async copyCoreUtilitiesToVolume(volume: Volume): Promise<void> {
         const coreFiles = await this.collectCoreUtilityFiles();
 
         // mkdirSync/writeFileSync are synchronous — no need for Promise.all.

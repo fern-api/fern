@@ -1,4 +1,5 @@
 export * from "@fern-api/typescript-base";
+export type { Volume as MemfsVolume } from "memfs/lib/volume";
 export { AsIsManager } from "./asIs/AsIsManager.js";
 export {
     createNumericLiteralSafe,

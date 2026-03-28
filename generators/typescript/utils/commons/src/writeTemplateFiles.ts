@@ -1,8 +1,7 @@
 import { Eta } from "eta";
 import * as fs from "fs/promises";
+import type { Volume } from "memfs/lib/volume";
 import * as path from "path";
-
-import type { MemfsVolume } from "./core-utilities/CoreUtilitiesManager.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
@@ -23,7 +22,7 @@ export async function writeTemplateFiles(directory: string, templateVariables: R
  * (e.g. getFetchFn.ts from getFetchFn.template.ts) are visible in the
  * file existence cache.
  */
-export function writeTemplateFilesToVolume(volume: MemfsVolume, templateVariables: Record<string, unknown>): void {
+export function writeTemplateFilesToVolume(volume: Volume, templateVariables: Record<string, unknown>): void {
     const templateFiles: string[] = [];
     collectTemplateFilesSync(volume, "/", templateFiles);
 
@@ -37,7 +36,7 @@ export function writeTemplateFilesToVolume(volume: MemfsVolume, templateVariable
     }
 }
 
-function collectTemplateFilesSync(volume: MemfsVolume, dir: string, files: string[]): void {
+function collectTemplateFilesSync(volume: Volume, dir: string, files: string[]): void {
     const entries = volume.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
         const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
