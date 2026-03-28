@@ -7,10 +7,10 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,
+    fixImportsInVolume,
     type MemfsVolume,
     NpmPackage,
     PersistedTypescriptProject,
-    writeTemplateFiles,
     writeTemplateFilesToVolume
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
@@ -258,38 +258,28 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             }
         });
         const typescriptProject = await sdkGenerator.generate();
-        // When not using legacy exports, enable in-memory ESM import fixup.
-        // The hook runs AFTER writeSrcToVolume inside persist(). Operations
-        // MUST execute in this order:
+        // Single in-memory code path for both legacy and non-legacy exports.
+        // The volumeHook runs AFTER writeSrcToVolume inside persist() but
+        // BEFORE writing to disk. Operations MUST execute in this order:
         //   1. copyCoreUtilitiesToVolume — populates Volume with core files
         //      (overwrites ts-morph barrel exports at overlapping paths)
         //   2. writeTemplateFilesToVolume — renders .template.ts → .ts
         //      (needs core files from step 1 to exist)
         //   3. generatePublicExportsToVolume — creates exports.ts re-export chain
         //      (needs core/*/exports.ts from step 1)
-        // Then persist() calls fixImportsInVolume (needs all files from steps 1-3).
+        //   4. fixImportsInVolume — adds .js extensions to all import specifiers
+        //      (needs all files from steps 1-3; only for non-legacy exports)
         const templateVariables = this.getTemplateVariables(customConfig);
-        const esmImportHook = customConfig.useLegacyExports
-            ? undefined
-            : async (volume: MemfsVolume) => {
-                  await sdkGenerator.copyCoreUtilitiesToVolume(volume);
-                  writeTemplateFilesToVolume(volume, templateVariables);
-                  sdkGenerator.generatePublicExportsToVolume(volume);
-              };
-        const persistedTypescriptProject = await typescriptProject.persist(esmImportHook);
+        const packagePath = customConfig.packagePath ?? "src";
+        const persistedTypescriptProject = await typescriptProject.persist(async (volume: MemfsVolume) => {
+            await sdkGenerator.copyCoreUtilitiesToVolume(volume);
+            writeTemplateFilesToVolume(volume, templateVariables);
+            sdkGenerator.generatePublicExportsToVolume(volume);
+            if (!customConfig.useLegacyExports) {
+                fixImportsInVolume(volume, packagePath);
+            }
+        });
         const rootDirectory = persistedTypescriptProject.getRootDirectory();
-        // For legacy exports, core utilities, public exports, and template
-        // rendering are handled on disk (the non-legacy path does all of
-        // this in-memory via the esmImportHook above).
-        if (customConfig.useLegacyExports) {
-            await sdkGenerator.copyCoreUtilities({
-                pathToRoot: rootDirectory
-            });
-            await sdkGenerator.generatePublicExports({
-                pathToSrc: persistedTypescriptProject.getSrcDirectory()
-            });
-            await writeTemplateFiles(rootDirectory, templateVariables);
-        }
         await this.writeLicenseFile(config, rootDirectory, generatorContext.logger);
         await this.postProcess(persistedTypescriptProject, customConfig);
 

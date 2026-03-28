@@ -1,6 +1,4 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { existsSync } from "fs";
-import { readdir, readFile, writeFile } from "fs/promises";
 import type { Volume } from "memfs/lib/volume";
 import path from "path";
 
@@ -17,56 +15,6 @@ const ImportModification = {
 } as const;
 
 type ImportModificationType = (typeof ImportModification)[keyof typeof ImportModification];
-
-/**
- * Fixes imports in a TypeScript project to ensure compatibility with ESM (ECMAScript Modules).
- *
- * TypeScript's `tsc` compiler does not generate valid ESM unless the source code follows specific conventions:
- * - All imports must include the `.js` extension.
- * - Folder imports must explicitly reference `index.js`.
- *
- * This function modifies the imports in the project to adhere to these conventions by:
- * - Adding `.js` extensions to imports where necessary.
- * - Replacing folder imports with explicit `index.js` imports.
- * - Ensuring compatibility with the generated ESM output.
- *
- * Uses string-based regex replacement instead of ts-morph AST mutations for performance.
- * On a 10K-file project (Stripe), this completes in ~7s vs ~372s with ts-morph.
- *
- * @param pathToProject - The absolute path to the root of the TypeScript project.
- */
-export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
-    // Phase 1: Discover all source files in the project's src/ directory.
-    // Generated TypeScript projects always use `include: ["src"]` in their tsconfig,
-    // so we scan src/ directly. This avoids the complexity and fragility of parsing
-    // tsconfig include/exclude (which can contain globs, JSONC comments, extends
-    // chains, etc.) while matching the original ts-morph scoping behavior.
-    const srcDir = join(pathToProject, RelativeFilePath.of("src"));
-    const fileExistenceCache = await collectFiles(srcDir);
-
-    // Phase 2: Process each TypeScript file via string replacement
-    const importModificationCache = new Map<string, ImportModificationType>();
-
-    const tsFiles: string[] = [];
-    for (const f of fileExistenceCache) {
-        if (TS_EXTENSIONS.has(path.extname(f))) {
-            tsFiles.push(f);
-        }
-    }
-
-    // Process all files in parallel. This is the legacy disk-based path
-    // (useLegacyExports=true); the primary path now uses fixImportsInVolume
-    // which processes everything in-memory before writing to disk.
-    await Promise.all(
-        tsFiles.map(async (filePath) => {
-            const content = await readFile(filePath, "utf-8");
-            const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
-            if (newContent !== content) {
-                await writeFile(filePath, newContent);
-            }
-        })
-    );
-}
 
 /**
  * Strips single-line comments (// ...) and multi-line comments (/* ... *\/)
@@ -272,86 +220,4 @@ function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>)
             }
         }
     }
-}
-
-/**
- * Fixes imports in files written to disk after persist(). Scans the given directories
- * recursively, plus any shallow (non-recursive) .ts files in shallowDirs. This is much
- * faster than scanning the entire project tree since generated source files were already
- * processed in-memory during persist() and would be no-ops.
- *
- * @param dirs - Directories to scan recursively (e.g. ["src/core"]).
- * @param shallowDirs - Directories to scan non-recursively for top-level .ts files only
- *                      (e.g. ["src"] for exports.ts, index.ts written by generatePublicExports).
- */
-export async function fixImportsForCoreFiles(dirs: string[], shallowDirs: string[] = []): Promise<void> {
-    // Build existence cache from the specified directories
-    const fileExistenceCache = new Set<string>();
-    const filesToProcess = new Set<string>();
-
-    // Recursively collect from dirs (skip directories that don't exist)
-    await Promise.all(
-        dirs.filter((dir) => existsSync(dir)).map((dir) => collectFilesRecursive(dir, fileExistenceCache))
-    );
-    for (const f of fileExistenceCache) {
-        filesToProcess.add(f);
-    }
-
-    // Collect shallow (top-level only) files from shallowDirs
-    for (const dir of shallowDirs) {
-        if (!existsSync(dir)) {
-            continue;
-        }
-        const entries = await readdir(dir, { withFileTypes: true });
-        for (const entry of entries) {
-            if (!entry.isDirectory()) {
-                const ext = path.extname(entry.name);
-                if (ALL_EXTENSIONS.has(ext)) {
-                    const fullPath = path.resolve(path.join(dir, entry.name));
-                    fileExistenceCache.add(fullPath);
-                    filesToProcess.add(fullPath);
-                }
-            }
-        }
-    }
-
-    // Process each TypeScript file
-    const importModificationCache = new Map<string, ImportModificationType>();
-
-    for (const filePath of filesToProcess) {
-        if (!TS_EXTENSIONS.has(path.extname(filePath))) {
-            continue;
-        }
-        const content = await readFile(filePath, "utf-8");
-        const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
-        if (newContent !== content) {
-            await writeFile(filePath, newContent);
-        }
-    }
-}
-
-// Recursively collect all source file paths, parallelizing subdirectory traversal.
-async function collectFiles(dir: string): Promise<Set<string>> {
-    const files = new Set<string>();
-    await collectFilesRecursive(dir, files);
-    return files;
-}
-
-async function collectFilesRecursive(dir: string, files: Set<string>): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    const subdirs: Promise<void>[] = [];
-    for (const entry of entries) {
-        const fullPath = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-            if (entry.name !== "node_modules" && entry.name !== ".git") {
-                subdirs.push(collectFilesRecursive(fullPath, files));
-            }
-        } else {
-            const ext = path.extname(entry.name);
-            if (ALL_EXTENSIONS.has(ext)) {
-                files.add(path.resolve(fullPath));
-            }
-        }
-    }
-    await Promise.all(subdirs);
 }

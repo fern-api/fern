@@ -46,4 +46,4 @@ export { fixImportsInSource, fixImportsInVolume } from "./typescript-project/fix
 export * from "./typescript-project/index.js";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType.js";
 export { FernWriters, ObjectWriter } from "./writers/index.js";
-export { writeTemplateFiles, writeTemplateFilesToVolume } from "./writeTemplateFiles.js";
+export { writeTemplateFilesToVolume } from "./writeTemplateFiles.js";

@@ -787,20 +787,9 @@ export class SdkGenerator {
         await this.coreUtilitiesManager.copyCoreUtilitiesToVolume(volume);
     }
 
-    public async copyCoreUtilities({ pathToRoot }: { pathToRoot: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToRoot });
-    }
-
     public generatePublicExportsToVolume(volume: MemfsVolume): void {
         this.publicExportsManager.generatePublicExportsToVolume(volume, this.relativePackagePath);
         this.context.logger.debug("Generated public exports to volume");
-    }
-
-    public async generatePublicExports({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.publicExportsManager.generatePublicExportsFiles({
-            pathToSrc
-        });
-        this.context.logger.debug("Generated public exports");
     }
 
     private generateTypeDeclarations() {
