@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.8
+  changelogEntry:
+    - summary: |
+        Fix multipart form data string fields being JSON-encoded with
+        `writeValueAsString()`, which wraps values in literal quote characters.
+        String fields, primitives, and enums now use plain string conversion
+        instead of JSON serialization. Complex types (objects, maps) continue
+        to use JSON serialization as before.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.0.7
   changelogEntry:
     - summary: |
