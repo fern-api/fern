@@ -61,9 +61,11 @@ export class PublicExportsManager {
     private findExportsFilesInVolume(volume: Volume, dir: string, results: string[]): void {
         const entries = volume.readdirSync(dir, { withFileTypes: true });
         for (const entry of entries) {
-            const name = typeof entry.name === "string" ? entry.name : entry.name.toString();
+            // memfs 3.x returns dirent-like objects with name and isDirectory()
+            const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
+            const name = typeof dirent.name === "string" ? dirent.name : dirent.name.toString();
             const fullPath = path.join(dir, name);
-            if (entry.isDirectory()) {
+            if (dirent.isDirectory()) {
                 this.findExportsFilesInVolume(volume, fullPath, results);
             } else if (name === "exports.ts") {
                 results.push(fullPath);
@@ -83,8 +85,10 @@ export class PublicExportsManager {
         const childDirs: string[] = [];
         const entries = volume.readdirSync(directoryPath, { withFileTypes: true });
         for (const entry of entries) {
-            const name = typeof entry.name === "string" ? entry.name : entry.name.toString();
-            if (entry.isDirectory()) {
+            // memfs 3.x returns dirent-like objects with name and isDirectory()
+            const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
+            const name = typeof dirent.name === "string" ? dirent.name : dirent.name.toString();
+            if (dirent.isDirectory()) {
                 const childExportsPath = path.join(directoryPath, name, "exports.ts");
                 if (volume.existsSync(childExportsPath)) {
                     childDirs.push(path.join(directoryPath, name));
