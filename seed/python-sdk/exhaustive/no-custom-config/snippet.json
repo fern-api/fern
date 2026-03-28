@@ -368,7 +368,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/inline-path/{param}",
+                "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
             },
@@ -394,7 +394,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/allow-multiple-query",
+                "path": "/params",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
@@ -420,7 +420,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/inline-path-query/{param}",
+                "path": "/params/path-query/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
             },
@@ -446,7 +446,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/params/inline-path/{param}",
+                "path": "/params/path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
             },

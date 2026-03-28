@@ -1825,12 +1825,9 @@ GET with path param
 <dd>
 
 ```go
-request := &endpoints.GetWithInlinePath{
-        Param: "param",
-    }
-client.Endpoints.Params.GetWithInlinePath(
+client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        request,
+        "param",
     )
 }
 ```
@@ -1956,15 +1953,11 @@ GET with multiple of same query param
 <dd>
 
 ```go
-request := &endpoints.GetWithMultipleQuery{
-        Query: []string{
-            "query",
-        },
-        Number: []int{
-            1,
-        },
+request := &endpoints.GetWithQuery{
+        Query: "query",
+        Number: 1,
     }
-client.Endpoints.Params.GetWithAllowMultipleQuery(
+client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
     )
@@ -2100,12 +2093,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &endpoints.GetWithInlinePathAndQuery{
-        Param: "param",
+request := &endpoints.GetWithPathAndQuery{
         Query: "query",
     }
-client.Endpoints.Params.GetWithInlinePathAndQuery(
+client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
+        "param",
         request,
     )
 }
@@ -2237,12 +2230,9 @@ PUT to update with path param
 <dd>
 
 ```go
-request := &endpoints.ModifyResourceAtInlinedPath{
-        Param: "param",
-        Body: "string",
-    }
-client.Endpoints.Params.ModifyWithInlinePath(
+client.Endpoints.Params.ModifyWithPath(
         context.TODO(),
+        "param",
         request,
     )
 }

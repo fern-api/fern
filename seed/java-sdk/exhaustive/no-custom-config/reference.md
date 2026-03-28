@@ -1597,12 +1597,7 @@ GET with path param
 <dd>
 
 ```java
-client.endpoints().params().getWithInlinePath(
-    "param",
-    GetWithInlinePath
-        .builder()
-        .build()
-);
+client.endpoints().params().getWithPath("param");
 ```
 </dd>
 </dl>
@@ -1724,15 +1719,11 @@ GET with multiple of same query param
 <dd>
 
 ```java
-client.endpoints().params().getWithAllowMultipleQuery(
-    GetWithMultipleQuery
+client.endpoints().params().getWithQuery(
+    GetWithQuery
         .builder()
-        .query(
-            Arrays.asList("query")
-        )
-        .number(
-            Arrays.asList(1)
-        )
+        .query("query")
+        .number(1)
         .build()
 );
 ```
@@ -1864,9 +1855,9 @@ GET with path and query params
 <dd>
 
 ```java
-client.endpoints().params().getWithInlinePathAndQuery(
+client.endpoints().params().getWithPathAndQuery(
     "param",
-    GetWithInlinePathAndQuery
+    GetWithPathAndQuery
         .builder()
         .query("query")
         .build()
@@ -1994,13 +1985,7 @@ PUT to update with path param
 <dd>
 
 ```java
-client.endpoints().params().modifyWithInlinePath(
-    "param",
-    ModifyResourceAtInlinedPath
-        .builder()
-        .body("string")
-        .build()
-);
+client.endpoints().params().modifyWithPath("param", "string");
 ```
 </dd>
 </dl>

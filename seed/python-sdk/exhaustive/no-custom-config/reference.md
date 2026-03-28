@@ -1970,7 +1970,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.params.get_with_inline_path(
+client.endpoints.params.get_with_path(
     param="param",
 )
 
@@ -2123,13 +2123,9 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.params.get_with_allow_multiple_query(
-    query=[
-        "query"
-    ],
-    number=[
-        1
-    ],
+client.endpoints.params.get_with_query(
+    query="query",
+    number=1,
 )
 
 ```
@@ -2289,7 +2285,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.params.get_with_inline_path_and_query(
+client.endpoints.params.get_with_path_and_query(
     param="param",
     query="query",
 )
@@ -2451,7 +2447,7 @@ client = SeedExhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.params.modify_with_inline_path(
+client.endpoints.params.modify_with_path(
     param="param",
     request="string",
 )

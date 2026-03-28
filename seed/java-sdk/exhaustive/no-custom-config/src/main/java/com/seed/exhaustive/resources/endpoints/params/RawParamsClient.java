@@ -114,7 +114,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("inline-path")
+                .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -204,8 +204,7 @@ public class RawParamsClient {
             GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("params")
-                .addPathSegments("allow-multiple-query");
+                .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
         if (requestOptions != null) {
@@ -297,7 +296,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("inline-path-query")
+                .addPathSegments("path-query")
                 .addPathSegment(param);
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
@@ -398,7 +397,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("inline-path")
+                .addPathSegments("path")
                 .addPathSegment(param);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

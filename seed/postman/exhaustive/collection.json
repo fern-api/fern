@@ -2439,13 +2439,13 @@
               "request": {
                 "description": "GET with path param",
                 "url": {
-                  "raw": "{{baseUrl}}/params/inline-path/:param",
+                  "raw": "{{baseUrl}}/params/path/:param",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "params",
-                    "inline-path",
+                    "path",
                     ":param"
                   ],
                   "query": [],
@@ -2476,13 +2476,13 @@
                   "originalRequest": {
                     "description": "GET with path param",
                     "url": {
-                      "raw": "{{baseUrl}}/params/inline-path/:param",
+                      "raw": "{{baseUrl}}/params/path/:param",
                       "host": [
                         "{{baseUrl}}"
                       ],
                       "path": [
                         "params",
-                        "inline-path",
+                        "path",
                         ":param"
                       ],
                       "query": [],
@@ -2601,13 +2601,12 @@
               "request": {
                 "description": "GET with multiple of same query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params/allow-multiple-query?query=query&number=1",
+                  "raw": "{{baseUrl}}/params?query=query&number=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "params",
-                    "allow-multiple-query"
+                    "params"
                   ],
                   "query": [
                     {
@@ -2642,13 +2641,12 @@
                   "originalRequest": {
                     "description": "GET with multiple of same query param",
                     "url": {
-                      "raw": "{{baseUrl}}/params/allow-multiple-query?query=query&number=1",
+                      "raw": "{{baseUrl}}/params?query=query&number=1",
                       "host": [
                         "{{baseUrl}}"
                       ],
                       "path": [
-                        "params",
-                        "allow-multiple-query"
+                        "params"
                       ],
                       "query": [
                         {
@@ -2777,13 +2775,13 @@
               "request": {
                 "description": "GET with path and query params",
                 "url": {
-                  "raw": "{{baseUrl}}/params/inline-path-query/:param?query=query",
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=query",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "params",
-                    "inline-path-query",
+                    "path-query",
                     ":param"
                   ],
                   "query": [
@@ -2820,13 +2818,13 @@
                   "originalRequest": {
                     "description": "GET with path and query params",
                     "url": {
-                      "raw": "{{baseUrl}}/params/inline-path-query/:param?query=query",
+                      "raw": "{{baseUrl}}/params/path-query/:param?query=query",
                       "host": [
                         "{{baseUrl}}"
                       ],
                       "path": [
                         "params",
-                        "inline-path-query",
+                        "path-query",
                         ":param"
                       ],
                       "query": [
@@ -2961,13 +2959,13 @@
               "request": {
                 "description": "PUT to update with path param",
                 "url": {
-                  "raw": "{{baseUrl}}/params/inline-path/:param",
+                  "raw": "{{baseUrl}}/params/path/:param",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "params",
-                    "inline-path",
+                    "path",
                     ":param"
                   ],
                   "query": [],
@@ -3006,13 +3004,13 @@
                   "originalRequest": {
                     "description": "PUT to update with path param",
                     "url": {
-                      "raw": "{{baseUrl}}/params/inline-path/:param",
+                      "raw": "{{baseUrl}}/params/path/:param",
                       "host": [
                         "{{baseUrl}}"
                       ],
                       "path": [
                         "params",
-                        "inline-path",
+                        "path",
                         ":param"
                       ],
                       "query": [],

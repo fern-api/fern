@@ -107,7 +107,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/inline-path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -130,7 +130,7 @@ export class ParamsClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/inline-path/{param}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
     }
 
     /**
@@ -235,7 +235,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/params/allow-multiple-query",
+                "/params",
             ),
             method: "GET",
             headers: _headers,
@@ -258,7 +258,7 @@ export class ParamsClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/allow-multiple-query");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params");
     }
 
     /**
@@ -363,7 +363,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/inline-path-query/${core.url.encodePathParam(param)}`,
+                `/params/path-query/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -386,12 +386,7 @@ export class ParamsClient {
             });
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/params/inline-path-query/{param}",
-        );
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path-query/{param}");
     }
 
     /**
@@ -490,7 +485,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/inline-path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -516,7 +511,7 @@ export class ParamsClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/inline-path/{param}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
     }
 
     /**
