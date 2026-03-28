@@ -4,4 +4,4 @@ service:
   endpoints:
     foo:
       method: POST
-      path: ""
+      path: /a/c

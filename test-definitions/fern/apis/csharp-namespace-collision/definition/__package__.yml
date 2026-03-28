@@ -31,6 +31,6 @@ service:
       response: User
     createTask:
       method: POST
-      path: ""
+      path: /create-task
       request: Task
       response: Task

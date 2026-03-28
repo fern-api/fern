@@ -109,7 +109,7 @@ service:
         next_cursor: $response.page.next.starting_after
         results: $response.data
       method: GET
-      path: ""
+      path: /cursor
       request:
         name: ListUsersCursorPaginationRequest
         query-parameters:
@@ -134,7 +134,7 @@ service:
         next_cursor: $response.next
         results: $response.data
       method: POST
-      path: ""
+      path: /mixed-type-cursor
       request:
         name: ListUsersMixedTypeCursorPaginationRequest
         query-parameters:
@@ -148,7 +148,7 @@ service:
         next_cursor: $response.page.next.starting_after
         results: $response.data
       method: POST
-      path: ""
+      path: /body-cursor
       request:
         name: ListUsersBodyCursorPaginationRequest
         body:
@@ -203,7 +203,7 @@ service:
         offset: $request.page
         results: $response.data
       method: GET
-      path: ""
+      path: /offset
       request:
         name: ListUsersOffsetPaginationRequest
         query-parameters:
@@ -228,7 +228,7 @@ service:
         offset: $request.page
         results: $response.data
       method: GET
-      path: ""
+      path: /double-offset
       request:
         name: ListUsersDoubleOffsetPaginationRequest
         query-parameters:
@@ -253,7 +253,7 @@ service:
         offset: $request.pagination.page
         results: $response.data
       method: POST
-      path: ""
+      path: /body-offset
       request:
         name: ListUsersBodyOffsetPaginationRequest
         body:
@@ -271,7 +271,7 @@ service:
         results: $response.data
         step: $request.limit
       method: GET
-      path: ""
+      path: /offset-step
       request:
         name: ListUsersOffsetStepPaginationRequest
         query-parameters:
@@ -296,7 +296,7 @@ service:
         step: $request.limit
         has-next-page: $response.hasNextPage
       method: GET
-      path: ""
+      path: /offset-has-next-page
       request:
         name: ListWithOffsetPaginationHasNextPageRequest
         query-parameters:
@@ -319,7 +319,7 @@ service:
         next_cursor: $response.next
         results: $response.data.users
       method: GET
-      path: ""
+      path: /extended
       request:
         name: ListUsersExtendedRequest
         query-parameters:
@@ -332,7 +332,7 @@ service:
         next_cursor: $response.next
         results: $response.data.users
       method: GET
-      path: ""
+      path: /extended-optional
       request:
         name: ListUsersExtendedRequestForOptionalData
         query-parameters:
@@ -345,7 +345,7 @@ service:
         next_cursor: $response.cursor.after
         results: $response.cursor.data
       method: GET
-      path: ""
+      path: /usernames
       request:
         name: ListUsernamesRequest
         query-parameters:
@@ -362,7 +362,7 @@ service:
         next_cursor: $response.cursor.after
         results: $response.cursor.data
       method: GET
-      path: ""
+      path: /usernames-optional
       request:
         name: ListUsernamesWithOptionalResponseRequest
         query-parameters:
@@ -375,7 +375,7 @@ service:
 
     listWithGlobalConfig:
       method: GET
-      path: ""
+      path: /global-config
       pagination: true
       request:
         name: ListWithGlobalConfigRequest

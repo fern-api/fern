@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: csharp-namespace-collision
+  version: ''
+paths:
+  /users:
+    post:
+      operationId: createUser
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /users/create-task:
+    post:
+      operationId: createTask
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+  /system/users:
+    post:
+      operationId: system_createUser
+      tags:
+        - System
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemUser'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemUser'
+  /system/users/create-task:
+    post:
+      operationId: system_createTask
+      tags:
+        - System
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemTask'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemTask'
+  /system/users/{userId}:
+    get:
+      operationId: system_getUser
+      tags:
+        - System
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemUser'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - id
+        - name
+        - email
+        - password
+    Task:
+      title: Task
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - id
+        - name
+        - email
+        - password
+    SystemTask:
+      title: SystemTask
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/SystemUser'
+        owner:
+          $ref: '#/components/schemas/SystemUser'
+      required:
+        - name
+        - user
+        - owner
+    SystemUser:
+      title: SystemUser
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          const: USA
+      required:
+        - line1
+        - city
+        - state
+        - zip
+        - country
+  securitySchemes: {}

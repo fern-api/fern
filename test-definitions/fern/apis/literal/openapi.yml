@@ -1,0 +1,361 @@
+openapi: 3.0.1
+info:
+  title: literal
+  version: ''
+  description: Test definition for literal schemas.
+paths:
+  /headers:
+    post:
+      operationId: headers_send
+      tags:
+        - Headers
+      parameters:
+        - name: X-Endpoint-Version
+          in: header
+          required: true
+          schema:
+            type: string
+            const: 02-12-2024
+        - name: X-Async
+          in: header
+          required: true
+          schema:
+            type: boolean
+            const: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              required:
+                - query
+  /inlined:
+    post:
+      operationId: inlined_send
+      tags:
+        - Inlined
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  const: You are a helpful assistant
+                context:
+                  type: string
+                  const: You're super wise
+                  nullable: true
+                query:
+                  type: string
+                temperature:
+                  type: number
+                  format: double
+                  nullable: true
+                stream:
+                  type: boolean
+                  const: false
+                aliasedContext:
+                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                maybeContext:
+                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                  nullable: true
+                objectWithLiteral:
+                  $ref: '#/components/schemas/ATopLevelLiteral'
+              required:
+                - prompt
+                - query
+                - stream
+                - aliasedContext
+                - objectWithLiteral
+  /path/{id}:
+    post:
+      operationId: path_send
+      tags:
+        - Path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            const: '123'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+  /query:
+    post:
+      operationId: query_send
+      tags:
+        - Query
+      parameters:
+        - name: prompt
+          in: query
+          required: true
+          schema:
+            type: string
+            const: You are a helpful assistant
+        - name: optional_prompt
+          in: query
+          required: false
+          schema:
+            type: string
+            const: You are a helpful assistant
+            nullable: true
+        - name: alias_prompt
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+        - name: alias_optional_prompt
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+            nullable: true
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: stream
+          in: query
+          required: true
+          schema:
+            type: boolean
+            const: false
+        - name: optional_stream
+          in: query
+          required: false
+          schema:
+            type: boolean
+            const: false
+            nullable: true
+        - name: alias_stream
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+        - name: alias_optional_stream
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+  /reference:
+    post:
+      operationId: reference_send
+      tags:
+        - Reference
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendRequest'
+components:
+  schemas:
+    SendResponse:
+      title: SendResponse
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: integer
+        success:
+          type: boolean
+          const: true
+      required:
+        - message
+        - status
+        - success
+    SomeAliasedLiteral:
+      title: SomeAliasedLiteral
+      type: string
+      const: You're super wise
+    ATopLevelLiteral:
+      title: ATopLevelLiteral
+      type: object
+      properties:
+        nestedLiteral:
+          $ref: '#/components/schemas/ANestedLiteral'
+      required:
+        - nestedLiteral
+    ANestedLiteral:
+      title: ANestedLiteral
+      type: object
+      properties:
+        myLiteral:
+          type: string
+          const: How super cool
+      required:
+        - myLiteral
+    DiscriminatedLiteral:
+      title: DiscriminatedLiteral
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - customName
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - defaultName
+            value:
+              type: string
+              const: Bob
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - george
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - literalGeorge
+            value:
+              type: boolean
+              const: true
+          required:
+            - type
+    UndiscriminatedLiteral:
+      title: UndiscriminatedLiteral
+      oneOf:
+        - type: string
+        - type: string
+          const: $ending
+        - type: string
+          const: >-
+            10 non-alphanumeric string literals you're going to love & why
+            (number 8 will surprise you)
+        - type: boolean
+          const: true
+        - type: boolean
+          const: false
+        - type: boolean
+    AliasToPrompt:
+      title: AliasToPrompt
+      type: string
+      const: You are a helpful assistant
+    AliasToStream:
+      title: AliasToStream
+      type: boolean
+      const: false
+    SendRequest:
+      title: SendRequest
+      type: object
+      properties:
+        prompt:
+          type: string
+          const: You are a helpful assistant
+        query:
+          type: string
+        stream:
+          type: boolean
+          const: false
+        ending:
+          type: string
+          const: $ending
+        context:
+          $ref: '#/components/schemas/SomeLiteral'
+        maybeContext:
+          $ref: '#/components/schemas/SomeLiteral'
+          nullable: true
+        containerObject:
+          $ref: '#/components/schemas/ContainerObject'
+      required:
+        - prompt
+        - query
+        - stream
+        - ending
+        - context
+        - containerObject
+    ContainerObject:
+      title: ContainerObject
+      type: object
+      properties:
+        nestedObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedObjectWithLiterals'
+      required:
+        - nestedObjects
+    NestedObjectWithLiterals:
+      title: NestedObjectWithLiterals
+      type: object
+      properties:
+        literal1:
+          type: string
+          const: literal1
+        literal2:
+          type: string
+          const: literal2
+        strProp:
+          type: string
+      required:
+        - literal1
+        - literal2
+        - strProp
+    SomeLiteral:
+      title: SomeLiteral
+      type: string
+      const: You're super wise
+  securitySchemes: {}

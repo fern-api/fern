@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: pagination-uri-path
+  version: ''
+paths:
+  /users/uri:
+    get:
+      operationId: users_listWithUriPagination
+      tags:
+        - Users
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersUriPaginationResponse'
+  /users/path:
+    get:
+      operationId: users_listWithPathPagination
+      tags:
+        - Users
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPathPaginationResponse'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+      required:
+        - name
+        - id
+    ListUsersUriPaginationResponse:
+      title: ListUsersUriPaginationResponse
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        next:
+          type: string
+          nullable: true
+      required:
+        - data
+    ListUsersPathPaginationResponse:
+      title: ListUsersPathPaginationResponse
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        next:
+          type: string
+          nullable: true
+      required:
+        - data
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

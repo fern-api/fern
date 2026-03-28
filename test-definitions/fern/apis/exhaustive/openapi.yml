@@ -18,6 +18,7 @@ paths:
                 type: array
                 items:
                   type: string
+      security: &ref_0
         - BearerAuth: []
       requestBody:
         required: true
@@ -42,6 +43,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -65,6 +67,7 @@ paths:
                 type: array
                 items:
                   type: string
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -88,6 +91,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -111,6 +115,7 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -134,6 +139,7 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -157,6 +163,7 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/typesMixedType'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -179,6 +186,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/typesObjectWithRequiredField'
                 nullable: true
+      security: *ref_0
       requestBody:
         required: false
         content:
@@ -195,6 +203,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -210,6 +219,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -229,6 +239,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesWeatherReport'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -253,6 +264,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
     put:
       operationId: endpoints_httpMethods_testPut
       tags:
@@ -270,6 +282,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -293,6 +306,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -316,6 +330,7 @@ paths:
             application/json:
               schema:
                 type: boolean
+      security: *ref_0
   /http-methods:
     post:
       operationId: endpoints_httpMethods_testPost
@@ -329,6 +344,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -348,6 +364,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -367,6 +384,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -386,6 +404,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithMapOfMap'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -405,6 +424,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -429,6 +449,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -448,6 +469,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -469,6 +491,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithUnknownField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -488,6 +511,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithDocumentedUnknownType'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -507,6 +531,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesMapOfDocumentedUnknownType'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -534,6 +559,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -568,6 +594,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/endpointsPaginatedResponse'
+      security: *ref_0
   /params/path/{param}:
     get:
       description: GET with path param
@@ -587,6 +614,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
     put:
       description: PUT to update with path param
       operationId: endpoints_params_modifyWithPath
@@ -605,6 +633,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -629,6 +658,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -655,6 +685,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
     put:
       description: PUT to update with path param
       operationId: endpoints_params_modifyWithInlinePath
@@ -673,6 +704,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -699,6 +731,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
   /params/allow-multiple-query:
     get:
       description: GET with multiple of same query param
@@ -723,6 +756,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
   /params/path-query/{param}:
     get:
       description: GET with path and query params
@@ -743,6 +777,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
   /params/inline-path-query/{param}:
     get:
       description: GET with path and query params
@@ -763,6 +798,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
   /primitive/string:
     post:
       operationId: endpoints_primitive_getAndReturnString
@@ -776,6 +812,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -795,6 +832,7 @@ paths:
             application/json:
               schema:
                 type: integer
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -815,6 +853,7 @@ paths:
               schema:
                 type: integer
                 format: int64
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -836,6 +875,7 @@ paths:
               schema:
                 type: number
                 format: double
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -856,6 +896,7 @@ paths:
             application/json:
               schema:
                 type: boolean
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -876,6 +917,7 @@ paths:
               schema:
                 type: string
                 format: date-time
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -897,6 +939,7 @@ paths:
               schema:
                 type: string
                 format: date
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -918,6 +961,7 @@ paths:
               schema:
                 type: string
                 format: uuid
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -939,6 +983,7 @@ paths:
               schema:
                 type: string
                 format: byte
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -965,6 +1010,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/endpointsPutResponse'
       summary: Put
+      security: *ref_0
   /union:
     post:
       operationId: endpoints_union_getAndReturnUnion
@@ -978,6 +1024,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesAnimal'
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -997,6 +1044,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
   /urls/no-ending-slash:
     get:
       operationId: endpoints_urls_noEndingSlash
@@ -1010,6 +1058,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
   /urls/with-ending-slash/:
     get:
       operationId: endpoints_urls_withEndingSlash
@@ -1023,6 +1072,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
   /urls/with_underscores:
     get:
       operationId: endpoints_urls_withUnderscores
@@ -1036,6 +1086,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
   /req-bodies/object:
     post:
       description: POST with custom object in request body, response is an object
@@ -1111,6 +1162,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
     post:
       operationId: noReqBody_postWithNoRequestBody
       tags:
@@ -1123,6 +1175,7 @@ paths:
             application/json:
               schema:
                 type: string
+      security: *ref_0
   /test-headers/custom-header:
     post:
       operationId: reqWithHeaders_getWithCustomHeader
@@ -1137,6 +1190,7 @@ paths:
       responses:
         '204':
           description: ''
+      security: *ref_0
       requestBody:
         required: true
         content:

@@ -198,14 +198,14 @@ service:
   base-path: /
   endpoints:
     get:
-      path: /{id}
+      path: /bigunion/{id}
       method: GET
       path-parameters:
         id: string
       response: BigUnion
 
     update:
-      path: ""
+      path: /bigunion
       method: PATCH
       request: BigUnion
       response: boolean

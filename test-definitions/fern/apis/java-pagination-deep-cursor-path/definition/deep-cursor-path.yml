@@ -50,7 +50,7 @@ service:
         cursor: $request.b.c.d.starting_after
         next_cursor: $response.starting_after
         results: $response.results
-      path: /
+      path: /do-thing
       request:
         body:
           type: A
@@ -64,7 +64,7 @@ service:
         cursor: $request.indirection.starting_after
         next_cursor: $response.starting_after
         results: $response.results
-      path: /
+      path: /do-thing-required
       request:
         body:
           type: MainRequired
@@ -78,7 +78,7 @@ service:
         cursor: $request.b.c.b.starting_after
         next_cursor: $response.starting_after
         results: $response.results
-      path: /
+      path: /do-thing-inline
       request:
         body:
           type: InlineA

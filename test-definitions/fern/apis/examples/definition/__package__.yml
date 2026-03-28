@@ -48,6 +48,6 @@ service:
 
     createType:
       method: POST
-      path: ""
+      path: /create-type
       request: Type
       response: Identifier

@@ -321,7 +321,7 @@ service:
   base-path: /time
   endpoints:
     get:
-      path: /{id}
+      path: /types/{id}
       method: GET
       path-parameters:
         id: string
@@ -341,7 +341,7 @@ service:
               value: 1994-01-01T01:01:01Z
 
     update:
-      path: ""
+      path: /types
       method: PATCH
       request: UnionWithTime
       response: boolean

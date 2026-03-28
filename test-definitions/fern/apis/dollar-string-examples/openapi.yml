@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: dollar-string-examples
+  version: ''
+paths: {}
+components:
+  schemas:
+    PaymentInfo:
+      title: PaymentInfo
+      type: object
+      properties:
+        amount:
+          type: string
+        currency:
+          type: string
+        description:
+          type: string
+          nullable: true
+      required:
+        - amount
+        - currency
+  securitySchemes: {}
