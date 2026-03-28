@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -10,10 +11,36 @@ public class CreateTest : BaseGrpcMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
-        DataServiceStub.OnCreate(_ => new Data.V1.Grpc.CreateResponse());
+        const string mockResponse = """
+            {
+              "resource": {
+                "id": "id",
+                "values": [
+                  1.1
+                ],
+                "metadata": {
+                  "key": 1.1
+                },
+                "indexed_data": {
+                  "indices": [
+                    1
+                  ],
+                  "values": [
+                    1.1
+                  ]
+                }
+              },
+              "success": true,
+              "error_message": "error_message"
+            }
+            """;
 
-        await Client.DataService.CreateAsync(
+        DataServiceStub.OnCreate(_ =>
+            ParseProtoJson<Data.V1.Grpc.CreateResponse>(mockResponse));
+
+        var response = await Client.DataService.CreateAsync(
             new SeedApi.CreateRequest { Name = "name" }
         );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

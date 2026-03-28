@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
-using Google.Protobuf;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -20,7 +19,7 @@ public class CheckTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnCheck(_ =>
-            JsonParser.Default.Parse<Data.V1.Grpc.CheckResponse>(mockResponse));
+            ParseProtoJson<Data.V1.Grpc.CheckResponse>(mockResponse));
 
         var response = await Client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);
@@ -37,7 +36,7 @@ public class CheckTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnCheck(_ =>
-            JsonParser.Default.Parse<Data.V1.Grpc.CheckResponse>(mockResponse));
+            ParseProtoJson<Data.V1.Grpc.CheckResponse>(mockResponse));
 
         var response = await Client.DataService.CheckAsync();
         JsonAssert.AreEqual(response, mockResponse);

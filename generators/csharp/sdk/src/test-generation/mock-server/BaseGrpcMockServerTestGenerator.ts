@@ -137,6 +137,43 @@ export class BaseGrpcMockServerTestGenerator extends FileGenerator<CSharpFile, S
             annotations: [this.NUnit.Framework.OneTimeTearDown]
         });
 
+        // Add ParseProtoJson<T> helper that sanitizes oneof conflicts before parsing.
+        // Auto-generated example JSON may set multiple fields in the same oneof group,
+        // which JsonParser.Default.Parse<T>() rejects. This helper strips extra oneof
+        // fields from the JSON using the proto message descriptor at runtime.
+        class_.addNamespaceReference("Google.Protobuf");
+        class_.addNamespaceReference("System.Text.Json.Nodes");
+        class_.addRawBodyContent(
+            this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("protected static T ParseProtoJson<T>(string json) where T : IMessage<T>, new()");
+                writer.writeLine("{");
+                writer.writeLine("    var descriptor = new T().Descriptor;");
+                writer.writeLine("    if (descriptor.Oneofs.Count == 0)");
+                writer.writeLine("    {");
+                writer.writeLine("        return JsonParser.Default.Parse<T>(json);");
+                writer.writeLine("    }");
+                writer.writeLine("    var node = JsonNode.Parse(json);");
+                writer.writeLine("    if (node is JsonObject obj)");
+                writer.writeLine("    {");
+                writer.writeLine("        foreach (var oneof in descriptor.Oneofs)");
+                writer.writeLine("        {");
+                writer.writeLine("            var seen = false;");
+                writer.writeLine("            foreach (var field in oneof.Fields)");
+                writer.writeLine("            {");
+                writer.writeLine(
+                    "                var key = obj.ContainsKey(field.JsonName) ? field.JsonName : field.Name;"
+                );
+                writer.writeLine("                if (!obj.ContainsKey(key)) continue;");
+                writer.writeLine("                if (!seen) { seen = true; continue; }");
+                writer.writeLine("                obj.Remove(key);");
+                writer.writeLine("            }");
+                writer.writeLine("        }");
+                writer.writeLine("    }");
+                writer.writeLine("    return JsonParser.Default.Parse<T>(node!.ToJsonString());");
+                writer.writeLine("}");
+            })
+        );
+
         return new CSharpFile({
             clazz: class_,
             directory: this.constants.folders.mockServerTests,

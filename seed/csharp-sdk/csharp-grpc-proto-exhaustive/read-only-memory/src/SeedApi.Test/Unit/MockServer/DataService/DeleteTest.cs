@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using SeedApi.Test.Unit.MockServer;
 using SeedApi.Test.Utils;
-using Google.Protobuf;
 
 namespace SeedApi.Test.Unit.MockServer.DataService;
 
@@ -17,7 +16,7 @@ public class DeleteTest : BaseGrpcMockServerTest
             """;
 
         DataServiceStub.OnDelete(_ =>
-            JsonParser.Default.Parse<Data.V1.Grpc.DeleteResponse>(mockResponse));
+            ParseProtoJson<Data.V1.Grpc.DeleteResponse>(mockResponse));
 
         var response = await Client.DataService.DeleteAsync(new SeedApi.DeleteRequest());
         JsonAssert.AreEqual(response, mockResponse);
