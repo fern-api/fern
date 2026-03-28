@@ -270,7 +270,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         //   4. fixImportsInVolume — adds .js extensions to all import specifiers
         //      (needs all files from steps 1-3; only for non-legacy exports)
         const templateVariables = this.getTemplateVariables(customConfig);
-        const packagePath = customConfig.packagePath ?? "src";
+        const rawPackagePath = customConfig.packagePath ?? "src";
+        const packagePath = rawPackagePath.replace(/^\//, "").replace(/\/$/, "") || "src";
         const persistedTypescriptProject = await typescriptProject.persist(async (volume: MemfsVolume) => {
             await sdkGenerator.copyCoreUtilitiesToVolume(volume);
             writeTemplateFilesToVolume(volume, templateVariables);
