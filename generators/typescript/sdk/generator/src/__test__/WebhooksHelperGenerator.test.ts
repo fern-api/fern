@@ -331,7 +331,7 @@ describe("WebhooksHelperGenerator", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
                 algorithm: "SHA1",
                 encoding: "BASE64",
-                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
                 signaturePrefix: undefined,
                 timestamp: undefined,
                 payloadFormat: {
@@ -351,11 +351,11 @@ describe("WebhooksHelperGenerator", () => {
             expect(text).toMatchSnapshot();
         });
 
-        it("writes HMAC class with ALPHABETICAL bodySort and NOTIFICATION_URL + BODY payload (Twilio pattern)", () => {
+        it("writes HMAC class with ALPHABETICAL bodySort and NOTIFICATION_URL + BODY payload", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
                 algorithm: "SHA1",
                 encoding: "BASE64",
-                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
                 signaturePrefix: undefined,
                 timestamp: undefined,
                 payloadFormat: {
@@ -380,7 +380,7 @@ describe("WebhooksHelperGenerator", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
                 algorithm: "SHA1",
                 encoding: "BASE64",
-                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
                 signaturePrefix: undefined,
                 timestamp: undefined,
                 payloadFormat: {
