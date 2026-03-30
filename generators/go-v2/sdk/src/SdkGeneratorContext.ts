@@ -547,6 +547,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getStreamReceiverTypeReference(valueType: go.Type): go.TypeReference {
+        return go.typeReference({
+            name: "StreamReceiver",
+            importPath: this.getCoreImportPath(),
+            generics: [valueType]
+        });
+    }
+
     public getCustomPagerTypeReference(responseType: go.Type): go.TypeReference {
         const pagerName = this.customConfig.customPagerName ?? "CustomPager";
         return go.typeReference({

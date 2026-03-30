@@ -29,7 +29,9 @@ export function getRawEndpointReturnTypeReference({
         case "streaming":
             return wrapWithRawResponseType({
                 context,
-                returnType: go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
+                returnType: go.Type.reference(
+                    context.getStreamReceiverTypeReference(context.getStreamPayload(body.value))
+                )
             });
         case "streamParameter":
             return context.getRawResponseTypeReference(go.Type.any());
