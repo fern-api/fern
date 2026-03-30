@@ -14,6 +14,12 @@ const (
 
 	// DefaultSSETerminator is the default terminator used for SSE streaming.
 	DefaultSSETerminator = "[DONE]"
+
+	// LastEventIDHeader is the SSE header sent on reconnection.
+	LastEventIDHeader = "Last-Event-ID"
+
+	// defaultMaxReconnectAttempts is the default number of reconnection attempts for SSE streams.
+	defaultMaxReconnectAttempts = 10
 )
 
 // Streamer calls APIs and streams responses using a *Stream.
@@ -89,9 +95,8 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 		return nil, err
 	}
 
-	// Configure auto-reconnection for SSE streams.
 	if params.Format == core.StreamFormatSSE {
-		maxAttempts := 10
+		maxAttempts := defaultMaxReconnectAttempts
 		if params.MaxReconnectAttempts != nil {
 			maxAttempts = *params.MaxReconnectAttempts
 		}
@@ -99,7 +104,7 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 			headers := params.Headers
 			if lastEventID != "" {
 				headers = params.Headers.Clone()
-				headers.Set("Last-Event-ID", lastEventID)
+				headers.Set(LastEventIDHeader, lastEventID)
 			}
 			return s.doStreamRequest(ctx, url, headers, params, client, retryOptions, opts)
 		}

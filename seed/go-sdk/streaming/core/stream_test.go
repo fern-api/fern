@@ -2,8 +2,10 @@ package core
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"io"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -1109,4 +1111,180 @@ func TestStream_CloseThenRecv(t *testing.T) {
 
 	_, err := initial.Recv()
 	assert.ErrorIs(t, err, io.EOF)
+}
+
+func TestStream_MultipleConsecutiveReconnections(t *testing.T) {
+	ctx := context.Background()
+	reconnectCount := 0
+
+	// First connection: one message then EOF triggers reconnect.
+	initial := newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"a\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		reconnectCount++
+		switch reconnectCount {
+		case 1:
+			// Second connection: one message then EOF triggers another reconnect.
+			return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"b\",\"done\":false}\n\n"), nil
+		case 2:
+			// Third connection: final message.
+			return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"c\",\"done\":true}\n\n"), nil
+		default:
+			return newReconnectSSEStream[TestMessage](ctx, ""), nil
+		}
+	}, 10)
+	defer initial.Close()
+
+	msgs := make([]string, 0, 3)
+	for i := 0; i < 3; i++ {
+		msg, err := initial.Recv()
+		require.NoError(t, err)
+		msgs = append(msgs, msg.Content)
+	}
+	assert.Equal(t, []string{"a", "b", "c"}, msgs)
+	assert.Equal(t, 2, reconnectCount, "should have reconnected twice")
+}
+
+func TestStream_RecvRawWithReconnection(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"first\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"second\",\"done\":true}\n\n"), nil
+	}, 10)
+	defer initial.Close()
+
+	raw1, err := initial.RecvRaw()
+	require.NoError(t, err)
+	assert.Contains(t, string(raw1), "first")
+
+	raw2, err := initial.RecvRaw()
+	require.NoError(t, err)
+	assert.Contains(t, string(raw2), "second")
+}
+
+func TestStream_RecvEventRawWithReconnection(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "id: e1\ndata: {\"content\":\"one\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		return newReconnectSSEStream[TestMessage](ctx, "id: e2\ndata: {\"content\":\"two\",\"done\":true}\n\n"), nil
+	}, 10)
+	defer initial.Close()
+
+	event1, err := initial.RecvEventRaw()
+	require.NoError(t, err)
+	assert.Contains(t, string(event1.Data), "one")
+	assert.Equal(t, "e1", event1.ID)
+
+	event2, err := initial.RecvEventRaw()
+	require.NoError(t, err)
+	assert.Contains(t, string(event2.Data), "two")
+	assert.Equal(t, "e2", event2.ID)
+}
+
+func TestBackoffDelay(t *testing.T) {
+	// Attempt 0: base delay (500ms ± 10%).
+	d0 := backoffDelay(0, 0)
+	assert.InDelta(t, float64(500*time.Millisecond), float64(d0), float64(50*time.Millisecond)+1)
+
+	// Attempt 3: 500ms * 2^3 = 4s ± 10%.
+	d3 := backoffDelay(3, 0)
+	assert.InDelta(t, float64(4*time.Second), float64(d3), float64(400*time.Millisecond)+1)
+
+	// High attempt: capped at maxReconnectDelay (30s ± 10%).
+	d100 := backoffDelay(100, 0)
+	assert.InDelta(t, float64(30*time.Second), float64(d100), float64(3*time.Second)+1)
+
+	// Server retry overrides base.
+	d0sr := backoffDelay(0, 2*time.Second)
+	assert.InDelta(t, float64(2*time.Second), float64(d0sr), float64(200*time.Millisecond)+1)
+}
+
+func TestIsIOError(t *testing.T) {
+	tests := []struct {
+		name     string
+		err      error
+		expected bool
+	}{
+		{"EOF", io.EOF, true},
+		{"UnexpectedEOF", io.ErrUnexpectedEOF, true},
+		{"net.Error timeout", &net.DNSError{IsTimeout: true}, true},
+		{"json.SyntaxError", &json.SyntaxError{}, false},
+		{"json.UnmarshalTypeError", &json.UnmarshalTypeError{}, false},
+		{"unknown error defaults to retryable", errors.New("connection reset"), true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.expected, isIOError(tt.err))
+		})
+	}
+}
+
+func TestStream_ReconnectSucceedsOnThirdAttempt(t *testing.T) {
+	ctx := context.Background()
+	attempts := 0
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		attempts++
+		if attempts < 3 {
+			return nil, io.ErrUnexpectedEOF
+		}
+		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"recovered\",\"done\":true}\n\n"), nil
+	}, 5)
+	defer initial.Close()
+
+	msg, err := initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "recovered", msg.Content)
+	assert.Equal(t, 3, attempts)
+}
+
+func TestStream_LastEventIDOverwrittenByLaterEvent(t *testing.T) {
+	ctx := context.Background()
+	var receivedLastEventID string
+
+	initial := newReconnectSSEStream[TestMessage](ctx,
+		"id: first\ndata: {\"content\":\"a\",\"done\":false}\n\n"+
+			"id: second\ndata: {\"content\":\"b\",\"done\":false}\n\n",
+	)
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		receivedLastEventID = lastEventID
+		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"c\",\"done\":true}\n\n"), nil
+	}, 10)
+	defer initial.Close()
+
+	_, err := initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "first", initial.LastEventID())
+
+	_, err = initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "second", initial.LastEventID())
+
+	// Reconnect should receive "second", not "first".
+	_, err = initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "second", receivedLastEventID)
+}
+
+func TestStream_RecvEventMetadataAfterReconnect(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "id: e1\nevent: ping\ndata: {\"content\":\"before\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		return newReconnectSSEStream[TestMessage](ctx, "id: e2\nevent: pong\nretry: 5000\ndata: {\"content\":\"after\",\"done\":true}\n\n"), nil
+	}, 10)
+	defer initial.Close()
+
+	event1, err := initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "ping", event1.Event)
+	assert.Equal(t, "e1", event1.ID)
+
+	event2, err := initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "pong", event2.Event)
+	assert.Equal(t, "e2", event2.ID)
+	assert.Equal(t, 5000, event2.Retry)
 }

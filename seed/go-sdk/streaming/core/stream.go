@@ -40,9 +40,8 @@ const (
 )
 
 const (
-	defaultMaxReconnectAttempts = 10
-	minReconnectDelay           = 500 * time.Millisecond
-	maxReconnectDelay           = 30 * time.Second
+	minReconnectDelay = 500 * time.Millisecond
+	maxReconnectDelay = 30 * time.Second
 )
 
 // ReconnectError is returned when all reconnection attempts are exhausted.
@@ -270,8 +269,14 @@ func (s *Stream[T]) Close() error {
 	if s.reconnectFn != nil {
 		s.mu.Lock()
 		s.closed = true
+		stopFunc := s.stopFunc
+		closer := s.closer
 		s.mu.Unlock()
 		s.cancel()
+		if stopFunc != nil {
+			stopFunc()
+		}
+		return closer.Close()
 	}
 	if s.stopFunc != nil {
 		s.stopFunc()
@@ -424,15 +429,16 @@ func (s *Stream[T]) recvReconnect(readFn func() (T, []byte, error)) (T, []byte, 
 }
 
 func (s *Stream[T]) reconnect() error {
-	// Stop the old context watcher and close the old body.
-	if s.stopFunc != nil {
-		s.stopFunc()
-	}
-	_ = s.closer.Close()
-
 	s.mu.Lock()
+	stopFunc := s.stopFunc
+	closer := s.closer
 	lastEventID := s.lastEventID
 	s.mu.Unlock()
+
+	if stopFunc != nil {
+		stopFunc()
+	}
+	_ = closer.Close()
 
 	var lastErr error
 	for {
@@ -461,10 +467,11 @@ func (s *Stream[T]) reconnect() error {
 			continue
 		}
 
-		// Swap in the new stream's internals.
+		s.mu.Lock()
 		s.reader = newStream.reader
 		s.closer = newStream.closer
 		s.stopFunc = newStream.stopFunc
+		s.mu.Unlock()
 		return nil
 	}
 }
