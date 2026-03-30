@@ -313,8 +313,8 @@ function allVariantsMatchSseSpec({
                   : undefined;
 
         if (rawType == null) {
-            // Variant with no properties - could be a heartbeat event, still valid SSE
-            continue;
+            // Variant with no properties cannot match SSE spec (no "event" field)
+            return false;
         }
 
         const declaration = typeResolver.getDeclarationOfNamedType({
