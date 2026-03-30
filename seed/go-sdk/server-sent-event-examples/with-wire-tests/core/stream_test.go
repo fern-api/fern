@@ -37,10 +37,10 @@ type TestStreamMessage struct {
 
 func TestSseStreamReader_TerminatorHandling(t *testing.T) {
 	tests := []struct {
-		desc        string
-		sseData     string
-		terminator  string
-		wantMessages int
+		desc          string
+		sseData       string
+		terminator    string
+		wantMessages  int
 		wantEOFOnRecv bool
 		wantRecvError bool
 	}{
@@ -150,9 +150,9 @@ data: [DONE]
 
 func TestStream_RecvRaw(t *testing.T) {
 	tests := []struct {
-		desc     string
-		sseData  string
-		wantRaw  []string
+		desc    string
+		sseData string
+		wantRaw []string
 	}{
 		{
 			desc: "raw bytes without JSON unmarshaling",
@@ -411,28 +411,28 @@ func TestSseStreamReader_CommentLines(t *testing.T) {
 		wantMessages []string
 	}{
 		{
-			desc:    "comment-only event is skipped",
-			sseData: ": this is a heartbeat comment\n\ndata: {\"content\":\"hello\"}\n\n",
+			desc:         "comment-only event is skipped",
+			sseData:      ": this is a heartbeat comment\n\ndata: {\"content\":\"hello\"}\n\n",
 			wantMessages: []string{"hello"},
 		},
 		{
-			desc:    "comment lines within data event are ignored",
-			sseData: ": leading comment\ndata: {\"content\":\"first\"}\n\n: standalone heartbeat\n\ndata: {\"content\":\"second\"}\n\n",
+			desc:         "comment lines within data event are ignored",
+			sseData:      ": leading comment\ndata: {\"content\":\"first\"}\n\n: standalone heartbeat\n\ndata: {\"content\":\"second\"}\n\n",
 			wantMessages: []string{"first", "second"},
 		},
 		{
-			desc:    "multiple consecutive comments",
-			sseData: ": heartbeat 1\n\n: heartbeat 2\n\n: heartbeat 3\n\ndata: {\"content\":\"after-heartbeats\"}\n\n",
+			desc:         "multiple consecutive comments",
+			sseData:      ": heartbeat 1\n\n: heartbeat 2\n\n: heartbeat 3\n\ndata: {\"content\":\"after-heartbeats\"}\n\n",
 			wantMessages: []string{"after-heartbeats"},
 		},
 		{
-			desc:    "comment with no space after colon",
-			sseData: ":no-space-comment\n\ndata: {\"content\":\"works\"}\n\n",
+			desc:         "comment with no space after colon",
+			sseData:      ":no-space-comment\n\ndata: {\"content\":\"works\"}\n\n",
 			wantMessages: []string{"works"},
 		},
 		{
-			desc:    "empty comment (just colon)",
-			sseData: ":\n\ndata: {\"content\":\"ok\"}\n\n",
+			desc:         "empty comment (just colon)",
+			sseData:      ":\n\ndata: {\"content\":\"ok\"}\n\n",
 			wantMessages: []string{"ok"},
 		},
 		{
