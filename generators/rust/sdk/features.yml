@@ -3,6 +3,10 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ENVIRONMENTS
+    description: |
+      This SDK allows you to configure different environments for API requests.
+
   - id: ERRORS
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an error will be returned.

@@ -14,6 +14,7 @@ async fn main() {
             &"id".to_string(),
             &Some(DeployParams {
                 update_draft: Some(true),
+                ..Default::default()
             }),
             None,
         )

@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 // Define the function locally to avoid import issues - tests the same logic
 function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
@@ -6,6 +7,121 @@ function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): Relative
     // that cause S3 signature mismatches when paths contain parent directory references
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
+
+type PostFn = (url: string, data: unknown, config: unknown) => Promise<unknown>;
+
+// Replicate unlockDeploy locally with an injectable post function for testing
+async function unlockDeploy({
+    fdrOrigin,
+    token,
+    domain,
+    basepath,
+    postFn
+}: {
+    fdrOrigin: string;
+    token: string;
+    domain: string;
+    basepath?: string;
+    postFn: PostFn;
+}): Promise<void> {
+    try {
+        await postFn(
+            `${fdrOrigin}/docs-deployment/unlock`,
+            { domain, basepath },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+    } catch {
+        // Best-effort: if unlock fails, the staleness timeout will still release the lock
+    }
+}
+
+describe("unlockDeploy", () => {
+    let mockPost: Mock<PostFn>;
+
+    beforeEach(() => {
+        mockPost = vi.fn<PostFn>();
+    });
+
+    it("should POST to the correct unlock endpoint with domain and token", async () => {
+        mockPost.mockResolvedValue({ data: { unlockedDeployments: 1 } });
+
+        await unlockDeploy({
+            fdrOrigin: "https://registry.buildwithfern.com",
+            token: "test-token",
+            domain: "docs.example.com",
+            postFn: mockPost
+        });
+
+        expect(mockPost).toHaveBeenCalledWith(
+            "https://registry.buildwithfern.com/docs-deployment/unlock",
+            { domain: "docs.example.com", basepath: undefined },
+            { headers: { Authorization: "Bearer test-token" } }
+        );
+    });
+
+    it("should include basepath in the request body when provided", async () => {
+        mockPost.mockResolvedValue({ data: { unlockedDeployments: 1 } });
+
+        await unlockDeploy({
+            fdrOrigin: "https://registry.buildwithfern.com",
+            token: "test-token",
+            domain: "docs.example.com",
+            basepath: "/api",
+            postFn: mockPost
+        });
+
+        expect(mockPost).toHaveBeenCalledWith(
+            "https://registry.buildwithfern.com/docs-deployment/unlock",
+            { domain: "docs.example.com", basepath: "/api" },
+            { headers: { Authorization: "Bearer test-token" } }
+        );
+    });
+
+    it("should not throw when the unlock request fails", async () => {
+        mockPost.mockRejectedValue(new Error("Network error"));
+
+        await expect(
+            unlockDeploy({
+                fdrOrigin: "https://registry.buildwithfern.com",
+                token: "test-token",
+                domain: "docs.example.com",
+                postFn: mockPost
+            })
+        ).resolves.toBeUndefined();
+    });
+
+    it("should not throw when the server returns a non-2xx status", async () => {
+        mockPost.mockRejectedValue({
+            response: { status: 500, data: "Internal Server Error" }
+        });
+
+        await expect(
+            unlockDeploy({
+                fdrOrigin: "https://registry.buildwithfern.com",
+                token: "test-token",
+                domain: "docs.example.com",
+                postFn: mockPost
+            })
+        ).resolves.toBeUndefined();
+    });
+
+    it("should use the correct URL format for different FDR origins", async () => {
+        mockPost.mockResolvedValue({ data: { unlockedDeployments: 0 } });
+
+        await unlockDeploy({
+            fdrOrigin: "http://localhost:8080",
+            token: "dev-token",
+            domain: "localhost-docs.example.com",
+            postFn: mockPost
+        });
+
+        expect(mockPost).toHaveBeenCalledWith(
+            "http://localhost:8080/docs-deployment/unlock",
+            expect.any(Object),
+            expect.any(Object)
+        );
+    });
+});
 
 describe("publishDocs S3 path sanitization", () => {
     describe("sanitizeRelativePathForS3", () => {

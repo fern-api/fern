@@ -10,7 +10,7 @@ pub struct HeartbeatPayload {
 
 impl HeartbeatPayload {
     pub fn builder() -> HeartbeatPayloadBuilder {
-        HeartbeatPayloadBuilder::default()
+        <HeartbeatPayloadBuilder as Default>::default()
     }
 }
 

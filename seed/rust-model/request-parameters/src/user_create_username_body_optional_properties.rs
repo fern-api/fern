@@ -12,7 +12,7 @@ pub struct CreateUsernameBodyOptionalProperties {
 
 impl CreateUsernameBodyOptionalProperties {
     pub fn builder() -> CreateUsernameBodyOptionalPropertiesBuilder {
-        CreateUsernameBodyOptionalPropertiesBuilder::default()
+        <CreateUsernameBodyOptionalPropertiesBuilder as Default>::default()
     }
 }
 

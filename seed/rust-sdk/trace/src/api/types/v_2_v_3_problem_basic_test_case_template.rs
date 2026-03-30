@@ -16,7 +16,7 @@ pub struct BasicTestCaseTemplate2 {
 
 impl BasicTestCaseTemplate2 {
     pub fn builder() -> BasicTestCaseTemplate2Builder {
-        BasicTestCaseTemplate2Builder::default()
+        <BasicTestCaseTemplate2Builder as Default>::default()
     }
 }
 

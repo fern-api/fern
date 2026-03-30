@@ -8,6 +8,11 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_oas_spec_native(&StreamRequest { query: None }, None)
+        .stream_oas_spec_native(
+            &StreamRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

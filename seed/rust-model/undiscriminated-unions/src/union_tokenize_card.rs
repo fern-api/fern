@@ -11,7 +11,7 @@ pub struct TokenizeCard {
 
 impl TokenizeCard {
     pub fn builder() -> TokenizeCardBuilder {
-        TokenizeCardBuilder::default()
+        <TokenizeCardBuilder as Default>::default()
     }
 }
 

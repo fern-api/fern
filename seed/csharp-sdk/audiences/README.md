@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -50,6 +51,19 @@ await client.Foo.FindAsync(
         PrivateProperty = 1,
     }
 );
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedAudiences;
+
+var client = new SeedAudiencesClient(new ClientOptions
+{
+    BaseUrl = SeedAudiencesEnvironment.EnvironmentA
+});
 ```
 
 ## Exception Handling

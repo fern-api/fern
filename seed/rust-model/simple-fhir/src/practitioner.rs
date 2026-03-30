@@ -11,7 +11,7 @@ pub struct Practitioner {
 
 impl Practitioner {
     pub fn builder() -> PractitionerBuilder {
-        PractitionerBuilder::default()
+        <PractitionerBuilder as Default>::default()
     }
 }
 

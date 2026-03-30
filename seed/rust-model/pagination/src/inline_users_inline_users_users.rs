@@ -8,7 +8,7 @@ pub struct Users {
 
 impl Users {
     pub fn builder() -> UsersBuilder {
-        UsersBuilder::default()
+        <UsersBuilder as Default>::default()
     }
 }
 

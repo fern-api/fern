@@ -9,7 +9,7 @@ pub struct GetWithPathAndQueryQueryRequest {
 
 impl GetWithPathAndQueryQueryRequest {
     pub fn builder() -> GetWithPathAndQueryQueryRequestBuilder {
-        GetWithPathAndQueryQueryRequestBuilder::default()
+        <GetWithPathAndQueryQueryRequestBuilder as Default>::default()
     }
 }
 

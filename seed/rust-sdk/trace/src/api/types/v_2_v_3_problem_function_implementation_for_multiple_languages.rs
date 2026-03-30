@@ -9,7 +9,7 @@ pub struct FunctionImplementationForMultipleLanguages2 {
 
 impl FunctionImplementationForMultipleLanguages2 {
     pub fn builder() -> FunctionImplementationForMultipleLanguages2Builder {
-        FunctionImplementationForMultipleLanguages2Builder::default()
+        <FunctionImplementationForMultipleLanguages2Builder as Default>::default()
     }
 }
 

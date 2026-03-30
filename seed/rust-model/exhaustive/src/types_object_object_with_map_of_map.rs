@@ -8,7 +8,7 @@ pub struct ObjectWithMapOfMap {
 
 impl ObjectWithMapOfMap {
     pub fn builder() -> ObjectWithMapOfMapBuilder {
-        ObjectWithMapOfMapBuilder::default()
+        <ObjectWithMapOfMapBuilder as Default>::default()
     }
 }
 

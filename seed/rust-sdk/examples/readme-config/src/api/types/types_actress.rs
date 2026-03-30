@@ -10,7 +10,7 @@ pub struct Actress {
 
 impl Actress {
     pub fn builder() -> ActressBuilder {
-        ActressBuilder::default()
+        <ActressBuilder as Default>::default()
     }
 }
 

@@ -406,8 +406,9 @@ export function buildEndpoint({
 }
 
 /**
- * Returns security array, true, or undefined.
- * Does not return false since false is the default for service and we want to inherit that.
+ * Returns security array, boolean, or undefined.
+ * Returns false for explicit empty security arrays (security: []).
+ * Returns undefined to inherit from service-level auth.
  */
 function convertEndpointAuth({
     endpoint,
@@ -415,7 +416,7 @@ function convertEndpointAuth({
 }: {
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
-}): true | undefined | RawSchemas.HttpEndpointSecurity {
+}): boolean | undefined | RawSchemas.HttpEndpointSecurity {
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;
@@ -431,7 +432,7 @@ function convertEndpointAuth({
     }
     // explicit empty array means no auth
     if (endpoint.security.length === 0) {
-        return undefined;
+        return false;
     }
 
     // deep equality for endpoint and global security

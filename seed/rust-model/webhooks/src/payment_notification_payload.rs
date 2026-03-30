@@ -13,7 +13,7 @@ pub struct PaymentNotificationPayload {
 
 impl PaymentNotificationPayload {
     pub fn builder() -> PaymentNotificationPayloadBuilder {
-        PaymentNotificationPayloadBuilder::default()
+        <PaymentNotificationPayloadBuilder as Default>::default()
     }
 }
 

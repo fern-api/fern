@@ -56,11 +56,9 @@ async fn main() {
             &"path_param".to_string(),
             &TestMethodNameRequest {
                 body: Some(PlainObject {
-                    id: None,
-                    name: None,
+                    ..Default::default()
                 }),
-                query_param_object: None,
-                query_param_integer: None,
+                ..Default::default()
             },
             None,
         )

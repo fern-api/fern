@@ -63,6 +63,7 @@ async fn main() {
         .post_object(
             &MyObject {
                 unknown: serde_json::json!({"key":"value"}),
+                ..Default::default()
             },
             None,
         )

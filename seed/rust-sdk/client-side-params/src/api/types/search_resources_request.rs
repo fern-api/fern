@@ -17,7 +17,7 @@ pub struct SearchResourcesRequest {
 
 impl SearchResourcesRequest {
     pub fn builder() -> SearchResourcesRequestBuilder {
-        SearchResourcesRequestBuilder::default()
+        <SearchResourcesRequestBuilder as Default>::default()
     }
 }
 

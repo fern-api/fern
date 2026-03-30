@@ -14,7 +14,7 @@ pub struct GeneratedFiles2 {
 
 impl GeneratedFiles2 {
     pub fn builder() -> GeneratedFiles2Builder {
-        GeneratedFiles2Builder::default()
+        <GeneratedFiles2Builder as Default>::default()
     }
 }
 

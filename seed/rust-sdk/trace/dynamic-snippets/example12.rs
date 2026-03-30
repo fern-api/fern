@@ -23,6 +23,7 @@ async fn main() {
                         ProblemId("problems".to_string()),
                         ProblemId("problems".to_string()),
                     ],
+                    ..Default::default()
                 },
             },
             None,

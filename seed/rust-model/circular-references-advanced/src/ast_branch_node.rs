@@ -8,7 +8,7 @@ pub struct BranchNode {
 
 impl BranchNode {
     pub fn builder() -> BranchNodeBuilder {
-        BranchNodeBuilder::default()
+        <BranchNodeBuilder as Default>::default()
     }
 }
 

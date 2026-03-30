@@ -8,7 +8,7 @@ pub struct GetFunctionSignatureRequest2 {
 
 impl GetFunctionSignatureRequest2 {
     pub fn builder() -> GetFunctionSignatureRequest2Builder {
-        GetFunctionSignatureRequest2Builder::default()
+        <GetFunctionSignatureRequest2Builder as Default>::default()
     }
 }
 

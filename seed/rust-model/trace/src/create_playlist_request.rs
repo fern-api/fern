@@ -17,7 +17,7 @@ pub struct CreatePlaylistRequest {
 
 impl CreatePlaylistRequest {
     pub fn builder() -> CreatePlaylistRequestBuilder {
-        CreatePlaylistRequestBuilder::default()
+        <CreatePlaylistRequestBuilder as Default>::default()
     }
 }
 

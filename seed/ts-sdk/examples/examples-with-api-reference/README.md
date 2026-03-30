@@ -16,6 +16,7 @@ The CustomName TypeScript library provides convenient access to the CustomName A
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -85,6 +86,18 @@ await client.service.createMovie({
         }
     },
     revenue: 1000000
+});
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { SeedExamplesClient, SeedExamplesEnvironment } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+    environment: SeedExamplesEnvironment.Production,
 });
 ```
 

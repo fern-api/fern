@@ -116,7 +116,9 @@ async fn main() {
                     country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -184,7 +186,9 @@ async fn main() {
                     country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -259,6 +263,7 @@ async fn main() {
                 offset: Some(1),
                 include_deleted: Some(true),
                 sort_by: Some("sortBy".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -463,6 +468,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_notification: Some(NotificationMethod::Email {
@@ -470,6 +476,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_nullable_notification: Some(NotificationMethod::Email {
@@ -477,6 +484,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 nullable_search_result: Some(SearchResult::User {
@@ -497,7 +505,9 @@ async fn main() {
                             country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 optional_search_result: Some(SearchResult::User {
@@ -518,7 +528,9 @@ async fn main() {
                             country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
@@ -547,6 +559,7 @@ async fn main() {
                         country: Some("country".to_string()),
                         building_id: NullableUserId(Some("buildingId".to_string())),
                         tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                        ..Default::default()
                     }),
                 )])),
                 nullable_list_of_unions: Some(vec![
@@ -555,6 +568,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                     NotificationMethod::Email {
@@ -562,6 +576,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                 ]),
@@ -569,6 +584,7 @@ async fn main() {
                     "optionalMapOfEnums".to_string(),
                     UserRole::Admin,
                 )])),
+                ..Default::default()
             },
             None,
         )
@@ -698,6 +714,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 nullable_search_result: Some(SearchResult::User {
@@ -718,13 +735,16 @@ async fn main() {
                             country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ]),
+                ..Default::default()
             },
             None,
         )
@@ -846,6 +866,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_union: Some(SearchResult::User {
@@ -866,7 +887,9 @@ async fn main() {
                             country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_list: Some(vec!["nullableList".to_string(), "nullableList".to_string()]),
@@ -879,13 +902,16 @@ async fn main() {
                     country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
                 optional_object: Some(Organization {
                     id: "id".to_string(),
                     name: "name".to_string(),
                     domain: Some("domain".to_string()),
                     employee_count: Some(1),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -944,6 +970,7 @@ async fn main() {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
                 secondary_role: Some(UserRole::Admin),
+                ..Default::default()
             },
             None,
         )
@@ -1100,6 +1127,7 @@ async fn main() {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
                 labels: Some(vec!["labels".to_string(), "labels".to_string()]),
+                ..Default::default()
             },
             None,
         )

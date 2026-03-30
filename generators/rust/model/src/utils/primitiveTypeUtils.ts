@@ -545,6 +545,11 @@ export function namedTypeSupportsHashAndEq(
             return false; // Prevent infinite recursion
         }
         analysisStack.add(namedType.typeId);
+        // HashMap<String, Value> (extra properties) doesn't implement Hash or Eq
+        if (typeDeclaration.shape.extraProperties) {
+            analysisStack.delete(namedType.typeId);
+            return false;
+        }
         // Check both properties and extended types
         const propertiesSupport = typeDeclaration.shape.properties.every((property: FernIr.ObjectProperty) =>
             typeSupportsHashAndEq(property.valueType, context, analysisStack)

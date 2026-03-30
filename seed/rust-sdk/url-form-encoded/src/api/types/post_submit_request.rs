@@ -12,7 +12,7 @@ pub struct PostSubmitRequest {
 
 impl PostSubmitRequest {
     pub fn builder() -> PostSubmitRequestBuilder {
-        PostSubmitRequestBuilder::default()
+        <PostSubmitRequestBuilder as Default>::default()
     }
 }
 

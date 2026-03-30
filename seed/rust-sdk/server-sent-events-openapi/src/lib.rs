@@ -14,7 +14,12 @@
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
-//!         .stream_protocol_no_collision(&StreamRequest { query: None }, None)
+//!         .stream_protocol_no_collision(
+//!             &StreamRequest {
+//!                 ..Default::default()
+//!             },
+//!             None,
+//!         )
 //!         .await;
 //! }
 //! ```

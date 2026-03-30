@@ -48,7 +48,8 @@ export async function runLocalGenerationForWorkspace({
     noReplay,
     validateWorkspace,
     requireEnvVars,
-    skipFernignore
+    skipFernignore,
+    publishToRegistry
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -66,6 +67,7 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
+    publishToRegistry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -342,6 +344,7 @@ export async function runLocalGenerationForWorkspace({
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    publishToRegistry,
                     runner,
                     ai,
                     autoVersioningCache,

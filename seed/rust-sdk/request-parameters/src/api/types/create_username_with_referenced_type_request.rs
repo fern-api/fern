@@ -11,7 +11,7 @@ pub struct CreateUsernameWithReferencedTypeRequest {
 
 impl CreateUsernameWithReferencedTypeRequest {
     pub fn builder() -> CreateUsernameWithReferencedTypeRequestBuilder {
-        CreateUsernameWithReferencedTypeRequestBuilder::default()
+        <CreateUsernameWithReferencedTypeRequestBuilder as Default>::default()
     }
 }
 
