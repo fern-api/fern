@@ -23,6 +23,7 @@ import {
     Webhook,
     WebhookGroup,
     WebhookPayload,
+    WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
     WebhookSignatureEncoding,
@@ -510,13 +511,26 @@ function convertPayloadFormat(payloadFormat: RawSchemas.WebhookPayloadFormatSche
     if (payloadFormat == null) {
         return {
             components: [WebhookPayloadComponent.Body],
-            delimiter: ""
+            delimiter: "",
+            bodySort: undefined
         };
     }
     return {
         components: payloadFormat.components.map(convertPayloadComponent),
-        delimiter: payloadFormat.delimiter ?? ""
+        delimiter: payloadFormat.delimiter ?? "",
+        bodySort: convertBodySort(payloadFormat["body-sort"])
     };
+}
+
+function convertBodySort(
+    bodySort: RawSchemas.WebhookPayloadBodySortSchema | undefined
+): WebhookPayloadBodySort | undefined {
+    switch (bodySort) {
+        case "alphabetical":
+            return WebhookPayloadBodySort.Alphabetical;
+        case undefined:
+            return undefined;
+    }
 }
 
 function convertPayloadComponent(component: RawSchemas.WebhookPayloadComponentSchema): WebhookPayloadComponent {

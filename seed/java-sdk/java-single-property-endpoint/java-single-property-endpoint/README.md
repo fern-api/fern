@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-single-property-endpoint'
+  implementation 'com.fern:java-single-property-endpoint:0.0.1'
 }
 ```
 

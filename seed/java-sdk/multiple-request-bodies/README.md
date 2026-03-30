@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:multiple-request-bodies'
+  implementation 'com.fern:multiple-request-bodies:0.0.1'
 }
 ```
 

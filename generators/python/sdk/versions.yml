@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.1.3
+  changelogEntry:
+    - summary: |
+        Add transport-level connection error retries to the HTTP client. The retry logic now
+        catches `httpx.ConnectError` and `httpx.RemoteProtocolError` (e.g., "Remote end closed
+        connection without response") and retries with exponential backoff, matching the existing
+        status-code-based retry behavior. Also fixes the existing status-code retry path to
+        forward the `data` and `force_multipart` parameters on retry.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 5.1.2
   changelogEntry:
     - summary: |

@@ -513,7 +513,11 @@ export class MockEndpointGenerator extends WithGeneration {
             type: "named";
             typeName: { typeId: TypeId };
             shape:
-                | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+                | {
+                      type: "object";
+                      properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                      extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                  }
                 | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
                 | { type: "enum"; value: { wireValue: string } }
                 | { type: "alias"; value: ExampleTypeReference }
@@ -526,7 +530,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         switch (innerShape.type) {
             case "object":
-                return this.filterObjectExample(typeId, innerShape.properties, options);
+                return this.filterObjectExample(typeId, innerShape.properties, options, innerShape.extraProperties);
 
             case "alias":
                 return this.filterExampleTypeReference(innerShape.value, options);
@@ -554,7 +558,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private filterObjectExample(
         typeId: TypeId,
         properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>,
-        options: { filterWriteOnly?: boolean } = {}
+        options: { filterWriteOnly?: boolean } = {},
+        extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
@@ -578,6 +583,14 @@ export class MockEndpointGenerator extends WithGeneration {
             }
             result[prop.name.wireValue] = filteredValue;
         }
+
+        // Include extra properties (AdditionalProperties) inline — they serialize via [JsonExtensionData]
+        if (extraProperties != null) {
+            for (const extraProp of extraProperties) {
+                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value, options);
+            }
+        }
+
         return result;
     }
 

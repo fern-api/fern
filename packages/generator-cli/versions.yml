@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade replay to 0.8.0 with support for detecting git revert commits and cancelling matching patches.
+      type: feat
+  createdAt: "2026-03-30"
+  version: 0.8.0
+
+- changelogEntry:
+    - summary: |
         Update generator-cli to trigger new publish after changing to oidc auth for publish action.
       type: chore
   createdAt: "2026-03-25"

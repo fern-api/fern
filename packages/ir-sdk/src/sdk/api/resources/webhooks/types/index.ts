@@ -13,6 +13,7 @@ export * from "./WebhookGroup.js";
 export * from "./WebhookHttpMethod.js";
 export * from "./WebhookName.js";
 export * from "./WebhookPayload.js";
+export * from "./WebhookPayloadBodySort.js";
 export * from "./WebhookPayloadComponent.js";
 export * from "./WebhookPayloadFormat.js";
 export * from "./WebhookPayloadReference.js";

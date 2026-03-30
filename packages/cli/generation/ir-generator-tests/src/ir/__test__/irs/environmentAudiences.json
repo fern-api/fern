@@ -5227,7 +5227,8 @@
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": {

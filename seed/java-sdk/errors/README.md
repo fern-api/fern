@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:errors'
+  implementation 'com.fern:errors:0.0.1'
 }
 ```
 

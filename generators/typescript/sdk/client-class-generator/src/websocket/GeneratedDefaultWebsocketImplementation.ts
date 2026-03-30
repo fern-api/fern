@@ -442,6 +442,18 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
         }
+        // Include client-level default headers (this._options?.headers)
+        mergeHeaders.push(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createThis(),
+                    undefined,
+                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                "headers"
+            )
+        );
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {
                 return ts.factory.createPropertyAssignment(
@@ -462,11 +474,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         }
         mergeHeaders.push(ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME));
 
-        if (mergeHeaders.length > 1) {
-            context.importsManager.addImportFromRoot("core/headers", {
-                namedImports: ["mergeHeaders"]
-            });
-        }
+        context.importsManager.addImportFromRoot("core/headers", {
+            namedImports: ["mergeHeaders"]
+        });
 
         return [
             destructuringStatement,
@@ -483,16 +493,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("unknown"))
                             ]),
-                            mergeHeaders.length > 1
-                                ? ts.factory.createCallExpression(
-                                      ts.factory.createIdentifier("mergeHeaders"),
-                                      undefined,
-                                      [...mergeHeaders]
-                                  )
-                                : ts.factory.createObjectLiteralExpression(
-                                      [ts.factory.createSpreadAssignment(mergeHeaders[0] as ts.Expression)],
-                                      false
-                                  )
+                            ts.factory.createCallExpression(ts.factory.createIdentifier("mergeHeaders"), undefined, [
+                                ...mergeHeaders
+                            ])
                         )
                     ],
                     ts.NodeFlags.Let

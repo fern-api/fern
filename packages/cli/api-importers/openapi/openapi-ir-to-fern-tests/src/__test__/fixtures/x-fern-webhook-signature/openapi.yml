@@ -15,6 +15,7 @@ x-fern-webhook-signature:
       - timestamp
       - body
     delimiter: "."
+    body-sort: alphabetical
   timestamp:
     header: x-webhook-timestamp
     format: unix-seconds
