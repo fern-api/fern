@@ -1,14 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.50.3
+- version: 4.51.0
   changelogEntry:
     - summary: |
-        Stop converting header parameters with `default` values into literal
-        schemas. The `default` value in an OpenAPI header parameter is
-        informational only and should not constrain the generated type. Headers
-        now preserve their declared schema type: optional headers remain
-        `optional<string>` and required headers remain `string`, regardless of
-        whether a `default` is present.
-      type: fix
+        Add `coerce-header-defaults-to-literals` option to control whether
+        header parameters with string `default` values are converted to literal
+        schemas. When set to `false`, the `default` is treated as informational
+        only and the header preserves its declared type (`string` or
+        `optional<string>`). Defaults to `true` for backward compatibility.
+      type: feat
   createdAt: "2026-03-30"
   irVersion: 65
 

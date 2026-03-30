@@ -96,6 +96,7 @@ export interface APIDefinitionSettings {
     resolveSchemaCollisions: boolean | undefined;
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
+    coerceHeaderDefaultsToLiterals: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

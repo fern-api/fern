@@ -69,7 +69,15 @@ export const BaseApiSettingsSchema = z.object({
      * - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
      * Defaults to `enums-coerceable-to-literals`.
      */
-    coerceConstsTo: z.enum(["literals", "enums", "enums-coerceable-to-literals"]).optional()
+    coerceConstsTo: z.enum(["literals", "enums", "enums-coerceable-to-literals"]).optional(),
+
+    /**
+     * If true, header parameters with string `default` values are converted to literal schemas,
+     * pinning the generated SDK to that exact value. If false, the `default` is treated as
+     * informational only and the header preserves its declared type (e.g. `string` or `optional<string>`).
+     * Defaults to true for backward compatibility.
+     */
+    coerceHeaderDefaultsToLiterals: z.boolean().optional()
 });
 
 export type BaseApiSettingsSchema = z.infer<typeof BaseApiSettingsSchema>;

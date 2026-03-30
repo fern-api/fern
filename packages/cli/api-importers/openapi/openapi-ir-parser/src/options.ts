@@ -131,6 +131,14 @@ export interface ParseOpenAPIOptions {
      * instead of a plain string. Defaults to false.
      */
     respectByteFormat: boolean;
+
+    /**
+     * If true, header parameters with string `default` values are converted to literal schemas,
+     * pinning the generated SDK to that exact value. If false, the `default` is treated as
+     * informational only and the header preserves its declared type (e.g. `string` or `optional<string>`).
+     * Defaults to true for backward compatibility.
+     */
+    coerceHeaderDefaultsToLiterals: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -169,7 +177,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     resolveSchemaCollisions: false,
     inferForwardCompatible: false,
     coerceConstsTo: "enums-coerceable-to-literals",
-    respectByteFormat: false
+    respectByteFormat: false,
+    coerceHeaderDefaultsToLiterals: true
 };
 
 function mergeOptions<T extends object>(params: {

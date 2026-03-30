@@ -148,7 +148,8 @@ export class LegacyApiSpecAdapter {
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
             defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
-            coerceConstsTo: settings.coerceConstsTo
+            coerceConstsTo: settings.coerceConstsTo,
+            coerceHeaderDefaultsToLiterals: settings.coerceHeaderDefaultsToLiterals
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
@@ -177,7 +178,8 @@ export class LegacyApiSpecAdapter {
 
             // AsyncAPI-specific settings
             asyncApiNaming: settings.messageNaming,
-            coerceConstsTo: settings.coerceConstsTo
+            coerceConstsTo: settings.coerceConstsTo,
+            coerceHeaderDefaultsToLiterals: settings.coerceHeaderDefaultsToLiterals
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);

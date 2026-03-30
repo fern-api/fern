@@ -1,6 +1,7 @@
 import {
     HeaderWithExample,
     HttpMethod,
+    LiteralSchemaValue,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
@@ -76,7 +77,7 @@ export function convertParameters({
         const [isOptional, isNullable] =
             context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
-        const schema =
+        let schema =
             resolvedParameter.schema != null
                 ? convertSchema(
                       resolvedParameter.schema,
@@ -144,6 +145,29 @@ export function convertParameters({
                         groupName: undefined,
                         inline: undefined
                     });
+        // When coerceHeaderDefaultsToLiterals is enabled (default for backward compat),
+        // convert header parameters with string defaults to literal schemas.
+        if (
+            context.options.coerceHeaderDefaultsToLiterals &&
+            resolvedParameter.in === "header" &&
+            resolvedParameter.schema != null &&
+            !isReferenceObject(resolvedParameter.schema) &&
+            resolvedParameter.schema.type === "string" &&
+            resolvedParameter.schema.default != null &&
+            typeof resolvedParameter.schema.default === "string"
+        ) {
+            schema = SchemaWithExample.literal({
+                nameOverride: undefined,
+                generatedName,
+                title: undefined,
+                value: LiteralSchemaValue.string(resolvedParameter.schema.default),
+                description: undefined,
+                availability,
+                namespace: undefined,
+                groupName: undefined
+            });
+        }
+
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,

@@ -25,6 +25,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "infer-forward-compatible": core.serialization.boolean().optional(),
     "infer-default-environment": core.serialization.boolean().optional(),
     "coerce-consts-to": CoerceConstsTo.optional(),
+    "coerce-header-defaults-to-literals": core.serialization.boolean().optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -43,5 +44,6 @@ export declare namespace BaseApiSettingsSchema {
         "infer-forward-compatible"?: boolean | null;
         "infer-default-environment"?: boolean | null;
         "coerce-consts-to"?: CoerceConstsTo.Raw | null;
+        "coerce-header-defaults-to-literals"?: boolean | null;
     }
 }

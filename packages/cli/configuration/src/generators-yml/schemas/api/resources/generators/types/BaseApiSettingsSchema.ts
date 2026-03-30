@@ -63,4 +63,11 @@ export interface BaseApiSettingsSchema {
      * Defaults to `enums-coerceable-to-literals`.
      */
     "coerce-consts-to"?: GeneratorsYml.CoerceConstsTo;
+    /**
+     * If true, header parameters with string `default` values are converted to literal schemas,
+     * pinning the generated SDK to that exact value. If false, the `default` is treated as
+     * informational only and the header preserves its declared type (e.g. `string` or `optional<string>`).
+     * Defaults to true for backward compatibility.
+     */
+    "coerce-header-defaults-to-literals"?: boolean;
 }

@@ -18,6 +18,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "remove-discriminants-from-schemas": "removeDiscriminantsFromSchemas",
     "path-parameter-order": "pathParameterOrder",
     "coerce-consts-to": "coerceConstsTo",
+    "coerce-header-defaults-to-literals": "coerceHeaderDefaultsToLiterals",
 
     // OpenAPI-specific settings
     "only-include-referenced-schemas": "onlyIncludeReferencedSchemas",
