@@ -1,0 +1,112 @@
+openapi: 3.0.1
+info:
+  title: null-type
+  version: ''
+paths:
+  /conversations/outbound-call:
+    post:
+      description: Place an outbound call or validate call setup with dry_run.
+      operationId: conversations_outboundCall
+      tags:
+        - Conversations
+      parameters: []
+      responses:
+        '200':
+          description: Dry run succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundCallConversationsResponse'
+              examples:
+                Example1:
+                  value:
+                    conversation_id:
+                      key: value
+                    dry_run: true
+      summary: Outbound Call
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to_phone_number:
+                  type: string
+                  description: The phone number to call in E.164 format.
+                  example: to_phone_number
+                dry_run:
+                  type: boolean
+                  nullable: true
+                  description: >-
+                    If true, validates the outbound call setup without placing a
+                    call.
+              required:
+                - to_phone_number
+            examples:
+              Example1:
+                value:
+                  to_phone_number: to_phone_number
+  /users/{id}:
+    get:
+      description: Gets a user by ID. The deleted_at field uses type null.
+      operationId: users_get
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: id
+          examples:
+            Example1:
+              value: id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    deleted_at:
+                      key: value
+      summary: Get User
+components:
+  schemas:
+    OutboundCallConversationsResponse:
+      title: OutboundCallConversationsResponse
+      type: object
+      properties:
+        conversation_id:
+          nullable: true
+          description: Always null when dry_run is true.
+        dry_run:
+          type: boolean
+          description: Always true for this response.
+          example: true
+      required:
+        - dry_run
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+          example: id
+        name:
+          type: string
+          example: name
+        deleted_at:
+          nullable: true
+          description: Always null for active users.
+      required:
+        - id
+        - name
+  securitySchemes: {}

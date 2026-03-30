@@ -412,6 +412,64 @@
   "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
+      "ChatRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "chatRequestQuery",
+            "key": "query",
+            "schema": {
+              "description": "The chat message or question.",
+              "schema": {
+                "example": "How can I use the Vectara platform?",
+                "type": "string"
+              },
+              "generatedName": "ChatRequestQuery",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "chatRequestStreamResponse",
+            "key": "stream_response",
+            "schema": {
+              "generatedName": "ChatRequestStreamResponse",
+              "description": "Indicates whether the response should be streamed or not.",
+              "value": {
+                "generatedName": "ChatRequestStreamResponse",
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "description": "Indicates whether the response should be streamed or not.",
+                  "schema": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "generatedName": "ChatRequestStreamResponse",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ChatRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
       "ChatFullResponse": {
         "allOf": [],
         "properties": [
