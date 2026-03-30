@@ -28,6 +28,7 @@ if typing.TYPE_CHECKING:
     from .remove_none_from_dict import remove_none_from_dict
     from .request_options import RequestOptions
     from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
+    from .webhooks_helper import WebhooksHelper
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiError": ".api_error",
     "AsyncClientWrapper": ".client_wrapper",
@@ -50,6 +51,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
+    "WebhooksHelper": ".webhooks_helper",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
     "create_logger": ".logging",
@@ -109,6 +111,7 @@ __all__ = [
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
+    "WebhooksHelper",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "create_logger",

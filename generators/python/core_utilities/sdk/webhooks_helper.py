@@ -1,0 +1,192 @@
+import base64
+import hashlib
+import hmac
+import time
+from typing import Dict, List, Optional, Union
+
+
+class WebhooksHelper:
+    """Utility for verifying webhook signatures."""
+
+    @staticmethod
+    def verify_signature(
+        *,
+        request_body: Union[str, Dict[str, str]],
+        signature_header: str,
+        signature_key: str,
+        notification_url: Optional[str] = None,
+        message_id: Optional[str] = None,
+        timestamp_header: Optional[str] = None,
+        algorithm: str = "sha256",
+        encoding: str = "hex",
+        signature_prefix: Optional[str] = None,
+        payload_components: Optional[List[str]] = None,
+        payload_delimiter: str = "",
+        body_sort: bool = False,
+        timestamp_tolerance_seconds: Optional[int] = None,
+        timestamp_format: Optional[str] = None,
+    ) -> bool:
+        """
+        Verify an HMAC webhook signature.
+
+        Parameters
+        ----------
+        request_body : Union[str, Dict[str, str]]
+            The raw request body as a string, or a dict of POST body parameters.
+            If a dict is provided and body_sort is True, the keys are sorted
+            alphabetically and concatenated as key+value pairs.
+
+        signature_header : str
+            The value of the signature header from the webhook request.
+
+        signature_key : str
+            The secret key used for HMAC computation.
+
+        notification_url : Optional[str]
+            The notification URL that the webhook was sent to.
+
+        message_id : Optional[str]
+            A provider-assigned message identifier.
+
+        timestamp_header : Optional[str]
+            The value of the timestamp header, if applicable.
+
+        algorithm : str
+            The HMAC hash algorithm (e.g., "sha1", "sha256", "sha384", "sha512").
+
+        encoding : str
+            The encoding for the computed signature ("hex" or "base64").
+
+        signature_prefix : Optional[str]
+            A prefix to strip from the signature header before comparison.
+
+        payload_components : Optional[List[str]]
+            Ordered list of component names to concatenate for the payload.
+            Valid values: "body", "notification_url", "timestamp", "message_id".
+            If None, defaults to ["body"].
+
+        payload_delimiter : str
+            Delimiter used to join payload components.
+
+        body_sort : bool
+            If True and request_body is a dict, sort keys alphabetically
+            and concatenate key+value pairs.
+
+        timestamp_tolerance_seconds : Optional[int]
+            If set, reject requests where the timestamp is outside this tolerance window.
+
+        timestamp_format : Optional[str]
+            Format of the timestamp header value: "unix_seconds", "unix_millis", or "iso8601".
+
+        Returns
+        -------
+        bool
+            True if the computed signature matches the provided signature header.
+        """
+        if request_body is None or signature_header is None or signature_key is None:
+            raise ValueError("Missing required parameters for webhook signature verification")
+
+        # Timestamp validation
+        if timestamp_tolerance_seconds is not None and timestamp_header is not None:
+            timestamp_ms = _parse_timestamp(timestamp_header, timestamp_format)
+            if timestamp_ms is not None:
+                now_ms = int(time.time() * 1000)
+                if abs(now_ms - timestamp_ms) > timestamp_tolerance_seconds * 1000:
+                    return False
+
+        # Strip signature prefix
+        sig = signature_header
+        if signature_prefix is not None and sig.startswith(signature_prefix):
+            sig = sig[len(signature_prefix) :]
+
+        # Build payload
+        components = payload_components or ["body"]
+        payload = _build_payload(
+            components=components,
+            request_body=request_body,
+            notification_url=notification_url,
+            message_id=message_id,
+            timestamp_header=timestamp_header,
+            delimiter=payload_delimiter,
+            body_sort=body_sort,
+        )
+
+        # Compute HMAC
+        hash_func = getattr(hashlib, algorithm, None)
+        if hash_func is None:
+            raise ValueError(f"Unsupported hash algorithm: {algorithm}")
+
+        computed = hmac.new(
+            signature_key.encode("utf-8"),
+            payload.encode("utf-8"),
+            hash_func,
+        )
+
+        if encoding == "base64":
+            expected = base64.b64encode(computed.digest()).decode("utf-8")
+        elif encoding == "hex":
+            expected = computed.hexdigest()
+        else:
+            raise ValueError(f"Unsupported encoding: {encoding}")
+
+        return hmac.compare_digest(expected, sig)
+
+
+def _parse_timestamp(timestamp_header: str, timestamp_format: Optional[str]) -> Optional[int]:
+    """Parse a timestamp header value into milliseconds since epoch."""
+    if not timestamp_header:
+        return None
+
+    if timestamp_format == "unix_seconds":
+        try:
+            return int(timestamp_header) * 1000
+        except ValueError:
+            raise ValueError("Invalid timestamp format: expected unix seconds")
+    elif timestamp_format == "unix_millis":
+        try:
+            return int(timestamp_header)
+        except ValueError:
+            raise ValueError("Invalid timestamp format: expected unix milliseconds")
+    elif timestamp_format == "iso8601":
+        import datetime
+
+        try:
+            dt = datetime.datetime.fromisoformat(timestamp_header.replace("Z", "+00:00"))
+            return int(dt.timestamp() * 1000)
+        except ValueError:
+            raise ValueError("Invalid timestamp format: expected ISO 8601 date string")
+
+    return None
+
+
+def _build_body_string(request_body: Union[str, Dict[str, str]], body_sort: bool) -> str:
+    """Convert request body to a string, optionally sorting dict keys."""
+    if isinstance(request_body, dict):
+        if body_sort:
+            return "".join(f"{k}{v}" for k, v in sorted(request_body.items()))
+        return "".join(f"{k}{v}" for k, v in request_body.items())
+    return request_body
+
+
+def _build_payload(
+    *,
+    components: List[str],
+    request_body: Union[str, Dict[str, str]],
+    notification_url: Optional[str],
+    message_id: Optional[str],
+    timestamp_header: Optional[str],
+    delimiter: str,
+    body_sort: bool,
+) -> str:
+    """Construct the signed payload from ordered components."""
+    parts: List[str] = []
+    for component in components:
+        if component == "body":
+            parts.append(_build_body_string(request_body, body_sort))
+        elif component == "notification_url":
+            parts.append(notification_url or "")
+        elif component == "timestamp":
+            parts.append(timestamp_header or "")
+        elif component == "message_id":
+            parts.append(message_id or "")
+    return delimiter.join(parts)

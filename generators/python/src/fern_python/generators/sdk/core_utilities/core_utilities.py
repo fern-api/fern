@@ -29,6 +29,7 @@ class CoreUtilities:
         has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
+        has_webhook_signature_verification: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -47,6 +48,7 @@ class CoreUtilities:
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
         self._datetime_milliseconds = custom_config.datetime_milliseconds
+        self._has_webhook_signature_verification = has_webhook_signature_verification
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -311,6 +313,17 @@ class CoreUtilities:
                 exports={"InvalidWebSocketStatus", "get_status_code"}
                 if not self._exclude_types_from_init_exports
                 else set(),
+            )
+
+        if self._has_webhook_signature_verification:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="webhooks_helper.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="webhooks_helper"),
+                ),
+                exports={"WebhooksHelper"} if not self._exclude_types_from_init_exports else set(),
             )
 
         # Copy the entire http_sse folder

@@ -61,11 +61,17 @@ class SdkGeneratorContext(ABC):
             for service in ir.services.values()
             for ep in service.endpoints
         )
+        _has_webhook_signature_verification = any(
+            webhook.signature_verification is not None
+            for webhook_group in ir.webhook_groups.values()
+            for webhook in webhook_group
+        )
         self.core_utilities = CoreUtilities(
             has_standard_paginated_endpoints=_has_standard_paginated_endpoints,
             has_custom_paginated_endpoints=_has_custom_paginated_endpoints,
             project_module_path=project_module_path,
             custom_config=custom_config,
+            has_webhook_signature_verification=_has_webhook_signature_verification,
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

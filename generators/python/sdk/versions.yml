@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.2.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification support. When an API definition includes
+        `x-fern-webhook-signature` configuration, the generated SDK now includes a
+        `WebhooksHelper` utility in the `core` module with a `verify_signature` static
+        method. Supports HMAC-based verification with configurable algorithms (SHA1,
+        SHA256, SHA384, SHA512), encodings (hex, base64), signature prefixes, payload
+        component ordering, body parameter sorting, and timestamp tolerance validation.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 5.1.3
   changelogEntry:
     - summary: |
