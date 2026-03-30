@@ -171,7 +171,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 jsonify: () =>
                     Promise.resolve().then(() =>
                         IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-                            unrecognizedObjectKeys: "strip"
+                            unrecognizedObjectKeys: "strip",
+                            skipValidation: true
                         })
                     )
             };
@@ -210,7 +211,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         let migrated: unknown = intermediateRepresentation;
         let jsonify: () => Promise<unknown> = async () => {
             return IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
-                unrecognizedObjectKeys: "strip"
+                unrecognizedObjectKeys: "strip",
+                skipValidation: true
             });
         };
         for (const migration of this.migrations) {

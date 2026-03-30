@@ -554,16 +554,33 @@ export function generateIntermediateRepresentation({
         readmeConfig
     });
 
-    return {
+    const result: IntermediateRepresentation = {
         ...finalIR,
-        dynamic: convertIrToDynamicSnippetsIr({
-            ir: finalIR,
-            generatorConfig: dynamicGeneratorConfig,
-            disableExamples: disableDynamicExamples,
-            generationLanguage,
-            smartCasing
-        })
+        dynamic: undefined
     };
+
+    // Lazily compute the dynamic snippets IR only when first accessed.
+    let cachedDynamic: dynamic.DynamicIntermediateRepresentation | undefined;
+    let dynamicComputed = false;
+    Object.defineProperty(result, "dynamic", {
+        get() {
+            if (!dynamicComputed) {
+                cachedDynamic = convertIrToDynamicSnippetsIr({
+                    ir: finalIR,
+                    generatorConfig: dynamicGeneratorConfig,
+                    disableExamples: disableDynamicExamples,
+                    generationLanguage,
+                    smartCasing
+                });
+                dynamicComputed = true;
+            }
+            return cachedDynamic;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    return result;
 }
 
 function formatAllDocs<T>(obj: T): T {

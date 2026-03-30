@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.49.1
+  changelogEntry:
+    - summary: |
+        Improve IR generation performance: skip validation during latest-version
+        IR serialization, cache casing computations to avoid redundant work for
+        repeated names, and lazily compute dynamic snippets IR so it is only
+        built when accessed.
+      type: chore
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.49.0
   changelogEntry:
     - summary: |

@@ -28,8 +28,19 @@ export function constructCasingsGenerator({
     keywords: string[] | undefined;
     smartCasing: boolean;
 }): CasingsGenerator {
+    const nameCache = new Map<string, Name>();
     const casingsGenerator: CasingsGenerator = {
         generateName: (inputName, opts) => {
+            // Cache results when no casing overrides are provided (the common case).
+            // With overrides, the output depends on external data so we skip the cache.
+            const canCache = opts?.casingOverrides == null;
+            if (canCache) {
+                const cacheKey = opts?.preserveUnderscores ? `${inputName}\0_` : inputName;
+                const cached = nameCache.get(cacheKey);
+                if (cached != null) {
+                    return cached;
+                }
+            }
             const name = preprocessName(inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
@@ -107,7 +118,7 @@ export function constructCasingsGenerator({
                 snakeCaseName = preserve ? withUnderscorePreservation(name, smartSnakeFn) : smartSnakeFn(name);
             }
 
-            return {
+            const result: Name = {
                 originalName: inputName,
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
@@ -116,6 +127,11 @@ export function constructCasingsGenerator({
                 ),
                 pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             };
+            if (canCache) {
+                const cacheKey = opts?.preserveUnderscores ? `${inputName}\0_` : inputName;
+                nameCache.set(cacheKey, result);
+            }
+            return result;
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({
             name: casingsGenerator.generateName(name, opts),
