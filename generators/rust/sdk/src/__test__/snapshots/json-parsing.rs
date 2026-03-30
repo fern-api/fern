@@ -16,6 +16,8 @@ pub enum ApiError {
     Configuration(String),
     #[error("Invalid header value")]
     InvalidHeader,
+    #[error("Invalid URL: {0}")]
+    InvalidUrl(String),
     #[error("Could not clone request for retry")]
     RequestClone,
     #[error("SSE stream terminated")]
