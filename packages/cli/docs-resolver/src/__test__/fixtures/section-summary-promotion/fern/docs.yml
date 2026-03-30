@@ -1,0 +1,15 @@
+instances:
+  - url: https://fern-platform-test.docs.dev.buildwithfern.com
+title: Section Summary Promotion Test
+navigation:
+  - api: API Integration
+    layout:
+      - customers
+      - payments
+      - section: Legacy APIs
+        summary: pages/legacy-apis.mdx
+        contents:
+          - legacyPayments
+colors:
+  accentPrimary: "#ffffff"
+  background: "#000000"
