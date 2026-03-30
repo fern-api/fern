@@ -11,7 +11,7 @@ export function encodePathParam(param) {
         case "boolean":
             break;
         default:
-            param = String(param);
+            param = JSON.stringify(param);
             break;
     }
     return encodeURIComponent(param);
