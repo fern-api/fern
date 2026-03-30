@@ -107,7 +107,7 @@ describe("logReplaySummary", () => {
             logger
         );
         expect(logger.debug).toHaveBeenCalledTimes(1);
-        expect(logger.debug.mock.calls[0]![0]).toContain("flow=first-generation");
+        expect(logger.debug.mock.calls[0]?.[0]).toContain("flow=first-generation");
     });
 
     it("logs info when preserved patches > 0", () => {
@@ -123,7 +123,7 @@ describe("logReplaySummary", () => {
             logger
         );
         expect(logger.info).toHaveBeenCalledTimes(1);
-        expect(logger.info.mock.calls[0]![0]).toContain("customizations preserved");
+        expect(logger.info.mock.calls[0]?.[0]).toContain("customizations preserved");
     });
 
     it("logs info when only absorbed patches (all applied became part of generated code)", () => {
@@ -140,7 +140,7 @@ describe("logReplaySummary", () => {
         );
         // preserved = applied - absorbed = 0, absorbed > 0 => "now part of generated code"
         expect(logger.info).toHaveBeenCalledTimes(1);
-        expect(logger.info.mock.calls[0]![0]).toContain("now part of generated code");
+        expect(logger.info.mock.calls[0]?.[0]).toContain("now part of generated code");
     });
 
     it("logs warn for unresolved patches with file details", () => {
@@ -319,7 +319,7 @@ describe("formatReplayPrBody", () => {
         });
         expect(body).toBeDefined();
         // Count table data rows (lines starting with "| `")
-        const lines = body!.split("\n");
+        const lines = body?.split("\n") ?? [];
         const dataRows = lines.filter((l) => l.startsWith("| `"));
         expect(dataRows).toHaveLength(2);
         expect(dataRows[0]).toContain("a.ts");

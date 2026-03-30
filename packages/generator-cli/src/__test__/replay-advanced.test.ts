@@ -131,7 +131,7 @@ describe("revert detection", { tags: ["slow"] }, () => {
         // Lockfile exists so report must not be null
         expect(result.report).not.toBeNull();
         // When both the patch and its revert are present, they cancel out
-        expect(result.report!.patchesDetected).toBe(0);
+        expect(result.report?.patchesDetected).toBe(0);
     });
 });
 
