@@ -13,6 +13,7 @@ import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminate
 import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
+import { inferDiscriminatorContextV3 } from "../../utils/inferDiscriminatorContext.js";
 import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
@@ -308,7 +309,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }),
                 extends: extends_,
                 types: unionTypes,
-                discriminatorContext: undefined
+                discriminatorContext: inferDiscriminatorContextV3({
+                    discriminator: this.schema.discriminator,
+                    context: this.context
+                })
             }),
             referencedTypes,
             inlinedTypes: {

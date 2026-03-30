@@ -92,7 +92,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 availability: getAvailability(rawSingleUnionType)
             };
         }),
-        discriminatorContext: getDiscriminatorContext({ union })
+        discriminatorContext: getDiscriminatorContext({ union, file, typeResolver })
     });
 }
 
@@ -236,8 +236,154 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
     return resolvedType;
 }
 
-function getDiscriminatorContext({ union }: { union: RawSchemas.DiscriminatedUnionSchema }): UnionDiscriminatorContext {
-    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+const SSE_SPEC_FIELDS = new Set(["event", "data", "id", "retry"]);
 
-    return discriminantContext === "protocol" ? UnionDiscriminatorContext.Protocol : UnionDiscriminatorContext.Data;
+/**
+ * Gets the raw type string from a property definition.
+ * Property definitions can be a plain string (e.g., "string") or an object with a `type` field.
+ */
+function getRawPropertyType(property: RawSchemas.ObjectPropertySchema): string {
+    if (typeof property === "string") {
+        return property;
+    }
+    return property.type;
+}
+
+/**
+ * Collects all property names and their type strings from an object schema,
+ * including those inherited via `extends`. Resolves extends chains recursively.
+ */
+function collectAllFernObjectProperties(
+    objectSchema: RawSchemas.ObjectSchema,
+    file: FernFileContext,
+    typeResolver: TypeResolver
+): Record<string, string> {
+    const allProperties: Record<string, string> = {};
+
+    // Collect inherited properties from extends
+    const extendsList =
+        objectSchema.extends == null
+            ? []
+            : typeof objectSchema.extends === "string"
+              ? [objectSchema.extends]
+              : objectSchema.extends;
+    for (const extendedType of extendsList) {
+        const declaration = typeResolver.getDeclarationOfNamedType({
+            referenceToNamedType: extendedType,
+            file
+        });
+        if (declaration != null && isRawObjectDefinition(declaration.declaration)) {
+            const inheritedProps = collectAllFernObjectProperties(
+                declaration.declaration,
+                declaration.file,
+                typeResolver
+            );
+            Object.assign(allProperties, inheritedProps);
+        }
+    }
+
+    // Collect own properties (these override inherited ones)
+    for (const [propName, propDef] of Object.entries(objectSchema.properties ?? {})) {
+        allProperties[propName] = getRawPropertyType(propDef);
+    }
+
+    return allProperties;
+}
+
+/**
+ * Checks if all variants of the union match the SSE event spec shape.
+ * Returns true if every variant is an object whose properties are exclusively
+ * drawn from {event, data, id, retry} with correct types.
+ */
+function allVariantsMatchSseSpec({
+    union,
+    file,
+    typeResolver
+}: {
+    union: RawSchemas.DiscriminatedUnionSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): boolean {
+    for (const rawSingleUnionType of Object.values(union.union)) {
+        const rawType: string | undefined =
+            typeof rawSingleUnionType === "string"
+                ? rawSingleUnionType
+                : typeof rawSingleUnionType.type === "string"
+                  ? rawSingleUnionType.type
+                  : undefined;
+
+        if (rawType == null) {
+            // Variant with no properties - could be a heartbeat event, still valid SSE
+            continue;
+        }
+
+        const declaration = typeResolver.getDeclarationOfNamedType({
+            referenceToNamedType: rawType,
+            file
+        });
+        if (declaration == null || !isRawObjectDefinition(declaration.declaration)) {
+            return false;
+        }
+
+        const allProperties = collectAllFernObjectProperties(declaration.declaration, declaration.file, typeResolver);
+
+        // Check that every property name is in the SSE spec set
+        for (const propName of Object.keys(allProperties)) {
+            if (!SSE_SPEC_FIELDS.has(propName)) {
+                return false;
+            }
+        }
+
+        // Check types for known SSE spec fields
+        for (const [propName, propType] of Object.entries(allProperties)) {
+            switch (propName) {
+                case "event":
+                    if (propType !== "string") {
+                        return false;
+                    }
+                    break;
+                case "id":
+                    if (propType !== "string") {
+                        return false;
+                    }
+                    break;
+                case "retry":
+                    if (propType !== "integer") {
+                        return false;
+                    }
+                    break;
+                case "data":
+                    // data can be any type
+                    break;
+            }
+        }
+    }
+
+    return true;
+}
+
+function getDiscriminatorContext({
+    union,
+    file,
+    typeResolver
+}: {
+    union: RawSchemas.DiscriminatedUnionSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): UnionDiscriminatorContext {
+    // Explicit override always takes precedence
+    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+    if (discriminantContext === "protocol") {
+        return UnionDiscriminatorContext.Protocol;
+    }
+    if (discriminantContext != null && discriminantContext !== false) {
+        return UnionDiscriminatorContext.Data;
+    }
+
+    // Infer from variant shapes
+    if (allVariantsMatchSseSpec({ union, file, typeResolver })) {
+        return UnionDiscriminatorContext.Protocol;
+    }
+
+    return UnionDiscriminatorContext.Data;
 }
