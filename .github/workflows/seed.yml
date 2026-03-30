@@ -924,10 +924,27 @@ jobs:
           mkdir -p benchmark-results-pr
           cp benchmark-results/* benchmark-results-pr/ 2>/dev/null || true
 
+      - name: Preserve benchmark infrastructure for baseline run
+        shell: bash
+        run: |
+          # These files are new in this PR and don't exist on main yet,
+          # so we save them before checking out main.
+          mkdir -p /tmp/benchmark-infra/.github/actions
+          cp -r .github/actions/fetch-benchmark-specs /tmp/benchmark-infra/.github/actions/
+          cp -r .github/actions/run-benchmark /tmp/benchmark-infra/.github/actions/
+          cp -r benchmarks /tmp/benchmark-infra/
+
       - name: Checkout main branch
         uses: actions/checkout@v6
         with:
           ref: main
+
+      - name: Restore benchmark infrastructure
+        shell: bash
+        run: |
+          cp -r /tmp/benchmark-infra/.github/actions/fetch-benchmark-specs .github/actions/
+          cp -r /tmp/benchmark-infra/.github/actions/run-benchmark .github/actions/
+          cp -r /tmp/benchmark-infra/benchmarks .
 
       - name: Install (main)
         uses: ./.github/actions/install
