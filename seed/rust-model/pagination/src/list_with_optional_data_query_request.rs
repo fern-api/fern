@@ -10,7 +10,7 @@ pub struct ListWithOptionalDataQueryRequest {
 
 impl ListWithOptionalDataQueryRequest {
     pub fn builder() -> ListWithOptionalDataQueryRequestBuilder {
-        ListWithOptionalDataQueryRequestBuilder::default()
+        <ListWithOptionalDataQueryRequestBuilder as Default>::default()
     }
 }
 

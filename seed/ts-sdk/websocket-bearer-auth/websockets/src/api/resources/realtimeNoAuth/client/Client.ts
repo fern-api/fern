@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { RealtimeNoAuthSocket } from "./Socket.js";
 
@@ -50,7 +51,7 @@ export class RealtimeNoAuthClient {
         const _queryParams: Record<string, unknown> = {
             model,
         };
-        const _headers: Record<string, unknown> = { ...headers };
+        const _headers: Record<string, unknown> = mergeHeaders(this._options?.headers, headers);
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

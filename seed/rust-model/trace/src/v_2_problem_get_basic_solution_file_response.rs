@@ -9,7 +9,7 @@ pub struct GetBasicSolutionFileResponse {
 
 impl GetBasicSolutionFileResponse {
     pub fn builder() -> GetBasicSolutionFileResponseBuilder {
-        GetBasicSolutionFileResponseBuilder::default()
+        <GetBasicSolutionFileResponseBuilder as Default>::default()
     }
 }
 

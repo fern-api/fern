@@ -24,7 +24,7 @@ pub struct UpdateUserRequest {
 
 impl UpdateUserRequest {
     pub fn builder() -> UpdateUserRequestBuilder {
-        UpdateUserRequestBuilder::default()
+        <UpdateUserRequestBuilder as Default>::default()
     }
 }
 

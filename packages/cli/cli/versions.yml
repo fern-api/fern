@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.48.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer handling of `security: []` on endpoints. Previously,
+        endpoints with an explicit empty security array (meaning no auth required)
+        inherited the global auth scheme instead of being marked as unauthenticated.
+        This caused generated SDKs to require auth tokens at construction time,
+        preventing use of unauthenticated endpoints like signup or signin.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.48.0
+  changelogEntry:
+    - summary: |
+        Automatically unlock docs deploy when the CLI exits early or crashes.
+        If the process receives SIGINT or SIGTERM after starting a docs publish,
+        the CLI now calls the FDR unlock endpoint to release the deploy lock so
+        subsequent publishes are not blocked.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk preview` command for publishing preview SDK packages.
+        Generates an SDK via Docker and publishes it to the Fern preview
+        registry (`npm.buildwithfern.com`). Outputs an `npm install` alias
+        command so consumers can test the preview with zero import changes.
+
+        ```bash
+        fern sdk preview --group my-sdk
+        fern sdk preview --group my-sdk --json
+        ```
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.46.7
   changelogEntry:
     - summary: |
@@ -97,7 +136,6 @@
       type: feat
   createdAt: "2026-03-26"
   irVersion: 65
-
 - version: 4.45.0
   changelogEntry:
     - summary: |
@@ -113,7 +151,6 @@
       type: feat
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.44.1
   changelogEntry:
     - summary: |

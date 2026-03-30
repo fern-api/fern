@@ -11,7 +11,7 @@ pub struct ListUsernamesCustomQueryRequest {
 
 impl ListUsernamesCustomQueryRequest {
     pub fn builder() -> ListUsernamesCustomQueryRequestBuilder {
-        ListUsernamesCustomQueryRequestBuilder::default()
+        <ListUsernamesCustomQueryRequestBuilder as Default>::default()
     }
 }
 

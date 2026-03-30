@@ -13,7 +13,7 @@ pub struct Patient {
 
 impl Patient {
     pub fn builder() -> PatientBuilder {
-        PatientBuilder::default()
+        <PatientBuilder as Default>::default()
     }
 }
 

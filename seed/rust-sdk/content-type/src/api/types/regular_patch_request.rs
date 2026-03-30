@@ -12,7 +12,7 @@ pub struct RegularPatchRequest {
 
 impl RegularPatchRequest {
     pub fn builder() -> RegularPatchRequestBuilder {
-        RegularPatchRequestBuilder::default()
+        <RegularPatchRequestBuilder as Default>::default()
     }
 }
 

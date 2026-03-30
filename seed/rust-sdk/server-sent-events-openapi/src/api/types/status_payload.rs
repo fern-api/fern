@@ -11,7 +11,7 @@ pub struct StatusPayload {
 
 impl StatusPayload {
     pub fn builder() -> StatusPayloadBuilder {
-        StatusPayloadBuilder::default()
+        <StatusPayloadBuilder as Default>::default()
     }
 }
 

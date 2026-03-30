@@ -14,7 +14,7 @@ pub struct StackFrame {
 
 impl StackFrame {
     pub fn builder() -> StackFrameBuilder {
-        StackFrameBuilder::default()
+        <StackFrameBuilder as Default>::default()
     }
 }
 

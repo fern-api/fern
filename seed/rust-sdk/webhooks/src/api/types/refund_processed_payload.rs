@@ -13,7 +13,7 @@ pub struct RefundProcessedPayload {
 
 impl RefundProcessedPayload {
     pub fn builder() -> RefundProcessedPayloadBuilder {
-        RefundProcessedPayloadBuilder::default()
+        <RefundProcessedPayloadBuilder as Default>::default()
     }
 }
 

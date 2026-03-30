@@ -27,7 +27,7 @@ pub struct PatchComplexRequest {
 
 impl PatchComplexRequest {
     pub fn builder() -> PatchComplexRequestBuilder {
-        PatchComplexRequestBuilder::default()
+        <PatchComplexRequestBuilder as Default>::default()
     }
 }
 

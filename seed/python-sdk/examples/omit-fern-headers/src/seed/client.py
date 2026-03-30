@@ -202,6 +202,9 @@ class AsyncSeedExamples:
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    async_token : typing.Optional[typing.Callable[[], typing.Awaitable[str]]]
+        An async callable that returns a bearer token. Use this when token acquisition involves async I/O (e.g., refreshing tokens via an async HTTP client). When provided, this is used instead of the synchronous token for async requests.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -232,6 +235,7 @@ class AsyncSeedExamples:
         environment: typing.Optional[SeedExamplesEnvironment] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -244,6 +248,7 @@ class AsyncSeedExamples:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
             headers=headers,
+            async_token=async_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

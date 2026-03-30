@@ -10,7 +10,7 @@ pub struct FilteredType {
 
 impl FilteredType {
     pub fn builder() -> FilteredTypeBuilder {
-        FilteredTypeBuilder::default()
+        <FilteredTypeBuilder as Default>::default()
     }
 }
 

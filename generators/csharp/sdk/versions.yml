@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.1
+  changelogEntry:
+    - summary: |
+        Include extraProperties (AdditionalProperties) in WireMock mock server
+        response objects. Previously, object types with `[JsonExtensionData]`
+        additional properties were missing those properties in generated mock
+        responses, causing incomplete WireMock stubs.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 2.55.0
   changelogEntry:
     - summary: |

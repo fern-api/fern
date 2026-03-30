@@ -24,7 +24,7 @@ pub struct Address {
 
 impl Address {
     pub fn builder() -> AddressBuilder {
-        AddressBuilder::default()
+        <AddressBuilder as Default>::default()
     }
 }
 

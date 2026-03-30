@@ -15,7 +15,7 @@ pub struct FindRequest {
 
 impl FindRequest {
     pub fn builder() -> FindRequestBuilder {
-        FindRequestBuilder::default()
+        <FindRequestBuilder as Default>::default()
     }
 }
 

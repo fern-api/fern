@@ -13,7 +13,7 @@ pub struct CreateRequest {
 
 impl CreateRequest {
     pub fn builder() -> CreateRequestBuilder {
-        CreateRequestBuilder::default()
+        <CreateRequestBuilder as Default>::default()
     }
 }
 

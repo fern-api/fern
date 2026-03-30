@@ -8,7 +8,7 @@ pub struct GetShapeRequest {
 
 impl GetShapeRequest {
     pub fn builder() -> GetShapeRequestBuilder {
-        GetShapeRequestBuilder::default()
+        <GetShapeRequestBuilder as Default>::default()
     }
 }
 

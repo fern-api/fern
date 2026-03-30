@@ -11,7 +11,7 @@ pub struct DocumentUploadResult {
 
 impl DocumentUploadResult {
     pub fn builder() -> DocumentUploadResultBuilder {
-        DocumentUploadResultBuilder::default()
+        <DocumentUploadResultBuilder as Default>::default()
     }
 }
 

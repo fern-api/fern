@@ -17,6 +17,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
@@ -94,6 +95,19 @@ private func main() async throws {
 }
 
 try await main()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Examples
+
+let client = ExamplesClient(
+    ...,
+    environment: .production
+)
 ```
 
 ## Errors

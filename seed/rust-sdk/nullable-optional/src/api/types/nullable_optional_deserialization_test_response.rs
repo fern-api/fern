@@ -19,7 +19,7 @@ pub struct DeserializationTestResponse {
 
 impl DeserializationTestResponse {
     pub fn builder() -> DeserializationTestResponseBuilder {
-        DeserializationTestResponseBuilder::default()
+        <DeserializationTestResponseBuilder as Default>::default()
     }
 }
 
