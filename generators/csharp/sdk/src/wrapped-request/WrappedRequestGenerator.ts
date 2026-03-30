@@ -76,6 +76,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             typeReference: TypeReference;
         }[] = [];
 
+        const pathParameterPascalNames = new Set<string>();
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -83,7 +84,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             })
         ) {
             for (const pathParameter of this.endpoint.allPathParameters) {
-                class_.addField({
+                const field = class_.addField({
                     origin: pathParameter,
                     type: this.context.csharpTypeMapper.convert({
                         reference: pathParameter.valueType
@@ -98,6 +99,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     }),
                     annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
+                pathParameterPascalNames.add(field.name);
             }
         }
 
@@ -185,7 +187,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 });
             },
             inlinedRequestBody: (request) => {
-                const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
+                const allProps = [...request.properties, ...(request.extendedProperties ?? [])].filter(
+                    (p) => !pathParameterPascalNames.has(p.name.name.pascalCase.safeName)
+                );
                 const allPropertyPascalNames = new Set(allProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of allProps) {
                     const field = generateField(class_, {
@@ -205,9 +209,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 }
             },
             fileUpload: (request) => {
-                const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
+                const bodyProps = request.properties
+                    .filter((p) => p.type === "bodyProperty")
+                    .filter((p) => !pathParameterPascalNames.has(p.name.name.pascalCase.safeName));
                 const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of request.properties) {
+                    if (pathParameterPascalNames.has(property.name.name.pascalCase.safeName)) {
+                        continue;
+                    }
                     switch (property.type) {
                         case "bodyProperty":
                             generateField(class_, {
@@ -277,6 +286,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }): ast.CodeBlock {
         const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
         let extraPropertiesFromExample: ExampleInlinedRequestBodyExtraProperty[] | undefined;
+        const snippetPathParamPascalNames = new Set<string>();
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -288,6 +298,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 ...example.servicePathParameters,
                 ...example.endpointPathParameters
             ]) {
+                snippetPathParamPascalNames.add(pathParameter.name.pascalCase.safeName);
                 orderedFields.push({
                     name: pathParameter.name,
                     value: this.exampleGenerator.getSnippetForTypeReference({
@@ -341,6 +352,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
+                    if (snippetPathParamPascalNames.has(property.name.name.pascalCase.safeName)) {
+                        continue;
+                    }
                     orderedFields.push({
                         name: property.name.name,
                         value: this.exampleGenerator.getSnippetForTypeReference({
