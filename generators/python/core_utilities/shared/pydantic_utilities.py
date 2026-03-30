@@ -1,7 +1,6 @@
 # nopycln: file
 import datetime as dt
 import inspect
-import logging
 from collections import defaultdict
 from typing import (
     Any,

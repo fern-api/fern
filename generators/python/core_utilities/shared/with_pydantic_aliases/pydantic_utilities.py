@@ -1,10 +1,7 @@
 # nopycln: file
 import datetime as dt
-import inspect
-import json
 import logging
 from collections import defaultdict
-from dataclasses import asdict
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -28,7 +25,7 @@ from pydantic.fields import FieldInfo as _FieldInfo
 _logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from .http_sse._models import ServerSentEvent
+    pass
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 

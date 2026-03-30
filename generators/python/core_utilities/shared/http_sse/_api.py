@@ -1,7 +1,6 @@
 from typing import AsyncGenerator, Iterator
 
 import httpx
-
 from ._decoders import SSEDecoder
 from ._exceptions import SSEError
 from ._models import ServerSentEvent
@@ -16,9 +15,7 @@ class EventSource:
     def _check_content_type(self) -> None:
         content_type = self._response.headers.get("content-type", "")
         if "text/event-stream" not in content_type:
-            raise SSEError(
-                f"Expected Content-Type 'text/event-stream', got {content_type!r}"
-            )
+            raise SSEError(f"Expected Content-Type 'text/event-stream', got {content_type!r}")
 
     @property
     def response(self) -> httpx.Response:

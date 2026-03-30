@@ -102,9 +102,7 @@ class EndpointResponseCodeWriter:
         payload_union = payload.get_as_union()
         if payload_union.type != "named":
             return False
-        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
-            payload_union.type_id
-        )
+        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(payload_union.type_id)
         shape_union = type_declaration.shape.get_as_union()
         if shape_union.type != "union":
             return False
@@ -138,9 +136,7 @@ class EndpointResponseCodeWriter:
                     AST.YieldStatement(
                         self._context.core_utilities.get_construct(
                             self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(
-                                f'{{"event": {EndpointResponseCodeWriter.SSE_VARIABLE}.event, **_data}}'
-                            ),
+                            AST.Expression(f'{{"event": {EndpointResponseCodeWriter.SSE_VARIABLE}.event, **_data}}'),
                         ),
                     ),
                 ]
@@ -212,7 +208,7 @@ class EndpointResponseCodeWriter:
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f'"Skipping SSE event with unparseable JSON data: %.200s"'
+                                                            '"Skipping SSE event with unparseable JSON data: %.200s"'
                                                         ),
                                                         AST.Expression(
                                                             f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"
@@ -232,9 +228,7 @@ class EndpointResponseCodeWriter:
                                                         qualified_name_excluding_import=("logger", "warning"),
                                                     ),
                                                     args=[
-                                                        AST.Expression(
-                                                            '"Skipping invalid SSE event: %s"'
-                                                        ),
+                                                        AST.Expression('"Skipping invalid SSE event: %s"'),
                                                         AST.Expression("exc"),
                                                     ],
                                                 )
