@@ -9,7 +9,7 @@ pub struct TestQueryRequest {
 
 impl TestQueryRequest {
     pub fn builder() -> TestQueryRequestBuilder {
-        TestQueryRequestBuilder::default()
+        <TestQueryRequestBuilder as Default>::default()
     }
 }
 

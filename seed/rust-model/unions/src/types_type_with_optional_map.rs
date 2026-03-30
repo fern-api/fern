@@ -11,7 +11,7 @@ pub struct TypeWithOptionalMap {
 
 impl TypeWithOptionalMap {
     pub fn builder() -> TypeWithOptionalMapBuilder {
-        TypeWithOptionalMapBuilder::default()
+        <TypeWithOptionalMapBuilder as Default>::default()
     }
 }
 

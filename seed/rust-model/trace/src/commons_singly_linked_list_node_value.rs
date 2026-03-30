@@ -13,7 +13,7 @@ pub struct SinglyLinkedListNodeValue {
 
 impl SinglyLinkedListNodeValue {
     pub fn builder() -> SinglyLinkedListNodeValueBuilder {
-        SinglyLinkedListNodeValueBuilder::default()
+        <SinglyLinkedListNodeValueBuilder as Default>::default()
     }
 }
 

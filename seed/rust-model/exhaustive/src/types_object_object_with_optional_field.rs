@@ -40,7 +40,7 @@ pub struct ObjectWithOptionalField {
 
 impl ObjectWithOptionalField {
     pub fn builder() -> ObjectWithOptionalFieldBuilder {
-        ObjectWithOptionalFieldBuilder::default()
+        <ObjectWithOptionalFieldBuilder as Default>::default()
     }
 }
 

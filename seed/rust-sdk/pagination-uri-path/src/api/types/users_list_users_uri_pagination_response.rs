@@ -10,7 +10,7 @@ pub struct ListUsersUriPaginationResponse {
 
 impl ListUsersUriPaginationResponse {
     pub fn builder() -> ListUsersUriPaginationResponseBuilder {
-        ListUsersUriPaginationResponseBuilder::default()
+        <ListUsersUriPaginationResponseBuilder as Default>::default()
     }
 }
 

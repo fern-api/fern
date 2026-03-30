@@ -8,7 +8,7 @@ pub struct WithDocs {
 
 impl WithDocs {
     pub fn builder() -> WithDocsBuilder {
-        WithDocsBuilder::default()
+        <WithDocsBuilder as Default>::default()
     }
 }
 

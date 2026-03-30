@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:extra-properties'
+  implementation 'com.fern:extra-properties:0.0.1'
 }
 ```
 

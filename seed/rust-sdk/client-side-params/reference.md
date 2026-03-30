@@ -366,6 +366,7 @@ async fn main() {
                 q: Some("q".to_string()),
                 search_engine: Some("search_engine".to_string()),
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -496,6 +497,7 @@ async fn main() {
             &GetUserByIdQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -598,6 +600,7 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 connection: "connection".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -670,6 +673,7 @@ async fn main() {
                 )])),
                 password: Some("password".to_string()),
                 blocked: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -811,6 +815,7 @@ async fn main() {
                 strategy: Some("strategy".to_string()),
                 name: Some("name".to_string()),
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -900,6 +905,7 @@ async fn main() {
             &"connectionId".to_string(),
             &GetConnectionQueryRequest {
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -987,6 +993,7 @@ async fn main() {
                 is_global: Some(true),
                 is_first_party: Some(true),
                 app_type: Some(vec!["app_type".to_string(), "app_type".to_string()]),
+                ..Default::default()
             },
             None,
         )
@@ -1117,6 +1124,7 @@ async fn main() {
             &GetClientQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
+                ..Default::default()
             },
             None,
         )

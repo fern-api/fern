@@ -8,7 +8,7 @@ pub struct ProblemDescription {
 
 impl ProblemDescription {
     pub fn builder() -> ProblemDescriptionBuilder {
-        ProblemDescriptionBuilder::default()
+        <ProblemDescriptionBuilder as Default>::default()
     }
 }
 

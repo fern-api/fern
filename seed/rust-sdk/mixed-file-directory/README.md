@@ -55,6 +55,7 @@ async fn main() {
         .create(
             &CreateOrganizationRequest {
                 name: "name".to_string(),
+                ..Default::default()
             },
             None,
         )

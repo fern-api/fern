@@ -22,7 +22,7 @@ pub struct PaginatedClientResponse {
 
 impl PaginatedClientResponse {
     pub fn builder() -> PaginatedClientResponseBuilder {
-        PaginatedClientResponseBuilder::default()
+        <PaginatedClientResponseBuilder as Default>::default()
     }
 }
 

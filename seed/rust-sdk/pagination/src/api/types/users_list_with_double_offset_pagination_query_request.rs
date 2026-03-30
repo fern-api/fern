@@ -19,7 +19,7 @@ pub struct UsersListWithDoubleOffsetPaginationQueryRequest {
 
 impl UsersListWithDoubleOffsetPaginationQueryRequest {
     pub fn builder() -> UsersListWithDoubleOffsetPaginationQueryRequestBuilder {
-        UsersListWithDoubleOffsetPaginationQueryRequestBuilder::default()
+        <UsersListWithDoubleOffsetPaginationQueryRequestBuilder as Default>::default()
     }
 }
 

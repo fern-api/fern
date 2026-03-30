@@ -12,7 +12,7 @@ pub struct ErrorEvent {
 
 impl ErrorEvent {
     pub fn builder() -> ErrorEventBuilder {
-        ErrorEventBuilder::default()
+        <ErrorEventBuilder as Default>::default()
     }
 }
 

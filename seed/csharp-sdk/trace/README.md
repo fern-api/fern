@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -47,6 +48,19 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
 );
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedTrace;
+
+var client = new SeedTraceClient(new ClientOptions
+{
+    BaseUrl = SeedTraceEnvironment.Prod
+});
 ```
 
 ## Exception Handling

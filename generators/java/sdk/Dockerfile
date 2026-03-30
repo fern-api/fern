@@ -25,6 +25,13 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
+# Replace vulnerable plexus-utils in Gradle distribution to fix GHSA-6fmv-xxpf-w3cw
+# (Directory Traversal vulnerability in extractFile method)
+RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar \
+      -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar && \
+    echo "421ff6ed146c53a9d4eaade8f629b52b12af7187101f1bd06c2c64e904019f3c  /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar" | sha256sum -c -
+
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
@@ -44,6 +51,7 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
 # curl-minimal/libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524,
 # CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
 # expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
+# Security update 2026-03-30: add freetype (CVE-2026-23865, ALAS2023-2026-1486)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -59,7 +67,8 @@ RUN dnf --releasever=latest update -y \
     alsa-lib \
     expat \
     openssh \
-    openssh-clients && \
+    openssh-clients \
+    freetype && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

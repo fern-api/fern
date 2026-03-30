@@ -25,7 +25,7 @@ pub struct CreateProblemRequestV2 {
 
 impl CreateProblemRequestV2 {
     pub fn builder() -> CreateProblemRequestV2Builder {
-        CreateProblemRequestV2Builder::default()
+        <CreateProblemRequestV2Builder as Default>::default()
     }
 }
 

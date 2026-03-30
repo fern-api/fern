@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:websocket-inferred-auth'
+  implementation 'com.fern:websocket-inferred-auth:0.0.1'
 }
 ```
 

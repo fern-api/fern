@@ -11,6 +11,7 @@ async fn main() {
         .stream_protocol_with_flat_schema(
             &StreamRequest {
                 query: Some("query".to_string()),
+                ..Default::default()
             },
             None,
         )

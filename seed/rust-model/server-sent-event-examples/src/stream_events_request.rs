@@ -8,7 +8,7 @@ pub struct StreamEventsRequest {
 
 impl StreamEventsRequest {
     pub fn builder() -> StreamEventsRequestBuilder {
-        StreamEventsRequestBuilder::default()
+        <StreamEventsRequestBuilder as Default>::default()
     }
 }
 

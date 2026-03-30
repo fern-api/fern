@@ -20,7 +20,7 @@ pub struct Resource {
 
 impl Resource {
     pub fn builder() -> ResourceBuilder {
-        ResourceBuilder::default()
+        <ResourceBuilder as Default>::default()
     }
 }
 

@@ -142,6 +142,7 @@ async fn main() {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
                     HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
+                ..Default::default()
             },
             None,
         )
@@ -260,6 +261,7 @@ async fn main() {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
                     method: "card".to_string(),
                     card_number: "1234567890123456".to_string(),
+                    ..Default::default()
                 }),
             },
             None,

@@ -9,7 +9,7 @@ pub struct ObjectWithDocumentedUnknownType {
 
 impl ObjectWithDocumentedUnknownType {
     pub fn builder() -> ObjectWithDocumentedUnknownTypeBuilder {
-        ObjectWithDocumentedUnknownTypeBuilder::default()
+        <ObjectWithDocumentedUnknownTypeBuilder as Default>::default()
     }
 }
 

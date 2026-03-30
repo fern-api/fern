@@ -10,7 +10,7 @@ pub struct Actor {
 
 impl Actor {
     pub fn builder() -> ActorBuilder {
-        ActorBuilder::default()
+        <ActorBuilder as Default>::default()
     }
 }
 

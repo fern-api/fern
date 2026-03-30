@@ -21,7 +21,7 @@ pub struct UpdateComplexProfileRequest {
 
 impl UpdateComplexProfileRequest {
     pub fn builder() -> UpdateComplexProfileRequestBuilder {
-        UpdateComplexProfileRequestBuilder::default()
+        <UpdateComplexProfileRequestBuilder as Default>::default()
     }
 }
 

@@ -10,7 +10,7 @@ pub struct CreateContactRequest {
 
 impl CreateContactRequest {
     pub fn builder() -> CreateContactRequestBuilder {
-        CreateContactRequestBuilder::default()
+        <CreateContactRequestBuilder as Default>::default()
     }
 }
 

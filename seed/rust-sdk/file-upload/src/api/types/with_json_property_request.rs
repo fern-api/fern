@@ -32,7 +32,7 @@ impl WithJsonPropertyRequest {
 
 impl WithJsonPropertyRequest {
     pub fn builder() -> WithJsonPropertyRequestBuilder {
-        WithJsonPropertyRequestBuilder::default()
+        <WithJsonPropertyRequestBuilder as Default>::default()
     }
 }
 

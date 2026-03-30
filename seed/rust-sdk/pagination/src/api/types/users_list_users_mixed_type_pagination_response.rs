@@ -10,7 +10,7 @@ pub struct ListUsersMixedTypePaginationResponse2 {
 
 impl ListUsersMixedTypePaginationResponse2 {
     pub fn builder() -> ListUsersMixedTypePaginationResponse2Builder {
-        ListUsersMixedTypePaginationResponse2Builder::default()
+        <ListUsersMixedTypePaginationResponse2Builder as Default>::default()
     }
 }
 
