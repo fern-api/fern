@@ -16,9 +16,8 @@ runs:
         FETCH_OK=false
         for ATTEMPT in 1 2 3; do
           echo "Attempt ${ATTEMPT}/3: Fetching Square OpenAPI spec..."
-          # Pinned to a specific commit for reproducibility
           if curl -sSfL --retry 2 --retry-delay 5 \
-            "https://raw.githubusercontent.com/square/connect-api-specification/ba11c0a1f006b81dcd3633adb9090e9b2f03fef7/api.json" \
+            "https://raw.githubusercontent.com/square/connect-api-specification/master/api.json" \
             -o benchmarks/fern/apis/square/openapi.json; then
             BYTES=$(wc -c < benchmarks/fern/apis/square/openapi.json)
             echo "Downloaded Square OpenAPI spec (${BYTES} bytes)"
