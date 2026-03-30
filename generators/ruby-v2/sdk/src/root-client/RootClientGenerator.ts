@@ -128,9 +128,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             } else {
                                 writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
                             }
+                            writer.indent();
                             writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
                             );
+                            writer.dedent();
                             if (i === basicAuthSchemes.length - 1) {
                                 writer.writeLine(`end`);
                             }
