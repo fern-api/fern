@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.3
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connect() methods missing auth provider headers when the
+        channel is in a client that also has authed HTTP endpoints. Previously,
+        auth headers were only included when the channel itself had `auth: true`.
+        Now, auth headers are included whenever the client has any authed endpoints,
+        matching the runtime behavior where `normalizeClientOptionsWithAuth` creates
+        an auth provider for the entire client.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 3.60.2
   changelogEntry:
     - summary: |

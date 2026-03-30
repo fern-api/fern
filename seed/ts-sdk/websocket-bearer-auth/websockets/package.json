@@ -22,6 +22,17 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./conversations": {
+            "import": {
+                "types": "./dist/esm/api/resources/conversations/exports.d.mts",
+                "default": "./dist/esm/api/resources/conversations/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/conversations/exports.d.ts",
+                "default": "./dist/cjs/api/resources/conversations/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/conversations/exports.js"
+        },
         "./realtimeNoAuth": {
             "import": {
                 "types": "./dist/esm/api/resources/realtimeNoAuth/exports.d.mts",

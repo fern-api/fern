@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+# This tests the scenario where a package has both HTTP endpoints with auth
+# and a WebSocket channel. Even though the channel sets auth: false,
+# the auth provider should still include auth headers because the
+# client has other authed endpoints (matching runtime behavior where
+# normalizeClientOptionsWithAuth creates an auth provider).
+service:
+  base-path: /conversations
+  auth: true
+  endpoints:
+    list:
+      method: GET
+      path: ""
+      response: list<Conversation>
+
+channel:
+  path: /conversations/connect
+  auth: false
+  query-parameters:
+    model: optional<string>
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: ConversationSendEvent
+    receive:
+      display-name: Receive
+      origin: server
+      body: ConversationReceiveEvent
+
+types:
+  Conversation:
+    properties:
+      id: string
+      status: string
+  ConversationSendEvent:
+    properties:
+      text: string
+  ConversationReceiveEvent:
+    properties:
+      response: string

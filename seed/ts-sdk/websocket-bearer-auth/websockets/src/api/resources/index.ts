@@ -1,3 +1,5 @@
+export * as conversations from "./conversations/index.js";
+export * from "./conversations/types/index.js";
 export * as realtime from "./realtime/index.js";
 export * from "./realtime/types/index.js";
 export * as realtimeNoAuth from "./realtimeNoAuth/index.js";
