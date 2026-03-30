@@ -19,11 +19,11 @@ public class RetryInterceptor implements Interceptor {
     private static final Duration MAX_RETRY_DELAY = Duration.ofMillis(60000);
     private static final double JITTER_FACTOR = 0.2;
 
-    private final ExponentialBackoff backoff;
+    private final int maxRetries;
     private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
-        this.backoff = new ExponentialBackoff(maxRetries);
+        this.maxRetries = maxRetries;
     }
 
     @Override
@@ -38,7 +38,8 @@ public class RetryInterceptor implements Interceptor {
     }
 
     private Response retryChain(Response response, Chain chain) throws IOException {
-        Optional<Duration> nextBackoff = this.backoff.nextBackoff(response);
+        ExponentialBackoff backoff = new ExponentialBackoff(this.maxRetries);
+        Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
@@ -48,7 +49,7 @@ public class RetryInterceptor implements Interceptor {
             response.close();
             response = chain.proceed(chain.request());
             if (shouldRetry(response.code())) {
-                nextBackoff = this.backoff.nextBackoff(response);
+                nextBackoff = backoff.nextBackoff(response);
             } else {
                 return response;
             }
