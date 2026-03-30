@@ -214,11 +214,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     .filter((p) => !pathParameterPascalNames.has(p.name.name.pascalCase.safeName));
                 const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of request.properties) {
-                    if (pathParameterPascalNames.has(property.name.name.pascalCase.safeName)) {
-                        continue;
-                    }
                     switch (property.type) {
                         case "bodyProperty":
+                            if (pathParameterPascalNames.has(property.name.name.pascalCase.safeName)) {
+                                break;
+                            }
                             generateField(class_, {
                                 property,
                                 className: this.classReference.name,
