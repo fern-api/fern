@@ -53,54 +53,15 @@ type StreamParams struct {
 // Stream issues an API streaming call according to the given stream parameters.
 func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.StreamReceiver[T], error) {
 	url := buildURL(params.URL, params.QueryParameters)
-	req, err := newRequest(
-		ctx,
-		url,
-		params.Method,
-		params.Headers,
-		params.Request,
-		params.BodyProperties,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	// If the call has been cancelled, don't issue the request.
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
 
 	client := s.client
 	if params.Client != nil {
-		// Use the HTTP client scoped to the request.
 		client = params.Client
 	}
 
 	var retryOptions []RetryOption
 	if params.MaxAttempts > 0 {
 		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
-
-	resp, err := s.retrier.Run(
-		client.Do,
-		req,
-		params.ErrorDecoder,
-		retryOptions...,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	// Check if the call was cancelled before we return the error
-	// associated with the call and/or unmarshal the response data.
-	if err := ctx.Err(); err != nil {
-		defer func() { _ = resp.Body.Close() }()
-		return nil, err
-	}
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer func() { _ = resp.Body.Close() }()
-		return nil, decodeError(resp, params.ErrorDecoder)
 	}
 
 	var opts []core.StreamOption
@@ -123,7 +84,10 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.St
 		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
-	stream := core.NewStream[T](ctx, resp, opts...)
+	stream, err := s.doStreamRequest(ctx, url, params.Headers, params, client, retryOptions, opts)
+	if err != nil {
+		return nil, err
+	}
 
 	// Wrap SSE streams in ReconnectingStream for auto-reconnection.
 	if params.Format == core.StreamFormatSSE {
@@ -132,45 +96,63 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.St
 			reconnectOpts = append(reconnectOpts, core.WithMaxReconnectAttempts(*params.MaxReconnectAttempts))
 		}
 		reconnectFn := func(lastEventID string) (*core.Stream[T], error) {
-			reconnectHeaders := params.Headers.Clone()
+			headers := params.Headers
 			if lastEventID != "" {
-				reconnectHeaders.Set("Last-Event-ID", lastEventID)
+				headers = params.Headers.Clone()
+				headers.Set("Last-Event-ID", lastEventID)
 			}
-			req, err := newRequest(
-				ctx,
-				url,
-				params.Method,
-				reconnectHeaders,
-				params.Request,
-				params.BodyProperties,
-			)
-			if err != nil {
-				return nil, err
-			}
-			if err := ctx.Err(); err != nil {
-				return nil, err
-			}
-			resp, err := s.retrier.Run(
-				client.Do,
-				req,
-				params.ErrorDecoder,
-				retryOptions...,
-			)
-			if err != nil {
-				return nil, err
-			}
-			if err := ctx.Err(); err != nil {
-				defer func() { _ = resp.Body.Close() }()
-				return nil, err
-			}
-			if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-				defer func() { _ = resp.Body.Close() }()
-				return nil, decodeError(resp, params.ErrorDecoder)
-			}
-			return core.NewStream[T](ctx, resp, opts...), nil
+			return s.doStreamRequest(ctx, url, headers, params, client, retryOptions, opts)
 		}
 		return core.NewReconnectingStream[T](ctx, stream, reconnectFn, reconnectOpts...), nil
 	}
 
 	return stream, nil
+}
+
+func (s *Streamer[T]) doStreamRequest(
+	ctx context.Context,
+	url string,
+	headers http.Header,
+	params *StreamParams,
+	client HTTPClient,
+	retryOptions []RetryOption,
+	opts []core.StreamOption,
+) (*core.Stream[T], error) {
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		headers,
+		params.Request,
+		params.BodyProperties,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
+	resp, err := s.retrier.Run(
+		client.Do,
+		req,
+		params.ErrorDecoder,
+		retryOptions...,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := ctx.Err(); err != nil {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, err
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, decodeError(resp, params.ErrorDecoder)
+	}
+
+	return core.NewStream[T](ctx, resp, opts...), nil
 }

@@ -2,12 +2,11 @@ package core
 
 import (
 	"context"
-	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
-	"math/big"
+	"math/rand"
 	"net"
 	"sync"
 	"time"
@@ -41,7 +40,6 @@ type ReconnectingStream[T any] struct {
 	attempts    int
 	serverRetry time.Duration
 	lastEventID string
-	reconnected bool
 	ctx         context.Context
 	cancel      context.CancelFunc
 	closed      bool
@@ -119,10 +117,7 @@ func (r *ReconnectingStream[T]) recv(readFn func(*Stream[T]) (T, []byte, error))
 			if retry := inner.ServerRetry(); retry > 0 {
 				r.serverRetry = retry
 			}
-			if r.reconnected {
-				r.attempts = 0
-				r.reconnected = false
-			}
+			r.attempts = 0
 			r.mu.Unlock()
 			return val, raw, nil
 		}
@@ -151,11 +146,14 @@ func (r *ReconnectingStream[T]) recv(readFn func(*Stream[T]) (T, []byte, error))
 
 func (r *ReconnectingStream[T]) reconnect() error {
 	r.mu.Lock()
-	if r.inner != nil {
-		_ = r.inner.Close()
-	}
+	inner := r.inner
+	r.inner = nil
 	lastEventID := r.lastEventID
 	r.mu.Unlock()
+
+	if inner != nil {
+		_ = inner.Close()
+	}
 
 	var lastErr error
 	for {
@@ -170,9 +168,10 @@ func (r *ReconnectingStream[T]) reconnect() error {
 		}
 		attempt := r.attempts
 		r.attempts++
+		serverRetry := r.serverRetry
 		r.mu.Unlock()
 
-		delay := r.backoffDelay(attempt)
+		delay := backoffDelay(attempt, serverRetry)
 
 		timer := time.NewTimer(delay)
 		select {
@@ -190,37 +189,32 @@ func (r *ReconnectingStream[T]) reconnect() error {
 
 		r.mu.Lock()
 		r.inner = newStream
-		r.reconnected = true
 		r.mu.Unlock()
 		return nil
 	}
 }
 
-func (r *ReconnectingStream[T]) backoffDelay(attempt int) time.Duration {
+func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
 	base := minReconnectDelay
-	r.mu.Lock()
-	if r.serverRetry > 0 {
-		base = r.serverRetry
+	if serverRetry > 0 {
+		base = serverRetry
 	}
-	r.mu.Unlock()
 
-	if attempt > 63 {
-		attempt = 63
+	delay := base
+	for i := 0; i < attempt && delay < maxReconnectDelay; i++ {
+		delay *= 2
 	}
-	delay := base << uint(attempt)
 	if delay > maxReconnectDelay {
 		delay = maxReconnectDelay
 	}
 
-	jitterRange := big.NewInt(int64(delay * 20 / 100))
-	if jitterRange.Sign() <= 0 {
+	// Apply ±10% symmetric jitter.
+	jitterRange := int64(delay) / 5
+	if jitterRange <= 0 {
 		return delay
 	}
-	jitter, err := rand.Int(rand.Reader, jitterRange)
-	if err != nil {
-		return delay
-	}
-	return delay - delay*10/100 + time.Duration(jitter.Int64())
+	jitter := rand.Int63n(jitterRange)
+	return delay - delay/10 + time.Duration(jitter)
 }
 
 func (r *ReconnectingStream[T]) Recv() (T, error) {

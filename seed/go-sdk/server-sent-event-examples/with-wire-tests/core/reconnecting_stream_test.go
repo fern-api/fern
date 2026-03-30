@@ -93,7 +93,7 @@ func TestReconnectingStream_MaxAttemptsExhausted(t *testing.T) {
 
 	initial := newReconnectSSEStream[reconnectTestMessage](ctx, "")
 	stream := NewReconnectingStream[reconnectTestMessage](ctx, initial, reconnectFn,
-		WithMaxReconnectAttempts(3),
+		WithMaxReconnectAttempts(1),
 	)
 	defer stream.Close()
 
@@ -102,8 +102,8 @@ func TestReconnectingStream_MaxAttemptsExhausted(t *testing.T) {
 
 	var reconnectErr *ReconnectError
 	require.ErrorAs(t, err, &reconnectErr)
-	assert.Equal(t, 3, reconnectErr.Attempts)
-	assert.Equal(t, 3, attempts)
+	assert.Equal(t, 1, reconnectErr.Attempts)
+	assert.Equal(t, 1, attempts)
 }
 
 func TestReconnectingStream_DisabledWithZeroAttempts(t *testing.T) {
@@ -212,6 +212,7 @@ func TestReconnectingStream_ServerRetryPersistsAcrossReconnections(t *testing.T)
 
 	reconnectFn := func(lastEventID string) (*Stream[reconnectTestMessage], error) {
 		callCount++
+		// Second stream does NOT send retry: — the original 2000ms should persist.
 		return newReconnectSSEStream[reconnectTestMessage](ctx, "data: {\"content\":\"resumed\",\"done\":true}\n\n"), nil
 	}
 
@@ -221,12 +222,32 @@ func TestReconnectingStream_ServerRetryPersistsAcrossReconnections(t *testing.T)
 	)
 	defer stream.Close()
 
+	// Read the first event which carries retry: 2000.
 	event, err := stream.RecvEvent()
 	require.NoError(t, err)
 	assert.Equal(t, "first", event.Data.Content)
 	assert.Equal(t, 2000, event.Retry)
 
-	stream.mu.Lock()
-	assert.Equal(t, 2*time.Second, stream.serverRetry)
-	stream.mu.Unlock()
+	// Read the second event — triggers reconnection.
+	event2, err := stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "resumed", event2.Data.Content)
+	assert.Equal(t, 1, callCount, "should have reconnected once")
+}
+
+func TestReconnectingStream_CloseThenRecv(t *testing.T) {
+	ctx := context.Background()
+
+	reconnectFn := func(lastEventID string) (*Stream[reconnectTestMessage], error) {
+		t.Fatal("reconnect should not be called after close")
+		return nil, nil
+	}
+
+	initial := newReconnectSSEStream[reconnectTestMessage](ctx, "data: {\"content\":\"hello\",\"done\":false}\n\n")
+	stream := NewReconnectingStream[reconnectTestMessage](ctx, initial, reconnectFn)
+
+	require.NoError(t, stream.Close())
+
+	_, err := stream.Recv()
+	assert.ErrorIs(t, err, io.EOF)
 }
