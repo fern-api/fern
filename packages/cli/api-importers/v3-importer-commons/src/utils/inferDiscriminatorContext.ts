@@ -61,6 +61,11 @@ function variantMatchesSseSpec(schema: OpenAPIV3_1.SchemaObject, context: Abstra
     const allProperties = collectAllProperties(schema, context);
     const propertyNames = Object.keys(allProperties);
 
+    // Must have at least the "event" field to be considered SSE spec
+    if (!allProperties["event"]) {
+        return false;
+    }
+
     // Check that every property name is in the SSE spec set
     for (const propName of propertyNames) {
         if (!SSE_SPEC_FIELDS.has(propName)) {

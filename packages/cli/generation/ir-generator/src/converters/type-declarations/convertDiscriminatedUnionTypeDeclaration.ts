@@ -327,6 +327,11 @@ function allVariantsMatchSseSpec({
 
         const allProperties = collectAllFernObjectProperties(declaration.declaration, declaration.file, typeResolver);
 
+        // Must have at least the "event" field to be considered SSE spec
+        if (!allProperties["event"]) {
+            return false;
+        }
+
         // Check that every property name is in the SSE spec set
         for (const propName of Object.keys(allProperties)) {
             if (!SSE_SPEC_FIELDS.has(propName)) {
