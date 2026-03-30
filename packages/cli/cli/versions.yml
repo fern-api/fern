@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.0
+  changelogEntry:
+    - summary: |
+        Auto-infer `x-fern-discriminator-context` for discriminated unions that
+        match the SSE event spec shape. When all variants of a discriminated union
+        have properties exclusively drawn from `{event, data, id, retry}` with
+        correct types, the discriminator context is now inferred as `protocol`
+        instead of defaulting to `data`. This applies to the legacy OpenAPI importer.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.49.0
   changelogEntry:
     - summary: |
@@ -11,7 +23,6 @@
       type: feat
   createdAt: "2026-03-30"
   irVersion: 65
-
 - version: 4.48.1
   changelogEntry:
     - summary: |
