@@ -149,7 +149,9 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             licenseFilePath,
             sourceMounts,
             context,
-            inspect
+            inspect,
+            performanceLogger,
+            profileId
         }: ExecutionEnvironment.ExecuteArgs
     ): Promise<void> {
         if (inspect) {
@@ -181,6 +183,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         });
 
         // Copy input files into the container
+        if (profileId != null) {
+            performanceLogger?.start(profileId, "copy_in");
+        }
+        const copyInStart = performance.now();
         await copyToContainer({
             logger,
             containerId,
@@ -237,7 +243,15 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             });
         }
 
+        if (profileId != null) {
+            performanceLogger?.end(profileId, "copy_in", performance.now() - copyInStart);
+        }
+
         // Execute the generator inside the container using the image's original entrypoint
+        if (profileId != null) {
+            performanceLogger?.start(profileId, "exec");
+        }
+        const execStart = performance.now();
         await execInContainer({
             logger,
             containerId,
@@ -246,8 +260,16 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             writeLogsToFile: true
         });
 
+        if (profileId != null) {
+            performanceLogger?.end(profileId, "exec", performance.now() - execStart);
+        }
+
         // Copy the output back to the host
         // Use "/fern/output/." to copy contents (not the directory itself)
+        if (profileId != null) {
+            performanceLogger?.start(profileId, "copy_out");
+        }
+        const copyOutStart = performance.now();
         await copyFromContainer({
             logger,
             containerId,
@@ -294,6 +316,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                     throw e;
                 }
             });
+        }
+
+        if (profileId != null) {
+            performanceLogger?.end(profileId, "copy_out", performance.now() - copyOutStart);
         }
     }
 

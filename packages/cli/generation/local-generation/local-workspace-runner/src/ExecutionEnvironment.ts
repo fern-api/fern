@@ -20,6 +20,11 @@ export declare namespace ExecutionEnvironment {
         context: TaskContext;
         inspect: boolean;
         runner: ContainerRunner | undefined;
+        performanceLogger?: {
+            start(id: string, phase: string): void;
+            end(id: string, phase: string, ms: number): void;
+        };
+        profileId?: string;
     }
 }
 

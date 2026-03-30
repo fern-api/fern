@@ -80,7 +80,9 @@ export async function writeFilesToDiskAndRunGenerator({
     ai,
     autoVersioningCache,
     absolutePathToSpecRepo,
-    skipFernignore
+    skipFernignore,
+    performanceLogger,
+    profileId
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -110,6 +112,8 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
+    performanceLogger?: { start(id: string, phase: string): void; end(id: string, phase: string, ms: number): void };
+    profileId?: string;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -119,6 +123,10 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningPrDescription?: string;
     autoVersioningVersionBumpReason?: string;
 }> {
+    if (profileId != null) {
+        performanceLogger?.start(profileId, "ir_migration");
+    }
+    const irMigrationStart = performance.now();
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -131,7 +139,14 @@ export async function writeFilesToDiskAndRunGenerator({
         includeOptionalRequestPropertyExamples,
         ir
     });
+    if (profileId != null) {
+        performanceLogger?.end(profileId, "ir_migration", performance.now() - irMigrationStart);
+    }
 
+    if (profileId != null) {
+        performanceLogger?.start(profileId, "write_to_disk");
+    }
+    const writeToDiskStart = performance.now();
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,
         filename: IR_FILENAME,
@@ -232,6 +247,10 @@ export async function writeFilesToDiskAndRunGenerator({
             containerPath: `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`
         }));
 
+    if (profileId != null) {
+        performanceLogger?.end(profileId, "write_to_disk", performance.now() - writeToDiskStart);
+    }
+
     await environment.execute({
         generatorName: generatorInvocation.name,
         irPath: absolutePathToIr,
@@ -243,7 +262,9 @@ export async function writeFilesToDiskAndRunGenerator({
         sourceMounts,
         context,
         inspect,
-        runner
+        runner,
+        performanceLogger,
+        profileId
     });
 
     const taskHandler = new LocalTaskHandler({

@@ -12,6 +12,11 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 
+export interface PerformanceLogger {
+    start(id: string, phase: string): void;
+    end(id: string, phase: string, ms: number): void;
+}
+
 export declare namespace GenerationRunner {
     interface RunArgs {
         organization: string;
@@ -26,6 +31,9 @@ export declare namespace GenerationRunner {
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
         skipFernignore?: boolean;
+        performanceLogger?: PerformanceLogger;
+        /** Identifier for performance profiling events (e.g., "ts-sdk:exhaustive:no-custom-config") */
+        profileId?: string;
     }
 }
 
@@ -46,7 +54,9 @@ export class GenerationRunner {
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
         inspect,
-        skipFernignore
+        skipFernignore,
+        performanceLogger,
+        profileId
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -71,7 +81,9 @@ export class GenerationRunner {
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
                                 inspect,
-                                skipFernignore
+                                skipFernignore,
+                                performanceLogger,
+                                profileId
                             });
 
                             interactiveTaskContext.logger.info(
@@ -123,7 +135,9 @@ export class GenerationRunner {
         outputVersionOverride,
         absolutePathToFernConfig,
         inspect,
-        skipFernignore
+        skipFernignore,
+        performanceLogger,
+        profileId
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -135,6 +149,8 @@ export class GenerationRunner {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
         skipFernignore?: boolean;
+        performanceLogger?: PerformanceLogger;
+        profileId?: string;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -151,6 +167,10 @@ export class GenerationRunner {
         }
 
         // Generate IR once here
+        if (profileId != null) {
+            performanceLogger?.start(profileId, "ir_generation");
+        }
+        const irGenStart = performance.now();
         const rawIr = generateIntermediateRepresentation({
             workspace,
             audiences: generatorGroup.audiences,
@@ -174,6 +194,9 @@ export class GenerationRunner {
                 originGitCommit: getOriginGitCommit()
             }
         });
+        if (profileId != null) {
+            performanceLogger?.end(profileId, "ir_generation", performance.now() - irGenStart);
+        }
 
         const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -207,7 +230,9 @@ export class GenerationRunner {
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
             absolutePathToSpecRepo: undefined,
-            skipFernignore
+            skipFernignore,
+            performanceLogger,
+            profileId
         });
     }
 }

@@ -57,7 +57,9 @@ export class LocalTestRunner extends TestRunner {
             license,
             smartCasing,
             organization,
-            absolutePathToFernConfig
+            absolutePathToFernConfig,
+            performanceLogger,
+            profileId
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -95,7 +97,9 @@ export class LocalTestRunner extends TestRunner {
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
-                ai: undefined
+                ai: undefined,
+                performanceLogger,
+                profileId
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,

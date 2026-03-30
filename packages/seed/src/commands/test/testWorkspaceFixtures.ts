@@ -73,6 +73,7 @@ export async function testGenerator({
             );
         }
     }
+    CONSOLE_LOGGER.info(`Running ${testCases.length} test cases for ${generator.workspaceName}`);
     const results = await Promise.all(testCases);
 
     printTestCases(results);

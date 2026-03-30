@@ -7,6 +7,7 @@ import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-ap
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api/index.js";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
+import { NoOpPerformanceLogger, PerformanceLogger } from "../../../PerformanceLogger.js";
 import { Semaphore } from "../../../Semaphore.js";
 import { Stopwatch } from "../../../Stopwatch.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace.js";
@@ -27,6 +28,7 @@ export declare namespace TestRunner {
         inspect: boolean;
         workspaceCache?: WorkspaceCache;
         logLevel: LogLevel;
+        performanceLogger?: PerformanceLogger;
     }
 
     interface RunArgs {
@@ -74,6 +76,8 @@ export declare namespace TestRunner {
         organization?: string;
         /** Absolute path to fern.config.json (used for license path resolution) **/
         absolutePathToFernConfig?: AbsoluteFilePath;
+        performanceLogger?: PerformanceLogger;
+        profileId?: string;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -129,6 +133,7 @@ export abstract class TestRunner {
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
     protected readonly logLevel: LogLevel;
+    protected readonly performanceLogger: PerformanceLogger;
 
     constructor({
         generator,
@@ -138,7 +143,8 @@ export abstract class TestRunner {
         keepContainer,
         scriptRunner,
         workspaceCache,
-        logLevel
+        logLevel,
+        performanceLogger
     }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
@@ -148,6 +154,7 @@ export abstract class TestRunner {
         this.scriptRunner = scriptRunner;
         this.workspaceCache = workspaceCache;
         this.logLevel = logLevel;
+        this.performanceLogger = performanceLogger ?? new NoOpPerformanceLogger();
     }
 
     protected shouldPipeOutput(): boolean {
@@ -176,6 +183,10 @@ export abstract class TestRunner {
         lenient
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
+        const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
+        const profileId = `${this.generator.workspaceName}:${id}`;
+        const totalStart = performance.now();
+        this.performanceLogger.start(profileId, "total");
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -183,8 +194,6 @@ export abstract class TestRunner {
             await this.buildInvocation;
 
             const metrics: TestRunner.TestCaseMetrics = {};
-
-            const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
             if (!absolutePathToApiDefinition) {
                 absolutePathToApiDefinition = AbsoluteFilePath.of(
                     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
@@ -220,19 +229,16 @@ export abstract class TestRunner {
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
 
+            this.performanceLogger.start(profileId, "workspace_load");
+            const workspaceLoadStart = performance.now();
             let fernWorkspace: FernWorkspace | undefined;
             if (this.workspaceCache != null && generatorInvocation == null) {
-                // Use cache when no generatorInvocation overrides are present.
-                // The cache is keyed by absolutePathToAPIDefinition (derived from fixture name),
-                // which is safe because all variants of the same fixture share the same API definition.
                 fernWorkspace = await this.workspaceCache.getOrConvertToFernWorkspace({
                     fixture,
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext
                 });
             } else {
-                // Fallback to uncached loading when generatorInvocation may provide
-                // custom workspaceSettings or apiOverride specs.
                 const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext,
@@ -249,6 +255,7 @@ export abstract class TestRunner {
                     generatorInvocation?.apiOverride?.specs
                 );
             }
+            this.performanceLogger.end(profileId, "workspace_load", performance.now() - workspaceLoadStart);
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
@@ -261,7 +268,10 @@ export abstract class TestRunner {
             }
 
             taskContext.logger.debug("Acquiring lock...");
+            this.performanceLogger.start(profileId, "lock_wait");
+            const lockWaitStart = performance.now();
             await this.lock.acquire();
+            this.performanceLogger.end(profileId, "lock_wait", performance.now() - lockWaitStart);
             lockAcquired = true;
             taskContext.logger.info("Running generator...");
             try {
@@ -293,7 +303,9 @@ export abstract class TestRunner {
                     license,
                     smartCasing,
                     organization,
-                    absolutePathToFernConfig
+                    absolutePathToFernConfig,
+                    performanceLogger: this.performanceLogger,
+                    profileId
                 });
 
                 generationStopwatch.stop();
@@ -364,6 +376,7 @@ export abstract class TestRunner {
                 metrics
             };
         } finally {
+            this.performanceLogger.end(profileId, "total", performance.now() - totalStart);
             if (lockAcquired) {
                 this.lock.release();
             }

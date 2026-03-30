@@ -38,6 +38,7 @@ import { validateCliRelease } from "./commands/validate/validateCliChangelog.js"
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog.js";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml.js";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces.js";
+import { FilePerformanceLogger, NoOpPerformanceLogger, PerformanceLogger } from "./PerformanceLogger.js";
 import { Semaphore } from "./Semaphore.js";
 
 tryRunCli()
@@ -159,6 +160,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: "origin/main",
                     description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
+                })
+                .option("profile", {
+                    type: "string",
+                    demandOption: false,
+                    description:
+                        "Enable performance profiling. Writes per-phase timing events to the specified JSONL file (default: /tmp/seed-profile-<timestamp>.jsonl)"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -227,6 +234,14 @@ function addTestCommand(cli: Argv) {
 
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const lock = new Semaphore(argv.parallel);
+            const performanceLogger: PerformanceLogger =
+                argv.profile != null
+                    ? new FilePerformanceLogger(
+                          typeof argv.profile === "string" && argv.profile.length > 0
+                              ? argv.profile
+                              : `/tmp/seed-profile-${Date.now()}.jsonl`
+                      )
+                    : new NoOpPerformanceLogger();
             const tests: Promise<boolean>[] = [];
             const scriptRunners: ScriptRunner[] = [];
             const testRunners: TestRunner[] = [];
@@ -330,7 +345,8 @@ function addTestCommand(cli: Argv) {
                         keepContainer: false, // not used for local
                         inspect: argv.inspect,
                         workspaceCache: new WorkspaceCache(),
-                        logLevel: argv["log-level"]
+                        logLevel: argv["log-level"],
+                        performanceLogger
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(
@@ -352,7 +368,8 @@ function addTestCommand(cli: Argv) {
                         runner: argv.containerRuntime as "docker" | "podman" | undefined,
                         parallelism: argv.parallel,
                         workspaceCache: new WorkspaceCache(),
-                        logLevel: argv["log-level"]
+                        logLevel: argv["log-level"],
+                        performanceLogger
                     });
                 }
 
@@ -381,6 +398,11 @@ function addTestCommand(cli: Argv) {
                 for (const testRunner of testRunners) {
                     await testRunner.cleanup();
                 }
+            }
+
+            const profilePath = performanceLogger.getFilePath();
+            if (profilePath != null) {
+                console.log(`\nProfile data written to ${profilePath}`);
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
