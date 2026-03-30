@@ -1,4 +1,4 @@
-import { type NormalizedVariantProperty, allVariantsMatchSseSpecShape } from "@fern-api/core-utils";
+import { allVariantsMatchSseSpecShape, type NormalizedVariantProperty } from "@fern-api/core-utils";
 import { OpenAPIV3 } from "openapi-types";
 
 import { SchemaParserContext } from "./SchemaParserContext.js";
