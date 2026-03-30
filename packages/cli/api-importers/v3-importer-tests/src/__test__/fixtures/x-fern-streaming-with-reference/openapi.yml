@@ -85,6 +85,7 @@ components:
           type: string
       required:
         - message
+      x-fern-type-name: ChatRequest
     CreateCompletionRequest:
       type: object
       properties:
