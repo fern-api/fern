@@ -47,10 +47,11 @@ type StreamParams struct {
 	Format             core.StreamFormat
 	EventDiscriminator string
 	MaxBufSize         int
+	MaxReconnectAttempts *int
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
-func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.Stream[T], error) {
+func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.StreamReceiver[T], error) {
 	url := buildURL(params.URL, params.QueryParameters)
 	req, err := newRequest(
 		ctx,
@@ -122,5 +123,54 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
-	return core.NewStream[T](ctx, resp, opts...), nil
+	stream := core.NewStream[T](ctx, resp, opts...)
+
+	// Wrap SSE streams in ReconnectingStream for auto-reconnection.
+	if params.Format == core.StreamFormatSSE {
+		var reconnectOpts []core.ReconnectingStreamOption
+		if params.MaxReconnectAttempts != nil {
+			reconnectOpts = append(reconnectOpts, core.WithMaxReconnectAttempts(*params.MaxReconnectAttempts))
+		}
+		reconnectFn := func(lastEventID string) (*core.Stream[T], error) {
+			reconnectHeaders := params.Headers.Clone()
+			if lastEventID != "" {
+				reconnectHeaders.Set("Last-Event-ID", lastEventID)
+			}
+			req, err := newRequest(
+				ctx,
+				url,
+				params.Method,
+				reconnectHeaders,
+				params.Request,
+				params.BodyProperties,
+			)
+			if err != nil {
+				return nil, err
+			}
+			if err := ctx.Err(); err != nil {
+				return nil, err
+			}
+			resp, err := s.retrier.Run(
+				client.Do,
+				req,
+				params.ErrorDecoder,
+				retryOptions...,
+			)
+			if err != nil {
+				return nil, err
+			}
+			if err := ctx.Err(); err != nil {
+				defer func() { _ = resp.Body.Close() }()
+				return nil, err
+			}
+			if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+				defer func() { _ = resp.Body.Close() }()
+				return nil, decodeError(resp, params.ErrorDecoder)
+			}
+			return core.NewStream[T](ctx, resp, opts...), nil
+		}
+		return core.NewReconnectingStream[T](ctx, stream, reconnectFn, reconnectOpts...), nil
+	}
+
+	return stream, nil
 }
