@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.49.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping object properties with `type: "null"`
+        (valid in OpenAPI 3.1). Properties declared as `type: "null"` were
+        silently filtered out before conversion, causing fields like
+        `conversation_id` to disappear from generated SDK response models.
+        The importer now represents `type: "null"` as `nullable(unknown)`,
+        producing `unknown | null` in TypeScript and `Optional[Any]` in Python.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.49.0
   changelogEntry:
     - summary: |
