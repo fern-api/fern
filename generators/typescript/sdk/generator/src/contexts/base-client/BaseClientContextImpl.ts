@@ -415,10 +415,13 @@ export class BaseClientContextImpl implements BaseClientContext {
         for (const header of this.intermediateRepresentation.idempotencyHeaders) {
             if (!endpointUtils.isLiteralHeader(header, context)) {
                 const type = context.type.getReferenceToType(header.valueType);
+                const typeNode = isUnknownType(header.valueType)
+                    ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    : type.typeNode;
                 properties.push({
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(type.typeNode),
+                    type: getTextOfTsNode(typeNode),
                     hasQuestionToken: type.isOptional
                 });
             }
