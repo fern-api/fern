@@ -9,7 +9,7 @@
         `payload-format`) and OpenAPI specs (`body-sort: alphabetical` inside the
         `payload-format` block of `x-fern-webhook-signature`).
       type: feat
-  createdAt: "2026-03-18"
+  createdAt: "2026-03-30"
   irVersion: 65
 
 - version: 4.48.1
