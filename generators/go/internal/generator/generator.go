@@ -218,6 +218,10 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 	}
 
 	// Phase 2: Format files in parallel (expensive removeUnusedImports calls).
+	// Unbounded parallelism is acceptable here because each goroutine is CPU-bound
+	// (AST parsing + formatting), each fileWriter is fully independent (no shared
+	// mutable state), and coordinator.Client.Log() is safe for concurrent use
+	// (creates a new HTTP request per call).
 	type fileResult struct {
 		file     *File
 		testFile *File

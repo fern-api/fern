@@ -211,9 +211,10 @@ func (f *fileWriter) P(elements ...any) {
 	fmt.Fprintln(f.buffer)
 }
 
-// File formats and writes the content stored in the writer's buffer into a *File.
-func (f *fileWriter) File() (*File, error) {
-	// Start with the package declaration and import statements.
+// assembleFile writes the package declaration and sorted import block into a header buffer,
+// then concatenates it with the writer's body buffer. This is the shared assembly logic
+// used by both File() and fileWithPreciseImports().
+func (f *fileWriter) assembleFile(imports map[string]string) []byte {
 	header := f.clone()
 	if f.whitelabel {
 		header.P(whitelabelFileHeader)
@@ -222,44 +223,6 @@ func (f *fileWriter) File() (*File, error) {
 	}
 	header.P("package ", f.packageName)
 	header.P("import (")
-	// Sort imports by alias for deterministic output.
-	type importStatement struct {
-		Alias string
-		Path  string
-	}
-	var imports []importStatement
-	for importPath, importAlias := range f.scope.Imports.Values {
-		imports = append(imports, importStatement{Alias: importAlias, Path: importPath})
-	}
-	sort.Slice(imports, func(i, j int) bool { return imports[i].Alias < imports[j].Alias })
-	for _, imp := range imports {
-		header.P(fmt.Sprintf("%s %q", imp.Alias, imp.Path))
-	}
-	header.P(")")
-
-	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
-	if err != nil {
-		fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
-		return nil, err
-	}
-
-	return NewFile(f.coordinator, f.filename, formatted), nil
-}
-
-// fileWithPreciseImports constructs a *File using only the specified imports,
-// bypassing removeUnusedImports entirely. This avoids the expensive AST parse
-// and format.Node round-trip for large generated test files where the required
-// imports are known ahead of time.
-func (f *fileWriter) fileWithPreciseImports(imports map[string]string) *File {
-	header := f.clone()
-	if f.whitelabel {
-		header.P(whitelabelFileHeader)
-	} else {
-		header.P(fileHeader)
-	}
-	header.P("package ", f.packageName)
-	header.P("import (")
-	// Sort imports by alias for deterministic output.
 	type importStatement struct {
 		Alias string
 		Path  string
@@ -273,8 +236,26 @@ func (f *fileWriter) fileWithPreciseImports(imports map[string]string) *File {
 		header.P(fmt.Sprintf("%s %q", imp.Alias, imp.Path))
 	}
 	header.P(")")
+	return append(header.buffer.Bytes(), f.buffer.Bytes()...)
+}
 
-	return NewFile(f.coordinator, f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
+// File formats and writes the content stored in the writer's buffer into a *File.
+func (f *fileWriter) File() (*File, error) {
+	raw := f.assembleFile(f.scope.Imports.Values)
+	formatted, err := removeUnusedImports(f.filename, raw)
+	if err != nil {
+		fmt.Println(string(raw))
+		return nil, err
+	}
+	return NewFile(f.coordinator, f.filename, formatted), nil
+}
+
+// fileWithPreciseImports constructs a *File using only the specified imports,
+// bypassing removeUnusedImports entirely. This avoids the expensive AST parse
+// and format.Node round-trip for large generated test files where the required
+// imports are known ahead of time.
+func (f *fileWriter) fileWithPreciseImports(imports map[string]string) *File {
+	return NewFile(f.coordinator, f.filename, f.assembleFile(imports))
 }
 
 // DocsFile acts like File, but is tailored to write docs.go files.
@@ -500,10 +481,10 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		}
 	}
 
-	// Track which package aliases are actually referenced in the generated test code.
-	usedAliases := make(map[string]struct{})
-	// Track whether any setter tests were written (they use json and require).
-	wroteSetterTests := false
+	// Import tracker: each Write*Tests method registers its imports here.
+	// This ensures that adding a new test type that uses a new import won't
+	// silently produce broken Go files — you register the import in the method.
+	tracker := newTestImportTracker()
 
 	// Write tests for each type
 	for _, testData := range f.testData {
@@ -520,10 +501,14 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 				shouldInclude = true
 			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
 				shouldInclude = true
-				usedAliases[pkgQualifier] = struct{}{}
+				if importPath, ok := aliasToImportPath[pkgQualifier]; ok {
+					tracker.require(importPath, pkgQualifier)
+				}
 			} else if isStdLibPackage(pkgQualifier) {
 				shouldInclude = true
-				usedAliases[pkgQualifier] = struct{}{}
+				if importPath, ok := aliasToImportPath[pkgQualifier]; ok {
+					tracker.require(importPath, pkgQualifier)
+				}
 			}
 
 			if !shouldInclude {
@@ -546,8 +531,10 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			continue
 		}
 
+		// Setter tests (TestSettersMarkExplicit) use json.Marshal/Unmarshal and require.NoError.
 		if testData.hasSetters {
-			wroteSetterTests = true
+			tracker.require("encoding/json", "json")
+			tracker.require("github.com/stretchr/testify/require", "require")
 		}
 
 		testWriter.WriteGetterSetterTests(
@@ -561,17 +548,21 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		)
 	}
 
-	// Write JSON marshaling tests
+	// Write JSON marshaling tests (use json and require).
 	jsonTestNames := make([]string, 0, len(f.jsonMarshalingTests))
 	for typeName := range f.jsonMarshalingTests {
 		jsonTestNames = append(jsonTestNames, typeName)
 	}
 	sort.Strings(jsonTestNames)
+	if len(jsonTestNames) > 0 {
+		tracker.require("encoding/json", "json")
+		tracker.require("github.com/stretchr/testify/require", "require")
+	}
 	for _, typeName := range jsonTestNames {
 		testWriter.WriteJSONMarshalingTests(typeName, f.jsonMarshalingTests[typeName])
 	}
 
-	// Write String() method tests
+	// Write String() method tests (only use testing and assert — already in tracker).
 	stringTestNames := make([]string, 0, len(f.stringMethodTests))
 	for typeName := range f.stringMethodTests {
 		stringTestNames = append(stringTestNames, typeName)
@@ -581,7 +572,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteStringMethodTests(typeName)
 	}
 
-	// Write enum tests
+	// Write enum tests (only use testing and assert — already in tracker).
 	enumTestNames := make([]string, 0, len(f.enumTests))
 	for typeName := range f.enumTests {
 		enumTestNames = append(enumTestNames, typeName)
@@ -591,7 +582,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		testWriter.WriteEnumTests(typeName, f.enumTests[typeName])
 	}
 
-	// Write GetExtraProperties() tests
+	// Write GetExtraProperties() tests (only use testing — already in tracker).
 	extraPropsTestNames := make([]string, 0, len(f.extraPropertiesTests))
 	for typeName := range f.extraPropertiesTests {
 		extraPropsTestNames = append(extraPropsTestNames, typeName)
@@ -608,27 +599,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		return nil, nil
 	}
 
-	// Build the precise set of imports needed by the generated test code.
-	// This avoids the expensive removeUnusedImports + format.Node round-trip
-	// which dominates generation time for large files (e.g. 9s+ for Stripe's 71MB test file).
-	preciseImports := map[string]string{
-		"testing":                            "testing",
-		"github.com/stretchr/testify/assert": "assert",
-	}
-	// json and require are needed by WriteJSONMarshalingTests AND by
-	// WriteGetterSetterTests (the TestSettersMarkExplicit section uses
-	// json.Marshal/json.Unmarshal and require.NoError).
-	if len(f.jsonMarshalingTests) > 0 || wroteSetterTests {
-		preciseImports["encoding/json"] = "json"
-		preciseImports["github.com/stretchr/testify/require"] = "require"
-	}
-	for alias := range usedAliases {
-		if importPath, ok := aliasToImportPath[alias]; ok {
-			preciseImports[importPath] = alias
-		}
-	}
-
-	return testWriter.fileWithPreciseImports(preciseImports), nil
+	return testWriter.fileWithPreciseImports(tracker.imports), nil
 }
 
 // stripPackageQualifier removes the package qualifier from a type if it matches the current package.
@@ -662,6 +633,29 @@ func extractPackageQualifier(goType string) string {
 		return matches[1]
 	}
 	return ""
+}
+
+// testImportTracker tracks which imports are needed by generated test code.
+// Each Write*Tests method registers its imports here, replacing ad-hoc tracking.
+// If you add a new Write*Tests method that uses additional imports, register them
+// in that method — otherwise the generated test file will fail to compile.
+type testImportTracker struct {
+	// imports maps import path → alias for all imports needed by written tests.
+	imports map[string]string
+}
+
+func newTestImportTracker() *testImportTracker {
+	return &testImportTracker{
+		imports: map[string]string{
+			// Always needed: every test function uses testing.T and assert.
+			"testing":                            "testing",
+			"github.com/stretchr/testify/assert": "assert",
+		},
+	}
+}
+
+func (t *testImportTracker) require(importPath, alias string) {
+	t.imports[importPath] = alias
 }
 
 // WriteGetterSetterTests writes test functions for getter and setter methods.
