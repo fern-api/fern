@@ -523,8 +523,8 @@ func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 		}
 		event.Data = append(event.Data, value...)
 	} else if value, ok := s.tryParseField(line, sseIdPrefix, sseIdPrefixNoSpace); ok {
-		event.hasID = true
 		if !bytes.Contains(value, []byte{0}) {
+			event.hasID = true
 			event.ID = string(value)
 		}
 	} else if value, ok := s.tryParseField(line, sseEventPrefix, sseEventPrefixNoSpace); ok {

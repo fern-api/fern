@@ -690,11 +690,12 @@ func TestStream_RecvEvent(t *testing.T) {
 }
 
 func TestStream_LastEventID(t *testing.T) {
-	// Events: id "1", no id (persists "1"), explicit empty id (resets), id "3"
+	// Events: id "1", no id (persists "1"), explicit empty id (resets), id "3", null-byte id (ignored, persists "3")
 	sseData := "id: 1\ndata: {\"content\":\"first\"}\n\n" +
 		"data: {\"content\":\"second\"}\n\n" +
 		"id: \ndata: {\"content\":\"third\"}\n\n" +
-		"id: 3\ndata: {\"content\":\"fourth\"}\n\n"
+		"id: 3\ndata: {\"content\":\"fourth\"}\n\n" +
+		"id: has\x00null\ndata: {\"content\":\"fifth\"}\n\n"
 
 	server := newSSEServer(t, sseData)
 	defer server.Close()
@@ -722,6 +723,11 @@ func TestStream_LastEventID(t *testing.T) {
 	assert.Equal(t, "", stream.LastEventID())
 
 	// After fourth event: LastEventID should be "3"
+	_, err = stream.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "3", stream.LastEventID())
+
+	// After fifth event (id with null byte): LastEventID should still be "3"
 	_, err = stream.Recv()
 	require.NoError(t, err)
 	assert.Equal(t, "3", stream.LastEventID())
