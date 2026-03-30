@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:oauth-client-credentials-with-variables'
+  implementation 'com.fern:oauth-client-credentials-with-variables:0.0.1'
 }
 ```
 

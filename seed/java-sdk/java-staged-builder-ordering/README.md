@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-staged-builder-ordering'
+  implementation 'com.fern:java-staged-builder-ordering:0.0.1'
 }
 ```
 

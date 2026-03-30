@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:url-form-encoded'
+  implementation 'com.fern:url-form-encoded:0.0.1'
 }
 ```
 
