@@ -106,7 +106,7 @@ final class HTTPClient: Swift.Sendable {
         requestOptions: RequestOptions? = nil
     ) async throws -> Networking.URLRequest {
         // Init with URL
-        let url = buildRequestURL(
+        let url = try buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
         var request = Networking.URLRequest(url: url)
@@ -141,11 +141,34 @@ final class HTTPClient: Swift.Sendable {
         return request
     }
 
+    private static let localhostHosts: Swift.Set<Swift.String> = ["localhost", "127.0.0.1", "[::1]"]
+
+    /// Validates that the URL uses HTTPS for non-localhost hosts.
+    /// Throws if the URL uses HTTP for a non-localhost host, preventing
+    /// accidental transmission of credentials in plaintext.
+    private static func validateHTTPS(url: Foundation.URL) throws {
+        guard let scheme = url.scheme?.lowercased(), scheme == "http" else {
+            return
+        }
+        if let host = url.host, localhostHosts.contains(host.lowercased()) {
+            return
+        }
+        throw ContentTypesError.networkError(
+            NSError(
+                domain: "HTTPClient",
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Refusing to send request to non-HTTPS URL: \(url.absoluteString). HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+                ]
+            )
+        )
+    }
+
     private func buildRequestURL(
         path: Swift.String,
         requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
-    ) -> URL {
+    ) throws -> URL {
         let endpointURL = "\(clientConfig.baseURL)\(path)"
         guard var components = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
@@ -178,6 +201,7 @@ final class HTTPClient: Swift.Sendable {
                 "Failed to construct URL from components - this indicates an unexpected error in the SDK."
             )
         }
+        try Self.validateHTTPS(url: url)
         return url
     }
 
