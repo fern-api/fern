@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.3
+  changelogEntry:
+    - summary: |
+        Support alphabetical body parameter sorting in webhook signature verification.
+        When the IR specifies `bodySort: ALPHABETICAL` on the payload format, the generated
+        `verifySignature` method now accepts `string | Record<string, string>` for the
+        `requestBody` parameter. When a `Record` is provided, keys are sorted alphabetically
+        and concatenated as key-value pairs before signing. This is required by providers
+        like Twilio whose signing algorithm sorts POST body parameters.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 3.60.2
   changelogEntry:
     - summary: |
