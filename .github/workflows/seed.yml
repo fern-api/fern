@@ -889,6 +889,7 @@ jobs:
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs
+  # Baseline timings come from the nightly benchmark-baseline.yml workflow (cached).
   benchmark:
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -918,60 +919,11 @@ jobs:
         with:
           generator: ${{ matrix.generator }}
 
-      - name: Preserve PR results and benchmark infrastructure for baseline run
-        shell: bash
-        run: |
-          # Save PR benchmark results to /tmp so they survive the clean checkout
-          mkdir -p /tmp/benchmark-results-pr
-          cp benchmark-results/* /tmp/benchmark-results-pr/ 2>/dev/null || true
-          # These files are new in this PR and don't exist on main yet,
-          # so we save them before checking out main.
-          mkdir -p /tmp/benchmark-infra/.github/actions
-          cp -r .github/actions/fetch-benchmark-specs /tmp/benchmark-infra/.github/actions/
-          cp -r .github/actions/run-benchmark /tmp/benchmark-infra/.github/actions/
-          cp -r benchmarks /tmp/benchmark-infra/
-
-      - name: Checkout main branch
-        uses: actions/checkout@v6
-        with:
-          ref: main
-
-      - name: Restore benchmark infrastructure
-        shell: bash
-        run: |
-          cp -r /tmp/benchmark-infra/.github/actions/fetch-benchmark-specs .github/actions/
-          cp -r /tmp/benchmark-infra/.github/actions/run-benchmark .github/actions/
-          cp -r /tmp/benchmark-infra/benchmarks .
-
-      - name: Install (main)
-        uses: ./.github/actions/install
-
-      - name: Fetch benchmark OpenAPI specs (main)
-        uses: ./.github/actions/fetch-benchmark-specs
-
-      - name: Run benchmark (main branch)
-        uses: ./.github/actions/run-benchmark
-        with:
-          generator: ${{ matrix.generator }}
-
-      - name: Save main results
-        shell: bash
-        run: |
-          mkdir -p benchmark-results-main
-          cp benchmark-results/* benchmark-results-main/ 2>/dev/null || true
-
       - name: Upload PR results
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-pr-${{ matrix.generator }}
-          path: /tmp/benchmark-results-pr/
-          retention-days: 5
-
-      - name: Upload main results
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-main-${{ matrix.generator }}
-          path: benchmark-results-main/
+          path: benchmark-results/
           retention-days: 5
 
   benchmark-report:
@@ -999,20 +951,44 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Download all main benchmark artifacts
-        uses: actions/download-artifact@v4
+      - name: Restore baseline from nightly cache
+        id: baseline-cache
+        uses: actions/cache/restore@v4
         with:
-          pattern: benchmark-main-*
-          path: benchmark-main-results
-          merge-multiple: true
+          path: benchmark-baseline-results
+          key: benchmark-baseline-never-matches
+          restore-keys: benchmark-baseline-
+
+      - name: Check baseline availability
+        shell: bash
+        run: |
+          if [ "${{ steps.baseline-cache.outputs.cache-hit }}" != "true" ] && [ ! -d benchmark-baseline-results ]; then
+            echo "::warning::No cached baseline found. Report will show N/A for main timings."
+            echo "Run the benchmark-baseline workflow manually to generate initial baselines."
+            mkdir -p benchmark-baseline-results
+          else
+            echo "Baseline cache restored successfully"
+            if [ -f benchmark-baseline-results/_metadata.json ]; then
+              echo "Baseline metadata:"
+              cat benchmark-baseline-results/_metadata.json
+            fi
+            ls -la benchmark-baseline-results/
+          fi
 
       - name: Generate benchmark report
         id: report
         shell: bash
         run: |
+          # Extract baseline timestamp for the report footer
+          BASELINE_TS=""
+          if [ -f benchmark-baseline-results/_metadata.json ]; then
+            BASELINE_TS=$(cat benchmark-baseline-results/_metadata.json | jq -r '.timestamp // empty')
+          fi
+          export BASELINE_TIMESTAMP="$BASELINE_TS"
+
           REPORT=$(bash .github/scripts/format-benchmark-report.sh \
             benchmark-pr-results \
-            benchmark-main-results)
+            benchmark-baseline-results)
           # Write to file for the comment action
           echo "$REPORT" > benchmark-comment.md
           echo "Generated benchmark report"

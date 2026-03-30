@@ -135,6 +135,32 @@ test_empty_results() {
   assert_contains "$OUTPUT" "</details>" "Has closing details tag"
 }
 
+# Test 8: Baseline timestamp shown when BASELINE_TIMESTAMP is set
+test_baseline_timestamp() {
+  echo "Test: Baseline timestamp shown in header"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "cached" "Shows cached baseline label"
+  assert_contains "$OUTPUT" "2026-03-30T04:00:00Z" "Shows baseline timestamp"
+  assert_contains "$OUTPUT" "benchmark-baseline" "Shows link to refresh workflow"
+}
+
+# Test 9: No baseline timestamp when BASELINE_TIMESTAMP is unset
+test_no_baseline_timestamp() {
+  echo "Test: No baseline timestamp when unset"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  OUTPUT=$(unset BASELINE_TIMESTAMP; bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_not_contains "$OUTPUT" "cached" "Does not show cached label without timestamp"
+  assert_contains "$OUTPUT" "Comparing PR branch against" "Shows generic comparison header"
+}
+
 # Run all tests
 echo "=== format-benchmark-report.sh tests ==="
 echo ""
@@ -145,6 +171,8 @@ test_missing_main
 test_skipped_spec
 test_multiple_generators
 test_empty_results
+test_baseline_timestamp
+test_no_baseline_timestamp
 
 echo ""
 echo "=== Results: ${PASS} passed, ${FAIL} failed ==="

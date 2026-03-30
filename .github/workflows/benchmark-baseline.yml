@@ -1,0 +1,91 @@
+name: Benchmark Baseline
+
+on:
+  # Runs nightly at 4:00 AM UTC
+  schedule:
+    - cron: "0 4 * * *"
+  # Allow manual triggers for ad-hoc baseline refreshes
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  # Run benchmarks for all SDK generators on main
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: ${{ github.ref == 'refs/heads/main' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        generator:
+          [ts-sdk, python-sdk, java-sdk, go-sdk, csharp-sdk, ruby-sdk-v2, php-sdk, swift-sdk, rust-sdk]
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Fetch benchmark OpenAPI specs
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Run benchmark
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+
+      - name: Upload baseline results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-baseline-${{ matrix.generator }}
+          path: benchmark-results/
+          retention-days: 7
+
+  # Aggregate all baseline results into a single cache entry
+  save-baseline-cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [baseline]
+    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    steps:
+      - name: Download all baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-baseline-*
+          path: benchmark-baseline-results
+          merge-multiple: true
+
+      - name: Add metadata
+        shell: bash
+        run: |
+          echo "{\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\"}" \
+            > benchmark-baseline-results/_metadata.json
+          echo "Baseline metadata:"
+          cat benchmark-baseline-results/_metadata.json
+          echo "Baseline results:"
+          ls -la benchmark-baseline-results/
+
+      - name: Save baseline to cache
+        uses: actions/cache/save@v4
+        with:
+          path: benchmark-baseline-results
+          key: benchmark-baseline-${{ github.run_id }}
+
+  log-rejection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: ${{ github.ref != 'refs/heads/main' }}
+    steps:
+      - name: Log rejection
+        run: echo "Benchmark baseline only runs on main. Current ref:${{ github.ref }}"

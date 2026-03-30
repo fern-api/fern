@@ -12,7 +12,11 @@ MAIN_DIR="${2:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-
 
 echo "## SDK Generation Benchmark Results"
 echo ""
-echo "Comparing PR branch against \`main\` (same runner, apples-to-apples)."
+if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
+  echo "Comparing PR branch against cached \`main\` baseline (generated ${BASELINE_TIMESTAMP})."
+else
+  echo "Comparing PR branch against \`main\` baseline."
+fi
 echo ""
 echo "<details>"
 echo "<summary>Full benchmark table (click to expand)</summary>"
@@ -75,3 +79,6 @@ echo "</details>"
 echo ""
 echo "_Timings include Docker startup, IR parsing, generation, and build scripts. Variance of ±10% is normal._"
 echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
+if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
+  echo "_Baseline from nightly run on \`main\` at ${BASELINE_TIMESTAMP}. Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
+fi
