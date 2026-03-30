@@ -112,7 +112,7 @@ class EndpointResponseCodeWriter:
         )
 
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
-        iter_func_body = []
+        iter_func_body: list[AST.AstNode] = []
 
         noop_except_handler = AST.ExceptHandler(
             body=[AST.PassStatement()],
