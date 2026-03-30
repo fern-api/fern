@@ -13,7 +13,7 @@ pub struct PaginatedConversationResponse {
 
 impl PaginatedConversationResponse {
     pub fn builder() -> PaginatedConversationResponseBuilder {
-        PaginatedConversationResponseBuilder::default()
+        <PaginatedConversationResponseBuilder as Default>::default()
     }
 }
 

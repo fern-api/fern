@@ -431,7 +431,11 @@ export class DynamicTypeLiteralMapper {
             });
         }
 
-        // Regular object handling - include ALL properties, setting missing optional ones to None
+        // Use ..Default::default() when the type supports it, or when the struct has
+        // additionalProperties (which generates an `extra: HashMap` field not in the IR)
+        const hasAdditionalProperties = (objectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const useDefault = hasAdditionalProperties || this.context.canObjectTypeUseDefault(objectType);
+
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
         for (const property of objectType.properties) {
@@ -440,7 +444,7 @@ export class DynamicTypeLiteralMapper {
                 const propertyName = this.context.getPropertyName(property.name.name);
                 const wireValue = property.name.wireValue;
 
-                let propertyValue: rust.Expression;
+                let propertyValue: rust.Expression | undefined;
 
                 // Check for _fields properties first (for #[serde(flatten)] support)
                 // These properties don't exist in the JSON but need to be populated from parent data
@@ -467,7 +471,12 @@ export class DynamicTypeLiteralMapper {
                         // Property not in value - check if it's optional
                         const isOptional = this.context.isNullable(property.typeReference);
                         if (isOptional) {
-                            propertyValue = rust.Expression.none();
+                            if (useDefault) {
+                                // Skip - will be filled by ..Default::default()
+                                propertyValue = undefined;
+                            } else {
+                                propertyValue = rust.Expression.none();
+                            }
                         } else {
                             // Required field missing - add error and use default
                             this.context.addScopedError(`Required field '${wireValue}' is missing`, Severity.Critical);
@@ -481,16 +490,18 @@ export class DynamicTypeLiteralMapper {
                     }
                 }
 
-                structFields.push({
-                    name: propertyName,
-                    value: propertyValue
-                });
+                if (propertyValue !== undefined) {
+                    structFields.push({
+                        name: propertyName,
+                        value: propertyValue
+                    });
+                }
             } finally {
                 this.context.unscopeError();
             }
         }
 
-        return rust.Expression.structConstruction(structName, structFields);
+        return rust.Expression.structConstruction(structName, structFields, useDefault);
     }
 
     // Check if object extends another object (for flattening)
@@ -563,42 +574,54 @@ export class DynamicTypeLiteralMapper {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Create the base object with ALL base properties (not just those with values)
-        // For missing required fields, use Default::default()
-        const baseStructFields = extendsInfo.baseObjectType.properties.map((property) => {
+        // Check if the base type supports Default (e.g. has additionalProperties generating an extra HashMap field)
+        const baseHasAdditionalProperties =
+            (extendsInfo.baseObjectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const baseUseDefault =
+            baseHasAdditionalProperties || this.context.canObjectTypeUseDefault(extendsInfo.baseObjectType);
+
+        // Create the base object with properties that have values or are required
+        // When useDefault is true, skip optional fields without values (they'll be covered by ..Default::default())
+        const baseStructFields: Array<{ name: string; value: rust.Expression }> = [];
+        for (const property of extendsInfo.baseObjectType.properties) {
             this.context.scopeError(property.name.wireValue);
             try {
                 const propertyValue = value[property.name.wireValue];
-                let fieldValue: rust.Expression;
 
                 if (propertyValue !== undefined) {
                     // Value is provided in the example
-                    fieldValue = this.convert({
-                        typeReference: property.typeReference,
-                        value: propertyValue
+                    baseStructFields.push({
+                        name: this.context.getPropertyName(property.name.name),
+                        value: this.convert({
+                            typeReference: property.typeReference,
+                            value: propertyValue
+                        })
                     });
                 } else if (
                     property.typeReference.type === "optional" ||
                     property.typeReference.type === "nullable"
                 ) {
-                    // Optional field without value -> None
-                    fieldValue = rust.Expression.raw("None");
+                    // Optional field without value: skip if useDefault, otherwise add None
+                    if (!baseUseDefault) {
+                        baseStructFields.push({
+                            name: this.context.getPropertyName(property.name.name),
+                            value: rust.Expression.raw("None")
+                        });
+                    }
                 } else {
                     // Required field without value -> Default::default()
-                    fieldValue = rust.Expression.raw("Default::default()");
+                    baseStructFields.push({
+                        name: this.context.getPropertyName(property.name.name),
+                        value: rust.Expression.raw("Default::default()")
+                    });
                 }
-
-                return {
-                    name: this.context.getPropertyName(property.name.name),
-                    value: fieldValue
-                };
             } finally {
                 this.context.unscopeError();
             }
-        });
+        }
 
         const baseStructName = this.context.getStructName(extendsInfo.baseObjectType.declaration.name);
-        const baseStruct = rust.Expression.structConstruction(baseStructName, baseStructFields);
+        const baseStruct = rust.Expression.structConstruction(baseStructName, baseStructFields, baseUseDefault);
 
         // Add the flattened base object field
         structFields.push({
@@ -634,7 +657,13 @@ export class DynamicTypeLiteralMapper {
             }
         });
 
-        return rust.Expression.structConstruction(structName, structFields);
+        // Check if the outer type also needs useDefault
+        const outerHasAdditionalProperties =
+            (objectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const outerUseDefault =
+            outerHasAdditionalProperties || this.context.canObjectTypeUseDefault(objectType);
+
+        return rust.Expression.structConstruction(structName, structFields, outerUseDefault);
     }
 
     // Generate the field name for the flattened base object
@@ -749,6 +778,14 @@ export class DynamicTypeLiteralMapper {
                 if (!referencedType || referencedType.type !== "object") {
                     this.context.addScopedError("Referenced union type not found or not an object", Severity.Critical);
                     return rust.Expression.reference(`${unionName}::${variantName}`);
+                }
+
+                // If the referenced object has no properties, the model generator collapses
+                // it to a no-fields variant. Use the constructor method instead of struct syntax
+                // (needed because variants are #[non_exhaustive]).
+                if (referencedType.properties.length === 0) {
+                    const methodName = this.context.getPropertyName(unionVariant.discriminantValue.name);
+                    return rust.Expression.raw(`${unionName}::${methodName}()`);
                 }
 
                 const convertedObject = this.convertObjectType({

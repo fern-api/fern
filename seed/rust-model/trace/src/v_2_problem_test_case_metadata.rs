@@ -12,7 +12,7 @@ pub struct TestCaseMetadata {
 
 impl TestCaseMetadata {
     pub fn builder() -> TestCaseMetadataBuilder {
-        TestCaseMetadataBuilder::default()
+        <TestCaseMetadataBuilder as Default>::default()
     }
 }
 

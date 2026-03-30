@@ -8,7 +8,7 @@ pub struct Bar {
 
 impl Bar {
     pub fn builder() -> BarBuilder {
-        BarBuilder::default()
+        <BarBuilder as Default>::default()
     }
 }
 

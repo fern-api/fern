@@ -13,7 +13,7 @@ pub struct TestMethodNameRequest {
 
 impl TestMethodNameRequest {
     pub fn builder() -> TestMethodNameRequestBuilder {
-        TestMethodNameRequestBuilder::default()
+        <TestMethodNameRequestBuilder as Default>::default()
     }
 }
 

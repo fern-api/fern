@@ -7,7 +7,7 @@ pub struct FlushedEvent {
 
 impl FlushedEvent {
     pub fn builder() -> FlushedEventBuilder {
-        FlushedEventBuilder::default()
+        <FlushedEventBuilder as Default>::default()
     }
 }
 

@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Query Param Name Conflict API
+  version: 1.0.0
+paths:
+  /task/:
+    put:
+      operationId: bulkUpdateTasks
+      summary: Bulk-update tasks. Query params and body share some property names.
+      parameters:
+        - name: assigned_to
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+          x-fern-parameter-name: filter_assigned_to
+        - name: is_complete
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+          x-fern-parameter-name: filter_is_complete
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+          x-fern-parameter-name: filter_date
+        - name: _fields
+          in: query
+          required: false
+          description: Comma-separated list of fields to include in the response.
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BulkUpdateTasksRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated_count:
+                    type: integer
+components:
+  schemas:
+    BulkUpdateTasksRequest:
+      type: object
+      properties:
+        assigned_to:
+          type: string
+        date:
+          type: string
+          format: date
+        is_complete:
+          type: boolean
+        text:
+          type: string

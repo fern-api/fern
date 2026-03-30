@@ -8,13 +8,22 @@ import {
 import { RuleVisitor } from "./Rule.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
+export interface RuleWithVisitor {
+    ruleName: string;
+    visitor: RuleVisitor<DocsConfigFileAstNodeTypes>;
+}
+
+export type SeverityOverride = "warning" | "error";
+
 export function createDocsConfigFileAstVisitorForRules({
     relativeFilepath,
-    allRuleVisitors,
+    allRulesWithVisitors,
+    severityOverrides,
     addViolations
 }: {
     relativeFilepath: RelativeFilePath;
-    allRuleVisitors: RuleVisitor<DocsConfigFileAstNodeTypes>[];
+    allRulesWithVisitors: RuleWithVisitor[];
+    severityOverrides?: Map<string, SeverityOverride>;
     addViolations: (newViolations: ValidationViolation[]) => void;
 }): DocsConfigFileAstVisitor {
     function createAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes>(
@@ -24,14 +33,15 @@ export function createDocsConfigFileAstVisitorForRules({
             node: DocsConfigFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
-            for (const ruleVisitors of allRuleVisitors) {
-                const visitFromRule = ruleVisitors[nodeType];
+            for (const { ruleName, visitor } of allRulesWithVisitors) {
+                const visitFromRule = visitor[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = await visitFromRule(node);
+                    const severityOverride = severityOverrides?.get(ruleName);
                     addViolations(
                         ruleViolations.map((violation) => ({
                             name: violation.name,
-                            severity: violation.severity,
+                            severity: severityOverride ?? violation.severity,
                             relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath,
                             message: violation.message

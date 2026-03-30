@@ -9,7 +9,7 @@ pub struct UpdateProblemResponse {
 
 impl UpdateProblemResponse {
     pub fn builder() -> UpdateProblemResponseBuilder {
-        UpdateProblemResponseBuilder::default()
+        <UpdateProblemResponseBuilder as Default>::default()
     }
 }
 

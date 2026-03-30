@@ -10,7 +10,7 @@ pub struct InlinedChildRequest {
 
 impl InlinedChildRequest {
     pub fn builder() -> InlinedChildRequestBuilder {
-        InlinedChildRequestBuilder::default()
+        <InlinedChildRequestBuilder as Default>::default()
     }
 }
 

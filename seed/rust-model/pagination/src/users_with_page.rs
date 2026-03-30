@@ -8,7 +8,7 @@ pub struct WithPage2 {
 
 impl WithPage2 {
     pub fn builder() -> WithPage2Builder {
-        WithPage2Builder::default()
+        <WithPage2Builder as Default>::default()
     }
 }
 

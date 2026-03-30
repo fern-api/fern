@@ -1,4 +1,154 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.49.0
+  changelogEntry:
+    - summary: |
+        Add `body-sort` option to webhook signature payload format. When set to
+        `alphabetical`, POST body parameters are sorted by key before being
+        concatenated into the signing payload. This is required by providers like
+        Twilio. Supported in both Fern Definition (`body-sort: alphabetical` inside
+        `payload-format`) and OpenAPI specs (`body-sort: alphabetical` inside the
+        `payload-format` block of `x-fern-webhook-signature`).
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.48.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer handling of `security: []` on endpoints. Previously,
+        endpoints with an explicit empty security array (meaning no auth required)
+        inherited the global auth scheme instead of being marked as unauthenticated.
+        This caused generated SDKs to require auth tokens at construction time,
+        preventing use of unauthenticated endpoints like signup or signin.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.48.0
+  changelogEntry:
+    - summary: |
+        Automatically unlock docs deploy when the CLI exits early or crashes.
+        If the process receives SIGINT or SIGTERM after starting a docs publish,
+        the CLI now calls the FDR unlock endpoint to release the deploy lock so
+        subsequent publishes are not blocked.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk preview` command for publishing preview SDK packages.
+        Generates an SDK via Docker and publishes it to the Fern preview
+        registry (`npm.buildwithfern.com`). Outputs an `npm install` alias
+        command so consumers can test the preview with zero import changes.
+
+        ```bash
+        fern sdk preview --group my-sdk
+        fern sdk preview --group my-sdk --json
+        ```
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.46.7
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-Fern conversion using wire names instead of SDK names
+        (from `x-fern-parameter-name`) for query parameter conflict detection.
+        When a query parameter has a name override, the override name is now used
+        to check for conflicts with body properties, preventing unnecessary body
+        property renames.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.46.6
+  changelogEntry:
+    - summary: |
+        Fix tag description pages not being generated when a tag reference in
+        `docs.yml` uses a `title` override. Tags with title overrides are parsed
+        as `Package` type items, but the `#convertPackage` method did not call
+        `createTagDescriptionPageId`, so the overview page was silently dropped.
+        The method now falls back to creating a tag description page when no
+        explicit overview is provided.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.46.5
+  changelogEntry:
+    - summary: |
+        Internal improvements to GitHub integration for server-side operations.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.46.4
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials auth from generators.yml being converted to
+        bearer token instead of proper OAuth in the new OpenAPI parser. The
+        `convertApiAuth` in `ir-utils` had a TODO stub that fell back to bearer auth
+        for OAuth schemes. A post-processing step in `OpenAPIConverter` now resolves
+        OAuth endpoint references after paths are converted, constructing the full
+        `AuthScheme.oauth` with resolved endpoint and property references.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 4.46.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-Fern conversion producing malformed discriminated union
+        definitions when `x-fern-discriminator-context` is set. The context
+        value was placed as a sibling of `discriminant` instead of being nested
+        inside it, so the information was silently lost during IR generation.
+        This caused generated SDKs to always use the default discriminator context
+        of `data` and never use the alternate `protocol` which is used in SSE when
+        the SSE envelope's event field is the discriminant.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 4.46.2
+  changelogEntry:
+    - summary: |
+        Fix Go SDK auto-versioning returning incorrect versions for modules with
+        major version >= 2. The Go module proxy treats `github.com/owner/repo` and
+        `github.com/owner/repo/v2` as separate modules, but `getGoPackageName()`
+        only constructed the base path without the `/vN` suffix. This caused the
+        version resolver to find ancient v0.x versions instead of the current v2.x+
+        versions, producing wrong `sdkVersion` values in `.fern/metadata.json` and
+        incorrect module paths in generated code. The Go proxy lookup now probes
+        `/v2` through `/v10` in parallel to discover the highest published major
+        version.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 4.46.1
+  changelogEntry:
+    - summary: |
+        Fix tag description pages incorrectly escaping curly braces and angle
+        brackets inside fenced code blocks and inline code. The blanket
+        character escaping has been removed in favor of the downstream MDX
+        sanitizer which correctly handles special characters only where needed.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.46.0
+  changelogEntry:
+    - summary: |
+        Add `check.rules` to `docs.yml` to configure severities for selected docs
+        validation rules, including OpenAPI example validation, broken links,
+        non-component refs, local refs, circular redirects, and docs endpoint checks.
+        Deprecate the `--broken-links` and `--strict-broken-links` CLI flags in favor
+        of configuring broken link behavior in `docs.yml`.
+      type: feat
+  createdAt: "2026-03-26"
+  irVersion: 65
 - version: 4.45.0
   changelogEntry:
     - summary: |
@@ -14,7 +164,6 @@
       type: feat
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 4.44.1
   changelogEntry:
     - summary: |

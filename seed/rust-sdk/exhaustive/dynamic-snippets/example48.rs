@@ -16,6 +16,7 @@ async fn main() {
                 data: Dog {
                     name: "name".to_string(),
                     likes_to_woof: true,
+                    ..Default::default()
                 },
             },
             None,

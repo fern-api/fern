@@ -10,7 +10,7 @@ pub struct TypeWithSingleCharPropertyEqualToTypeStartingLetter {
 
 impl TypeWithSingleCharPropertyEqualToTypeStartingLetter {
     pub fn builder() -> TypeWithSingleCharPropertyEqualToTypeStartingLetterBuilder {
-        TypeWithSingleCharPropertyEqualToTypeStartingLetterBuilder::default()
+        <TypeWithSingleCharPropertyEqualToTypeStartingLetterBuilder as Default>::default()
     }
 }
 

@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:nullable-allof-extends'
+  implementation 'com.fern:nullable-allof-extends:0.0.1'
 }
 ```
 

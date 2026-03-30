@@ -10,7 +10,7 @@ pub struct ListUsersTopLevelCursorPaginationResponse {
 
 impl ListUsersTopLevelCursorPaginationResponse {
     pub fn builder() -> ListUsersTopLevelCursorPaginationResponseBuilder {
-        ListUsersTopLevelCursorPaginationResponseBuilder::default()
+        <ListUsersTopLevelCursorPaginationResponseBuilder as Default>::default()
     }
 }
 

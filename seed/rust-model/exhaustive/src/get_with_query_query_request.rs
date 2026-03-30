@@ -11,7 +11,7 @@ pub struct GetWithQueryQueryRequest {
 
 impl GetWithQueryQueryRequest {
     pub fn builder() -> GetWithQueryQueryRequestBuilder {
-        GetWithQueryQueryRequestBuilder::default()
+        <GetWithQueryQueryRequestBuilder as Default>::default()
     }
 }
 

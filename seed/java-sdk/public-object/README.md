@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:public-object'
+  implementation 'com.fern:public-object:0.0.1'
 }
 ```
 

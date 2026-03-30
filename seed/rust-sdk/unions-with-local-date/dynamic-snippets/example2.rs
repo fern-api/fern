@@ -14,11 +14,13 @@ async fn main() {
                 BigUnion::NormalSweet {
                     data: NormalSweet {
                         value: "value".to_string(),
+                        ..Default::default()
                     },
                 },
                 BigUnion::NormalSweet {
                     data: NormalSweet {
                         value: "value".to_string(),
+                        ..Default::default()
                     },
                 },
             ],

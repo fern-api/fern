@@ -16,7 +16,7 @@ pub struct SearchUsersQueryRequest {
 
 impl SearchUsersQueryRequest {
     pub fn builder() -> SearchUsersQueryRequestBuilder {
-        SearchUsersQueryRequestBuilder::default()
+        <SearchUsersQueryRequestBuilder as Default>::default()
     }
 }
 

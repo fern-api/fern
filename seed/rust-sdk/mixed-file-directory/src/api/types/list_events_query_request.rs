@@ -10,7 +10,7 @@ pub struct ListEventsQueryRequest {
 
 impl ListEventsQueryRequest {
     pub fn builder() -> ListEventsQueryRequestBuilder {
-        ListEventsQueryRequestBuilder::default()
+        <ListEventsQueryRequestBuilder as Default>::default()
     }
 }
 

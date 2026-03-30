@@ -31,7 +31,10 @@ export function getSdkParameterPropertyName({
     }
 
     if (isNameAndWireValue(name)) {
-        return includeSerdeLayer && !retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue;
+        if (includeSerdeLayer && !retainOriginalCasing) {
+            return name.name.camelCase.unsafeName;
+        }
+        return name.wireValue;
     } else {
         return includeSerdeLayer && !retainOriginalCasing ? name.camelCase.unsafeName : name.originalName;
     }

@@ -1,4 +1,78 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.3
+  changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.4.9 to 2.4.10.
+      type: chore
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix request body properties being stripped when query parameter names
+        collide with body property names and `resolveQueryParameterNameConflicts`
+        is enabled. The destructuring pattern in the generated client method now
+        correctly uses the renamed query parameter property (e.g. `filterIsComplete`)
+        instead of the wire value (e.g. `is_complete`), preventing body properties
+        from being accidentally extracted as query parameters.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections missing client-level default headers. The generated
+        `connect` method now includes `this._options?.headers` in the merged headers,
+        matching the behavior of HTTP endpoint methods. Previously, only auth headers
+        and user-provided connect-time headers were sent, causing Authorization and
+        other client-configured headers to be silently dropped on WebSocket connections.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 3.59.12
+  changelogEntry:
+    - summary: |
+        Fix duplicate property names in generated request interfaces when query
+        parameters and request body properties share the same wire name and
+        `x-fern-parameter-name` overrides are used with `noSerdeLayer: true`.
+        The generator now respects explicit name overrides (e.g.
+        `x-fern-parameter-name: filter_assigned_to`) even without a serde layer,
+        so query parameters use their override names instead of wire values.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+- version: 3.59.11
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints where expected event
+        assertions used snake_case wire format instead of camelCase deserialized format.
+        The `call_id` field (and similar snake_case properties) in SSE event data now
+        correctly appear as `callId` in test expectations, matching the SDK's runtime
+        deserialization behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.10
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  createdAt: "2026-03-26"
+  irVersion: 65
+
 - version: 3.59.9
   changelogEntry:
     - summary: |
@@ -30,7 +104,6 @@
       type: chore
   createdAt: "2026-03-25"
   irVersion: 65
-
 - version: 3.59.7
   changelogEntry:
     - summary: |

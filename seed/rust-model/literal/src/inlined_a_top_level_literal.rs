@@ -8,7 +8,7 @@ pub struct ATopLevelLiteral {
 
 impl ATopLevelLiteral {
     pub fn builder() -> ATopLevelLiteralBuilder {
-        ATopLevelLiteralBuilder::default()
+        <ATopLevelLiteralBuilder as Default>::default()
     }
 }
 

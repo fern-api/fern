@@ -11,7 +11,7 @@ pub struct GetWithAllowMultipleQueryQueryRequest {
 
 impl GetWithAllowMultipleQueryQueryRequest {
     pub fn builder() -> GetWithAllowMultipleQueryQueryRequestBuilder {
-        GetWithAllowMultipleQueryQueryRequestBuilder::default()
+        <GetWithAllowMultipleQueryQueryRequestBuilder as Default>::default()
     }
 }
 
