@@ -327,6 +327,14 @@ class SdkGenerator(AbstractGenerator):
 
         context.core_utilities.copy_to_project(project=project)
 
+        from .webhooks.webhooks_helper_generator import WebhooksHelperGenerator
+
+        webhooks_generator = WebhooksHelperGenerator(
+            ir=ir,
+            core_filepath=context.core_utilities.filepath,
+        )
+        webhooks_generator.generate(project=project)
+
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
 

@@ -3,12 +3,14 @@
 - version: 5.2.0
   changelogEntry:
     - summary: |
-        Add webhook signature verification support. When an API definition includes
-        `x-fern-webhook-signature` configuration, the generated SDK now includes a
-        `WebhooksHelper` utility in the `core` module with a `verify_signature` static
-        method. Supports HMAC-based verification with configurable algorithms (SHA1,
-        SHA256, SHA384, SHA512), encodings (hex, base64), signature prefixes, payload
-        component ordering, body parameter sorting, and timestamp tolerance validation.
+        Add webhook signature verification support with per-webhook generated classes.
+        When an API definition includes `x-fern-webhook-signature` configuration, the
+        generator produces a `WebhooksHelper` class in `core/` with algorithm, encoding,
+        signature prefix, payload format, and timestamp config baked in at generation time.
+        SDK consumers only need to pass `request_body`, `signature_header`, `signature_key`,
+        and optionally `timestamp_header`. Webhooks with different verification configs get
+        separate named helper classes (e.g. `PaymentWebhooksHelper`). Supports HMAC-based
+        verification with SHA1, SHA256, SHA384, SHA512 algorithms and hex/base64 encodings.
       type: feat
   createdAt: "2026-03-30"
   irVersion: 65

@@ -323,7 +323,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="webhooks_helper"),
                 ),
-                exports={"WebhooksHelper"} if not self._exclude_types_from_init_exports else set(),
+                exports=set(),
             )
 
         # Copy the entire http_sse folder
