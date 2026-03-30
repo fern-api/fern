@@ -357,16 +357,22 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         const usernameName = this.context.getParameterName(basicAuthScheme.username);
                         const passwordName = this.context.getParameterName(basicAuthScheme.password);
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
-                            const controlFlowKeyword = i === 0 ? "if" : "else if";
-                            writer.controlFlow(
-                                controlFlowKeyword,
-                                php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
-                            );
+                            if (i === 0) {
+                                writer.controlFlow(
+                                    "if",
+                                    php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                                );
+                            } else {
+                                writer.contiguousControlFlow(
+                                    "elseif",
+                                    php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                                );
+                            }
                         }
                         writer.writeLine(
                             `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
                         );
-                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                        if ((isAuthOptional || basicAuthSchemes.length > 1) && i === basicAuthSchemes.length - 1) {
                             writer.endControlFlow();
                         }
                     }
