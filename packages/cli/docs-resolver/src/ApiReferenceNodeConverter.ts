@@ -126,17 +126,22 @@ export class ApiReferenceNodeConverter {
             this.#idgen
         ).orUndefined();
 
-        // When no explicit overview is set, inherit the first apiPackage child's overview page (e.g., tag description).
+        // When no explicit overview is set, inherit the first apiPackage child's tag-description overview page.
         // This works for both flattened and non-flattened cases:
         // - Flattened: The section will inherit this overview page via DocsDefinitionResolver.toSectionNode()
         // - Non-flattened: The API Reference itself will show the tag description when clicked
-        // We search through all children to find an apiPackage with an overviewPageId, rather than assuming
-        // the first child is an apiPackage (which may not be true when endpoints are explicitly listed in the layout).
+        // We search through all children to find an apiPackage with a tag-description overviewPageId, rather
+        // than assuming the first child is an apiPackage (which may not be true when endpoints are explicitly
+        // listed in the layout).
+        // Only auto-generated tag description pages (with "tag-" prefix) are promoted here.
+        // User-defined section summaries should NOT be promoted to the API landing page.
         let overviewPageId = this.#overviewPageId;
         if (overviewPageId == null) {
             const apiPackageWithOverview = this.#children.find(
                 (child): child is FernNavigation.V1.ApiPackageNode =>
-                    child.type === "apiPackage" && child.overviewPageId != null
+                    child.type === "apiPackage" &&
+                    child.overviewPageId != null &&
+                    child.overviewPageId.startsWith("tag-")
             );
             if (apiPackageWithOverview != null) {
                 overviewPageId = apiPackageWithOverview.overviewPageId;
