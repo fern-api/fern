@@ -12,18 +12,18 @@ class BaseClientWrapper:
         self,
         *,
         api_version: typing.Optional[str] = None,
+        required_version: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        required_version: typing.Optional[str] = None,
     ):
         self._api_version = api_version
+        self._required_version = required_version
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._logging = logging
-        self._required_version = required_version
 
     def get_headers(self) -> typing.Dict[str, str]:
         import platform
@@ -39,7 +39,7 @@ class BaseClientWrapper:
         }
         if self._api_version is not None:
             headers["X-API-Version"] = self._api_version
-        headers["X-Required-Version"] = self._required_version if self._required_version is not None else "2024-01-01"
+        headers["X-Required-Version"] = self._required_version
         return headers
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
@@ -57,20 +57,20 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_version: typing.Optional[str] = None,
+        required_version: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        required_version: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
         super().__init__(
             api_version=api_version,
+            required_version=required_version,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
             logging=logging,
-            required_version=required_version,
         )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
@@ -86,21 +86,21 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_version: typing.Optional[str] = None,
+        required_version: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        required_version: typing.Optional[str] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(
             api_version=api_version,
+            required_version=required_version,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
             logging=logging,
-            required_version=required_version,
         )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(

@@ -6,7 +6,12 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("listItems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "test", environment: server.baseUrl });
+        const client = new SeedApiClient({
+            maxRetries: 0,
+            apiVersion: "test",
+            requiredVersion: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = [{ id: "id", name: "name" }];
 

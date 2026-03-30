@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/optional-header-with-default";
 
-const client = new SeedApiClient({ apiVersion: "YOUR_API_VERSION" });
+const client = new SeedApiClient({ apiVersion: "YOUR_API_VERSION", requiredVersion: "YOUR_REQUIRED_VERSION" });
 await client.listItems();
 ```
 

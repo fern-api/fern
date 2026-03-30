@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/optional-header-with-default\";\n\nconst client = new SeedApiClient({ apiVersion: \"YOUR_API_VERSION\" });\nawait client.listItems();\n"
+                "client": "import { SeedApiClient } from \"@fern/optional-header-with-default\";\n\nconst client = new SeedApiClient({ apiVersion: \"YOUR_API_VERSION\", requiredVersion: \"YOUR_REQUIRED_VERSION\" });\nawait client.listItems();\n"
             }
         }
     ],

@@ -18,7 +18,7 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
 
-    constructor(options: SeedApiClient.Options = {}) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -39,7 +39,7 @@ export class SeedApiClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion,
-                "X-Required-Version": requestOptions?.requiredVersion ?? "2024-01-01",
+                "X-Required-Version": requestOptions?.requiredVersion ?? this._options?.requiredVersion,
             }),
             requestOptions?.headers,
         );

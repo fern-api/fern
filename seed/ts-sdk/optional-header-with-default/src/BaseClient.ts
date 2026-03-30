@@ -11,7 +11,7 @@ export interface BaseClientOptions {
     /** Override the X-API-Version header */
     apiVersion?: core.Supplier<string | undefined>;
     /** Override the X-Required-Version header */
-    requiredVersion?: "2024-01-01";
+    requiredVersion: core.Supplier<string>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -34,7 +34,7 @@ export interface BaseRequestOptions {
     /** Override the X-API-Version header */
     apiVersion?: string | undefined;
     /** Override the X-Required-Version header */
-    requiredVersion?: "2024-01-01";
+    requiredVersion?: string;
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
@@ -57,7 +57,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
             "X-API-Version": options?.apiVersion,
-            "X-Required-Version": options?.requiredVersion ?? "2024-01-01",
+            "X-Required-Version": options?.requiredVersion,
         },
         options?.headers,
     );

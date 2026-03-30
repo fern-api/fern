@@ -37,7 +37,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    required_version="<X-Required-Version>",
+)
 
 client.list_items()
 ```
@@ -64,7 +66,9 @@ import asyncio
 
 from seed import AsyncSeedApi
 
-client = AsyncSeedApi()
+client = AsyncSeedApi(
+    required_version="<X-Required-Version>",
+)
 
 
 async def main() -> None:

@@ -30,6 +30,7 @@ class SeedApi:
 
 
     api_version : typing.Optional[str]
+    required_version : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -45,13 +46,13 @@ class SeedApi:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    required_version : typing.Optional[str]
     Examples
     --------
     from seed import SeedApi
 
     client = SeedApi(
         api_version="YOUR_API_VERSION",
+        required_version="YOUR_REQUIRED_VERSION",
     )
     """
 
@@ -61,12 +62,12 @@ class SeedApi:
         base_url: typing.Optional[str] = None,
         environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
         api_version: typing.Optional[str] = None,
+        required_version: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        required_version: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -74,6 +75,7 @@ class SeedApi:
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_version=api_version,
+            required_version=required_version,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -82,7 +84,6 @@ class SeedApi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             logging=logging,
-            required_version=required_version,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -115,6 +116,7 @@ class SeedApi:
 
         client = SeedApi(
             api_version="YOUR_API_VERSION",
+            required_version="YOUR_REQUIRED_VERSION",
         )
         client.list_items()
         """
@@ -141,6 +143,7 @@ class AsyncSeedApi:
 
 
     api_version : typing.Optional[str]
+    required_version : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -156,13 +159,13 @@ class AsyncSeedApi:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    required_version : typing.Optional[str]
     Examples
     --------
     from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
         api_version="YOUR_API_VERSION",
+        required_version="YOUR_REQUIRED_VERSION",
     )
     """
 
@@ -172,12 +175,12 @@ class AsyncSeedApi:
         base_url: typing.Optional[str] = None,
         environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
         api_version: typing.Optional[str] = None,
+        required_version: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        required_version: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -185,6 +188,7 @@ class AsyncSeedApi:
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_version=api_version,
+            required_version=required_version,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -193,7 +197,6 @@ class AsyncSeedApi:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             logging=logging,
-            required_version=required_version,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -228,6 +231,7 @@ class AsyncSeedApi:
 
         client = AsyncSeedApi(
             api_version="YOUR_API_VERSION",
+            required_version="YOUR_REQUIRED_VERSION",
         )
 
 

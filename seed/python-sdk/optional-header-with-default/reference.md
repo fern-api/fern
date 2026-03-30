@@ -16,6 +16,7 @@ from seed import SeedApi
 from seed.environment import SeedApiEnvironment
 
 client = SeedApi(
+    required_version="<X-Required-Version>",
     environment=SeedApiEnvironment.DEFAULT,
 )
 

@@ -1,7 +1,6 @@
 import {
     HeaderWithExample,
     HttpMethod,
-    LiteralSchemaValue,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
@@ -77,7 +76,7 @@ export function convertParameters({
         const [isOptional, isNullable] =
             context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
-        let schema =
+        const schema =
             resolvedParameter.schema != null
                 ? convertSchema(
                       resolvedParameter.schema,
@@ -145,30 +144,6 @@ export function convertParameters({
                         groupName: undefined,
                         inline: undefined
                     });
-        if (
-            resolvedParameter.in === "header" &&
-            isRequired &&
-            resolvedParameter.schema != null &&
-            !isReferenceObject(resolvedParameter.schema) &&
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            (resolvedParameter.schema as any).default != null
-        ) {
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            const defaultValue = (resolvedParameter.schema as any).default;
-            if (typeof defaultValue === "string" && defaultValue.length > 0) {
-                schema = SchemaWithExample.literal({
-                    nameOverride: undefined,
-                    generatedName,
-                    title: undefined,
-                    value: LiteralSchemaValue.string(defaultValue),
-                    description: undefined,
-                    availability,
-                    namespace: undefined,
-                    groupName: undefined
-                });
-            }
-        }
-
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
