@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Test that streaming $ref schemas are not excluded when shared with other endpoints.
+  version: 1.0.0
+paths:
+  "/completions/stream":
+    post:
+      x-fern-sdk-group-name: completions
+      x-fern-sdk-method-name: stream
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/Completion"
+        response-stream:
+          $ref: "#/components/schemas/CompletionChunk"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+  "/completions/create":
+    post:
+      operationId: createCompletion
+      x-fern-sdk-group-name: completions
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completion"
+components:
+  schemas:
+    CompletionRequest:
+      type: object
+      properties:
+        stream:
+          type: boolean
+        prompt:
+          type: string
+        model:
+          type: string
+      required:
+        - prompt
+        - model
+    Completion:
+      type: object
+      properties:
+        text:
+          type: string
+    CompletionChunk:
+      type: object
+      properties:
+        delta:
+          type: string

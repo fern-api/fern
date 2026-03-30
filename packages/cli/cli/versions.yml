@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.2
+  changelogEntry:
+    - summary: |
+        Don't exclude streaming request body ref schemas during stream condition
+        processing, as they may be referenced by other operations and need to
+        remain in the generated output.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.50.1
   changelogEntry:
     - summary: |
