@@ -1,5 +1,5 @@
-# Square OpenAPI spec is fetched at CI runtime from a pinned GitHub SHA
-fern/apis/square/openapi.json
+# OpenAPI specs are fetched at CI runtime (Square from pinned SHA, ElevenLabs from live API)
+**/openapi.json
 
 # Benchmark timing results generated during CI runs
 benchmark-results/

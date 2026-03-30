@@ -97,7 +97,6 @@
             "!!packages/generator-cli/src/configuration/sdk/**",
             "!!packages/ir-sdk/**",
             "!!packages/seed/src/config/**",
-            "!!benchmarks/**",
             "!!seed-remote-local",
             "!!seed",
             "!!test-definitions-openapi/**",
