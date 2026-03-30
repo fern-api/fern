@@ -25,11 +25,10 @@ runs:
 
           START_TIME=$EPOCHSECONDS
 
-          # Run the seed CLI against the benchmark fixture
+          # Run full E2E generation including build/test scripts
           pnpm seed:local run \
             --generator "${GENERATOR}" \
-            --path "benchmarks/fern/apis/${SPEC}" \
-            --skip-scripts 2>&1 || true
+            --path "benchmarks/fern/apis/${SPEC}" 2>&1 || true
 
           END_TIME=$EPOCHSECONDS
           DURATION=$(( END_TIME - START_TIME ))
@@ -42,10 +41,3 @@ runs:
 
           echo "::endgroup::"
         done
-
-    - name: Upload benchmark results
-      uses: actions/upload-artifact@v4
-      with:
-        name: benchmark-${{ inputs.generator }}
-        path: benchmark-results/
-        retention-days: 5

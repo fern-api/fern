@@ -928,7 +928,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: main
-          clean: false
 
       - name: Install (main)
         uses: ./.github/actions/install
