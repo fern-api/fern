@@ -8152,8 +8152,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: ^0.7.0
-        version: 0.7.0
+        specifier: ^0.8.0
+        version: 0.8.0
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9672,8 +9672,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.7.0':
-    resolution: {integrity: sha512-NJrnacvCtc8Uy/k056KKR/6/8WJvsPC7yf+cJHIQGWRe8MZRUnEDGC5k76NIuq6c3/YWrVJW0+jUbjOWNLw9jg==}
+  '@fern-api/replay@0.8.0':
+    resolution: {integrity: sha512-NMuVNGoGGTFLE63WMGL19jKulnQ1XcKe5son94WCt3md3sWGMNRQz+rIE9riaK1wTlnIbrd5v6aJ8t2ZQT/wrQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16628,7 +16628,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.7.0':
+  '@fern-api/replay@0.8.0':
     dependencies:
       minimatch: 10.2.4
       node-diff3: 3.2.0
