@@ -40,7 +40,7 @@ func (c *Client) StreamProtocolNoCollision(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamProtocolNoCollisionResponse], error) {
+) (core.StreamReceiver[fern.StreamProtocolNoCollisionResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -57,20 +57,21 @@ func (c *Client) StreamProtocolNoCollision(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:                endpointURL,
-			Method:             http.MethodPost,
-			Headers:            headers,
-			MaxAttempts:        options.MaxAttempts,
-			BodyProperties:     options.BodyProperties,
-			QueryParameters:    options.QueryParameters,
-			Client:             options.HTTPClient,
-			MaxBufSize:         options.MaxBufSize,
-			Prefix:             internal.DefaultSSEDataPrefix,
-			Terminator:         internal.DefaultSSETerminator,
-			Format:             core.StreamFormatSSE,
-			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			EventDiscriminator:   "event",
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -80,7 +81,7 @@ func (c *Client) StreamProtocolCollision(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamProtocolCollisionResponse], error) {
+) (core.StreamReceiver[fern.StreamProtocolCollisionResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -97,20 +98,21 @@ func (c *Client) StreamProtocolCollision(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:                endpointURL,
-			Method:             http.MethodPost,
-			Headers:            headers,
-			MaxAttempts:        options.MaxAttempts,
-			BodyProperties:     options.BodyProperties,
-			QueryParameters:    options.QueryParameters,
-			Client:             options.HTTPClient,
-			MaxBufSize:         options.MaxBufSize,
-			Prefix:             internal.DefaultSSEDataPrefix,
-			Terminator:         internal.DefaultSSETerminator,
-			Format:             core.StreamFormatSSE,
-			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			EventDiscriminator:   "event",
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -120,7 +122,7 @@ func (c *Client) StreamDataContext(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamDataContextResponse], error) {
+) (core.StreamReceiver[fern.StreamDataContextResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -137,19 +139,20 @@ func (c *Client) StreamDataContext(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -159,7 +162,7 @@ func (c *Client) StreamNoContext(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamNoContextResponse], error) {
+) (core.StreamReceiver[fern.StreamNoContextResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -176,19 +179,20 @@ func (c *Client) StreamNoContext(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -198,7 +202,7 @@ func (c *Client) StreamProtocolWithFlatSchema(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamProtocolWithFlatSchemaResponse], error) {
+) (core.StreamReceiver[fern.StreamProtocolWithFlatSchemaResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -215,20 +219,21 @@ func (c *Client) StreamProtocolWithFlatSchema(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:                endpointURL,
-			Method:             http.MethodPost,
-			Headers:            headers,
-			MaxAttempts:        options.MaxAttempts,
-			BodyProperties:     options.BodyProperties,
-			QueryParameters:    options.QueryParameters,
-			Client:             options.HTTPClient,
-			MaxBufSize:         options.MaxBufSize,
-			Prefix:             internal.DefaultSSEDataPrefix,
-			Terminator:         internal.DefaultSSETerminator,
-			Format:             core.StreamFormatSSE,
-			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			EventDiscriminator:   "event",
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -238,7 +243,7 @@ func (c *Client) StreamDataContextWithEnvelopeSchema(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.StreamDataContextWithEnvelopeSchemaResponse], error) {
+) (core.StreamReceiver[fern.StreamDataContextWithEnvelopeSchemaResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -255,19 +260,20 @@ func (c *Client) StreamDataContextWithEnvelopeSchema(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -277,7 +283,7 @@ func (c *Client) StreamOasSpecNative(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[fern.Event], error) {
+) (core.StreamReceiver[fern.Event], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -294,19 +300,20 @@ func (c *Client) StreamOasSpecNative(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }

@@ -38,7 +38,7 @@ func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamedCompletion], error) {
+) (core.StreamReceiver[sse.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -55,19 +55,20 @@ func (c *Client) Stream(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      "[[DONE]]",
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           "[[DONE]]",
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(sse.ErrorCodes),
 		},
 	)
 }
@@ -76,7 +77,7 @@ func (c *Client) StreamWithoutTerminator(
 	ctx context.Context,
 	request *sse.StreamCompletionRequestWithoutTerminator,
 	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamedCompletion], error) {
+) (core.StreamReceiver[sse.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -93,19 +94,20 @@ func (c *Client) StreamWithoutTerminator(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Prefix:               internal.DefaultSSEDataPrefix,
+			Terminator:           internal.DefaultSSETerminator,
+			Format:               core.StreamFormatSSE,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(sse.ErrorCodes),
 		},
 	)
 }

@@ -38,7 +38,7 @@ func (c *Client) GenerateStream(
 	ctx context.Context,
 	request *stream.GenerateStreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[stream.StreamResponse], error) {
+) (core.StreamReceiver[stream.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -54,16 +54,17 @@ func (c *Client) GenerateStream(
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(stream.ErrorCodes),
+			URL:                  endpointURL,
+			Method:               http.MethodPost,
+			Headers:              headers,
+			MaxAttempts:          options.MaxAttempts,
+			BodyProperties:       options.BodyProperties,
+			QueryParameters:      options.QueryParameters,
+			Client:               options.HTTPClient,
+			MaxBufSize:           options.MaxBufSize,
+			MaxReconnectAttempts: options.MaxReconnectAttempts,
+			Request:              request,
+			ErrorDecoder:         internal.NewErrorDecoder(stream.ErrorCodes),
 		},
 	)
 }

@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
+	"time"
 )
 
 type StreamFormat string
@@ -234,6 +235,24 @@ func (s *Stream[T]) LastEventID() string {
 	return ""
 }
 
+// Terminated reports whether the stream ended due to a terminator match
+// rather than a connection drop or normal EOF.
+func (s *Stream[T]) Terminated() bool {
+	if reader, ok := s.reader.(sseEventReader); ok {
+		return reader.Terminated()
+	}
+	return false
+}
+
+// ServerRetry returns the most recently received retry interval from the server.
+// Returns 0 if no retry field has been received.
+func (s *Stream[T]) ServerRetry() time.Duration {
+	if reader, ok := s.reader.(sseEventReader); ok {
+		return reader.ServerRetry()
+	}
+	return 0
+}
+
 // streamReader reads data from a stream.
 type streamReader interface {
 	ReadFromStream() ([]byte, error)
@@ -244,6 +263,8 @@ type sseEventReader interface {
 	streamReader
 	ReadEvent() (*SseEvent, error)
 	LastEventID() string
+	Terminated() bool
+	ServerRetry() time.Duration
 }
 
 // newStreamReader returns a new streamReader based on the given
@@ -394,6 +415,8 @@ type SseStreamReader struct {
 	scanner     *bufio.Scanner
 	options     *streamOptions
 	lastEventID string
+	terminated  bool
+	lastRetry   time.Duration
 
 	// Precomputed discriminator injection patterns (empty if no discriminator configured).
 	discriminatorQuotedField []byte // e.g. `"type"`
@@ -488,6 +511,7 @@ func (s *SseStreamReader) ReadEvent() (*SseEvent, error) {
 			return nil, err
 		}
 		if s.options.isTerminated(event.Data) {
+			s.terminated = true
 			return nil, io.EOF
 		}
 		if len(event.Data) == 0 {
@@ -513,6 +537,18 @@ func (s *SseStreamReader) LastEventID() string {
 	return s.lastEventID
 }
 
+// Terminated reports whether the stream ended due to a terminator match
+// rather than a connection drop or normal EOF.
+func (s *SseStreamReader) Terminated() bool {
+	return s.terminated
+}
+
+// ServerRetry returns the most recently received retry interval from the server.
+// Returns 0 if no retry field has been received.
+func (s *SseStreamReader) ServerRetry() time.Duration {
+	return s.lastRetry
+}
+
 func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 	if bytes.HasPrefix(line, sseCommentPrefix) {
 		return
@@ -532,6 +568,7 @@ func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 	} else if value, ok := s.tryParseField(line, sseRetryPrefix, sseRetryPrefixNoSpace); ok {
 		if n, err := strconv.Atoi(string(bytes.TrimSpace(value))); err == nil && n >= 0 {
 			event.Retry = n
+			s.lastRetry = time.Duration(n) * time.Millisecond
 		}
 	}
 }

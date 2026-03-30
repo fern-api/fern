@@ -71,3 +71,11 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 		MaxBufSize: size,
 	}
 }
+
+// WithMaxReconnectAttempts configures the maximum number of reconnection
+// attempts for SSE streams. Default is 10. Set to 0 to disable auto-reconnection.
+func WithMaxReconnectAttempts(attempts int) *core.MaxReconnectAttemptsOption {
+	return &core.MaxReconnectAttemptsOption{
+		MaxReconnectAttempts: &attempts,
+	}
+}
