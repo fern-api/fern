@@ -3,107 +3,106 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum JsonLikeWithNullAndUndefined {
-        List0(Vec<Option<JsonLikeWithNullAndUndefined>>),
+        OptionalJsonLikeWithNullAndUndefinedList(Vec<Option<JsonLikeWithNullAndUndefined>>),
 
-        Map1(HashMap<String, Option<JsonLikeWithNullAndUndefined>>),
+        StringToOptionalJsonLikeWithNullAndUndefinedMap(HashMap<String, Option<JsonLikeWithNullAndUndefined>>),
 
-        Optional2(Option<String>),
+        OptionalString(Option<String>),
 
-        Optional3(Option<i64>),
+        OptionalInteger(Option<i64>),
 
-        Optional4(Option<bool>),
+        OptionalBoolean(Option<bool>),
 }
 
 impl JsonLikeWithNullAndUndefined {
-    pub fn is_list0(&self) -> bool {
-        matches!(self, Self::List0(_))
+    pub fn is_optional_json_like_with_null_and_undefined_list(&self) -> bool {
+        matches!(self, Self::OptionalJsonLikeWithNullAndUndefinedList(_))
     }
 
-    pub fn is_map1(&self) -> bool {
-        matches!(self, Self::Map1(_))
+    pub fn is_string_to_optional_json_like_with_null_and_undefined_map(&self) -> bool {
+        matches!(self, Self::StringToOptionalJsonLikeWithNullAndUndefinedMap(_))
     }
 
-    pub fn is_optional2(&self) -> bool {
-        matches!(self, Self::Optional2(_))
+    pub fn is_optional_string(&self) -> bool {
+        matches!(self, Self::OptionalString(_))
     }
 
-    pub fn is_optional3(&self) -> bool {
-        matches!(self, Self::Optional3(_))
+    pub fn is_optional_integer(&self) -> bool {
+        matches!(self, Self::OptionalInteger(_))
     }
 
-    pub fn is_optional4(&self) -> bool {
-        matches!(self, Self::Optional4(_))
+    pub fn is_optional_boolean(&self) -> bool {
+        matches!(self, Self::OptionalBoolean(_))
     }
 
 
-    pub fn as_list0(&self) -> Option<&Vec<Option<JsonLikeWithNullAndUndefined>>> {
+    pub fn as_optional_json_like_with_null_and_undefined_list(&self) -> Option<&Vec<Option<JsonLikeWithNullAndUndefined>>> {
         match self {
-                    Self::List0(value) => Some(value),
+                    Self::OptionalJsonLikeWithNullAndUndefinedList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_list0(self) -> Option<Vec<Option<JsonLikeWithNullAndUndefined>>> {
+    pub fn into_optional_json_like_with_null_and_undefined_list(self) -> Option<Vec<Option<JsonLikeWithNullAndUndefined>>> {
         match self {
-                    Self::List0(value) => Some(value),
+                    Self::OptionalJsonLikeWithNullAndUndefinedList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_map1(&self) -> Option<&HashMap<String, Option<JsonLikeWithNullAndUndefined>>> {
+    pub fn as_string_to_optional_json_like_with_null_and_undefined_map(&self) -> Option<&HashMap<String, Option<JsonLikeWithNullAndUndefined>>> {
         match self {
-                    Self::Map1(value) => Some(value),
+                    Self::StringToOptionalJsonLikeWithNullAndUndefinedMap(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_map1(self) -> Option<HashMap<String, Option<JsonLikeWithNullAndUndefined>>> {
+    pub fn into_string_to_optional_json_like_with_null_and_undefined_map(self) -> Option<HashMap<String, Option<JsonLikeWithNullAndUndefined>>> {
         match self {
-                    Self::Map1(value) => Some(value),
+                    Self::StringToOptionalJsonLikeWithNullAndUndefinedMap(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_optional2(&self) -> Option<&Option<String>> {
+    pub fn as_optional_string(&self) -> Option<&str> {
         match self {
-                    Self::Optional2(value) => Some(value),
+                    Self::OptionalString(value) => value.as_deref(),
                     _ => None,
                 }
     }
 
-    pub fn into_optional2(self) -> Option<Option<String>> {
+    pub fn into_optional_string(self) -> Option<String> {
         match self {
-                    Self::Optional2(value) => Some(value),
+                    Self::OptionalString(value) => value,
                     _ => None,
                 }
     }
 
-    pub fn as_optional3(&self) -> Option<&Option<i64>> {
+    pub fn as_optional_integer(&self) -> Option<&i64> {
         match self {
-                    Self::Optional3(value) => Some(value),
+                    Self::OptionalInteger(value) => value.as_ref(),
                     _ => None,
                 }
     }
 
-    pub fn into_optional3(self) -> Option<Option<i64>> {
+    pub fn into_optional_integer(self) -> Option<i64> {
         match self {
-                    Self::Optional3(value) => Some(value),
+                    Self::OptionalInteger(value) => value,
                     _ => None,
                 }
     }
 
-    pub fn as_optional4(&self) -> Option<&Option<bool>> {
+    pub fn as_optional_boolean(&self) -> Option<&bool> {
         match self {
-                    Self::Optional4(value) => Some(value),
+                    Self::OptionalBoolean(value) => value.as_ref(),
                     _ => None,
                 }
     }
 
-    pub fn into_optional4(self) -> Option<Option<bool>> {
+    pub fn into_optional_boolean(self) -> Option<bool> {
         match self {
-                    Self::Optional4(value) => Some(value),
+                    Self::OptionalBoolean(value) => value,
                     _ => None,
                 }
     }
-
 }

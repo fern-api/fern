@@ -4,6 +4,7 @@ package basicauth
 
 import (
 	context "context"
+
 	core "github.com/basic-auth/fern/core"
 	internal "github.com/basic-auth/fern/internal"
 	option "github.com/basic-auth/fern/option"

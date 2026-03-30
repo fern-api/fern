@@ -17,6 +17,7 @@ export interface WireMockMapping {
     request: {
         urlPathTemplate: string;
         method: string;
+        headers?: Record<string, { matches: string }>;
         pathParameters?: Record<string, { equalTo: string }>;
         queryParameters?: Record<string, { equalTo: string }>;
         formParameters?: Record<string, unknown>;
@@ -266,12 +267,38 @@ export class WireMock {
         // This allows WireMock to differentiate between streaming and non-streaming requests
         const shouldAddBodyPattern = needsBodyPattern && isSseResponse;
 
+        // Build auth header matchers for endpoints that require authentication.
+        // Skip auth header matching when endpoint has per-endpoint security because
+        // the client configures all auth schemes globally and header overwriting
+        // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
+        const authHeaders: Record<string, { matches: string }> = {};
+        if (endpoint.auth && !(endpoint.security != null && endpoint.security.length > 0)) {
+            for (const scheme of ir.auth.schemes) {
+                switch (scheme.type) {
+                    case "basic":
+                        authHeaders["Authorization"] = { matches: "Basic .+" };
+                        break;
+                    case "bearer":
+                        authHeaders["Authorization"] = { matches: "Bearer .+" };
+                        break;
+                    case "header": {
+                        const headerName = scheme.name?.wireValue;
+                        if (headerName) {
+                            authHeaders[headerName] = { matches: ".+" };
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
         const mapping: WireMockMapping = {
             id: uuid,
             name,
             request: {
                 urlPathTemplate,
                 method: endpoint.method,
+                headers: Object.keys(authHeaders).length > 0 ? authHeaders : undefined,
                 pathParameters: Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
                 queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
                 formParameters: {},

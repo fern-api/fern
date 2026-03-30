@@ -27,7 +27,7 @@ impl UserClient {
     /// Empty response
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -60,7 +60,7 @@ impl UserClient {
             .execute_request(
                 Method::POST,
                 "users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

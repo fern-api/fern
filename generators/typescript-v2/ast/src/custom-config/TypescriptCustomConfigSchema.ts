@@ -86,6 +86,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     offsetSemantics: z.optional(z.enum(["item-index", "page-index"])),
     customPagerName: z.optional(z.string()),
 
+    resolveQueryParameterNameConflicts: z.optional(z.boolean()),
+
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),

@@ -108,15 +108,17 @@ async fn main() {
                 username: "username".to_string(),
                 email: Some("email".to_string()),
                 phone: Some("phone".to_string()),
-                address: Some(Some(Address {
+                address: Some(Address {
                     street: "street".to_string(),
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
-                })),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -174,17 +176,19 @@ async fn main() {
             &"userId".to_string(),
             &UpdateUserRequest {
                 username: Some("username".to_string()),
-                email: Some(Some("email".to_string())),
+                email: Some("email".to_string()),
                 phone: Some("phone".to_string()),
-                address: Some(Some(Address {
+                address: Some(Address {
                     street: "street".to_string(),
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
-                })),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -258,7 +262,8 @@ async fn main() {
                 limit: Some(1),
                 offset: Some(1),
                 include_deleted: Some(true),
-                sort_by: Some(Some("sortBy".to_string())),
+                sort_by: Some("sortBy".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -356,7 +361,7 @@ async fn main() {
                 query: "query".to_string(),
                 department: Some("department".to_string()),
                 role: Some("role".to_string()),
-                is_active: Some(Some(true)),
+                is_active: Some(true),
             },
             None,
         )
@@ -454,15 +459,16 @@ async fn main() {
                 id: "id".to_string(),
                 nullable_role: Some(UserRole::Admin),
                 optional_role: Some(UserRole::Admin),
-                optional_nullable_role: Some(Some(UserRole::Admin)),
+                optional_nullable_role: Some(UserRole::Admin),
                 nullable_status: Some(UserStatus::Active),
                 optional_status: Some(UserStatus::Active),
-                optional_nullable_status: Some(Some(UserStatus::Active)),
+                optional_nullable_status: Some(UserStatus::Active),
                 nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_notification: Some(NotificationMethod::Email {
@@ -470,15 +476,17 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
-                optional_nullable_notification: Some(Some(NotificationMethod::Email {
+                optional_nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                })),
+                }),
                 nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
@@ -494,10 +502,12 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 optional_search_result: Some(SearchResult::User {
@@ -515,10 +525,12 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
@@ -529,10 +541,10 @@ async fn main() {
                     "optionalArray".to_string(),
                     "optionalArray".to_string(),
                 ]),
-                optional_nullable_array: Some(Some(vec![
+                optional_nullable_array: Some(vec![
                     "optionalNullableArray".to_string(),
                     "optionalNullableArray".to_string(),
-                ])),
+                ]),
                 nullable_list_of_nullables: Some(vec![
                     Some("nullableListOfNullables".to_string()),
                     Some("nullableListOfNullables".to_string()),
@@ -544,9 +556,10 @@ async fn main() {
                         city: Some("city".to_string()),
                         state: Some("state".to_string()),
                         zip_code: "zipCode".to_string(),
-                        country: Some(Some("country".to_string())),
+                        country: Some("country".to_string()),
                         building_id: NullableUserId(Some("buildingId".to_string())),
                         tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                        ..Default::default()
                     }),
                 )])),
                 nullable_list_of_unions: Some(vec![
@@ -555,6 +568,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                     NotificationMethod::Email {
@@ -562,6 +576,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                 ]),
@@ -569,6 +584,7 @@ async fn main() {
                     "optionalMapOfEnums".to_string(),
                     UserRole::Admin,
                 )])),
+                ..Default::default()
             },
             None,
         )
@@ -691,16 +707,17 @@ async fn main() {
         .update_complex_profile(
             &"profileId".to_string(),
             &UpdateComplexProfileRequest {
-                nullable_role: Some(Some(UserRole::Admin)),
-                nullable_status: Some(Some(UserStatus::Active)),
-                nullable_notification: Some(Some(NotificationMethod::Email {
+                nullable_role: Some(UserRole::Admin),
+                nullable_status: Some(UserStatus::Active),
+                nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                })),
-                nullable_search_result: Some(Some(SearchResult::User {
+                }),
+                nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
                         username: "username".to_string(),
@@ -715,16 +732,19 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
-                })),
-                nullable_array: Some(Some(vec![
+                }),
+                nullable_array: Some(vec![
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
-                ])),
+                ]),
+                ..Default::default()
             },
             None,
         )
@@ -838,7 +858,7 @@ async fn main() {
                 required_string: "requiredString".to_string(),
                 nullable_string: Some("nullableString".to_string()),
                 optional_string: Some("optionalString".to_string()),
-                optional_nullable_string: Some(Some("optionalNullableString".to_string())),
+                optional_nullable_string: Some("optionalNullableString".to_string()),
                 nullable_enum: Some(UserRole::Admin),
                 optional_enum: Some(UserStatus::Active),
                 nullable_union: Some(NotificationMethod::Email {
@@ -846,6 +866,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_union: Some(SearchResult::User {
@@ -863,10 +884,12 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_list: Some(vec!["nullableList".to_string(), "nullableList".to_string()]),
@@ -876,16 +899,19 @@ async fn main() {
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
                 optional_object: Some(Organization {
                     id: "id".to_string(),
                     name: "name".to_string(),
                     domain: Some("domain".to_string()),
                     employee_count: Some(1),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -943,7 +969,8 @@ async fn main() {
             &FilterByRoleQueryRequest {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
-                secondary_role: Some(Some(UserRole::Admin)),
+                secondary_role: Some(UserRole::Admin),
+                ..Default::default()
             },
             None,
         )
@@ -1099,7 +1126,8 @@ async fn main() {
             &UpdateTagsRequest {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
-                labels: Some(Some(vec!["labels".to_string(), "labels".to_string()])),
+                labels: Some(vec!["labels".to_string(), "labels".to_string()]),
+                ..Default::default()
             },
             None,
         )

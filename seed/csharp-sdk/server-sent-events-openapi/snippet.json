@@ -1,0 +1,89 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/protocol-no-collision",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolNoCollision"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamProtocolNoCollisionAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/protocol-collision",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolCollision"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamProtocolCollisionAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/data-context",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamDataContext"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamDataContextAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/no-context",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamNoContext"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamNoContextAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/protocol-with-flat-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolWithFlatSchema"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamProtocolWithFlatSchemaAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/data-context-with-envelope-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamDataContextWithEnvelopeSchema"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamDataContextWithEnvelopeSchemaAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/oas-spec-native",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamOasSpecNative"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamOasSpecNativeAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        }
+    ]
+}

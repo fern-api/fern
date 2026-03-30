@@ -60,11 +60,11 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
+    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,6 +80,9 @@ class AuthClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -104,11 +107,11 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
+    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -124,6 +127,9 @@ class AuthClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {

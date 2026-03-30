@@ -311,7 +311,7 @@ export class EndpointSnippetGenerator {
         }
         if (endpoint.auth != null) {
             if (snippet.auth != null) {
-                args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
+                args.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
                 this.context.errors.add({
                     severity: Severity.Warning,
@@ -343,29 +343,28 @@ export class EndpointSnippetGenerator {
         ];
     }
 
-    private getConstructorAuthArg({
+    private getConstructorAuthArgs({
         auth,
         values
     }: {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
-    }): go.AstNode {
+    }): go.AstNode[] {
         if (values.type !== auth.type) {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
-            return TypeInst.nop();
+            return [];
         }
         switch (auth.type) {
             case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "basic" ? [this.getConstructorBasicAuthArg({ auth, values })] : [];
             case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "bearer" ? [this.getConstructorBearerAuthArg({ auth, values })] : [];
             case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "header" ? [this.getConstructorHeaderAuthArg({ auth, values })] : [];
             case "oauth":
-                return values.type === "oauth" ? this.getConstructorOAuthAuthArg({ values }) : TypeInst.nop();
+                return values.type === "oauth" ? [this.getConstructorOAuthAuthArg({ values })] : [];
             case "inferred":
-                this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
-                return TypeInst.nop();
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -526,6 +525,49 @@ export class EndpointSnippetGenerator {
                 })
             );
         });
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): go.AstNode[] {
+        const parameters = auth.parameters;
+        if (parameters == null || parameters.length === 0) {
+            return [];
+        }
+        const args: go.AstNode[] = [];
+        for (const param of parameters) {
+            // Skip optional and literal parameters — they don't have WithXxx() options.
+            if (param.typeReference.type === "optional" || param.typeReference.type === "literal") {
+                continue;
+            }
+            const wireValue = param.name.wireValue;
+            const value = values.values?.[wireValue] ?? param.name.name.originalName;
+            const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
+                typeReference: param.typeReference,
+                value
+            });
+            if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                continue;
+            }
+            args.push(
+                go.codeblock((writer) => {
+                    writer.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: `With${param.name.name.pascalCase.unsafeName}`,
+                                importPath: this.context.getOptionImportPath()
+                            }),
+                            arguments_: [typeInstantiation]
+                        })
+                    );
+                })
+            );
+        }
+        return args;
     }
 
     private getConstructorHeaderArgs({

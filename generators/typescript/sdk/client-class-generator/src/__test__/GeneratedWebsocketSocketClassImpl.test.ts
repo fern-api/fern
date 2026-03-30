@@ -342,7 +342,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
                 methods: { name: string; parameters: { type: string }[]; statements: string[] }[];
             };
             const bytesMethods = classStructure.methods.filter((m) =>
-                m.parameters?.some((p) => p.type === "ArrayBufferLike | Blob | ArrayBufferView")
+                m.parameters?.some((p) => p.type === "ArrayBuffer | Blob | ArrayBufferView")
             );
             expect(bytesMethods.length).toBeGreaterThanOrEqual(1);
         });
@@ -382,7 +382,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
                 methods: { name: string; parameters: { type: string }[] }[];
             };
             const bytesMethods = classStructure.methods.filter((m) =>
-                m.parameters?.some((p) => p.type === "ArrayBufferLike | Blob | ArrayBufferView")
+                m.parameters?.some((p) => p.type === "ArrayBuffer | Blob | ArrayBufferView")
             );
             expect(bytesMethods.length).toBeGreaterThanOrEqual(1);
         });
@@ -561,7 +561,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const sendBinaryMethod = classStructure.methods.find((m: { name: string }) => m.name === "sendBinary");
             expect(sendBinaryMethod).toBeDefined();
             // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
-            expect(sendBinaryMethod!.parameters[0]!.type).toBe("ArrayBufferLike | Blob | ArrayBufferView");
+            expect(sendBinaryMethod!.parameters[0]!.type).toBe("ArrayBuffer | Blob | ArrayBufferView");
         });
     });
 

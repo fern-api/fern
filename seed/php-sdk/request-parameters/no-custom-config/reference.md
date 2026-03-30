@@ -176,7 +176,7 @@ $client->user->createUsernameOptional(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getUsername($request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUsername($request) -> ?User</code></summary>
 <dl>
 <dd>
 

@@ -192,7 +192,7 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
     }
 
     /**
-     * Registers a handler for receive messages from the server.
+     * Registers a handler for Receive messages from the server.
      * @param handler the handler to invoke when a message is received
      */
     public void onReceive(Consumer<NoAuthReceiveEvent> handler) {
@@ -269,13 +269,8 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
             assertSocketIsOpen();
             String json = objectMapper.writeValueAsString(body);
             // Use reconnecting listener's send method which handles queuing
-            boolean sent = reconnectingListener.send(json);
-            if (sent) {
-                future.complete(null);
-            } else {
-                // Message was queued for later delivery when reconnected
-                future.complete(null);
-            }
+            reconnectingListener.send(json);
+            future.complete(null);
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);
         } catch (Exception e) {
@@ -313,10 +308,6 @@ public class RealtimeNoAuthWebSocketClient implements AutoCloseable {
                                 + "'. Update your SDK version to support new message types."));
                     }
                     break;
-            }
-        } catch (IllegalArgumentException e) {
-            if (onErrorHandler != null) {
-                onErrorHandler.accept(e);
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

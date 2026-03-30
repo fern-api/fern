@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/imdb/fern/client"
     option "github.com/imdb/fern/option"
-    context "context"
 )
 
 func do() {

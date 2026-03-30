@@ -1,5 +1,97 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.1.3
+  changelogEntry:
+    - summary: |
+        Add transport-level connection error retries to the HTTP client. The retry logic now
+        catches `httpx.ConnectError` and `httpx.RemoteProtocolError` (e.g., "Remote end closed
+        connection without response") and retries with exponential backoff, matching the existing
+        status-code-based retry behavior. Also fixes the existing status-code retry path to
+        forward the `data` and `force_multipart` parameters on retry.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.2
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.1
+  changelogEntry:
+    - summary: |
+        Ensure `async_token` is accepted and forwarded in generated async client constructors
+        for bearer token auth. Previously, `AsyncClientWrapper` supported `async_token` but
+        the top-level async client only exposed it for OAuth client credentials flows, causing
+        sync token callables to block the event loop in async contexts.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.0.8
+  changelogEntry:
+    - summary: |
+        Eliminate Pydantic v2 deprecation warnings in `UniversalBaseModel`. Under Pydantic v2,
+        the class-based `Config` pattern with `smart_union` and `allow_population_by_field_name`
+        emits deprecation warnings. `UniversalBaseModel` now uses `model_config: ConfigDict` with
+        `populate_by_name=True`, `validate_by_name=True`, and `validate_by_alias=True` (for v2.11+
+        support) for v2, and a custom `@model_serializer` for datetime serialization instead of
+        the deprecated `json_encoders`. Pydantic v1 continues to use the original class-based Config.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 5.0.7
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
+        Fix `construct_type` to resolve `ForwardRef` annotations in nested model fields
+        and use strict Literal discriminant matching for undiscriminated unions.
+
+        Under Pydantic v2 with `from __future__ import annotations`, field annotations
+        like `List["Block"]` remain as `list[ForwardRef('Block')]` even after
+        `model_rebuild`. `construct_type` now resolves these ForwardRefs via the host
+        model's module, ensuring nested data is recursively constructed into proper model
+        instances instead of staying as raw dicts.
+
+        Additionally, undiscriminated union resolution now requires Literal-typed
+        discriminant fields to be present AND matching before accepting a candidate type.
+        This prevents models with all-optional fields (e.g. `FigureDetails`) from greedily
+        matching inputs that belong to a different variant or to a plain-dict fallback.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 5.0.5
+  changelogEntry:
+    - summary: |
+        Add enum handling to `construct_type()` to prevent Pydantic serialization warnings
+        when enum values pass through untyped model construction paths.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 5.0.4
   changelogEntry:
     - summary: |

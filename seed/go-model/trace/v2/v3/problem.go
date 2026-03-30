@@ -5,6 +5,7 @@ package v3
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	fern "github.com/trace/fern"
 	internal "github.com/trace/fern/internal"
 )

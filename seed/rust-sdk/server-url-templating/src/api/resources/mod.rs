@@ -27,7 +27,7 @@ impl ApiClient {
 
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -50,7 +50,7 @@ impl ApiClient {
             .execute_request(
                 Method::POST,
                 "auth/token",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

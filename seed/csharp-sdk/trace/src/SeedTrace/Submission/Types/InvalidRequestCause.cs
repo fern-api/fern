@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,9 @@ public record InvalidRequestCause
     public SeedTrace.SubmissionIdNotFound AsSubmissionIdNotFound() =>
         IsSubmissionIdNotFound
             ? (SeedTrace.SubmissionIdNotFound)Value!
-            : throw new System.Exception("InvalidRequestCause.Type is not 'submissionIdNotFound'");
+            : throw new global::System.Exception(
+                "InvalidRequestCause.Type is not 'submissionIdNotFound'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CustomTestCasesUnsupported"/> if <see cref="Type"/> is 'customTestCasesUnsupported', otherwise throws an exception.
@@ -87,7 +89,7 @@ public record InvalidRequestCause
     public SeedTrace.CustomTestCasesUnsupported AsCustomTestCasesUnsupported() =>
         IsCustomTestCasesUnsupported
             ? (SeedTrace.CustomTestCasesUnsupported)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "InvalidRequestCause.Type is not 'customTestCasesUnsupported'"
             );
 
@@ -98,7 +100,9 @@ public record InvalidRequestCause
     public SeedTrace.UnexpectedLanguageError AsUnexpectedLanguage() =>
         IsUnexpectedLanguage
             ? (SeedTrace.UnexpectedLanguageError)Value!
-            : throw new System.Exception("InvalidRequestCause.Type is not 'unexpectedLanguage'");
+            : throw new global::System.Exception(
+                "InvalidRequestCause.Type is not 'unexpectedLanguage'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.SubmissionIdNotFound, T> onSubmissionIdNotFound,
@@ -201,12 +205,12 @@ public record InvalidRequestCause
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<InvalidRequestCause>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(InvalidRequestCause).IsAssignableFrom(typeToConvert);
 
         public override InvalidRequestCause Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -286,7 +290,7 @@ public record InvalidRequestCause
 
         public override InvalidRequestCause ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

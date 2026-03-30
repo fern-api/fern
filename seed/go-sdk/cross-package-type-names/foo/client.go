@@ -4,6 +4,7 @@ package foo
 
 import (
 	context "context"
+
 	fern "github.com/cross-package-type-names/fern"
 	core "github.com/cross-package-type-names/fern/core"
 	internal "github.com/cross-package-type-names/fern/internal"

@@ -21,11 +21,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -38,17 +40,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
                 TraceResponseV2 {
                     submission_id: SubmissionId(
@@ -58,11 +65,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -75,17 +84,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
             ],
             None,

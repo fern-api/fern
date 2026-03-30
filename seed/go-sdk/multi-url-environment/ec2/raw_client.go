@@ -4,11 +4,12 @@ package ec2
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/multi-url-environment/fern"
 	core "github.com/multi-url-environment/fern/core"
 	internal "github.com/multi-url-environment/fern/internal"
 	option "github.com/multi-url-environment/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -171,6 +171,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                         subpackage,
                         websocketChannel
                     });
+                    context.project.addSourceFiles(websocketApi.generateInterface());
                     context.project.addSourceFiles(websocketApi.generate());
                 }
             }

@@ -3,6 +3,7 @@ export * from "./FirstItemType";
 export * from "./Foo";
 export * from "./FooExtended";
 export * from "./SecondItemType";
+export * from "./TypeWithOptionalMap";
 export * from "./Union";
 export * from "./UnionWithBaseProperties";
 export * from "./UnionWithDiscriminant";

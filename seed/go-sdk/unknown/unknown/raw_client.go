@@ -4,11 +4,12 @@ package unknown
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/unknown/fern"
 	core "github.com/unknown/fern/core"
 	internal "github.com/unknown/fern/internal"
 	option "github.com/unknown/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

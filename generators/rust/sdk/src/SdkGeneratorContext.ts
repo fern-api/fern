@@ -54,6 +54,18 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         if (!this.hasWebSocketChannels()) {
             files = files.filter((file) => file.filename !== "websocket.rs");
         }
+        // Only include bigint_string.rs when big integer types are used
+        if (!this.usesBigInteger()) {
+            files = files.filter((file) => file.filename !== "bigint_string.rs");
+        }
+        // Only include base64_bytes.rs when base64 types are used
+        if (!this.usesBase64()) {
+            files = files.filter((file) => file.filename !== "base64_bytes.rs");
+        }
+        // Only include flexible_datetime.rs when datetime/date types are used
+        if (!this.usesDateTime()) {
+            files = files.filter((file) => file.filename !== "flexible_datetime.rs");
+        }
         return files;
     }
 
@@ -108,6 +120,15 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         }
 
         return modelContext;
+    }
+
+    /**
+     * Returns true if the subpackage has only a WebSocket channel and no HTTP service
+     * or endpoints in tree. These subpackages should not generate HTTP client stubs
+     * since the actual WebSocket functionality is handled by the WebSocketChannelGenerator.
+     */
+    public isWebSocketOnlySubpackage(subpackage: FernIr.Subpackage): boolean {
+        return subpackage.websocket != null && subpackage.service == null && !subpackage.hasEndpointsInTree;
     }
 
     /**

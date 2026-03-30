@@ -23,7 +23,7 @@ impl OptionalClient {
             .execute_request(
                 Method::POST,
                 "send-optional-body",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -39,7 +39,7 @@ impl OptionalClient {
             .execute_request(
                 Method::POST,
                 "send-optional-typed-body",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -58,8 +58,8 @@ impl OptionalClient {
     /// JSON response from the API
     pub async fn send_optional_nullable_with_all_optional_properties(
         &self,
-        action_id: &String,
-        id: &String,
+        action_id: &str,
+        id: &str,
         request: &Option<DeployParams>,
         options: Option<RequestOptions>,
     ) -> Result<DeployResponse, ApiError> {
@@ -67,7 +67,7 @@ impl OptionalClient {
             .execute_request(
                 Method::POST,
                 &format!("deploy/{}/versions/{}", action_id, id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

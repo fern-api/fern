@@ -21,6 +21,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
@@ -78,6 +79,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const wsSnippets = this.buildWebSocketSnippets();
         if (wsSnippets.length > 0) {
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = wsSnippets;
+        }
+
+        // Environments
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         }
 
         // Pagination disable it for now, currently only support normal pagination
@@ -618,6 +624,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
         }
         for (const header of channel.headers) {
+            // Skip authorization header — the connector auto-injects it from the stored token
+            if (header.name.name.snakeCase.safeName === "authorization") {
+                continue;
+            }
             connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
         }
         for (const qp of channel.queryParameters) {
@@ -639,24 +649,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         writer.newLine();
         writer.newLine();
 
-        // Create client config and root client (same pattern as pagination snippets)
+        // Create client using ClientConfig with token auth (matching the standard SDK pattern)
         const rootClientName = this.context.getClientName();
-        const configStatement = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("error")
-        });
-        configStatement.write(writer);
+        writer.write(`let client = ${rootClientName}::new(ClientConfig {`);
         writer.newLine();
-        const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${rootClientName}::new(config)`),
-            method: "expect",
-            args: [Expression.stringLiteral("Failed to build client")]
-        });
-        const clientStatement = Statement.let({
-            name: "client",
-            value: clientBuild
-        });
-        clientStatement.write(writer);
+        writer.indent();
+        writer.write(`token: Some("your-api-key".to_string()),`);
+        writer.newLine();
+        writer.write(`..Default::default()`);
+        writer.dedent();
+        writer.newLine();
+        writer.write(`})`);
+        writer.newLine();
+        writer.write(`.expect("Failed to create client");`);
         writer.newLine();
         writer.newLine();
 
@@ -813,6 +818,56 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return msg.body.name.pascalCase.safeName;
         }
         return undefined;
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const environmentEnumName = this.context.customConfig.environmentEnumName || "Environment";
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        const writer = new Writer();
+
+        const useStatement = new UseStatement({
+            path: `${this.crateName}::prelude`,
+            items: ["*"]
+        });
+        useStatement.write(writer);
+        writer.newLine();
+        writer.newLine();
+
+        writer.write(`let config = ClientConfig {`);
+        writer.newLine();
+        writer.indent();
+        writer.write(`base_url: ${environmentEnumName}::${defaultEnvName}.url().to_string(),`);
+        writer.newLine();
+        writer.write(`..Default::default()`);
+        writer.newLine();
+        writer.dedent();
+        writer.write(`};`);
+        writer.newLine();
+        writer.write(`let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = Client::new(config).expect("Failed to build client");`);
+
+        return [this.writeCode(writer.toString().trim())];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.pascalCase.safeName;
+            }
+        }
+        return envs[0]?.name.pascalCase.safeName;
     }
 
     private writeCode(code: string): string {

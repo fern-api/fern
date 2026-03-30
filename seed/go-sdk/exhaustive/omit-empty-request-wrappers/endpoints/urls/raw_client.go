@@ -4,10 +4,11 @@ package urls
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

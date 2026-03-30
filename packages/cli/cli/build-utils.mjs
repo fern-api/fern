@@ -66,6 +66,7 @@ export async function buildCli(config) {
         packageJsonOverrides = {},
         tsupOverrides = {}
     } = config;
+    const version = process.argv[2] || packageJson.version;
 
     // Build with tsup
     await tsup.build({
@@ -77,7 +78,7 @@ export async function buildCli(config) {
         clean: true,
         env: {
             ...env,
-            CLI_VERSION: process.argv[2] || packageJson.version
+            CLI_VERSION: version
         },
         ...tsupOverrides
     });
@@ -104,7 +105,7 @@ export async function buildCli(config) {
 
     // Write package.json
     const outputPackageJson = {
-        version: process.argv[2] || packageJson.version,
+        version,
         repository: packageJson.repository,
         files: ["cli.cjs"],
         dependencies,

@@ -1,4 +1,132 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections missing client-level default headers. The generated
+        `connect` method now includes `this._options?.headers` in the merged headers,
+        matching the behavior of HTTP endpoint methods. Previously, only auth headers
+        and user-provided connect-time headers were sent, causing Authorization and
+        other client-configured headers to be silently dropped on WebSocket connections.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 3.59.12
+  changelogEntry:
+    - summary: |
+        Fix duplicate property names in generated request interfaces when query
+        parameters and request body properties share the same wire name and
+        `x-fern-parameter-name` overrides are used with `noSerdeLayer: true`.
+        The generator now respects explicit name overrides (e.g.
+        `x-fern-parameter-name: filter_assigned_to`) even without a serde layer,
+        so query parameters use their override names instead of wire values.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+- version: 3.59.11
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints where expected event
+        assertions used snake_case wire format instead of camelCase deserialized format.
+        The `call_id` field (and similar snake_case properties) in SSE event data now
+        correctly appear as `callId` in test expectations, matching the SDK's runtime
+        deserialization behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.10
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 3.59.9
+  changelogEntry:
+    - summary: |
+        Upgrade vitest from ^3.2.4 to ^4.1.1 in generated SDK test configuration.
+
+        Vitest 4 brings performance improvements (especially with project-based configs),
+        more accurate V8 coverage remapping, and stable browser mode. Note that vitest 4
+        requires Node.js >= 20 at test-run time (Node 18 is EOL).
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.8
+  changelogEntry:
+    - summary: |
+        Upgrade generated SDK dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - webpack ^5.97.1 -> ^5.105.4
+        - ts-loader ^9.5.1 -> ^9.5.4
+        - ws ^8.16.0 -> ^8.20.0
+        - @types/ws ^8.5.10 -> ^8.18.1
+        - readable-stream ^4.5.2 -> ^4.7.0
+        - @types/readable-stream ^4.0.18 -> ^4.0.23
+        - form-data-encoder ^4.0.2 -> ^4.1.0
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.7
+  changelogEntry:
+    - summary: |
+        Extend `globalThis.` qualification for shadowed global types (e.g. `Date`) to
+        union visitor signatures and builder parameters, not just interface properties.
+      type: fix
+    - summary: |
+        Fix `Record` serialization schema for maps with optional value types to strip
+        the optional wrapper, matching the type converter's behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.6
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.5
+  changelogEntry:
+    - summary: |
+        Fix unhandled WebSocket error crash when closing a connection in the CONNECTING state.
+        The `_disconnect()` and `_handleAbort()` methods removed all event listeners before
+        calling `close()`, but `close()` on a CONNECTING-state WebSocket emits an error event
+        asynchronously via `abortHandshake()`. A no-op error listener is now attached after
+        removing listeners to prevent this from crashing the Node.js process.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.4
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during GitHub output mode when removing the temporary
+        `.git` directory in `deleteGitIgnoredFiles`. The `fs.rm` call now uses
+        `maxRetries: 3` to handle race conditions with git background processes
+        (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
 - version: 3.59.3
   changelogEntry:
     - summary: |

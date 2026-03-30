@@ -1,9 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,8 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := "primitive"
-    client.Echo(
+    request := &fern.Type{
+        BasicType: fern.BasicTypePrimitive,
+    }
+    client.CreateType(
         context.TODO(),
         request,
     )

@@ -4,5 +4,12 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum PlaylistIdNotFoundErrorBody {
     #[serde(rename = "playlistId")]
+    #[non_exhaustive]
     PlaylistId { value: PlaylistId },
+}
+
+impl PlaylistIdNotFoundErrorBody {
+    pub fn playlist_id(value: PlaylistId) -> Self {
+        Self::PlaylistId { value }
+    }
 }

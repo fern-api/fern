@@ -14,6 +14,7 @@ async fn main() {
         .get_and_return_set_of_objects(
             &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }]),
             None,
         )

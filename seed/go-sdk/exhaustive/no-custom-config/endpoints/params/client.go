@@ -4,12 +4,13 @@ package params
 
 import (
 	context "context"
+	io "io"
+
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	io "io"
 )
 
 type Client struct {

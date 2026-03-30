@@ -5,6 +5,7 @@ package folderb
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	folderc "github.com/cross-package-type-names/fern/folderc"
 	internal "github.com/cross-package-type-names/fern/internal"
 )

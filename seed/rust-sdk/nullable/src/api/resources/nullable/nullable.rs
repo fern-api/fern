@@ -44,7 +44,7 @@ impl NullableClient2 {
             .execute_request(
                 Method::POST,
                 "/users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -60,7 +60,7 @@ impl NullableClient2 {
             .execute_request(
                 Method::DELETE,
                 "/users",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

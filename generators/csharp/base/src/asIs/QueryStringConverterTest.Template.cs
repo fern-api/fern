@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using <%= namespace%>.Core;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+using global::System.Collections.Generic;
+using global::System.Linq;
+using global::System.Runtime.Serialization;
+using global::System.Text.Json.Serialization;
 
 namespace <%= namespace%>.Test.Unit;
 
@@ -150,9 +150,9 @@ public class QueryStringConverterTest
 
     private class TestEnumSerializer : JsonConverter<TestEnum>
     {
-        public override TestEnum Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+        public override TestEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
         {
-            var stringValue = reader.GetString() ?? throw new System.Exception("The JSON value could not be read as a string.");
+            var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
             return stringValue switch
             {
                 "value_1" => TestEnum.Value1,
@@ -161,19 +161,19 @@ public class QueryStringConverterTest
             };
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, TestEnum value, JsonSerializerOptions options)
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TestEnum value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value switch
             {
                 TestEnum.Value1 => "value_1",
                 TestEnum.Value2 => "value_2",
-                _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, null)
+                _ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)
             });
         }
     }
 
     [JsonConverter(typeof(TestStringEnum.TestStringEnumSerializer))]
-    [System.Serializable]
+    [global::System.Serializable]
     private readonly record struct TestStringEnum : IStringEnum
     {
         public static readonly TestStringEnum Red = new("red");
@@ -192,13 +192,13 @@ public class QueryStringConverterTest
 
         internal class TestStringEnumSerializer : JsonConverter<TestStringEnum>
         {
-            public override TestStringEnum Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+            public override TestStringEnum Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
             {
-                var stringValue = reader.GetString() ?? throw new System.Exception("The JSON value could not be read as a string.");
+                var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
                 return new TestStringEnum(stringValue);
             }
 
-            public override void Write(System.Text.Json.Utf8JsonWriter writer, TestStringEnum value, JsonSerializerOptions options)
+            public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TestStringEnum value, JsonSerializerOptions options)
             {
                 writer.WriteStringValue(value.Value);
             }
