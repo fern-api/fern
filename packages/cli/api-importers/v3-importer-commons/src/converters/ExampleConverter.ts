@@ -1075,7 +1075,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
         }
 
-        const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
+        const containerExample =
+            this.example !== undefined ? this.example : this.maybeResolveSchemaExample(resolvedSchema);
 
         // For simple unions (all members are primitives/literals/enums) without a provided example,
         // prefer const/literal variants over primitive types that would fall back to generic examples
@@ -1152,7 +1153,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const schemaToUse =
                 unionType === "oneOf" ? { ...resolvedSchema, ...subSchema, oneOf: undefined } : subSchema;
 
-            const variantExample = containerExample ?? this.maybeResolveSchemaExample(schemaToUse);
+            const variantExample =
+                containerExample !== undefined ? containerExample : this.maybeResolveSchemaExample(schemaToUse);
 
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `${unionType}[${index}]`],
