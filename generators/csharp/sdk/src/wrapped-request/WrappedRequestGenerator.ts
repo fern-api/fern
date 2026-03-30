@@ -99,7 +99,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     }),
                     annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
-                pathParameterPascalNames.add(field.name);
+                pathParameterPascalNames.add(pathParameter.name.pascalCase.safeName);
             }
         }
 
