@@ -8,11 +8,19 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPORT_SCRIPT="${SCRIPT_DIR}/format-benchmark-report.sh"
 PASS=0
 FAIL=0
+ALL_TEMP_DIRS=()
+
+cleanup() {
+  for d in "${ALL_TEMP_DIRS[@]}"; do
+    rm -rf "$d"
+  done
+}
+trap cleanup EXIT
 
 setup_dirs() {
   PR_DIR=$(mktemp -d)
   MAIN_DIR=$(mktemp -d)
-  trap "rm -rf $PR_DIR $MAIN_DIR" EXIT
+  ALL_TEMP_DIRS+=("$PR_DIR" "$MAIN_DIR")
 }
 
 assert_contains() {

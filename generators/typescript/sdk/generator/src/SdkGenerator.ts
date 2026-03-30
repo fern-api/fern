@@ -591,9 +591,6 @@ export class SdkGenerator {
     }
 
     public async generate(): Promise<TypescriptProject> {
-        // TEMPORARY: Deliberate 5s delay to validate benchmark CI infrastructure. Remove before merge.
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-
         this.context.logger.debug("Copying as-is files");
         await this.copyAsIsFiles();
         this.generateTypeDeclarations();

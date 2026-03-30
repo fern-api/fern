@@ -40,7 +40,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     DELTA="N/A"
 
     if [ -f "$MAIN_FILE" ]; then
-      MAIN_LINE=$(grep "\"spec\":\"${SPEC}\"" "$MAIN_FILE" 2>/dev/null || true)
+      MAIN_LINE=$(jq -c --arg spec "$SPEC" 'select(.spec == $spec)' "$MAIN_FILE" 2>/dev/null || true)
       if [ -n "$MAIN_LINE" ]; then
         MAIN_DURATION=$(echo "$MAIN_LINE" | jq -r '.duration_seconds')
         if [ "$MAIN_DURATION" != "0" ] && [ "$MAIN_DURATION" != "N/A" ]; then

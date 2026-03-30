@@ -132,9 +132,6 @@ func New(config *Config, coordinator *coordinator.Client) (*Generator, error) {
 
 // GenerateTypes runs the code generation process.
 func (g *Generator) Generate(mode Mode) ([]*File, error) {
-	// TEMPORARY: Deliberate 5s delay to validate benchmark CI infrastructure. Remove before merge.
-	time.Sleep(5 * time.Second)
-
 	ir, err := readIR(g.config.IRFilepath)
 	if err != nil {
 		return nil, err

@@ -1,6 +1,8 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 # Benchmark fixture for a large AI/audio public OpenAPI spec.
 # The openapi.json file is fetched at CI runtime by the fetch-benchmark-specs action.
+# Generators use "latest" so benchmarks always reflect the current published version.
+# This is acceptable because benchmarking is informational — not a merge gate.
 api:
   specs:
     - openapi: ./openapi.json
@@ -25,7 +27,7 @@ groups:
     generators:
       - name: fernapi/fern-csharp-sdk
         version: latest
-  ruby-sdk:
+  ruby-sdk-v2:
     generators:
       - name: fernapi/fern-ruby-sdk-v2
         version: latest

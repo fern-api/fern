@@ -259,7 +259,9 @@ jobs:
             fi
           done
 
-          # Build list of affected SDK generators for benchmarking
+          # Build list of affected SDK generators for benchmarking.
+          # When ALL_GENERATORS_AFFECTED is true (e.g. core/shared package changes),
+          # all 9 SDK generators will be benchmarked.
           SDK_GENERATORS="ts-sdk python-sdk java-sdk go-sdk csharp-sdk php-sdk ruby-sdk-v2 swift-sdk rust-sdk"
           BENCHMARK_LIST="[]"
           for GEN in $SDK_GENERATORS; do
@@ -956,6 +958,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: benchmark-baseline-results
+          # Intentionally non-matching key forces prefix fallback via restore-keys,
+          # which returns the most recently saved nightly baseline cache entry.
           key: benchmark-baseline-never-matches
           restore-keys: benchmark-baseline-
 
@@ -989,8 +993,8 @@ jobs:
           REPORT=$(bash .github/scripts/format-benchmark-report.sh \
             benchmark-pr-results \
             benchmark-baseline-results)
-          # Write to file for the comment action
-          echo "$REPORT" > benchmark-comment.md
+          # Write to file for the comment action (printf avoids echo mangling special chars)
+          printf '%s\n' "$REPORT" > benchmark-comment.md
           echo "Generated benchmark report"
 
       - name: Post or update PR comment

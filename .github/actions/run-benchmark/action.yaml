@@ -31,6 +31,7 @@ runs:
 
           echo "::group::Benchmarking ${GENERATOR} against ${SPEC}"
 
+          # $EPOCHSECONDS requires bash 5+ (available on GitHub Actions Ubuntu runners)
           START_TIME=$EPOCHSECONDS
           EXIT_CODE=0
 

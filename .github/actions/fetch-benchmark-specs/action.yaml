@@ -13,11 +13,13 @@ runs:
       id: fetch-square
       shell: bash
       run: |
+        # Pinned to a specific commit SHA for reproducibility.
+        # A live endpoint would be preferable but Square does not publish one.
         FETCH_OK=false
         for ATTEMPT in 1 2 3; do
           echo "Attempt ${ATTEMPT}/3: Fetching Square OpenAPI spec..."
           if curl -sSfL --retry 2 --retry-delay 5 \
-            "https://raw.githubusercontent.com/square/connect-api-specification/master/api.json" \
+            "https://raw.githubusercontent.com/square/connect-api-specification/ba11c0a1f006b81dcd3633adb9090e9b2f03fef7/api.json" \
             -o benchmarks/fern/apis/square/openapi.json; then
             BYTES=$(wc -c < benchmarks/fern/apis/square/openapi.json)
             echo "Downloaded Square OpenAPI spec (${BYTES} bytes)"
@@ -43,6 +45,8 @@ runs:
       id: fetch-elevenlabs
       shell: bash
       run: |
+        # Fetched from live API endpoint — no pinnable GitHub-hosted file exists.
+        # This means the spec can drift between nightly baseline and PR runs.
         FETCH_OK=false
         for ATTEMPT in 1 2 3; do
           echo "Attempt ${ATTEMPT}/3: Fetching ElevenLabs OpenAPI spec..."
