@@ -348,6 +348,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 	f.P("MaxBufSize int")
+	f.P("MaxReconnectAttempts *int")
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -662,6 +663,9 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
+	if err := f.writeOptionStruct("MaxReconnectAttempts", "*int", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
 			return err
@@ -963,6 +967,14 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {")
 	f.P("return &core.MaxBufSizeOption{")
 	f.P("MaxBufSize: size,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxReconnectAttempts configures the maximum number of reconnection")
+	f.P("// attempts for SSE streams. Default is 10. Set to 0 to disable auto-reconnection.")
+	f.P("func WithMaxReconnectAttempts(attempts int) *core.MaxReconnectAttemptsOption {")
+	f.P("return &core.MaxReconnectAttemptsOption{")
+	f.P("MaxReconnectAttempts: &attempts,")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -1811,6 +1823,7 @@ func (f *fileWriter) WriteClient(
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
 			f.P("MaxBufSize: options.MaxBufSize,")
+			f.P("MaxReconnectAttempts: options.MaxReconnectAttempts,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}
