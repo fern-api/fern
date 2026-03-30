@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections missing client-level default headers. The generated
+        `connect` method now includes `this._options?.headers` in the merged headers,
+        matching the behavior of HTTP endpoint methods. Previously, only auth headers
+        and user-provided connect-time headers were sent, causing Authorization and
+        other client-configured headers to be silently dropped on WebSocket connections.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 3.60.0
   changelogEntry:
     - summary: |
