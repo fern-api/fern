@@ -1,5 +1,5 @@
-# OpenAPI specs fetched at CI runtime by the fetch-benchmark-specs action
-**/openapi.json
+# Square OpenAPI spec is fetched at CI runtime from a pinned GitHub SHA
+fern/apis/square/openapi.json
 
 # Benchmark timing results generated during CI runs
 benchmark-results/
