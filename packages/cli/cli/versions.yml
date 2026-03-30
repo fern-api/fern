@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.50.2
+- version: 4.50.3
   changelogEntry:
     - summary: |
         Fix section summary pages being incorrectly promoted to the API landing
@@ -8,6 +8,16 @@
         API landing page instead of redirecting to the first endpoint. The
         fallback now only promotes auto-generated tag description pages, not
         user-defined section summaries.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.50.2
+  changelogEntry:
+    - summary: |
+        Don't exclude streaming request body ref schemas during stream condition
+        processing, as they may be referenced by other operations and need to
+        remain in the generated output.
       type: fix
   createdAt: "2026-03-30"
   irVersion: 65

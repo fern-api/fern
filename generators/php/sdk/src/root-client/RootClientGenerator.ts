@@ -344,22 +344,31 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
 
                 // Add Basic Auth header if applicable
-                const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
-                if (basicAuthScheme != null && basicAuthScheme.type === "basic") {
-                    const usernameName = this.context.getParameterName(basicAuthScheme.username);
-                    const passwordName = this.context.getParameterName(basicAuthScheme.password);
+                const basicAuthSchemes = this.context.ir.auth.schemes.filter(
+                    (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                );
+                if (basicAuthSchemes.length > 0) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
-                    if (isAuthOptional) {
-                        writer.controlFlow(
-                            "if",
-                            php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                    for (let i = 0; i < basicAuthSchemes.length; i++) {
+                        const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
+                        const usernameName = this.context.getParameterName(basicAuthScheme.username);
+                        const passwordName = this.context.getParameterName(basicAuthScheme.password);
+                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                            const controlFlowKeyword = i === 0 ? "if" : "else if";
+                            writer.controlFlow(
+                                controlFlowKeyword,
+                                php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                            );
+                        }
+                        writer.writeLine(
+                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
                         );
-                    }
-                    writer.writeLine(
-                        `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
-                    );
-                    if (isAuthOptional) {
-                        writer.endControlFlow();
+                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                            writer.endControlFlow();
+                        }
                     }
                 }
 

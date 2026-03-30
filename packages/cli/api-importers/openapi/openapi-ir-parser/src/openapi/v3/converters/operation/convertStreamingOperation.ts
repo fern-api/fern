@@ -1,13 +1,13 @@
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import type { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
+import type { OpenAPIV3 } from "openapi-types";
 
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
-import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension.js";
-import { OperationContext } from "../contexts.js";
+import type { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import type { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension.js";
+import type { OperationContext } from "../contexts.js";
 import { getApplicationJsonSchemaMediaObjectFromContent } from "../endpoint/getApplicationJsonSchema.js";
 import { convertHttpOperation } from "./convertHttpOperation.js";
 
@@ -48,12 +48,6 @@ export function convertStreamingOperation({
                 streamingExtension,
                 isStreaming: true
             });
-            if (streamingRequestBody?.schemaReference != null) {
-                const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
-                if (schemaId != null) {
-                    context.excludeSchema(schemaId);
-                }
-            }
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
@@ -169,7 +163,7 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    let jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
+    const jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
         content: resolvedRequestBody.content,
         context
     });

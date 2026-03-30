@@ -5,16 +5,12 @@ import com.seed.api.resources.conversations.requests.OutboundCallConversationsRe
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.conversations().outboundCall(
-            OutboundCallConversationsRequest
-                .builder()
-                .toPhoneNumber("to_phone_number")
-                .build()
-        );
+        client.conversations()
+                .outboundCall(OutboundCallConversationsRequest.builder()
+                        .toPhoneNumber("to_phone_number")
+                        .build());
     }
 }
