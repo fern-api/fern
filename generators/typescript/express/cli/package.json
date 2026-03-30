@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",
@@ -34,7 +36,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-exec-sdk": "catalog:",
-    "@fern-fern/ir-sdk": "^65.3.0",
+    "@fern-fern/ir-sdk": "^65.6.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

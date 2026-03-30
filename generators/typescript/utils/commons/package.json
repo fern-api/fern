@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -37,7 +39,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-base": "workspace:*",
-    "@fern-fern/ir-sdk": "^65.3.0",
+    "@fern-fern/ir-sdk": "^65.6.0",
     "decompress": "catalog:",
     "esutils": "catalog:",
     "eta": "^4.5.1",
