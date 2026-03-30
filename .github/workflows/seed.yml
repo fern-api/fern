@@ -918,15 +918,12 @@ jobs:
         with:
           generator: ${{ matrix.generator }}
 
-      - name: Save PR results
+      - name: Preserve PR results and benchmark infrastructure for baseline run
         shell: bash
         run: |
-          mkdir -p benchmark-results-pr
-          cp benchmark-results/* benchmark-results-pr/ 2>/dev/null || true
-
-      - name: Preserve benchmark infrastructure for baseline run
-        shell: bash
-        run: |
+          # Save PR benchmark results to /tmp so they survive the clean checkout
+          mkdir -p /tmp/benchmark-results-pr
+          cp benchmark-results/* /tmp/benchmark-results-pr/ 2>/dev/null || true
           # These files are new in this PR and don't exist on main yet,
           # so we save them before checking out main.
           mkdir -p /tmp/benchmark-infra/.github/actions
@@ -967,7 +964,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-pr-${{ matrix.generator }}
-          path: benchmark-results-pr/
+          path: /tmp/benchmark-results-pr/
           retention-days: 5
 
       - name: Upload main results
