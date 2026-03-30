@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.6
+  changelogEntry:
+    - summary: |
+        Reject non-HTTPS base URLs for non-localhost hosts to prevent
+        accidental transmission of credentials in plaintext. HTTP is
+        still allowed for localhost (127.0.0.1, [::1], localhost).
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 2.2.5
   changelogEntry:
     - summary: |

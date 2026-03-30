@@ -82,6 +82,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "LoggingInterceptor");
     }
 
+    public ClassName getHttpsValidatorClassName() {
+        return ClassName.get(getCorePackage(), "HttpsValidator");
+    }
+
     public ClassName getResponseBodyInputStreamClassName() {
         return ClassName.get(getCorePackage(), "ResponseBodyInputStream");
     }

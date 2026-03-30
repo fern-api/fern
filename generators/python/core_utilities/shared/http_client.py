@@ -5,6 +5,7 @@ import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
 from random import random
+from urllib.parse import urlparse
 
 import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
@@ -153,6 +154,24 @@ def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
     return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
 
 
+_LOCALHOST_HOSTS = frozenset({"localhost", "127.0.0.1", "[::1]"})
+
+
+def _validate_https(url: str) -> None:
+    """Raises if the URL uses http:// for a non-localhost host, which would
+    send authentication credentials in plaintext."""
+    parsed = urlparse(url)
+    if parsed.scheme != "http":
+        return
+    hostname = parsed.hostname or ""
+    if hostname in _LOCALHOST_HOSTS:
+        return
+    raise ValueError(
+        f"Refusing to send request to non-HTTPS URL: {url}. "
+        "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+    )
+
+
 def _build_url(base_url: str, path: typing.Optional[str]) -> str:
     """
     Build a full URL by joining a base URL with a path.
@@ -174,7 +193,9 @@ def _build_url(base_url: str, path: typing.Optional[str]) -> str:
     """
     if not path:
         return base_url
-    return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+    url = f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+    _validate_https(url)
+    return url
 
 
 def _maybe_filter_none_from_multipart_data(

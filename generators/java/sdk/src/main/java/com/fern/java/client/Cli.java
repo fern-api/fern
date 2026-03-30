@@ -39,6 +39,7 @@ import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
+import com.fern.java.client.generators.HttpsValidatorGenerator;
 import com.fern.java.client.generators.ILoggerGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
@@ -362,6 +363,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         LoggingInterceptorGenerator loggingInterceptorGenerator = new LoggingInterceptorGenerator(context);
         this.addGeneratedFile(loggingInterceptorGenerator.generateFile());
+
+        HttpsValidatorGenerator httpsValidatorGenerator = new HttpsValidatorGenerator(context);
+        this.addGeneratedFile(httpsValidatorGenerator.generateFile());
 
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);

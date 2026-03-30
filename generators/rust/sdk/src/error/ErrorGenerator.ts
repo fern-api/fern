@@ -89,6 +89,7 @@ export class ErrorGenerator {
             ]),
             this.buildStandardVariant("Configuration", "Configuration error: {0}", undefined, [Type.string()]),
             this.buildStandardVariant("InvalidHeader", "Invalid header value"),
+            this.buildStandardVariant("InvalidUrl", "Invalid URL: {0}", undefined, [Type.string()]),
             this.buildStandardVariant("RequestClone", "Could not clone request for retry"),
             this.buildStandardVariant("StreamTerminated", "SSE stream terminated"),
             this.buildStandardVariant("StreamTimeout", "SSE stream timed out waiting for next event"),

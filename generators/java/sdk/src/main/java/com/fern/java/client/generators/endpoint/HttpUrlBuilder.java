@@ -127,6 +127,9 @@ public final class HttpUrlBuilder {
 
     private GeneratedHttpUrl generateInlineableCodeBlock() {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
+                .addStatement("$T.validateHttps($L)",
+                        context.getPoetClassNameFactory().getHttpsValidatorClassName(),
+                        baseUrlReference)
                 .add("$T $L = $T.parse(", HttpUrl.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
                 .add(").newBuilder()\n")
@@ -144,6 +147,9 @@ public final class HttpUrlBuilder {
     private GeneratedHttpUrl generateUnInlineableCodeBlock(
             List<EnrichedObjectProperty> queryParamProperties, boolean hasRequestOptions) {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
+                .addStatement("$T.validateHttps($L)",
+                        context.getPoetClassNameFactory().getHttpsValidatorClassName(),
+                        baseUrlReference)
                 .add("$T $L = $T.parse(", HttpUrl.Builder.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
                 .add(").newBuilder()\n")
