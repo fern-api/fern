@@ -119,8 +119,25 @@ class EndpointResponseCodeWriter:
             exception_type="Exception",
         )
 
+        # Add a logger variable for SSE error logging
+        logging_ref = AST.Reference(
+            import_=AST.ReferenceImport(module=AST.Module.built_in(("logging",))),
+            qualified_name_excluding_import=("getLogger",),
+        )
+
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            iter_func_body.append(
+                AST.VariableDeclaration(
+                    name="logger",
+                    initializer=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=logging_ref,
+                            args=[AST.Expression("__name__")],
+                        ),
+                    ),
+                )
+            )
             is_protocol = self._is_protocol_context_union(stream_response_union.payload)
 
             # Build the yield expression based on Case A/B vs Case C
