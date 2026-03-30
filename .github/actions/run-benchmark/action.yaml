@@ -24,19 +24,24 @@ runs:
           echo "::group::Benchmarking ${GENERATOR} against ${SPEC}"
 
           START_TIME=$EPOCHSECONDS
+          EXIT_CODE=0
 
           # Run full E2E generation including build/test scripts
           pnpm seed:local run \
             --generator "${GENERATOR}" \
-            --path "benchmarks/fern/apis/${SPEC}" 2>&1 || true
+            --path "benchmarks/fern/apis/${SPEC}" 2>&1 || EXIT_CODE=$?
 
           END_TIME=$EPOCHSECONDS
           DURATION=$(( END_TIME - START_TIME ))
 
-          echo "Benchmark: ${GENERATOR} x ${SPEC} = ${DURATION}s"
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "::warning::Benchmark ${GENERATOR} x ${SPEC} exited with code ${EXIT_CODE} after ${DURATION}s"
+          fi
 
-          # Write result as JSON
-          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION}}" \
+          echo "Benchmark: ${GENERATOR} x ${SPEC} = ${DURATION}s (exit ${EXIT_CODE})"
+
+          # Write result as JSON (includes exit code so failures are distinguishable)
+          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
             >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
 
           echo "::endgroup::"

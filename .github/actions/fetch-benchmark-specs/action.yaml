@@ -1,5 +1,5 @@
 name: Fetch Benchmark Specs
-description: Download OpenAPI specs for SDK generation benchmarking
+description: Download large public OpenAPI specs for SDK generation benchmarking
 
 runs:
   using: composite
@@ -7,10 +7,16 @@ runs:
     - name: Fetch Square OpenAPI spec
       shell: bash
       run: |
+        # Pinned to a specific commit for reproducibility
         curl -sSfL \
-          "https://raw.githubusercontent.com/square/connect-api-specification/master/api.json" \
+          "https://raw.githubusercontent.com/square/connect-api-specification/ba11c0a1f006b81dcd3633adb9090e9b2f03fef7/api.json" \
           -o benchmarks/fern/apis/square/openapi.json
-        echo "Downloaded Square OpenAPI spec ($(wc -c < benchmarks/fern/apis/square/openapi.json) bytes)"
+        BYTES=$(wc -c < benchmarks/fern/apis/square/openapi.json)
+        echo "Downloaded Square OpenAPI spec (${BYTES} bytes)"
+        if [ "$BYTES" -lt 100000 ]; then
+          echo "::error::Square spec unexpectedly small (${BYTES} bytes). Possible download issue."
+          exit 1
+        fi
 
     - name: Fetch ElevenLabs OpenAPI spec
       shell: bash
@@ -18,4 +24,9 @@ runs:
         curl -sSfL \
           "https://api.elevenlabs.io/openapi.json" \
           -o benchmarks/fern/apis/elevenlabs/openapi.json
-        echo "Downloaded ElevenLabs OpenAPI spec ($(wc -c < benchmarks/fern/apis/elevenlabs/openapi.json) bytes)"
+        BYTES=$(wc -c < benchmarks/fern/apis/elevenlabs/openapi.json)
+        echo "Downloaded ElevenLabs OpenAPI spec (${BYTES} bytes)"
+        if [ "$BYTES" -lt 100000 ]; then
+          echo "::error::ElevenLabs spec unexpectedly small (${BYTES} bytes). Possible download issue."
+          exit 1
+        fi

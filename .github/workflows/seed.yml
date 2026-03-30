@@ -888,7 +888,7 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  # SDK Generation Benchmarks — runs affected SDK generators against large customer OAS specs
+  # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs
   benchmark:
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -1004,7 +1004,7 @@ jobs:
           echo "Generated benchmark report"
 
       - name: Post or update PR comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body-path: benchmark-comment.md

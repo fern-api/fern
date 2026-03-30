@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-# Benchmark fixture for a large AI/audio API OpenAPI spec.
+# Benchmark fixture for a large AI/audio public OpenAPI spec.
 # The openapi.json file is fetched at CI runtime by the fetch-benchmark-specs action.
 api:
   specs:

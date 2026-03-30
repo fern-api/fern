@@ -28,6 +28,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     GENERATOR=$(echo "$LINE" | jq -r '.generator')
     SPEC=$(echo "$LINE" | jq -r '.spec')
     PR_DURATION=$(echo "$LINE" | jq -r '.duration_seconds')
+    PR_EXIT=$(echo "$LINE" | jq -r '.exit_code // 0')
 
     # Look up corresponding main result
     MAIN_FILE="${MAIN_DIR}/${GENERATOR}.jsonl"
@@ -53,7 +54,12 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       fi
     fi
 
-    echo "| ${GENERATOR} | ${SPEC} | ${MAIN_DURATION} | ${PR_DURATION}s | ${DELTA} |"
+    PR_DISPLAY="${PR_DURATION}s"
+    if [ "$PR_EXIT" != "0" ] && [ "$PR_EXIT" != "null" ]; then
+      PR_DISPLAY="${PR_DURATION}s ⚠️"
+    fi
+
+    echo "| ${GENERATOR} | ${SPEC} | ${MAIN_DURATION} | ${PR_DISPLAY} | ${DELTA} |"
   done < "$PR_FILE"
 done
 
@@ -61,3 +67,4 @@ echo ""
 echo "</details>"
 echo ""
 echo "_Timings include Docker startup, IR parsing, generation, and build scripts. Variance of ±10% is normal._"
+echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
