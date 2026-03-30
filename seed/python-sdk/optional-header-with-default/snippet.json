@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_.listItems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_version=\"YOUR_API_VERSION\",\n)\nclient.list_items()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_version=\"YOUR_API_VERSION\",\n)\n\n\nasync def main() -> None:\n    await client.list_items()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

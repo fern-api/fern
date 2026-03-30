@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/items",
+                "method": "GET",
+                "identifier_override": "endpoint_.listItems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/optional-header-with-default\";\n\nconst client = new SeedApiClient({ apiVersion: \"YOUR_API_VERSION\" });\nawait client.listItems();\n"
+            }
+        }
+    ],
+    "types": {}
+}

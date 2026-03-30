@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer converting optional header parameters with default
+        values into required literals. When a header parameter is not marked as
+        `required: true` but has a `default` value, the importer now preserves
+        the optional type instead of replacing it with a literal schema. This
+        restores the correct behavior where optional headers with defaults
+        (e.g. API version headers) remain optional in generated SDKs.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.50.2
   changelogEntry:
     - summary: |

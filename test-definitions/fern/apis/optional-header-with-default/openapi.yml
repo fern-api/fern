@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: Optional Header With Default Test
+  version: 1.0.0
+  description: Test that optional header parameters with default values are not converted to required literals.
+servers:
+  - url: https://api.example.com
+paths:
+  /items:
+    get:
+      summary: List Items
+      operationId: listItems
+      parameters:
+        - name: X-API-Version
+          in: header
+          description: Optional API version header with a default value. Should remain optional in generated SDKs.
+          schema:
+            type: string
+            default: "2024-01-01"
+        - name: X-Required-Version
+          in: header
+          required: true
+          description: Required API version header with a default value. Should become a literal in generated SDKs.
+          schema:
+            type: string
+            default: "2024-01-01"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

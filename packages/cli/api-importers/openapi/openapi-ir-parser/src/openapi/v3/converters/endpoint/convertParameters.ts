@@ -147,6 +147,7 @@ export function convertParameters({
                     });
         if (
             resolvedParameter.in === "header" &&
+            isRequired &&
             resolvedParameter.schema != null &&
             !isReferenceObject(resolvedParameter.schema) &&
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
