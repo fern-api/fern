@@ -59,13 +59,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
 
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
-            files.push(
-                AsIsFiles.Stream,
-                AsIsFiles.StreamTest,
-                AsIsFiles.StreamReceiver,
-                AsIsFiles.ReconnectingStream,
-                AsIsFiles.ReconnectingStreamTest
-            );
+            files.push(AsIsFiles.Stream, AsIsFiles.StreamTest);
         }
 
         if (getOAuthClientCredentialsScheme(this.ir) != null || getInferredAuthScheme(this.ir) != null) {
@@ -542,14 +536,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public getStreamTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Stream",
-            importPath: this.getCoreImportPath(),
-            generics: [valueType]
-        });
-    }
-
-    public getStreamReceiverTypeReference(valueType: go.Type): go.TypeReference {
-        return go.typeReference({
-            name: "StreamReceiver",
             importPath: this.getCoreImportPath(),
             generics: [valueType]
         });

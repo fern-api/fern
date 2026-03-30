@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	// DefaultDataPrefix is the default prefix used for SSE streaming.
+	// DefaultSSEDataPrefix is the default prefix used for SSE streaming.
 	DefaultSSEDataPrefix = "data: "
 
-	// DefaultTerminator is the default terminator used for SSE streaming.
+	// DefaultSSETerminator is the default terminator used for SSE streaming.
 	DefaultSSETerminator = "[DONE]"
 )
 
@@ -51,7 +51,7 @@ type StreamParams struct {
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
-func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.StreamReceiver[T], error) {
+func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.Stream[T], error) {
 	url := buildURL(params.URL, params.QueryParameters)
 
 	client := s.client
@@ -89,11 +89,11 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.St
 		return nil, err
 	}
 
-	// Wrap SSE streams in ReconnectingStream for auto-reconnection.
+	// Configure auto-reconnection for SSE streams.
 	if params.Format == core.StreamFormatSSE {
-		var reconnectOpts []core.ReconnectingStreamOption
+		maxAttempts := 10
 		if params.MaxReconnectAttempts != nil {
-			reconnectOpts = append(reconnectOpts, core.WithMaxReconnectAttempts(*params.MaxReconnectAttempts))
+			maxAttempts = *params.MaxReconnectAttempts
 		}
 		reconnectFn := func(lastEventID string) (*core.Stream[T], error) {
 			headers := params.Headers
@@ -103,7 +103,7 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (core.St
 			}
 			return s.doStreamRequest(ctx, url, headers, params, client, retryOptions, opts)
 		}
-		return core.NewReconnectingStream[T](ctx, stream, reconnectFn, reconnectOpts...), nil
+		stream.ConfigureReconnect(reconnectFn, maxAttempts)
 	}
 
 	return stream, nil

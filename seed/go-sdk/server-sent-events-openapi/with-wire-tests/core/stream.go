@@ -8,6 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math/rand"
+	"net"
 	"net/http"
 	"strconv"
 	"sync"
@@ -37,11 +39,42 @@ const (
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 )
 
+const (
+	defaultMaxReconnectAttempts = 10
+	minReconnectDelay           = 500 * time.Millisecond
+	maxReconnectDelay           = 30 * time.Second
+)
+
+// ReconnectError is returned when all reconnection attempts are exhausted.
+type ReconnectError struct {
+	Attempts int
+	Err      error
+}
+
+func (e *ReconnectError) Error() string {
+	return fmt.Sprintf("failed to reconnect after %d attempts: %v", e.Attempts, e.Err)
+}
+
+func (e *ReconnectError) Unwrap() error {
+	return e.Err
+}
+
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
 	reader   streamReader
 	closer   *onceCloser
 	stopFunc func() bool
+	ctx      context.Context
+
+	// Reconnection fields (active when reconnectFn != nil).
+	reconnectFn func(lastEventID string) (*Stream[T], error)
+	maxAttempts int
+	attempts    int
+	serverRetry time.Duration
+	lastEventID string
+	cancel      context.CancelFunc
+	closed      bool
+	mu          sync.Mutex
 }
 
 // StreamOption adapts the behavior of the Stream.
@@ -141,21 +174,30 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 		reader:   newStreamReader(response.Body, options),
 		closer:   closer,
 		stopFunc: stop,
+		ctx:      ctx,
 	}
+}
+
+// ConfigureReconnect enables automatic reconnection for SSE streams.
+// The reconnectFn is called with the last event ID to establish a new connection.
+// Set maxAttempts to 0 to disable reconnection.
+func (s *Stream[T]) ConfigureReconnect(reconnectFn func(lastEventID string) (*Stream[T], error), maxAttempts int) {
+	s.reconnectFn = reconnectFn
+	s.maxAttempts = maxAttempts
+	s.ctx, s.cancel = context.WithCancel(s.ctx)
 }
 
 // Recv reads a message from the stream, returning io.EOF when
 // all the messages have been read.
 func (s *Stream[T]) Recv() (T, error) {
-	var value T
-	bytes, err := s.reader.ReadFromStream()
-	if err != nil {
-		return value, err
+	if s.reconnectFn == nil {
+		return s.recvOnce()
 	}
-	if err := json.Unmarshal(bytes, &value); err != nil {
-		return value, err
-	}
-	return value, nil
+	val, _, err := s.recvReconnect(func() (T, []byte, error) {
+		val, err := s.recvOnce()
+		return val, nil, err
+	})
+	return val, err
 }
 
 // RecvRaw reads a raw message from the stream without JSON unmarshaling,
@@ -163,32 +205,15 @@ func (s *Stream[T]) Recv() (T, error) {
 // This is useful when the stream may contain data that requires custom
 // parsing or error handling.
 func (s *Stream[T]) RecvRaw() ([]byte, error) {
-	bytes, err := s.reader.ReadFromStream()
-	if err != nil {
-		return nil, err
+	if s.reconnectFn == nil {
+		return s.recvRawOnce()
 	}
-	return bytes, nil
-}
-
-// Close closes the Stream.
-func (s *Stream[T]) Close() error {
-	if s.stopFunc != nil {
-		s.stopFunc()
-	}
-	return s.closer.Close()
-}
-
-// recvSseEvent reads the next SSE event with metadata, falling back to
-// ReadFromStream for non-SSE readers.
-func (s *Stream[T]) recvSseEvent() (*SseEvent, error) {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.ReadEvent()
-	}
-	data, err := s.reader.ReadFromStream()
-	if err != nil {
-		return nil, err
-	}
-	return &SseEvent{Data: data}, nil
+	var zero T
+	_, raw, err := s.recvReconnect(func() (T, []byte, error) {
+		raw, err := s.recvRawOnce()
+		return zero, raw, err
+	})
+	return raw, err
 }
 
 // RecvEvent reads the next event from the stream, including SSE metadata
@@ -197,29 +222,61 @@ func (s *Stream[T]) recvSseEvent() (*SseEvent, error) {
 // This is only meaningful for SSE streams. For non-SSE streams, the
 // metadata fields will always be zero-valued.
 func (s *Stream[T]) RecvEvent() (StreamEvent[T], error) {
+	if s.reconnectFn == nil {
+		return s.recvEventOnce()
+	}
 	var result StreamEvent[T]
-	event, err := s.recvSseEvent()
+	val, _, err := s.recvReconnect(func() (T, []byte, error) {
+		event, err := s.recvEventOnce()
+		if err != nil {
+			var zero T
+			return zero, nil, err
+		}
+		result.SseEventMeta = event.SseEventMeta
+		return event.Data, nil, nil
+	})
 	if err != nil {
 		return result, err
 	}
-	if err := json.Unmarshal(event.Data, &result.Data); err != nil {
-		return result, err
-	}
-	result.SseEventMeta = event.SseEventMeta
+	result.Data = val
 	return result, nil
 }
 
 // RecvEventRaw reads the next event from the stream without JSON unmarshaling,
 // including SSE metadata. Returns io.EOF when all events have been read.
 func (s *Stream[T]) RecvEventRaw() (StreamEventRaw, error) {
+	if s.reconnectFn == nil {
+		return s.recvEventRawOnce()
+	}
+	var zero T
 	var result StreamEventRaw
-	event, err := s.recvSseEvent()
+	_, raw, err := s.recvReconnect(func() (T, []byte, error) {
+		event, err := s.recvEventRawOnce()
+		if err != nil {
+			return zero, nil, err
+		}
+		result.SseEventMeta = event.SseEventMeta
+		return zero, event.Data, nil
+	})
 	if err != nil {
 		return result, err
 	}
-	result.Data = event.Data
-	result.SseEventMeta = event.SseEventMeta
+	result.Data = raw
 	return result, nil
+}
+
+// Close closes the Stream.
+func (s *Stream[T]) Close() error {
+	if s.reconnectFn != nil {
+		s.mu.Lock()
+		s.closed = true
+		s.mu.Unlock()
+		s.cancel()
+	}
+	if s.stopFunc != nil {
+		s.stopFunc()
+	}
+	return s.closer.Close()
 }
 
 // LastEventID returns the most recently received non-empty event ID.
@@ -229,6 +286,11 @@ func (s *Stream[T]) RecvEventRaw() (StreamEventRaw, error) {
 // This works regardless of whether Recv or RecvEvent is used to consume
 // the stream — the ID is tracked at the reader level.
 func (s *Stream[T]) LastEventID() string {
+	if s.reconnectFn != nil {
+		s.mu.Lock()
+		defer s.mu.Unlock()
+		return s.lastEventID
+	}
 	if reader, ok := s.reader.(sseEventReader); ok {
 		return reader.LastEventID()
 	}
@@ -251,6 +313,202 @@ func (s *Stream[T]) ServerRetry() time.Duration {
 		return reader.ServerRetry()
 	}
 	return 0
+}
+
+// recvOnce reads a single message without reconnection.
+func (s *Stream[T]) recvOnce() (T, error) {
+	var value T
+	bytes, err := s.reader.ReadFromStream()
+	if err != nil {
+		return value, err
+	}
+	if err := json.Unmarshal(bytes, &value); err != nil {
+		return value, err
+	}
+	return value, nil
+}
+
+// recvRawOnce reads a single raw message without reconnection.
+func (s *Stream[T]) recvRawOnce() ([]byte, error) {
+	bytes, err := s.reader.ReadFromStream()
+	if err != nil {
+		return nil, err
+	}
+	return bytes, nil
+}
+
+// recvSseEvent reads the next SSE event with metadata, falling back to
+// ReadFromStream for non-SSE readers.
+func (s *Stream[T]) recvSseEvent() (*SseEvent, error) {
+	if reader, ok := s.reader.(sseEventReader); ok {
+		return reader.ReadEvent()
+	}
+	data, err := s.reader.ReadFromStream()
+	if err != nil {
+		return nil, err
+	}
+	return &SseEvent{Data: data}, nil
+}
+
+// recvEventOnce reads a single event without reconnection.
+func (s *Stream[T]) recvEventOnce() (StreamEvent[T], error) {
+	var result StreamEvent[T]
+	event, err := s.recvSseEvent()
+	if err != nil {
+		return result, err
+	}
+	if err := json.Unmarshal(event.Data, &result.Data); err != nil {
+		return result, err
+	}
+	result.SseEventMeta = event.SseEventMeta
+	return result, nil
+}
+
+// recvEventRawOnce reads a single raw event without reconnection.
+func (s *Stream[T]) recvEventRawOnce() (StreamEventRaw, error) {
+	var result StreamEventRaw
+	event, err := s.recvSseEvent()
+	if err != nil {
+		return result, err
+	}
+	result.Data = event.Data
+	result.SseEventMeta = event.SseEventMeta
+	return result, nil
+}
+
+// recvReconnect wraps a read function with reconnection logic.
+func (s *Stream[T]) recvReconnect(readFn func() (T, []byte, error)) (T, []byte, error) {
+	var zero T
+	for {
+		s.mu.Lock()
+		if s.closed {
+			s.mu.Unlock()
+			return zero, nil, io.EOF
+		}
+		s.mu.Unlock()
+
+		val, raw, err := readFn()
+		if err == nil {
+			s.mu.Lock()
+			if reader, ok := s.reader.(sseEventReader); ok {
+				s.lastEventID = reader.LastEventID()
+				if retry := reader.ServerRetry(); retry > 0 {
+					s.serverRetry = retry
+				}
+			}
+			s.attempts = 0
+			s.mu.Unlock()
+			return val, raw, nil
+		}
+
+		if errors.Is(err, io.EOF) && s.Terminated() {
+			return zero, nil, io.EOF
+		}
+
+		if s.ctx.Err() != nil {
+			return zero, nil, s.ctx.Err()
+		}
+
+		if !isIOError(err) {
+			return zero, nil, err
+		}
+
+		if s.maxAttempts <= 0 {
+			return zero, nil, err
+		}
+
+		if reconnectErr := s.reconnect(); reconnectErr != nil {
+			return zero, nil, reconnectErr
+		}
+	}
+}
+
+func (s *Stream[T]) reconnect() error {
+	// Stop the old context watcher and close the old body.
+	if s.stopFunc != nil {
+		s.stopFunc()
+	}
+	_ = s.closer.Close()
+
+	s.mu.Lock()
+	lastEventID := s.lastEventID
+	s.mu.Unlock()
+
+	var lastErr error
+	for {
+		if s.attempts >= s.maxAttempts {
+			return &ReconnectError{
+				Attempts: s.attempts,
+				Err:      lastErr,
+			}
+		}
+		attempt := s.attempts
+		s.attempts++
+
+		delay := backoffDelay(attempt, s.serverRetry)
+
+		timer := time.NewTimer(delay)
+		select {
+		case <-s.ctx.Done():
+			timer.Stop()
+			return s.ctx.Err()
+		case <-timer.C:
+		}
+
+		newStream, err := s.reconnectFn(lastEventID)
+		if err != nil {
+			lastErr = err
+			continue
+		}
+
+		// Swap in the new stream's internals.
+		s.reader = newStream.reader
+		s.closer = newStream.closer
+		s.stopFunc = newStream.stopFunc
+		return nil
+	}
+}
+
+func isIOError(err error) bool {
+	if errors.Is(err, io.EOF) || errors.Is(err, io.ErrUnexpectedEOF) {
+		return true
+	}
+	var netErr net.Error
+	if errors.As(err, &netErr) {
+		return true
+	}
+	var jsonErr *json.SyntaxError
+	if errors.As(err, &jsonErr) {
+		return false
+	}
+	var jsonTypeErr *json.UnmarshalTypeError
+	if errors.As(err, &jsonTypeErr) {
+		return false
+	}
+	return true
+}
+
+func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
+	base := minReconnectDelay
+	if serverRetry > 0 {
+		base = serverRetry
+	}
+
+	delay := base
+	for i := 0; i < attempt && delay < maxReconnectDelay; i++ {
+		delay *= 2
+	}
+	if delay > maxReconnectDelay {
+		delay = maxReconnectDelay
+	}
+
+	// Apply ±10% symmetric jitter.
+	jitterRange := int64(delay) / 5
+	if jitterRange <= 0 {
+		return delay
+	}
+	jitter := rand.Int63n(jitterRange)
+	return delay - delay/10 + time.Duration(jitter)
 }
 
 // streamReader reads data from a stream.

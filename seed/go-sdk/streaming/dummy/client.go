@@ -38,7 +38,7 @@ func (c *Client) GenerateStream(
 	ctx context.Context,
 	request *stream.GenerateStreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[stream.StreamResponse], error) {
+) (*core.Stream[stream.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,

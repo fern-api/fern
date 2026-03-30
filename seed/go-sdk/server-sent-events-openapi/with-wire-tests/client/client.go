@@ -40,7 +40,7 @@ func (c *Client) StreamProtocolNoCollision(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamProtocolNoCollisionResponse], error) {
+) (*core.Stream[fern.StreamProtocolNoCollisionResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -81,7 +81,7 @@ func (c *Client) StreamProtocolCollision(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamProtocolCollisionResponse], error) {
+) (*core.Stream[fern.StreamProtocolCollisionResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -122,7 +122,7 @@ func (c *Client) StreamDataContext(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamDataContextResponse], error) {
+) (*core.Stream[fern.StreamDataContextResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -162,7 +162,7 @@ func (c *Client) StreamNoContext(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamNoContextResponse], error) {
+) (*core.Stream[fern.StreamNoContextResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -202,7 +202,7 @@ func (c *Client) StreamProtocolWithFlatSchema(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamProtocolWithFlatSchemaResponse], error) {
+) (*core.Stream[fern.StreamProtocolWithFlatSchemaResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -243,7 +243,7 @@ func (c *Client) StreamDataContextWithEnvelopeSchema(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.StreamDataContextWithEnvelopeSchemaResponse], error) {
+) (*core.Stream[fern.StreamDataContextWithEnvelopeSchemaResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -283,7 +283,7 @@ func (c *Client) StreamOasSpecNative(
 	ctx context.Context,
 	request *fern.StreamRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[fern.Event], error) {
+) (*core.Stream[fern.Event], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,

@@ -38,7 +38,7 @@ func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[sse.StreamedCompletion], error) {
+) (*core.Stream[sse.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -77,7 +77,7 @@ func (c *Client) StreamEvents(
 	ctx context.Context,
 	request *sse.StreamEventsRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[sse.StreamEvent], error) {
+) (*core.Stream[sse.StreamEvent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -116,7 +116,7 @@ func (c *Client) StreamEventsContextProtocol(
 	ctx context.Context,
 	request *sse.StreamEventsContextProtocolRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[sse.StreamEventContextProtocol], error) {
+) (*core.Stream[sse.StreamEventContextProtocol], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,

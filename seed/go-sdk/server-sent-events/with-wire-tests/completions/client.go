@@ -38,7 +38,7 @@ func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[sse.StreamedCompletion], error) {
+) (*core.Stream[sse.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -77,7 +77,7 @@ func (c *Client) StreamWithoutTerminator(
 	ctx context.Context,
 	request *sse.StreamCompletionRequestWithoutTerminator,
 	opts ...option.RequestOption,
-) (core.StreamReceiver[sse.StreamedCompletion], error) {
+) (*core.Stream[sse.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,

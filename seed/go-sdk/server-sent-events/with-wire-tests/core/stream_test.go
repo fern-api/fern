@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -904,4 +905,208 @@ func TestSseStreamReader_InjectDiscriminator(t *testing.T) {
 // Helper function to create int pointer
 func intPtr(i int) *int {
 	return &i
+}
+
+// newReconnectSSEStream creates a Stream[T] from raw SSE text for reconnection tests.
+func newReconnectSSEStream[T any](ctx context.Context, body string) *Stream[T] {
+	resp := &http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(strings.NewReader(body)),
+		Header:     http.Header{"Content-Type": []string{"text/event-stream"}},
+	}
+	return NewStream[T](ctx, resp,
+		WithFormat(StreamFormatSSE),
+		WithPrefix("data: "),
+	)
+}
+
+func TestStream_TransparentReconnection(t *testing.T) {
+	ctx := context.Background()
+	callCount := 0
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"hello\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		callCount++
+		if callCount == 1 {
+			return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"world\",\"done\":true}\n\n"), nil
+		}
+		return newReconnectSSEStream[TestMessage](ctx, ""), nil
+	}, 10)
+	defer initial.Close()
+
+	msg1, err := initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "hello", msg1.Content)
+
+	msg2, err := initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "world", msg2.Content)
+
+	assert.Equal(t, 1, callCount, "should have reconnected once")
+}
+
+func TestStream_LastEventIDSentOnReconnect(t *testing.T) {
+	ctx := context.Background()
+	var receivedLastEventID string
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "id: evt-42\ndata: {\"content\":\"before\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		receivedLastEventID = lastEventID
+		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"after\",\"done\":true}\n\n"), nil
+	}, 10)
+	defer initial.Close()
+
+	event1, err := initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "before", event1.Data.Content)
+	assert.Equal(t, "evt-42", initial.LastEventID())
+
+	_, err = initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "evt-42", receivedLastEventID)
+}
+
+func TestStream_MaxReconnectAttemptsExhausted(t *testing.T) {
+	ctx := context.Background()
+	attempts := 0
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		attempts++
+		return nil, io.ErrUnexpectedEOF
+	}, 1)
+	defer initial.Close()
+
+	_, err := initial.Recv()
+	require.Error(t, err)
+
+	var reconnectErr *ReconnectError
+	require.ErrorAs(t, err, &reconnectErr)
+	assert.Equal(t, 1, reconnectErr.Attempts)
+	assert.Equal(t, 1, attempts)
+}
+
+func TestStream_ReconnectDisabledWithZeroAttempts(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		t.Fatal("reconnect should not be called")
+		return nil, nil
+	}, 0)
+	defer initial.Close()
+
+	_, err := initial.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+}
+
+func TestStream_ReconnectContextCancellation(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		cancel()
+		return nil, io.ErrUnexpectedEOF
+	}, 10)
+	defer initial.Close()
+
+	_, err := initial.Recv()
+	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestStream_CloseStopsReconnection(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		return nil, io.ErrUnexpectedEOF
+	}, 10)
+
+	go func() {
+		time.Sleep(50 * time.Millisecond)
+		_ = initial.Close()
+	}()
+
+	_, err := initial.Recv()
+	assert.Error(t, err)
+}
+
+func TestStream_TerminatorStopsReconnection(t *testing.T) {
+	ctx := context.Background()
+
+	resp := &http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(strings.NewReader("data: {\"content\":\"hi\",\"done\":false}\n\ndata: [DONE]\n\n")),
+		Header:     http.Header{"Content-Type": []string{"text/event-stream"}},
+	}
+	initial := NewStream[TestMessage](ctx, resp,
+		WithFormat(StreamFormatSSE),
+		WithPrefix("data: "),
+		WithTerminator("[DONE]"),
+	)
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		t.Fatal("reconnect should not be called after terminator")
+		return nil, nil
+	}, 10)
+	defer initial.Close()
+
+	msg, err := initial.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "hi", msg.Content)
+
+	_, err = initial.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+}
+
+func TestStream_JSONUnmarshalErrorNotRetryable(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "data: not-valid-json\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		t.Fatal("reconnect should not be called for JSON errors")
+		return nil, nil
+	}, 10)
+	defer initial.Close()
+
+	_, err := initial.Recv()
+	require.Error(t, err)
+	var reconnectErr *ReconnectError
+	assert.False(t, errors.As(err, &reconnectErr))
+}
+
+func TestStream_ServerRetryPersistsAcrossReconnections(t *testing.T) {
+	ctx := context.Background()
+	callCount := 0
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "retry: 2000\ndata: {\"content\":\"first\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		callCount++
+		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"resumed\",\"done\":true}\n\n"), nil
+	}, 3)
+	defer initial.Close()
+
+	event, err := initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "first", event.Data.Content)
+	assert.Equal(t, 2000, event.Retry)
+
+	event2, err := initial.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "resumed", event2.Data.Content)
+	assert.Equal(t, 1, callCount, "should have reconnected once")
+}
+
+func TestStream_CloseThenRecv(t *testing.T) {
+	ctx := context.Background()
+
+	initial := newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"hello\",\"done\":false}\n\n")
+	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
+		t.Fatal("reconnect should not be called after close")
+		return nil, nil
+	}, 10)
+
+	require.NoError(t, initial.Close())
+
+	_, err := initial.Recv()
+	assert.ErrorIs(t, err, io.EOF)
 }

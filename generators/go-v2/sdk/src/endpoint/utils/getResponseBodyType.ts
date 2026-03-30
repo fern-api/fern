@@ -21,7 +21,9 @@ export function getResponseBodyType({
         case "json":
             return getEndpointReturnTypeJson({ context, responseBody: body.value });
         case "streaming":
-            return go.Type.reference(context.getStreamReceiverTypeReference(context.getStreamPayload(body.value)));
+            return go.Type.pointer(
+                go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
+            );
         case "text":
             return go.Type.string();
         default:

@@ -18,9 +18,6 @@ export enum AsIsFiles {
     CustomPagination = "core/custom_pagination.go_",
     Stream = "core/stream.go_",
     StreamTest = "core/stream_test.go_",
-    StreamReceiver = "core/stream_receiver.go_",
-    ReconnectingStream = "core/reconnecting_stream.go_",
-    ReconnectingStreamTest = "core/reconnecting_stream_test.go_",
     Streamer = "internal/streamer.go_",
     TokenProvider = "core/token_provider.go_"
 }
