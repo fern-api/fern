@@ -129,6 +129,15 @@ export class Streamer {
                 )
             }
         ];
+        arguments_.push({
+            name: "MaxReconnectAttempts",
+            value: go.TypeInstantiation.reference(
+                go.selector({
+                    on: args.optionsReference,
+                    selector: go.codeblock("MaxReconnectAttempts")
+                })
+            )
+        });
         const prefix = this.getStreamPrefix(args.streamingResponse);
         if (prefix != null) {
             arguments_.push({
