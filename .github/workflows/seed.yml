@@ -114,6 +114,7 @@ jobs:
       swift-sdk: ${{ steps.create-dynamic-matrix.outputs.swift-sdk-test-matrix }}
       rust-model: ${{ steps.create-dynamic-matrix.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
+      benchmark-generators: ${{ steps.create-dynamic-matrix.outputs.benchmark-generators }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -257,6 +258,31 @@ jobs:
               fi
             fi
           done
+
+          # Build list of affected SDK generators for benchmarking
+          SDK_GENERATORS="ts-sdk python-sdk java-sdk go-sdk csharp-sdk php-sdk ruby-sdk-v2 swift-sdk rust-sdk"
+          BENCHMARK_LIST="[]"
+          for GEN in $SDK_GENERATORS; do
+            IS_AFFECTED=false
+            if [[ "$ALL_GENERATORS_AFFECTED" == "true" ]]; then
+              IS_AFFECTED=true
+            else
+              if echo "$AFFECTED_JSON" | jq -e --arg gen "$GEN" '.generators | index($gen)' > /dev/null 2>&1; then
+                IS_AFFECTED=true
+              fi
+            fi
+            if [[ "$IS_AFFECTED" == "true" ]]; then
+              BENCHMARK_LIST=$(echo "$BENCHMARK_LIST" | jq -c --arg gen "$GEN" '. + [{"generator": $gen}]')
+            fi
+          done
+
+          if [[ "$BENCHMARK_LIST" == "[]" ]]; then
+            echo "benchmark-generators=" >> $GITHUB_OUTPUT
+            echo "No SDK generators affected for benchmarking"
+          else
+            echo "benchmark-generators=$BENCHMARK_LIST" >> $GITHUB_OUTPUT
+            echo "Benchmark generators: $BENCHMARK_LIST"
+          fi
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -861,6 +887,129 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+
+  # SDK Generation Benchmarks — runs affected SDK generators against large customer OAS specs
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [get-all-test-matrices]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && github.event.pull_request.draft == false
+      }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.benchmark-generators) }}
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Fetch benchmark OpenAPI specs
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Run benchmark (PR branch)
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+
+      - name: Save PR results
+        shell: bash
+        run: |
+          mkdir -p benchmark-results-pr
+          cp benchmark-results/* benchmark-results-pr/ 2>/dev/null || true
+
+      - name: Checkout main branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          clean: false
+
+      - name: Install (main)
+        uses: ./.github/actions/install
+
+      - name: Fetch benchmark OpenAPI specs (main)
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Run benchmark (main branch)
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+
+      - name: Save main results
+        shell: bash
+        run: |
+          mkdir -p benchmark-results-main
+          cp benchmark-results/* benchmark-results-main/ 2>/dev/null || true
+
+      - name: Upload PR results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-pr-${{ matrix.generator }}
+          path: benchmark-results-pr/
+          retention-days: 5
+
+      - name: Upload main results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-main-${{ matrix.generator }}
+          path: benchmark-results-main/
+          retention-days: 5
+
+  benchmark-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [benchmark]
+    if: >-
+      ${{
+        always() && !cancelled()
+        && github.event_name == 'pull_request'
+        && needs.benchmark.result != 'skipped'
+      }}
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Download all PR benchmark artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-pr-*
+          path: benchmark-pr-results
+          merge-multiple: true
+
+      - name: Download all main benchmark artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-main-*
+          path: benchmark-main-results
+          merge-multiple: true
+
+      - name: Generate benchmark report
+        id: report
+        shell: bash
+        run: |
+          REPORT=$(bash .github/scripts/format-benchmark-report.sh \
+            benchmark-pr-results \
+            benchmark-main-results)
+          # Write to file for the comment action
+          echo "$REPORT" > benchmark-comment.md
+          echo "Generated benchmark report"
+
+      - name: Post or update PR comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: benchmark-comment.md
+          comment-tag: sdk-benchmark-results
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:

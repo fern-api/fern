@@ -1,0 +1,21 @@
+name: Fetch Benchmark Specs
+description: Download OpenAPI specs for SDK generation benchmarking
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch Square OpenAPI spec
+      shell: bash
+      run: |
+        curl -sSfL \
+          "https://raw.githubusercontent.com/square/connect-api-specification/master/api.json" \
+          -o benchmarks/fern/apis/square/openapi.json
+        echo "Downloaded Square OpenAPI spec ($(wc -c < benchmarks/fern/apis/square/openapi.json) bytes)"
+
+    - name: Fetch ElevenLabs OpenAPI spec
+      shell: bash
+      run: |
+        curl -sSfL \
+          "https://api.elevenlabs.io/openapi.json" \
+          -o benchmarks/fern/apis/elevenlabs/openapi.json
+        echo "Downloaded ElevenLabs OpenAPI spec ($(wc -c < benchmarks/fern/apis/elevenlabs/openapi.json) bytes)"

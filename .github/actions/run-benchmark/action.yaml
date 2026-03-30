@@ -1,0 +1,51 @@
+name: Run SDK Generation Benchmark
+description: Run SDK generation for a single generator against benchmark specs and record timing
+
+inputs:
+  generator:
+    description: "Generator name (e.g. ts-sdk, python-sdk)"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Build seed CLI
+      shell: bash
+      run: pnpm seed:build
+
+    - name: Run benchmark for ${{ inputs.generator }}
+      shell: bash
+      run: |
+        GENERATOR="${{ inputs.generator }}"
+        RESULTS_DIR="benchmark-results"
+        mkdir -p "$RESULTS_DIR"
+
+        for SPEC in square elevenlabs; do
+          echo "::group::Benchmarking ${GENERATOR} against ${SPEC}"
+
+          START_TIME=$EPOCHSECONDS
+
+          # Run the seed CLI against the benchmark fixture
+          pnpm seed:local run \
+            --generator "${GENERATOR}" \
+            --path "benchmarks/fern/apis/${SPEC}" \
+            --skip-scripts 2>&1 || true
+
+          END_TIME=$EPOCHSECONDS
+          DURATION=$(( END_TIME - START_TIME ))
+
+          echo "Benchmark: ${GENERATOR} x ${SPEC} = ${DURATION}s"
+
+          # Write result as JSON
+          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION}}" \
+            >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
+
+          echo "::endgroup::"
+        done
+
+    - name: Upload benchmark results
+      uses: actions/upload-artifact@v4
+      with:
+        name: benchmark-${{ inputs.generator }}
+        path: benchmark-results/
+        retention-days: 5
