@@ -1,1 +1,60 @@
-{"mappings":[{"id":"ce59c023-78fc-4d8d-8e8c-95f5e1a6204a","name":"getWithBasicAuth - default","request":{"urlPathTemplate":"/basic-auth","method":"GET"},"response":{"status":200,"body":"true","headers":{"Content-Type":"application/json"}},"uuid":"ce59c023-78fc-4d8d-8e8c-95f5e1a6204a","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}},"postServeActions":[]},{"id":"9cf6385c-29ea-4710-8792-fd2e00adc7c7","name":"postWithBasicAuth - default","request":{"urlPathTemplate":"/basic-auth","method":"POST"},"response":{"status":200,"body":"true","headers":{"Content-Type":"application/json"}},"uuid":"9cf6385c-29ea-4710-8792-fd2e00adc7c7","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}}],"meta":{"total":2}}
+{
+  "mappings": [
+    {
+      "id": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
+      "name": "getWithBasicAuth - default",
+      "request": {
+        "urlPathTemplate": "/basic-auth",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
+      "name": "postWithBasicAuth - default",
+      "request": {
+        "urlPathTemplate": "/basic-auth",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}
