@@ -274,6 +274,32 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
+    private static readonly string[] LocalhostHosts = ["localhost", "127.0.0.1", "[::1]"];
+
+    /// <summary>
+    /// Validates that the URL uses HTTPS for non-localhost hosts.
+    /// Throws if the URL uses HTTP for a non-localhost host, preventing
+    /// accidental transmission of credentials in plaintext.
+    /// </summary>
+    private static void ValidateHttps(string url)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+        {
+            return;
+        }
+        if (!string.Equals(uri.Scheme, "http", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+        if (Array.Exists(LocalhostHosts, host => string.Equals(uri.Host, host, StringComparison.OrdinalIgnoreCase)))
+        {
+            return;
+        }
+        throw new ArgumentException(
+            $"Refusing to send request to non-HTTPS URL: {url}. HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+        );
+    }
+
     private string BuildUrl(global::Seed.CsharpNamespaceConflict.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
@@ -285,9 +311,10 @@ internal partial class RawClient(ClientOptions clientOptions)
         // Append query string if present
         if (!string.IsNullOrEmpty(request.QueryString))
         {
-            return url + request.QueryString;
+            url += request.QueryString;
         }
 
+        ValidateHttps(url);
         return url;
     }
 

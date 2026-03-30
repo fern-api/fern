@@ -233,6 +233,36 @@ class RawClient
      * } $options
      * @return string
      */
+    private const LOCALHOST_HOSTS = ['localhost', '127.0.0.1', '[::1]'];
+
+    /**
+     * Validates that the URL uses HTTPS for non-localhost hosts.
+     * Throws if the URL uses HTTP for a non-localhost host, preventing
+     * accidental transmission of credentials in plaintext.
+     *
+     * @param string $url
+     * @throws InvalidArgumentException
+     */
+    private function validateHttps(string $url): void
+    {
+        $parsed = parse_url($url);
+        if ($parsed === false) {
+            return;
+        }
+        $scheme = $parsed['scheme'] ?? '';
+        if (strtolower($scheme) !== 'http') {
+            return;
+        }
+        $host = $parsed['host'] ?? '';
+        if (in_array(strtolower($host), self::LOCALHOST_HOSTS, true)) {
+            return;
+        }
+        throw new InvalidArgumentException(
+            "Refusing to send request to non-HTTPS URL: {$url}. "
+            . "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+        );
+    }
+
     private function buildUrl(
         BaseApiRequest $request,
         array          $options,
@@ -248,6 +278,7 @@ class RawClient
         if (!empty($query)) {
             $url .= '?' . $this->encodeQuery($query);
         }
+        $this->validateHttps($url);
         return $url;
     }
 
