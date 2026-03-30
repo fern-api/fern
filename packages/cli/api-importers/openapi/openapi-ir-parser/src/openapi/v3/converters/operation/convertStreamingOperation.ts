@@ -48,12 +48,12 @@ export function convertStreamingOperation({
                 streamingExtension,
                 isStreaming: true
             });
-            if (streamingRequestBody?.schemaReference != null) {
-                const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
-                if (schemaId != null) {
-                    context.excludeSchema(schemaId);
-                }
-            }
+            // Note: we intentionally do NOT exclude the original schema here.
+            // The stream-condition processing inlines a modified copy of the schema
+            // (with a literal boolean for the stream property) into the streaming and
+            // non-streaming endpoint variants. However, other endpoints may still
+            // reference the original schema by $ref, and excluding it globally would
+            // cause those references to resolve to "unknown".
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
