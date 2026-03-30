@@ -75,6 +75,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         }
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
+                    datetimeRfc2822: (datetimeRfc2822Example) => {
+                        if (!context.includeSerdeLayer && datetimeRfc2822Example.raw != null) {
+                            return ts.factory.createStringLiteral(datetimeRfc2822Example.raw);
+                        } else {
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                                ts.factory.createStringLiteral(datetimeRfc2822Example.datetime.toISOString())
+                            ]);
+                        }
+                    },
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     }
@@ -193,6 +202,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return `"${primitiveExample.bigInteger}"`;
             case "base64":
                 return `"${primitiveExample.base64}"`;
+            case "datetimeRfc2822":
+                return `"${primitiveExample.datetime.toISOString()}"`;
             default:
                 assertNever(primitiveExample);
         }
@@ -238,6 +249,9 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         throw new Error("Cannot convert datetime to property name");
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
+                    datetimeRfc2822: () => {
+                        throw new Error("Cannot convert datetimeRfc2822 to property name");
+                    },
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     }
