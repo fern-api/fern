@@ -16,6 +16,9 @@ import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.publish.DirectPublish;
+import com.fern.ir.model.webhooks.Webhook;
+import com.fern.ir.model.webhooks.WebhookGroup;
+import com.fern.ir.model.webhooks.WebhookSignatureVerification;
 import com.fern.ir.model.publish.Filesystem;
 import com.fern.ir.model.publish.GithubPublish;
 import com.fern.ir.model.publish.PublishingConfig.Visitor;
@@ -57,6 +60,7 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.WebhooksHelperGenerator;
 import com.fern.java.client.generators.auth.AuthProviderGenerator;
 import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
 import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
@@ -688,6 +692,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedAsyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
         generatedAsyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
+        // Generate webhook signature verification helper if webhooks with signature config exist
+        findWebhookSignatureVerification(ir).ifPresent(verification -> {
+            log(generatorExecClient, "Generating webhook signature verification helper");
+            WebhooksHelperGenerator webhooksHelperGenerator = new WebhooksHelperGenerator(context, verification);
+            this.addGeneratedFile(webhooksHelperGenerator.generateFile());
+        });
+
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {
                 dependencies.add(GradleDependency.of(dep));
@@ -755,6 +766,27 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 subpackage,
                 connectOptionsClassName);
         this.addGeneratedFile(asyncWebSocketWriter.generateFile());
+    }
+
+    /**
+     * Finds the most common webhook signature verification config across all webhook groups.
+     * Returns empty if no webhooks have signature verification configured.
+     */
+    private static Optional<WebhookSignatureVerification> findWebhookSignatureVerification(
+            IntermediateRepresentation ir) {
+        WebhookSignatureVerification found = null;
+        for (WebhookGroup group : ir.getWebhookGroups().values()) {
+            for (Webhook webhook : group.get()) {
+                if (webhook.getSignatureVerification().isPresent()) {
+                    if (found == null) {
+                        found = webhook.getSignatureVerification().get();
+                    }
+                    // Use the first one found (most common pattern is a single config)
+                    return Optional.of(found);
+                }
+            }
+        }
+        return Optional.ofNullable(found);
     }
 
     @Override
