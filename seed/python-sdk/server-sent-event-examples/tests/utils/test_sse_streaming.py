@@ -73,7 +73,7 @@ class TestSSEStreamingLogic:
                 with client.stream(query="test") as response:
                     completions = list(response.data)
                     assert len(completions) == 0
-                    assert "Failed to parse SSE data field as JSON" in caplog.text
+                    assert "Skipping SSE event with unparseable JSON data" in caplog.text
 
     def test_stream_sync_model_construction_error(self, caplog):
         """Test sync streaming with model construction error."""
@@ -104,7 +104,7 @@ class TestSSEStreamingLogic:
                 with client.stream(query="test") as response:
                     completions = list(response.data)
                     assert len(completions) == 0
-                    assert "Skipping SSE event due to model construction error" in caplog.text
+                    assert "Skipping invalid SSE event" in caplog.text
 
     def test_stream_sync_unexpected_error(self, caplog):
         """Test sync streaming with unexpected error."""
@@ -215,7 +215,7 @@ class TestSSEStreamingLogic:
                     async for completion in response.data:
                         completions.append(completion)
                     assert len(completions) == 0
-                    assert "Failed to parse SSE data field as JSON" in caplog.text
+                    assert "Skipping SSE event with unparseable JSON data" in caplog.text
 
     def test_stream_sync_error_response(self):
         """Test sync streaming with error response."""
@@ -374,7 +374,7 @@ class TestSSEStreamingLogic:
                     assert completions[0].tokens == 1
                     assert completions[1].delta == "world"
                     assert completions[1].tokens == 2
-                    assert "Failed to parse SSE data field as JSON" in caplog.text
+                    assert "Skipping SSE event with unparseable JSON data" in caplog.text
 
     def test_stream_missing_required_fields(self, caplog):
         """Test handling of SSE events missing required fields."""
@@ -402,7 +402,7 @@ class TestSSEStreamingLogic:
                 with client.stream(query="test") as response:
                     completions = list(response.data)
                     assert len(completions) == 0
-                    assert "Skipping SSE event due to model construction error" in caplog.text
+                    assert "Skipping invalid SSE event" in caplog.text
 
     def test_stream_invalid_tokens_type(self, caplog):
         """Test handling of invalid tokens field type."""
@@ -430,7 +430,7 @@ class TestSSEStreamingLogic:
                 with client.stream(query="test") as response:
                     completions = list(response.data)
                     assert len(completions) == 0
-                    assert "Skipping SSE event due to model construction error" in caplog.text
+                    assert "Skipping invalid SSE event" in caplog.text
 
     def test_stream_unicode_data(self):
         """Test handling of Unicode characters in SSE data."""
@@ -670,7 +670,7 @@ class TestSSEStreamingLogic:
                     assert completions[0].tokens == 1
                     assert completions[1].delta == "world"
                     assert completions[1].tokens == 2
-                    assert "Failed to parse SSE data field as JSON" in caplog.text
+                    assert "Skipping SSE event with unparseable JSON data" in caplog.text
 
     @pytest.mark.asyncio
     async def test_stream_async_unicode_data(self):
