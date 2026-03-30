@@ -59,8 +59,7 @@ public class AsyncRawFileUploadExampleClient {
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            multipartBodyBuilder.addFormDataPart(
-                    "name", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getName()));
+            multipartBodyBuilder.addFormDataPart("name", request.getName());
             if (file.isPresent()) {
                 String fileMimeType = Files.probeContentType(file.get().toPath());
                 MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
