@@ -158,7 +158,8 @@ impl HttpClient {
     where
         T: DeserializeOwned, // Generic T: DeserializeOwned means the response will be automatically deserialized into whatever type you specify:
     {
-        let url = join_url(&self.config.base_url, path);
+        let url = join_url(&self.config.base_url, path)
+            .map_err(|e| ApiError::InvalidUrl(e))?;
         let mut request = self.client.request(method, &url);
 
         // Apply query parameters if provided
@@ -220,7 +221,8 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
-        let url = join_url(&self.config.base_url, path);
+        let url = join_url(&self.config.base_url, path)
+            .map_err(|e| ApiError::InvalidUrl(e))?;
         let mut request = self.client.request(method, &url);
 
         // Apply query parameters if provided
@@ -335,7 +337,8 @@ impl HttpClient {
         client_id: &str,
         client_secret: &str,
     ) -> Result<(String, u64), ApiError> {
-        let url = join_url(base_url, token_endpoint);
+        let url = join_url(base_url, token_endpoint)
+            .map_err(|e| ApiError::InvalidUrl(e))?;
 
         // Build the token request body
         let body = serde_json::json!({
@@ -460,7 +463,8 @@ impl HttpClient {
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<Vec<u8>, ApiError> {
-        let url = join_url(&self.config.base_url, path);
+        let url = join_url(&self.config.base_url, path)
+            .map_err(|e| ApiError::InvalidUrl(e))?;
         let mut request = self.client.request(method, &url);
 
         // Apply query parameters if provided
@@ -563,7 +567,8 @@ impl HttpClient {
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<ByteStream, ApiError> {
-        let url = join_url(&self.config.base_url, path);
+        let url = join_url(&self.config.base_url, path)
+            .map_err(|e| ApiError::InvalidUrl(e))?;
         let mut request = self.client.request(method, &url);
 
         // Apply query parameters if provided
