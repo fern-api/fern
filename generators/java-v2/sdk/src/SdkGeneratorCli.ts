@@ -81,17 +81,23 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
 
             // Run README and reference generation in parallel
+            context.logger.debug("Starting README.md and reference.md generation...");
             const [readmeResult, referenceResult] = await Promise.allSettled([
                 this.generateReadme({ context, endpointSnippets }),
                 this.generateReference({ context })
             ]);
 
+            const docErrors: string[] = [];
             if (readmeResult.status === "rejected") {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(readmeResult.reason)}`);
+                docErrors.push(`README.md: ${extractErrorMessage(readmeResult.reason)}`);
             }
             if (referenceResult.status === "rejected") {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(referenceResult.reason)}`);
+                docErrors.push(`reference.md: ${extractErrorMessage(referenceResult.reason)}`);
             }
+            if (docErrors.length > 0) {
+                throw new Error(`Failed to generate documentation:\n${docErrors.join("\n")}`);
+            }
+            context.logger.debug("Successfully generated README.md and reference.md");
 
             try {
                 await this.generateSnippetsJson({
