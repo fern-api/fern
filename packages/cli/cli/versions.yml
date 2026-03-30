@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.49.0
+- version: 4.50.0
   changelogEntry:
     - summary: |
         Auto-infer `x-fern-discriminator-context` for discriminated unions that
@@ -12,6 +12,18 @@
   createdAt: "2026-03-30"
   irVersion: 65
 
+- version: 4.49.0
+  changelogEntry:
+    - summary: |
+        Add `body-sort` option to webhook signature payload format. When set to
+        `alphabetical`, POST body parameters are sorted by key before being
+        concatenated into the signing payload. This is required by providers like
+        Twilio. Supported in both Fern Definition (`body-sort: alphabetical` inside
+        `payload-format`) and OpenAPI specs (`body-sort: alphabetical` inside the
+        `payload-format` block of `x-fern-webhook-signature`).
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
 - version: 4.48.1
   changelogEntry:
     - summary: |

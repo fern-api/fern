@@ -21,6 +21,7 @@ interface WebhookTimestampExtensionSchema {
 interface WebhookPayloadFormatExtensionSchema {
     components: Array<"body" | "timestamp" | "notification-url" | "message-id">;
     delimiter?: string;
+    "body-sort"?: "alphabetical";
 }
 
 interface WebhookSignatureExtensionSchema {
@@ -81,8 +82,19 @@ function convertPayloadFormat(
                     return finalIr.WebhookPayloadComponent.MessageId;
             }
         }),
-        delimiter: payloadFormat.delimiter
+        delimiter: payloadFormat.delimiter,
+        bodySort: convertBodySort(payloadFormat["body-sort"])
     };
+}
+
+function convertBodySort(bodySort: "alphabetical" | undefined): finalIr.WebhookPayloadBodySort | undefined {
+    if (bodySort == null) {
+        return undefined;
+    }
+    switch (bodySort) {
+        case "alphabetical":
+            return finalIr.WebhookPayloadBodySort.Alphabetical;
+    }
 }
 
 function convertAlgorithm(

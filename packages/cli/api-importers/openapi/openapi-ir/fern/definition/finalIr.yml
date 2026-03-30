@@ -238,6 +238,11 @@ types:
     properties:
       components: list<WebhookPayloadComponent>
       delimiter: optional<string>
+      bodySort: optional<WebhookPayloadBodySort>
+
+  WebhookPayloadBodySort:
+    enum:
+      - alphabetical
 
   WebhookPayloadComponent:
     enum:

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix request body properties being stripped when query parameter names
+        collide with body property names and `resolveQueryParameterNameConflicts`
+        is enabled. The destructuring pattern in the generated client method now
+        correctly uses the renamed query parameter property (e.g. `filterIsComplete`)
+        instead of the wire value (e.g. `is_complete`), preventing body properties
+        from being accidentally extracted as query parameters.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 3.60.1
   changelogEntry:
     - summary: |
