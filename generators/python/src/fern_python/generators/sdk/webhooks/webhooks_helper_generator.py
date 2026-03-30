@@ -174,12 +174,9 @@ class WebhooksHelperGenerator:
 
         body_lines: List[str] = []
 
+        body_lines.append("        if request_body is None or signature_header is None or signature_key is None:")
         body_lines.append(
-            "        if request_body is None or signature_header is None or signature_key is None:"
-        )
-        body_lines.append(
-            '            raise ValueError("Missing required parameters'
-            ' for webhook signature verification")'
+            '            raise ValueError("Missing required parameters for webhook signature verification")'
         )
 
         if config.timestamp is not None:
@@ -189,17 +186,11 @@ class WebhooksHelperGenerator:
 
             body_lines.append("")
             body_lines.append('        if not timestamp_header or timestamp_header == "":')
-            msg = json.dumps(
-                f"Missing timestamp header '{header_name}' for webhook signature verification"
-            )
+            msg = json.dumps(f"Missing timestamp header '{header_name}' for webhook signature verification")
             body_lines.append(f"            raise ValueError({msg})")
             body_lines.append("")
-            body_lines.append(
-                f'        timestamp_ms = _parse_timestamp_ms(timestamp_header, "{ts_format}")'
-            )
-            body_lines.append(
-                f"        if abs(_get_current_time_ms() - timestamp_ms) > {tolerance} * 1000:"
-            )
+            body_lines.append(f'        timestamp_ms = _parse_timestamp_ms(timestamp_header, "{ts_format}")')
+            body_lines.append(f"        if abs(_get_current_time_ms() - timestamp_ms) > {tolerance} * 1000:")
             body_lines.append("            return False")
 
         if config.signature_prefix is not None:
@@ -213,10 +204,7 @@ class WebhooksHelperGenerator:
             body_lines.append("        sig = signature_header")
 
         body_lines.append("")
-        if (
-            len(config.payload_format.components) == 1
-            and config.payload_format.components[0].value == "BODY"
-        ):
+        if len(config.payload_format.components) == 1 and config.payload_format.components[0].value == "BODY":
             body_lines.append("        payload = request_body")
         else:
             component_exprs: List[str] = []
@@ -232,9 +220,7 @@ class WebhooksHelperGenerator:
 
             delimiter_repr = json.dumps(config.payload_format.delimiter)
             components_str = ", ".join(component_exprs)
-            body_lines.append(
-                f"        payload = {delimiter_repr}.join([{components_str}])"
-            )
+            body_lines.append(f"        payload = {delimiter_repr}.join([{components_str}])")
 
         body_lines.append("")
         body_lines.append("        expected = _compute_hmac_signature(")
