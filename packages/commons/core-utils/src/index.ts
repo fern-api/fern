@@ -43,6 +43,8 @@ export { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
+export { allVariantsMatchSseSpecShape, variantMatchesSseSpecShape } from "./sseSpecShape.js";
+export type { NormalizedVariantProperty } from "./sseSpecShape.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
 export { titleCase } from "./titleCase.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";

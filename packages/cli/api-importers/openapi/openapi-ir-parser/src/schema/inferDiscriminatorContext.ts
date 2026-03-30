@@ -1,9 +1,8 @@
+import { type NormalizedVariantProperty, allVariantsMatchSseSpecShape } from "@fern-api/core-utils";
 import { OpenAPIV3 } from "openapi-types";
 
 import { SchemaParserContext } from "./SchemaParserContext.js";
 import { isReferenceObject } from "./utils/isReferenceObject.js";
-
-const SSE_SPEC_FIELDS = new Set(["event", "data", "id", "retry"]);
 
 /**
  * Collects all property names from a schema, including those inherited via allOf.
@@ -45,65 +44,18 @@ function resolvePropertySchema(
 }
 
 /**
- * Checks if a property schema represents a string type.
+ * Normalizes an OpenAPI variant schema into a list of NormalizedVariantProperty
+ * for consumption by the shared SSE spec shape matcher.
  */
-function isStringType(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.type === "string";
-}
-
-/**
- * Checks if a property schema represents an integer type.
- */
-function isIntegerType(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.type === "integer";
-}
-
-/**
- * Checks if a single variant schema matches the SSE event spec shape.
- * All properties must be in {event, data, id, retry} with correct types.
- */
-function variantMatchesSseSpec(schema: OpenAPIV3.SchemaObject, context: SchemaParserContext): boolean {
+function normalizeVariantProperties(
+    schema: OpenAPIV3.SchemaObject,
+    context: SchemaParserContext
+): NormalizedVariantProperty[] {
     const allProperties = collectAllProperties(schema, context);
-    const propertyNames = Object.keys(allProperties);
-
-    // Must have at least the "event" field to be considered SSE spec
-    if (!allProperties["event"]) {
-        return false;
-    }
-
-    // Check that every property name is in the SSE spec set
-    for (const propName of propertyNames) {
-        if (!SSE_SPEC_FIELDS.has(propName)) {
-            return false;
-        }
-    }
-
-    // Check types for known SSE spec fields
-    for (const [propName, propSchema] of Object.entries(allProperties)) {
+    return Object.entries(allProperties).map(([name, propSchema]) => {
         const resolved = resolvePropertySchema(propSchema, context);
-        switch (propName) {
-            case "event":
-                if (!isStringType(resolved)) {
-                    return false;
-                }
-                break;
-            case "id":
-                if (!isStringType(resolved)) {
-                    return false;
-                }
-                break;
-            case "retry":
-                if (!isIntegerType(resolved)) {
-                    return false;
-                }
-                break;
-            case "data":
-                // data can be any type
-                break;
-        }
-    }
-
-    return true;
+        return { name, type: resolved.type ?? "unknown" };
+    });
 }
 
 /**
@@ -126,18 +78,17 @@ export function inferDiscriminatorContext({
         return "data";
     }
 
+    const variants: NormalizedVariantProperty[][] = [];
     for (const schema of Object.values(mapping)) {
         try {
             const resolved = context.resolveSchemaReference({ $ref: schema });
-            if (!variantMatchesSseSpec(resolved, context)) {
-                return "data";
-            }
+            variants.push(normalizeVariantProperties(resolved, context));
         } catch {
             return "data";
         }
     }
 
-    return "protocol";
+    return allVariantsMatchSseSpecShape(variants) ? "protocol" : "data";
 }
 
 /**
@@ -156,18 +107,17 @@ export function inferDiscriminatorContextFromVariants({
         return "data";
     }
 
+    const normalizedVariants: NormalizedVariantProperty[][] = [];
     for (const variantSchema of variantEntries) {
         try {
             const resolved = isReferenceObject(variantSchema)
                 ? context.resolveSchemaReference(variantSchema)
                 : variantSchema;
-            if (!variantMatchesSseSpec(resolved, context)) {
-                return "data";
-            }
+            normalizedVariants.push(normalizeVariantProperties(resolved, context));
         } catch {
             return "data";
         }
     }
 
-    return "protocol";
+    return allVariantsMatchSseSpecShape(normalizedVariants) ? "protocol" : "data";
 }
