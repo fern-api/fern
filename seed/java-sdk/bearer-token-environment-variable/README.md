@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:bearer-token-environment-variable'
+  implementation 'com.fern:bearer-token-environment-variable:0.0.1'
 }
 ```
 

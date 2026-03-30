@@ -15,7 +15,7 @@ catalog:
   "@babel/core": ^7.29.0
   "@babel/preset-env": ^7.29.2
   "@babel/preset-typescript": ^7.28.5
-  "@biomejs/biome": 2.4.9
+  "@biomejs/biome": 2.4.10
   "@blueprintjs/eslint-plugin": ^6.1.24
   "@blueprintjs/stylelint-plugin": ^4.1.14
   "@boundaryml/baml": ^0.219.0

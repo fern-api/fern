@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-path-param-key-conflict'
+  implementation 'com.fern:java-path-param-key-conflict:0.0.1'
 }
 ```
 

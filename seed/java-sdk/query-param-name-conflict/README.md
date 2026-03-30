@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:query-param-name-conflict'
+  implementation 'com.fern:query-param-name-conflict:0.0.1'
 }
 ```
 

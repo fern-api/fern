@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:server-sent-event-examples'
+  implementation 'com.fern:server-sent-event-examples:0.0.1'
 }
 ```
 

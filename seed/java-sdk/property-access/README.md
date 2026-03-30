@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:property-access'
+  implementation 'com.fern:property-access:0.0.1'
 }
 ```
 
