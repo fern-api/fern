@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.4
+  changelogEntry:
+    - summary: |
+        Fix global headers with `unknown` IR type producing `Supplier<unknown>` in
+        `BaseClientOptions` and `unknown` in `BaseRequestOptions`, which caused
+        TypeScript compilation errors (`Type 'unknown' is not assignable to type
+        'string | undefined'`) in generated SDKs. HTTP headers are always strings,
+        so `unknown`-typed headers are now coerced to `string`.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 3.60.3
   changelogEntry:
     - summary: |

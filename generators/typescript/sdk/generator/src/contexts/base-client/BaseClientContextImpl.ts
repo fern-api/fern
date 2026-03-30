@@ -224,11 +224,14 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         for (const header of this.intermediateRepresentation.headers) {
             const type = context.type.getReferenceToType(header.valueType);
+            const typeNode = isUnknownType(header.valueType)
+                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                : type.typeNode;
             if (endpointUtils.isLiteralHeader(header, context)) {
                 properties.push({
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
+                    type: getTextOfTsNode(typeNode),
                     hasQuestionToken: true,
                     docs: [`Override the ${header.name.wireValue} header`]
                 });
@@ -236,7 +239,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                 properties.push({
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
+                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(typeNode)),
                     hasQuestionToken: type.isOptional,
                     docs: [`Override the ${header.name.wireValue} header`]
                 });
@@ -366,9 +369,12 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["A hook to abort the request."]
                 },
                 ...this.intermediateRepresentation.headers.map((header) => {
+                    const typeNode = isUnknownType(header.valueType)
+                        ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                        : context.type.getReferenceToType(header.valueType).typeNode;
                     return {
                         name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                        type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
+                        type: getTextOfTsNode(typeNode),
                         hasQuestionToken: true,
                         docs: [`Override the ${header.name.wireValue} header`]
                     };
@@ -439,4 +445,14 @@ export class BaseClientContextImpl implements BaseClientContext {
 
 function isPropertyRequired(property: OptionalKind<PropertySignatureStructure>): boolean {
     return property.hasQuestionToken !== true;
+}
+
+/**
+ * HTTP headers are always strings, so when the IR type is `unknown`,
+ * we coerce the generated TypeScript type to `string` to avoid
+ * producing `Supplier<unknown>` or `unknown` which causes type errors
+ * when assigning to header values.
+ */
+function isUnknownType(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "unknown";
 }
