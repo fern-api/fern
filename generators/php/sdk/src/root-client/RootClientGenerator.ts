@@ -351,6 +351,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
                     for (let i = 0; i < basicAuthSchemes.length; i++) {
                         const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
                         const usernameName = this.context.getParameterName(basicAuthScheme.username);
                         const passwordName = this.context.getParameterName(basicAuthScheme.password);
                         if (isAuthOptional || basicAuthSchemes.length > 1) {

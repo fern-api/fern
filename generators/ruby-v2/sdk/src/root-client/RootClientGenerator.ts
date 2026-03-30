@@ -117,6 +117,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.newLine();
                     for (let i = 0; i < basicAuthSchemes.length; i++) {
                         const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
                         const usernameName = basicAuthScheme.username.snakeCase.safeName;
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {

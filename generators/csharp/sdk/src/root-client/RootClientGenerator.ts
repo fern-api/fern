@@ -455,6 +455,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
                         for (let i = 0; i < basicSchemes.length; i++) {
                             const basicScheme = basicSchemes[i];
+                            if (basicScheme == null) {
+                                continue;
+                            }
                             const usernameName = basicScheme.username.camelCase.safeName;
                             const passwordName = basicScheme.password.camelCase.safeName;
                             const usernameAccess = unified
