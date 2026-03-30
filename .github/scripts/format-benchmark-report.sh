@@ -54,6 +54,13 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       fi
     fi
 
+    # Check if this spec was skipped (fetch failure)
+    PR_SKIPPED=$(echo "$LINE" | jq -r '.skipped // false')
+    if [ "$PR_SKIPPED" = "true" ]; then
+      echo "| ${GENERATOR} | ${SPEC} | — | ⏭️ skipped | — |"
+      continue
+    fi
+
     PR_DISPLAY="${PR_DURATION}s"
     if [ "$PR_EXIT" != "0" ] && [ "$PR_EXIT" != "null" ]; then
       PR_DISPLAY="${PR_DURATION}s ⚠️"

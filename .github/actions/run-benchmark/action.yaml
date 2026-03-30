@@ -21,6 +21,14 @@ runs:
         mkdir -p "$RESULTS_DIR"
 
         for SPEC in square elevenlabs; do
+          # Skip specs whose OAS file was not successfully fetched
+          if [ ! -f "benchmarks/fern/apis/${SPEC}/openapi.json" ]; then
+            echo "::warning::Skipping ${GENERATOR} x ${SPEC} — OpenAPI spec not available"
+            echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
+              >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
+            continue
+          fi
+
           echo "::group::Benchmarking ${GENERATOR} against ${SPEC}"
 
           START_TIME=$EPOCHSECONDS
