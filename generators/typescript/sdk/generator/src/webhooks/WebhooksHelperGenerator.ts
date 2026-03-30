@@ -3,6 +3,19 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { Scope, ts } from "ts-morph";
 
+/**
+ * Extended payload format that includes `bodySort`.
+ * The field is defined in the IR but not yet published in @fern-fern/ir-sdk.
+ * Remove this once the published package includes `bodySort`.
+ */
+interface WebhookPayloadFormatWithBodySort extends FernIr.WebhookPayloadFormat {
+    bodySort?: "ALPHABETICAL";
+}
+
+function getBodySort(payloadFormat: FernIr.WebhookPayloadFormat): "ALPHABETICAL" | undefined {
+    return (payloadFormat as WebhookPayloadFormatWithBodySort).bodySort;
+}
+
 interface MethodBodyResult {
     fileConstants: string[];
     body: string;
@@ -77,7 +90,8 @@ export class WebhooksHelperGenerator {
     }
 
     private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
-        const requestBodyType = config.payloadFormat.bodySort != null ? "string | Record<string, string>" : "string";
+        const requestBodyType =
+            getBodySort(config.payloadFormat) != null ? "string | Record<string, string>" : "string";
         const params: Array<{ name: string; type: string }> = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
@@ -339,7 +353,7 @@ export class WebhooksHelperGenerator {
     }
 
     private addPayloadConstruction(lines: string[], payloadFormat: FernIr.WebhookPayloadFormat): void {
-        const hasBodySort = payloadFormat.bodySort != null;
+        const hasBodySort = getBodySort(payloadFormat) != null;
 
         if (hasBodySort) {
             lines.push(
@@ -438,7 +452,7 @@ export class WebhooksHelperGenerator {
                 `Extract the timestamp from the "${config.timestamp.headerName.wireValue}" header and pass it as the timestampHeader parameter.`
             );
         }
-        if (config.payloadFormat.bodySort != null) {
+        if (getBodySort(config.payloadFormat) != null) {
             lines.push(
                 "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
                 "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."

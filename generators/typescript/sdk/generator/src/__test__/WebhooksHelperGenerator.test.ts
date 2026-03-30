@@ -4,6 +4,11 @@ import { describe, expect, it } from "vitest";
 
 import { WebhooksHelperGenerator } from "../webhooks/WebhooksHelperGenerator.js";
 
+// Extended type: bodySort is defined in the IR but not yet published in @fern-fern/ir-sdk.
+interface WebhookPayloadFormatWithBodySort extends FernIr.WebhookPayloadFormat {
+    bodySort?: "ALPHABETICAL";
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
@@ -333,7 +338,7 @@ describe("WebhooksHelperGenerator", () => {
                     components: ["BODY"],
                     delimiter: "",
                     bodySort: "ALPHABETICAL"
-                }
+                } as WebhookPayloadFormatWithBodySort
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockSdkContext();
@@ -357,7 +362,7 @@ describe("WebhooksHelperGenerator", () => {
                     components: ["NOTIFICATION_URL", "BODY"],
                     delimiter: "",
                     bodySort: "ALPHABETICAL"
-                }
+                } as WebhookPayloadFormatWithBodySort
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockSdkContext();
@@ -382,7 +387,7 @@ describe("WebhooksHelperGenerator", () => {
                     components: ["NOTIFICATION_URL", "BODY"],
                     delimiter: "",
                     bodySort: "ALPHABETICAL"
-                }
+                } as WebhookPayloadFormatWithBodySort
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockSdkContext();
