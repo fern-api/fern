@@ -4,7 +4,7 @@
     - summary: |
         Auto-infer `x-fern-discriminator-context` for discriminated unions that
         match the SSE event spec shape. When all variants of a discriminated union
-        have properties exclusively drawn from {event, data, id, retry} with
+        have properties exclusively drawn from `{event, data, id, retry}` with
         correct types, the discriminator context is now inferred as `protocol`
         instead of defaulting to `data`. This applies across the OpenAPI importer
         (legacy and v3) and the Fern definition to IR path.
