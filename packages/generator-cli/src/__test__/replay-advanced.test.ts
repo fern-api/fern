@@ -92,7 +92,7 @@ const emptyContext: PipelineContext = {
 // describe("revert detection")
 // ---------------------------------------------------------------------------
 
-describe("revert detection", { tags: ["slow"] }, () => {
+describe("revert detection", { tags: ["slow", "flaky"] }, () => {
     let repoPath = "";
     let cleanup: () => Promise<void>;
 
@@ -139,7 +139,7 @@ describe("revert detection", { tags: ["slow"] }, () => {
 // describe("error resilience")
 // ---------------------------------------------------------------------------
 
-describe("error resilience", { tags: ["slow"] }, () => {
+describe("error resilience", { tags: ["slow", "flaky"] }, () => {
     it("corrupted lockfile returns null report — does not throw", async () => {
         const tmpDir = await tmp.dir({ unsafeCleanup: true });
         const repoPath = tmpDir.path;
@@ -218,7 +218,7 @@ describe("error resilience", { tags: ["slow"] }, () => {
 // describe("ReplayStep integration")
 // ---------------------------------------------------------------------------
 
-describe("ReplayStep integration", { tags: ["slow"] }, () => {
+describe("ReplayStep integration", { tags: ["slow", "flaky"] }, () => {
     let repoPath = "";
     let cleanup: () => Promise<void>;
 
@@ -303,7 +303,7 @@ describe("ReplayStep integration", { tags: ["slow"] }, () => {
 // describe("fernignore idempotency")
 // ---------------------------------------------------------------------------
 
-describe("fernignore idempotency", { tags: ["slow"] }, () => {
+describe("fernignore idempotency", { tags: ["slow", "flaky"] }, () => {
     it(".fernignore created with replay entries after first call — returns true", async () => {
         const tmpDir = await tmp.dir({ unsafeCleanup: true });
         const outputDir = tmpDir.path;

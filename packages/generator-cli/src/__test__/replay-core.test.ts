@@ -83,7 +83,7 @@ async function setupRepoWithGeneration(): Promise<{ repoPath: string; cleanup: (
 // Test suites
 // ---------------------------------------------------------------------------
 
-describe("first generation - no lockfile", { tags: ["slow"] }, () => {
+describe("first generation - no lockfile", { tags: ["slow", "flaky"] }, () => {
     let repoPath: string;
     let cleanup: () => Promise<void>;
 
@@ -122,7 +122,7 @@ describe("first generation - no lockfile", { tags: ["slow"] }, () => {
     });
 });
 
-describe("first generation - with lockfile", { tags: ["slow"] }, () => {
+describe("first generation - with lockfile", { tags: ["slow", "flaky"] }, () => {
     let repoPath: string;
     let cleanup: () => Promise<void>;
 
@@ -152,7 +152,7 @@ describe("first generation - with lockfile", { tags: ["slow"] }, () => {
     });
 });
 
-describe("normal regeneration with patches", { tags: ["slow"] }, () => {
+describe("normal regeneration with patches", { tags: ["slow", "flaky"] }, () => {
     let repoPath: string;
     let cleanup: () => Promise<void>;
 
@@ -189,7 +189,7 @@ describe("normal regeneration with patches", { tags: ["slow"] }, () => {
     });
 });
 
-describe("conflict detection", { tags: ["slow"] }, () => {
+describe("conflict detection", { tags: ["slow", "flaky"] }, () => {
     let repoPath: string;
     let cleanup: () => Promise<void>;
 
