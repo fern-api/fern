@@ -799,10 +799,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     }
                 };
             }
+            const propertyAllowsNull =
+                ("nullable" in property && property.nullable === true) ||
+                ("anyOf" in property &&
+                    Array.isArray(property.anyOf) &&
+                    property.anyOf.some(
+                        (s) => typeof s === "object" && s !== null && !("$ref" in s) && s.type === "null"
+                    )) ||
+                ("oneOf" in property &&
+                    Array.isArray(property.oneOf) &&
+                    property.oneOf.some(
+                        (s) => typeof s === "object" && s !== null && !("$ref" in s) && s.type === "null"
+                    ));
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
-                (!("nullable" in property) && exampleObj[key] == null) ||
-                ("nullable" in property && property.nullable === true && exampleObj[key] === undefined);
+                (!propertyAllowsNull && exampleObj[key] == null) ||
+                (propertyAllowsNull && exampleObj[key] === undefined);
             const propertyIsOptional = !resolvedSchema.required?.includes(key);
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
