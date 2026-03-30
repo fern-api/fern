@@ -175,7 +175,7 @@ func validateHTTPS(rawURL string) error {
 		return nil
 	}
 	host := parsed.Hostname()
-	if localhostHosts[host] {
+	if localhostHosts[host] || strings.HasSuffix(host, ".localhost") {
 		return nil
 	}
 	return fmt.Errorf(
