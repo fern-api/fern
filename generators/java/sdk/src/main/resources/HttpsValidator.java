@@ -35,7 +35,7 @@ public final class HttpsValidator {
             return;
         }
         String host = parsed.getHost();
-        if (host != null && LOCALHOST_HOSTS.contains(host.toLowerCase())) {
+        if (host != null && (LOCALHOST_HOSTS.contains(host.toLowerCase()) || host.toLowerCase().endsWith(".localhost"))) {
             return;
         }
         throw new IllegalArgumentException(

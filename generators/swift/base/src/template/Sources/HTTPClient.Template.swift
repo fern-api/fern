@@ -150,7 +150,7 @@ final class HTTPClient: Swift.Sendable {
         guard let scheme = url.scheme?.lowercased(), scheme == "http" else {
             return
         }
-        if let host = url.host, localhostHosts.contains(host.lowercased()) {
+        if let host = url.host, localhostHosts.contains(host.lowercased()) || host.lowercased().hasSuffix(".localhost") {
             return
         }
         throw <%= errorEnumName %>.networkError(

@@ -17,7 +17,7 @@ function validateHttps(url: string): void {
     if (parsed.protocol !== "http:") {
         return;
     }
-    if (LOCALHOST_HOSTS.has(parsed.hostname)) {
+    if (LOCALHOST_HOSTS.has(parsed.hostname) || parsed.hostname.endsWith(".localhost")) {
         return;
     }
     throw new Error(

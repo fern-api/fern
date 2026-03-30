@@ -166,7 +166,7 @@ def _validate_https(url: str) -> None:
     if parsed.scheme != "http":
         return
     hostname = parsed.hostname or ""
-    if hostname in _LOCALHOST_HOSTS:
+    if hostname in _LOCALHOST_HOSTS or hostname.endswith(".localhost"):
         return
     raise ValueError(
         f"Refusing to send request to non-HTTPS URL: {url}. "

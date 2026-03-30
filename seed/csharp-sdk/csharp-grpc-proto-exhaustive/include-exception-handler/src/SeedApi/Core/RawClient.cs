@@ -298,7 +298,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         {
             return;
         }
-        if (Array.Exists(LocalhostHosts, host => string.Equals(uri.Host, host, StringComparison.OrdinalIgnoreCase)))
+        if (Array.Exists(LocalhostHosts, host => string.Equals(uri.Host, host, StringComparison.OrdinalIgnoreCase)) || uri.Host.EndsWith(".localhost", StringComparison.OrdinalIgnoreCase))
         {
             return;
         }

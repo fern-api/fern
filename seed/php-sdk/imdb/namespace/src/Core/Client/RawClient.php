@@ -247,7 +247,7 @@ class RawClient
             return;
         }
         $host = $parsed['host'] ?? '';
-        if (in_array(strtolower($host), self::LOCALHOST_HOSTS, true)) {
+        if (in_array(strtolower($host), self::LOCALHOST_HOSTS, true) || str_ends_with(strtolower($host), '.localhost')) {
             return;
         }
         throw new InvalidArgumentException(

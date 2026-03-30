@@ -14,7 +14,7 @@ pub fn validate_https(raw_url: &str) -> Result<(), String> {
         return Ok(());
     }
     let host = parsed.host_str().unwrap_or("");
-    if LOCALHOST_HOSTS.contains(&host) {
+    if LOCALHOST_HOSTS.contains(&host) || host.ends_with(".localhost") {
         return Ok(());
     }
     Err(format!(
