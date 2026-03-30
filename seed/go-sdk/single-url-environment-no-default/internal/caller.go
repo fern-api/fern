@@ -73,7 +73,10 @@ type CallResponse struct {
 
 // Call issues an API call according to the given call parameters.
 func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, error) {
-	url := buildURL(params.URL, params.QueryParameters)
+	url, err := buildURL(params.URL, params.QueryParameters)
+	if err != nil {
+		return nil, err
+	}
 	req, err := newRequest(
 		ctx,
 		url,
@@ -154,21 +157,51 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 	}, nil
 }
 
+// localhostHosts is the set of hostnames treated as localhost.
+var localhostHosts = map[string]bool{
+	"localhost": true,
+	"127.0.0.1": true,
+	"[::1]":     true,
+}
+
+// validateHTTPS returns an error if the URL uses http:// for a non-localhost host,
+// which would send authentication credentials in plaintext.
+func validateHTTPS(rawURL string) error {
+	parsed, err := url.Parse(rawURL)
+	if err != nil {
+		return nil
+	}
+	if parsed.Scheme != "http" {
+		return nil
+	}
+	host := parsed.Hostname()
+	if localhostHosts[host] || strings.HasSuffix(host, ".localhost") {
+		return nil
+	}
+	return fmt.Errorf(
+		"refusing to send request to non-HTTPS URL: %s. HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL",
+		rawURL,
+	)
+}
+
 // buildURL constructs the final URL by appending the given query parameters (if any).
 func buildURL(
-	url string,
+	rawURL string,
 	queryParameters url.Values,
-) string {
+) (string, error) {
+	if err := validateHTTPS(rawURL); err != nil {
+		return "", err
+	}
 	if len(queryParameters) == 0 {
-		return url
+		return rawURL, nil
 	}
-	if strings.ContainsRune(url, '?') {
-		url += "&"
+	if strings.ContainsRune(rawURL, '?') {
+		rawURL += "&"
 	} else {
-		url += "?"
+		rawURL += "?"
 	}
-	url += queryParameters.Encode()
-	return url
+	rawURL += queryParameters.Encode()
+	return rawURL, nil
 }
 
 // newRequest returns a new *http.Request with all of the fields

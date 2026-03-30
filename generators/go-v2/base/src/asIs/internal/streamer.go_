@@ -51,7 +51,10 @@ type StreamParams struct {
 
 // Stream issues an API streaming call according to the given stream parameters.
 func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.Stream[T], error) {
-	url := buildURL(params.URL, params.QueryParameters)
+	url, err := buildURL(params.URL, params.QueryParameters)
+	if err != nil {
+		return nil, err
+	}
 	req, err := newRequest(
 		ctx,
 		url,
