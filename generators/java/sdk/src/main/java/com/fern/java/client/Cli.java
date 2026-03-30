@@ -262,6 +262,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
 
+        // TEMPORARY: Deliberate 5s delay to validate benchmark CI infrastructure. Remove before merge.
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         log(generatorExecClient, "Generating core SDK files");
 
         // core

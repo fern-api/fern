@@ -1,4 +1,5 @@
 import sys
+import time
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
 from .client_generator.client_generator import ClientGenerator
@@ -97,6 +98,9 @@ class SdkGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None:
+        # TEMPORARY: Deliberate 5s delay to validate benchmark CI infrastructure. Remove before merge.
+        time.sleep(5)
+
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
 
         if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
