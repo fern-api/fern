@@ -21,7 +21,7 @@ export interface StreamingEndpoints {
 export function convertStreamingOperation({
     operationContext,
     context,
-    streamingExtension,
+    streamingExtension
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -34,11 +34,11 @@ export function convertStreamingOperation({
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
-                source: context.source,
+                source: context.source
             });
             return {
                 streaming: streamingOperations,
-                nonStreaming: [],
+                nonStreaming: []
             };
         }
         case "streamCondition": {
@@ -46,11 +46,11 @@ export function convertStreamingOperation({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: true,
+                isStreaming: true
             });
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
-                response: streamingExtension.responseStream,
+                response: streamingExtension.responseStream
             });
             // Auto-disambiguate the streaming request name when the request body is a $ref
             // to a named schema. Without this, both streaming and non-streaming variants would
@@ -76,27 +76,27 @@ export function convertStreamingOperation({
                         operationContext.sdkMethodName != null
                             ? {
                                   groupName: operationContext.sdkMethodName.groupName,
-                                  methodName: operationContext.sdkMethodName.methodName + "_" + STREAM_SUFFIX,
+                                  methodName: operationContext.sdkMethodName.methodName + "_" + STREAM_SUFFIX
                               }
                             : undefined,
                     operation: {
                         ...operationContext.operation,
                         description: streamingExtension.streamDescription ?? operationContext.operation.description,
                         requestBody: streamingRequestBody?.requestBody,
-                        responses: streamingResponses,
+                        responses: streamingResponses
                     },
-                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX],
+                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
                 },
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
                 suffix: STREAM_SUFFIX,
                 source: context.source,
-                streamRequestNameOverride: autoStreamRequestName,
+                streamRequestNameOverride: autoStreamRequestName
             });
             streamingOperations.forEach((streamingOperation) => {
                 streamingOperation.examples = streamingOperation.examples.filter(
-                    (example) => isStreamingExample(example, context) !== false,
+                    (example) => isStreamingExample(example, context) !== false
                 );
             });
 
@@ -104,11 +104,11 @@ export function convertStreamingOperation({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: false,
+                isStreaming: false
             });
             const nonStreamingResponses = getResponses({
                 operation: operationContext.operation,
-                response: streamingExtension.response,
+                response: streamingExtension.response
             });
             const nonStreamingOperations = convertHttpOperation({
                 streamFormat: undefined,
@@ -117,21 +117,21 @@ export function convertStreamingOperation({
                     operation: {
                         ...operationContext.operation,
                         requestBody: nonStreamingRequestBody?.requestBody,
-                        responses: nonStreamingResponses,
-                    },
+                        responses: nonStreamingResponses
+                    }
                 },
                 context,
-                source: context.source,
+                source: context.source
             });
             nonStreamingOperations.forEach((nonStreamingOperation) => {
                 nonStreamingOperation.examples = nonStreamingOperation.examples.filter(
-                    (example) => isStreamingExample(example, context) !== true,
+                    (example) => isStreamingExample(example, context) !== true
                 );
             });
 
             return {
                 streaming: streamingOperations,
-                nonStreaming: nonStreamingOperations,
+                nonStreaming: nonStreamingOperations
             };
         }
         default:
@@ -148,7 +148,7 @@ function getRequestBody({
     context,
     operation,
     streamingExtension,
-    isStreaming,
+    isStreaming
 }: {
     context: AbstractOpenAPIV3ParserContext;
     operation: OpenAPIV3.OperationObject;
@@ -165,7 +165,7 @@ function getRequestBody({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
         content: resolvedRequestBody.content,
-        context,
+        context
     });
 
     if (jsonMediaObject == null) {
@@ -192,31 +192,31 @@ function getRequestBody({
             [streamingExtension.streamConditionProperty]: {
                 ...(streamingProperty ?? {}),
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming,
+                "x-fern-boolean-literal": isStreaming
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            } as any,
+            } as any
         },
         // Set to undefined because we inline both the streaming and non-streaming request schemas
         // and title would cause conflicting names
         title: undefined,
-        required: [...(resolvedRequestBodySchema.required ?? []), streamingExtension.streamConditionProperty],
+        required: [...(resolvedRequestBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
 
     return {
         requestBody: {
             content: {
                 [MediaType.APPLICATION_JSON]: {
-                    schema: requestBodySchemaWithLiteralProperty,
-                },
-            },
+                    schema: requestBodySchemaWithLiteralProperty
+                }
+            }
         },
-        schemaReference: isReferenceObject(jsonMediaObject.schema) ? jsonMediaObject.schema : undefined,
+        schemaReference: isReferenceObject(jsonMediaObject.schema) ? jsonMediaObject.schema : undefined
     };
 }
 
 function getResponses({
     operation,
-    response,
+    response
 }: {
     operation: OpenAPIV3.OperationObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
@@ -227,10 +227,10 @@ function getResponses({
             description: "",
             content: {
                 [MediaType.APPLICATION_JSON]: {
-                    schema: response,
-                },
-            },
-        } as OpenAPIV3.ResponseObject,
+                    schema: response
+                }
+            }
+        } as OpenAPIV3.ResponseObject
     };
 }
 
@@ -238,7 +238,7 @@ function getResponses({
 // TODO: check if the request passes the stream-condition
 export function isStreamingExample(
     example: EndpointExample,
-    context: AbstractOpenAPIV3ParserContext,
+    context: AbstractOpenAPIV3ParserContext
 ): boolean | undefined {
     return example._visit({
         unknown: (unknownExample) => {
@@ -254,6 +254,6 @@ export function isStreamingExample(
             return (maybeFernExample.value.response as { stream?: unknown }).stream != null;
         },
         full: () => undefined,
-        _other: () => undefined,
+        _other: () => undefined
     });
 }
