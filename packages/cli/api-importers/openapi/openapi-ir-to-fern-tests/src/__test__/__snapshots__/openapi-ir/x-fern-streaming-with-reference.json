@@ -19,7 +19,6 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "requestNameOverride": "CreateCompletionRequestStreaming",
       "generatedRequestName": "CreateChatCompletionsStreamRequest",
       "request": {
         "schema": {
@@ -315,7 +314,6 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "requestNameOverride": "CreateCompletionRequestStreaming",
       "generatedRequestName": "ResumeChatCompletionsStreamRequest",
       "request": {
         "schema": {
@@ -628,7 +626,6 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "requestNameOverride": "ChatRequestStreaming",
       "generatedRequestName": "ChatStreamRequest",
       "request": {
         "schema": {

@@ -388,22 +388,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "RequestStreaming",
+              "originalName": "CreateStreamRequest",
               "camelCase": {
-                "unsafeName": "requestStreaming",
-                "safeName": "requestStreaming"
+                "unsafeName": "createStreamRequest",
+                "safeName": "createStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "request_streaming",
-                "safeName": "request_streaming"
+                "unsafeName": "create_stream_request",
+                "safeName": "create_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "REQUEST_STREAMING",
-                "safeName": "REQUEST_STREAMING"
+                "unsafeName": "CREATE_STREAM_REQUEST",
+                "safeName": "CREATE_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "RequestStreaming",
-                "safeName": "RequestStreaming"
+                "unsafeName": "CreateStreamRequest",
+                "safeName": "CreateStreamRequest"
               }
             },
             "extends": [],
@@ -498,22 +498,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "RequestStreaming",
+                "originalName": "CreateStreamRequest",
                 "camelCase": {
-                  "unsafeName": "requestStreaming",
-                  "safeName": "requestStreaming"
+                  "unsafeName": "createStreamRequest",
+                  "safeName": "createStreamRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "request_streaming",
-                  "safeName": "request_streaming"
+                  "unsafeName": "create_stream_request",
+                  "safeName": "create_stream_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "REQUEST_STREAMING",
-                  "safeName": "REQUEST_STREAMING"
+                  "unsafeName": "CREATE_STREAM_REQUEST",
+                  "safeName": "CREATE_STREAM_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "RequestStreaming",
-                  "safeName": "RequestStreaming"
+                  "unsafeName": "CreateStreamRequest",
+                  "safeName": "CreateStreamRequest"
                 }
               },
               "bodyKey": {
@@ -1185,22 +1185,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "RequestStreaming",
+              "originalName": "CreateStreamRequest",
               "camelCase": {
-                "unsafeName": "requestStreaming",
-                "safeName": "requestStreaming"
+                "unsafeName": "createStreamRequest",
+                "safeName": "createStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "request_streaming",
-                "safeName": "request_streaming"
+                "unsafeName": "create_stream_request",
+                "safeName": "create_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "REQUEST_STREAMING",
-                "safeName": "REQUEST_STREAMING"
+                "unsafeName": "CREATE_STREAM_REQUEST",
+                "safeName": "CREATE_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "RequestStreaming",
-                "safeName": "RequestStreaming"
+                "unsafeName": "CreateStreamRequest",
+                "safeName": "CreateStreamRequest"
               }
             },
             "fernFilepath": {

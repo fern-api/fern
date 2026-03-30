@@ -80,7 +80,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ChatRequestStreaming",
+                "name": "ChatStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -143,7 +143,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: ChatRequestStreaming
+        name: ChatStreamRequest
         body:
           properties:
             stream: literal<true>
@@ -279,7 +279,7 @@ types:
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "CreateCompletionRequestStreaming",
+                "name": "CreateChatCompletionsStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -372,7 +372,7 @@ types:
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "CreateCompletionRequestStreaming",
+                "name": "ResumeChatCompletionsStreamRequest",
                 "path-parameters": {
                   "conversation_id": "string",
                 },
@@ -406,7 +406,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: CreateCompletionRequestStreaming
+        name: CreateChatCompletionsStreamRequest
         body:
           properties:
             stream: literal<true>
@@ -452,7 +452,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: CreateCompletionRequestStreaming
+        name: ResumeChatCompletionsStreamRequest
         path-parameters:
           conversation_id: string
         body:
