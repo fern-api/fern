@@ -108,7 +108,7 @@ describe("first generation - no lockfile", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("replayRun returns null report when no lockfile", async () => {
@@ -140,7 +140,7 @@ describe("first generation - with lockfile", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("ReplayService.runReplay handles first flow", async () => {
@@ -177,7 +177,7 @@ describe("normal regeneration with patches", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("detects and applies user patches", async () => {
@@ -214,7 +214,7 @@ describe("conflict detection", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("reports conflicts on same-line edits", async () => {

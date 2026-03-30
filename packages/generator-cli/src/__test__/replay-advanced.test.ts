@@ -123,7 +123,7 @@ describe("revert detection", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("reverted patches cancel out — net patchesDetected is 0", async () => {
@@ -229,7 +229,7 @@ describe("ReplayStep integration", { tags: ["slow"] }, () => {
     });
 
     afterAll(async () => {
-        await cleanup();
+        await cleanup?.();
     });
 
     it("step name is 'replay'", () => {
