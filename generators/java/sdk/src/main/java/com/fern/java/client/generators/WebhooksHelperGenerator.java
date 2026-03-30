@@ -42,8 +42,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         }
 
         TypeSpec typeSpec = classBuilder.build();
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), typeSpec).build();
+        JavaFile javaFile = JavaFile.builder(className.packageName(), typeSpec).build();
         return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(javaFile)
@@ -52,18 +51,16 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
 
     private void addHmacMethods(TypeSpec.Builder classBuilder, HmacSignatureVerification hmac) {
         List<WebhookPayloadComponent> components = hmac.getPayloadFormat().getComponents();
-        boolean hasNotificationUrl = components.stream()
-                .anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.NOTIFICATION_URL);
-        boolean hasBody =
-                components.stream().anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.BODY);
-        boolean hasTimestamp = components.stream()
-                .anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.TIMESTAMP);
-        boolean hasMessageId = components.stream()
-                .anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.MESSAGE_ID);
+        boolean hasNotificationUrl =
+                components.stream().anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.NOTIFICATION_URL);
+        boolean hasBody = components.stream().anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.BODY);
+        boolean hasTimestamp =
+                components.stream().anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.TIMESTAMP);
+        boolean hasMessageId =
+                components.stream().anyMatch(c -> c.getEnumValue() == WebhookPayloadComponent.Value.MESSAGE_ID);
 
         String algorithm = mapHmacAlgorithm(hmac.getAlgorithm());
-        boolean isBase64 =
-                hmac.getEncoding().getEnumValue() == WebhookSignatureEncoding.Value.BASE_64;
+        boolean isBase64 = hmac.getEncoding().getEnumValue() == WebhookSignatureEncoding.Value.BASE_64;
 
         // String body overload
         classBuilder.addMethod(buildStringBodyMethod(
@@ -71,8 +68,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
 
         // Map<String, String> body overload
         if (hasBody) {
-            classBuilder.addMethod(buildMapBodyMethod(
-                    hmac, algorithm, isBase64, hasNotificationUrl, hasTimestamp, hasMessageId));
+            classBuilder.addMethod(
+                    buildMapBodyMethod(hmac, algorithm, isBase64, hasNotificationUrl, hasTimestamp, hasMessageId));
         }
     }
 
@@ -118,9 +115,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             boolean hasTimestamp,
             boolean hasMessageId) {
         ParameterizedTypeName mapType = ParameterizedTypeName.get(
-                ClassName.get(java.util.Map.class),
-                ClassName.get(String.class),
-                ClassName.get(String.class));
+                ClassName.get(java.util.Map.class), ClassName.get(String.class), ClassName.get(String.class));
 
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -158,13 +153,11 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         return method.build();
     }
 
-    private void addPayloadConstruction(
-            MethodSpec.Builder method, WebhookPayloadFormat payloadFormat, String bodyVar) {
+    private void addPayloadConstruction(MethodSpec.Builder method, WebhookPayloadFormat payloadFormat, String bodyVar) {
         List<WebhookPayloadComponent> components = payloadFormat.getComponents();
         String delimiter = payloadFormat.getDelimiter();
 
-        if (components.size() == 1
-                && components.get(0).getEnumValue() == WebhookPayloadComponent.Value.BODY) {
+        if (components.size() == 1 && components.get(0).getEnumValue() == WebhookPayloadComponent.Value.BODY) {
             method.addStatement("String payload = $L", bodyVar);
             return;
         }
@@ -193,20 +186,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             method.addStatement("String payload = " + String.join(" + ", componentExprs));
         } else {
             method.addStatement(
-                    "String payload = $T.join($S, $L)",
-                    String.class,
-                    delimiter,
-                    String.join(", ", componentExprs));
+                    "String payload = $T.join($S, $L)", String.class, delimiter, String.join(", ", componentExprs));
         }
     }
 
     private void addSignatureComputation(MethodSpec.Builder method, String algorithm, boolean isBase64) {
         method.beginControlFlow("try");
-        method.addStatement(
-                "$T mac = $T.getInstance($S)",
-                javax.crypto.Mac.class,
-                javax.crypto.Mac.class,
-                algorithm);
+        method.addStatement("$T mac = $T.getInstance($S)", javax.crypto.Mac.class, javax.crypto.Mac.class, algorithm);
         method.addStatement(
                 "mac.init(new $T(signatureKey.getBytes($T.UTF_8), $S))",
                 javax.crypto.spec.SecretKeySpec.class,
@@ -216,8 +202,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 "byte[] digest = mac.doFinal(payload.getBytes($T.UTF_8))", java.nio.charset.StandardCharsets.class);
 
         if (isBase64) {
-            method.addStatement(
-                    "String expected = $T.getEncoder().encodeToString(digest)", java.util.Base64.class);
+            method.addStatement("String expected = $T.getEncoder().encodeToString(digest)", java.util.Base64.class);
         } else {
             method.addStatement("$T hexBuilder = new $T()", StringBuilder.class, StringBuilder.class);
             method.beginControlFlow("for (byte b : digest)");
@@ -248,7 +233,10 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                     java.nio.charset.StandardCharsets.class);
         }
 
-        method.nextControlFlow("catch ($T | $T e)", java.security.NoSuchAlgorithmException.class, java.security.InvalidKeyException.class);
+        method.nextControlFlow(
+                "catch ($T | $T e)",
+                java.security.NoSuchAlgorithmException.class,
+                java.security.InvalidKeyException.class);
         method.addStatement("throw new $T($S, e)", RuntimeException.class, "Failed to verify webhook signature");
         method.endControlFlow();
     }

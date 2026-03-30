@@ -16,12 +16,12 @@ import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.publish.DirectPublish;
-import com.fern.ir.model.webhooks.Webhook;
-import com.fern.ir.model.webhooks.WebhookGroup;
-import com.fern.ir.model.webhooks.WebhookSignatureVerification;
 import com.fern.ir.model.publish.Filesystem;
 import com.fern.ir.model.publish.GithubPublish;
 import com.fern.ir.model.publish.PublishingConfig.Visitor;
+import com.fern.ir.model.webhooks.Webhook;
+import com.fern.ir.model.webhooks.WebhookGroup;
+import com.fern.ir.model.webhooks.WebhookSignatureVerification;
 import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
@@ -769,8 +769,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     }
 
     /**
-     * Finds the most common webhook signature verification config across all webhook groups.
-     * Returns empty if no webhooks have signature verification configured.
+     * Finds the most common webhook signature verification config across all webhook groups. Returns empty if no
+     * webhooks have signature verification configured.
      */
     private static Optional<WebhookSignatureVerification> findWebhookSignatureVerification(
             IntermediateRepresentation ir) {
