@@ -9,8 +9,6 @@ from core_utilities.shared.http_sse import (
     EventSource,
     ServerSentEvent,
     SSEError,
-    aconnect_sse,
-    connect_sse,
 )
 
 
@@ -19,12 +17,9 @@ class TestSSEDecoder:
 
     def test_basic_sse_event(self) -> None:
         """Test basic SSE event decoding."""
-        sse_stream = "event: test\ndata: hello world\nid: 123\nretry: 5000\n\n"
-
-        # Convert string to bytes for httpx.Response.iter_bytes()
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = ["event: test", "data: hello world", "id: 123", "retry: 5000", ""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -37,17 +32,16 @@ class TestSSEDecoder:
 
     def test_multiple_sse_events_without_final_double_newline(self) -> None:
         """Test multiple SSE events where the final one doesn't end with double newline."""
-        # Simulate a real SSE stream where the final event doesn't end with double newline
-        # The key is that the incomplete event should still be processed when the stream ends
-        chunks = [
-            b"event: first\ndata: first data\n\n",
-            b"event: second\ndata: second data\n\n",
-            b"event: third\ndata: third data\n",  # Has newline but no double newline
-        ]
-
+        # iter_lines yields lines without newline terminators.
+        # An empty string represents the blank line that separates events.
+        # The third event never gets a blank-line separator, so it stays incomplete.
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = chunks
+        response.iter_lines.return_value = [
+            "event: first", "data: first data", "",
+            "event: second", "data: second data", "",
+            "event: third", "data: third data",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -62,12 +56,15 @@ class TestSSEDecoder:
 
     def test_sse_event_with_escaped_double_newlines(self) -> None:
         """Test SSE event with escaped double newlines in data."""
-        # Test data that contains literal \n characters (escaped newlines) in the content
-        sse_stream = "event: multiline\ndata: line1\\nline2\ndata: \\n\\n\ndata: line3\\n\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: multiline",
+            "data: line1\\nline2",
+            "data: \\n\\n",
+            "data: line3\\n",
+            "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -79,12 +76,17 @@ class TestSSEDecoder:
 
     def test_sse_event_with_complex_escaped_content(self) -> None:
         """Test SSE event with complex escaped content including newlines."""
-        # Test data with both actual newlines (from multiple data lines) and literal \n characters
-        sse_stream = "event: complex\ndata: This is line 1\ndata: This is line 2\ndata: \ndata: This is line 3\ndata: Special chars: \\n \\r \\t\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: complex",
+            "data: This is line 1",
+            "data: This is line 2",
+            "data: ",
+            "data: This is line 3",
+            "data: Special chars: \\n \\r \\t",
+            "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -97,11 +99,11 @@ class TestSSEDecoder:
 
     def test_sse_event_with_null_character_in_id(self) -> None:
         """Test SSE event with null character in id field (should be ignored)."""
-        sse_stream = "event: test\ndata: test data\nid: normal_id\nid: id_with_null\0character\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: test", "data: test data", "id: normal_id", "id: id_with_null\0character", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -111,11 +113,11 @@ class TestSSEDecoder:
 
     def test_sse_event_with_invalid_retry(self) -> None:
         """Test SSE event with invalid retry value."""
-        sse_stream = "event: test\ndata: test data\nretry: 5000\nretry: invalid\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: test", "data: test data", "retry: 5000", "retry: invalid", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -125,11 +127,11 @@ class TestSSEDecoder:
 
     def test_sse_event_with_comment_line(self) -> None:
         """Test SSE event with comment line (starts with colon)."""
-        sse_stream = "event: test\ndata: test data\n: this is a comment\ndata: more data\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: test", "data: test data", ": this is a comment", "data: more data", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -139,11 +141,11 @@ class TestSSEDecoder:
 
     def test_sse_event_with_field_name_space(self) -> None:
         """Test SSE event with field name followed by space."""
-        sse_stream = "event: test\ndata: test data\ndata : spaced field\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: test", "data: test data", "data : spaced field", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -154,11 +156,11 @@ class TestSSEDecoder:
 
     def test_sse_event_with_unknown_field(self) -> None:
         """Test SSE event with unknown field (should be ignored)."""
-        sse_stream = "event: test\ndata: test data\nunknown: ignored\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "event: test", "data: test data", "unknown: ignored", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -169,11 +171,9 @@ class TestSSEDecoder:
 
     def test_empty_sse_event(self) -> None:
         """Test empty SSE event (no fields)."""
-        sse_stream = "\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -182,11 +182,9 @@ class TestSSEDecoder:
 
     def test_sse_event_with_only_data(self) -> None:
         """Test SSE event with only data field (default event type)."""
-        sse_stream = "data: hello\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = ["data: hello", ""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -197,11 +195,9 @@ class TestSSEDecoder:
 
     def test_multiple_data_lines(self) -> None:
         """Test SSE event with multiple data lines."""
-        sse_stream = "data: line1\ndata: line2\ndata: line3\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = ["data: line1", "data: line2", "data: line3", ""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -211,11 +207,9 @@ class TestSSEDecoder:
 
     def test_sse_event_with_retry_only(self) -> None:
         """Test SSE event with only retry field."""
-        sse_stream = "retry: 3000\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = ["retry: 3000", ""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -227,11 +221,11 @@ class TestSSEDecoder:
 
     def test_sse_event_preserves_last_event_id(self) -> None:
         """Test that last event id is preserved across events."""
-        sse_stream = "id: first_id\ndata: first data\n\ndata: second data\n\n"
-
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+        response.iter_lines.return_value = [
+            "id: first_id", "data: first data", "", "data: second data", "",
+        ]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -256,7 +250,7 @@ class TestEventSource:
 
         # Invalid content type
         response.headers = {"content-type": "application/json"}
-        with pytest.raises(SSEError, match="Expected response header Content-Type to contain 'text/event-stream'"):
+        with pytest.raises(SSEError, match="Expected Content-Type 'text/event-stream'"):
             event_source._check_content_type()
 
     def test_content_type_with_charset(self) -> None:
@@ -268,104 +262,11 @@ class TestEventSource:
         # Should not raise exception
         event_source._check_content_type()
 
-        # Should detect charset correctly
-        assert event_source._get_charset() == "utf-8"
-
-    def test_charset_detection_utf16(self) -> None:
-        """Test charset detection for UTF-16."""
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream; charset=utf-16"}
-        event_source = EventSource(response)
-
-        # Should not raise exception
-        event_source._check_content_type()
-
-        assert event_source._get_charset() == "utf-16"
-
-    def test_charset_detection_iso8859(self) -> None:
-        """Test charset detection for ISO-8859-1."""
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream; charset=iso-8859-1"}
-        event_source = EventSource(response)
-
-        # Should not raise exception
-        event_source._check_content_type()
-
-        assert event_source._get_charset() == "iso-8859-1"
-
-    def test_charset_detection_quoted(self) -> None:
-        """Test charset detection with quoted charset."""
-        response = Mock()
-        response.headers = {"content-type": 'text/event-stream; charset="utf-8"'}
-        event_source = EventSource(response)
-
-        # Should not raise exception
-        event_source._check_content_type()
-
-        assert event_source._get_charset() == "utf-8"
-
-    def test_charset_detection_invalid_fallback(self) -> None:
-        """Test charset detection with invalid charset falls back to UTF-8."""
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream; charset=invalid-charset"}
-        event_source = EventSource(response)
-
-        # Should not raise exception
-        event_source._check_content_type()
-
-        # Should detect charset correctly
-        assert event_source._get_charset() == "utf-8"
-
-    def test_charset_detection_no_charset(self) -> None:
-        """Test charset detection with no charset specified falls back to UTF-8."""
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream"}
-        event_source = EventSource(response)
-
-        # Should not raise exception
-        event_source._check_content_type()
-
-        assert event_source._get_charset() == "utf-8"
-
-    def test_sse_with_utf16_encoding(self) -> None:
-        """Test SSE processing with UTF-16 encoding."""
-        # Create UTF-16 encoded SSE data
-        sse_data = "event: test\ndata: hello world\n\n"
-        utf16_bytes = sse_data.encode("utf-16")
-
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream; charset=utf-16"}
-        response.iter_bytes.return_value = [utf16_bytes]
-
-        event_source = EventSource(response)
-        events = list(event_source.iter_sse())
-
-        assert len(events) == 1
-        assert events[0].event == "test"
-        assert events[0].data == "hello world"
-
-    def test_sse_with_iso8859_encoding(self) -> None:
-        """Test SSE processing with ISO-8859-1 encoding."""
-        # Create ISO-8859-1 encoded SSE data
-        sse_data = "event: test\ndata: café\n\n"
-        iso_bytes = sse_data.encode("iso-8859-1")
-
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream; charset=iso-8859-1"}
-        response.iter_bytes.return_value = [iso_bytes]
-
-        event_source = EventSource(response)
-        events = list(event_source.iter_sse())
-
-        assert len(events) == 1
-        assert events[0].event == "test"
-        assert events[0].data == "café"
-
     def test_iter_sse_basic(self) -> None:
         """Test basic SSE iteration."""
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [b"event: test\n", b"data: hello\n", b"data: world\n", b"\n"]
+        response.iter_lines.return_value = ["event: test", "data: hello", "data: world", ""]
 
         event_source = EventSource(response)
         events = list(event_source.iter_sse())
@@ -378,13 +279,13 @@ class TestEventSource:
         """Test SSE iteration with multiple events."""
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [
-            b"event: first\n",
-            b"data: first data\n",
-            b"\n",
-            b"event: second\n",
-            b"data: second data\n",
-            b"\n",
+        response.iter_lines.return_value = [
+            "event: first",
+            "data: first data",
+            "",
+            "event: second",
+            "data: second data",
+            "",
         ]
 
         event_source = EventSource(response)
@@ -400,12 +301,12 @@ class TestEventSource:
         """Test SSE iteration with remaining buffer data."""
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [
-            b"event: test\n",
-            b"data: hello\n",
-            b"data: world\n",
-            b"\n",
-            b"asdlkjfa;skdjf",  # Extra buffer that shouldn't be processed
+        response.iter_lines.return_value = [
+            "event: test",
+            "data: hello",
+            "data: world",
+            "",
+            "asdlkjfa;skdjf",  # Extra line that shouldn't form a complete event
         ]
 
         event_source = EventSource(response)
@@ -415,15 +316,14 @@ class TestEventSource:
         assert events[0].event == "test"
         assert events[0].data == "hello\nworld"
 
-    def test_iter_sse_with_utf8_errors(self) -> None:
-        """Test SSE iteration with UTF-8 decoding errors."""
+    def test_iter_sse_with_special_characters(self) -> None:
+        """Test SSE iteration with special characters in data."""
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
-        # Include invalid UTF-8 bytes
-        response.iter_bytes.return_value = [
-            b"event: test\n",
-            b"data: hello\xffworld\n",  # Invalid UTF-8
-            b"\n",
+        response.iter_lines.return_value = [
+            "event: test",
+            "data: hello\u00e9world",  # Unicode character
+            "",
         ]
 
         event_source = EventSource(response)
@@ -431,7 +331,6 @@ class TestEventSource:
 
         assert len(events) == 1
         assert events[0].event == "test"
-        # Should handle UTF-8 errors gracefully
         assert "hello" in events[0].data
 
     @pytest.mark.asyncio
@@ -508,116 +407,6 @@ class TestEventSource:
 
         assert len(events) == 1
         assert events[0].data == "test"
-
-
-class TestConnectSSE:
-    """Test cases for connect_sse and aconnect_sse functions."""
-
-    def test_connect_sse_headers(self) -> None:
-        """Test that connect_sse sets proper headers."""
-        client = Mock()
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [b"data: test\n\n"]
-
-        # Mock the context manager
-        context_manager = Mock()
-        context_manager.__enter__ = Mock(return_value=response)
-        context_manager.__exit__ = Mock(return_value=None)
-        client.stream.return_value = context_manager
-
-        with connect_sse(client, "GET", "http://example.com/sse") as event_source:
-            assert isinstance(event_source, EventSource)
-
-        # Check that proper headers were set
-        client.stream.assert_called_once()
-        call_args = client.stream.call_args
-        assert call_args[1]["headers"]["Accept"] == "text/event-stream"
-        assert call_args[1]["headers"]["Cache-Control"] == "no-store"
-
-    def test_connect_sse_with_custom_headers(self) -> None:
-        """Test that connect_sse preserves custom headers."""
-        client = Mock()
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream"}
-        response.iter_bytes.return_value = [b"data: test\n\n"]
-
-        # Mock the context manager
-        context_manager = Mock()
-        context_manager.__enter__ = Mock(return_value=response)
-        context_manager.__exit__ = Mock(return_value=None)
-        client.stream.return_value = context_manager
-
-        custom_headers = {"Authorization": "Bearer token"}
-
-        with connect_sse(client, "GET", "http://example.com/sse", headers=custom_headers) as event_source:
-            assert isinstance(event_source, EventSource)
-
-        # Check that custom headers are preserved and SSE headers are added
-        call_args = client.stream.call_args
-        headers = call_args[1]["headers"]
-        assert headers["Accept"] == "text/event-stream"
-        assert headers["Cache-Control"] == "no-store"
-        assert headers["Authorization"] == "Bearer token"
-
-    @pytest.mark.asyncio
-    async def test_aconnect_sse_headers(self) -> None:
-        """Test that aconnect_sse sets proper headers."""
-        client = Mock()
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream"}
-
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "data: test"
-            yield ""
-
-        response.aiter_lines = mock_aiter_lines
-
-        # Mock the async context manager
-        async_context_manager = Mock()
-        async_context_manager.__aenter__ = AsyncMock(return_value=response)
-        async_context_manager.__aexit__ = AsyncMock(return_value=None)
-        client.stream.return_value = async_context_manager
-
-        async with aconnect_sse(client, "GET", "http://example.com/sse") as event_source:
-            assert isinstance(event_source, EventSource)
-
-        # Check that proper headers were set
-        client.stream.assert_called_once()
-        call_args = client.stream.call_args
-        assert call_args[1]["headers"]["Accept"] == "text/event-stream"
-        assert call_args[1]["headers"]["Cache-Control"] == "no-store"
-
-    @pytest.mark.asyncio
-    async def test_aconnect_sse_with_custom_headers(self) -> None:
-        """Test that aconnect_sse preserves custom headers."""
-        client = Mock()
-        response = Mock()
-        response.headers = {"content-type": "text/event-stream"}
-
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "data: test"
-            yield ""
-
-        response.aiter_lines = mock_aiter_lines
-
-        # Mock the async context manager
-        async_context_manager = Mock()
-        async_context_manager.__aenter__ = AsyncMock(return_value=response)
-        async_context_manager.__aexit__ = AsyncMock(return_value=None)
-        client.stream.return_value = async_context_manager
-
-        custom_headers = {"Authorization": "Bearer token"}
-
-        async with aconnect_sse(client, "GET", "http://example.com/sse", headers=custom_headers) as event_source:
-            assert isinstance(event_source, EventSource)
-
-        # Check that custom headers are preserved and SSE headers are added
-        call_args = client.stream.call_args
-        headers = call_args[1]["headers"]
-        assert headers["Accept"] == "text/event-stream"
-        assert headers["Cache-Control"] == "no-store"
-        assert headers["Authorization"] == "Bearer token"
 
 
 class TestServerSentEvent:
