@@ -232,13 +232,6 @@ class RawClient
         return $result;
     }
 
-    /**
-     * @param BaseApiRequest $request
-     * @param array{
-     *     queryParameters?: array<string, mixed>,
-     * } $options
-     * @return string
-     */
     private const LOCALHOST_HOSTS = ['localhost', '127.0.0.1', '[::1]'];
 
     /**
@@ -269,6 +262,13 @@ class RawClient
         );
     }
 
+    /**
+     * @param BaseApiRequest $request
+     * @param array{
+     *     queryParameters?: array<string, mixed>,
+     * } $options
+     * @return string
+     */
     private function buildUrl(
         BaseApiRequest $request,
         array          $options,
