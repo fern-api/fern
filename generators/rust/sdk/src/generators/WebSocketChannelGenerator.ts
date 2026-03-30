@@ -362,6 +362,16 @@ ${methods.join("\n\n")}
         return !hasExplicitAuth;
     }
 
+    /**
+     * Returns true if the header is `Sec-WebSocket-Protocol` (case-insensitive).
+     * This header is handled specially by tungstenite for RFC 6455 subprotocol
+     * negotiation and must NOT be inserted as a regular HTTP header, because
+     * tungstenite will fail the handshake if the server does not echo it back.
+     */
+    private isWebSocketProtocolHeader(header: FernIr.HttpHeader): boolean {
+        return header.name.wireValue.toLowerCase() === "sec-websocket-protocol";
+    }
+
     private buildConnectParams(
         channel: FernIr.WebSocketChannel,
         enumPrefix: string
@@ -378,6 +388,11 @@ ${methods.join("\n\n")}
         }
 
         for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — tungstenite handles subprotocol
+            // negotiation internally and fails if the server doesn't echo it.
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
             params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
         }
 
@@ -416,6 +431,10 @@ ${methods.join("\n\n")}
         }
 
         for (const header of channel.headers) {
+            // Skip Sec-WebSocket-Protocol — see isWebSocketProtocolHeader().
+            if (this.isWebSocketProtocolHeader(header)) {
+                continue;
+            }
             const paramName = header.name.name.snakeCase.safeName;
             const wireValue = header.name.wireValue;
             headerLines.push(`        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
@@ -530,12 +549,12 @@ ${queryLines.join("\n")}
      */
     private generateConnectorStruct(clientName: string, enumPrefix: string, channel: FernIr.WebSocketChannel): string {
         const connectorName = this.getConnectorName(clientName);
-        const implicitAuth = this.needsImplicitAuth(channel);
 
-        // Build the user-facing connector connect() params — exclude the implicit auth param
-        // since it is auto-injected from the stored token.
+        // The connector always auto-injects the Authorization header from the stored
+        // token so users never need to pass it manually — matching the TypeScript SDK
+        // experience where `client.realtime.connect()` "just works".
         const connectParams = this.buildConnectParams(channel, enumPrefix)
-            .filter((p) => !(implicitAuth && p.name === "authorization"));
+            .filter((p) => p.name !== "authorization");
         const params: string[] = ["&self", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
 
         // Build the forward args for the underlying client::connect() call.
@@ -543,26 +562,21 @@ ${queryLines.join("\n")}
         const allClientParams = this.buildConnectParams(channel, enumPrefix);
         const forwardArgs: string[] = ["&self.base_url"];
         for (const p of allClientParams) {
-            if (implicitAuth && p.name === "authorization") {
+            if (p.name === "authorization") {
                 forwardArgs.push("&auth_header");
             } else {
                 forwardArgs.push(p.name);
             }
         }
 
-        const structFields = implicitAuth
-            ? `    base_url: String,\n    token: Option<String>,`
-            : `    base_url: String,`;
+        // Check if there is any authorization param to auto-inject
+        const hasAuthParam = allClientParams.some((p) => p.name === "authorization");
 
-        const newParams = implicitAuth
-            ? `base_url: String, token: Option<String>`
-            : `base_url: String`;
+        const structFields = `    base_url: String,\n    token: Option<String>,`;
+        const newParams = `base_url: String, token: Option<String>`;
+        const newBody = `Self { base_url, token }`;
 
-        const newBody = implicitAuth
-            ? `Self { base_url, token }`
-            : `Self { base_url }`;
-
-        const authSetup = implicitAuth
+        const authSetup = hasAuthParam
             ? `        let auth_header = self.token.as_ref()
             .map(|t| format!("Bearer {}", t))
             .unwrap_or_default();\n`

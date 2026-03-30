@@ -81,11 +81,11 @@ class SeedClient
      * @return (
      *    DocumentMetadata
      *   |DocumentUploadResult
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult
+    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -101,6 +101,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -127,11 +130,11 @@ class SeedClient
      * @return (
      *    DocumentMetadata
      *   |DocumentUploadResult
-     * )
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult
+    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -146,6 +149,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

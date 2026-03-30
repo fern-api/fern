@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:reserved-keywords'
+  implementation 'com.fern:reserved-keywords:0.0.1'
 }
 ```
 

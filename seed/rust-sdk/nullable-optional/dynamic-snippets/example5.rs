@@ -14,15 +14,16 @@ async fn main() {
                 id: "id".to_string(),
                 nullable_role: Some(UserRole::Admin),
                 optional_role: Some(UserRole::Admin),
-                optional_nullable_role: Some(Some(UserRole::Admin)),
+                optional_nullable_role: Some(UserRole::Admin),
                 nullable_status: Some(UserStatus::Active),
                 optional_status: Some(UserStatus::Active),
-                optional_nullable_status: Some(Some(UserStatus::Active)),
+                optional_nullable_status: Some(UserStatus::Active),
                 nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_notification: Some(NotificationMethod::Email {
@@ -30,15 +31,17 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
-                optional_nullable_notification: Some(Some(NotificationMethod::Email {
+                optional_nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                })),
+                }),
                 nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
@@ -54,10 +57,12 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 optional_search_result: Some(SearchResult::User {
@@ -75,10 +80,12 @@ async fn main() {
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
@@ -89,10 +96,10 @@ async fn main() {
                     "optionalArray".to_string(),
                     "optionalArray".to_string(),
                 ]),
-                optional_nullable_array: Some(Some(vec![
+                optional_nullable_array: Some(vec![
                     "optionalNullableArray".to_string(),
                     "optionalNullableArray".to_string(),
-                ])),
+                ]),
                 nullable_list_of_nullables: Some(vec![
                     Some("nullableListOfNullables".to_string()),
                     Some("nullableListOfNullables".to_string()),
@@ -104,9 +111,10 @@ async fn main() {
                         city: Some("city".to_string()),
                         state: Some("state".to_string()),
                         zip_code: "zipCode".to_string(),
-                        country: Some(Some("country".to_string())),
+                        country: Some("country".to_string()),
                         building_id: NullableUserId(Some("buildingId".to_string())),
                         tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                        ..Default::default()
                     }),
                 )])),
                 nullable_list_of_unions: Some(vec![
@@ -115,6 +123,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                     NotificationMethod::Email {
@@ -122,6 +131,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                 ]),
@@ -129,6 +139,7 @@ async fn main() {
                     "optionalMapOfEnums".to_string(),
                     UserRole::Admin,
                 )])),
+                ..Default::default()
             },
             None,
         )

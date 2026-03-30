@@ -12,7 +12,7 @@ public class Example2
             }
         );
 
-        await client.User.GetWithBearerAsync();
+        await client.User.GetWithApiKeyAsync();
     }
 
 }

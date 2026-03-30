@@ -4,7 +4,7 @@ imports:
   general-errors: ./general-errors.yml
 
 service:
-  auth: false
+  auth: true
   base-path: /no-auth
   endpoints:
     postWithNoAuth:

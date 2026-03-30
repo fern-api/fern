@@ -4,11 +4,12 @@ package package_
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/reserved-keywords/fern"
 	core "github.com/reserved-keywords/fern/core"
 	internal "github.com/reserved-keywords/fern/internal"
 	option "github.com/reserved-keywords/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

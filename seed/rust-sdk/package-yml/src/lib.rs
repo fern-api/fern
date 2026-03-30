@@ -19,6 +19,7 @@
 //!             &EchoRequest {
 //!                 name: "Hello world!".to_string(),
 //!                 size: 20,
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -46,4 +47,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

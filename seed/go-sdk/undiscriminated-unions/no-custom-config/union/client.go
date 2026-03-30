@@ -4,6 +4,7 @@ package union
 
 import (
 	context "context"
+
 	undiscriminated "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
 	internal "github.com/fern-api/undiscriminated-go/internal"

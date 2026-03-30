@@ -65,7 +65,6 @@ impl UnionWithIdenticalPrimitives {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for UnionWithIdenticalPrimitives {

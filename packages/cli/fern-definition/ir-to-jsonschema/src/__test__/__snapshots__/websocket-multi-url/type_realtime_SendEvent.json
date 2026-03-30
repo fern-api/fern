@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "text",
+    "priority"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

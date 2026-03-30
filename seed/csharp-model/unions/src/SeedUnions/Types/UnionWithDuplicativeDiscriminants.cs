@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithDuplicativeDiscriminants
     public SeedUnions.FirstItemType AsFirstItemType() =>
         IsFirstItemType
             ? (SeedUnions.FirstItemType)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "UnionWithDuplicativeDiscriminants.Type is not 'firstItemType'"
             );
 
@@ -75,7 +75,7 @@ public record UnionWithDuplicativeDiscriminants
     public SeedUnions.SecondItemType AsSecondItemType() =>
         IsSecondItemType
             ? (SeedUnions.SecondItemType)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "UnionWithDuplicativeDiscriminants.Type is not 'secondItemType'"
             );
 
@@ -154,12 +154,12 @@ public record UnionWithDuplicativeDiscriminants
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicativeDiscriminants>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithDuplicativeDiscriminants).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDuplicativeDiscriminants Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -214,7 +214,7 @@ public record UnionWithDuplicativeDiscriminants
 
         public override UnionWithDuplicativeDiscriminants ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

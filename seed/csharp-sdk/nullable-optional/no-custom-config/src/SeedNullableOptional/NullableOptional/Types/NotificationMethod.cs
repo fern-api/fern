@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedNullableOptional.Core;
 
 namespace SeedNullableOptional;
@@ -81,7 +81,7 @@ public record NotificationMethod
     public SeedNullableOptional.EmailNotification AsEmail() =>
         IsEmail
             ? (SeedNullableOptional.EmailNotification)Value!
-            : throw new System.Exception("NotificationMethod.Type is not 'email'");
+            : throw new global::System.Exception("NotificationMethod.Type is not 'email'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.SmsNotification"/> if <see cref="Type"/> is 'sms', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record NotificationMethod
     public SeedNullableOptional.SmsNotification AsSms() =>
         IsSms
             ? (SeedNullableOptional.SmsNotification)Value!
-            : throw new System.Exception("NotificationMethod.Type is not 'sms'");
+            : throw new global::System.Exception("NotificationMethod.Type is not 'sms'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.PushNotification"/> if <see cref="Type"/> is 'push', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record NotificationMethod
     public SeedNullableOptional.PushNotification AsPush() =>
         IsPush
             ? (SeedNullableOptional.PushNotification)Value!
-            : throw new System.Exception("NotificationMethod.Type is not 'push'");
+            : throw new global::System.Exception("NotificationMethod.Type is not 'push'");
 
     public T Match<T>(
         Func<SeedNullableOptional.EmailNotification, T> onEmail,
@@ -195,12 +195,12 @@ public record NotificationMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<NotificationMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(NotificationMethod).IsAssignableFrom(typeToConvert);
 
         public override NotificationMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -279,7 +279,7 @@ public record NotificationMethod
 
         public override NotificationMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

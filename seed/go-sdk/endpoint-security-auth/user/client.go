@@ -4,11 +4,12 @@ package user
 
 import (
 	context "context"
+	os "os"
+
 	fern "github.com/endpoint-security-auth/fern"
 	core "github.com/endpoint-security-auth/fern/core"
 	internal "github.com/endpoint-security-auth/fern/internal"
 	option "github.com/endpoint-security-auth/fern/option"
-	os "os"
 )
 
 type Client struct {

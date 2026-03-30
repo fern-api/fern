@@ -249,12 +249,16 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                this.dependencyManager.addDependency("vitest", "^4.1.1", {
                     type: DependencyType.DEV
                 });
                 break;
         }
         if (this.generateWireTests) {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
             this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
@@ -1530,17 +1534,24 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.type === "union" &&
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
-                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
+                discriminantField = context.includeSerdeLayer
+                    ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
+                    : typeDeclaration.shape.discriminant.wireValue;
             }
         }
 
-        const createRawJsonExample = this.createRawJsonExample.bind(this);
         const eventCodes = sseEvents.map((event) => {
+            // Build the deserialized (camelCase) representation of the event data
+            const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
             if (discriminantField != null) {
-                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
-                return code`${literalOf(merged)}`;
+                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
+                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
             }
-            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+            return code`${getTextOfTsNode(deserializedData)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
     }

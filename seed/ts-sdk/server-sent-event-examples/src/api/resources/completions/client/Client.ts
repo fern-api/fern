@@ -126,7 +126,6 @@ export class CompletionsClient {
                     eventShape: {
                         type: "sse",
                         streamTerminator: "[DONE]",
-                        eventDiscriminator: "event",
                     },
                 }),
                 rawResponse: _response.rawResponse,
@@ -150,5 +149,76 @@ export class CompletionsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream-events");
+    }
+
+    public streamEventsContextProtocol(
+        request: SeedServerSentEvents.StreamEventsContextProtocolRequest,
+        requestOptions?: CompletionsClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamEventContextProtocol>> {
+        return core.HttpResponsePromise.fromPromise(this.__streamEventsContextProtocol(request, requestOptions));
+    }
+
+    private async __streamEventsContextProtocol(
+        request: SeedServerSentEvents.StreamEventsContextProtocolRequest,
+        requestOptions?: CompletionsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamEventContextProtocol>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream-events-context-protocol",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            responseType: "sse",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                        streamTerminator: "[DONE]",
+                        eventDiscriminator: "event",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new SeedServerSentEvents.BadRequestError(
+                        _response.error.body as string,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.SeedServerSentEventsError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream-events-context-protocol",
+        );
     }
 }

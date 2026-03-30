@@ -15,6 +15,7 @@ async fn main() {
             &ListItemsQueryRequest {
                 cursor: Some("cursor".to_string()),
                 limit: Some(1),
+                ..Default::default()
             },
             None,
         )

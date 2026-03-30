@@ -23,6 +23,7 @@ async fn test_endpoints_union_get_and_return_union_with_wiremock() {
                 data: Dog {
                     name: "name".to_string(),
                     likes_to_woof: true,
+                    ..Default::default()
                 },
             },
             None,

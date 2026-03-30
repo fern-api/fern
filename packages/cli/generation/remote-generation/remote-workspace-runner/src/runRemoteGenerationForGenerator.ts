@@ -39,8 +39,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -56,8 +58,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -72,7 +76,13 @@ export async function runRemoteGenerationForGenerator({
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
             { substituteAsEmpty: isPreview }
         );
 
@@ -257,6 +267,7 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview,
         fernignorePath,
+        skipFernignore,
         retryRateLimited
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);

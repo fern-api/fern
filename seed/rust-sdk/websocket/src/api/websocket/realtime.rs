@@ -1,7 +1,7 @@
-use crate::prelude::*;
 use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions};
+use tokio::sync::{mpsc};
+use crate::prelude::{*};
 use serde::{Deserialize, Serialize};
-use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -72,10 +72,7 @@ impl RealtimeClient {
         loop {
             match self.incoming_rx.recv().await {
                 Some(Ok(WebSocketMessage::Text(raw))) => {
-                    return Some(
-                        serde_json::from_str::<RealtimeServerMessage>(&raw)
-                            .map_err(ApiError::Serialization),
-                    );
+                    return Some(serde_json::from_str::<RealtimeServerMessage>(&raw).map_err(ApiError::Serialization));
                 }
                 Some(Ok(WebSocketMessage::Binary(_))) => {
                     continue;

@@ -46,6 +46,7 @@ function createDefaultInit(overrides?: Partial<GeneratedRequestWrapperImpl.Init>
         formDataSupport: "Node18",
         flattenRequestParameters: false,
         parameterNaming: "default",
+        resolveQueryParameterNameConflicts: false,
         ...overrides
     };
 }

@@ -14,6 +14,7 @@ async fn main() {
             &User {
                 name: "name".to_string(),
                 tags: vec!["tags".to_string(), "tags".to_string()],
+                ..Default::default()
             },
             None,
         )

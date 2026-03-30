@@ -4,6 +4,7 @@ package organizations
 
 import (
 	context "context"
+
 	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"

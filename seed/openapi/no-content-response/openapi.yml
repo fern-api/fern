@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: no-content-response
+  version: ''
+paths:
+  /contacts:
+    post:
+      description: >-
+        Creates a new contact. Returns 200 with the contact or 204 with no
+        content.
+      operationId: contacts_create
+      tags:
+        - Contacts
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+                nullable: true
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Create Contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: name
+                email:
+                  type: string
+                  nullable: true
+              required:
+                - name
+            examples:
+              Example1:
+                value:
+                  name: name
+  /contacts/{id}:
+    get:
+      description: Gets a contact by ID. Returns 200 with the contact.
+      operationId: contacts_get
+      tags:
+        - Contacts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: id
+          examples:
+            Example1:
+              value: id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Get Contact
+components:
+  schemas:
+    Contact:
+      title: Contact
+      type: object
+      properties:
+        id:
+          type: string
+          example: id
+        name:
+          type: string
+          example: name
+        email:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+  securitySchemes: {}

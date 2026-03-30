@@ -74,11 +74,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PostSubmitResponse
+     * @return ?PostSubmitResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function submitFormData(PostSubmitRequest $request, ?array $options = null): PostSubmitResponse
+    public function submitFormData(PostSubmitRequest $request, ?array $options = null): ?PostSubmitResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -94,6 +94,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return PostSubmitResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -118,11 +121,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(TokenRequest $request, ?array $options = null): TokenResponse
+    public function getToken(TokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -138,6 +141,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {

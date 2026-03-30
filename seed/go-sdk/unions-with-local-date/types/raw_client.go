@@ -4,11 +4,12 @@ package types
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/unions-with-local-date/fern"
 	core "github.com/unions-with-local-date/fern/core"
 	internal "github.com/unions-with-local-date/fern/internal"
 	option "github.com/unions-with-local-date/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

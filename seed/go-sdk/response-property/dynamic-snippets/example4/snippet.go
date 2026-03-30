@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/response-property/fern/client"
     option "github.com/response-property/fern/option"
-    context "context"
 )
 
 func do() {
@@ -13,7 +14,7 @@ func do() {
         ),
     )
     request := "string"
-    client.Service.GetMovie(
+    client.Service.GetOptionalMovie(
         context.TODO(),
         request,
     )

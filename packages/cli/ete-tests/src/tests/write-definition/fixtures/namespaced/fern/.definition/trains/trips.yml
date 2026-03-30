@@ -3,11 +3,17 @@ imports:
 types:
   GetTripsResponse:
     properties:
-      data: optional<list<trainsRoot.Trip>>
-      links: optional<GetTripsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Trip>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetTripsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination

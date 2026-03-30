@@ -1,0 +1,430 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:BulkUpdateTasksResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "BulkUpdateTasksResponse",
+                    "camelCase": {
+                        "unsafeName": "bulkUpdateTasksResponse",
+                        "safeName": "bulkUpdateTasksResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bulk_update_tasks_response",
+                        "safeName": "bulk_update_tasks_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BULK_UPDATE_TASKS_RESPONSE",
+                        "safeName": "BULK_UPDATE_TASKS_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BulkUpdateTasksResponse",
+                        "safeName": "BulkUpdateTasksResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "updated_count",
+                            "camelCase": {
+                                "unsafeName": "updatedCount",
+                                "safeName": "updatedCount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "updated_count",
+                                "safeName": "updated_count"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPDATED_COUNT",
+                                "safeName": "UPDATED_COUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UpdatedCount",
+                                "safeName": "UpdatedCount"
+                            }
+                        },
+                        "wireValue": "updated_count"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.bulkUpdateTasks": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "bulkUpdateTasks",
+                    "camelCase": {
+                        "unsafeName": "bulkUpdateTasks",
+                        "safeName": "bulkUpdateTasks"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bulk_update_tasks",
+                        "safeName": "bulk_update_tasks"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BULK_UPDATE_TASKS",
+                        "safeName": "BULK_UPDATE_TASKS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BulkUpdateTasks",
+                        "safeName": "BulkUpdateTasks"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/task/"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "BulkUpdateTasksRequest",
+                        "camelCase": {
+                            "unsafeName": "bulkUpdateTasksRequest",
+                            "safeName": "bulkUpdateTasksRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bulk_update_tasks_request",
+                            "safeName": "bulk_update_tasks_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BULK_UPDATE_TASKS_REQUEST",
+                            "safeName": "BULK_UPDATE_TASKS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BulkUpdateTasksRequest",
+                            "safeName": "BulkUpdateTasksRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "filter_assigned_to",
+                                "camelCase": {
+                                    "unsafeName": "filterAssignedTo",
+                                    "safeName": "filterAssignedTo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "filter_assigned_to",
+                                    "safeName": "filter_assigned_to"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILTER_ASSIGNED_TO",
+                                    "safeName": "FILTER_ASSIGNED_TO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FilterAssignedTo",
+                                    "safeName": "FilterAssignedTo"
+                                }
+                            },
+                            "wireValue": "assigned_to"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "filter_is_complete",
+                                "camelCase": {
+                                    "unsafeName": "filterIsComplete",
+                                    "safeName": "filterIsComplete"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "filter_is_complete",
+                                    "safeName": "filter_is_complete"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILTER_IS_COMPLETE",
+                                    "safeName": "FILTER_IS_COMPLETE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FilterIsComplete",
+                                    "safeName": "FilterIsComplete"
+                                }
+                            },
+                            "wireValue": "is_complete"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "filter_date",
+                                "camelCase": {
+                                    "unsafeName": "filterDate",
+                                    "safeName": "filterDate"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "filter_date",
+                                    "safeName": "filter_date"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILTER_DATE",
+                                    "safeName": "FILTER_DATE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FilterDate",
+                                    "safeName": "FilterDate"
+                                }
+                            },
+                            "wireValue": "date"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "_fields",
+                                "camelCase": {
+                                    "unsafeName": "fields",
+                                    "safeName": "fields"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "fields",
+                                    "safeName": "fields"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FIELDS",
+                                    "safeName": "FIELDS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Fields",
+                                    "safeName": "Fields"
+                                }
+                            },
+                            "wireValue": "_fields"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "bulkUpdateTasksRequestAssignedTo",
+                                    "camelCase": {
+                                        "unsafeName": "bulkUpdateTasksRequestAssignedTo",
+                                        "safeName": "bulkUpdateTasksRequestAssignedTo"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bulk_update_tasks_request_assigned_to",
+                                        "safeName": "bulk_update_tasks_request_assigned_to"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BULK_UPDATE_TASKS_REQUEST_ASSIGNED_TO",
+                                        "safeName": "BULK_UPDATE_TASKS_REQUEST_ASSIGNED_TO"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BulkUpdateTasksRequestAssignedTo",
+                                        "safeName": "BulkUpdateTasksRequestAssignedTo"
+                                    }
+                                },
+                                "wireValue": "assigned_to"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "bulkUpdateTasksRequestDate",
+                                    "camelCase": {
+                                        "unsafeName": "bulkUpdateTasksRequestDate",
+                                        "safeName": "bulkUpdateTasksRequestDate"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bulk_update_tasks_request_date",
+                                        "safeName": "bulk_update_tasks_request_date"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BULK_UPDATE_TASKS_REQUEST_DATE",
+                                        "safeName": "BULK_UPDATE_TASKS_REQUEST_DATE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BulkUpdateTasksRequestDate",
+                                        "safeName": "BulkUpdateTasksRequestDate"
+                                    }
+                                },
+                                "wireValue": "date"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "bulkUpdateTasksRequestIsComplete",
+                                    "camelCase": {
+                                        "unsafeName": "bulkUpdateTasksRequestIsComplete",
+                                        "safeName": "bulkUpdateTasksRequestIsComplete"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bulk_update_tasks_request_is_complete",
+                                        "safeName": "bulk_update_tasks_request_is_complete"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BULK_UPDATE_TASKS_REQUEST_IS_COMPLETE",
+                                        "safeName": "BULK_UPDATE_TASKS_REQUEST_IS_COMPLETE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BulkUpdateTasksRequestIsComplete",
+                                        "safeName": "BulkUpdateTasksRequestIsComplete"
+                                    }
+                                },
+                                "wireValue": "is_complete"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "BOOLEAN"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "text",
+                                    "camelCase": {
+                                        "unsafeName": "text",
+                                        "safeName": "text"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "text",
+                                        "safeName": "text"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TEXT",
+                                        "safeName": "TEXT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Text",
+                                        "safeName": "Text"
+                                    }
+                                },
+                                "wireValue": "text"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

@@ -4,11 +4,12 @@ package bigunion
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/unions/fern"
 	core "github.com/unions/fern/core"
 	internal "github.com/unions/fern/internal"
 	option "github.com/unions/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

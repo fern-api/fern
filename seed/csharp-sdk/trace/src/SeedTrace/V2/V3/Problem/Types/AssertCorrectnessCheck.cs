@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -64,7 +64,9 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.DeepEqualityCorrectnessCheck AsDeepEquality() =>
         IsDeepEquality
             ? (SeedTrace.V2.V3.DeepEqualityCorrectnessCheck)Value!
-            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'deepEquality'");
+            : throw new global::System.Exception(
+                "AssertCorrectnessCheck.Type is not 'deepEquality'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +75,7 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult)Value!
-            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'custom'");
+            : throw new global::System.Exception("AssertCorrectnessCheck.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck, T> onDeepEquality,
@@ -149,12 +151,12 @@ public record AssertCorrectnessCheck
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<AssertCorrectnessCheck>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(AssertCorrectnessCheck).IsAssignableFrom(typeToConvert);
 
         public override AssertCorrectnessCheck Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -225,7 +227,7 @@ public record AssertCorrectnessCheck
 
         public override AssertCorrectnessCheck ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

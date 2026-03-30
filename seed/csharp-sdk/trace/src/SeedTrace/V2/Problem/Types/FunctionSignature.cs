@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2;
@@ -78,7 +78,7 @@ public record FunctionSignature
     public SeedTrace.V2.VoidFunctionSignature AsVoid() =>
         IsVoid
             ? (SeedTrace.V2.VoidFunctionSignature)Value!
-            : throw new System.Exception("FunctionSignature.Type is not 'void'");
+            : throw new global::System.Exception("FunctionSignature.Type is not 'void'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FunctionSignature
     public SeedTrace.V2.NonVoidFunctionSignature AsNonVoid() =>
         IsNonVoid
             ? (SeedTrace.V2.NonVoidFunctionSignature)Value!
-            : throw new System.Exception("FunctionSignature.Type is not 'nonVoid'");
+            : throw new global::System.Exception("FunctionSignature.Type is not 'nonVoid'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FunctionSignature
     public SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
         IsVoidThatTakesActualResult
             ? (SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "FunctionSignature.Type is not 'voidThatTakesActualResult'"
             );
 
@@ -203,12 +203,12 @@ public record FunctionSignature
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FunctionSignature>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FunctionSignature).IsAssignableFrom(typeToConvert);
 
         public override FunctionSignature Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -289,7 +289,7 @@ public record FunctionSignature
 
         public override FunctionSignature ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

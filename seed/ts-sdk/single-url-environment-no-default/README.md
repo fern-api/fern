@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -43,6 +44,18 @@ import { SeedSingleUrlEnvironmentNoDefaultClient, SeedSingleUrlEnvironmentNoDefa
 
 const client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: "YOUR_TOKEN" });
 await client.dummy.getDummy();
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { SeedSingleUrlEnvironmentNoDefaultClient, SeedSingleUrlEnvironmentNoDefaultEnvironment } from "@fern/single-url-environment-no-default";
+
+const client = new SeedSingleUrlEnvironmentNoDefaultClient({
+    environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
+});
 ```
 
 ## Exception Handling

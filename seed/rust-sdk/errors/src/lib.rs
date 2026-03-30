@@ -18,6 +18,7 @@
 //!         .foo_without_endpoint_error(
 //!             &FooRequest {
 //!                 bar: "bar".to_string(),
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -45,4 +46,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

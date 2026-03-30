@@ -5,14 +5,13 @@ package com.seed.nullableOptional.resources.nullableoptional.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullableOptional.core.Nullable;
-import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import com.seed.nullableOptional.core.OptionalNullable;
 import java.util.HashMap;
@@ -46,33 +45,26 @@ public final class ListUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("limit")
+    @JsonIgnore
     public Optional<Integer> getLimit() {
         return limit;
     }
 
-    @JsonProperty("offset")
+    @JsonIgnore
     public Optional<Integer> getOffset() {
         return offset;
     }
 
-    @JsonProperty("includeDeleted")
+    @JsonIgnore
     public Optional<Boolean> getIncludeDeleted() {
         return includeDeleted;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("sortBy")
+    @JsonIgnore
     public OptionalNullable<String> getSortBy() {
         if (sortBy == null) {
             return OptionalNullable.absent();
         }
-        return sortBy;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("sortBy")
-    private OptionalNullable<String> _getSortBy() {
         return sortBy;
     }
 

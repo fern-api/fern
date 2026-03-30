@@ -5,6 +5,7 @@ package basicauthenvironmentvariables
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/basic-auth-environment-variables/fern/internal"
 )
 

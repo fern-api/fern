@@ -12,6 +12,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
     extractErrorMessage,
@@ -67,12 +68,14 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
 import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/validateMdx.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
@@ -144,6 +147,10 @@ async function runCli() {
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
         } else {
+            // TODO: This is intentionally broad for initial rollout.
+            // We likely capture more than intended; narrow reporting with
+            // explicit error classification once we collect real-world signal.
+            await cliContext.captureException(error);
             cliContext.failWithoutThrowing("Failed.", error);
         }
     }
@@ -239,6 +246,8 @@ async function tryRunCli(cliContext: CliContext) {
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
+
+    addSdkCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -743,6 +752,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("require-env-vars", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
+                .option("skip-fernignore", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -763,6 +784,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["skip-fernignore"] && argv.fernignore != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --skip-fernignore and --fernignore flags cannot be used together."
                 );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
@@ -808,10 +834,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
+                    skipFernignore: argv["skip-fernignore"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    requireEnvVars: argv["require-env-vars"]
                 });
             }
             if (argv.docs != null) {
@@ -865,10 +893,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
+                skipFernignore: argv["skip-fernignore"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                requireEnvVars: argv["require-env-vars"]
             });
         }
     );
@@ -1176,13 +1206,15 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("broken-links", {
                     boolean: true,
                     description: "Log a warning if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: warn` instead."
                 })
                 .option("strict-broken-links", {
                     boolean: true,
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: error` instead."
                 })
                 .option("local", {
                     boolean: true,
@@ -1661,6 +1693,7 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     // This command is in beta and not yet ready for general use
     cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
+        addDocsMdCheckCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1896,6 +1929,49 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
+function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "check",
+        "Validate MDX syntax in your docs",
+        () => {
+            // No additional options for this command
+        },
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md check"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            if (project.docsWorkspaces == null) {
+                cliContext.failAndThrow("No docs workspace found");
+            }
+
+            const docsWorkspace = project.docsWorkspaces;
+            let hasErrors = false;
+            await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+                const { errors, totalFiles } = await validateMdxFiles({
+                    workspace: docsWorkspace,
+                    context
+                });
+
+                logMdxValidationResults({ errors, totalFiles, context });
+
+                if (errors.length > 0) {
+                    hasErrors = true;
+                }
+            });
+
+            if (hasErrors) {
+                cliContext.failAndThrow("MDX validation failed");
+            }
+        }
+    );
+}
+
 function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "jsonschema <path-to-output>",
@@ -2070,6 +2146,53 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 overridesPath: AbsoluteFilePath.of(overridesPath),
                 outputPath: AbsoluteFilePath.of(outputPath),
                 cliContext
+            });
+        }
+    );
+}
+
+function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("sdk", false, (yargs) => {
+        addSdkPreviewCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "The generator group to preview"
+                })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "Only run the command on the provided API"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk preview"
+            });
+            const generatorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            await sdkPreview({
+                cliContext,
+                groupName: argv.group,
+                generatorFilter,
+                apiName: argv.api,
+                json: argv.json
             });
         }
     );
@@ -2268,7 +2391,48 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
                 if (argv.dryRun) {
                     cliContext.logger.info("\nDry run complete. No changes made.");
+                    return;
                 }
+
+                if (result.lockfileContent == null) {
+                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.");
+                }
+
+                // Send lockfile to Fiddle for server-side PR creation
+                const fernToken = await cliContext.runTask((context) => askToLogin(context));
+
+                const { owner, repo } = parseOwnerRepo(githubRepo);
+                const fiddleOrigin = getFiddleOrigin();
+
+                const response = await fetch(`${fiddleOrigin}/api/remote-gen/replay/init`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${fernToken.value}`
+                    },
+                    body: JSON.stringify({
+                        owner,
+                        repo,
+                        lockfileContents: result.lockfileContent,
+                        fernignoreEntries: result.fernignoreEntries,
+                        prBody: result.prBody
+                    })
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return cliContext.failAndThrow(
+                            "The Fern GitHub App is not installed on this repository. " +
+                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation."
+                        );
+                    }
+                    const body = await response.text();
+                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`);
+                }
+
+                const data = (await response.json()) as { prUrl: string };
+                cliContext.logger.info(`\nPR created: ${data.prUrl}`);
+                cliContext.logger.info("Merge the PR to enable Replay for this repository.");
             } catch (error) {
                 cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
@@ -2346,4 +2510,18 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             }
         }
     );
+}
+
+function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
+    const cleaned = githubRepo
+        .replace(/^https?:\/\//, "")
+        .replace(/\.git$/, "")
+        .replace(/^github\.com\//, "");
+    const parts = cleaned.split("/");
+    const owner = parts[parts.length - 2];
+    const repo = parts[parts.length - 1];
+    if (owner == null || repo == null) {
+        throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
+    }
+    return { owner, repo };
 }

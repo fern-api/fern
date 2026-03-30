@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -64,7 +64,7 @@ public record TestCaseFunction
     public SeedTrace.V2.V3.TestCaseWithActualResultImplementation AsWithActualResult() =>
         IsWithActualResult
             ? (SeedTrace.V2.V3.TestCaseWithActualResultImplementation)Value!
-            : throw new System.Exception("TestCaseFunction.Type is not 'withActualResult'");
+            : throw new global::System.Exception("TestCaseFunction.Type is not 'withActualResult'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseFunction
     public SeedTrace.V2.V3.VoidFunctionDefinition AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.V3.VoidFunctionDefinition)Value!
-            : throw new System.Exception("TestCaseFunction.Type is not 'custom'");
+            : throw new global::System.Exception("TestCaseFunction.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.TestCaseWithActualResultImplementation, T> onWithActualResult,
@@ -149,12 +149,12 @@ public record TestCaseFunction
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseFunction>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseFunction).IsAssignableFrom(typeToConvert);
 
         public override TestCaseFunction Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -225,7 +225,7 @@ public record TestCaseFunction
 
         public override TestCaseFunction ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,5 +1,5 @@
 use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions};
-use tokio::sync::mpsc;
+use tokio::sync::{mpsc};
 
 pub struct EmptyRealtimeClient {
     ws: WebSocketClient,
@@ -38,9 +38,7 @@ impl EmptyRealtimeConnector {
     }
 
     pub async fn connect(&self) -> Result<EmptyRealtimeClient, ApiError> {
-        let auth_header = self
-            .token
-            .as_ref()
+        let auth_header = self.token.as_ref()
             .map(|t| format!("Bearer {}", t))
             .unwrap_or_default();
         EmptyRealtimeClient::connect(&self.base_url, &auth_header).await

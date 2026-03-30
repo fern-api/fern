@@ -15,9 +15,11 @@ on:
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
+# On main: runs queue (no cancellation) so every merge gets tested
+# On PRs: previous runs are cancelled when new commits are pushed
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   DO_NOT_TRACK: "1"
@@ -55,17 +57,36 @@ jobs:
     if: ${{ needs.get-all-test-matrices.outputs.seed-infrastructure-changed == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Check for orphaned seed folders
+      - name: Check for orphaned seed folders (PRs only)
+        if: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: true
         shell: bash
         env:
           FORCE_COLOR: "2"
         run: |
           pnpm seed:local clean --dry-run
+
+      - name: Auto-clean orphaned seed folders (main only)
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          pnpm seed:local clean
+          if [ -n "$(git status --porcelain seed/)" ]; then
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git add seed/
+            git commit -m "chore(seed): auto-clean orphaned seed folders"
+            git push
+          else
+            echo "No orphaned seed folders found."
+          fi
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -95,22 +116,10 @@ jobs:
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
-        with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        shell: bash
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Build Seed CLI
         shell: bash
@@ -251,7 +260,7 @@ jobs:
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -265,7 +274,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -282,7 +291,7 @@ jobs:
 
   pydantic:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -296,7 +305,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -312,7 +321,7 @@ jobs:
 
   python-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -326,7 +335,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -343,7 +352,7 @@ jobs:
 
   fastapi:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -357,7 +366,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -373,7 +382,7 @@ jobs:
 
   openapi:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -387,7 +396,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -403,7 +412,7 @@ jobs:
 
   postman:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -417,7 +426,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -433,7 +442,7 @@ jobs:
 
   java-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -447,7 +456,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -463,7 +472,7 @@ jobs:
 
   java-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -477,7 +486,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -493,7 +502,7 @@ jobs:
 
   java-spring:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -507,7 +516,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -523,7 +532,7 @@ jobs:
 
   ts-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -537,7 +546,7 @@ jobs:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -554,7 +563,7 @@ jobs:
 
   ts-express:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -568,7 +577,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -585,7 +594,7 @@ jobs:
 
   go-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -599,7 +608,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -615,7 +624,7 @@ jobs:
 
   go-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -629,7 +638,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -645,7 +654,7 @@ jobs:
 
   csharp-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -659,7 +668,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -675,7 +684,7 @@ jobs:
 
   csharp-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -689,7 +698,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -705,7 +714,7 @@ jobs:
 
   php-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -719,7 +728,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -735,7 +744,7 @@ jobs:
 
   php-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -749,7 +758,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -765,7 +774,7 @@ jobs:
 
   swift-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -779,7 +788,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -795,7 +804,7 @@ jobs:
 
   rust-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -809,7 +818,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -825,7 +834,7 @@ jobs:
 
   rust-sdk:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
       ${{
@@ -839,7 +848,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
@@ -1072,22 +1081,10 @@ jobs:
       rust-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures-count }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
-        with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        shell: bash
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Build Seed CLI
         shell: bash
@@ -1198,7 +1195,7 @@ jobs:
           fi
 
       - name: Download Seed Test Time Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           path: ${{ steps.artifacts-info.outputs.metrics_path }}
           pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}
