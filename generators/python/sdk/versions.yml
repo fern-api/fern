@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.1.4
+  changelogEntry:
+    - summary: |
+        Simplify SSE code generation by replacing runtime type introspection with codegen-time
+        decisions. The generator now emits mode-specific parsing inline per endpoint based on
+        the IR's discriminatorContext, removing the generic parse_sse_obj runtime engine. Also
+        cleans up http_sse template files: removes dead connect_sse/aconnect_sse helpers,
+        unifies sync/async iteration to use iter_lines/aiter_lines, and removes manual charset
+        detection that duplicates httpx's built-in encoding support.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 5.1.3
   changelogEntry:
     - summary: |

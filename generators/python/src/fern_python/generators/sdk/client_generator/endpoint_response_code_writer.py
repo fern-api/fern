@@ -97,6 +97,22 @@ class EndpointResponseCodeWriter:
             ],
         )
 
+    def _is_protocol_context_union(self, payload: ir_types.TypeReference) -> bool:
+        """Check if the SSE payload type is a discriminated union with protocol context."""
+        payload_union = payload.get_as_union()
+        if payload_union.type != "named":
+            return False
+        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
+            payload_union.type_id
+        )
+        shape_union = type_declaration.shape.get_as_union()
+        if shape_union.type != "union":
+            return False
+        return (
+            shape_union.discriminator_context is not None
+            and shape_union.discriminator_context == ir_types.UnionDiscriminatorContext.PROTOCOL
+        )
+
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
         iter_func_body = []
 
@@ -107,6 +123,40 @@ class EndpointResponseCodeWriter:
 
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
+            is_protocol = self._is_protocol_context_union(stream_response_union.payload)
+
+            # Build the yield expression based on Case A/B vs Case C
+            if is_protocol:
+                # Case C: protocol context — merge SSE event field with parsed data
+                try_body: list[AST.AstNode] = [
+                    AST.VariableDeclaration(
+                        name="_data",
+                        initializer=AST.Expression(
+                            Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                        ),
+                    ),
+                    AST.YieldStatement(
+                        self._context.core_utilities.get_construct(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(
+                                f'{{"event": {EndpointResponseCodeWriter.SSE_VARIABLE}.event, **_data}}'
+                            ),
+                        ),
+                    ),
+                ]
+            else:
+                # Case A/B: plain type or data-context union — just parse data as JSON
+                try_body = [
+                    AST.YieldStatement(
+                        self._context.core_utilities.get_construct(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(
+                                Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                            ),
+                        ),
+                    ),
+                ]
+
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(
@@ -151,80 +201,47 @@ class EndpointResponseCodeWriter:
                                 else_code=None,
                             ),
                             AST.TryStatement(
-                                body=[
-                                    AST.YieldStatement(
-                                        self._context.core_utilities.get_construct_sse(
-                                            self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
-                                        ),
-                                    ),
-                                ],
+                                body=try_body,
                                 handlers=[
                                     AST.ExceptHandler(
                                         body=[
                                             AST.Expression(
                                                 AST.FunctionInvocation(
                                                     function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="warning",
-                                                        ),
+                                                        qualified_name_excluding_import=("logger", "warning"),
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f'f"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
+                                                            f'"Skipping SSE event with unparseable JSON data: %.200s"'
+                                                        ),
+                                                        AST.Expression(
+                                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"
+                                                        ),
                                                     ],
                                                 )
                                             ),
                                         ],
-                                        exception_type="JSONDecodeError",
-                                        name="e",
+                                        exception_type="json.JSONDecodeError",
+                                        name=None,
                                     ),
                                     AST.ExceptHandler(
                                         body=[
                                             AST.Expression(
                                                 AST.FunctionInvocation(
                                                     function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="warning",
-                                                        ),
+                                                        qualified_name_excluding_import=("logger", "warning"),
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f'f"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
-                                                    ],
-                                                )
-                                            ),
-                                        ],
-                                        exception_type="(TypeError, ValueError, KeyError, AttributeError)",
-                                        name="e",
-                                    ),
-                                    AST.ExceptHandler(
-                                        body=[
-                                            AST.Expression(
-                                                AST.FunctionInvocation(
-                                                    function_definition=AST.Reference(
-                                                        qualified_name_excluding_import=(),
-                                                        import_=AST.ReferenceImport(
-                                                            module=AST.Module.built_in(("logging",)),
-                                                            named_import="error",
+                                                            '"Skipping invalid SSE event: %s"'
                                                         ),
-                                                    ),
-                                                    args=[
-                                                        AST.Expression(
-                                                            f'f"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
-                                                        )
+                                                        AST.Expression("exc"),
                                                     ],
                                                 )
                                             ),
                                         ],
                                         exception_type="Exception",
-                                        name="e",
+                                        name="exc",
                                     ),
                                 ],
                             ),
