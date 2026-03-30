@@ -449,8 +449,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     // Add Basic Auth header if applicable
                     if (hasBasicAuth) {
-                        const basicScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
-                        if (basicScheme != null && basicScheme.type === "basic") {
+                        const basicSchemes = this.context.ir.auth.schemes.filter(
+                            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                        );
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        for (let i = 0; i < basicSchemes.length; i++) {
+                            const basicScheme = basicSchemes[i];
+                            if (basicScheme == null) {
+                                continue;
+                            }
                             const usernameName = basicScheme.username.camelCase.safeName;
                             const passwordName = basicScheme.password.camelCase.safeName;
                             const usernameAccess = unified
@@ -459,17 +466,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
-                            const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
-                            if (isAuthOptional) {
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                const controlFlowKeyword = i === 0 ? "if" : "else if";
                                 innerWriter.controlFlow(
-                                    "if",
+                                    controlFlowKeyword,
                                     this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
                                 );
                             }
                             innerWriter.writeTextStatement(
                                 `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
                             );
-                            if (isAuthOptional) {
+                            if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
                             }
                         }
