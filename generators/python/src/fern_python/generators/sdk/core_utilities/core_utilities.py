@@ -47,6 +47,7 @@ class CoreUtilities:
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
         self._datetime_milliseconds = custom_config.datetime_milliseconds
+        self._default_max_retries = custom_config.default_max_retries
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -155,6 +156,13 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
+        http_client_replacements = (
+            {
+                'request_options.get("max_retries", 2) if request_options is not None else 2': f'request_options.get("max_retries", {self._default_max_retries}) if request_options is not None else {self._default_max_retries}',
+            }
+            if self._default_max_retries != 2
+            else None
+        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -163,6 +171,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
+            string_replacements=http_client_replacements,
         )
 
         self._copy_file_to_project(
