@@ -6,7 +6,7 @@
         file when no auth is configured in `generators.yml`. This allows auth
         configuration to live exclusively in the overrides file alongside other
         OpenAPI overrides, without needing to duplicate it in `generators.yml`.
-      type: feat
+      type: chore
   createdAt: "2026-03-31"
   irVersion: 65
 
