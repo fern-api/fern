@@ -360,15 +360,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             return { headers: {} };
         }
 
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
         return {
-            headers: {
-                Authorization: ${getTextOfTsNode(
-                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                        ts.factory.createIdentifier(usernameVar),
-                        ts.factory.createIdentifier(passwordVar)
-                    )
-                )},
-            },
+            headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
             }
@@ -416,15 +416,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
         return {
-            headers: {
-                Authorization: ${getTextOfTsNode(
-                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                        ts.factory.createIdentifier(usernameVar),
-                        ts.factory.createIdentifier(passwordVar)
-                    )
-                )},
-            },
+            headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
             }

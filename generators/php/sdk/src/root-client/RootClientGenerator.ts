@@ -356,8 +356,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         }
                         const usernameName = this.context.getParameterName(basicAuthScheme.username);
                         const passwordName = this.context.getParameterName(basicAuthScheme.password);
-                        const eitherOmitted =
-                            basicAuthScheme.usernameOmit === true || basicAuthScheme.passwordOmit === true;
+                        // usernameOmit/passwordOmit may exist in newer IR versions
+                        const scheme = basicAuthScheme as unknown as Record<string, unknown>;
+                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             const controlFlowKeyword = i === 0 ? "if" : "else if";
                             const condition = eitherOmitted

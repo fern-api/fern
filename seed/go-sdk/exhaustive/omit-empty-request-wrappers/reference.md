@@ -2329,6 +2329,64 @@ client.Endpoints.Params.UploadWithPath(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.GetWithPathAndErrors(Param) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.GetWithPath(
+        context.TODO(),
+        "param",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.Endpoints.Primitive.GetAndReturnString(request) -> string</code></summary>
 <dl>

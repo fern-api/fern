@@ -122,8 +122,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         }
                         const usernameName = basicAuthScheme.username.snakeCase.safeName;
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
-                        const eitherOmitted =
-                            basicAuthScheme.usernameOmit === true || basicAuthScheme.passwordOmit === true;
+                        // usernameOmit/passwordOmit may exist in newer IR versions
+                        const scheme = basicAuthScheme as unknown as Record<string, unknown>;
+                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
                         const conditionOp = eitherOmitted ? "||" : "&&";
                         const usernameExpr = eitherOmitted ? `${usernameName} || ""` : usernameName;
                         const passwordExpr = eitherOmitted ? `${passwordName} || ""` : passwordName;

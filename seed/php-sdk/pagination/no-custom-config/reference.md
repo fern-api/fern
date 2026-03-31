@@ -1240,7 +1240,7 @@ paginated endpoint.
 $client->users->listWithOffsetStepPagination(
     new ListUsersOffsetStepPaginationRequest([
         'page' => 1,
-        'limit' => 1,
+        'limit' => 3,
         'order' => Order::Asc->value,
     ]),
 );

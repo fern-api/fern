@@ -436,6 +436,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAndErrorsAsync(\"param\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/primitive/string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"

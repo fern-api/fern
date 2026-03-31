@@ -121,18 +121,20 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
-                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
-                .addStatement("String username = $N.get()", usernameSupplierField)
-                .addStatement("String password = $N.get()", passwordSupplierField);
+                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class));
 
         if (eitherOmitted) {
-            builder.beginControlFlow("if (username == null && password == null)")
+            builder.addStatement("String username = $N != null ? $N.get() : null", usernameSupplierField, usernameSupplierField)
+                    .addStatement("String password = $N != null ? $N.get() : null", passwordSupplierField, passwordSupplierField)
+                    .beginControlFlow("if (username == null && password == null)")
                     .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                     .endControlFlow()
                     .addStatement(
                             "String credentials = (username != null ? username : \"\") + \":\" + (password != null ? password : \"\")");
         } else {
-            builder.beginControlFlow("if (username == null || password == null)")
+            builder.addStatement("String username = $N.get()", usernameSupplierField)
+                    .addStatement("String password = $N.get()", passwordSupplierField)
+                    .beginControlFlow("if (username == null || password == null)")
                     .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                     .endControlFlow()
                     .addStatement("String credentials = username + \":\" + password");

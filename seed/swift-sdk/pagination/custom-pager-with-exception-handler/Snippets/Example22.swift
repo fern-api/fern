@@ -9,7 +9,7 @@ private func main() async throws {
 
     _ = try await client.users.listWithOffsetPaginationHasNextPage(
         page: 1,
-        limit: 1,
+        limit: 3,
         order: .asc
     )
 }
