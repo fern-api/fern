@@ -312,6 +312,49 @@ service:
           order:
             type: optional<Order>
       response: ListUsersPaginationResponse
+      examples:
+        - name: HasNextPage
+          query-parameters:
+            page: 1
+            limit: 3
+            order: asc
+          response:
+            body:
+              hasNextPage: true
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 3
+                total_page: 5
+              total_count: 15
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+        - name: NoNextPage
+          query-parameters:
+            page: 1
+            limit: 10
+            order: asc
+          response:
+            body:
+              hasNextPage: false
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 10
+                total_page: 1
+              total_count: 2
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
 
     listWithExtendedResults:
       pagination:

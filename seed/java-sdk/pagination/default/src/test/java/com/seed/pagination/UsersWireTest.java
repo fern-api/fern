@@ -325,11 +325,11 @@ public class UsersWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
+                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":2,\"starting_after\":\"next_cursor\"},\"per_page\":3,\"total_page\":5},\"total_count\":15,\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
         SyncPagingIterable<User> response = client.users()
                 .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
                         .page(1)
-                        .limit(1)
+                        .limit(3)
                         .order(Order.ASC)
                         .build());
         RecordedRequest request = server.takeRequest();

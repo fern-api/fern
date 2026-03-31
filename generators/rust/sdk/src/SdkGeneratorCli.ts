@@ -364,7 +364,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         if (hasWebSocket) {
             lines.push('#[cfg(feature = "websocket")]');
-            lines.push("pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};");
+            lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
         }
         lines.push("pub use utils::join_url;");
         lines.push("");
