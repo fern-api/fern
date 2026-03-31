@@ -10,6 +10,7 @@ import {
     ExperimentalConfig,
     Language,
     LibraryLanguage,
+    LlmsConfig,
     PlaygroundSettings,
     Target,
     ThemeConfig,
@@ -84,6 +85,8 @@ export interface ParsedDocsConfiguration {
     js: JavascriptConfig | undefined;
 
     aiChatConfig: AiChatConfig | undefined;
+
+    llmsConfig: LlmsConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 

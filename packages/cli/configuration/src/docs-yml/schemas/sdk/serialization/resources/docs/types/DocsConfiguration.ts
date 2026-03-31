@@ -19,6 +19,7 @@ import { FooterLinksConfig } from "./FooterLinksConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
 import { Language } from "./Language.js";
+import { LlmsConfig } from "./LlmsConfig.js";
 import { LayoutConfig } from "./LayoutConfig.js";
 import { LibraryConfiguration } from "./LibraryConfiguration.js";
 import { LibraryName } from "./LibraryName.js";
@@ -61,6 +62,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
+    llms: LlmsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     check: CheckConfig.optional(),
@@ -101,6 +103,7 @@ export declare namespace DocsConfiguration {
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;
+        llms?: LlmsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         check?: CheckConfig.Raw | null;

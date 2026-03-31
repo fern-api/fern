@@ -52,6 +52,8 @@ export interface DocsConfiguration {
     aiSearch?: FernDocsConfig.AiChatConfig;
     /** Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
     aiExamples?: FernDocsConfig.AiExamplesConfig;
+    /** Configuration for LLM-serving endpoints. Supports per-page directive injection via page-directive-prepend and page-directive-append. */
+    llms?: FernDocsConfig.LlmsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     check?: FernDocsConfig.CheckConfig;
