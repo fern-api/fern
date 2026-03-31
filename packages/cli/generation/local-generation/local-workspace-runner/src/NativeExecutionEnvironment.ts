@@ -32,11 +32,18 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         snippetPath,
         snippetTemplatePath,
         context,
-        inspect
+        inspect,
+        performanceLogger,
+        profileId
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(
             `Executing generator ${generatorName} natively with commands: ${this.commands.join(" && ")}`
         );
+
+        if (performanceLogger != null && profileId != null) {
+            performanceLogger.start(profileId, "exec");
+        }
+        const execStart = performance.now();
 
         for (const command of this.commands) {
             const processedCommand = command
@@ -91,6 +98,10 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
             if (result.failed) {
                 throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);
             }
+        }
+
+        if (performanceLogger != null && profileId != null) {
+            performanceLogger.end(profileId, "exec", performance.now() - execStart);
         }
 
         context.logger.info("Native generator execution completed successfully");

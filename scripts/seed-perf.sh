@@ -21,6 +21,7 @@ FIXTURES=()
 SAMPLE_COUNT=0
 OUTPUT_FOLDER=""
 SEQUENTIAL=0
+LOCAL=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -31,6 +32,7 @@ while [[ $# -gt 0 ]]; do
         --sample) SAMPLE_COUNT="$2"; shift 2 ;;
         --outputFolder) OUTPUT_FOLDER="$2"; shift 2 ;;
         --sequential) SEQUENTIAL=1; shift ;;
+        --local) LOCAL=1; shift ;;
         --fixture)
             shift
             while [[ $# -gt 0 && ! "$1" =~ ^-- ]]; do
@@ -74,21 +76,25 @@ PROFILE_LOG="$REPORT_DIR/profile.jsonl"
 STATS_LOG="$REPORT_DIR/stats.csv"
 SUMMARY="$REPORT_DIR/summary.txt"
 
-# Build fixture args for seed CLI
-FIXTURE_ARGS=""
+# Build extra args for seed CLI
+EXTRA_ARGS=""
 if [[ ${#FIXTURES[@]} -gt 0 ]]; then
     for f in "${FIXTURES[@]}"; do
-        FIXTURE_ARGS="$FIXTURE_ARGS --fixture $f"
+        EXTRA_ARGS="$EXTRA_ARGS --fixture $f"
     done
 fi
 if [[ -n "$OUTPUT_FOLDER" ]]; then
-    FIXTURE_ARGS="$FIXTURE_ARGS --outputFolder $OUTPUT_FOLDER"
+    EXTRA_ARGS="$EXTRA_ARGS --outputFolder $OUTPUT_FOLDER"
+fi
+if [[ "$LOCAL" -eq 1 ]]; then
+    EXTRA_ARGS="$EXTRA_ARGS --local"
 fi
 
 echo "==========================================="
 echo " Seed Performance Profiler"
 echo "==========================================="
 echo " Generator:       $GENERATOR"
+echo " Execution:       $([[ "$LOCAL" -eq 1 ]] && echo "local (native)" || echo "docker")"
 if [[ "$SEQUENTIAL" -eq 1 ]]; then
 echo " Mode:            sequential (one test case at a time)"
 else
@@ -116,12 +122,15 @@ fi
 echo "Total fixtures: $FIXTURE_COUNT"
 echo ""
 
-# Docker image name from seed.yml
-DOCKER_IMAGE=$(python3 -c "
+# Docker image name from seed.yml (only needed for docker mode)
+DOCKER_IMAGE=""
+if [[ "$LOCAL" -eq 0 ]]; then
+    DOCKER_IMAGE=$(python3 -c "
 import yaml
 with open('seed/$GENERATOR/seed.yml') as f:
     print(yaml.safe_load(f).get('test',{}).get('docker',{}).get('image','unknown'))
 " 2>/dev/null || echo "unknown")
+fi
 
 # --- Docker stats monitor (background) ---
 echo "timestamp,containers,total_mem_mib,avg_mem_mib,max_mem_mib,total_cpu_pct" > "$STATS_LOG"
@@ -184,19 +193,22 @@ import json, sys, time, subprocess, os
 profile_path = os.environ['PROFILE_LOG']
 stats_path = os.environ['STATS_LOG']
 fixture_count = os.environ['FIXTURE_COUNT']
+is_local = os.environ.get('LOCAL', '0') == '1'
 
 active = {}
 completed = 0
 last_pos = 0
 
-try:
-    docker_limit = subprocess.check_output(
-        ['docker', 'info', '--format', '{{.MemTotal}}'],
-        stderr=subprocess.DEVNULL, text=True
-    ).strip()
-    docker_limit = f'{int(docker_limit) / 1073741824:.0f}'
-except Exception:
-    docker_limit = '?'
+docker_limit = ''
+if not is_local:
+    try:
+        docker_limit = subprocess.check_output(
+            ['docker', 'info', '--format', '{{.MemTotal}}'],
+            stderr=subprocess.DEVNULL, text=True
+        ).strip()
+        docker_limit = f'{int(docker_limit) / 1073741824:.0f}'
+    except Exception:
+        docker_limit = '?'
 
 phase_order = ['workspace_load', 'lock_wait', 'ir_generation', 'ir_migration',
                'write_to_disk', 'copy_in', 'exec', 'copy_out', 'total']
@@ -228,19 +240,6 @@ while True:
             if phase == 'total':
                 completed += 1
 
-    mem_gib = '?'
-    containers = '?'
-    try:
-        with open(stats_path, 'r') as sf:
-            lines = sf.readlines()
-            if len(lines) > 1:
-                parts = lines[-1].strip().split(',')
-                if len(parts) > 2:
-                    containers = parts[1]
-                    mem_gib = f'{float(parts[2]) / 1024:.1f}'
-    except Exception:
-        pass
-
     in_flight = []
     total_in_flight = 0
     for p in phase_order:
@@ -254,10 +253,29 @@ while True:
             in_flight.append(f'{p}: {c}')
 
     summary = ', '.join(in_flight) if in_flight else 'idle'
-    sys.stderr.write(
-        f'\r  [done: {completed:3d}/{fixture_count}] containers: {containers} | '
-        f'mem: {mem_gib}/{docker_limit} GiB | in-flight: {total_in_flight} ({summary})          '
-    )
+
+    if is_local:
+        sys.stderr.write(
+            f'\r  [done: {completed:3d}/{fixture_count}] local | '
+            f'in-flight: {total_in_flight} ({summary})          '
+        )
+    else:
+        mem_gib = '?'
+        containers = '?'
+        try:
+            with open(stats_path, 'r') as sf:
+                lines = sf.readlines()
+                if len(lines) > 1:
+                    parts = lines[-1].strip().split(',')
+                    if len(parts) > 2:
+                        containers = parts[1]
+                        mem_gib = f'{float(parts[2]) / 1024:.1f}'
+        except Exception:
+            pass
+        sys.stderr.write(
+            f'\r  [done: {completed:3d}/{fixture_count}] containers: {containers} | '
+            f'mem: {mem_gib}/{docker_limit} GiB | in-flight: {total_in_flight} ({summary})          '
+        )
     sys.stderr.flush()
     time.sleep(0.5)
 "
@@ -269,10 +287,13 @@ echo ""
 
 START_TIME=$SECONDS
 
-export PROFILE_LOG STATS_LOG FIXTURE_COUNT
+export PROFILE_LOG STATS_LOG FIXTURE_COUNT LOCAL
 
-monitor_docker_stats &
-DOCKER_MONITOR_PID=$!
+DOCKER_MONITOR_PID=""
+if [[ "$LOCAL" -eq 0 ]]; then
+    monitor_docker_stats &
+    DOCKER_MONITOR_PID=$!
+fi
 
 monitor_profile &
 PROFILE_MONITOR_PID=$!
@@ -361,6 +382,7 @@ for f in d[0].get('fixtures', []):
             --log-level "$LOG_LEVEL" \
             --profile "$TC_PROFILE" \
             $SKIP_SCRIPTS \
+            $([[ "$LOCAL" -eq 1 ]] && echo "--local") \
             $TC_ARGS \
             >> "$SEED_LOG" 2>&1 &
         SEED_PID=$!
@@ -385,7 +407,7 @@ else
         --log-level "$LOG_LEVEL" \
         --profile "$PROFILE_LOG" \
         $SKIP_SCRIPTS \
-        $FIXTURE_ARGS \
+        $EXTRA_ARGS \
         > "$SEED_LOG" 2>&1 &
     SEED_PID=$!
     wait "$SEED_PID" || true
@@ -475,20 +497,29 @@ for fid, total_ms in sorted_fixtures:
     print(f'   {fid:50s} {fmt(total_ms):>8s} (exec: {fmt(exec_ms)})')
 " 2>/dev/null || echo "  (failed to parse profile data)")
 
-# Peak Docker stats from CSV
-PEAK_MEM=$(awk -F, 'NR>1 && $3+0 > max {max=$3+0} END {printf "%.1f", max/1024}' "$STATS_LOG" 2>/dev/null || echo "?")
-PEAK_CONTAINERS=$(awk -F, 'NR>1 && $2+0 > max {max=$2+0} END {print max+0}' "$STATS_LOG" 2>/dev/null || echo "?")
-AVG_MEM_PER=$(awk -F, 'NR>1 && $4+0 > 0 {sum+=$4; n++} END {printf "%.0f", (n>0 ? sum/n : 0)}' "$STATS_LOG" 2>/dev/null || echo "?")
-PEAK_CPU=$(awk -F, 'NR>1 && $6+0 > max {max=$6+0} END {printf "%.0f", max}' "$STATS_LOG" 2>/dev/null || echo "?")
-
 PASSED=$(grep -oE '[0-9]+/[0-9]+ test cases passed' "$SEED_LOG" 2>/dev/null || echo "unknown")
 UNEXPECTED=$(grep -c 'UNEXPECTED' "$SEED_LOG" 2>/dev/null || echo 0)
+
+# Build resource section based on mode
+if [[ "$LOCAL" -eq 1 ]]; then
+    RESOURCE_SECTION=" Execution:       local (native)"
+else
+    PEAK_MEM=$(awk -F, 'NR>1 && $3+0 > max {max=$3+0} END {printf "%.1f", max/1024}' "$STATS_LOG" 2>/dev/null || echo "?")
+    PEAK_CONTAINERS=$(awk -F, 'NR>1 && $2+0 > max {max=$2+0} END {print max+0}' "$STATS_LOG" 2>/dev/null || echo "?")
+    AVG_MEM_PER=$(awk -F, 'NR>1 && $4+0 > 0 {sum+=$4; n++} END {printf "%.0f", (n>0 ? sum/n : 0)}' "$STATS_LOG" 2>/dev/null || echo "?")
+    PEAK_CPU=$(awk -F, 'NR>1 && $6+0 > max {max=$6+0} END {printf "%.0f", max}' "$STATS_LOG" 2>/dev/null || echo "?")
+    RESOURCE_SECTION=" Docker Resources (peak):
+   Containers:      $PEAK_CONTAINERS
+   Memory:          ${PEAK_MEM} GiB (avg ${AVG_MEM_PER}M per container)
+   CPU:             ${PEAK_CPU}%"
+fi
 
 cat > "$SUMMARY" <<EOF
 ==========================================
  Seed Performance Report
 ==========================================
  Generator:       $GENERATOR
+ Execution:       $([[ "$LOCAL" -eq 1 ]] && echo "local (native)" || echo "docker")
  Parallel:        $PARALLEL
  Skip scripts:    $([[ -n "$SKIP_SCRIPTS" ]] && echo yes || echo no)
  Total fixtures:  $FIXTURE_COUNT
@@ -500,10 +531,7 @@ cat > "$SUMMARY" <<EOF
 ------------------------------------------
 $PHASE_SUMMARY
 ------------------------------------------
- Docker Resources (peak):
-   Containers:      $PEAK_CONTAINERS
-   Memory:          ${PEAK_MEM} GiB (avg ${AVG_MEM_PER}M per container)
-   CPU:             ${PEAK_CPU}%
+$RESOURCE_SECTION
 ==========================================
  Full log:    $SEED_LOG
  Profile:     $PROFILE_LOG
