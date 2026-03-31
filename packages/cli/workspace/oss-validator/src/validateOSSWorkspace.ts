@@ -33,7 +33,9 @@ async function preloadOpenAPIDocuments({
         }
 
         const contents = (await readFile(spec.absoluteFilepath)).toString();
-        if (!contents.includes("openapi") && !contents.includes("swagger")) {
+        const isOpenAPI = contents.includes("openapi") || contents.includes("swagger");
+        const isAsyncAPI = contents.includes("asyncapi:");
+        if (!isOpenAPI && !isAsyncAPI) {
             continue;
         }
 
