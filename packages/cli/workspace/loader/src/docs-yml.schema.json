@@ -380,16 +380,6 @@
           "type": "null"
         }
       ]
-    },
-    "llm": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/docs.LlmConfig"
-        },
-        {
-          "type": "null"
-        }
-      ]
     }
   },
   "required": [
@@ -4104,22 +4094,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.PageActionOptions"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "docs.LlmConfig": {
-      "type": "object",
-      "properties": {
-        "use-subtitle": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
