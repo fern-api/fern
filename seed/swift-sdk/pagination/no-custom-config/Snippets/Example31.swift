@@ -1,13 +1,13 @@
 import Foundation
-import Exhaustive
+import Pagination
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = PaginationClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.urls.noEndingSlash()
+    _ = try await client.users.listWithOptionalData(page: 1)
 }
 
 try await main()
