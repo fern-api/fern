@@ -5,9 +5,13 @@ pub use crate::prelude::*;
 pub struct UsersListWithDoubleOffsetPaginationQueryRequest {
     /// Defaults to first page
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub page: Option<f64>,
     /// Defaults to per page
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub per_page: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub order: Option<Order2>,

@@ -188,10 +188,7 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
-    /// Execute a request with a raw bytes body (application/octet-stream)
-    ///
-    /// This method sends the body as raw bytes with Content-Type: application/octet-stream,
-    /// instead of JSON-encoding it. Used for endpoints that accept binary data like file uploads.
+    /// Execute a request with a raw bytes body (application/octet-stream).
     pub async fn execute_bytes_request<T>(
         &self,
         method: Method,
@@ -206,33 +203,27 @@ impl HttpClient {
         let url = join_url(&self.config.base_url, path);
         let mut request = self.client.request(method, &url);
 
-        // Apply query parameters if provided
         if let Some(params) = query_params {
             request = request.query(&params);
         }
 
-        // Apply additional query parameters from options
         if let Some(opts) = &options {
             if !opts.additional_query_params.is_empty() {
                 request = request.query(&opts.additional_query_params);
             }
         }
 
-        // Apply raw bytes body with octet-stream content type
         if let Some(body) = body {
             request = request
                 .header("Content-Type", "application/octet-stream")
                 .body(body);
         }
 
-        // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options).await?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
         self.parse_response(response).await
     }
