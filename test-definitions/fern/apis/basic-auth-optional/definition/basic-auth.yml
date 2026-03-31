@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  errors: ./errors.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getWithBasicAuth:
+      auth: true
+      docs: GET request with basic auth scheme
+      path: /basic-auth
+      method: GET
+      response:
+        boolean
+      examples:
+        - response:
+            body: true
+      errors:
+        - errors.UnauthorizedRequest
+
+    postWithBasicAuth:
+      auth: true
+      docs: POST request with basic auth scheme
+      path: /basic-auth
+      method: POST
+      request:
+        name: PostWithBasicAuth
+        body: unknown
+      response: boolean
+      examples:
+        - request:
+            key: "value"
+          response:
+            body: true
+      errors:
+        - errors.UnauthorizedRequest
+        - errors.BadRequest
