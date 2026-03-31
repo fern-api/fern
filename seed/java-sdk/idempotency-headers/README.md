@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:idempotency-headers'
+  implementation 'com.fern:idempotency-headers:0.0.1'
 }
 ```
 

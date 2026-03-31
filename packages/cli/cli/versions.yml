@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.2
+  changelogEntry:
+    - summary: |
+        Don't exclude streaming request body ref schemas during stream condition
+        processing, as they may be referenced by other operations and need to
+        remain in the generated output.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.50.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping object properties with `type: "null"`
+        (valid in OpenAPI 3.1). Properties declared as `type: "null"` were
+        silently filtered out before conversion, causing fields like
+        `conversation_id` to disappear from generated SDK response models.
+        The importer now represents `type: "null"` as `nullable(unknown)`,
+        producing `unknown | null` in TypeScript and `Optional[Any]` in Python.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.50.0
+  changelogEntry:
+    - summary: |
+        Auto-infer `x-fern-discriminator-context` for discriminated unions that
+        match the SSE event spec shape. When all variants of a discriminated union
+        have properties exclusively drawn from `{event, data, id, retry}` with
+        correct types, the discriminator context is now inferred as `protocol`
+        instead of defaulting to `data`. This applies to the legacy OpenAPI importer.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.49.0
+  changelogEntry:
+    - summary: |
+        Add `body-sort` option to webhook signature payload format. When set to
+        `alphabetical`, POST body parameters are sorted by key before being
+        concatenated into the signing payload. This is required by providers like
+        Twilio. Supported in both Fern Definition (`body-sort: alphabetical` inside
+        `payload-format`) and OpenAPI specs (`body-sort: alphabetical` inside the
+        `payload-format` block of `x-fern-webhook-signature`).
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
 - version: 4.48.1
   changelogEntry:
     - summary: |

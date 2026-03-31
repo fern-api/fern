@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:server-sent-events-openapi'
+  implementation 'com.fern:server-sent-events-openapi:0.0.1'
 }
 ```
 

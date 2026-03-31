@@ -516,12 +516,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         const properties = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) =>
                 this.getPropertyNameOfPathParameter(pathParameter)
             ),
             ...this.getAllQueryParameters().map((queryParameter) =>
-                this.getPropertyNameOfQueryParameter(queryParameter)
+                collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                    : this.getPropertyNameOfQueryParameter(queryParameter)
             ),
             ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header))
         ];
@@ -537,6 +543,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         const properties: RequestWrapperNonBodyPropertyWithData[] = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) => ({
                 ...this.getPropertyNameOfPathParameter(pathParameter),
@@ -546,7 +556,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             })),
             ...this.getAllQueryParameters().map((queryParameter) => ({
-                ...this.getPropertyNameOfQueryParameter(queryParameter),
+                ...(collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                    : this.getPropertyNameOfQueryParameter(queryParameter)),
                 originalParameter: {
                     type: "query" as const,
                     parameter: queryParameter

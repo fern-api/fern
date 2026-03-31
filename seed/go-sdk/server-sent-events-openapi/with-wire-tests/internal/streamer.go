@@ -122,5 +122,5 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
-	return core.NewStream[T](resp, opts...), nil
+	return core.NewStream[T](ctx, resp, opts...), nil
 }

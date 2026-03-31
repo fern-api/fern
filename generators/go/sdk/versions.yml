@@ -1,4 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.32.0-rc0
+  changelogEntry:
+    - summary: |
+        Add context cancellation support to streams. `NewStream` now accepts a
+        `context.Context` so that blocking `Recv()` calls unblock when the context
+        is cancelled or times out.
+      type: feat
+    - summary: |
+        Add `RecvEvent()` and `RecvEventRaw()` methods that return SSE metadata
+        (id, event type, retry) alongside the data payload. Also add `LastEventID()`
+        for tracking the most recent event ID across reconnections.
+      type: feat
+    - summary: |
+        Fix SSE comment lines (`: heartbeat`) crashing the stream. Comment-only
+        events are now silently skipped per the WHATWG SSE specification.
+      type: fix
+    - summary: |
+        Fix SSE streams to handle all spec-compliant line endings (LF, CR, CRLF).
+        Previously only LF was supported, causing parse failures with servers that
+        use Windows-style or bare CR line endings.
+      type: fix
+    - summary: |
+        Fix SSE `id:` and `retry:` fields being parsed but discarded. The `id:`
+        field now persists across events per spec, and `retry:` is parsed as an
+        integer milliseconds value.
+      type: fix
+    - summary: |
+        Ship `core/stream_test.go` into generated SDKs so that streaming logic
+        is verified by user CI alongside the rest of the SDK.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 61
+
 - version: 1.31.5
   changelogEntry:
     - summary: |

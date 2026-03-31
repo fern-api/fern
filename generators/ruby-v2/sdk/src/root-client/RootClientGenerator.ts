@@ -102,8 +102,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
         // Check if basic auth is configured so we can conditionally add the Authorization header
-        const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
-        const hasBasicAuth = basicAuthScheme != null && basicAuthScheme.type === "basic";
+        const basicAuthSchemes = this.context.ir.auth.schemes.filter(
+            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+        );
+        const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
 
         method.addStatement(
@@ -113,16 +115,30 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
-                    const usernameName = basicAuthScheme.username.snakeCase.safeName;
-                    const passwordName = basicAuthScheme.password.snakeCase.safeName;
-                    if (isAuthOptional) {
-                        writer.writeLine(
-                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}" if !${usernameName}.nil? && !${passwordName}.nil?`
-                        );
-                    } else {
-                        writer.writeLine(
-                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
-                        );
+                    for (let i = 0; i < basicAuthSchemes.length; i++) {
+                        const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
+                        const usernameName = basicAuthScheme.username.snakeCase.safeName;
+                        const passwordName = basicAuthScheme.password.snakeCase.safeName;
+                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                            if (i === 0) {
+                                writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
+                            } else {
+                                writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
+                            }
+                            writer.writeLine(
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                            );
+                            if (i === basicAuthSchemes.length - 1) {
+                                writer.writeLine(`end`);
+                            }
+                        } else {
+                            writer.writeLine(
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                            );
+                        }
                     }
                 }
                 writer.write(`@raw_client = `);

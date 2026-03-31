@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.9
+  changelogEntry:
+    - summary: |
+        Fix RetryInterceptor sharing a single ExponentialBackoff instance across
+        all requests. Once the retry budget was exhausted by any request, no further
+        retries were attempted for the lifetime of the client. Each request now gets
+        its own backoff instance.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.0.8
   changelogEntry:
     - summary: |

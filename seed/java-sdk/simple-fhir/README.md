@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:simple-fhir'
+  implementation 'com.fern:simple-fhir:0.0.1'
 }
 ```
 

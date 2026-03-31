@@ -5,4 +5,5 @@ import type * as FernOpenapiIr from "../../../index.js";
 export interface WebhookPayloadFormat {
     components: FernOpenapiIr.WebhookPayloadComponent[];
     delimiter: string | undefined;
+    bodySort: FernOpenapiIr.WebhookPayloadBodySort | undefined;
 }

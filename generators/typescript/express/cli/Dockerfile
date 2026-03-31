@@ -14,7 +14,7 @@ RUN npm install -g pnpm@10.33.0 --force && \
 RUN pnpm add -g \
   prettier@3.8.1 \
   oxfmt@0.42.0 \
-  @biomejs/biome@2.4.9 \
+  @biomejs/biome@2.4.10 \
   oxlint@1.57.0 \
   oxlint-tsgolint@0.17.4
 
@@ -30,7 +30,7 @@ RUN echo '{ \
     "axios": "0.27.2", \
     "esbuild": "0.16.15", \
     "express": "4.18.2", \
-    "@biomejs/biome": "2.4.9", \
+    "@biomejs/biome": "2.4.10", \
     "prettier": "3.8.1", \
     "oxfmt": "0.42.0", \
     "oxlint": "1.57.0", \

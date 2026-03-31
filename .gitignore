@@ -83,6 +83,9 @@ seed/python-sdk/**/output.prof
 # Claude
 **/settings.local.json
 
+# Superpowers
+docs/superpowers/
+
 # Preview
 **/.preview/
 
