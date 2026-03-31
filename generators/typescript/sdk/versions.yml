@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.6
+  changelogEntry:
+    - summary: |
+        Fix auto-generated error test examples producing object path parameter values
+        (e.g. `{ key: "value" }`) instead of strings. Path parameters are always scalar
+        URL segments, so `generatePathParameterExamples` now coerces non-primitive values
+        to a string fallback derived from the parameter name. This prevents `[object Object]`
+        from appearing in generated wire test URLs and removes the `getMockUrlForExample`
+        workaround added in 3.60.5.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 3.60.5
   changelogEntry:
     - summary: |
