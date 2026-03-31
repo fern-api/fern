@@ -2332,7 +2332,18 @@ function isPaginationCursorMissingInExample({
     }
 
     // If the leaf is explicitly undefined or null, treat it as "missing"
-    return cursor === undefined || cursor === null;
+    if (cursor === undefined || cursor === null) {
+        return true;
+    }
+
+    // For offset pagination, if the hasNextPage property is explicitly false,
+    // treat it as "missing" so we don't generate hasNextPage().toBe(true) assertions
+    // that would contradict the mock data
+    if (pagination.type === "offset" && cursor === false) {
+        return true;
+    }
+
+    return false;
 }
 
 /**
