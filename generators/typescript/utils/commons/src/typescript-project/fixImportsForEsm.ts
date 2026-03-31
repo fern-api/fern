@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { readdir, readFile, writeFile } from "fs/promises";
+import type { Volume } from "memfs/lib/volume";
 import path from "path";
 
 // File extensions to collect for the existence cache and to process
@@ -17,57 +17,6 @@ const ImportModification = {
 type ImportModificationType = (typeof ImportModification)[keyof typeof ImportModification];
 
 /**
- * Fixes imports in a TypeScript project to ensure compatibility with ESM (ECMAScript Modules).
- *
- * TypeScript's `tsc` compiler does not generate valid ESM unless the source code follows specific conventions:
- * - All imports must include the `.js` extension.
- * - Folder imports must explicitly reference `index.js`.
- *
- * This function modifies the imports in the project to adhere to these conventions by:
- * - Adding `.js` extensions to imports where necessary.
- * - Replacing folder imports with explicit `index.js` imports.
- * - Ensuring compatibility with the generated ESM output.
- *
- * Uses string-based regex replacement instead of ts-morph AST mutations for performance.
- * On a 10K-file project (Stripe), this completes in ~7s vs ~372s with ts-morph.
- *
- * @param pathToProject - The absolute path to the root of the TypeScript project.
- */
-export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
-    // Phase 1: Discover all source files in the project's src/ directory.
-    // Generated TypeScript projects always use `include: ["src"]` in their tsconfig,
-    // so we scan src/ directly. This avoids the complexity and fragility of parsing
-    // tsconfig include/exclude (which can contain globs, JSONC comments, extends
-    // chains, etc.) while matching the original ts-morph scoping behavior.
-    const fileExistenceCache = new Set<string>();
-    const srcDir = join(pathToProject, RelativeFilePath.of("src"));
-    await collectFiles(srcDir, fileExistenceCache);
-
-    // Phase 2: Process each TypeScript file via string replacement
-    const importModificationCache = new Map<string, ImportModificationType>();
-
-    const tsFiles = [...fileExistenceCache].filter((f) => {
-        const ext = path.extname(f);
-        return TS_EXTENSIONS.has(ext);
-    });
-
-    // Process in parallel batches for I/O throughput
-    const BATCH_SIZE = 100;
-    for (let i = 0; i < tsFiles.length; i += BATCH_SIZE) {
-        const batch = tsFiles.slice(i, i + BATCH_SIZE);
-        await Promise.all(
-            batch.map(async (filePath) => {
-                const content = await readFile(filePath, "utf-8");
-                const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
-                if (newContent !== content) {
-                    await writeFile(filePath, newContent);
-                }
-            })
-        );
-    }
-}
-
-/**
  * Strips single-line comments (// ...) and multi-line comments (/* ... *\/)
  * from source text, replacing them with whitespace of equal length so that
  * character positions are preserved. This ensures that regex-based import
@@ -83,78 +32,73 @@ function stripComments(source: string): string {
     return source.replace(pattern, (match) => " ".repeat(match.length));
 }
 
-// Regex for static imports/exports: from "./path" or from '../path'
-// Also handles side-effect imports: import "./path" or import './path'
-const STATIC_IMPORT_REGEX = /(?:from|import)\s+["'](\.\.?\/[^"']*?)["']/g;
+// Combined regex for both static and dynamic imports in a single pass.
+// Group 1: static import specifier (from "..." / import "...")
+// Group 2: dynamic import specifier (import("..."))
+// Using a single regex eliminates one full-text scan and the need to sort matches,
+// since exec() already yields matches in document order.
+const IMPORT_REGEX = /(?:from|import)\s+["'](\.\.?\/[^"']*?)["']|import\(\s*["'](\.\.?\/[^"']*?)["']\s*\)/g;
 
-// Regex for dynamic imports: import("./path") or import('./path')
-const DYNAMIC_IMPORT_REGEX = /import\(\s*["'](\.\.?\/[^"']*?)["']\s*\)/g;
-
-function fixImportsInSource(
+/**
+ * Fixes import specifiers in a single source file's content string.
+ * Exported so callers can apply this to in-memory content without disk I/O.
+ */
+export function fixImportsInSource(
     content: string,
     filePath: string,
     fileExistenceCache: Set<string>,
     importModificationCache: Map<string, ImportModificationType>
 ): string {
-    // Strip comments to find where real imports are, then apply
-    // replacements to the original content using the positions from the stripped version.
-    const stripped = stripComments(content);
+    // Fast path: skip files with no relative imports at all
+    if (!content.includes("./") && !content.includes("../")) {
+        return content;
+    }
 
-    let result = content;
-    // Track offset shifts from replacements so far
-    let offset = 0;
+    // Strip comments so regex doesn't match patterns inside comments.
+    // Skip the strip pass entirely if there are no comment markers.
+    const hasComments = content.includes("//") || content.includes("/*");
+    const stripped = hasComments ? stripComments(content) : content;
 
-    // Collect all matches from the stripped source (comments/strings removed)
-    const matches: Array<{ specifier: string; specifierStart: number; specifierEnd: number }> = [];
+    // Single-pass: collect matches and build result using a string builder
+    // to avoid O(n*m) copying from repeated slice+concat.
+    const parts: string[] = [];
+    let lastEnd = 0;
 
     let match: RegExpExecArray | null;
-
-    // Find static import/export matches
-    STATIC_IMPORT_REGEX.lastIndex = 0;
-    while ((match = STATIC_IMPORT_REGEX.exec(stripped)) !== null) {
-        const fullMatch = match[0];
-        const specifier = match[1];
-        if (specifier == null) {
+    IMPORT_REGEX.lastIndex = 0;
+    while ((match = IMPORT_REGEX.exec(stripped)) !== null) {
+        // Group 1 = static import specifier, Group 2 = dynamic import specifier
+        const specifier = match[1] ?? match[2];
+        if (specifier == null || specifier.endsWith(".js")) {
             continue;
         }
-        const quoteChar = fullMatch.charAt(fullMatch.indexOf(specifier) - 1);
-        const specifierStart = match.index + fullMatch.indexOf(quoteChar + specifier) + 1;
-        const specifierEnd = specifierStart + specifier.length;
-        matches.push({ specifier, specifierStart, specifierEnd });
-    }
 
-    // Find dynamic import matches
-    DYNAMIC_IMPORT_REGEX.lastIndex = 0;
-    while ((match = DYNAMIC_IMPORT_REGEX.exec(stripped)) !== null) {
-        const fullMatch = match[0];
-        const specifier = match[1];
-        if (specifier == null) {
-            continue;
-        }
-        const quoteChar = fullMatch.charAt(fullMatch.indexOf(specifier) - 1);
-        const specifierStart = match.index + fullMatch.indexOf(quoteChar + specifier) + 1;
-        const specifierEnd = specifierStart + specifier.length;
-        matches.push({ specifier, specifierStart, specifierEnd });
-    }
-
-    // Sort by position to apply replacements in order
-    matches.sort((a, b) => a.specifierStart - b.specifierStart);
-
-    for (const { specifier, specifierStart, specifierEnd } of matches) {
-        if (specifier.endsWith(".js")) {
-            continue;
-        }
         const modification = getCachedModification(specifier, filePath, fileExistenceCache, importModificationCache);
-        if (modification !== ImportModification.NONE) {
-            const newSpecifier = getModifiedSpecifier(specifier, modification);
-            const adjustedStart = specifierStart + offset;
-            const adjustedEnd = specifierEnd + offset;
-            result = result.slice(0, adjustedStart) + newSpecifier + result.slice(adjustedEnd);
-            offset += newSpecifier.length - specifier.length;
+        if (modification === ImportModification.NONE) {
+            continue;
         }
+
+        // Locate the specifier within the full match to get its absolute position
+        const fullMatch = match[0];
+        const quoteChar = fullMatch.charAt(fullMatch.indexOf(specifier) - 1);
+        const specifierStart = match.index + fullMatch.indexOf(quoteChar + specifier) + 1;
+        const specifierEnd = specifierStart + specifier.length;
+
+        // Append everything from the last replacement end to the start of this specifier,
+        // then append the modified specifier.
+        parts.push(content.slice(lastEnd, specifierStart));
+        parts.push(getModifiedSpecifier(specifier, modification));
+        lastEnd = specifierEnd;
     }
 
-    return result;
+    // If no replacements were made, return the original content (avoids allocation)
+    if (parts.length === 0) {
+        return content;
+    }
+
+    // Append the remainder of the file
+    parts.push(content.slice(lastEnd));
+    return parts.join("");
 }
 
 function getCachedModification(
@@ -225,18 +169,52 @@ function determineModification(
     return ImportModification.NONE;
 }
 
-// Recursively collect all source file paths, skipping node_modules and .git
-async function collectFiles(dir: string, files: Set<string>): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
+/**
+ * Fixes imports in-memory inside a memfs Volume before writing to disk.
+ * This eliminates the disk read+write round-trip that fixImportsForEsm performs,
+ * since the files are already in memory. Uses synchronous Volume APIs for speed.
+ *
+ * @param volume - The memfs Volume containing the project files.
+ * @param packagePath - The source directory path within the volume (e.g. "src").
+ */
+export function fixImportsInVolume(volume: Volume, packagePath: string): void {
+    const srcDir = "/" + packagePath;
+
+    // Phase 1: Collect all source file paths from the volume.
+    // Core utility files should already be in the Volume (via copyCoreUtilitiesToVolume)
+    // so their paths are included in the existence cache automatically.
+    const volumeFiles = new Set<string>();
+    collectVolumeFilesSync(volume, srcDir, volumeFiles);
+
+    const fileExistenceCache = volumeFiles;
+
+    // Phase 2: Process each TypeScript file in the volume via string replacement.
+    const importModificationCache = new Map<string, ImportModificationType>();
+
+    for (const filePath of volumeFiles) {
+        if (!TS_EXTENSIONS.has(path.extname(filePath))) {
+            continue;
+        }
+        const contentBuf = volume.readFileSync(filePath, "utf-8");
+        const content = typeof contentBuf === "string" ? contentBuf : contentBuf.toString();
+        const newContent = fixImportsInSource(content, filePath, fileExistenceCache, importModificationCache);
+        if (newContent !== content) {
+            volume.writeFileSync(filePath, newContent);
+        }
+    }
+}
+
+function collectVolumeFilesSync(volume: Volume, dir: string, files: Set<string>): void {
+    const entries = volume.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
-        const fullPath = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-            if (entry.name === "node_modules" || entry.name === ".git") {
-                continue;
-            }
-            await collectFiles(fullPath, files);
+        // memfs 3.x returns dirent-like objects with name and isDirectory()
+        const dirent = entry as { name: string | Buffer; isDirectory(): boolean };
+        const name = typeof dirent.name === "string" ? dirent.name : dirent.name.toString();
+        const fullPath = path.join(dir, name);
+        if (dirent.isDirectory()) {
+            collectVolumeFilesSync(volume, fullPath, files);
         } else {
-            const ext = path.extname(entry.name);
+            const ext = path.extname(name);
             if (ALL_EXTENSIONS.has(ext)) {
                 files.add(path.resolve(fullPath));
             }

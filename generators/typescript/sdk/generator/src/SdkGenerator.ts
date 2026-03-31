@@ -16,6 +16,7 @@ import {
     getFullPathForEndpoint,
     getTextOfTsNode,
     ImportsManager,
+    type MemfsVolume,
     NpmPackage,
     PackageId,
     PublicExportsManager,
@@ -782,21 +783,13 @@ export class SdkGenerator {
         return this.intermediateRepresentation.types;
     }
 
-    public async copyCoreUtilities({
-        pathToSrc,
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+    public async copyCoreUtilitiesToVolume(volume: MemfsVolume): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilitiesToVolume(volume);
     }
 
-    public async generatePublicExports({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.publicExportsManager.generatePublicExportsFiles({
-            pathToSrc
-        });
-        this.context.logger.debug("Generated public exports");
+    public generatePublicExportsToVolume(volume: MemfsVolume): void {
+        this.publicExportsManager.generatePublicExportsToVolume(volume, this.relativePackagePath);
+        this.context.logger.debug("Generated public exports to volume");
     }
 
     private generateTypeDeclarations() {

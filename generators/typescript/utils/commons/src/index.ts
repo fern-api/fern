@@ -1,4 +1,5 @@
 export * from "@fern-api/typescript-base";
+export type { Volume as MemfsVolume } from "memfs/lib/volume";
 export { AsIsManager } from "./asIs/AsIsManager.js";
 export {
     createNumericLiteralSafe,
@@ -41,8 +42,8 @@ export * from "./referencing/index.js";
 export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode.js";
 export { type TypeReferenceNode } from "./TypeReferenceNode.js";
 export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest.js";
-export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm.js";
+export { fixImportsInSource, fixImportsInVolume } from "./typescript-project/fixImportsForEsm.js";
 export * from "./typescript-project/index.js";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType.js";
 export { FernWriters, ObjectWriter } from "./writers/index.js";
-export { writeTemplateFiles } from "./writeTemplateFiles.js";
+export { writeTemplateFilesToVolume } from "./writeTemplateFiles.js";

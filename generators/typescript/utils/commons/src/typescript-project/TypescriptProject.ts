@@ -191,7 +191,15 @@ export abstract class TypescriptProject {
         return exports;
     }
 
-    public async persist(): Promise<PersistedTypescriptProject> {
+    /**
+     * Writes the project to disk.
+     *
+     * @param volumeHook - When provided, runs AFTER ts-morph source files are
+     *   written to the Volume but BEFORE the Volume is flushed to disk. Callers
+     *   use this to inject additional files (core utilities, templates, public
+     *   exports) and optionally fix ESM imports — all in a single in-memory pass.
+     */
+    public async persist(volumeHook?: (volume: Volume) => Promise<void>): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
@@ -204,6 +212,11 @@ export abstract class TypescriptProject {
         }
 
         await this.addFilesToVolume();
+
+        if (volumeHook) {
+            await volumeHook(this.volume);
+        }
+
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         return new PersistedTypescriptProject({
