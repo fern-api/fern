@@ -254,7 +254,7 @@
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "HasNextPage",
             "id": {
                 "path": "/users",
                 "method": "GET",
@@ -262,7 +262,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest\n    {\n        Page = 1,\n        Limit = 1,\n        Order = SeedPagination.Order.Asc,\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest\n    {\n        Page = 1,\n        Limit = 3,\n        Order = SeedPagination.Order.Asc,\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": "NoNextPage",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOffsetPaginationHasNextPageAsync(\n    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest\n    {\n        Page = 1,\n        Limit = 10,\n        Order = SeedPagination.Order.Asc,\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {

@@ -439,17 +439,17 @@ describe("UsersClient", () => {
         expect(expected.data).toEqual(nextPage.data);
     });
 
-    test("listWithOffsetPaginationHasNextPage", async () => {
+    test("listWithOffsetPaginationHasNextPage (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
-            total_count: 1,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 3, total_page: 5 },
+            total_count: 15,
             data: [
-                { name: "name", id: 1 },
-                { name: "name", id: 1 },
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
             ],
         };
 
@@ -466,27 +466,27 @@ describe("UsersClient", () => {
             page: {
                 page: 1,
                 next: {
-                    page: 1,
-                    starting_after: "starting_after",
+                    page: 2,
+                    starting_after: "next_cursor",
                 },
-                per_page: 1,
-                total_page: 1,
+                per_page: 3,
+                total_page: 5,
             },
-            total_count: 1,
+            total_count: 15,
             data: [
                 {
-                    name: "name",
+                    name: "Alice",
                     id: 1,
                 },
                 {
-                    name: "name",
-                    id: 1,
+                    name: "Bob",
+                    id: 2,
                 },
             ],
         };
         const page = await client.users.listWithOffsetPaginationHasNextPage({
             page: 1,
-            limit: 1,
+            limit: 3,
             order: "asc",
         });
 
@@ -494,6 +494,54 @@ describe("UsersClient", () => {
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
+    });
+
+    test("listWithOffsetPaginationHasNextPage (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: false,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 1 },
+            total_count: 2,
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+        };
+
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const expected = {
+            hasNextPage: false,
+            page: {
+                page: 1,
+                next: {
+                    page: 2,
+                    starting_after: "next_cursor",
+                },
+                per_page: 10,
+                total_page: 1,
+            },
+            total_count: 2,
+            data: [
+                {
+                    name: "Alice",
+                    id: 1,
+                },
+                {
+                    name: "Bob",
+                    id: 2,
+                },
+            ],
+        };
+        const page = await client.users.listWithOffsetPaginationHasNextPage({
+            page: 1,
+            limit: 10,
+            order: "asc",
+        });
+
+        expect(expected.data).toEqual(page.data);
     });
 
     test("listWithExtendedResults", async () => {

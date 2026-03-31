@@ -1575,7 +1575,7 @@ async fn main() {
         .list_with_offset_step_pagination(
             &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
-                limit: Some(1),
+                limit: Some(3),
                 order: Some(Order::Asc),
                 ..Default::default()
             },
