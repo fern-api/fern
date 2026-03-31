@@ -1,11 +1,11 @@
 require "seed"
 
-client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.params.get_with_path_and_query(
-  param: 'param',
-  query: 'query'
-);
+client.endpoints.object.get_and_return_with_datetime_like_string(
+  datetime_like_string: "2023-08-31T14:15:22Z",
+  actual_datetime: "2023-08-31T14:15:22Z"
+)

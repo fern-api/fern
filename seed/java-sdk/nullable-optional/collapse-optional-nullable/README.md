@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -13,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:nullable-optional'
+  implementation 'com.fern:nullable-optional:0.0.1'
 }
 ```
 
@@ -55,36 +70,24 @@ public class Example {
             CreateUserRequest
                 .builder()
                 .username("username")
-                .email(
-                    OptionalNullable.of("email")
-                )
-                .phone(
-                    OptionalNullable.of("phone")
-                )
                 .address(
                     OptionalNullable.of(
                         Address
                             .builder()
                             .street("street")
-                            .city(
-                                OptionalNullable.of("city")
-                            )
-                            .state(
-                                OptionalNullable.of("state")
-                            )
                             .zipCode("zipCode")
                             .country(
                                 OptionalNullable.of("country")
                             )
-                            .buildingId(
-                                OptionalNullable.of("buildingId")
-                            )
-                            .tenantId(
-                                OptionalNullable.of("tenantId")
-                            )
+                            .city("city")
+                            .state("state")
+                            .buildingId("buildingId")
+                            .tenantId("tenantId")
                             .build()
                     )
                 )
+                .email("email")
+                .phone("phone")
                 .build()
         );
     }
@@ -99,7 +102,7 @@ For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nul
 - **PRESENT**: Field has a non-null value
 
 ```java
-import com.seed.api.core.OptionalNullable;
+import com.seed.nullableOptional.core.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -240,7 +243,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-CreateUserHttpResponse response = client.nullableOptional().withRawResponse().createUser(...);
+SeedNullableOptionalHttpResponse response = client.nullableOptional().withRawResponse().createUser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnOptionalTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -41,10 +42,6 @@ public class GetAndReturnOptionalTest : BaseMockServerTest
         var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
             new ObjectWithRequiredField { String = "string" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField?>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

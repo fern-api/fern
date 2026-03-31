@@ -2328,6 +2328,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
@@ -3549,23 +3550,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreatePrivateLobbyDeprecatedRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "response": {
         "description": "Ok",
@@ -3744,18 +3729,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "value": {
@@ -3842,23 +3816,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreatePublicLobbyDeprecatedRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "response": {
         "description": "Ok",
@@ -4037,18 +3995,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "value": {
@@ -4135,23 +4082,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "ListActivePublicLobbiesDeprecatedRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "response": {
         "description": "Ok",
@@ -4254,18 +4185,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "value": [
@@ -4419,23 +4339,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreatePrivateLobbyRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreatePrivateLobbyRequest",
       "request": {
         "schema": {
@@ -4456,6 +4360,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePrivateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
@@ -4477,9 +4382,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -4678,18 +4581,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "initialConfig": {
@@ -4868,23 +4760,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreatePublicLobbyRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreatePublicLobbyRequest",
       "request": {
         "schema": {
@@ -4905,6 +4781,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePublicLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
@@ -4926,9 +4803,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5127,18 +5002,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "initialConfig": {
@@ -5317,23 +5181,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreateLocalLobbyRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreateLocalLobbyRequest",
       "request": {
         "schema": {
@@ -5354,6 +5202,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLocalLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
@@ -5375,9 +5224,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -5576,18 +5423,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "initialConfig": {
@@ -5766,23 +5602,7 @@
           }
         }
       ],
-      "headers": [
-        {
-          "name": "Authorization",
-          "schema": {
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "CreateLobbyRequestAuthorization",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        }
-      ],
+      "headers": [],
       "generatedRequestName": "CreateLobbyRequest",
       "request": {
         "schema": {
@@ -5835,6 +5655,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLobbyRequestInitialConfig",
@@ -5856,9 +5677,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -6056,18 +5875,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Authorization",
-              "value": {
-                "value": {
-                  "value": "Authorization",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "visibility": {
@@ -6691,6 +6499,7 @@
                 },
                 "value": {
                   "generatedName": "SetLobbyStateRequestStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "SetLobbyStateRequestState",
@@ -8577,9 +8386,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -9974,9 +9781,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10041,9 +9846,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -10062,9 +9865,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10245,6 +10046,7 @@
               },
               "generatedName": "DeploymentConfigEnv",
               "groupName": [],
+              "maxItems": 100,
               "type": "array"
             },
             "audiences": []
@@ -10278,9 +10080,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10295,9 +10095,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10432,9 +10230,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10449,9 +10245,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10466,9 +10260,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10507,9 +10299,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10588,9 +10378,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 },
                 {
                   "conflict": {},
@@ -10609,9 +10397,7 @@
                     },
                     "type": "optional"
                   },
-                  "audiences": [],
-                  "readonly": false,
-                  "writeonly": false
+                  "audiences": []
                 }
               ],
               "allOfPropertyConflicts": [],
@@ -10752,9 +10538,7 @@
                       },
                       "type": "reference"
                     },
-                    "audiences": [],
-                    "readonly": false,
-                    "writeonly": false
+                    "audiences": []
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -10922,9 +10706,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10939,9 +10721,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10999,9 +10779,7 @@
                 },
                 "type": "reference"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             }
           ],
           "allOfPropertyConflicts": [],
@@ -11046,6 +10824,7 @@
                 },
                 "value": {
                   "generatedName": "LobbyStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "LobbyState",
@@ -11072,6 +10851,7 @@
               },
               "value": {
                 "generatedName": "LobbyInitialConfigValue",
+                "groupName": [],
                 "type": "unknown"
               },
               "generatedName": "LobbyInitialConfig",
@@ -11167,9 +10947,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11184,9 +10962,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11201,9 +10977,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11636,9 +11410,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11653,9 +11425,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11670,9 +11440,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11687,9 +11455,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11790,9 +11556,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11807,9 +11571,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11838,9 +11600,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11855,9 +11615,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11872,9 +11630,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12023,9 +11779,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12060,9 +11814,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12077,9 +11829,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12108,9 +11858,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12139,9 +11887,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12184,9 +11930,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12203,6 +11947,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "status",
+          "discriminatorContext": "data",
           "generatedName": "ConnectionInfo",
           "schemas": {
             "starting": {

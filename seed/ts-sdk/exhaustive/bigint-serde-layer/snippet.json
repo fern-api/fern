@@ -68,6 +68,17 @@
         },
         {
             "id": {
+                "path": "/container/map-prim-to-union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({\n    \"string\": 1.1\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
@@ -233,6 +244,63 @@
         },
         {
             "id": {
+                "path": "/object/get-and-return-with-unknown-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithUnknownField({\n    unknown: {\n        \"$ref\": \"https://example.com/schema\"\n    }\n});\n"
+            },
+            "example_identifier": "BackslashExample"
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDocumentedUnknownType({\n    documentedUnknownType: {\n        \"key\": \"value\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-map-of-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDatetimeLikeString({\n    datetimeLikeString: \"2023-08-31T14:15:22Z\",\n    actualDatetime: new Date(\"2023-08-31T14:15:22.000Z\")\n});\n"
+            },
+            "example_identifier": "DatetimeLikeStringExample"
+        },
+        {
+            "id": {
+                "path": "/pagination",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/pagination.listItems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.endpoints.pagination.listItems({\n    cursor: \"cursor\",\n    limit: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.endpoints.pagination.listItems({\n    cursor: \"cursor\",\n    limit: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPath"
@@ -317,6 +385,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithInlinePath({\n    param: \"param\",\n    body: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.uploadWithPath(createReadStream(\"path/to/file\"), \"upload-path\");\n"
             }
         },
         {

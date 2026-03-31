@@ -1,17 +1,4 @@
-import {
-    ContainerType,
-    CursorPagination,
-    CustomPagination,
-    ErrorDiscriminationByPropertyStrategy,
-    ErrorDiscriminationStrategy,
-    HttpEndpoint,
-    HttpMethod,
-    HttpResponseBody,
-    OffsetPagination,
-    PrimitiveTypeV2,
-    ResponseError,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     getElementTypeFromArrayType,
     getFullPathForEndpoint,
@@ -24,30 +11,30 @@ import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/co
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
-import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
-import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
-import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
+import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl.js";
+import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
+import { getAbortSignalExpression } from "../../utils/requestOptionsParameter.js";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
     getSuccessReturnType,
     READABLE_RESPONSE_KEY
-} from "./getSuccessReturnType";
+} from "./getSuccessReturnType.js";
 
 export declare namespace GeneratedThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response:
-            | HttpResponseBody.Json
-            | HttpResponseBody.FileDownload
-            | HttpResponseBody.Streaming
-            | HttpResponseBody.Text
-            | HttpResponseBody.Bytes
+            | FernIr.HttpResponseBody.Json
+            | FernIr.HttpResponseBody.FileDownload
+            | FernIr.HttpResponseBody.Streaming
+            | FernIr.HttpResponseBody.Text
+            | FernIr.HttpResponseBody.Bytes
             | undefined;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
@@ -61,15 +48,15 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     public static readonly RESPONSE_VARIABLE_NAME = "_response";
 
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private response:
-        | HttpResponseBody.Json
-        | HttpResponseBody.FileDownload
-        | HttpResponseBody.Streaming
-        | HttpResponseBody.Text
-        | HttpResponseBody.Bytes
+        | FernIr.HttpResponseBody.Json
+        | FernIr.HttpResponseBody.FileDownload
+        | FernIr.HttpResponseBody.Streaming
+        | FernIr.HttpResponseBody.Text
+        | FernIr.HttpResponseBody.Bytes
         | undefined;
-    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
@@ -101,7 +88,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.offsetSemantics = offsetSemantics;
     }
 
-    private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
+    private getItemTypeFromListOrOptionalList(typeReference: FernIr.TypeReference): FernIr.TypeReference | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "list") {
             return typeReference.container.list;
         }
@@ -141,6 +128,18 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         custom: this.endpoint.pagination,
                         successReturnType
                     });
+                case "uri":
+                    return this.getUriPaginationInfo({
+                        context,
+                        uri: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "path":
+                    return this.getPathPaginationInfo({
+                        context,
+                        path: this.endpoint.pagination,
+                        successReturnType
+                    });
             }
         }
 
@@ -153,7 +152,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         successReturnType
     }: {
         context: SdkContext;
-        cursor: CursorPagination;
+        cursor: FernIr.CursorPagination;
         successReturnType: ts.TypeNode;
     }): PaginationResponseInfo | undefined {
         const itemValueType = cursor.results.property.valueType;
@@ -257,7 +256,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         successReturnType
     }: {
         context: SdkContext;
-        offset: OffsetPagination;
+        offset: FernIr.OffsetPagination;
         successReturnType: ts.TypeNode;
     }): PaginationResponseInfo | undefined {
         const itemValueType = offset.results.property.valueType;
@@ -466,7 +465,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         successReturnType
     }: {
         context: SdkContext;
-        custom: CustomPagination;
+        custom: FernIr.CustomPagination;
         successReturnType: ts.TypeNode;
     }): PaginationResponseInfo | undefined {
         const itemValueType = custom.results.property.valueType;
@@ -522,14 +521,150 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         };
     }
 
-    private getDefaultPaginationValue({ type }: { type: TypeReference }): string {
+    private getUriPaginationInfo({
+        context,
+        uri,
+        successReturnType
+    }: {
+        context: SdkContext;
+        uri: FernIr.UriPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        return this.getUriOrPathPaginationInfo({
+            context,
+            nextProperty: uri.nextUri,
+            results: uri.results,
+            successReturnType,
+            type: "uri"
+        });
+    }
+
+    private getPathPaginationInfo({
+        context,
+        path,
+        successReturnType
+    }: {
+        context: SdkContext;
+        path: FernIr.PathPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        return this.getUriOrPathPaginationInfo({
+            context,
+            nextProperty: path.nextPath,
+            results: path.results,
+            successReturnType,
+            type: "path"
+        });
+    }
+
+    private getUriOrPathPaginationInfo({
+        context,
+        nextProperty,
+        results,
+        successReturnType,
+        type
+    }: {
+        context: SdkContext;
+        nextProperty: FernIr.ResponseProperty;
+        results: FernIr.ResponseProperty;
+        successReturnType: ts.TypeNode;
+        type: "uri" | "path";
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: results
+                })
+            )
+        );
+
+        // hasNextPage: check that next property is not null and not empty string.
+        // Each call to generateGetterForResponseProperty creates a fresh AST node (nodes cannot be shared).
+        const hasNextPage = ts.factory.createBinaryExpression(
+            ts.factory.createBinaryExpression(
+                context.type.generateGetterForResponseProperty({
+                    property: nextProperty,
+                    variable: "response",
+                    isVariableOptional: true
+                }),
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                ts.factory.createNull()
+            ),
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            ts.factory.createBinaryExpression(
+                context.type.generateGetterForResponseProperty({
+                    property: nextProperty,
+                    variable: "response",
+                    isVariableOptional: true
+                }),
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                ts.factory.createStringLiteral("")
+            )
+        );
+
+        // getItems: extract items from response
+        const getItems = ts.factory.createBinaryExpression(
+            context.type.generateGetterForResponseProperty({
+                property: results,
+                variable: "response",
+                isVariableOptional: true
+            }),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // loadPage: make a direct fetch to the next URI/path
+        // For URI pagination: use the full URL directly
+        // For path pagination: combine the next path with the base URL
+        // Use non-null assertion since loadPage is only called when hasNextPage is true.
+        // A fresh AST node is required here since nodes cannot be shared across parents.
+        const nextPropertyForLoadPage = ts.factory.createNonNullExpression(
+            context.type.generateGetterForResponseProperty({
+                property: nextProperty,
+                variable: "response",
+                isVariableOptional: true
+            })
+        );
+        const nextUrlExpression =
+            type === "uri"
+                ? nextPropertyForLoadPage
+                : context.coreUtilities.urlUtils.join._invoke([
+                      ts.factory.createIdentifier("_baseUrl"),
+                      nextPropertyForLoadPage
+                  ]);
+
+        const loadPage = [
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [nextUrlExpression])
+            )
+        ];
+
+        return {
+            type,
+            itemType: itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getDefaultPaginationValue({ type }: { type: FernIr.TypeReference }): string {
         let defaultValue: string | undefined;
 
-        TypeReference._visit(type, {
+        FernIr.TypeReference._visit(type, {
             primitive: (primitiveType) => {
                 const maybeV2Scheme = primitiveType.v2;
                 if (maybeV2Scheme != null) {
-                    defaultValue = PrimitiveTypeV2._visit(maybeV2Scheme, {
+                    defaultValue = FernIr.PrimitiveTypeV2._visit(maybeV2Scheme, {
                         integer: (it) => (it.default != null ? String(it.default) : undefined),
                         double: () => undefined,
                         string: () => undefined,
@@ -548,7 +683,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 }
             },
             container: (containerType) => {
-                defaultValue = ContainerType._visit(containerType, {
+                defaultValue = FernIr.ContainerType._visit(containerType, {
                     literal: () => undefined,
                     list: () => undefined,
                     set: () => undefined,
@@ -681,8 +816,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         } else if (this.response?.type === "streaming") {
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
-                    type: "sse",
-                    streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
+                    type: "sse" as const,
+                    ...(sse.terminator != null
+                        ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
+                        : {}),
+                    ...this.getEventDiscriminator(sse.payload, context)
                 }),
                 json: (json) => ({
                     type: "json",
@@ -909,10 +1047,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         defaultBody
     }: {
         context: SdkContext;
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        generateCaseBody: (responseError: FernIr.ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
-        return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
             property: (propertyErrorDiscriminationStrategy) =>
                 this.getSwitchStatementForPropertyDiscriminatedErrors({
                     context,
@@ -927,7 +1065,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     defaultBody
                 }),
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
     }
@@ -939,8 +1077,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         defaultBody
     }: {
         context: SdkContext;
-        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        propertyErrorDiscriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
+        generateCaseBody: (responseError: FernIr.ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
         return ts.factory.createSwitchStatement(
@@ -972,16 +1110,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         defaultBody
     }: {
         context: SdkContext;
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        generateCaseBody: (responseError: FernIr.ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
+        // Deduplicate errors by status code to prevent duplicate case clauses.
+        // The first error for each status code wins (endpoint-specific errors come before global errors).
+        const seenStatusCodes = new Set<number>();
+        const deduplicatedErrors = this.endpoint.errors.filter((error) => {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+            if (seenStatusCodes.has(errorDeclaration.statusCode)) {
+                return false;
+            }
+            seenStatusCodes.add(errorDeclaration.statusCode);
+            return true;
+        });
+
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
                 context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
-                ...this.endpoint.errors.map((error) => {
+                ...deduplicatedErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),
@@ -1026,7 +1176,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         }
 
         const dataInitializer =
-            this.endpoint.method === HttpMethod.Head
+            this.endpoint.method === FernIr.HttpMethod.Head
                 ? ts.factory.createPropertyAccessExpression(
                       ts.factory.createPropertyAccessExpression(
                           ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -1067,5 +1217,24 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             this.getReferenceToError(context),
             context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
+    }
+
+    private getEventDiscriminator(
+        payload: FernIr.TypeReference,
+        context: SdkContext
+    ): { eventDiscriminator: ts.Expression } | Record<string, never> {
+        if (payload.type !== "named") {
+            return {};
+        }
+        const typeDeclaration = context.type.getTypeDeclaration(payload);
+        if (typeDeclaration.shape.type !== "union") {
+            return {};
+        }
+        if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return {};
+        }
+        return {
+            eventDiscriminator: ts.factory.createStringLiteral(typeDeclaration.shape.discriminant.wireValue)
+        };
     }
 }

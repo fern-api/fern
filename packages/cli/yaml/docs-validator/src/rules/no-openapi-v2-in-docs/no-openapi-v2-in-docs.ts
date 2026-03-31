@@ -1,7 +1,7 @@
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const NoOpenApiV2InDocsRule: Rule = {
     name: "no-openapi-v2-in-docs",
@@ -21,17 +21,21 @@ export const NoOpenApiV2InDocsRule: Rule = {
                                 // Use the docs workspace as reference point for more descriptive path
                                 const relativePath = relative(docsWorkspace.absoluteFilePath, spec.absoluteFilepath);
 
-                                // Simple check for OpenAPI v2 by looking for "swagger: " pattern
-                                if (
+                                // Simple check for OpenAPI v2 by looking for "swagger" pattern
+                                // Check both YAML format (swagger: "2.0") and JSON format ("swagger": "2.0")
+                                const isOpenApiV2Yaml =
                                     contents.includes("swagger:") &&
                                     (contents.includes('swagger: "2.0"') ||
                                         contents.includes("swagger: '2.0'") ||
-                                        contents.includes("swagger: 2.0"))
-                                ) {
+                                        contents.includes("swagger: 2.0"));
+                                const isOpenApiV2Json =
+                                    contents.includes('"swagger":') &&
+                                    (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
+                                if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                     violations.push({
-                                        severity: "error",
-                                        name: "OpenAPI v2.0 not supported",
-                                        message: `OpenAPI version 2.0 (Swagger) is not supported in docs generation. Please upgrade to OpenAPI 3.0 or later.`,
+                                        severity: "warning",
+                                        name: "OpenAPI v2.0 detected",
+                                        message: `OpenAPI version 2.0 (Swagger) detected. Consider upgrading to OpenAPI 3.0 or later.`,
                                         relativeFilepath: relativePath
                                     });
                                 }

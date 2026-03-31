@@ -62,6 +62,27 @@ func (c *CreateUserRequest) SetAvatar(avatar *string) {
 	c.require(createUserRequestFieldAvatar)
 }
 
+func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserRequest(body)
+	return nil
+}
+
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	deleteUserRequestFieldUsername = big.NewInt(1 << 0)
 )
@@ -86,6 +107,27 @@ func (d *DeleteUserRequest) require(field *big.Int) {
 func (d *DeleteUserRequest) SetUsername(username *string) {
 	d.Username = username
 	d.require(deleteUserRequestFieldUsername)
+}
+
+func (d *DeleteUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteUserRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteUserRequest(body)
+	return nil
+}
+
+func (d *DeleteUserRequest) MarshalJSON() ([]byte, error) {
+	type embed DeleteUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -218,6 +260,9 @@ func (m *Metadata) GetValues() map[string]*string {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -310,6 +355,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -499,14 +547,14 @@ var (
 )
 
 type User struct {
-	Name           string                 `json:"name" url:"name"`
-	Id             UserId                 `json:"id" url:"id"`
-	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber           `json:"favorite-number" url:"favorite-number"`
-	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
-	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
+	Name           string         `json:"name" url:"name"`
+	Id             UserId         `json:"id" url:"id"`
+	Tags           []string       `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email          `json:"email,omitempty" url:"email,omitempty"`
+	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
+	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -564,7 +612,7 @@ func (u *User) GetNumbers() []int {
 	return u.Numbers
 }
 
-func (u *User) GetStrings() map[string]interface{} {
+func (u *User) GetStrings() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -572,6 +620,9 @@ func (u *User) GetStrings() map[string]interface{} {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -633,7 +684,7 @@ func (u *User) SetNumbers(numbers []int) {
 
 // SetStrings sets the Strings field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetStrings(strings map[string]interface{}) {
+func (u *User) SetStrings(strings map[string]any) {
 	u.Strings = strings
 	u.require(userFieldStrings)
 }
@@ -666,6 +717,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

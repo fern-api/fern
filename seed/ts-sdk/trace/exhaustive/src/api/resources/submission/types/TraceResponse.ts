@@ -5,8 +5,8 @@ import type * as SeedTrace from "../../../index.js";
 export interface TraceResponse {
     submissionId: SeedTrace.SubmissionId;
     lineNumber: number;
-    returnValue?: SeedTrace.DebugVariableValue;
-    expressionLocation?: SeedTrace.ExpressionLocation;
+    returnValue?: SeedTrace.DebugVariableValue | undefined;
+    expressionLocation?: SeedTrace.ExpressionLocation | undefined;
     stack: SeedTrace.StackInformation;
-    stdout?: string;
+    stdout?: string | undefined;
 }

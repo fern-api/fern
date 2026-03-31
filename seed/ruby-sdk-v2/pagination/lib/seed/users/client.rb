@@ -36,9 +36,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: query_params[:starting_after]
+          initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
-          query_params[:starting_after] = next_cursor
+          query_params["starting_after"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -79,11 +79,11 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :next,
+          cursor_field: :next_,
           item_field: :data,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: query_params["cursor"]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          query_params["cursor"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -117,20 +117,17 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[pagination]
-        body_bag = params.slice(*body_prop_names)
-
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: query_params["cursor"]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          query_params["cursor"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h,
+            body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -141,6 +138,49 @@ module Seed
           code = response.code.to_i
           if code.between?(200, 299)
             Seed::Users::Types::ListUsersPaginationResponse.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+      end
+
+      # Pagination endpoint with a top-level cursor field in the request body.
+      # This tests that the mock server correctly ignores cursor mismatches
+      # when getNextPage() is called with a different cursor value.
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
+      def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        Seed::Internal::CursorItemIterator.new(
+          cursor_field: :next_cursor,
+          item_field: :data,
+          initial_cursor: query_params["cursor"]
+        ) do |next_cursor|
+          query_params["cursor"] = next_cursor
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/users/top-level-cursor",
+            body: Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest.new(params).to_h,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -172,12 +212,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -224,12 +264,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -263,21 +303,18 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[pagination]
-        body_bag = params.slice(*body_prop_names)
-
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h,
+            body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -317,12 +354,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: true
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -367,12 +404,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
-          has_next_field: :hasNextPage,
+          has_next_field: :has_next_page,
           step: true
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -413,11 +450,11 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :next,
+          cursor_field: :next_,
           item_field: :users,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: query_params["cursor"]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          query_params["cursor"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -458,11 +495,11 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :next,
+          cursor_field: :next_,
           item_field: :users,
-          initial_cursor: query_params[:cursor]
+          initial_cursor: query_params["cursor"]
         ) do |next_cursor|
-          query_params[:cursor] = next_cursor
+          query_params["cursor"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -505,9 +542,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
-          initial_cursor: query_params[:starting_after]
+          initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
-          query_params[:starting_after] = next_cursor
+          query_params["starting_after"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -550,9 +587,9 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
           item_field: :data,
-          initial_cursor: query_params[:starting_after]
+          initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
-          query_params[:starting_after] = next_cursor
+          query_params["starting_after"] = next_cursor
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -591,12 +628,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:offset],
+          initial_page: query_params["offset"],
           item_field: :results,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:offset] = next_page
+          query_params["offset"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -637,12 +674,12 @@ module Seed
         params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
-          initial_page: query_params[:page],
+          initial_page: query_params["page"],
           item_field: :data,
           has_next_field: nil,
           step: false
         ) do |next_page|
-          query_params[:page] = next_page
+          query_params["page"] = next_page
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",

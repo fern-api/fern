@@ -1,6 +1,6 @@
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { RelativeFilePath } from "./RelativeFilePath";
-import { splitPath } from "./splitPath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
+import { RelativeFilePath } from "./RelativeFilePath.js";
+import { splitPath } from "./splitPath.js";
 
 export function getFilename(path: RelativeFilePath | AbsoluteFilePath): RelativeFilePath | undefined {
     if (!path.includes(".")) {

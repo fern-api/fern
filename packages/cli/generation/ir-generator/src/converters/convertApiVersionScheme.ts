@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { convertHttpHeader } from "./services/convertHttpService";
-import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration";
+import { FernFileContext } from "../FernFileContext.js";
+import { convertHttpHeader } from "./services/convertHttpService.js";
+import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration.js";
 
 export function convertApiVersionScheme({
     file,

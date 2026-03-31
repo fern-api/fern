@@ -1,0 +1,133 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedEndpointErrorSchemaImpl > constructs with multiple errors (mixed typed and untyped) 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.BadRequest | Error.Error;
+
+    export interface BadRequest {
+        errorName: "BadRequest";
+        content: string;
+    }
+
+    export interface Error {
+        errorName: "Error";
+    }
+}
+"
+`;
+
+exports[`GeneratedEndpointErrorSchemaImpl > writeToFile generates error schema output 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.Error;
+
+    export interface Error {
+        errorName: "Error";
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > casts response when serde layer disabled 1`] = `"response as string"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > casts text response to string type 1`] = `"response as string"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > deserializes named JSON response with named type schema 1`] = `"namedTypeSchema.parseOrThrow(response)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > deserializes primitive JSON response with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(response)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse - container type > deserializes container JSON response with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(response)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes named streaming data with named type schema 1`] = `"namedTypeSchema.parseOrThrow(streamData)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes primitive streaming data with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(streamData)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData - additional branches > deserializes container streaming data with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(streamData)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > error schema strategies > deserializes error with property discrimination strategy 1`] = `"EndpointSchema.parseOrThrow(error)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest > serializes named reference request with named type schema jsonOrThrow 1`] = `"namedTypeSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest > serializes primitive reference request with jsonOrThrow 1`] = `"EndpointSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest - allowExtraFields with extraProperties > serializes named request with extraProperties=true 1`] = `"namedTypeSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest - container type > serializes container reference request with jsonOrThrow 1`] = `"EndpointSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes both request and response schemas when both are primitive 1`] = `
+"export const Request: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace Request {
+    export type Raw = string;
+}
+
+export const Response: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace Response {
+    export type Raw = string;
+}
+
+
+"
+`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes request schema for reference request with container type 1`] = `
+"export const Request: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace Request {
+    export type Raw = string;
+}
+
+
+"
+`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes request schema for reference request with primitive type 1`] = `
+"export const Request: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace Request {
+    export type Raw = string;
+}
+
+
+"
+`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes response schema for JSON response with primitive type 1`] = `
+"export const Response: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace Response {
+    export type Raw = string;
+}
+
+
+"
+`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes stream data schema for streaming response with primitive payload 1`] = `
+"export const StreamData: Schema<EndpointSchema.Raw, string> = typeRefSchema;
+
+export declare namespace StreamData {
+    export type Raw = string;
+}
+
+
+"
+`;
+
+exports[`RawSinglePropertyErrorSingleUnionType > exercises getNonDiscriminantPropertiesForInterface and getNonDiscriminantPropertiesForSchema via writeToFile 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.BadRequest;
+
+    export interface BadRequest {
+        errorName: "BadRequest";
+        content: string;
+    }
+}
+"
+`;

@@ -93,6 +93,13 @@ types:
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
+      forwardCompatible:
+        docs: |
+          If true, the enum is forward-compatible (i.e., the API may return values
+          not listed in `values`). This is inferred from OpenAPI specs that express
+          an enum as `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from
+          Fern Definition enums marked with `forward-compatible: true`.
+        type: optional<boolean>
 
   EnumValue:
     extends: commons.Declaration
@@ -133,6 +140,13 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      discriminatorContext:
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means discriminator is within the union data itself.
+          "protocol" means discriminator is at the protocol level (e.g., SSE event field).
+        type: optional<UnionDiscriminatorContext>
+        default: data
 
   SingleUnionType:
     extends: commons.WithDocs
@@ -155,6 +169,14 @@ types:
     properties:
       name: commons.NameAndWireValue
       type: TypeReference
+
+  UnionDiscriminatorContext:
+    docs: Location of the discriminator relative to the union type
+    enum:
+      - value: data
+        docs: Discriminator is within the union data itself (e.g., data.type field)
+      - value: protocol
+        docs: Discriminator is at the protocol level (e.g., SSE event field, HTTP path)
 
   UndiscriminatedUnionTypeDeclaration:
     properties:
@@ -248,6 +270,7 @@ types:
       - STRING
       - DATE
       - DATE_TIME
+      - DATE_TIME_RFC_2822
       - UUID
       - BASE_64
       - BIG_INTEGER
@@ -264,6 +287,7 @@ types:
       string: StringType
       date: DateType
       dateTime: DateTimeType
+      dateTimeRfc2822: DateTimeRfc2822Type
       uuid: UuidType
       base64: Base64Type
       bigInteger: BigIntegerType
@@ -284,15 +308,54 @@ types:
   LongType:
     properties:
       default: optional<long>
+      validation: optional<LongValidationRules>
+
+  LongValidationRules:
+    properties:
+      min: optional<long>
+      max: optional<long>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<long>
 
   UintType:
-    properties: {}
+    properties:
+      default: optional<uint>
+      validation: optional<UintValidationRules>
+
+  UintValidationRules:
+    properties:
+      min: optional<uint>
+      max: optional<uint>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint>
 
   Uint64Type:
-    properties: {}
+    properties:
+      default: optional<uint64>
+      validation: optional<Uint64ValidationRules>
+
+  Uint64ValidationRules:
+    properties:
+      min: optional<uint64>
+      max: optional<uint64>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint64>
 
   FloatType:
-    properties: {}
+    properties:
+      default: optional<float>
+      validation: optional<FloatValidationRules>
+
+  FloatValidationRules:
+    properties:
+      min: optional<float>
+      max: optional<float>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<float>
 
   DoubleType:
     properties:
@@ -327,6 +390,9 @@ types:
     properties: {}
 
   DateTimeType:
+    properties: {}
+
+  DateTimeRfc2822Type:
     properties: {}
 
   UuidType:
@@ -532,6 +598,7 @@ types:
         type: date
         key: date
       datetime: ExampleDatetime
+      datetimeRfc2822: ExampleDatetimeRfc2822
       uuid:
         type: uuid
         key: uuid
@@ -543,6 +610,11 @@ types:
         key: bigInteger
 
   ExampleDatetime:
+    properties:
+      datetime: datetime
+      raw: optional<string>
+
+  ExampleDatetimeRfc2822:
     properties:
       datetime: datetime
       raw: optional<string>

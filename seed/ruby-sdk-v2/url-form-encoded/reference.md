@@ -13,9 +13,9 @@
 
 ```ruby
 client.submit_form_data(
-  username: 'johndoe',
-  email: 'john@example.com'
-);
+  username: "johndoe",
+  email: "john@example.com"
+)
 ```
 </dd>
 </dl>
@@ -57,3 +57,55 @@ client.submit_form_data(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_token</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.get_token(
+  client_id: "client_id",
+  client_secret: "client_secret"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::TokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

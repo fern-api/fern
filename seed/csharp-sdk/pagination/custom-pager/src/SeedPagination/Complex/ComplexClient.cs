@@ -1,35 +1,53 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedPagination.Core;
 
 namespace SeedPagination;
 
-public partial class ComplexClient
+public partial class ComplexClient : IComplexClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ComplexClient(RawClient client)
     {
         _client = client;
     }
 
-    private async Task<PaginatedConversationResponse> SearchInternalAsync(
+    private WithRawResponseTask<PaginatedConversationResponse> SearchInternalAsync(
         string index,
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        return new WithRawResponseTask<PaginatedConversationResponse>(
+            SearchInternalAsyncCore(index, request, options, cancellationToken)
+        );
+    }
+
+    private async Task<WithRawResponse<PaginatedConversationResponse>> SearchInternalAsyncCore(
+        string index,
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "{0}/conversations/search",
                         ValueConvert.ToPathParameterString(index)
                     ),
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -38,19 +56,39 @@ public partial class ComplexClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
-                return JsonUtils.Deserialize<PaginatedConversationResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<PaginatedConversationResponse>(
+                    responseBody
+                )!;
+                return new WithRawResponse<PaginatedConversationResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPaginationException("Failed to deserialize response", e);
+                throw new SeedPaginationApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -95,8 +133,9 @@ public partial class ComplexClient
             .CreateInstanceAsync(
                 request,
                 options,
-                (request, options, cancellationToken) =>
-                    SearchInternalAsync(index, request, options, cancellationToken),
+                async (request, options, cancellationToken) =>
+                    await SearchInternalAsync(index, request, options, cancellationToken)
+                        .ConfigureAwait(false),
                 (request, cursor) =>
                 {
                     request.Pagination ??= new StartingAfterPaging() { PerPage = 0 };

@@ -3,11 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .core.serialization import FieldMetadata
 
 
 class DocumentUploadResult(UniversalBaseModel):
-    file_id: typing.Optional[str] = pydantic.Field(alias="fileId", default=None)
+    file_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="fileId"), pydantic.Field(alias="fileId")
+    ] = None
     status: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

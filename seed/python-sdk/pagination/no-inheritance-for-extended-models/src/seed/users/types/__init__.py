@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
     from .list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
     from .list_users_pagination_response import ListUsersPaginationResponse
+    from .list_users_top_level_cursor_pagination_response import ListUsersTopLevelCursorPaginationResponse
     from .next_page import NextPage
     from .order import Order
     from .page import Page
@@ -28,6 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListUsersMixedTypePaginationResponse": ".list_users_mixed_type_pagination_response",
     "ListUsersOptionalDataPaginationResponse": ".list_users_optional_data_pagination_response",
     "ListUsersPaginationResponse": ".list_users_pagination_response",
+    "ListUsersTopLevelCursorPaginationResponse": ".list_users_top_level_cursor_pagination_response",
     "NextPage": ".next_page",
     "Order": ".order",
     "Page": ".page",
@@ -69,6 +71,7 @@ __all__ = [
     "ListUsersMixedTypePaginationResponse",
     "ListUsersOptionalDataPaginationResponse",
     "ListUsersPaginationResponse",
+    "ListUsersTopLevelCursorPaginationResponse",
     "NextPage",
     "Order",
     "Page",

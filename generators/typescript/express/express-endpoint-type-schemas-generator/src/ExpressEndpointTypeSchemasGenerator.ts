@@ -1,8 +1,7 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
-
-import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpointTypeSchemasImpl";
+import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpointTypeSchemasImpl.js";
 
 export declare namespace ExpressEndpointTypeSchemasGenerator {
     export interface Init {
@@ -15,8 +14,8 @@ export declare namespace ExpressEndpointTypeSchemasGenerator {
     export namespace generateEndpointTypeSchemas {
         export interface Args {
             packageId: PackageId;
-            service: HttpService;
-            endpoint: HttpEndpoint;
+            service: FernIr.HttpService;
+            endpoint: FernIr.HttpEndpoint;
         }
     }
 }

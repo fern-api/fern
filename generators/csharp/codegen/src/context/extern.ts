@@ -1,6 +1,6 @@
-import { type Type } from "../ast/types/IType";
-import { type Generation } from "../context/generation-info";
-import { lazy } from "../utils/lazy";
+import { type Type } from "../ast/types/IType.js";
+import { type Generation } from "../context/generation-info.js";
+import { lazy } from "../utils/lazy.js";
 
 /**
  * Provides access to external type references for C# code generation.
@@ -108,7 +108,7 @@ export class Extern {
          */
         Serializable: () =>
             this.csharp.classReference({
-                name: "Serializable",
+                name: "SerializableAttribute",
                 namespace: "System"
             }),
 
@@ -174,7 +174,7 @@ export class Extern {
                          */
                         EnumMember: () =>
                             this.csharp.classReference({
-                                name: "EnumMember",
+                                name: "EnumMemberAttribute",
                                 namespace: "System.Runtime.Serialization"
                             })
                     })
@@ -593,7 +593,7 @@ export class Extern {
                                  */
                                 JsonExtensionData: () =>
                                     this.csharp.classReference({
-                                        name: "JsonExtensionData",
+                                        name: "JsonExtensionDataAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     }),
 
@@ -616,7 +616,7 @@ export class Extern {
                                  */
                                 JsonIgnore: () =>
                                     this.csharp.classReference({
-                                        name: "JsonIgnore",
+                                        name: "JsonIgnoreAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     }),
 
@@ -625,7 +625,7 @@ export class Extern {
                                  */
                                 JsonPropertyName: () =>
                                     this.csharp.classReference({
-                                        name: "JsonPropertyName",
+                                        name: "JsonPropertyNameAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     })
                             })
@@ -662,8 +662,59 @@ export class Extern {
                                 namespace: "System.Threading.Tasks",
                                 generics: ofType ? [ofType] : undefined
                             });
+                        },
+                        /**
+                         * Creates a reference to ValueTask or ValueTask<T>.
+                         *
+                         * @param ofType - The result type (optional)
+                         * @returns A ClassReference for ValueTask<T>
+                         */
+                        ValueTask: (ofType?: Type) => {
+                            return this.csharp.classReference({
+                                name: "ValueTask",
+                                namespace: "System.Threading.Tasks",
+                                generics: ofType ? [ofType] : undefined
+                            });
                         }
                     })
+            }),
+        /**
+         * ComponentModel namespace references.
+         */
+        ComponentModel: () =>
+            lazy({
+                /**
+                 * Reference to System.ComponentModel.INotifyPropertyChanged interface.
+                 */
+                INotifyPropertyChanged: () =>
+                    this.csharp.classReference({
+                        name: "INotifyPropertyChanged",
+                        namespace: "System.ComponentModel"
+                    }),
+                /**
+                 * Reference to System.ComponentModel.PropertyChangedEventHandler delegate.
+                 */
+                PropertyChangedEventHandler: () =>
+                    this.csharp.classReference({
+                        name: "PropertyChangedEventHandler",
+                        namespace: "System.ComponentModel"
+                    })
+            }),
+        /**
+         * Reference to System.IAsyncDisposable interface.
+         */
+        IAsyncDisposable: () =>
+            this.csharp.classReference({
+                name: "IAsyncDisposable",
+                namespace: "System"
+            }),
+        /**
+         * Reference to System.IDisposable interface.
+         */
+        IDisposable: () =>
+            this.csharp.classReference({
+                name: "IDisposable",
+                namespace: "System"
             })
     });
 
@@ -720,6 +771,14 @@ export class Extern {
                     this.csharp.classReference({
                         name: "SetUpFixture",
                         namespace: "NUnit.Framework"
+                    }),
+                /**
+                 * Reference to NUnit.Framework.ParallelizableAttribute class.
+                 */
+                Parallelizable: () =>
+                    this.csharp.classReference({
+                        name: "Parallelizable",
+                        namespace: "NUnit.Framework"
                     })
             })
     });
@@ -774,6 +833,15 @@ export class Extern {
          */
         Protobuf: () =>
             lazy({
+                /**
+                 * Reference to Google.Protobuf.ByteString class.
+                 */
+                ByteString: () =>
+                    this.csharp.classReference({
+                        name: "ByteString",
+                        namespace: "Google.Protobuf"
+                    }),
+
                 /**
                  * Well-known types namespace references with namespace alias.
                  */

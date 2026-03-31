@@ -5,6 +5,21 @@
 
 The Seed Swift library provides convenient access to the Seed APIs from Swift.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Timeouts](#timeouts)
+  - [Custom Networking Client](#custom-networking-client)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -50,11 +65,7 @@ private func main() async throws {
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             avatar: .value("avatar"),
             activated: .value(true),
-            status: Status.active(
-                .init(
-
-                )
-            ),
+            status: Status.active,
             values: [
                 "values": .value("values")
             ]

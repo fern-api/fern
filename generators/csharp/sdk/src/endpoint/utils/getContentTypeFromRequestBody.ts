@@ -1,4 +1,6 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
 
 export function getContentTypeFromRequestBody(endpoint: HttpEndpoint): string | undefined {
     if (!endpoint.requestBody) {

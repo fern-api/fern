@@ -1,20 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    Name,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 export declare namespace GoTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
     }
 }
 
@@ -42,14 +33,14 @@ export class GoTypeMapper {
         }
     }
 
-    public convertToTypeReference(declaredTypeName: { typeId: TypeId; name: Name }): go.TypeReference {
+    public convertToTypeReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name }): go.TypeReference {
         return go.typeReference({
             name: this.context.getClassName(declaredTypeName.name),
             importPath: this.context.getLocationForTypeId(declaredTypeName.typeId).importPath
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): go.Type {
+    private convertContainer({ container }: { container: FernIr.ContainerType }): go.Type {
         switch (container.type) {
             case "list":
                 return go.Type.slice(this.convert({ reference: container.list }));
@@ -71,8 +62,8 @@ export class GoTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): go.Type {
-        return PrimitiveTypeV1._visit<go.Type>(primitive.v1, {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): go.Type {
+        return FernIr.PrimitiveTypeV1._visit<go.Type>(primitive.v1, {
             integer: () => go.Type.int(),
             long: () => go.Type.int64(),
             uint: () => go.Type.int(),
@@ -90,7 +81,7 @@ export class GoTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): go.Type {
+    private convertLiteral({ literal }: { literal: FernIr.Literal }): go.Type {
         switch (literal.type) {
             case "boolean":
                 return go.Type.bool();
@@ -101,7 +92,7 @@ export class GoTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): go.Type {
+    private convertNamed({ named }: { named: FernIr.DeclaredTypeName }): go.Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":

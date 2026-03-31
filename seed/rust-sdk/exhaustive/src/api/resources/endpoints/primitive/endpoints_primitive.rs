@@ -1,5 +1,5 @@
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, FixedOffset, NaiveDate};
 use reqwest::Method;
 use uuid::Uuid;
 
@@ -16,14 +16,14 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_string(
         &self,
-        request: &String,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 "/primitive/string",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -39,7 +39,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/integer",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -55,7 +55,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/long",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -71,7 +71,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/double",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -87,7 +87,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/boolean",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -96,14 +96,14 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_datetime(
         &self,
-        request: &DateTime<Utc>,
+        request: &DateTime<FixedOffset>,
         options: Option<RequestOptions>,
-    ) -> Result<DateTime<Utc>, ApiError> {
+    ) -> Result<DateTime<FixedOffset>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 "/primitive/datetime",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -119,7 +119,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/date",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -135,7 +135,7 @@ impl PrimitiveClient {
             .execute_request(
                 Method::POST,
                 "/primitive/uuid",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -148,10 +148,10 @@ impl PrimitiveClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<u8>, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_request_base64(
                 Method::POST,
                 "/primitive/base64",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

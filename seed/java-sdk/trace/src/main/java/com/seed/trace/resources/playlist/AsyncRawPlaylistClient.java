@@ -62,6 +62,11 @@ public class AsyncRawPlaylistClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalDatetime", request.getOptionalDatetime().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -140,6 +145,11 @@ public class AsyncRawPlaylistClient {
                     true);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "multipleField", request.getMultipleField(), true);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -192,14 +202,18 @@ public class AsyncRawPlaylistClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<Playlist>> getPlaylist(
             int serviceParam, String playlistId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId)
-                .build();
+                .addPathSegment(playlistId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -248,6 +262,14 @@ public class AsyncRawPlaylistClient {
      * Updates a playlist
      */
     public CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> updatePlaylist(
+            int serviceParam, String playlistId, RequestOptions requestOptions) {
+        return updatePlaylist(serviceParam, playlistId, Optional.empty(), requestOptions);
+    }
+
+    /**
+     * Updates a playlist
+     */
+    public CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return updatePlaylist(serviceParam, playlistId, request, null);
     }
@@ -260,12 +282,16 @@ public class AsyncRawPlaylistClient {
             String playlistId,
             Optional<UpdatePlaylistRequest> request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId)
-                .build();
+                .addPathSegment(playlistId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -277,7 +303,7 @@ public class AsyncRawPlaylistClient {
             throw new SeedTraceException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -329,14 +355,18 @@ public class AsyncRawPlaylistClient {
      */
     public CompletableFuture<SeedTraceHttpResponse<Void>> deletePlaylist(
             int serviceParam, String playlistId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId)
-                .build();
+                .addPathSegment(playlistId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();

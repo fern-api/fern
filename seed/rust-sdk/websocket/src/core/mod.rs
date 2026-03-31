@@ -1,15 +1,17 @@
 //! Core client infrastructure
 
 mod http_client;
-mod query_parameter_builder;
+mod oauth_token_provider;
 mod request_options;
-#[cfg(feature = "sse")]
-mod sse_stream;
+mod query_parameter_builder;
+#[cfg(feature = "websocket")]
+mod websocket;
 mod utils;
 
-pub use http_client::{ByteStream, HttpClient};
-pub use query_parameter_builder::{parse_structured_query, QueryBuilder, QueryBuilderError};
+pub use http_client::{ByteStream, HttpClient, OAuthConfig};
+pub use oauth_token_provider::OAuthTokenProvider;
 pub use request_options::RequestOptions;
-#[cfg(feature = "sse")]
-pub use sse_stream::SseStream;
+pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};
+#[cfg(feature = "websocket")]
+pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};
 pub use utils::join_url;

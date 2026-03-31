@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> Task</code></summary>
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -164,6 +164,15 @@ await client.System.CreateTaskAsync(
     {
         Name = "name",
         User = new global::SeedCsharpNamespaceCollision.System.User
+        {
+            Line1 = "line1",
+            Line2 = "line2",
+            City = "city",
+            State = "state",
+            Zip = "zip",
+            Country = "USA",
+        },
+        Owner = new global::SeedCsharpNamespaceCollision.System.User
         {
             Line1 = "line1",
             Line2 = "line2",
@@ -199,3 +208,44 @@ await client.System.CreateTaskAsync(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.System.GetUserAsync("userId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

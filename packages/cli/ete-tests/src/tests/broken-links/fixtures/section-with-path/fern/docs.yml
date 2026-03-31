@@ -1,0 +1,9 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+navigation:
+  - section: Section With Path
+    path: section-index.mdx
+    contents:
+      - page: Child Page
+        path: child.mdx

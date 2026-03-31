@@ -10,7 +10,13 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_path(&"param".to_string(), None)
+        .object
+        .get_and_return_with_unknown_field(
+            &ObjectWithUnknownField {
+                unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

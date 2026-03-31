@@ -102,6 +102,16 @@ public final class ObjectTypeWithMapAliasTypeKey {
         public ObjectTypeWithMapAliasTypeKey build() {
             return new ObjectTypeWithMapAliasTypeKey(prop, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -158,6 +168,10 @@ public final class ObjectTypeWithMapAliasTypeKey {
 
         public interface _FinalStage {
             PropKey build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -185,6 +199,18 @@ public final class ObjectTypeWithMapAliasTypeKey {
             @java.lang.Override
             public PropKey build() {
                 return new PropKey(prop, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }

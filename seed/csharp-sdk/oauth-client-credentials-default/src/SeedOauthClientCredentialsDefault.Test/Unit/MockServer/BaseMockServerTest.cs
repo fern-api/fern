@@ -6,21 +6,20 @@ using WireMock.Settings;
 
 namespace SeedOauthClientCredentialsDefault.Test.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedOauthClientCredentialsDefaultClient Client { get; set; } = null!;
+    protected SeedOauthClientCredentialsDefaultClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     private void MockOAuthEndpoint()
     {
         const string requestJson = """
             {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET",
+              "client_id": "client_id",
+              "client_secret": "client_secret",
               "grant_type": "client_credentials"
             }
             """;
@@ -33,13 +32,7 @@ public class BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/token")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -58,8 +51,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedOauthClientCredentialsDefaultClient(
-            "CLIENT_ID",
-            "CLIENT_SECRET",
+            "client_id",
+            "client_secret",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockOAuthEndpoint();

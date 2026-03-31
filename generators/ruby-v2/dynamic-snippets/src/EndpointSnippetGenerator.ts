@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
 const CLIENT_VAR_NAME = "client";
 const INSTANCE_CLIENT_VAR_NAME = "@client";
@@ -285,7 +285,7 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         for (const header of headers) {
-            const value = values[header.name.name.originalName];
+            const value = values[header.name.wireValue];
             if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({

@@ -8,9 +8,13 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { isReferenceObject } from "./utils/isReferenceObject";
+
+import { getExtension } from "../getExtension.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas.js";
+import { inferDiscriminatorContext, inferDiscriminatorContextFromVariants } from "./inferDiscriminatorContext.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export function convertDiscriminatedOneOf({
     nameOverride,
@@ -48,6 +52,10 @@ export function convertDiscriminatedOneOf({
     source: Source;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
+    const discriminantNameOverride = getExtension<string>(discriminator, FernOpenAPIExtension.FERN_PROPERTY_NAME);
+    const discriminatorContext =
+        getExtension<"data" | "protocol">(discriminator, FernOpenAPIExtension.DISCRIMINATOR_CONTEXT) ??
+        inferDiscriminatorContext({ discriminator, context });
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
             const subtypeReference = convertReferenceObject(
@@ -105,6 +113,8 @@ export function convertDiscriminatedOneOf({
         description,
         availability,
         discriminant,
+        discriminantNameOverride,
+        discriminatorContext,
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -213,6 +223,8 @@ export function convertDiscriminatedOneOfWithVariants({
         description,
         availability,
         discriminant,
+        discriminantNameOverride: undefined,
+        discriminatorContext: inferDiscriminatorContextFromVariants({ variants, context }),
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -230,6 +242,8 @@ export function wrapDiscriminatedOneOf({
     description,
     availability,
     discriminant,
+    discriminantNameOverride,
+    discriminatorContext,
     subtypes,
     namespace,
     groupName,
@@ -244,6 +258,8 @@ export function wrapDiscriminatedOneOf({
     description: string | undefined;
     availability: Availability | undefined;
     discriminant: string;
+    discriminantNameOverride: string | undefined;
+    discriminatorContext: "data" | "protocol";
     subtypes: Record<string, SchemaWithExample>;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -254,6 +270,8 @@ export function wrapDiscriminatedOneOf({
             description,
             availability,
             discriminantProperty: discriminant,
+            discriminantPropertyNameOverride: discriminantNameOverride,
+            discriminatorContext,
             nameOverride,
             generatedName,
             title,

@@ -1,19 +1,17 @@
-import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
-import { ast, is, Writer } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleEndpointCall,
-    ExampleResponse,
-    ExampleTypeReference,
-    HttpEndpoint,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { MockEndpointGenerator } from "./MockEndpointGenerator";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -46,22 +44,32 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     public override shouldGenerate(): boolean {
-        if (this.endpoint.pagination?.type === "custom") {
+        if (
+            this.endpoint.pagination?.type === "custom" ||
+            this.endpoint.pagination?.type === "uri" ||
+            this.endpoint.pagination?.type === "path"
+        ) {
             return false;
         }
         return super.shouldGenerate();
     }
 
-    private getTestNamespace(): string {
+    private getServiceNamespaceSegments(): string[] {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
+            return [];
+        }
+        // Use allParts (not packagePath) to include the service name itself,
+        // ensuring each service gets its own subdirectory and namespace.
+        return subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+    }
+
+    private getTestNamespace(): string {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.namespaces.mockServerTest;
         }
-
-        return [
-            this.namespaces.mockServerTest,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
-        ].join(".");
+        return [this.namespaces.mockServerTest, ...segments].join(".");
     }
 
     protected doGenerate(): CSharpFile {
@@ -139,40 +147,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                         writer.write("var response = ");
                         writer.writeNodeStatement(endpointSnippet);
                         if (responseBodyType === "json") {
-                            const responseType = this.getCsharpTypeFromResponse(example.response);
-                            const deserializeResponseNode = this.csharp.invokeMethod({
-                                on: this.Types.JsonUtils,
-                                method: "Deserialize",
-                                generics: [responseType],
-                                arguments_: [this.csharp.codeblock("mockResponse")]
-                            });
-                            const innerType = responseType.asNonOptional();
-                            if (is.OneOf.OneOf(innerType) || is.OneOf.OneOfBase(innerType)) {
-                                writer.writeLine(`Assert.That(
-                                response.Value,
-                                Is.EqualTo(`);
-                                writer.writeNode(deserializeResponseNode);
-                                writer.writeLine(".Value).UsingDefaults()");
-                            } else {
-                                if (
-                                    innerType.isCollection ||
-                                    is.Primitive.object(innerType) ||
-                                    is.ClassReference(innerType)
-                                ) {
-                                    writer.writeLine(`Assert.That(
-                                        response,
-                                        Is.EqualTo(`);
-                                    writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(").UsingDefaults()");
-                                } else {
-                                    writer.writeLine(`Assert.That(
-                                  response,
-                                  Is.EqualTo(`);
-                                    writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(")");
-                                }
-                            }
-                            writer.writeTextStatement(")");
+                            writer.writeNodeStatement(
+                                this.csharp.invokeMethod({
+                                    on: this.Types.JsonAssert,
+                                    method: "AreEqual",
+                                    arguments_: [
+                                        this.csharp.codeblock("response"),
+                                        this.csharp.codeblock("mockResponse")
+                                    ]
+                                })
+                            );
                         } else if (responseBodyType === "text") {
                             writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
                         }
@@ -214,14 +198,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private getDirectory(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
-        if (!subpackage) {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.constants.folders.mockServerTests;
         }
-        return join(
-            this.constants.folders.mockServerTests,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath).map(RelativeFilePath.of)
-        );
+        return join(this.constants.folders.mockServerTests, ...segments.map(RelativeFilePath.of));
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -272,33 +253,6 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     : undefined;
             case "unknown":
                 return undefined;
-        }
-    }
-
-    getCsharpTypeFromResponse(exampleResponse: ExampleResponse): ast.Type {
-        switch (exampleResponse.type) {
-            case "ok":
-                if (exampleResponse.value.type === "body") {
-                    if (exampleResponse.value.value) {
-                        const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value);
-                        const type = this.context.csharpTypeMapper.convert({
-                            reference: typeReference
-                        });
-                        return type;
-                    }
-                }
-                throw new Error("Internal error; could not convert example response to C# type");
-            case "error":
-                if (exampleResponse.body) {
-                    const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
-                    const type = this.context.csharpTypeMapper.convert({
-                        reference: typeReference
-                    });
-                    return type;
-                }
-                throw new Error("Internal error; could not convert example response to C# type");
-            default:
-                assertNever(exampleResponse);
         }
     }
 }

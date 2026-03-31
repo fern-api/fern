@@ -8,8 +8,8 @@ import {
     VALID_ENUM_NAME_REGEX
 } from "@fern-api/openapi-ir";
 
-import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
-import { SchemaParserContext } from "./SchemaParserContext";
+import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
 
 export function convertEnum({
     nameOverride,

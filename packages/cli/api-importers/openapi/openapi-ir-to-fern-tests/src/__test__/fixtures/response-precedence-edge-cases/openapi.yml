@@ -58,6 +58,15 @@ paths:
               schema:
                 type: string
 
+  /csv-only:
+    get:
+      operationId: getCsvData
+      responses:
+        "200":
+          description: Ids in textual format, one id per line.
+          content:
+            text/csv: {}
+
   /items:
     get:
       operationId: getItems

@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">create_movie</a>(request: CreateMovieRequest) -> Result<MovieId, ApiError></code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">create_movie</a>(request: CreateMovieRequest) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ Add a movie to the database using the movies/* /... path.
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {
@@ -43,6 +42,7 @@ async fn main() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )
@@ -59,7 +59,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">get_movie</a>(movie_id: MovieId) -> Result<Movie, ApiError></code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -73,7 +73,6 @@ async fn main() {
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -112,3 +111,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

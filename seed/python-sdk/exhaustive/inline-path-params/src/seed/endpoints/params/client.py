@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 from .raw_client import AsyncRawParamsClient, RawParamsClient
 
 # this is used as the default value for optional parameters
@@ -303,6 +304,44 @@ class ParamsClient:
         _response = self._raw_client.modify_with_inline_path(
             param=param, request=request, request_options=request_options
         )
+        return _response.data
+
+    def upload_with_path(
+        self,
+        *,
+        param: str,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredField:
+        """
+        POST bytes with path param returning object
+
+        Parameters
+        ----------
+        param : str
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredField
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.upload_with_path(
+            param="upload-path",
+        )
+        """
+        _response = self._raw_client.upload_with_path(param=param, request=request, request_options=request_options)
         return _response.data
 
 
@@ -665,6 +704,54 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.modify_with_inline_path(
+            param=param, request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def upload_with_path(
+        self,
+        *,
+        param: str,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredField:
+        """
+        POST bytes with path param returning object
+
+        Parameters
+        ----------
+        param : str
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredField
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.params.upload_with_path(
+                param="upload-path",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.upload_with_path(
             param=param, request=request, request_options=request_options
         )
         return _response.data

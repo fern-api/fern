@@ -1,12 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
-import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type PathParameter = FernIr.PathParameter;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 type PagingEndpoint = HttpEndpoint & {
     pagination: NonNullable<HttpEndpoint["pagination"]>;
@@ -36,15 +42,18 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     protected getUnpagedEndpointSignatureInfo({
         serviceId,
-        endpoint
+        endpoint,
+        isGrpc
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
+        isGrpc?: boolean;
     }): EndpointSignatureInfo {
         return this.getEndpointSignatureInfoFor({
             serviceId,
             endpoint,
-            endpointType: "unpaged"
+            endpointType: "unpaged",
+            isGrpc
         });
     }
 
@@ -65,11 +74,13 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     protected getEndpointSignatureInfoFor({
         serviceId,
         endpoint,
-        endpointType
+        endpointType,
+        isGrpc
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
         endpointType: "unpaged" | "paged";
+        isGrpc?: boolean;
     }): EndpointSignatureInfo {
         const request = getEndpointRequest({
             context: this.context,
@@ -90,7 +101,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         let returnType: ast.Type | undefined;
         switch (endpointType) {
             case "unpaged":
-                returnType = getEndpointReturnType({ context: this.context, endpoint });
+                returnType = getEndpointReturnType({ context: this.context, endpoint, isGrpc });
                 break;
             case "paged":
                 returnType = this.getPagerReturnType(endpoint);
@@ -110,10 +121,21 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
-        if (endpoint.pagination?.type === "custom") {
-            return this.Types.CustomPagerClass(itemType);
+        this.assertHasPagination(endpoint);
+        switch (endpoint.pagination.type) {
+            case "offset":
+            case "cursor":
+                return this.Types.Pager(itemType);
+            case "custom":
+                return this.Types.CustomPagerClass(itemType);
+            case "uri":
+            case "path":
+                throw new Error(
+                    `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                );
+            default:
+                assertNever(endpoint.pagination);
         }
-        return this.Types.Pager(itemType);
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -127,6 +149,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        throw new Error(
+                            `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                        );
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -329,7 +356,10 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         );
     }
 
-    private getJustRequestBodySnippet(exampleRequestBody: ExampleRequestBody, parseDatetimes: boolean): ast.CodeBlock {
+    private getJustRequestBodySnippet(
+        exampleRequestBody: FernIr.ExampleRequestBody,
+        parseDatetimes: boolean
+    ): ast.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
             throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }

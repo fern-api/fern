@@ -1,12 +1,13 @@
 package example
 
 import (
-    client "github.com/examples/fern/client"
-    option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    commons "github.com/examples/fern/commons"
-    uuid "github.com/google/uuid"
     context "context"
+
+    fern "github.com/examples/fern"
+    client "github.com/examples/fern/client"
+    commons "github.com/examples/fern/commons"
+    option "github.com/examples/fern/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -46,7 +47,7 @@ func do() {
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &fern.Entity{
             Type: &fern.Type{
@@ -103,13 +104,9 @@ func do() {
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -126,13 +123,9 @@ func do() {
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -204,13 +197,9 @@ func do() {
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -229,13 +218,9 @@ func do() {
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },

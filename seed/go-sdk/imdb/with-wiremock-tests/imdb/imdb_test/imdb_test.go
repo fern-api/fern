@@ -6,12 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	testPackageName "github.com/imdb/fern"
 	client "github.com/imdb/fern/client"
 	option "github.com/imdb/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -22,7 +24,11 @@ func VerifyRequestCount(
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockURL := os.Getenv("WIREMOCK_URL")
+	if wiremockURL == "" {
+		wiremockURL = "http://localhost:8080"
+	}
+	WiremockAdminURL := wiremockURL + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
@@ -60,11 +66,12 @@ func VerifyRequestCount(
 func TestImdbCreateMovieWithWireMock(
 	t *testing.T,
 ) {
-	WireMockBaseURL := "http://localhost:8080"
-	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewIMDBClient(
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &testPackageName.CreateMovieRequest{
 		Title:  "title",
@@ -85,11 +92,12 @@ func TestImdbCreateMovieWithWireMock(
 func TestImdbGetMovieWithWireMock(
 	t *testing.T,
 ) {
-	WireMockBaseURL := "http://localhost:8080"
-	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewIMDBClient(
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Imdb.GetMovie(
 		context.TODO(),

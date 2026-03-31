@@ -1,13 +1,13 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../resolvers/ResolvedType";
-import { TypeResolver } from "../../resolvers/TypeResolver";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ResolvedType } from "../../resolvers/ResolvedType.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import {
     getObjectPropertyFromObjectSchema,
     getObjectPropertyFromResolvedType
-} from "./getObjectPropertyFromResolvedType";
+} from "./getObjectPropertyFromResolvedType.js";
 
 export function getNestedObjectPropertyFromResolvedType({
     typeResolver,

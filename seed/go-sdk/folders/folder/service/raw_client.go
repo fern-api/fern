@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
-	fern "github.com/folders/fern"
+	http "net/http"
+
 	core "github.com/folders/fern/core"
+	folder "github.com/folders/fern/folder"
 	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -94,7 +95,7 @@ func (r *RawClient) UnknownRequest(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(folder.ErrorCodes),
 		},
 	)
 	if err != nil {

@@ -1,11 +1,10 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent.js";
 
 type SPMDetails = {
     gitUrl: string | null;
@@ -16,7 +15,7 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
     public readonly generatorAgent: SwiftGeneratorAgent;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService

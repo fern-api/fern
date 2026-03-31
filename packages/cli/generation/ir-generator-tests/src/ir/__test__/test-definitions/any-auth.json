@@ -414,6 +414,7 @@
                     }
                 },
                 "usernameEnvVar": "MY_USERNAME",
+                "usernameOmit": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -434,6 +435,7 @@
                     }
                 },
                 "passwordEnvVar": "MY_PASSWORD",
+                "passwordOmit": null,
                 "key": "Basic",
                 "docs": null
             },
@@ -2000,6 +2002,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -2912,6 +2915,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -3749,6 +3753,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

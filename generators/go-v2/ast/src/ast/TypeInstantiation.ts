@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { FuncInvocation } from "./FuncInvocation";
-import { GoTypeReference } from "./GoTypeReference";
-import { MethodInvocation } from "./MethodInvocation";
-import { Type } from "./Type";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { FuncInvocation } from "./FuncInvocation.js";
+import { GoTypeReference } from "./GoTypeReference.js";
+import { MethodInvocation } from "./MethodInvocation.js";
+import { Type } from "./Type.js";
 
 type InternalTypeInstantiation =
     | Any_
@@ -131,8 +131,18 @@ interface Uuid {
     value: string;
 }
 
-const POINTER_HELPER_TYPES = new Set<string>(["bool", "date", "dateTime", "float64", "int", "int64", "string", "uuid"]);
-const ADDRESSABLE_TYPES = new Set<string>(["any", "bytes", "map", "slice"]);
+const POINTER_HELPER_TYPES = new Set<string>([
+    "bool",
+    "bytes",
+    "date",
+    "dateTime",
+    "float64",
+    "int",
+    "int64",
+    "string",
+    "uuid"
+]);
+const ADDRESSABLE_TYPES = new Set<string>(["any", "map", "slice"]);
 
 export class TypeInstantiation extends AstNode {
     private constructor(public readonly internalType: InternalTypeInstantiation) {
@@ -161,8 +171,10 @@ export class TypeInstantiation extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             case "int":
-            case "int64":
                 writer.write(this.internalType.value.toString());
+                break;
+            case "int64":
+                writer.write(`int64(${this.internalType.value.toString()})`);
                 break;
             case "map":
                 this.writeMap({ writer, map: this.internalType });
@@ -183,9 +195,11 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "string":
                 writer.write(
-                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
-                        ? `\`${this.internalType.value}\``
-                        : `"${this.internalType.value}"`
+                    this.internalType.value.includes("`")
+                        ? `"${escapeGoString(this.internalType.value)}"`
+                        : this.internalType.value.includes('"') || this.internalType.value.includes("\n")
+                          ? `\`${this.internalType.value}\``
+                          : `"${escapeGoString(this.internalType.value)}"`
                 );
                 break;
             case "struct":
@@ -379,7 +393,13 @@ export class TypeInstantiation extends AstNode {
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.write(value.includes('"') ? `\`${value}\`` : `"${value}"`);
+                writer.write(
+                    value.includes("`")
+                        ? `"${escapeGoString(value)}"`
+                        : value.includes('"') || value.includes("\n")
+                          ? `\`${value}\``
+                          : `"${escapeGoString(value)}"`
+                );
                 return;
             case "number":
                 writer.write(value.toString());
@@ -425,7 +445,7 @@ export class TypeInstantiation extends AstNode {
 
     private writeAnyObject({ writer, value }: { writer: Writer; value: object }): void {
         writer.write("map[string]any");
-        const entries = Object.entries(value);
+        const entries = Object.entries(value).sort(([keyA], [keyB]) => (keyA < keyB ? -1 : keyA > keyB ? 1 : 0));
         if (entries.length === 0) {
             writer.write("{}");
             return;
@@ -433,7 +453,7 @@ export class TypeInstantiation extends AstNode {
         writer.writeLine("{");
         writer.indent();
         for (const [key, val] of entries) {
-            writer.write(`"${key}": `);
+            writer.write(`"${escapeGoString(key)}": `);
             writer.writeNode(TypeInstantiation.any(val));
             writer.writeLine(",");
         }
@@ -558,6 +578,8 @@ function getPointerHelperFuncName({ type }: { type: TypeInstantiation }): string
     switch (type.internalType.type) {
         case "bool":
             return "Bool";
+        case "bytes":
+            return "Bytes";
         case "date":
         case "dateTime":
             return "Time";
@@ -595,6 +617,15 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
         }),
         arguments_: [new CodeBlock(`"${value}"`)]
     });
+}
+
+function escapeGoString(value: string): string {
+    return value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\t/g, "\\t");
 }
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {

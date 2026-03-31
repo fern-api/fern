@@ -588,7 +588,10 @@
               "safeName": "Production"
             }
           },
-          "url": "https://api.com"
+          "url": "https://api.com",
+          "audiences": [
+            "public"
+          ]
         },
         {
           "id": "sandbox",
@@ -611,7 +614,10 @@
               "safeName": "Sandbox"
             }
           },
-          "url": "https://private.api.com"
+          "url": "https://private.api.com",
+          "audiences": [
+            "private"
+          ]
         }
       ],
       "type": "singleBaseUrl"

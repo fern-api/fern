@@ -37,14 +37,18 @@ public class RawOrganizationsClient {
 
     public SeedPathParametersHttpResponse<Organization> getOrganization(
             String organizationId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
-                .addPathSegment(organizationId)
-                .build();
+                .addPathSegment(organizationId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -74,22 +78,32 @@ public class RawOrganizationsClient {
     }
 
     public SeedPathParametersHttpResponse<User> getOrganizationUser(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return getOrganizationUser(
+                organizationId, userId, GetOrganizationUserRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPathParametersHttpResponse<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request) {
         return getOrganizationUser(organizationId, userId, request, null);
     }
 
     public SeedPathParametersHttpResponse<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(clientOptions.tenantId())
                 .addPathSegments("organizations")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -119,6 +133,12 @@ public class RawOrganizationsClient {
     }
 
     public SeedPathParametersHttpResponse<List<Organization>> searchOrganizations(
+            String organizationId, RequestOptions requestOptions) {
+        return searchOrganizations(
+                organizationId, SearchOrganizationsRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPathParametersHttpResponse<List<Organization>> searchOrganizations(
             String organizationId, SearchOrganizationsRequest request) {
         return searchOrganizations(organizationId, request, null);
     }
@@ -134,6 +154,11 @@ public class RawOrganizationsClient {
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "limit", request.getLimit().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

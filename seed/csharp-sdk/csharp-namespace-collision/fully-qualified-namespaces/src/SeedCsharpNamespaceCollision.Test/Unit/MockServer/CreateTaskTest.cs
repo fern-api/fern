@@ -1,9 +1,10 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.Test.Utils;
 
 namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTaskTest : BaseMockServerTest
 {
     [Test]
@@ -11,7 +12,6 @@ public class CreateTaskTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "id": "id",
               "name": "name",
               "email": "email",
               "password": "password"
@@ -20,10 +20,8 @@ public class CreateTaskTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "id": "id",
               "name": "name",
-              "email": "email",
-              "password": "password"
+              "email": "email"
             }
             """;
 
@@ -51,9 +49,6 @@ public class CreateTaskTest : BaseMockServerTest
                 Password = "password",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Task>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,4 +1,4 @@
-import { writePostmanCollection } from "./writePostmanCollection";
+import { writePostmanCollection } from "./writePostmanCollection.js";
 
 const pathToJson = process.argv[process.argv.length - 1];
 if (pathToJson == null) {

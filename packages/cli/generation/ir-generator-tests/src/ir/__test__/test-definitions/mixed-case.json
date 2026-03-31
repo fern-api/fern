@@ -2098,7 +2098,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -2496,7 +2497,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_service:ResourceStatus",
@@ -4891,6 +4893,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -7604,6 +7607,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

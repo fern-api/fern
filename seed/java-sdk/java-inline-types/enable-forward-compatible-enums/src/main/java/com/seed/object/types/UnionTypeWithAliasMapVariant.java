@@ -60,6 +60,23 @@ public final class UnionTypeWithAliasMapVariant {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnionTypeWithAliasMapVariant
+                && value.equals(((UnionTypeWithAliasMapVariant) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -205,6 +222,10 @@ public final class UnionTypeWithAliasMapVariant {
 
         public interface _FinalStage {
             AliasVariantValue build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -232,6 +253,18 @@ public final class UnionTypeWithAliasMapVariant {
             @java.lang.Override
             public AliasVariantValue build() {
                 return new AliasVariantValue(prop, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }
@@ -290,6 +323,10 @@ public final class UnionTypeWithAliasMapVariant {
 
         public interface _FinalStage {
             AliasVariantKey build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -317,6 +354,18 @@ public final class UnionTypeWithAliasMapVariant {
             @java.lang.Override
             public AliasVariantKey build() {
                 return new AliasVariantKey(prop, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }

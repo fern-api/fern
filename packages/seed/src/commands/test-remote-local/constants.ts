@@ -84,7 +84,9 @@ export const PACKAGE_LOCATION_LOCAL_FILE_SYSTEM = "local-file-system";
 // Package Names (per generator)
 // ============================================================================
 export const TS_SDK_PACKAGE_NAME = "@fern-fern/test-remote-local-sdk";
-export const JAVA_SDK_MAVEN_COORDINATE = "com.fern-api:test-remote-local-sdk";
+// Format matches Fiddle's RegistryConfigFactory: com.<org>.fern:<api>-sdk
+// With organization=fern and api-name=api, this becomes com.fern.fern:api-sdk
+export const JAVA_SDK_MAVEN_COORDINATE = "com.fern.fern:api-sdk";
 export const PYTHON_SDK_PACKAGE_NAME = "test-remote-local-sdk";
 export const GO_SDK_MODULE_PATH = `github.com/${FERN_TEST_REPO_NAME}`;
 
@@ -101,7 +103,7 @@ export const GITHUB_TOKEN_ENV_VAR_REFERENCE = "${GITHUB_TOKEN}";
 // Docker Hub
 export const DOCKER_HUB_API_BASE_URL = "https://hub.docker.com/v2";
 export const DOCKER_HUB_TAGS_PAGE_SIZE = 100;
-export const DOCKER_HUB_TAGS_ORDERING = "-last_updated";
+export const DOCKER_HUB_TAGS_ORDERING = "last_updated";
 
 // GitHub
 export const GITHUB_BASE_URL = "https://github.com";
@@ -125,7 +127,9 @@ export const LOCAL_BUILD_VERSION = "99.99.99";
 export const SEMVER_REGEX = /^\d+\.\d+\.\d+$/;
 
 // GitHub branch URL pattern in logs - flexible pattern to extract branch from any GitHub tree URL
-export const GITHUB_BRANCH_URL_REGEX = /https?:\/\/(?:www\.)?github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
+// The capture group excludes " to avoid capturing trailing JSON when the URL is embedded in structured log output
+// e.g. ...tree/fern-bot/2026-03-03T20-32Z","prUrl":"..."
+export const GITHUB_BRANCH_URL_REGEX = /https?:\/\/(?:www\.)?github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s"]+)/;
 
 // ============================================================================
 // Log Messages & Separators

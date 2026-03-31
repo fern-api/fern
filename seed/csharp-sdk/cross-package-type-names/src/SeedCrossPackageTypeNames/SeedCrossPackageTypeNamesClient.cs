@@ -4,13 +4,14 @@ using SeedCrossPackageTypeNames.FolderD;
 
 namespace SeedCrossPackageTypeNames;
 
-public partial class SeedCrossPackageTypeNamesClient
+public partial class SeedCrossPackageTypeNamesClient : ISeedCrossPackageTypeNamesClient
 {
     private readonly RawClient _client;
 
     public SeedCrossPackageTypeNamesClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -19,8 +20,7 @@ public partial class SeedCrossPackageTypeNamesClient
                 { "User-Agent", "Ferncross-package-type-names/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -33,9 +33,9 @@ public partial class SeedCrossPackageTypeNamesClient
         Foo = new FooClient(_client);
     }
 
-    public FolderAClient FolderA { get; }
+    public IFolderAClient FolderA { get; }
 
-    public FolderDClient FolderD { get; }
+    public IFolderDClient FolderD { get; }
 
-    public FooClient Foo { get; }
+    public IFooClient Foo { get; }
 }

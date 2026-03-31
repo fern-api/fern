@@ -1,6 +1,6 @@
-import { Writer } from "../core/Writer";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
+import { Writer } from "../core/Writer.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { Parameter } from "./Parameter.js";
 
 export declare namespace AnonymousFunction {
     interface Args {

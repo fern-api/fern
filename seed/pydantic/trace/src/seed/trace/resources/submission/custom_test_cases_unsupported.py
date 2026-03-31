@@ -3,14 +3,20 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from ..commons.problem_id import ProblemId
 from .submission_id import SubmissionId
 
 
 class CustomTestCasesUnsupported(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    submission_id: typing_extensions.Annotated[
+        SubmissionId, FieldMetadata(alias="submissionId"), pydantic.Field(alias="submissionId")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

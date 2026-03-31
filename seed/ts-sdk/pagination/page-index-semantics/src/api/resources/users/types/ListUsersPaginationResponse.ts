@@ -3,8 +3,8 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface ListUsersPaginationResponse {
-    hasNextPage?: boolean;
-    page?: SeedPagination.Page;
+    hasNextPage?: boolean | undefined;
+    page?: SeedPagination.Page | undefined;
     /** The totall number of /users */
     total_count: number;
     data: SeedPagination.User[];

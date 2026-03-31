@@ -4,19 +4,19 @@ import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } fr
 import { AudienceId, getPropertiesByAudience } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertDeclaration } from "../convertDeclaration";
-import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from "../convertProtobufType";
-import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
-import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
-import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
-import { convertTypeExample } from "./convertExampleType";
-import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
-import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
-import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertDeclaration } from "../convertDeclaration.js";
+import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from "../convertProtobufType.js";
+import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration.js";
+import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration.js";
+import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration.js";
+import { convertTypeExample } from "./convertExampleType.js";
+import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration.js";
+import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration.js";
+import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration.js";
 
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;

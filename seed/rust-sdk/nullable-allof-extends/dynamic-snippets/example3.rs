@@ -1,5 +1,4 @@
 use seed_api::prelude::*;
-use seed_api::RootObject;
 
 #[tokio::main]
 async fn main() {
@@ -13,8 +12,10 @@ async fn main() {
             &RootObject {
                 normal_object_fields: NormalObject {
                     normal_field: Some("normalField".to_string()),
+                    ..Default::default()
                 },
                 nullable_field: Some("nullableField".to_string()),
+                ..Default::default()
             },
             None,
         )

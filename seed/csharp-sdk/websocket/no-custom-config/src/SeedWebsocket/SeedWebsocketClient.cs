@@ -2,13 +2,14 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket;
 
-public partial class SeedWebsocketClient
+public partial class SeedWebsocketClient : ISeedWebsocketClient
 {
     private readonly RawClient _client;
 
     public SeedWebsocketClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedWebsocketClient
                 { "User-Agent", "Fernwebsocket/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {

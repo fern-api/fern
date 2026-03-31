@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -51,12 +52,6 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

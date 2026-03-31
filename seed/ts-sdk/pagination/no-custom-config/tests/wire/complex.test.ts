@@ -23,10 +23,11 @@ describe("ComplexClient", () => {
             total_count: 1,
             type: "conversation.list",
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/index/conversations/search")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.starting_after"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

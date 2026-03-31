@@ -9,5 +9,6 @@
     },
     "includeLegacyClientOptions": true
   },
-  "sdkVersion": "0.0.1"
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "v0.0.1"
 }

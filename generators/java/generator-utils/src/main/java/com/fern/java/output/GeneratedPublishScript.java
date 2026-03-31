@@ -1,5 +1,6 @@
 package com.fern.java.output;
 
+import com.fern.java.ICustomConfig.OutputDirectory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +30,8 @@ public class GeneratedPublishScript extends GeneratedFile {
     }
 
     @Override
-    public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)
+    public final void writeToFile(
+            Path directory, boolean _isLocal, Optional<String> _existingPrefix, OutputDirectory _outputDirectoryMode)
             throws IOException {
         Path resolvedPath = directory.resolve(filename());
         Files.writeString(directory.resolve(filename()), contents());

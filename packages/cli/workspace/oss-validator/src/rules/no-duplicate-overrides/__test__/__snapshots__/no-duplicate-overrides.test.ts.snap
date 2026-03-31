@@ -4,6 +4,7 @@ exports[`no-duplicate-overrides > complex failure 1`] = `
 [
   {
     "message": "SDK method a.b.c.d already exists (x-fern-sdk-group-name: a.b.c, x-fern-sdk-method-name: d)",
+    "name": "no-duplicate-overrides",
     "nodePath": [
       "paths",
       "/a/b",
@@ -19,6 +20,7 @@ exports[`no-duplicate-overrides > inlined failure 1`] = `
 [
   {
     "message": "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)",
+    "name": "no-duplicate-overrides",
     "nodePath": [
       "paths",
       "/a/b",
@@ -34,6 +36,7 @@ exports[`no-duplicate-overrides > simple failure 1`] = `
 [
   {
     "message": "SDK method a.b already exists (x-fern-sdk-group-name: a, x-fern-sdk-method-name: b)",
+    "name": "no-duplicate-overrides",
     "nodePath": [
       "paths",
       "/a/b",

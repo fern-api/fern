@@ -13,6 +13,6 @@
  */
 export interface Metadata {
     id: string;
-    data?: Record<string, string>;
-    jsonString?: string;
+    data?: Record<string, string> | undefined;
+    jsonString?: string | undefined;
 }

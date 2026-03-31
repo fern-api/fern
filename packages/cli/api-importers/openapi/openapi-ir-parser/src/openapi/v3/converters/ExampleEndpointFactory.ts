@@ -22,12 +22,12 @@ import {
 import * as fs from "fs";
 import * as path from "path";
 
-import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
-import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
-import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
-import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly";
-import { hasIncompleteExample } from "../hasIncompleteExample";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory.js";
+import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample.js";
+import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired.js";
+import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly.js";
+import { hasIncompleteExample } from "../hasIncompleteExample.js";
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext.js";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -594,9 +594,7 @@ export class ExampleEndpointFactory {
                 );
                 example = undefined;
             }
-            if (example == null) {
-                return [];
-            } else if (example != null) {
+            if (example != null) {
                 headers.push({
                     name: globalHeader.header,
                     value: example
@@ -954,7 +952,10 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,
+        encoding: undefined,
         source: request.source,
-        inline: undefined
+        inline: undefined,
+        minProperties: undefined,
+        maxProperties: undefined
     });
 }

@@ -2,9 +2,9 @@ using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
-public partial class InlineUsersClient
+public partial class InlineUsersClient : IInlineUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlineUsersClient(RawClient client)
     {
@@ -20,5 +20,5 @@ public partial class InlineUsersClient
         }
     }
 
-    public InlineUsersClient_ InlineUsers { get; }
+    public IInlineUsersClient_ InlineUsers { get; }
 }

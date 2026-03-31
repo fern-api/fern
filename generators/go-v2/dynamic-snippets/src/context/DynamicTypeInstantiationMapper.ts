@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
@@ -76,6 +76,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasImportPath
                         });
                     }
+                    // Special case: nullable + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
+                    }
                 }
                 // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
@@ -108,6 +115,13 @@ export class DynamicTypeInstantiationMapper {
                             aliasName,
                             aliasImportPath
                         });
+                    }
+                    // Special case: optional + alias-of-literal
+                    // For fields like `SortField *SortField` where `type SortField = string` with literal value,
+                    // we use the primitive's pointer helper (e.g., fern.String("DEFAULT")) instead of
+                    // trying to take the address of a type conversion which is invalid Go.
+                    if (named?.type === "alias" && named.typeReference.type === "literal") {
+                        return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
                     }
                 }
                 // Default behavior for all other optionals
@@ -179,17 +193,19 @@ export class DynamicTypeInstantiationMapper {
         return go.TypeInstantiation.map({
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
-            entries: Object.entries(value).map(([key, value]) => {
-                this.context.errors.scope(key);
-                try {
-                    return {
-                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
-                        value: this.convert({ typeReference: map.value, value })
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
+            entries: Object.entries(value)
+                .sort(([keyA], [keyB]) => (keyA < keyB ? -1 : keyA > keyB ? 1 : 0))
+                .map(([key, value]) => {
+                    this.context.errors.scope(key);
+                    try {
+                        return {
+                            key: this.convert({ typeReference: map.key, value: key, as: "key" }),
+                            value: this.convert({ typeReference: map.value, value })
+                        };
+                    } finally {
+                        this.context.errors.unscope();
+                    }
+                })
         });
     }
 
@@ -335,6 +351,17 @@ export class DynamicTypeInstantiationMapper {
                 return go.TypeInstantiation.bool(literal.value);
             case "string":
                 return go.TypeInstantiation.string(literal.value);
+            default:
+                assertNever(literal);
+        }
+    }
+
+    private convertLiteralToOptionalPrimitive(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        switch (literal.type) {
+            case "boolean":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.bool(literal.value));
+            case "string":
+                return go.TypeInstantiation.optional(go.TypeInstantiation.string(literal.value));
             default:
                 assertNever(literal);
         }
@@ -553,6 +580,10 @@ export class DynamicTypeInstantiationMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
+                // Skip types that result in nop() - this means the value didn't match the type
+                if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;
@@ -604,7 +635,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         list: FernIr.dynamic.TypeReference.List;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list.value });
         if (fieldName == null) {
             return undefined;
         }
@@ -628,7 +659,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: typeReference.value });
         if (fieldName == null) {
             return undefined;
         }
@@ -640,7 +671,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         set: FernIr.dynamic.TypeReference.Set;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set.value });
         if (fieldName == null) {
             return undefined;
         }

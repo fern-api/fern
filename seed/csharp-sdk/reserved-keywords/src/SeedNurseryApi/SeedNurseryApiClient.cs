@@ -2,13 +2,14 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
-public partial class SeedNurseryApiClient
+public partial class SeedNurseryApiClient : ISeedNurseryApiClient
 {
     private readonly RawClient _client;
 
     public SeedNurseryApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedNurseryApiClient
                 { "User-Agent", "Fernreserved-keywords/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedNurseryApiClient
         Package = new PackageClient(_client);
     }
 
-    public PackageClient Package { get; }
+    public IPackageClient Package { get; }
 }

@@ -288,6 +288,17 @@
         },
         {
             "id": {
+                "path": "/users/top-level-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithTopLevelBodyCursorPagination(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersTopLevelBodyCursorPaginationRequest{\n\t\tCursor: fern.String(\n\t\t\t\"initial_cursor\",\n\t\t),\n\t\tFilter: fern.String(\n\t\t\t\"active\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{index}/conversations/search",
                 "method": "POST",
                 "identifier_override": "endpoint_complex.search"

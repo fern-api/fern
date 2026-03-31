@@ -87,6 +87,15 @@ public class PlaylistClient {
     /**
      * Updates a playlist
      */
+    public Optional<Playlist> updatePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
+        return this.rawClient
+                .updatePlaylist(serviceParam, playlistId, requestOptions)
+                .body();
+    }
+
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId, request).body();

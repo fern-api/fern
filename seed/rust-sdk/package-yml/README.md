@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_package_yml::prelude::*;
-use seed_package_yml::EchoRequest;
 
 #[tokio::main]
 async fn main() {
@@ -57,6 +56,7 @@ async fn main() {
             &EchoRequest {
                 name: "Hello world!".to_string(),
                 size: 20,
+                ..Default::default()
             },
             None,
         )

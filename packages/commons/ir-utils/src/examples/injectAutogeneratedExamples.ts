@@ -1,8 +1,8 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
-import { generateEndpointExample as generateEndpointV1Example } from "./v1/generateEndpointExample";
-import { generateWebSocketExample as generateWebSocketV1Example } from "./v1/generateWebSocketExample";
-import { generateEndpointExample as generateEndpointV2Example } from "./v2/generateEndpointExample";
+import { generateEndpointExample as generateEndpointV1Example } from "./v1/generateEndpointExample.js";
+import { generateWebSocketExample as generateWebSocketV1Example } from "./v1/generateWebSocketExample.js";
+import { generateEndpointExample as generateEndpointV2Example } from "./v2/generateEndpointExample.js";
 
 export interface ExampleGenerationArgs {
     disabled: boolean;

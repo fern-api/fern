@@ -1,1 +1,1 @@
-export * from "./ReferenceConfigAssembler";
+export * from "./ReferenceConfigAssembler.js";

@@ -1,13 +1,13 @@
-import type { BasicAuthScheme } from "@fern-fern/ir-sdk/api";
+import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import type { AuthProviderInstance } from "./AuthProviderInstance";
+import type { AuthProviderInstance } from "./AuthProviderInstance.js";
 
 export class BasicAuthProviderInstance implements AuthProviderInstance {
-    private readonly authScheme: BasicAuthScheme;
+    private readonly authScheme: FernIr.BasicAuthScheme;
 
-    constructor(authScheme: BasicAuthScheme) {
+    constructor(authScheme: FernIr.BasicAuthScheme) {
         this.authScheme = authScheme;
     }
 

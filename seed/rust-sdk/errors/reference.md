@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_without_endpoint_error</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_without_endpoint_error</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```rust
 use seed_errors::prelude::*;
-use seed_errors::FooRequest;
 
 #[tokio::main]
 async fn main() {
@@ -27,6 +26,7 @@ async fn main() {
         .foo_without_endpoint_error(
             &FooRequest {
                 bar: "bar".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -43,7 +43,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,6 @@ async fn main() {
 
 ```rust
 use seed_errors::prelude::*;
-use seed_errors::FooRequest;
 
 #[tokio::main]
 async fn main() {
@@ -70,6 +69,7 @@ async fn main() {
         .foo(
             &FooRequest {
                 bar: "bar".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -86,7 +86,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_with_examples</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_with_examples</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -100,7 +100,6 @@ async fn main() {
 
 ```rust
 use seed_errors::prelude::*;
-use seed_errors::FooRequest;
 
 #[tokio::main]
 async fn main() {
@@ -113,6 +112,7 @@ async fn main() {
         .foo_with_examples(
             &FooRequest {
                 bar: "hello".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -128,3 +128,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

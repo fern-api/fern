@@ -96,6 +96,27 @@ func (s *SearchRequest) SetIncludeTypes(includeTypes []string) {
 	s.require(searchRequestFieldIncludeTypes)
 }
 
+func (s *SearchRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SearchRequest(body)
+	return nil
+}
+
+func (s *SearchRequest) MarshalJSON() ([]byte, error) {
+	type embed SearchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersRequestFieldLimit          = big.NewInt(1 << 0)
 	listUsersRequestFieldOffset         = big.NewInt(1 << 1)
@@ -277,6 +298,9 @@ func (a *Address) GetTenantId() OptionalUserId {
 }
 
 func (a *Address) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -364,6 +388,9 @@ func (a *Address) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Address) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -560,6 +587,9 @@ func (c *ComplexProfile) GetOptionalMapOfEnums() map[string]UserRole {
 }
 
 func (c *ComplexProfile) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -731,6 +761,9 @@ func (c *ComplexProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ComplexProfile) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -791,6 +824,9 @@ func (c *CreateUserRequest) GetAddress() *Address {
 }
 
 func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -857,6 +893,9 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateUserRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -990,6 +1029,9 @@ func (d *DeserializationTestRequest) GetOptionalObject() *Organization {
 }
 
 func (d *DeserializationTestRequest) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1112,6 +1154,9 @@ func (d *DeserializationTestRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeserializationTestRequest) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1173,6 +1218,9 @@ func (d *DeserializationTestResponse) GetPresentFieldsCount() int {
 }
 
 func (d *DeserializationTestResponse) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1247,6 +1295,9 @@ func (d *DeserializationTestResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeserializationTestResponse) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1316,6 +1367,9 @@ func (d *Document) GetTags() []string {
 }
 
 func (d *Document) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1389,6 +1443,9 @@ func (d *Document) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Document) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1440,6 +1497,9 @@ func (e *EmailNotification) GetHtmlContent() *string {
 }
 
 func (e *EmailNotification) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1499,6 +1559,9 @@ func (e *EmailNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EmailNotification) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1707,6 +1770,9 @@ func (o *Organization) GetEmployeeCount() *int {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -1773,6 +1839,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -1833,6 +1902,9 @@ func (p *PushNotification) GetBadge() *int {
 }
 
 func (p *PushNotification) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1899,6 +1971,9 @@ func (p *PushNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PushNotification) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -2092,6 +2167,9 @@ func (s *SmsNotification) GetShortCode() *string {
 }
 
 func (s *SmsNotification) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -2151,6 +2229,9 @@ func (s *SmsNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SmsNotification) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -2212,6 +2293,9 @@ func (u *UpdateUserRequest) GetAddress() *Address {
 }
 
 func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2278,6 +2362,9 @@ func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateUserRequest) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2465,6 +2552,9 @@ func (u *UserProfile) GetOptionalNullableObject() *Address {
 }
 
 func (u *UserProfile) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2641,6 +2731,9 @@ func (u *UserProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserProfile) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2728,6 +2821,9 @@ func (u *UserResponse) GetAddress() *Address {
 }
 
 func (u *UserResponse) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2827,6 +2923,9 @@ func (u *UserResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserResponse) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2957,6 +3056,27 @@ func (u *UpdateComplexProfileRequest) SetNullableArray(nullableArray []string) {
 	u.require(updateComplexProfileRequestFieldNullableArray)
 }
 
+func (u *UpdateComplexProfileRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateComplexProfileRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateComplexProfileRequest(body)
+	return nil
+}
+
+func (u *UpdateComplexProfileRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateComplexProfileRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	updateTagsRequestFieldTags       = big.NewInt(1 << 0)
 	updateTagsRequestFieldCategories = big.NewInt(1 << 1)
@@ -2998,4 +3118,25 @@ func (u *UpdateTagsRequest) SetCategories(categories []string) {
 func (u *UpdateTagsRequest) SetLabels(labels []string) {
 	u.Labels = labels
 	u.require(updateTagsRequestFieldLabels)
+}
+
+func (u *UpdateTagsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateTagsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateTagsRequest(body)
+	return nil
+}
+
+func (u *UpdateTagsRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateTagsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

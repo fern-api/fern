@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,14 +37,17 @@ Instantiate and use the client with the following:
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.search_resources(
     limit=1,
     offset=1,
     query="query",
-    filters={"filters": {"key": "value"}},
+    filters={
+        "filters": {"key": "value"}
+    },
 )
 ```
 
@@ -44,7 +61,7 @@ import asyncio
 from seed import AsyncSeedClientSideParams
 
 client = AsyncSeedClientSideParams(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -54,7 +71,9 @@ async def main() -> None:
         limit=1,
         offset=1,
         query="query",
-        filters={"filters": {"key": "value"}},
+        filters={
+            "filters": {"key": "value"}
+        },
     )
 
 
@@ -86,11 +105,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedClientSideParams
 
-client = SeedClientSideParams(
-    ...,
-)
+client = SeedClientSideParams(...)
 response = client.service.with_raw_response.search_resources(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -119,14 +137,9 @@ client.service.search_resources(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedClientSideParams
 
-client = SeedClientSideParams(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedClientSideParams(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.search_resources(..., request_options={

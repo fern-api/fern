@@ -1,7 +1,7 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { IrVersions } from "../../../ir-versions";
-import { V62_TO_V61_MIGRATION } from "../migrateFromV62ToV61";
+import { IrVersions } from "../../../ir-versions/index.js";
+import { V62_TO_V61_MIGRATION } from "../migrateFromV62ToV61.js";
 
 describe("migrateFromV62ToV61", () => {
     it("filters out wildcard status code errors", () => {

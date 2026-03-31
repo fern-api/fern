@@ -1,23 +1,14 @@
-import {
-    ExampleEndpointCall,
-    FileProperty,
-    HttpHeader,
-    InlinedRequestBodyProperty,
-    Name,
-    NameAndWireValue,
-    PathParameter,
-    QueryParameter
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 
-import { GeneratedFile } from "../../commons/GeneratedFile";
-import { SdkContext } from "../SdkContext";
-import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample";
+import { GeneratedFile } from "../../commons/GeneratedFile.js";
+import { SdkContext } from "../SdkContext.js";
+import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample.js";
 import {
     RequestWrapperBodyProperty,
     RequestWrapperNonBodyProperty,
     RequestWrapperNonBodyPropertyWithData
-} from "./types";
+} from "./types.js";
 
 export namespace GeneratedRequestWrapper {
     export interface Property {
@@ -34,27 +25,27 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     areBodyPropertiesInlined: () => boolean;
     getReferencedBodyPropertyName: () => string;
     hasBodyProperty(context: SdkContext): boolean;
-    getAllQueryParameters: () => QueryParameter[];
+    getAllQueryParameters: () => FernIr.QueryParameter[];
     getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
     getNonBodyKeysWithData: (context: SdkContext) => RequestWrapperNonBodyPropertyWithData[];
-    getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
-    getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => RequestWrapperBodyProperty;
+    getInlinedRequestBodyPropertyKey: (property: FernIr.InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
+    getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValue) => RequestWrapperBodyProperty;
     shouldInlinePathParameters: (context: SdkContext) => boolean;
-    getPropertyNameOfFileParameter: (fileProperty: FileProperty) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfFileParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfQueryParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfPathParameter: (pathParameter: PathParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfPathParameterFromName: (name: Name) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfNonLiteralHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfNonLiteralHeaderFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfFileParameter: (fileProperty: FernIr.FileProperty) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfFileParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfQueryParameter: (queryParameter: FernIr.QueryParameter) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameter: (pathParameter: FernIr.PathParameter) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameterFromName: (name: FernIr.Name) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeader: (header: FernIr.HttpHeader) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
-        queryParameter: QueryParameter;
+        queryParameter: FernIr.QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
         context: SdkContext;
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }) => ts.Statement[];
-    generateExample: (example: ExampleEndpointCall) => GeneratedRequestWrapperExample | undefined;
+    generateExample: (example: FernIr.ExampleEndpointCall) => GeneratedRequestWrapperExample | undefined;
     getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[];
 }

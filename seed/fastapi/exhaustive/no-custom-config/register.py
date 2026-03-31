@@ -15,6 +15,7 @@ from .resources.endpoints.resources.content_type.service.service import Abstract
 from .resources.endpoints.resources.enum.service.service import AbstractEndpointsEnumService
 from .resources.endpoints.resources.http_methods.service.service import AbstractEndpointsHttpMethodsService
 from .resources.endpoints.resources.object.service.service import AbstractEndpointsObjectService
+from .resources.endpoints.resources.pagination.service.service import AbstractEndpointsPaginationService
 from .resources.endpoints.resources.params.service.service import AbstractEndpointsParamsService
 from .resources.endpoints.resources.primitive.service.service import AbstractEndpointsPrimitiveService
 from .resources.endpoints.resources.put.service.service import AbstractEndpointsPutService
@@ -35,6 +36,7 @@ def register(
     endpoints_enum: AbstractEndpointsEnumService,
     endpoints_http_methods: AbstractEndpointsHttpMethodsService,
     endpoints_object: AbstractEndpointsObjectService,
+    endpoints_pagination: AbstractEndpointsPaginationService,
     endpoints_params: AbstractEndpointsParamsService,
     endpoints_primitive: AbstractEndpointsPrimitiveService,
     endpoints_put: AbstractEndpointsPutService,
@@ -51,6 +53,7 @@ def register(
     _app.include_router(__register_service(endpoints_enum), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_http_methods), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_object), dependencies=dependencies)
+    _app.include_router(__register_service(endpoints_pagination), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_params), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_primitive), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_put), dependencies=dependencies)

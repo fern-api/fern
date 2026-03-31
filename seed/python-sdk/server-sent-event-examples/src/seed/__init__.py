@@ -8,11 +8,35 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import completions
     from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
-    from .completions import StreamedCompletion
+    from .completions import (
+        BadRequestError,
+        CompletionEvent,
+        ErrorEvent,
+        EventEvent,
+        StreamEvent,
+        StreamEventContextProtocol,
+        StreamEventContextProtocol_Completion,
+        StreamEventContextProtocol_Error,
+        StreamEventContextProtocol_Event,
+        StreamEvent_Completion,
+        StreamEvent_Error,
+        StreamedCompletion,
+    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedServerSentEvents": ".client",
+    "BadRequestError": ".completions",
+    "CompletionEvent": ".completions",
+    "ErrorEvent": ".completions",
+    "EventEvent": ".completions",
     "SeedServerSentEvents": ".client",
+    "StreamEvent": ".completions",
+    "StreamEventContextProtocol": ".completions",
+    "StreamEventContextProtocol_Completion": ".completions",
+    "StreamEventContextProtocol_Error": ".completions",
+    "StreamEventContextProtocol_Event": ".completions",
+    "StreamEvent_Completion": ".completions",
+    "StreamEvent_Error": ".completions",
     "StreamedCompletion": ".completions",
     "__version__": ".version",
     "completions": ".completions",
@@ -40,4 +64,21 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedServerSentEvents", "SeedServerSentEvents", "StreamedCompletion", "__version__", "completions"]
+__all__ = [
+    "AsyncSeedServerSentEvents",
+    "BadRequestError",
+    "CompletionEvent",
+    "ErrorEvent",
+    "EventEvent",
+    "SeedServerSentEvents",
+    "StreamEvent",
+    "StreamEventContextProtocol",
+    "StreamEventContextProtocol_Completion",
+    "StreamEventContextProtocol_Error",
+    "StreamEventContextProtocol_Event",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+    "__version__",
+    "completions",
+]

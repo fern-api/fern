@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\Bigunion\BigunionClient;
 use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

@@ -1,10 +1,10 @@
-import { isReservedKeyword } from "../syntax";
-import { AccessLevel } from "./AccessLevel";
-import { AstNode, Writer } from "./core";
-import { DeclarationType } from "./DeclarationType";
-import { DocComment } from "./DocComment";
-import { Expression } from "./Expression";
-import { TypeReference } from "./TypeReference";
+import { isReservedKeyword } from "../syntax/index.js";
+import { AccessLevel } from "./AccessLevel.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DeclarationType } from "./DeclarationType.js";
+import { DocComment } from "./DocComment.js";
+import { Expression } from "./Expression.js";
+import { TypeReference } from "./TypeReference.js";
 
 export declare namespace Property {
     interface Args {

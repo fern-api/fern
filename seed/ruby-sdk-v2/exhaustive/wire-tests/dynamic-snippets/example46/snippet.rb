@@ -1,8 +1,8 @@
 require "seed"
 
-client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.no_auth.post_with_no_auth();
+client.endpoints.primitive.get_and_return_base_64(request: "SGVsbG8gd29ybGQh")

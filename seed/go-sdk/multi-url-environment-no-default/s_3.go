@@ -3,6 +3,8 @@
 package multiurlenvironmentnodefault
 
 import (
+	json "encoding/json"
+	internal "github.com/multi-url-environment-no-default/fern/internal"
 	big "math/big"
 )
 
@@ -29,4 +31,25 @@ func (g *GetPresignedUrlRequest) require(field *big.Int) {
 func (g *GetPresignedUrlRequest) SetS3Key(s3Key string) {
 	g.S3Key = s3Key
 	g.require(getPresignedUrlRequestFieldS3Key)
+}
+
+func (g *GetPresignedUrlRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetPresignedUrlRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*g = GetPresignedUrlRequest(body)
+	return nil
+}
+
+func (g *GetPresignedUrlRequest) MarshalJSON() ([]byte, error) {
+	type embed GetPresignedUrlRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

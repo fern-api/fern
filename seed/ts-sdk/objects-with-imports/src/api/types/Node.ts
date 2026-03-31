@@ -31,6 +31,6 @@ import type * as SeedObjectsWithImports from "../index.js";
  */
 export interface Node {
     id: string;
-    label?: string;
-    metadata?: SeedObjectsWithImports.commons.Metadata;
+    label?: string | undefined;
+    metadata?: SeedObjectsWithImports.commons.Metadata | undefined;
 }

@@ -1,5 +1,6 @@
 package com.fern.java.generators;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -499,6 +500,15 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                     "value",
                                     Modifier.PRIVATE)
                             .addAnnotation(JsonUnwrapped.class)
+                            .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
+                                    .addMember(
+                                            "value",
+                                            "$S",
+                                            unionTypeDeclaration
+                                                    .getDiscriminant()
+                                                    .getWireValue())
+                                    .addMember("allowSetters", "$L", true)
+                                    .build())
                             .build());
                 }
 

@@ -1,0 +1,14 @@
+default-group: docs
+
+api:
+  specs:
+    - graphql: ./definition/admin-schema.graphql
+      resource: admin
+    - graphql: ./definition/user-schema.graphql
+      resource: user
+
+groups:
+  docs:
+    generators:
+      - name: fern-docs
+        version: latest

@@ -1,5 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {

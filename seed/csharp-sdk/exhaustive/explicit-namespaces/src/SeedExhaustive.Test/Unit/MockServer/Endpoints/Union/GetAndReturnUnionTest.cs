@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Union;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Union;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnUnionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -45,9 +46,6 @@ public class GetAndReturnUnionTest : BaseMockServerTest
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
             new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Animal>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

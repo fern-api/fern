@@ -1,11 +1,11 @@
-import { Class } from "./Class";
-import { Comment } from "./Comment";
-import { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
-import { EnumWithRawValues } from "./EnumWithRawValues";
-import { Extension } from "./Extension";
-import { LineBreak } from "./LineBreak";
-import { Statement } from "./Statement";
-import { Struct } from "./Struct";
+import { Class } from "./Class.js";
+import { Comment } from "./Comment.js";
+import { EnumWithAssociatedValues } from "./EnumWithAssociatedValues.js";
+import { EnumWithRawValues } from "./EnumWithRawValues.js";
+import { Extension } from "./Extension.js";
+import { LineBreak } from "./LineBreak.js";
+import { Statement } from "./Statement.js";
+import { Struct } from "./Struct.js";
 
 export type FileComponent =
     | Class

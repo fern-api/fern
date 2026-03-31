@@ -3,8 +3,12 @@ namespace SeedClientSideParams;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedClientSideParamsApiException(string message, int statusCode, object body)
-    : SeedClientSideParamsException(message)
+public class SeedClientSideParamsApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedClientSideParamsException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

@@ -5,13 +5,17 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from .....core.serialization import FieldMetadata
 from .file_info_v_2 import FileInfoV2
 
 
 class DefaultProvidedFile(UniversalBaseModel):
     file: FileInfoV2
-    related_types: typing.List["VariableType"] = pydantic.Field(alias="relatedTypes")
+    related_types: typing_extensions.Annotated[
+        typing.List["VariableType"], FieldMetadata(alias="relatedTypes"), pydantic.Field(alias="relatedTypes")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

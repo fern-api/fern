@@ -3,7 +3,7 @@ using SeedTrace.V2;
 
 namespace SeedTrace;
 
-public partial class SeedTraceClient
+public partial class SeedTraceClient : ISeedTraceClient
 {
     private readonly RawClient _client;
 
@@ -13,26 +13,36 @@ public partial class SeedTraceClient
         ClientOptions? clientOptions = null
     )
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
-                { "X-Random-Header", xRandomHeader ?? "" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedTrace" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferntrace/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "Authorization", $"Bearer {token}" },
+                { "X-Random-Header", xRandomHeader ?? "" },
+            }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         V2 = new V2Client(_client);
         Admin = new AdminClient(_client);
         Homepage = new HomepageClient(_client);
@@ -43,19 +53,19 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get; }
+    public IV2Client V2 { get; }
 
-    public AdminClient Admin { get; }
+    public IAdminClient Admin { get; }
 
-    public HomepageClient Homepage { get; }
+    public IHomepageClient Homepage { get; }
 
-    public MigrationClient Migration { get; }
+    public IMigrationClient Migration { get; }
 
-    public PlaylistClient Playlist { get; }
+    public IPlaylistClient Playlist { get; }
 
-    public ProblemClient Problem { get; }
+    public IProblemClient Problem { get; }
 
-    public SubmissionClient Submission { get; }
+    public ISubmissionClient Submission { get; }
 
-    public SyspropClient Sysprop { get; }
+    public ISyspropClient Sysprop { get; }
 }

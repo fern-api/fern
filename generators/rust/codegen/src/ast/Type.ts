@@ -1,7 +1,7 @@
-import { AstNode } from "./AstNode";
-import { Reference } from "./Reference";
-import { PrimitiveType } from "./types";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Reference } from "./Reference.js";
+import { PrimitiveType } from "./types.js";
+import { Writer } from "./Writer.js";
 
 export abstract class Type extends AstNode {
     public static primitive(primitive: PrimitiveType): Type {
@@ -13,6 +13,9 @@ export abstract class Type extends AstNode {
     }
 
     public static option(inner: Type): Type {
+        if (this.isAlreadyOptional(inner)) {
+            return inner;
+        }
         return new OptionType(inner);
     }
 
@@ -74,6 +77,10 @@ export abstract class Type extends AstNode {
 
     public static never(): Type {
         return new NeverType();
+    }
+
+    private static isAlreadyOptional(value: Type): boolean {
+        return value instanceof OptionType;
     }
 }
 

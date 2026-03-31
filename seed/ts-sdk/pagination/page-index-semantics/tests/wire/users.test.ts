@@ -17,6 +17,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -72,6 +73,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
@@ -116,10 +118,11 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -160,6 +163,51 @@ describe("UsersClient", () => {
         expect(expected.data).toEqual(nextPage.data);
     });
 
+    test("listWithTopLevelBodyCursorPagination", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { cursor: "initial_cursor", filter: "active" };
+        const rawResponseBody = {
+            next_cursor: "next_cursor_value",
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+        };
+
+        server
+            .mockEndpoint({ once: false })
+            .post("/users/top-level-cursor")
+            .jsonBody(rawRequestBody, { ignoredFields: ["cursor"] })
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            next_cursor: "next_cursor_value",
+            data: [
+                {
+                    name: "Alice",
+                    id: 1,
+                },
+                {
+                    name: "Bob",
+                    id: 2,
+                },
+            ],
+        };
+        const page = await client.users.listWithTopLevelBodyCursorPagination({
+            cursor: "initial_cursor",
+            filter: "active",
+        });
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
+    });
+
     test("listWithOffsetPagination", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
@@ -173,6 +221,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -230,6 +279,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -287,10 +337,11 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -344,6 +395,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -400,6 +452,7 @@ describe("UsersClient", () => {
                 { name: "name", id: 1 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -457,6 +510,7 @@ describe("UsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -505,6 +559,7 @@ describe("UsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -544,6 +599,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -573,6 +629,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -602,6 +659,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
+
         server
             .mockEndpoint({ once: false })
             .get("/users")
@@ -636,6 +694,7 @@ describe("UsersClient", () => {
                 { name: "Bob", id: 2 },
             ],
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users/optional-data")
@@ -686,6 +745,7 @@ describe("UsersClient", () => {
             page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 1 },
             total_count: 0,
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/users/optional-data")

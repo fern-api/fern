@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_anyOfExamples",
@@ -43,6 +44,7 @@
           "description": "Demonstrates anyOf without title fields.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -170,6 +172,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -190,6 +193,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "anyOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_anyOfExamples",
@@ -267,7 +271,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -278,7 +282,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfErrorB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -356,7 +360,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -367,7 +371,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "AnyOfVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->getText() -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getText() -> string</code></summary>
 <dl>
 <dd>
 
@@ -24,3 +24,4 @@ $client->service->getText();
 </dd>
 </dl>
 </details>
+

@@ -12,11 +12,11 @@ public class Example20
             }
         );
 
-        await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-            new SeedPagination.ListWithOffsetPaginationHasNextPageRequest {
-                Page = 1,
-                Limit = 1,
-                Order = SeedPagination.Order.Asc
+        await client.Users.ListWithBodyOffsetPaginationAsync(
+            new SeedPagination.ListUsersBodyOffsetPaginationRequest {
+                Pagination = new SeedPagination.WithPage {
+                    Page = 1
+                }
             }
         );
     }

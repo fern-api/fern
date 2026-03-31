@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.5.0] - 2026-03-10
+- Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
+  (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as
+  `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from Fern Definition enums marked with `forward-compatible: true`.
+
+## [v65.4.0] - 2026-02-25
+- Feature: Add `originGitCommit` field to `GenerationMetadata` to track the git commit hash of the repository at generation time.
+  This field is populated with the HEAD commit hash when `fern generate` is executed in a git repository, allowing generators
+  to include source commit information in generated SDKs and documentation for better traceability and debugging.
+
+## [v65.3.0] - 2026-02-24
+- Feature: Add optional `connectMethodName` field to `WebSocketChannel` for custom WebSocket connection method naming.
+  Supports `x-fern-sdk-method-name` extension on AsyncAPI channels to customize the generated connection method name instead of using the default "connect".
+  This addresses confusing APIs where both the client wrapper creation and actual connection use "connect".
+
+## [v65.2.1] - 2026-02-24
+- Feature: Add document-level `webhook-signature` configuration to Fern definition files.
+  Allows specifying a default signature verification config that applies to all webhooks in a file,
+  with per-webhook `signature` overrides. The IR generator resolves defaults and stamps each webhook
+  with its final `signatureVerification` config.
+
+## [v65.2.0] - 2026-02-23
+- Feature: Add `WebhookSignatureVerification` discriminated union to the `Webhook` type.
+  Supports HMAC-based and asymmetric key signature verification with configurable algorithms,
+  encoding, signature prefix parsing, payload format composition, and timestamp-based replay protection.
+  New types: `HmacSignatureVerification`, `AsymmetricKeySignatureVerification`, `HmacAlgorithm`,
+  `AsymmetricAlgorithm`, `WebhookSignatureEncoding`, `WebhookPayloadFormat`, `WebhookPayloadComponent`,
+  `WebhookTimestampConfig`, `WebhookTimestampFormat`, `AsymmetricKeySource`, `JwksKeySource`, `StaticKeySource`.
+
+## [v65.1.0] - 2026-02-23
+- Feature: Add optional `signatureVerification` field to the `Webhook` type for webhook signature verification.
+  Includes algorithm (SHA256/SHA1/SHA384/SHA512), encoding (base64/hex), signature header name, and payload format (bodyOnly/urlPrefixed).
+
+## [v65.0.0] - 2026-02-03
+- Feature: Add new pagination types where the cursor is to be consumed as the full URI, or full path (HATEOS-style)
+
+## [v64.0.0] - 2026-02-06
+- Internal: Bump to the latest TypeScript SDK generator. While there are no changes in the IR, the way the generated SDK exports CJS and ESM is different, hence the major version bump.
+  We are not duplicating the IR to 63.x.x because there are no changes in the IR itself.
+
+## [v63.2.0] - 2026-01-13
+- Feature: Add support for min and max validation keywords:
+  Added validation rules for numeric types: `FloatValidationRules`, `LongValidationRules`, `UintValidationRules`, `Uint64ValidationRules` (with min, max, exclusiveMin, exclusiveMax, multipleOf)
+  Added default and validation fields to `FloatType`, `UintType`, `Uint64Type`, `LongType`
+  Added `minItems`/`maxItems` to `ArraySchema` and `ArraySchemaWithExample`
+  Added `minProperties`/`maxProperties` to `MapSchema`, `MapSchemaWithExample`, `ObjectSchema`, `ObjectSchemaWithExample`
+
+## [v63.1.0] - 2026-01-12
+- Feature: Add `responseHeaders` field to `HttpResponse` for capturing response headers from OpenAPI specs.
+  Response headers defined on success responses (2xx) are now parsed and available in the IR for SDK generators and documentation.
+
 ## [v63.0.0] - 2025-12-18
 - Feature: Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum to support per-endpoint authentication configuration. 
   When `auth.requirement` is set to `ENDPOINT_SECURITY`, the API definition declares that authentication requirements are specified on individual endpoints rather than globally. 

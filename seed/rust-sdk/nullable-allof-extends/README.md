@@ -10,6 +10,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -43,7 +44,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::RootObject;
 
 #[tokio::main]
 async fn main() {
@@ -54,12 +54,29 @@ async fn main() {
     client
         .create_test(
             &RootObject {
-                normal_object_fields: NormalObject { normal_field: None },
+                normal_object_fields: NormalObject {
+                    ..Default::default()
+                },
+                ..Default::default()
             },
             None,
         )
         .await;
 }
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```rust
+use seed_api::prelude::{*};
+
+let config = ClientConfig {
+    base_url: Environment::Default.url().to_string(),
+    ..Default::default()
+};
+let client = Client::new(config).expect("Failed to build client");
 ```
 
 ## Errors

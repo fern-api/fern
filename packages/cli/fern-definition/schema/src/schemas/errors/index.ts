@@ -1,2 +1,2 @@
-export { FernDefinitionError } from "./FernDefinitionError";
-export { FernDefinitionTimeoutError } from "./FernDefinitionTimeoutError";
+export { FernDefinitionError } from "./FernDefinitionError.js";
+export { FernDefinitionTimeoutError } from "./FernDefinitionTimeoutError.js";

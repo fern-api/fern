@@ -21,6 +21,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBearer();
@@ -52,6 +53,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithApiKey();
@@ -85,6 +87,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithOAuth();
@@ -116,6 +119,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBasic();
@@ -149,6 +153,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithInferredAuth();
@@ -183,6 +188,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAnyAuth();
@@ -217,6 +223,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAllAuth();

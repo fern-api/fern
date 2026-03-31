@@ -57,6 +57,10 @@ public class HttpMethodsClient {
     return this.rawClient.testPatch(id).body();
   }
 
+  public ObjectWithOptionalField testPatch(String id, RequestOptions requestOptions) {
+    return this.rawClient.testPatch(id, requestOptions).body();
+  }
+
   public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
     return this.rawClient.testPatch(id, request).body();
   }

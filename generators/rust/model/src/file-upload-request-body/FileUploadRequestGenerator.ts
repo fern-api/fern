@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
     CodeBlock,
@@ -9,22 +10,22 @@ import {
     Statement,
     Type
 } from "@fern-api/rust-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
+import { isOptionalType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace FileUploadRequestGenerator {
     interface Args {
         name: string;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
         fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
-        bodyProperties: InlinedRequestBodyProperty[];
+        bodyProperties: FernIr.InlinedRequestBodyProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -39,9 +40,9 @@ export declare namespace FileUploadRequestGenerator {
  */
 export class FileUploadRequestGenerator {
     private readonly name: string;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
     private readonly fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
-    private readonly bodyProperties: InlinedRequestBodyProperty[];
+    private readonly bodyProperties: FernIr.InlinedRequestBodyProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
@@ -76,6 +77,10 @@ export class FileUploadRequestGenerator {
         // Generate impl block
         const implBlock = this.generateImplBlock();
         implBlock.write(writer);
+
+        // Generate builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
 
         return writer.toString();
     }
@@ -235,10 +240,10 @@ export class FileUploadRequestGenerator {
         return attributes;
     }
 
-    private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
+    private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
         const fieldType = generateFieldType(property, this.context);
-        const attributes = generateFieldAttributes(property);
+        const attributes = generateFieldAttributes(property, this.context);
 
         return rust.field({
             name: fieldName,

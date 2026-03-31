@@ -32,19 +32,21 @@ func NewStreamer[T any](caller *Caller) *Streamer[T] {
 
 // StreamParams represents the parameters used to issue an API streaming call.
 type StreamParams struct {
-	URL             string
-	Method          string
-	Prefix          string
-	Delimiter       string
-	Terminator      string
-	MaxAttempts     uint
-	Headers         http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	Client          HTTPClient
-	Request         interface{}
-	ErrorDecoder    ErrorDecoder
-	Format          core.StreamFormat
+	URL                string
+	Method             string
+	Prefix             string
+	Delimiter          string
+	Terminator         string
+	MaxAttempts        uint
+	Headers            http.Header
+	BodyProperties     map[string]interface{}
+	QueryParameters    url.Values
+	Client             HTTPClient
+	Request            interface{}
+	ErrorDecoder       ErrorDecoder
+	Format             core.StreamFormat
+	EventDiscriminator string
+	MaxBufSize         int
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -91,12 +93,12 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, decodeError(resp, params.ErrorDecoder)
 	}
 
@@ -113,6 +115,12 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	if params.Format != core.StreamFormatEmpty {
 		opts = append(opts, core.WithFormat(params.Format))
 	}
+	if params.EventDiscriminator != "" {
+		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
+	}
+	if params.MaxBufSize > 0 {
+		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
+	}
 
-	return core.NewStream[T](resp, opts...), nil
+	return core.NewStream[T](ctx, resp, opts...), nil
 }

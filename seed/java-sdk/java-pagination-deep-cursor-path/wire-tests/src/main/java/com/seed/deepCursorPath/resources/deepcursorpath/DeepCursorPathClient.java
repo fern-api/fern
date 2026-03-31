@@ -31,6 +31,10 @@ public class DeepCursorPathClient {
         return this.rawClient.doThing().body();
     }
 
+    public SyncPagingIterable<String> doThing(RequestOptions requestOptions) {
+        return this.rawClient.doThing(requestOptions).body();
+    }
+
     public SyncPagingIterable<String> doThing(A request) {
         return this.rawClient.doThing(request).body();
     }
@@ -49,6 +53,10 @@ public class DeepCursorPathClient {
 
     public SyncPagingIterable<String> doThingInline() {
         return this.rawClient.doThingInline().body();
+    }
+
+    public SyncPagingIterable<String> doThingInline(RequestOptions requestOptions) {
+        return this.rawClient.doThingInline(requestOptions).body();
     }
 
     public SyncPagingIterable<String> doThingInline(InlineA request) {

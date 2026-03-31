@@ -1,10 +1,14 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    ContainerType,
     FernIr,
     HttpEndpoint,
     HttpEndpointSource,
     HttpPath,
     HttpResponse,
+    HttpResponseBody,
+    JsonResponse,
+    TypeReference,
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
@@ -12,19 +16,20 @@ import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples";
-import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
-import { FernExplorerExtension } from "../../../extensions/x-fern-explorer";
-import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
-import { ResponseErrorConverter } from "../ResponseErrorConverter";
-import { AbstractOperationConverter } from "./AbstractOperationConverter";
+import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
+import { FernExamplesExtension } from "../../../extensions/x-fern-examples.js";
+import { FernExplorerExtension } from "../../../extensions/x-fern-explorer.js";
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
+import { ResponseBodyConverter } from "../ResponseBodyConverter.js";
+import { ResponseErrorConverter } from "../ResponseErrorConverter.js";
+import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
+        pathLevelServers?: OpenAPIV3_1.ServerObject[];
         streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
@@ -42,6 +47,7 @@ export declare namespace OperationConverter {
         streamResponse: HttpResponse | undefined;
         errors: ResponseErrorConverter.Output[];
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        responseHeaders: FernIr.HttpHeader[];
     }
 
     type BaseEndpoint = Omit<
@@ -54,6 +60,7 @@ export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly pathLevelServers?: OpenAPIV3_1.ServerObject[];
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
@@ -67,12 +74,14 @@ export class OperationConverter extends AbstractOperationConverter {
         idempotent,
         idToAuthScheme,
         topLevelServers,
+        pathLevelServers,
         streamingExtension
     }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
+        this.pathLevelServers = pathLevelServers;
         this.streamingExtension = streamingExtension;
     }
 
@@ -194,14 +203,11 @@ export class OperationConverter extends AbstractOperationConverter {
             headers: headers.filter(
                 (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
             ),
+            responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,
             errors,
-            auth:
-                this.operation.security != null ||
-                this.context.spec.security != null ||
-                this.shouldApplyDefaultAuthOverrides(),
-            security:
-                this.operation.security ?? this.context.spec.security ?? this.getDefaultSecurityFromAuthOverrides(),
+            auth: this.computeEndpointAuth(),
+            security: this.computeEndpointSecurity(),
             availability: this.context.getAvailability({
                 node: this.operation,
                 breadcrumbs: this.breadcrumbs
@@ -275,7 +281,7 @@ export class OperationConverter extends AbstractOperationConverter {
                       }
                     : undefined,
             inlinedTypes: this.inlinedTypes,
-            servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? [])
         };
     }
 
@@ -298,6 +304,7 @@ export class OperationConverter extends AbstractOperationConverter {
         // TODO: Our existing Parser will only parse the first successful response.
         // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
+        let hasNoContentResponse = false;
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             const isWildcardStatusCode = /^[45]XX$/i.test(statusCode);
             let statusCodeNum: number;
@@ -321,7 +328,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             // Convert Successful Responses (2xx)
@@ -345,6 +353,11 @@ export class OperationConverter extends AbstractOperationConverter {
                     streamingExtension
                 });
                 const converted = responseBodyConverter.convert();
+                if (converted == null) {
+                    // A 2xx response with no body (e.g., 204 No Content with content: {})
+                    hasNoContentResponse = true;
+                    continue;
+                }
                 if (converted != null) {
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
@@ -367,6 +380,10 @@ export class OperationConverter extends AbstractOperationConverter {
                             body: converted.streamResponseBody,
                             docs: resolvedResponse.description
                         };
+
+                        if (converted.headers != null) {
+                            convertedResponseBody.responseHeaders = converted.headers;
+                        }
                     }
 
                     convertedResponseBody.v2Responses = [
@@ -419,7 +436,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             const responseBodyConverter = new ResponseBodyConverter({
@@ -460,7 +478,58 @@ export class OperationConverter extends AbstractOperationConverter {
             }
         }
 
+        // If there's both a successful response with a body and a no-content response (e.g., 204),
+        // wrap the response body type in optional so generators produce nullable return types.
+        if (hasNoContentResponse && hasSuccessfulResponse && convertedResponseBody?.response?.body != null) {
+            const body = convertedResponseBody.response.body;
+            if (body.type === "json" && body.value.type === "response") {
+                const innerType = body.value.responseBodyType;
+                // Only wrap if not already optional
+                if (innerType.type !== "container" || innerType.container.type !== "optional") {
+                    convertedResponseBody.response = {
+                        ...convertedResponseBody.response,
+                        body: HttpResponseBody.json(
+                            JsonResponse.response({
+                                ...body.value,
+                                responseBodyType: TypeReference.container(ContainerType.optional(innerType))
+                            })
+                        )
+                    };
+                }
+            }
+        }
+
         return convertedResponseBody;
+    }
+
+    private computeEndpointAuth(): boolean {
+        if (this.operation.security != null && this.operation.security.length === 0) {
+            return false;
+        }
+
+        if (this.operation.security != null && this.operation.security.length > 0) {
+            return true;
+        }
+
+        return (
+            (this.context.spec.security != null && this.context.spec.security.length > 0) ||
+            this.shouldApplyDefaultAuthOverrides()
+        );
+    }
+
+    private computeEndpointSecurity(): OpenAPIV3_1.SecurityRequirementObject[] | undefined {
+        // If endpoint explicitly has no auth (empty security array), respect that
+        if (this.operation.security != null && this.operation.security.length === 0) {
+            return [];
+        }
+
+        // When auth overrides are specified, use them instead of OpenAPI security
+        if (this.context.authOverrides?.auth != null) {
+            return this.getDefaultSecurityFromAuthOverrides();
+        }
+
+        // Fall back to OpenAPI security
+        return this.operation.security ?? this.context.spec.security;
     }
 
     /**
@@ -474,7 +543,8 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const hasGlobalSecurity = this.context.spec.security != null && this.context.spec.security.length > 0;
-        const hasEndpointSecurity = this.operation.security != null;
+        // Check for non-empty endpoint security (empty array means explicit no-auth, not "has security")
+        const hasEndpointSecurity = this.operation.security != null && this.operation.security.length > 0;
 
         // If there's already security defined (global or endpoint), don't apply defaults
         return !(hasGlobalSecurity || hasEndpointSecurity);
@@ -487,17 +557,29 @@ export class OperationConverter extends AbstractOperationConverter {
             return undefined;
         }
 
-        // The auth field from generators.yml contains the scheme name (e.g., "bearerAuth")
-        // Convert this to OpenAPI security requirement format
-        const authSchemeName = this.context.authOverrides.auth;
-        if (typeof authSchemeName !== "string") {
-            return undefined;
+        const authConfig = this.context.authOverrides.auth;
+
+        // Handle string auth (single scheme)
+        if (typeof authConfig === "string") {
+            const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+            securityRequirement[authConfig] = [];
+            return [securityRequirement];
         }
 
-        // Return OpenAPI security requirement format: [{ "schemeName": [] }]
-        const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
-        securityRequirement[authSchemeName] = [];
-        return [securityRequirement];
+        // Handle "any" auth (OR semantics - each scheme in its own array element)
+        if (typeof authConfig === "object" && "any" in authConfig) {
+            const anySchemes = authConfig.any;
+            if (Array.isArray(anySchemes)) {
+                return anySchemes.map((scheme) => {
+                    const schemeName = typeof scheme === "string" ? scheme : scheme.scheme;
+                    const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+                    securityRequirement[schemeName] = [];
+                    return securityRequirement;
+                });
+            }
+        }
+
+        return undefined;
     }
 
     private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
@@ -688,6 +770,13 @@ export class OperationConverter extends AbstractOperationConverter {
         );
     }
 
+    /**
+     * Gets the example name from x-fern-examples extension.
+     *
+     * Note: This uses the 'name' field directly without collision
+     * disambiguation. This is intentional because x-fern-examples is a
+     * Fern-specific extension where users explicitly provide unique names.
+     */
     private getExampleName({
         example,
         exampleIndex
@@ -729,7 +818,7 @@ export class OperationConverter extends AbstractOperationConverter {
             return serverFromOperationName;
         }
 
-        const operationServer = this.operation.servers?.[0];
+        const operationServer = this.operation.servers?.[0] ?? this.pathLevelServers?.[0];
         if (operationServer == null) {
             return undefined;
         }
@@ -743,7 +832,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
-        const operationServers = this.operation.servers;
+        const operationServers = this.operation.servers ?? this.pathLevelServers;
         if (operationServers == null) {
             return undefined;
         }

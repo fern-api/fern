@@ -1,10 +1,10 @@
 import { File, GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { generateModels } from "./generateModels.js";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -13,7 +13,7 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: ModelCustomConfigSchema;
         generatorConfig: GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

@@ -1,14 +1,14 @@
-import { HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl";
+import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl.js";
 
 export declare namespace SdkEndpointTypeSchemasGenerator {
     export interface Init {
         errorResolver: ErrorResolver;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
@@ -19,15 +19,15 @@ export declare namespace SdkEndpointTypeSchemasGenerator {
     export namespace generateEndpointTypeSchemas {
         export interface Args {
             packageId: PackageId;
-            service: HttpService;
-            endpoint: HttpEndpoint;
+            service: FernIr.HttpService;
+            endpoint: FernIr.HttpEndpoint;
         }
     }
 }
 
 export class SdkEndpointTypeSchemasGenerator {
     private errorResolver: ErrorResolver;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private shouldGenerateErrors: boolean;
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;

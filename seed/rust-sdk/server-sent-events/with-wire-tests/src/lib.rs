@@ -17,7 +17,7 @@
 //!         .completions
 //!         .stream(
 //!             &StreamCompletionRequest {
-//!                 query: "query".to_string(),
+//!                 query: "foo".to_string(),
 //!             },
 //!             None,
 //!         )
@@ -45,4 +45,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

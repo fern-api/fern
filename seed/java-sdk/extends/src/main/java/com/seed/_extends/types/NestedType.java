@@ -96,6 +96,10 @@ public final class NestedType implements IJson, IDocs {
 
     public interface _FinalStage {
         NestedType build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -143,6 +147,18 @@ public final class NestedType implements IJson, IDocs {
         @java.lang.Override
         public NestedType build() {
             return new NestedType(raw, docs, name, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

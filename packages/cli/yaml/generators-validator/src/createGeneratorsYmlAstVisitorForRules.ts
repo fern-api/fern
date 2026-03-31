@@ -5,9 +5,9 @@ import {
     GeneratorsYmlFileAstNodeTypes,
     GeneratorsYmlFileAstNodeVisitor,
     GeneratorsYmlFileAstVisitor
-} from "./ast/GeneratorsYmlAstVisitor";
-import { RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+} from "./ast/GeneratorsYmlAstVisitor.js";
+import { NamedRuleVisitors } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export function createGeneratorsYmlAstVisitorForRules({
     relativeFilepath,
@@ -17,7 +17,7 @@ export function createGeneratorsYmlAstVisitorForRules({
 }: {
     relativeFilepath: RelativeFilePath;
     contents: generatorsYml.GeneratorsConfigurationSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
 }): GeneratorsYmlFileAstVisitor {
     function createAstNodeVisitor<K extends keyof GeneratorsYmlFileAstNodeTypes>(
@@ -27,12 +27,13 @@ export function createGeneratorsYmlAstVisitorForRules({
             node: GeneratorsYmlFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
-            for (const ruleVisitors of allRuleVisitors) {
+            for (const { name: ruleName, visitors: ruleVisitors } of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.generatorsYml?.[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
+                            name: ruleName,
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,

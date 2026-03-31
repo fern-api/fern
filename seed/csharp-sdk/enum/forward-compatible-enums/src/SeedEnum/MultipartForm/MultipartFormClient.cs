@@ -2,9 +2,9 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class MultipartFormClient
+public partial class MultipartFormClient : IMultipartFormClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MultipartFormClient(RawClient client)
     {
@@ -17,11 +17,17 @@ public partial class MultipartFormClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var multipartFormRequest_ = new SeedEnum.Core.MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "multipart",
+            Headers = _headers,
             Options = options,
         };
         multipartFormRequest_.AddJsonPart("color", request.Color);
@@ -36,7 +42,9 @@ public partial class MultipartFormClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

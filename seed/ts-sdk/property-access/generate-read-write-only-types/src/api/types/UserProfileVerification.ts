@@ -9,5 +9,10 @@ export interface UserProfileVerification {
 }
 
 export namespace UserProfileVerification {
-    export type Request = Omit<UserProfileVerification, "verified">;
+    export type Request = Omit<UserProfileVerification, "verified"> & {
+        verified: string;
+    };
+    export type Response = Omit<UserProfileVerification, "verified"> & {
+        verified: string;
+    };
 }

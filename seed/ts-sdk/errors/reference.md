@@ -152,3 +152,4 @@ await client.simple.fooWithExamples({
 </dd>
 </dl>
 </details>
+

@@ -6,14 +6,13 @@ using WireMock.Settings;
 
 namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedCsharpSystemCollision.System Client { get; set; } = null!;
+    protected SeedCsharpSystemCollision.System Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()

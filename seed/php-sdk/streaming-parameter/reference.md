@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client->dummy->generate($request)</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generate($request)</code></summary>
 <dl>
 <dd>
 
@@ -52,3 +52,4 @@ $client->dummy->generate(
 </dd>
 </dl>
 </details>
+

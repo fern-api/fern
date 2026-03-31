@@ -23,9 +23,9 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "compile": "tsc",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint:eslint": "eslint --max-warnings 0 .",
@@ -35,17 +35,19 @@
     "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "octokit": "^4.1.4",
-    "simple-git": "^3.24.0",
-    "tmp-promise": "^3.0.3"
+    "semver": "^7.7.3",
+    "simple-git": "catalog:",
+    "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "^22.0.0",
-    "depcheck": "^1.4.7",
-    "simple-git": "^3.24.0",
+    "@types/node": "catalog:",
+    "@types/semver": "^7.5.8",
+    "simple-git": "catalog:",
     "stylelint": "^16.1.0",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

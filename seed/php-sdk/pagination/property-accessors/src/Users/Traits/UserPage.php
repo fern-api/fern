@@ -37,6 +37,7 @@ trait UserPage
     public function setData(UserListContainer $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 
@@ -54,6 +55,7 @@ trait UserPage
     public function setNext(?string $value = null): self
     {
         $this->next = $value;
+        $this->_setField('next');
         return $this;
     }
 }

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SearchAsync</a>(SearchRequest { ... }) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SearchAsync</a>(SearchRequest { ... }) -> WithRawResponseTask&lt;SearchResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -59,6 +59,8 @@ await client.SearchAsync(
             },
         ],
         Filter = ["filter"],
+        Tags = ["tags"],
+        OptionalTags = ["optionalTags"],
         Neighbor = new User
         {
             Name = "name",
@@ -96,3 +98,4 @@ await client.SearchAsync(
 </dd>
 </dl>
 </details>
+

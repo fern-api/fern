@@ -1,11 +1,10 @@
-import * as FernIr from "@fern-fern/ir-sdk/api";
-import { HttpEndpoint, IntermediateRepresentation, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { SubClientGenerator } from "../generators/SubClientGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SubClientGenerator } from "../generators/SubClientGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Mock function to create basic IR structure
-function createMockIR(services: Record<string, unknown> = {}): IntermediateRepresentation {
+function createMockIR(services: Record<string, unknown> = {}): FernIr.IntermediateRepresentation {
     return {
         apiName: {
             originalName: "TestAPI",
@@ -18,11 +17,11 @@ function createMockIR(services: Record<string, unknown> = {}): IntermediateRepre
         errors: {},
         types: {},
         services
-    } as unknown as IntermediateRepresentation;
+    } as unknown as FernIr.IntermediateRepresentation;
 }
 
 // Mock function to create query parameter
-function createQueryParameter(name: string, wireValue: string): QueryParameter {
+function createQueryParameter(name: string, wireValue: string): FernIr.QueryParameter {
     return {
         name: {
             name: {
@@ -50,11 +49,11 @@ function createQueryParameter(name: string, wireValue: string): QueryParameter {
         allowMultiple: false,
         docs: undefined,
         availability: undefined
-    } as QueryParameter;
+    } as FernIr.QueryParameter;
 }
 
 // Mock function to create HTTP endpoint with query parameters
-function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): HttpEndpoint {
+function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] = []): FernIr.HttpEndpoint {
     return {
         id: name,
         name: {
@@ -109,11 +108,11 @@ function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): H
         source: undefined,
         security: undefined,
         retries: undefined
-    } as HttpEndpoint;
+    } as FernIr.HttpEndpoint;
 }
 
 // Mock function to create context
-function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext {
+function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
         getClientName: () => "TestClient",
@@ -143,7 +142,7 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
             return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
         },
-        getQueryRequestTypeName: (endpoint: HttpEndpoint) => {
+        getQueryRequestTypeName: (endpoint: FernIr.HttpEndpoint) => {
             const methodName = endpoint.name.pascalCase.safeName;
             return `${methodName}QueryRequest`;
         },
@@ -257,7 +256,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;
@@ -286,7 +285,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;
@@ -316,7 +315,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;

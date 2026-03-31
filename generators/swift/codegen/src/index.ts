@@ -1,5 +1,5 @@
-export * from "./custom-config";
-export * from "./helpers";
-export * from "./name-registry";
-export * as swift from "./swift";
-export * from "./syntax";
+export * from "./custom-config/index.js";
+export * from "./helpers/index.js";
+export * from "./name-registry/index.js";
+export * as swift from "./swift.js";
+export * from "./syntax/index.js";

@@ -10,10 +10,7 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_date(
-            &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-            None,
-        )
+        .params
+        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
         .await;
 }

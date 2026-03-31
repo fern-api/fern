@@ -6,7 +6,6 @@
 //!
 //! ```rust
 //! use seed_validation::prelude::*;
-//! use seed_validation::Shape;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -48,4 +47,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

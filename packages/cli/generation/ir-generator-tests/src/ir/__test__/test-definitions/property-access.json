@@ -1356,7 +1356,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_:Foo",
@@ -3067,6 +3068,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

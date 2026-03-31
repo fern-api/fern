@@ -64,7 +64,7 @@ pnpm seed:build                 # Build seed CLI for generator testing
 
 **Running Individual Package Commands**: For commands in subfolder packages, use `pnpm turbo run <command> --filter @fern-api/cli` (e.g., `pnpm turbo run test --filter @fern-api/cli`)
 
-**Dependency Management**: Run `pnpm depcheck` to check for unused dependencies
+**Dependency Management**: Run `pnpm check:knip` to check for unused dependencies (or `pnpm depcheck` which delegates to knip via turbo)
 
 ## Architecture Overview
 
@@ -214,6 +214,27 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 **When working with external data (API responses, JSON parsing), validate and narrow with type guards—never assert the shape blindly.**
 
+#### Exhaustive Checks
+
+**Always handle all cases when switching on discriminated unions.** Every `switch` statement on a discriminated union's type field must include a `case` for every variant. The `default` case must call `assertNever` from `@fern-api/core-utils` to ensure compile-time exhaustiveness—if a new variant is added to the union, any unhandled switch will fail to compile.
+
+```typescript
+import { assertNever } from "@fern-api/core-utils";
+
+switch (shape.type) {
+    case "circle":
+        return handleCircle(shape);
+    case "square":
+        return handleSquare(shape);
+    default:
+        assertNever(shape);
+}
+```
+
+**Never leave a `default` case that silently ignores unknown variants.** The whole point of `assertNever` is to turn missed cases into compile-time errors rather than silent runtime bugs. If you find yourself wanting to skip a variant, handle it explicitly (even if the handler is a no-op with a comment explaining why).
+
+**This applies to all discriminated union patterns in the codebase**, including IR types, generator configuration unions, OpenAPI schema variants, and any other tagged union. Use `assertNeverNoThrow` from `@fern-api/core-utils` only when you intentionally want to ignore unexpected variants without throwing (e.g., forward-compatible parsing), and add a comment explaining why.
+
 Here are additional TypeScript rules beyond type safety:
 
 #### Async/Await & Promises
@@ -276,7 +297,14 @@ Here are additional TypeScript rules beyond type safety:
 
 When creating pull requests in this repository:
 
-1. **PR Title**: Must follow semantic commit message rules with format `<type>(<scope>): <description>`. The type and scope must match those defined in `.github/workflows/lint-pr-title.yml`. For example: `chore(docs): update guidelines` or `feat(python): add new feature`.
+1. **PR Title**: Must follow semantic commit message rules enforced by CI (`.github/workflows/lint-pr-title.yml`). Format: `<type>(<scope>): <description>`. Both type and scope are **required**.
+
+   **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
+
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+
+   **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
+
 2. **Assignee**: Always assign the person who prompted you to create the PR as the assignee
 3. **Description**: Follow the PR template in `.github/pull_request_template.md`
 4. **Testing**: Ensure all tests pass before marking PR as ready for review

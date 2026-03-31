@@ -1,5 +1,4 @@
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -13,11 +12,12 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )

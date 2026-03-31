@@ -3,8 +3,8 @@
 export interface Resource {
     id: string;
     name: string;
-    description?: string;
+    description?: string | undefined;
     created_at: string;
     updated_at: string;
-    metadata?: Record<string, unknown>;
+    metadata?: Record<string, unknown> | undefined;
 }

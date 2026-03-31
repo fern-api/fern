@@ -13,7 +13,31 @@ features:
     description: |
       Failed API calls will raise errors that can be rescued from granularly.
 
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries. A request will be retried as long as the request is deemed
+      retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 2).
+
+      A request is deemed retryable when any of the following HTTP status codes is returned:
+
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+      Use the `max_retries` option to configure this behavior.
+
   - id: TIMEOUTS
     advanced: true
     description: |
       The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
+
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: |
+      If you would like to send additional headers as part of the request, use the `additional_headers` request option.
+
+  - id: ADDITIONAL_QUERY_PARAMETERS
+    advanced: true
+    description: |
+      If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.

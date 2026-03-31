@@ -48,4 +48,12 @@ public class AsyncSeedAnyAuthClient {
     public static AsyncSeedAnyAuthClientBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
         return AsyncSeedAnyAuthClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static AsyncSeedAnyAuthClientBuilder._Builder builder() {
+        return AsyncSeedAnyAuthClientBuilder.builder();
+    }
 }

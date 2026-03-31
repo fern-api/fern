@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_anyOfExamples",
@@ -43,6 +44,7 @@
           "description": "Demonstrates anyOf with title field per OpenAPI spec.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -170,6 +172,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -190,6 +193,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "anyOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_anyOfExamples",

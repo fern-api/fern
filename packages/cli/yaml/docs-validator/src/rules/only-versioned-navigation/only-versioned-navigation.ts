@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const OnlyVersionedNavigation: Rule = {
     name: "only-versioned-navigation",

@@ -38,6 +38,7 @@ class WithPage extends JsonSerializableType
     public function setPage(?int $value = null): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 

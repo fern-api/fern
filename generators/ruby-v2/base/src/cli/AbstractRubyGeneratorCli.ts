@@ -1,21 +1,21 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 
 export abstract class AbstractRubyGeneratorCli<
     CustomConfig extends BaseRubyCustomConfigSchema,
     RubyGeneratorContext extends AbstractRubyGeneratorContext<CustomConfig>
-> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, RubyGeneratorContext> {
+> extends AbstractGeneratorCli<CustomConfig, FernIr.IntermediateRepresentation, RubyGeneratorContext> {
     /**
      * Parses the IR for the PHP generators
      * @param irFilepath
      * @returns
      */
-    protected async parseIntermediateRepresentation(irFilepath: string): Promise<IntermediateRepresentation> {
-        return await parseIR<IntermediateRepresentation>({
+    protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+        return await parseIR<FernIr.IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });

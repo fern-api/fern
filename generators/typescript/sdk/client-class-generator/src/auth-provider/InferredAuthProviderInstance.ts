@@ -1,6 +1,6 @@
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { AuthProviderInstance } from "./AuthProviderInstance";
+import { AuthProviderInstance } from "./AuthProviderInstance.js";
 
 export class InferredAuthProviderInstance implements AuthProviderInstance {
     public instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression {

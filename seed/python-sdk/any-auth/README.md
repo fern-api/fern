@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Oauth Token Override](#oauth-token-override)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,10 +38,10 @@ Instantiate and use the client with the following:
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -43,9 +58,8 @@ import asyncio
 from seed import AsyncSeedAnyAuth
 
 client = AsyncSeedAnyAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
 
 
@@ -82,13 +96,16 @@ This SDK supports two authentication methods: OAuth client credentials flow (aut
 from seed import SeedAnyAuth
 
 # Option 1: Direct bearer token (bypass OAuth flow)
-client = SeedAnyAuth(..., token="my-pre-generated-bearer-token")
-
-from seed import SeedAnyAuth
+client = SeedAnyAuth(
+    ...,
+    token="my-pre-generated-bearer-token",
+)
 
 # Option 2: OAuth client credentials flow (automatic token management)
 client = SeedAnyAuth(
-    ..., client_id="your-client-id", client_secret="your-client-secret"
+    ...,
+    client_id="your-client-id",
+    client_secret="your-client-secret",
 )
 ```
 
@@ -102,11 +119,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedAnyAuth
 
-client = SeedAnyAuth(
-    ...,
-)
+client = SeedAnyAuth(...)
 response = client.auth.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -135,14 +151,9 @@ client.auth.get_token(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedAnyAuth
 
-client = SeedAnyAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedAnyAuth(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token(..., request_options={

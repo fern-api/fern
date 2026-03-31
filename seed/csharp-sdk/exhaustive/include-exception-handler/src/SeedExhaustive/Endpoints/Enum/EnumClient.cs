@@ -1,13 +1,13 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class EnumClient
+public partial class EnumClient : IEnumClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EnumClient(RawClient client)
     {
@@ -22,10 +22,7 @@ public partial class EnumClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-    /// </code></example>
-    public async Task<WeatherReport> GetAndReturnEnumAsync(
+    private async Task<WithRawResponse<WeatherReport>> GetAndReturnEnumAsyncCore(
         WeatherReport request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -34,14 +31,20 @@ public partial class EnumClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/enum",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -49,19 +52,39 @@ public partial class EnumClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
-                        return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
+                        return new WithRawResponse<WeatherReport>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -70,5 +93,19 @@ public partial class EnumClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
+    /// </code></example>
+    public WithRawResponseTask<WeatherReport> GetAndReturnEnumAsync(
+        WeatherReport request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<WeatherReport>(
+            GetAndReturnEnumAsyncCore(request, options, cancellationToken)
+        );
     }
 }

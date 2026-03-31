@@ -7,6 +7,7 @@ from .first_item_type import FirstItemType
 from .foo import Foo
 from .foo_extended import FooExtended
 from .second_item_type import SecondItemType
+from .type_with_optional_map import TypeWithOptionalMap
 from .union import Union
 from .union_with_base_properties import UnionWithBaseProperties
 from .union_with_discriminant import UnionWithDiscriminant
@@ -16,6 +17,8 @@ from .union_with_duplicative_discriminants import UnionWithDuplicativeDiscrimina
 from .union_with_literal import UnionWithLiteral
 from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
 from .union_with_no_properties import UnionWithNoProperties
+from .union_with_nullable_reference import UnionWithNullableReference
+from .union_with_optional_reference import UnionWithOptionalReference
 from .union_with_optional_time import UnionWithOptionalTime
 from .union_with_primitive import UnionWithPrimitive
 from .union_with_same_number_types import UnionWithSameNumberTypes
@@ -31,6 +34,7 @@ __all__ = [
     "Foo",
     "FooExtended",
     "SecondItemType",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
@@ -40,6 +44,8 @@ __all__ = [
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
+    "UnionWithNullableReference",
+    "UnionWithOptionalReference",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
     "UnionWithSameNumberTypes",

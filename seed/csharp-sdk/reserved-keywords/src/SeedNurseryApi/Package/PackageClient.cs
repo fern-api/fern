@@ -2,9 +2,9 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
-public partial class PackageClient
+public partial class PackageClient : IPackageClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PackageClient(RawClient client)
     {
@@ -20,16 +20,24 @@ public partial class PackageClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["for"] = request.For;
+        var _queryString = new SeedNurseryApi.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("for", request.For)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedNurseryApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -40,7 +48,9 @@ public partial class PackageClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNurseryApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

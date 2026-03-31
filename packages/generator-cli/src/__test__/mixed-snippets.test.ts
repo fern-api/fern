@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/mixed-snippets/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/mixed-snippets/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("mixed-snippets", () => {
     testGenerateReadme({

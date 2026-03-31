@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedHeaderTokenEnvironmentVariable/Service/ServiceClient.cs">GetWithBearerTokenAsync</a>() -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedHeaderTokenEnvironmentVariable/Service/ServiceClient.cs">GetWithBearerTokenAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,3 +38,4 @@ await client.Service.GetWithBearerTokenAsync();
 </dd>
 </dl>
 </details>
+

@@ -1,7 +1,7 @@
 import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
-import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
-import { TypeScriptFile } from "./TypeScriptFile";
+import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema.js";
+import { TypeScriptFile } from "./TypeScriptFile.js";
 
 export abstract class AstNode extends AbstractAstNode {
     /**

@@ -253,6 +253,7 @@ class SnippetTestFactory:
                 boolean=lambda _: None,
                 long_=lambda _: None,
                 datetime=lambda _: "datetime",
+                datetime_rfc_2822=lambda _: "datetime",
                 date=lambda _: "date",
                 uuid_=lambda _: "uuid",
             ),
@@ -275,12 +276,16 @@ class SnippetTestFactory:
                         ]
                     ),
                 ),
-                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
-                if item_type.optional is not None
-                else None,
-                nullable=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.nullable)
-                if item_type.nullable is not None
-                else None,
+                optional=lambda item_type: (
+                    self._generate_type_expectations_for_type_reference(item_type.optional)
+                    if item_type.optional is not None
+                    else None
+                ),
+                nullable=lambda item_type: (
+                    self._generate_type_expectations_for_type_reference(item_type.nullable)
+                    if item_type.nullable is not None
+                    else None
+                ),
                 map_=lambda map_type: (
                     "dict",
                     dict(

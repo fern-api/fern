@@ -2,8 +2,8 @@ import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
 
 export async function previewDocsWorkspace({
     loadProject,

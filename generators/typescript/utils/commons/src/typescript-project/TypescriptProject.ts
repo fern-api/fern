@@ -7,9 +7,9 @@ import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
-import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { JSR } from "./JSR";
-import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
+import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
+import { JSR } from "./JSR.js";
+import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
 export declare namespace TypescriptProject {
     export interface Init {
@@ -46,6 +46,15 @@ const COMMON_SCRIPTS = {
     CHECK_FIX: "check:fix"
 } as const;
 type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
+
+/** Shared version constants for formatter / linter packages. */
+const TOOL_VERSIONS = {
+    BIOME: "2.4.10",
+    PRETTIER: "3.8.1",
+    OXFMT: "0.42.0",
+    OXLINT: "1.57.0",
+    OXLINT_TSGOLINT: "0.17.4"
+} as const;
 
 export abstract class TypescriptProject {
     protected static readonly DEFAULT_SRC_DIRECTORY = "src";
@@ -212,6 +221,8 @@ export abstract class TypescriptProject {
             buildCommand: this.getBuildCommand(),
             formatCommand: this.getFormatCommand(),
             checkFixCommand: this.getCheckFixCommand(),
+            checkFixPackages: this.getCheckFixPackages(),
+            checkFixToolBinaries: this.getCheckFixToolBinaries(),
             packageManager: this.packageManager
         });
     }
@@ -369,6 +380,50 @@ export abstract class TypescriptProject {
         return [COMMON_SCRIPTS.CHECK_FIX];
     }
 
+    /**
+     * Returns the exact package specifiers (name@version) required by the
+     * configured formatter and linter so they can be installed in isolation
+     * without pulling in the full dependency tree.
+     */
+    protected getCheckFixPackages(): string[] {
+        const packages: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            packages.push(`@biomejs/biome@${TOOL_VERSIONS.BIOME}`);
+        }
+        if (this.formatter === "prettier") {
+            packages.push(`prettier@${TOOL_VERSIONS.PRETTIER}`);
+        }
+        if (this.formatter === "oxfmt") {
+            packages.push(`oxfmt@${TOOL_VERSIONS.OXFMT}`);
+        }
+        if (this.linter === "oxlint") {
+            packages.push(`oxlint@${TOOL_VERSIONS.OXLINT}`);
+            packages.push(`oxlint-tsgolint@${TOOL_VERSIONS.OXLINT_TSGOLINT}`);
+        }
+        return packages;
+    }
+
+    /**
+     * Returns the binary names that must be on PATH for check:fix to work
+     * without installing packages (e.g. ["biome"], ["prettier", "oxlint"]).
+     */
+    protected getCheckFixToolBinaries(): string[] {
+        const binaries: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            binaries.push("biome");
+        }
+        if (this.formatter === "prettier") {
+            binaries.push("prettier");
+        }
+        if (this.formatter === "oxfmt") {
+            binaries.push("oxfmt");
+        }
+        if (this.linter === "oxlint") {
+            binaries.push("oxlint");
+        }
+        return binaries;
+    }
+
     protected getBuildCommand(): string[] {
         return [COMMON_SCRIPTS.BUILD];
     }
@@ -378,20 +433,20 @@ export abstract class TypescriptProject {
     protected getCommonDevDependencies(): Record<string, string> {
         const deps: Record<string, string> = {
             "@types/node": "^18.19.70",
-            typescript: "~5.7.2"
+            typescript: "~5.9.3"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
-            deps["@biomejs/biome"] = "2.3.1";
+            deps["@biomejs/biome"] = TOOL_VERSIONS.BIOME;
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.32.0";
-            deps["oxlint-tsgolint"] = "0.8.4";
+            deps["oxlint"] = TOOL_VERSIONS.OXLINT;
+            deps["oxlint-tsgolint"] = TOOL_VERSIONS.OXLINT_TSGOLINT;
         }
         if (this.formatter === "prettier") {
-            deps["prettier"] = "3.4.2";
+            deps["prettier"] = TOOL_VERSIONS.PRETTIER;
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.17.0";
+            deps["oxfmt"] = TOOL_VERSIONS.OXFMT;
         }
         return deps;
     }

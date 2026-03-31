@@ -60,6 +60,8 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
+          "defaultUrl": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",
           "name": {
@@ -82,6 +84,8 @@
             },
           },
           "url": "https://api.example.com/v1",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",
@@ -430,6 +434,7 @@
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
+          "responseHeaders": [],
           "retries": undefined,
           "sdkRequest": undefined,
           "security": undefined,
@@ -1115,6 +1120,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -1274,6 +1280,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -1352,22 +1359,71 @@
         "UserEvent",
         "SystemEvent",
         "ErrorEvent",
+        "EventRequestDiscriminatorMappingErrorSeverity",
       },
       "shape": {
         "_visit": [Function],
-        "members": [
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "discriminatorContext": undefined,
+        "extends": [],
+        "type": "union",
+        "types": [
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "user",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "user",
+            },
+            "displayName": "user",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "user",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "userEvent",
@@ -1387,22 +1443,44 @@
                   "unsafeName": "user_event",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "UserEvent",
             },
           },
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+                "originalName": "system",
+                "pascalCase": {
+                  "safeName": "System",
+                  "unsafeName": "System",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM",
+                  "unsafeName": "SYSTEM",
+                },
+                "snakeCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+              },
+              "wireValue": "system",
+            },
+            "displayName": "system",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "system",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "systemEvent",
@@ -1422,22 +1500,44 @@
                   "unsafeName": "system_event",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "SystemEvent",
             },
           },
           {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+                "originalName": "error",
+                "pascalCase": {
+                  "safeName": "Error_",
+                  "unsafeName": "Error",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR",
+                  "unsafeName": "ERROR",
+                },
+                "snakeCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+              },
+              "wireValue": "error",
+            },
+            "displayName": "error",
             "docs": undefined,
-            "type": {
+            "shape": {
               "_visit": [Function],
-              "default": undefined,
               "displayName": "error",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
-              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "errorEvent",
@@ -1457,12 +1557,11 @@
                   "unsafeName": "error_event",
                 },
               },
-              "type": "named",
+              "propertiesType": "samePropertiesAsObject",
               "typeId": "ErrorEvent",
             },
           },
         ],
-        "type": "undiscriminatedUnion",
       },
       "source": undefined,
       "userProvidedExamples": [],
@@ -1475,6 +1574,166 @@
           },
         },
         "userSpecifiedExamples": {},
+      },
+    },
+    "EventRequestDiscriminatorMappingErrorSeverity": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Severity level of the error",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "eventRequestDiscriminatorMappingErrorSeverity",
+            "unsafeName": "eventRequestDiscriminatorMappingErrorSeverity",
+          },
+          "originalName": "EventRequestDiscriminatorMappingErrorSeverity",
+          "pascalCase": {
+            "safeName": "EventRequestDiscriminatorMappingErrorSeverity",
+            "unsafeName": "EventRequestDiscriminatorMappingErrorSeverity",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_REQUEST_DISCRIMINATOR_MAPPING_ERROR_SEVERITY",
+            "unsafeName": "EVENT_REQUEST_DISCRIMINATOR_MAPPING_ERROR_SEVERITY",
+          },
+          "snakeCase": {
+            "safeName": "event_request_discriminator_mapping_error_severity",
+            "unsafeName": "event_request_discriminator_mapping_error_severity",
+          },
+        },
+        "typeId": "EventRequestDiscriminatorMappingErrorSeverity",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "forwardCompatible": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+                "originalName": "low",
+                "pascalCase": {
+                  "safeName": "Low",
+                  "unsafeName": "Low",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LOW",
+                  "unsafeName": "LOW",
+                },
+                "snakeCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+              },
+              "wireValue": "low",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+                "originalName": "medium",
+                "pascalCase": {
+                  "safeName": "Medium",
+                  "unsafeName": "Medium",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MEDIUM",
+                  "unsafeName": "MEDIUM",
+                },
+                "snakeCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+              },
+              "wireValue": "medium",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+                "originalName": "high",
+                "pascalCase": {
+                  "safeName": "High",
+                  "unsafeName": "High",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HIGH",
+                  "unsafeName": "HIGH",
+                },
+                "snakeCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+              },
+              "wireValue": "high",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+                "originalName": "critical",
+                "pascalCase": {
+                  "safeName": "Critical",
+                  "unsafeName": "Critical",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CRITICAL",
+                  "unsafeName": "CRITICAL",
+                },
+                "snakeCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+              },
+              "wireValue": "critical",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "EventRequestDiscriminatorMappingErrorSeverity_example_0": "high",
+        },
       },
     },
     "EventResponse": {
@@ -1663,7 +1922,14 @@
             },
             "propertyAccess": undefined,
             "v2Examples": {
-              "autogeneratedExamples": {},
+              "autogeneratedExamples": {
+                "EventResponseEvent_example_autogenerated": {
+                  "action": "login",
+                  "timestamp": "2023-12-01T12:00:00Z",
+                  "type": "user",
+                  "userId": "user_123",
+                },
+              },
               "userSpecifiedExamples": {},
             },
             "valueType": {
@@ -1757,6 +2023,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -2195,6 +2462,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -2551,6 +2819,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {

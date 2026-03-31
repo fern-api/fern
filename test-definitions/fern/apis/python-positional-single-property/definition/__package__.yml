@@ -1,0 +1,91 @@
+types:
+  # Simple single-property wrapper type - should get positional init
+  Isin:
+    properties:
+      isin: string
+
+  # Single-property wrapper with discriminator literal - should get positional init
+  # (the discriminator field should be ignored when counting required fields)
+  IsinWithDiscriminator:
+    properties:
+      isin: string
+      type: literal<"ISIN">
+
+  # Another single-property wrapper with discriminator
+  Quantity:
+    properties:
+      quantity: double
+      type: literal<"QUANTITY">
+
+  # Type with two required fields - should NOT get positional init
+  TwoFields:
+    properties:
+      field1: string
+      field2: integer
+
+  # Type with one required field and one optional - should get positional init
+  OneRequiredOneOptional:
+    properties:
+      required_field: string
+      optional_field: optional<string>
+
+  # Type with multiple discriminator literals but one required field - should get positional init
+  MultipleDiscriminators:
+    properties:
+      value: string
+      type: literal<"TYPE_A">
+      version: literal<"v1">
+
+  # Nested wrapper types for testing
+  Trader:
+    properties:
+      uuid_: integer
+
+  TakerParty:
+    properties:
+      trader: Trader
+
+  BondSingleLeg:
+    properties:
+      identifier: Isin
+      quantity: Quantity
+
+  # Union type with single-property members
+  # Using a different discriminant name to avoid conflict with member type fields
+  Identifier:
+    discriminant: identifier_type
+    union:
+      isin: Isin
+      cusip: Cusip
+
+  Cusip:
+    properties:
+      cusip: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    create:
+      path: /create
+      method: POST
+      request:
+        name: CreateRequest
+        body:
+          properties:
+            instrument: BondSingleLeg
+            taker: TakerParty
+      response: string
+      examples:
+        - request:
+            instrument:
+              identifier:
+                isin: "US0378331005"
+              quantity:
+                quantity: 10000.0
+                type: "QUANTITY"
+            taker:
+              trader:
+                uuid_: 1234567
+          response:
+            body: "created"

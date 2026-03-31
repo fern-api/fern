@@ -5,7 +5,7 @@ from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
-from fern_python.external_dependencies import Contextlib, HttpX, Websockets
+from fern_python.external_dependencies import Contextlib, UrlLibParse, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -13,6 +13,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
+from fern_python.utils.snake_case import snake_case
 
 import fern.ir.resources as ir_types
 
@@ -68,13 +69,18 @@ class WebsocketConnectMethodGenerator:
                 _named_parameter_names.append(name)
                 self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
+    def _get_connect_method_name(self) -> str:
+        if self._websocket.connect_method_name is not None:
+            return snake_case(self._websocket.connect_method_name)
+        return "connect"
+
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
         named_parameters = self._get_overridden_parameter_types()
         parameters = self._get_websocket_parameters()
 
         function_declaration = AST.FunctionDeclaration(
-            name="connect",
+            name=self._get_connect_method_name(),
             is_async=self._is_async,
             docstring=self._get_docstring_for_websocket(
                 websocket=self._websocket,
@@ -269,14 +275,37 @@ class WebsocketConnectMethodGenerator:
                 else f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
             )
             writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
-            if len(parameters) > 0:
-                writer.write("query_params = ")
-                writer.write_node(HttpX.query_params())
-                writer.write_line()
-                query_params_expr = self._build_query_parameters(channel=websocket, parent_writer=writer)
-                if query_params_expr is not None:
-                    writer.write_node(query_params_expr)
-                writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
+
+            # Build query params using encode_query(jsonable_encoder(remove_none_from_dict({...})))
+            # encode_query returns List[Tuple[str, Any]], so we use urllib.parse.urlencode to convert to string
+            query_params_dict_expr = self._build_query_params_dict(channel=websocket)
+            writer.write("_encoded_query_params = ")
+            writer.write_node(
+                self._context.core_utilities.get_encode_query(
+                    self._context.core_utilities.jsonable_encoder(
+                        self._context.core_utilities.remove_none_from_dict(query_params_dict_expr)
+                    )
+                )
+            )
+            writer.write_line()
+
+            # Only append query string if there are params
+            def write_url_with_query_params(writer: AST.NodeWriter) -> None:
+                writer.write(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + ")
+                writer.write('"?" + ')
+                writer.write_node(UrlLibParse.urlencode(AST.Expression("_encoded_query_params")))
+
+            writer.write_node(
+                AST.ConditionalTree(
+                    [
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression("_encoded_query_params"),
+                            code=[AST.Expression(AST.CodeWriter(write_url_with_query_params))],
+                        )
+                    ],
+                    else_code=None,
+                )
+            )
             writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
             headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:
@@ -350,14 +379,21 @@ class WebsocketConnectMethodGenerator:
                     handlers=[
                         AST.ExceptHandler(
                             exception_type=AST.Expression(
-                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
+                                AST.ReferenceNode(
+                                    reference=self._context.core_utilities.get_reference_to_invalid_websocket_status()
+                                ),
                             ),
                             name="exc",
                             body=[
                                 AST.VariableDeclaration(
                                     name="status_code",
                                     type_hint=AST.TypeHint.int_(),
-                                    initializer=AST.Expression("exc.status_code"),
+                                    initializer=AST.Expression(
+                                        AST.FunctionInvocation(
+                                            function_definition=self._context.core_utilities.get_reference_to_get_status_code(),
+                                            args=[AST.Expression("exc")],
+                                        )
+                                    ),
                                 ),
                                 AST.ConditionalTree(
                                     conditions=[
@@ -688,30 +724,37 @@ class WebsocketConnectMethodGenerator:
             return AST.Expression(f"{possible_query_literal}")
         return self._get_reference_to_query_parameter(query_parameter)
 
-    def _build_query_parameters(
-        self, *, channel: ir_types.WebSocketChannel, parent_writer: AST.NodeWriter
-    ) -> Optional[AST.Expression]:
+    def _build_query_params_dict(self, *, channel: ir_types.WebSocketChannel) -> AST.Expression:
+        """
+        Builds a dictionary expression for query parameters that includes:
+        - Channel-declared query parameters
+        - additional_query_parameters from request_options
+        """
         query_parameters = [
             (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
             for query_parameter in channel.query_parameters
         ]
 
-        if len(query_parameters) == 0:
-            return None
-
-        def write_query_params_check(writer: AST.NodeWriter) -> None:
-            for _, (query_param_key, query_param_value) in enumerate(query_parameters):
-                writer.write("if ")
-                writer.write_node(query_param_value)
-                writer.write_line(" is not None:")
-                with writer.indent():
-                    writer.write("query_params = query_params.add(")
-                    writer.write(f'"{query_param_key}", ')
+        def write_query_params_dict(writer: AST.NodeWriter) -> None:
+            writer.write_line("{")
+            with writer.indent():
+                # Write channel-declared query parameters
+                for query_param_key, query_param_value in query_parameters:
+                    writer.write(f'"{query_param_key}": ')
                     writer.write_node(query_param_value)
-                    writer.write(")")
-                    writer.write_line()
+                    writer.write_line(",")
+                # Spread additional_query_parameters from request_options
+                writer.write_line("**(")
+                with writer.indent():
+                    writer.write_line(
+                        f'{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get("additional_query_parameters", {{}}) or {{}}'
+                    )
+                    writer.write_line(f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None")
+                    writer.write_line("else {}")
+                writer.write_line("),")
+            writer.write("}")
 
-        return AST.Expression(AST.CodeWriter(write_query_params_check))
+        return AST.Expression(AST.CodeWriter(write_query_params_dict))
 
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
@@ -748,10 +791,12 @@ class WebsocketConnectMethodGenerator:
             container=lambda container: container.visit(
                 list_=lambda _lt: False,
                 set_=lambda _st: False,
-                optional=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
-                nullable=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                optional=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
+                nullable=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
                 map_=lambda _mt: False,
                 literal=lambda _lit: False,
             ),
@@ -768,7 +813,7 @@ class WebsocketConnectMethodGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME]),
+            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME, ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822]),
             allow_optional=allow_optional,
             allow_enum=False,
         )
@@ -826,19 +871,23 @@ class WebsocketConnectMethodGenerator:
             container=lambda container: container.visit(
                 list_=lambda x: False,
                 set_=lambda x: False,
-                optional=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                optional=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
-                nullable=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                nullable=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(

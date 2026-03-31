@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithPathAndQuery;
+import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
+import java.time.OffsetDateTime;
 
 public class Example26 {
     public static void main(String[] args) {
@@ -11,8 +12,10 @@ public class Example26 {
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+                .object()
+                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
+                        .datetimeLikeString("2023-08-31T14:15:22Z")
+                        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
+                        .build());
     }
 }

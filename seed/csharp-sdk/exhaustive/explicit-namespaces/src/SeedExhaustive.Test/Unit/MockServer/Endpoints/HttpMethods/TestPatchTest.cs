@@ -1,12 +1,13 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.HttpMethods;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TestPatchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -100,9 +101,6 @@ public class TestPatchTest : BaseMockServerTest
                 Bigint = "1000000",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

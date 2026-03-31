@@ -5,6 +5,7 @@ package responseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/response-property/fern/internal"
 )
 

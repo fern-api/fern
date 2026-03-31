@@ -21,14 +21,11 @@ module Seed
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[client_id client_secret audience grant_type]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: Seed::Auth::Types::GetTokenRequest.new(body_bag).to_h,
+          body: Seed::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin

@@ -15,8 +15,14 @@ export interface UserProfile {
 }
 
 export namespace UserProfile {
-    export type Request = Omit<UserProfile, "verification"> & {
+    export type Request = Omit<UserProfile, "name" | "verification" | "ssn"> & {
+        name: string;
         verification: SeedPropertyAccess.UserProfileVerification.Request;
+        ssn: string;
     };
-    export type Response = Omit<UserProfile, "ssn">;
+    export type Response = Omit<UserProfile, "name" | "verification" | "ssn"> & {
+        name: string;
+        verification: SeedPropertyAccess.UserProfileVerification;
+        ssn: string;
+    };
 }

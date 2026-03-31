@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/basic-auth",
+                "method": "GET",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+            }
+        }
+    ]
+}

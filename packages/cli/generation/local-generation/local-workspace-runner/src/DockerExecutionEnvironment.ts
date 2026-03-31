@@ -1,5 +1,5 @@
 import { ContainerRunner } from "@fern-api/core-utils";
-import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 
 /**
  * @deprecated Use ContainerExecutionEnvironment instead. This class is maintained for backward compatibility.

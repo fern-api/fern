@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidDocsEndpoints: Rule = {
     name: "valid-docs-endpoints",

@@ -61,7 +61,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/problem-crud/update/#{params[:problem_id]}",
+          path: "/problem-crud/update/#{URI.encode_uri_component(params[:problem_id].to_s)}",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
           request_options: request_options
         )
@@ -96,7 +96,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problem_id]}",
+          path: "/problem-crud/delete/#{URI.encode_uri_component(params[:problem_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -124,14 +124,11 @@ module Seed
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[input_params output_type method_name]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h,
+          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(params).to_h,
           request_options: request_options
         )
         begin

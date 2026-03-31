@@ -1,4 +1,136 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.19.13
+  changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.4.9 to 2.4.10.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-30"
+
+- version: 0.19.12
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-26"
+
+- changelogEntry:
+    - summary: |
+        Upgrade generated project dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-25"
+  version: 0.19.11
+
+- changelogEntry:
+    - summary: |
+        Fix npm publish authentication failing when the registry URL includes a port number.
+        The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
+        instead of `URL.host` (which preserves it).
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-18"
+  version: 0.19.10
+
+- changelogEntry:
+    - summary: |
+        Fix README generation in Docker by adding `ca-certificates` to the Debian slim
+        base image. Since the switch from Alpine to Debian slim, the container was missing
+        CA certificates, causing `git clone` over HTTPS to fail with "server certificate
+        verification failed". This resulted in empty README files being generated.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-09"
+  version: 0.19.9
+
+- changelogEntry:
+    - summary: |
+        Fix map types with enum keys to generate `Partial<Record<EnumType, ValueType>>` instead of
+        `Record<EnumType, ValueType | undefined>`. The previous type required all enum keys to be
+        explicitly provided (even as `undefined`), while the new type correctly allows keys to be
+        omitted entirely, matching the semantics of a sparse map.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-02"
+  version: 0.19.8
+
+- changelogEntry:
+    - summary: |
+        Fix TypeScript generator crash when discriminated union discriminant values start
+        with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
+        with an underscore to produce valid TypeScript.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-02-27"
+  version: 0.19.7
+
+- changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-26"
+  version: 0.19.6
+
+- changelogEntry:
+    - summary: |
+        Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-25"
+  version: 0.19.5
+
+- changelogEntry:
+    - summary: |
+        Upgrade to IRv65
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-24"
+  version: 0.19.4
+
+- changelogEntry:
+    - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-24"
+  version: 0.19.3
+
+- changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.3.11 to 2.4.3.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-20"
+  version: 0.19.2
+
+- changelogEntry:
+    - summary: |
+        Fix `outputSrcOnly` to take priority over `shouldGenerateFullProject` so that organizations
+        with self-hosted SDKs correctly receive only source files instead of the full project.
+      type: fix
+  irVersion: 61
+  createdAt: "2026-02-10"
+  version: 0.19.1
+
+- changelogEntry:
+    - summary: |
+        Add `outputSrcOnly` configuration option that outputs only the contents of the `src/` directory
+        directly to the destination path, without the `src/` wrapper directory. This is useful when you
+        want to integrate the generated source files directly into another project without the extra
+        directory nesting. The option takes priority over `outputSourceFiles` when both are enabled.
+      type: feat
+  irVersion: 61
+  createdAt: "2026-01-29"
+  version: 0.19.0
+
 - changelogEntry:
     - summary: Bump generator CLI version to publish new Docker image.
       type: chore

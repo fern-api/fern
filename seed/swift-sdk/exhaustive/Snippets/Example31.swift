@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
+    _ = try await client.endpoints.params.getWithQuery(
+        query: "query",
+        number: 1
+    )
 }
 
 try await main()

@@ -7,13 +7,13 @@ import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
-import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { cp, mkdir, rm } from "fs/promises";
+import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
+import yauzl from "yauzl";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -234,11 +234,38 @@ async function downloadZipForTask({
     await pipeline(request.data, createWriteStream(outputZipPath));
 
     // decompress to user-specified location
-    if (await doesPathExist(absolutePathToLocalOutput)) {
-        await rm(absolutePathToLocalOutput, { recursive: true });
-    }
+    // Force remove the directory to handle read-only files (e.g., .git/objects)
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    await decompress(outputZipPath, absolutePathToLocalOutput);
+    await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
+}
+
+async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
+    if (!(await doesPathExist(dirPath))) {
+        return;
+    }
+    await makeWritableRecursive(dirPath);
+    await rm(dirPath, { recursive: true, force: true });
+}
+
+async function makeWritableRecursive(dirPath: AbsoluteFilePath): Promise<void> {
+    try {
+        const entries = await readdir(dirPath, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = AbsoluteFilePath.of(path.join(dirPath, entry.name));
+            if (entry.isDirectory()) {
+                await makeWritableRecursive(fullPath);
+            }
+            try {
+                await chmod(fullPath, 0o755);
+            } catch {
+                // Ignore chmod errors - file might be deleted or inaccessible
+            }
+        }
+        await chmod(dirPath, 0o755);
+    } catch {
+        // Ignore errors - directory might not exist or be inaccessible
+    }
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
@@ -290,12 +317,6 @@ async function downloadFilesWithFernIgnoreInExistingRepo({
     const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
     const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
-    const gitConfigResponse = await runGitCommand(["config", "--list"], absolutePathToLocalOutput, context);
-    if (!gitConfigResponse.includes("user.name")) {
-        await runGitCommand(["config", "user.name", "fern-api"], absolutePathToLocalOutput, context);
-        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], absolutePathToLocalOutput, context);
-    }
-
     await runGitCommand(["rm", "-rf", "."], absolutePathToLocalOutput, context);
 
     await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput });
@@ -322,15 +343,29 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await cp(absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
+    // Initialize a throwaway git repo in the temp directory. This is only used to
+    // leverage git's file-tracking for resolving .fernignore paths. We inline the
+    // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
+    // Touch ID on macOS) and unnecessary overhead.
     await runGitCommand(["init"], tmpOutputResolutionDir, context);
     await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
-
-    const gitConfigResponse = await runGitCommand(["config", "--list"], tmpOutputResolutionDir, context);
-    if (!gitConfigResponse.includes("user.name")) {
-        await runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir, context);
-        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir, context);
-    }
-    await runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir, context);
+    await runGitCommand(
+        [
+            "-c",
+            "user.name=fern",
+            "-c",
+            "user.email=hey@buildwithfern.com",
+            "-c",
+            "commit.gpgsign=false",
+            "commit",
+            "--allow-empty",
+            "--no-verify",
+            "-m",
+            "init"
+        ],
+        tmpOutputResolutionDir,
+        context
+    );
 
     await runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir, context);
 
@@ -342,9 +377,9 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await runGitCommand(["restore", "."], tmpOutputResolutionDir, context);
 
-    await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+    await forceRemoveDirectory(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")));
 
-    await rm(absolutePathToLocalOutput, { recursive: true });
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await cp(tmpOutputResolutionDir, absolutePathToLocalOutput, { recursive: true });
 }
 
@@ -363,5 +398,47 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    await decompress(outputZipPath, outputPath);
+    await extractZipToDirectory(outputZipPath, outputPath);
+}
+
+export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+    return new Promise((resolve, reject) => {
+        yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
+            if (err || !zipFile) {
+                reject(err ?? new Error("Failed to open zip file"));
+                return;
+            }
+
+            zipFile.on("error", reject);
+            zipFile.on("end", resolve);
+
+            zipFile.on("entry", (entry: yauzl.Entry) => {
+                const outputPath = path.join(outputDir, entry.fileName);
+
+                if (entry.fileName.endsWith("/")) {
+                    mkdir(outputPath, { recursive: true })
+                        .then(() => zipFile.readEntry())
+                        .catch(reject);
+                    return;
+                }
+
+                mkdir(path.dirname(outputPath), { recursive: true })
+                    .then(() => {
+                        zipFile.openReadStream(entry, (streamErr, readStream) => {
+                            if (streamErr || !readStream) {
+                                reject(streamErr ?? new Error("Failed to open read stream"));
+                                return;
+                            }
+                            readStream
+                                .pipe(createWriteStream(outputPath))
+                                .on("finish", () => zipFile.readEntry())
+                                .on("error", reject);
+                        });
+                    })
+                    .catch(reject);
+            });
+
+            zipFile.readEntry();
+        });
+    });
 }

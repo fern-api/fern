@@ -10,5 +10,6 @@
         "includeOtherInUnionTypes": true,
         "timeoutInSeconds": "infinity"
     },
+    "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }

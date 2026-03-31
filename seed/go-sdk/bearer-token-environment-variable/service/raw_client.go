@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

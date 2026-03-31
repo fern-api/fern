@@ -3,15 +3,7 @@
 package api
 
 import (
-	core "github.com/folders/fern/core"
-	folder "github.com/folders/fern/folder"
 	internal "github.com/folders/fern/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
-	404: func(apiError *core.APIError) error {
-		return &folder.NotFoundError{
-			APIError: apiError,
-		}
-	},
-}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

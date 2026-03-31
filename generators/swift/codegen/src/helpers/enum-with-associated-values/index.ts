@@ -1,1 +1,1 @@
-export * as EnumWithAssociatedValues from "./enum-with-associated-values";
+export * as EnumWithAssociatedValues from "./enum-with-associated-values.js";

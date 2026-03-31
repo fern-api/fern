@@ -76,6 +76,39 @@ public final class SyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegat
     }
 
     @Override
+    public Optional<MethodSpec> getBodyOnlyMethodSpec() {
+        return httpEndpointMethodSpecs.getBodyOnlyMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
+                        methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
+                .returns(methodSpec.returnType)
+                .addModifiers(methodSpec.modifiers)
+                .addParameters(methodSpec.parameters)
+                .addStatement(
+                        returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
+                        rawClientName,
+                        methodSpec.name,
+                        bodyGetterName)
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getBodyOnlyWithRequestOptionsMethodSpec()
+                .map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+                        .addJavadoc(methodSpec.javadoc)
+                        .returns(methodSpec.returnType)
+                        .addModifiers(methodSpec.modifiers)
+                        .addParameters(methodSpec.parameters)
+                        .addStatement(
+                                returnString(methodSpec.returnType, "this.$L.$L" + paramString(methodSpec) + ".$L()"),
+                                rawClientName,
+                                methodSpec.name,
+                                bodyGetterName)
+                        .build());
+    }
+
+    @Override
     public Optional<MethodSpec> getByteArrayMethodSpec() {
         return httpEndpointMethodSpecs.getByteArrayMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
                         methodSpec.name)

@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedCsharpXmlEntities;
-using SeedCsharpXmlEntities.Core;
+using SeedCsharpXmlEntities.Test.Utils;
 
 namespace SeedCsharpXmlEntities.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTimeZoneTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -29,9 +29,6 @@ public class GetTimeZoneTest : BaseMockServerTest
             );
 
         var response = await Client.GetTimeZoneAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TimeZoneModel>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

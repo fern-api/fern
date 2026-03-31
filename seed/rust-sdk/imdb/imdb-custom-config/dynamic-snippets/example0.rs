@@ -1,5 +1,4 @@
 use custom_imdb_sdk::prelude::*;
-use custom_imdb_sdk::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {
@@ -15,6 +14,7 @@ async fn main() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )

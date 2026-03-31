@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 
-export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;
+export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) => ts.Expression;
 
 export function buildUrl({
     endpoint,
@@ -20,10 +20,10 @@ export function buildUrl({
     forceInlinePathParameters = false
 }: {
     endpoint: {
-        sdkRequest: SdkRequest | undefined;
-        fullPath: HttpPath;
-        allPathParameters: PathParameter[];
-        path: HttpPath;
+        sdkRequest: FernIr.SdkRequest | undefined;
+        fullPath: FernIr.HttpPath;
+        allPathParameters: FernIr.PathParameter[];
+        path: FernIr.HttpPath;
     };
     generatedClientClass: GeneratedSdkClientClassImpl;
     context: SdkContext;
@@ -93,7 +93,7 @@ function getReferenceToPathParameter({
     parameterNaming,
     getReferenceToPathParameterVariableFromRequest
 }: {
-    pathParameter: PathParameter;
+    pathParameter: FernIr.PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
     retainOriginalCasing: boolean;
     shouldInlinePathParameters: boolean;
@@ -104,8 +104,8 @@ function getReferenceToPathParameter({
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {
-        case PathParameterLocation.Service:
-        case PathParameterLocation.Endpoint: {
+        case FernIr.PathParameterLocation.Service:
+        case FernIr.PathParameterLocation.Endpoint: {
             if (shouldInlinePathParameters) {
                 return getReferenceToPathParameterVariableFromRequest(pathParameter);
             } else {
@@ -117,7 +117,7 @@ function getReferenceToPathParameter({
                 return ts.factory.createIdentifier(pathParamName);
             }
         }
-        case PathParameterLocation.Root:
+        case FernIr.PathParameterLocation.Root:
             return generatedClientClass.getReferenceToRootPathParameter(pathParameter);
         default:
             assertNever(pathParameter.location);

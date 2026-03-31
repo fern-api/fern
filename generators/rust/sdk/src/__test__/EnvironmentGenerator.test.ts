@@ -1,16 +1,10 @@
-import {
-    EnvironmentBaseUrlWithId,
-    EnvironmentsConfig,
-    IntermediateRepresentation,
-    MultipleBaseUrlsEnvironment,
-    SingleBaseUrlEnvironment
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { EnvironmentGenerator } from "../environment/EnvironmentGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Mock function to create IR with specific environment configurations
-function createMockIR(environmentsConfig?: EnvironmentsConfig): IntermediateRepresentation {
+function createMockIR(environmentsConfig?: FernIr.EnvironmentsConfig): FernIr.IntermediateRepresentation {
     return {
         apiName: {
             originalName: "TestAPI",
@@ -24,11 +18,11 @@ function createMockIR(environmentsConfig?: EnvironmentsConfig): IntermediateRepr
         types: {},
         services: {},
         environments: environmentsConfig
-    } as unknown as IntermediateRepresentation;
+    } as unknown as FernIr.IntermediateRepresentation;
 }
 
 // Mock function to create single base URL environment
-function createSingleBaseUrlEnvironment(name: string, url: string): SingleBaseUrlEnvironment {
+function createSingleBaseUrlEnvironment(name: string, url: string): FernIr.SingleBaseUrlEnvironment {
     return {
         id: `${name}Id`,
         name: {
@@ -50,22 +44,22 @@ function createSingleBaseUrlEnvironment(name: string, url: string): SingleBaseUr
         displayName: name,
         url,
         docs: undefined
-    } as SingleBaseUrlEnvironment;
+    } as FernIr.SingleBaseUrlEnvironment;
 }
 
 // Mock function to create environments union with _visit method
-function createSingleBaseUrlEnvironmentsUnion(environments: SingleBaseUrlEnvironment[]) {
+function createSingleBaseUrlEnvironmentsUnion(environments: FernIr.SingleBaseUrlEnvironment[]) {
     return {
         type: "singleBaseUrl",
         environments,
-        _visit: (visitor: { singleBaseUrl: (args: { environments: SingleBaseUrlEnvironment[] }) => unknown }) =>
+        _visit: (visitor: { singleBaseUrl: (args: { environments: FernIr.SingleBaseUrlEnvironment[] }) => unknown }) =>
             visitor.singleBaseUrl({ environments })
-    } as unknown as EnvironmentsConfig["environments"];
+    } as unknown as FernIr.EnvironmentsConfig["environments"];
 }
 
 function createMultipleBaseUrlsEnvironmentsUnion(
-    environments: MultipleBaseUrlsEnvironment[],
-    baseUrls: EnvironmentBaseUrlWithId[]
+    environments: FernIr.MultipleBaseUrlsEnvironment[],
+    baseUrls: FernIr.EnvironmentBaseUrlWithId[]
 ) {
     return {
         type: "multipleBaseUrls",
@@ -73,15 +67,15 @@ function createMultipleBaseUrlsEnvironmentsUnion(
         baseUrls,
         _visit: (visitor: {
             multipleBaseUrls: (args: {
-                environments: MultipleBaseUrlsEnvironment[];
-                baseUrls: EnvironmentBaseUrlWithId[];
+                environments: FernIr.MultipleBaseUrlsEnvironment[];
+                baseUrls: FernIr.EnvironmentBaseUrlWithId[];
             }) => unknown;
         }) => visitor.multipleBaseUrls({ environments, baseUrls })
-    } as unknown as EnvironmentsConfig["environments"];
+    } as unknown as FernIr.EnvironmentsConfig["environments"];
 }
 
 // Mock function to create multiple base URLs environment
-function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, string>): MultipleBaseUrlsEnvironment {
+function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, string>): FernIr.MultipleBaseUrlsEnvironment {
     return {
         id: `${name}Id`,
         name: {
@@ -103,11 +97,11 @@ function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, st
         displayName: name,
         urls,
         docs: undefined
-    } as MultipleBaseUrlsEnvironment;
+    } as FernIr.MultipleBaseUrlsEnvironment;
 }
 
 // Mock function to create environment base URL with ID
-function createEnvironmentBaseUrl(id: string, name: string): EnvironmentBaseUrlWithId {
+function createEnvironmentBaseUrl(id: string, name: string): FernIr.EnvironmentBaseUrlWithId {
     return {
         id,
         name: {
@@ -128,11 +122,11 @@ function createEnvironmentBaseUrl(id: string, name: string): EnvironmentBaseUrlW
         },
         displayName: name,
         docs: undefined
-    } as EnvironmentBaseUrlWithId;
+    } as FernIr.EnvironmentBaseUrlWithId;
 }
 
 // Mock function to create context
-function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext {
+function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
         getClientName: () => "TestClient",
@@ -155,7 +149,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: undefined,
                 defaultEnvironment: undefined
-            } as unknown as EnvironmentsConfig;
+            } as unknown as FernIr.EnvironmentsConfig;
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
             const generator = new EnvironmentGenerator({ context });
@@ -175,7 +169,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createSingleBaseUrlEnvironmentsUnion(environments),
                 defaultEnvironment: "ProductionId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -197,7 +191,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createSingleBaseUrlEnvironmentsUnion(environments),
                 defaultEnvironment: "ProductionId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -218,7 +212,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createSingleBaseUrlEnvironmentsUnion(environments),
                 defaultEnvironment: "Prod-APIId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -238,7 +232,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createSingleBaseUrlEnvironmentsUnion(environments),
                 defaultEnvironment: undefined
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -268,7 +262,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
                 defaultEnvironment: "ProductionId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -311,7 +305,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
                 defaultEnvironment: "ProductionId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -342,7 +336,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
                 defaultEnvironment: "ProductionId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -362,9 +356,9 @@ describe("EnvironmentGenerator", () => {
                     _visit: (_visitor: { [key: string]: unknown }) => {
                         throw new Error("Unknown environments type: unknownType");
                     }
-                } as unknown as EnvironmentsConfig["environments"],
+                } as unknown as FernIr.EnvironmentsConfig["environments"],
                 defaultEnvironment: undefined
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);
@@ -377,7 +371,7 @@ describe("EnvironmentGenerator", () => {
             const environmentsConfig = {
                 environments: createSingleBaseUrlEnvironmentsUnion([]),
                 defaultEnvironment: "nonExistentId"
-            } as EnvironmentsConfig;
+            } as FernIr.EnvironmentsConfig;
 
             const ir = createMockIR(environmentsConfig);
             const context = createMockContext(ir);

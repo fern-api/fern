@@ -2,5 +2,5 @@
 
 export interface FunctionImplementation {
     impl: string;
-    imports?: string;
+    imports?: string | undefined;
 }

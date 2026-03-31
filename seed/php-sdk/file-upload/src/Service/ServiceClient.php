@@ -2,7 +2,7 @@
 
 namespace Seed\Service;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
@@ -11,10 +11,10 @@ use Seed\Core\Multipart\MultipartFormData;
 use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\JustFileRequest;
 use Seed\Service\Requests\JustFileWithQueryParamsRequest;
+use Seed\Service\Requests\JustFileWithOptionalQueryParamsRequest;
 use Seed\Service\Requests\WithContentTypeRequest;
 use Seed\Service\Requests\WithFormEncodingRequest;
 use Seed\Service\Requests\MyOtherRequest;
@@ -22,7 +22,9 @@ use Seed\Service\Requests\OptionalArgsRequest;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Seed\Service\Requests\InlineTypeRequest;
+use Seed\Service\Requests\WithJsonPropertyRequest;
 use Seed\Core\Json\JsonApiRequest;
+use Seed\Service\Requests\LiteralEnumRequest;
 
 class ServiceClient
 {
@@ -133,16 +135,6 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -184,16 +176,6 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -248,16 +230,55 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param JustFileWithOptionalQueryParamsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->maybeString != null) {
+            $query['maybeString'] = $request->maybeString;
+        }
+        if ($request->maybeInteger != null) {
+            $query['maybeInteger'] = $request->maybeInteger;
+        }
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/just-file-with-optional-query-params",
+                    method: HttpMethod::POST,
+                    query: $query,
+                    body: $body,
+                ),
+                $options,
             );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -317,16 +338,6 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -375,16 +386,6 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -471,16 +472,6 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -500,11 +491,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function optionalArgs(OptionalArgsRequest $request = new OptionalArgsRequest(), ?array $options = null): string
+    public function optionalArgs(OptionalArgsRequest $request = new OptionalArgsRequest(), ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
@@ -536,20 +527,13 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -569,11 +553,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withInlineType(InlineTypeRequest $request, ?array $options = null): string
+    public function withInlineType(InlineTypeRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
@@ -592,20 +576,64 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param WithJsonPropertyRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @return ?string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function withJsonProperty(WithJsonPropertyRequest $request, ?array $options = null): ?string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        if ($request->json != null) {
+            $body->add(name: 'json', value: $request->json->toJson());
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/with-json-property",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
             );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -644,16 +672,63 @@ class ServiceClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param LiteralEnumRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @return ?string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function withLiteralAndEnumTypes(LiteralEnumRequest $request, ?array $options = null): ?string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        if ($request->modelType != null) {
+            $body->add(name: 'model_type', value: $request->modelType->toJson());
+        }
+        if ($request->openEnum != null) {
+            $body->add(name: 'open_enum', value: $request->openEnum);
+        }
+        if ($request->maybeName != null) {
+            $body->add(name: 'maybe_name', value: $request->maybeName);
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/with-literal-enum",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
             );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

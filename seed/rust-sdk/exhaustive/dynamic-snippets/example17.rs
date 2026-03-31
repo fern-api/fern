@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithMapOfMap;
 
 #[tokio::main]
 async fn main() {
@@ -12,12 +11,10 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_map_of_map(
-            &ObjectWithMapOfMap {
-                map: HashMap::from([(
-                    "map".to_string(),
-                    HashMap::from([("map".to_string(), "map".to_string())]),
-                )]),
+        .get_and_return_with_required_field(
+            &ObjectWithRequiredField {
+                string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )

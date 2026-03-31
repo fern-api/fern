@@ -1,0 +1,60 @@
+using OneOf;
+using SeedExhaustive;
+using SeedExhaustive.Types.Object;
+
+namespace SeedExhaustive.Endpoints.Container;
+
+public partial interface IContainerClient
+{
+    WithRawResponseTask<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        IEnumerable<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
+        HashSet<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+        HashSet<ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
+        Dictionary<string, string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<
+        Dictionary<string, ObjectWithRequiredField>
+    > GetAndReturnMapOfPrimToObjectAsync(
+        Dictionary<string, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+    > GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+        ObjectWithRequiredField? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+}

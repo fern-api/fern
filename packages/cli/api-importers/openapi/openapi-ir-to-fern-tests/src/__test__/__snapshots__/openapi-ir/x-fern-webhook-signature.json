@@ -1,0 +1,487 @@
+{
+  "title": "Webhook Signature Verification Test",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "webhooks"
+        ],
+        "methodName": "userCreated"
+      },
+      "method": "POST",
+      "operationId": "userCreated",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "UserCreatedWebhooksPayload",
+      "payload": {
+        "generatedName": "UserCreatedWebhooksPayload",
+        "schema": "UserEvent",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "signatureVerification": {
+        "header": "x-webhook-signature",
+        "algorithm": "sha256",
+        "encoding": "hex",
+        "signaturePrefix": "sha256=",
+        "payloadFormat": {
+          "components": [
+            "timestamp",
+            "body"
+          ],
+          "delimiter": ".",
+          "bodySort": "alphabetical"
+        },
+        "timestamp": {
+          "header": "x-webhook-timestamp",
+          "format": "unix-seconds",
+          "tolerance": 300
+        },
+        "type": "hmac"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "userId": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "action": {
+                "value": {
+                  "value": "action",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "webhooks"
+        ],
+        "methodName": "orderPlaced"
+      },
+      "method": "POST",
+      "operationId": "orderPlaced",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "OrderPlacedWebhooksPayload",
+      "payload": {
+        "generatedName": "OrderPlacedWebhooksPayload",
+        "schema": "OrderEvent",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "signatureVerification": {
+        "header": "x-webhook-signature",
+        "algorithm": "sha256",
+        "encoding": "hex",
+        "signaturePrefix": "sha256=",
+        "payloadFormat": {
+          "components": [
+            "timestamp",
+            "body"
+          ],
+          "delimiter": ".",
+          "bodySort": "alphabetical"
+        },
+        "timestamp": {
+          "header": "x-webhook-timestamp",
+          "format": "unix-seconds",
+          "tolerance": 300
+        },
+        "type": "hmac"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "orderId": {
+                "value": {
+                  "value": "orderId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "webhooks"
+        ],
+        "methodName": "paymentProcessed"
+      },
+      "method": "POST",
+      "operationId": "paymentProcessed",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "PaymentProcessedWebhooksPayload",
+      "payload": {
+        "generatedName": "PaymentProcessedWebhooksPayload",
+        "schema": "PaymentEvent",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "signatureVerification": {
+        "header": "x-signature",
+        "asymmetricAlgorithm": "rsa-sha256",
+        "encoding": "base64",
+        "signaturePrefix": "rsa=",
+        "jwksUrl": "https://api.example.com/.well-known/jwks.json",
+        "keyIdHeader": "x-key-id",
+        "timestamp": {
+          "header": "x-timestamp",
+          "format": "iso8601"
+        },
+        "type": "asymmetric"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "paymentId": {
+                "value": {
+                  "value": "paymentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "amount": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "webhooks"
+        ],
+        "methodName": "refundProcessed"
+      },
+      "method": "POST",
+      "operationId": "refundProcessed",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "RefundProcessedWebhooksPayload",
+      "payload": {
+        "generatedName": "RefundProcessedWebhooksPayload",
+        "schema": "RefundEvent",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "signatureVerification": {
+        "header": "x-refund-signature",
+        "asymmetricAlgorithm": "ecdsa-sha256",
+        "encoding": "hex",
+        "type": "asymmetric"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "refundId": {
+                "value": {
+                  "value": "refundId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "amount": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "UserEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userEventUserId",
+            "key": "userId",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UserEventUserId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userEventAction",
+            "key": "action",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UserEventAction",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OrderEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "orderEventOrderId",
+            "key": "orderId",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "OrderEventOrderId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "orderEventTotal",
+            "key": "total",
+            "schema": {
+              "generatedName": "OrderEventTotal",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "OrderEventTotal",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OrderEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PaymentEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paymentEventPaymentId",
+            "key": "paymentId",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PaymentEventPaymentId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentEventAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "PaymentEventAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "paymentEventCurrency",
+            "key": "currency",
+            "schema": {
+              "generatedName": "PaymentEventCurrency",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PaymentEventCurrency",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaymentEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RefundEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "refundEventRefundId",
+            "key": "refundId",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RefundEventRefundId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundEventAmount",
+            "key": "amount",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "RefundEventAmount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "refundEventReason",
+            "key": "reason",
+            "schema": {
+              "generatedName": "RefundEventReason",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RefundEventReason",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RefundEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

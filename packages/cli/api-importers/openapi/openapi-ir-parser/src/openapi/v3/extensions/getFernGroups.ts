@@ -1,9 +1,9 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { getExtensionAndValidate } from "../../../getExtension";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtensionAndValidate } from "../../../getExtension.js";
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export const XFernGroupsSchema = z.record(
     z.string(),

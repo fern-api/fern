@@ -2,13 +2,14 @@ using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
-public partial class SeedHttpHeadClient
+public partial class SeedHttpHeadClient : ISeedHttpHeadClient
 {
     private readonly RawClient _client;
 
     public SeedHttpHeadClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new SeedHttpHead.Core.Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new SeedHttpHead.Core.Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedHttpHeadClient
                 { "User-Agent", "Fernhttp-head/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedHttpHeadClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

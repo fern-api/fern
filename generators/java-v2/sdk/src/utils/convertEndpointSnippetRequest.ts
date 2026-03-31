@@ -1,6 +1,5 @@
-import { dynamic, ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
+import { FernIr } from "@fern-fern/ir-sdk";
+export type EndpointSnippetRequest = Omit<FernIr.dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
 };
 
@@ -8,7 +7,9 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseU
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
  * convention doesn't match.
  */
-export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSnippetRequest): EndpointSnippetRequest {
+export function convertDynamicEndpointSnippetRequest(
+    request: FernIr.dynamic.EndpointSnippetRequest
+): EndpointSnippetRequest {
     return {
         ...request,
         baseURL: request.baseUrl
@@ -16,20 +17,20 @@ export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSn
 }
 
 /**
- * Converts an ExampleEndpointCall from the IR to a dynamic.EndpointSnippetRequest
+ * Converts an FernIr.ExampleEndpointCall from the IR to a FernIr.dynamic.EndpointSnippetRequest
  * that can be used for snippet generation.
  */
 export function convertExampleEndpointCallToSnippetRequest(
-    example: ExampleEndpointCall,
-    endpoint: HttpEndpoint
-): dynamic.EndpointSnippetRequest {
-    // Create endpoint location from the HttpEndpoint
+    example: FernIr.ExampleEndpointCall,
+    endpoint: FernIr.HttpEndpoint
+): FernIr.dynamic.EndpointSnippetRequest {
+    // Create endpoint location from the FernIr.HttpEndpoint
     let path = endpoint.fullPath.head;
     for (const part of endpoint.fullPath.parts) {
         path += `{${part.pathParameter}}${part.tail}`;
     }
 
-    const endpointLocation: dynamic.EndpointLocation = {
+    const endpointLocation: FernIr.dynamic.EndpointLocation = {
         method: endpoint.method,
         path
     };

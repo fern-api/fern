@@ -4,10 +4,11 @@ package simple
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/oauth-client-credentials-nested-root/fern/core"
 	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
 	option "github.com/oauth-client-credentials-nested-root/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

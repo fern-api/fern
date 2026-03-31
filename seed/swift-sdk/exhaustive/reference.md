@@ -358,6 +358,67 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnMapOfPrimToUndiscriminatedUnion</a>(request: [String: MixedType], requestOptions: RequestOptions?) -> [String: MixedType]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request: [
+        "string": MixedType.double(
+            1.1
+        )
+    ])
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `[String: MixedType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnOptional</a>(request: ObjectWithRequiredField?, requestOptions: RequestOptions?) -> ObjectWithRequiredField?</code></summary>
 <dl>
 <dd>
@@ -1415,6 +1476,348 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithUnknownField</a>(request: ObjectWithUnknownField, requestOptions: RequestOptions?) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
+        unknown: .object([
+            "$ref": .string("https://example.com/schema")
+        ])
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDocumentedUnknownType</a>(request: ObjectWithDocumentedUnknownType, requestOptions: RequestOptions?) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(request: ObjectWithDocumentedUnknownType(
+        documentedUnknownType: .object([
+            "key": .string("value")
+        ])
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnMapOfDocumentedUnknownType</a>(request: MapOfDocumentedUnknownType, requestOptions: RequestOptions?) -> MapOfDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
+        "string": .object([
+            "key": .string("value")
+        ])
+    ])
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `MapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDatetimeLikeString</a>(request: ObjectWithDatetimeLikeString, requestOptions: RequestOptions?) -> ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
+        datetimeLikeString: "2023-08-31T14:15:22Z",
+        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="/Sources/Resources/Endpoints/Pagination/PaginationClient.swift">listItems</a>(cursor: String?, limit: Int?, requestOptions: RequestOptions?) -> PaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.pagination.listItems(
+        cursor: "cursor",
+        limit: 1
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `String?` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Int?` — Maximum number of items to return
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
@@ -2050,6 +2453,88 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">uploadWithPath</a>(param: String, request: Data, requestOptions: RequestOptions?) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.uploadWithPath(
+        param: "upload-path",
+        request: Data("data".utf8)
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Data` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnString</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
@@ -2643,7 +3128,7 @@ private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
     _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-        .init(
+        Dog(
             name: "name",
             likesToWoof: true
         )
@@ -3149,7 +3634,7 @@ try await main()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestServiceHeader: String, xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -3182,6 +3667,14 @@ try await main()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xTestServiceHeader:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

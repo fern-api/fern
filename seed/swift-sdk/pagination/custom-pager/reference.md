@@ -1114,6 +1114,82 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithTopLevelBodyCursorPagination</a>(request: Requests.ListUsersTopLevelBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Pagination
+
+private func main() async throws {
+    let client = PaginationClient(token: "<token>")
+
+    _ = try await client.users.listWithTopLevelBodyCursorPagination(request: .init(
+        cursor: "initial_cursor",
+        filter: "active"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.ListUsersTopLevelBodyCursorPaginationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOffsetPagination</a>(page: Int?, perPage: Int?, order: OrderType?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
 <dl>
 <dd>

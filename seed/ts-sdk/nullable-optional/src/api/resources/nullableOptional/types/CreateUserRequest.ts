@@ -5,6 +5,6 @@ import type * as SeedNullableOptional from "../../../index.js";
 export interface CreateUserRequest {
     username: string;
     email: string | null;
-    phone?: string;
-    address?: SeedNullableOptional.Address | null;
+    phone?: string | undefined;
+    address?: (SeedNullableOptional.Address | null) | undefined;
 }

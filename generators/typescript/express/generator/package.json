@@ -22,10 +22,10 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -34,7 +34,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/ir-sdk": "^63.0.0",
+    "@fern-fern/ir-sdk": "^65.3.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-endpoint-type-schemas-generator": "workspace:*",
@@ -50,13 +50,12 @@
     "@fern-typescript/type-reference-converters": "workspace:*",
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -9,6 +9,7 @@ describe("MetadataClient", () => {
         const client = new SeedMixedFileDirectoryClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", value: { key: "value" } };
+
         server
             .mockEndpoint()
             .get("/users/events/metadata/")

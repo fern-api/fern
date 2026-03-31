@@ -3,9 +3,9 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class PathParamClient
+public partial class PathParamClient : IPathParamClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PathParamClient(RawClient client)
     {
@@ -22,17 +22,23 @@ public partial class PathParamClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "path/{0}/{1}",
                         ValueConvert.ToPathParameterString(operand),
                         ValueConvert.ToPathParameterString(operandOrColor)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -43,7 +49,9 @@ public partial class PathParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

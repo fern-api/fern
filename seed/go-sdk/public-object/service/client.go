@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	io "io"
+
 	core "github.com/public-object/fern/core"
 	internal "github.com/public-object/fern/internal"
 	option "github.com/public-object/fern/option"
-	io "io"
 )
 
 type Client struct {

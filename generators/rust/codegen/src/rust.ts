@@ -23,7 +23,7 @@ import {
     Type,
     Visibility,
     Writer
-} from "./ast";
+} from "./ast/index.js";
 
 // Factory functions for Type creation
 export function primitiveType(primitive: PrimitiveType): Type {
@@ -150,4 +150,4 @@ export const rust = {
 };
 
 // Re-export all AST types and utilities
-export * from "./ast";
+export * from "./ast/index.js";

@@ -9,8 +9,8 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export function getFernTypeExtension({
     nameOverride,
@@ -237,6 +237,19 @@ export function getSchemaFromFernType({
                                 format: undefined
                             })
                         });
+                    case "DATE_TIME_RFC_2822":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            title,
+                            description,
+                            availability,
+                            namespace,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.datetimeRfc2822({
+                                example: undefined
+                            })
+                        });
                     default:
                         assertNever(primitive.v1);
                 }
@@ -267,7 +280,9 @@ export function getSchemaFromFernType({
                           groupName,
                           encoding: undefined,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minProperties: undefined,
+                          maxProperties: undefined
                       })
                     : undefined,
             list: (itemType) =>
@@ -282,7 +297,9 @@ export function getSchemaFromFernType({
                           namespace,
                           groupName,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minItems: undefined,
+                          maxItems: undefined
                       })
                     : undefined,
             optional: (itemType) =>
@@ -325,7 +342,9 @@ export function getSchemaFromFernType({
                           namespace,
                           groupName,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minItems: undefined,
+                          maxItems: undefined
                       })
                     : undefined,
             literal: (literal) =>

@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_products",
@@ -47,7 +48,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "products_createProduct_example",
               "path": "/products",
               "pathParameters": {},
               "queryParameters": {},
@@ -159,6 +160,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -289,6 +291,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -309,6 +312,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "products",
       "pointsTo": undefined,
       "subpackageId": "subpackage_products",
@@ -375,8 +379,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },
@@ -454,8 +461,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },

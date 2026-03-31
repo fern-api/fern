@@ -3,5 +3,5 @@
 export interface SmsNotification {
     phoneNumber: string;
     message: string;
-    shortCode?: string;
+    shortCode?: string | undefined;
 }

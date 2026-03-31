@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> core.MyPager<string, SeedPagination.UsernameCursor></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> core.MyPager&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
 <dl>
 <dd>
 
@@ -64,3 +64,4 @@ const response = page.response;
 </dd>
 </dl>
 </details>
+

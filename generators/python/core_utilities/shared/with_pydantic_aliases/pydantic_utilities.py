@@ -1,29 +1,127 @@
 # nopycln: file
 import datetime as dt
+import inspect
+import json
+import logging
 from collections import defaultdict
-from typing import Any, Callable, Dict, List, Mapping, Tuple, Type, TypeVar, Union, cast
+from dataclasses import asdict
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pydantic
+import typing_extensions
+from pydantic.fields import FieldInfo as _FieldInfo
+
+_logger = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from .http_sse._models import ServerSentEvent
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    from pydantic.v1.datetime_parse import parse_date as parse_date
-    from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-    from pydantic.v1.fields import ModelField as ModelField
-    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-    from pydantic.v1.typing import get_args as get_args
-    from pydantic.v1.typing import get_origin as get_origin
-    from pydantic.v1.typing import is_literal_type as is_literal_type
-    from pydantic.v1.typing import is_union as is_union
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+
+    def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value
+        return _datetime_adapter.validate_python(value)
+
+    def parse_date(value: Any) -> dt.date:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value.date()
+        if isinstance(value, dt.date):
+            return value
+        return _date_adapter.validate_python(value)
+
+    # Avoid importing from pydantic.v1 to maintain Python 3.14 compatibility.
+    from typing import get_args as get_args  # type: ignore[assignment]
+    from typing import get_origin as get_origin  # type: ignore[assignment]
+
+    def is_literal_type(tp: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return typing_extensions.get_origin(tp) is typing_extensions.Literal
+
+    def is_union(tp: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return tp is Union or typing_extensions.get_origin(tp) is Union  # type: ignore[comparison-overlap]
+
+    # Inline encoders_by_type to avoid importing from pydantic.v1.json
+    import re as _re
+    from collections import deque as _deque
+    from decimal import Decimal as _Decimal
+    from enum import Enum as _Enum
+    from ipaddress import (
+        IPv4Address as _IPv4Address,
+    )
+    from ipaddress import (
+        IPv4Interface as _IPv4Interface,
+    )
+    from ipaddress import (
+        IPv4Network as _IPv4Network,
+    )
+    from ipaddress import (
+        IPv6Address as _IPv6Address,
+    )
+    from ipaddress import (
+        IPv6Interface as _IPv6Interface,
+    )
+    from ipaddress import (
+        IPv6Network as _IPv6Network,
+    )
+    from pathlib import Path as _Path
+    from types import GeneratorType as _GeneratorType
+    from uuid import UUID as _UUID
+
+    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
+
+    def _decimal_encoder(dec_value: Any) -> Any:
+        if dec_value.as_tuple().exponent >= 0:
+            return int(dec_value)
+        return float(dec_value)
+
+    encoders_by_type: Dict[Type[Any], Callable[[Any], Any]] = {  # type: ignore[no-redef]
+        bytes: lambda o: o.decode(),
+        dt.date: lambda o: o.isoformat(),
+        dt.datetime: lambda o: o.isoformat(),
+        dt.time: lambda o: o.isoformat(),
+        dt.timedelta: lambda td: td.total_seconds(),
+        _Decimal: _decimal_encoder,
+        _Enum: lambda o: o.value,
+        frozenset: list,
+        _deque: list,
+        _GeneratorType: list,
+        _IPv4Address: str,
+        _IPv4Interface: str,
+        _IPv4Network: str,
+        _IPv6Address: str,
+        _IPv6Interface: str,
+        _IPv6Network: str,
+        _Path: str,
+        _re.Pattern: lambda o: o.pattern,
+        set: list,
+        _UUID: str,
+    }
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
-    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef]
+    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef, assignment]
     from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[no-redef]
     from pydantic.typing import get_args as get_args  # type: ignore[no-redef]
     from pydantic.typing import get_origin as get_origin  # type: ignore[no-redef]
-    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef]
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef, assignment]
     from pydantic.typing import is_union as is_union  # type: ignore[no-redef]
 
 from .datetime_utils import serialize_datetime
@@ -31,6 +129,169 @@ from typing_extensions import TypeAlias
 
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
+
+
+def _get_discriminator_and_variants(type_: Type[Any]) -> Tuple[Optional[str], Optional[List[Type[Any]]]]:
+    """
+    Extract the discriminator field name and union variants from a discriminated union type.
+    Supports Annotated[Union[...], Field(discriminator=...)] patterns.
+    Returns (discriminator, variants) or (None, None) if not a discriminated union.
+    """
+    origin = typing_extensions.get_origin(type_)
+
+    if origin is typing_extensions.Annotated:
+        args = typing_extensions.get_args(type_)
+        if len(args) >= 2:
+            inner_type = args[0]
+            # Check annotations for discriminator
+            discriminator = None
+            for annotation in args[1:]:
+                if hasattr(annotation, "discriminator"):
+                    discriminator = getattr(annotation, "discriminator", None)
+                    break
+
+            if discriminator:
+                inner_origin = typing_extensions.get_origin(inner_type)
+                if inner_origin is Union:
+                    variants = list(typing_extensions.get_args(inner_type))
+                    return discriminator, variants
+    return None, None
+
+
+def _get_field_annotation(model: Type[Any], field_name: str) -> Optional[Type[Any]]:
+    """Get the type annotation of a field from a Pydantic model."""
+    if IS_PYDANTIC_V2:
+        fields = getattr(model, "model_fields", {})
+        field_info = fields.get(field_name)
+        if field_info:
+            return cast(Optional[Type[Any]], field_info.annotation)
+    else:
+        fields = getattr(model, "__fields__", {})
+        field_info = fields.get(field_name)
+        if field_info:
+            return cast(Optional[Type[Any]], field_info.outer_type_)
+    return None
+
+
+def _find_variant_by_discriminator(
+    variants: List[Type[Any]],
+    discriminator: str,
+    discriminator_value: Any,
+) -> Optional[Type[Any]]:
+    """Find the union variant that matches the discriminator value."""
+    for variant in variants:
+        if not (inspect.isclass(variant) and issubclass(variant, pydantic.BaseModel)):
+            continue
+
+        disc_annotation = _get_field_annotation(variant, discriminator)
+        if disc_annotation and is_literal_type(disc_annotation):
+            literal_args = get_args(disc_annotation)
+            if literal_args and literal_args[0] == discriminator_value:
+                return variant
+    return None
+
+
+def _is_string_type(type_: Type[Any]) -> bool:
+    """Check if a type is str or Optional[str]."""
+    if type_ is str:
+        return True
+
+    origin = typing_extensions.get_origin(type_)
+    if origin is Union:
+        args = typing_extensions.get_args(type_)
+        # Optional[str] = Union[str, None]
+        non_none_args = [a for a in args if a is not type(None)]
+        if len(non_none_args) == 1 and non_none_args[0] is str:
+            return True
+
+    return False
+
+
+def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
+    """
+    Parse a ServerSentEvent into the appropriate type.
+
+    Handles two scenarios based on where the discriminator field is located:
+
+    1. Data-level discrimination: The discriminator (e.g., 'type') is inside the 'data' payload.
+       The union describes the data content, not the SSE envelope.
+       -> Returns: json.loads(data) parsed into the type
+
+    2. Event-level discrimination: The discriminator (e.g., 'event') is at the SSE event level.
+       The union describes the full SSE event structure.
+       -> Returns: SSE envelope with 'data' field JSON-parsed only if the variant expects non-string
+
+    Args:
+        sse: The ServerSentEvent object to parse
+        type_: The target discriminated union type
+
+    Returns:
+        The parsed object of type T
+
+    Note:
+        This function is only available in SDK contexts where http_sse module exists.
+    """
+    sse_event = asdict(sse)
+    discriminator, variants = _get_discriminator_and_variants(type_)
+
+    if discriminator is None or variants is None:
+        # Not a discriminated union - parse the data field as JSON
+        data_value = sse_event.get("data")
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
+        return parse_obj_as(type_, sse_event)
+
+    data_value = sse_event.get("data")
+
+    # Check if discriminator is at the top level (event-level discrimination)
+    if discriminator in sse_event:
+        # Case 2: Event-level discrimination
+        # Find the matching variant to check if 'data' field needs JSON parsing
+        disc_value = sse_event.get(discriminator)
+        matching_variant = _find_variant_by_discriminator(variants, discriminator, disc_value)
+
+        if matching_variant is not None:
+            # Check what type the variant expects for 'data'
+            data_type = _get_field_annotation(matching_variant, "data")
+            if data_type is not None and not _is_string_type(data_type):
+                # Variant expects non-string data - parse JSON
+                if isinstance(data_value, str) and data_value:
+                    try:
+                        parsed_data = json.loads(data_value)
+                        new_object = dict(sse_event)
+                        new_object["data"] = parsed_data
+                        return parse_obj_as(type_, new_object)
+                    except json.JSONDecodeError as e:
+                        _logger.warning(
+                            "Failed to parse SSE data field as JSON for event-level discrimination: %s, data: %s",
+                            e,
+                            data_value[:100] if len(data_value) > 100 else data_value,
+                        )
+        # Either no matching variant, data is string type, or JSON parse failed
+        return parse_obj_as(type_, sse_event)
+
+    else:
+        # Case 1: Data-level discrimination
+        # The discriminator is inside the data payload - extract and parse data only
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON for data-level discrimination: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
+        return parse_obj_as(type_, sse_event)
 
 
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
@@ -49,13 +310,37 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields beginning with `model_` to be used in the model
-        protected_namespaces = ()
+    if IS_PYDANTIC_V2:
+        model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
+            validate_by_name=True,
+            validate_by_alias=True,
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces=(),
+        )
+
+        @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
+        def serialize_model(self) -> Any:  # type: ignore[name-defined]
+            def _serialize_recursive(obj: Any) -> Any:
+                if isinstance(obj, dt.datetime):
+                    return serialize_datetime(obj)
+                elif isinstance(obj, dict):
+                    return {k: _serialize_recursive(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [_serialize_recursive(item) for item in obj]
+                return obj
+
+            serialized = self.model_dump()  # type: ignore[attr-defined]
+            return _serialize_recursive(serialized)
+
+    else:
+
+        class Config:
+            populate_by_name = True
+            smart_union = True
+            allow_population_by_field_name = True
+            json_encoders = {dt.datetime: serialize_datetime}
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces = ()
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {
@@ -205,7 +490,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> Callable[[A
     return decorator
 
 
-PydanticField = Union[ModelField, pydantic.fields.FieldInfo]
+PydanticField = Union[ModelField, _FieldInfo]
 
 
 def _get_model_fields(model: Type["Model"]) -> Mapping[str, PydanticField]:

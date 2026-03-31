@@ -7,6 +7,14 @@ export interface Foo {
 }
 
 export namespace Foo {
-    export type Request = Omit<Foo, "read">;
-    export type Response = Omit<Foo, "write">;
+    export type Request = Omit<Foo, "normal" | "read" | "write"> & {
+        normal: string;
+        read: string;
+        write: string;
+    };
+    export type Response = Omit<Foo, "normal" | "read" | "write"> & {
+        normal: string;
+        read: string;
+        write: string;
+    };
 }

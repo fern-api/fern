@@ -1,31 +1,30 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { HttpEndpointSecurity } from "@fern-api/fern-definition-schema/src/schemas";
 import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildEndpointExample } from "./buildEndpointExample";
-import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
-import { buildHeader } from "./buildHeader";
-import { buildPathParameter } from "./buildPathParameter";
-import { buildQueryParameter } from "./buildQueryParameter";
-import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertFullExample } from "./utils/convertFullExample";
-import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
-import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { buildEndpointExample } from "./buildEndpointExample.js";
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition.js";
+import { buildHeader } from "./buildHeader.js";
+import { buildPathParameter } from "./buildPathParameter.js";
+import { buildQueryParameter } from "./buildQueryParameter.js";
+import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { State } from "./State.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertFullExample } from "./utils/convertFullExample.js";
+import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName.js";
+import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 import {
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     stripNullableWrapperForExtends
-} from "./utils/getTypeFromTypeReference";
-import { isWriteMethod } from "./utils/isWriteMethod";
+} from "./utils/getTypeFromTypeReference.js";
+import { isWriteMethod } from "./utils/isWriteMethod.js";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -41,8 +40,6 @@ export function buildEndpoint({
     declarationFile: RelativeFilePath;
     endpoint: Endpoint;
 }): ConvertedEndpoint {
-    const { nonRequestReferencedSchemas } = context.ir;
-
     let schemaIdsToExclude: string[] = [];
 
     const names = new Set<string>();
@@ -105,6 +102,18 @@ export function buildEndpoint({
                     results: endpoint.pagination.results
                 };
                 break;
+            case "uri":
+                pagination = {
+                    next_uri: endpoint.pagination.nextUri,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "path":
+                pagination = {
+                    next_path: endpoint.pagination.nextPath,
+                    results: endpoint.pagination.results
+                };
+                break;
             default:
                 assertNever(endpoint.pagination);
         }
@@ -163,7 +172,6 @@ export function buildEndpoint({
                     ? pathParameters
                     : undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
-            nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
             usedNames: names,
             namespace: maybeEndpointNamespace
@@ -228,7 +236,8 @@ export function buildEndpoint({
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "json"
+                    format: "json",
+                    terminator: jsonResponse.terminator ?? undefined
                 };
             },
             streamingSse: (jsonResponse) => {
@@ -242,7 +251,8 @@ export function buildEndpoint({
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "sse"
+                    format: "sse",
+                    terminator: jsonResponse.terminator ?? undefined
                 };
             },
             file: (fileResponse) => {
@@ -286,7 +296,8 @@ export function buildEndpoint({
                 convertedEndpoint.url = defaultServer;
             }
         } else {
-            convertedEndpoint.url = serverOverride.name ?? undefined;
+            const urlId = serverOverride.url != null ? context.getUrlId(serverOverride.url) : undefined;
+            convertedEndpoint.url = urlId ?? serverOverride.name ?? undefined;
         }
     }
 
@@ -395,8 +406,9 @@ export function buildEndpoint({
 }
 
 /**
- * Returns security array, true, or undefined.
- * Does not return false since false is the default for service and we want to inherit that.
+ * Returns security array, boolean, or undefined.
+ * Returns false for explicit empty security arrays (security: []).
+ * Returns undefined to inherit from service-level auth.
  */
 function convertEndpointAuth({
     endpoint,
@@ -404,7 +416,7 @@ function convertEndpointAuth({
 }: {
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
-}): true | undefined | HttpEndpointSecurity {
+}): boolean | undefined | RawSchemas.HttpEndpointSecurity {
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;
@@ -420,7 +432,7 @@ function convertEndpointAuth({
     }
     // explicit empty array means no auth
     if (endpoint.security.length === 0) {
-        return undefined;
+        return false;
     }
 
     // deep equality for endpoint and global security
@@ -482,7 +494,6 @@ function getRequest({
     generatedRequestName,
     pathParameters,
     queryParameters,
-    nonRequestReferencedSchemas,
     headers,
     usedNames,
     namespace
@@ -495,7 +506,6 @@ function getRequest({
     generatedRequestName: string;
     pathParameters?: Record<string, RawSchemas.HttpPathParameterSchema>;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
-    nonRequestReferencedSchemas: SchemaId[];
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     usedNames: Set<string>;
     namespace: string | undefined;
@@ -504,18 +514,24 @@ function getRequest({
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
+
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
+            (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
         ) {
+            // When respectReadonlySchemas is enabled on a write endpoint, resolve schema
+            // references to the write variant (without readOnly properties)
+            const useWriteVariant = context.options.respectReadonlySchemas && isWriteMethod(endpoint.method);
+            const variant: "read" | "write" | undefined = useWriteVariant ? "write" : undefined;
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
                 namespace,
-                declarationDepth: 0
+                declarationDepth: 0,
+                variant
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],

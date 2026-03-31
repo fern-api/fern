@@ -1,5 +1,4 @@
 use seed_package_yml::prelude::*;
-use seed_package_yml::EchoRequest;
 
 #[tokio::main]
 async fn main() {
@@ -14,6 +13,7 @@ async fn main() {
             &EchoRequest {
                 name: "name".to_string(),
                 size: 1,
+                ..Default::default()
             },
             None,
         )

@@ -5,8 +5,8 @@ import fs from "fs";
 import { rm } from "fs/promises";
 import path from "path";
 
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES } from "../test/testWorkspaceFixtures";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES } from "../test/testWorkspaceFixtures.js";
 
 export interface OrphanedFolder {
     generator: string;

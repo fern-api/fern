@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: HTTP Auth Capital Scheme Test API
+  version: 1.0.0
+  description: Test API to verify Basic and Bearer schemes with capital B are supported
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /basic-protected:
+    get:
+      operationId: getBasicProtected
+      summary: Get resource protected by Basic auth
+      security:
+        - basicHttpAuthentication: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Basic auth successful"
+
+  /bearer-protected:
+    get:
+      operationId: getBearerProtected
+      summary: Get resource protected by Bearer auth
+      security:
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bearer auth successful"
+
+components:
+  securitySchemes:
+    basicHttpAuthentication:
+      description: Basic HTTP Authentication
+      type: http
+      scheme: Basic
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT

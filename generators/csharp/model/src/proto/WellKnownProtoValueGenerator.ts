@@ -2,9 +2,11 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+type TypeDeclaration = FernIr.TypeDeclaration;
+
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace WellKnownProtoValueGenerator {
     interface Args {

@@ -6,7 +6,7 @@ mod wire_test_utils;
 #[allow(unused_variables, unreachable_code)]
 async fn test_service_get_movie_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -31,7 +31,7 @@ async fn test_service_get_movie_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_service_create_movie_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -80,7 +80,7 @@ async fn test_service_create_movie_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_service_get_metadata_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -119,7 +119,7 @@ async fn test_service_get_metadata_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_service_create_big_entity_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -135,6 +135,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                 cast_member: Some(CastMember::Actor(Actor {
                     name: "name".to_string(),
                     id: "id".to_string(),
+                    ..Default::default()
                 })),
                 extended_movie: Some(ExtendedMovie {
                     movie_fields: Movie {
@@ -167,12 +168,14 @@ async fn test_service_create_big_entity_with_wiremock() {
                     id: "id".to_string(),
                     data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
                     json_string: Some("jsonString".to_string()),
+                    ..Default::default()
                 }),
                 event_info: Some(EventInfo::Metadata {
                     data: Metadata {
                         id: "id".to_string(),
                         data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
                         json_string: Some("jsonString".to_string()),
+                        ..Default::default()
                     },
                 }),
                 data: Some(Data::r#String {
@@ -187,6 +190,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                         exception_type: "exceptionType".to_string(),
                         exception_message: "exceptionMessage".to_string(),
                         exception_stacktrace: "exceptionStacktrace".to_string(),
+                        ..Default::default()
                     },
                 }),
                 test: Some(Test::And { value: false }),
@@ -198,46 +202,48 @@ async fn test_service_create_big_entity_with_wiremock() {
                             nodes: Some(vec![
                                 Node {
                                     name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Node {
                                     name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Tree {
                                     nodes: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                         Node {
                             name: "name".to_string(),
                             nodes: Some(vec![
                                 Node {
                                     name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Node {
                                     name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Tree {
                                     nodes: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                     ]),
                     trees: Some(vec![
@@ -247,13 +253,16 @@ async fn test_service_create_big_entity_with_wiremock() {
                                     name: "name".to_string(),
                                     nodes: Some(vec![]),
                                     trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Node {
                                     name: "name".to_string(),
                                     nodes: Some(vec![]),
                                     trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                         Tree {
                             nodes: Some(vec![
@@ -261,15 +270,19 @@ async fn test_service_create_big_entity_with_wiremock() {
                                     name: "name".to_string(),
                                     nodes: Some(vec![]),
                                     trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Node {
                                     name: "name".to_string(),
                                     nodes: Some(vec![]),
                                     trees: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                     ]),
+                    ..Default::default()
                 }),
                 directory: Some(Directory {
                     name: "name".to_string(),
@@ -277,10 +290,12 @@ async fn test_service_create_big_entity_with_wiremock() {
                         File {
                             name: "name".to_string(),
                             contents: "contents".to_string(),
+                            ..Default::default()
                         },
                         File {
                             name: "name".to_string(),
                             contents: "contents".to_string(),
+                            ..Default::default()
                         },
                     ]),
                     directories: Some(vec![
@@ -290,24 +305,25 @@ async fn test_service_create_big_entity_with_wiremock() {
                                 File {
                                     name: "name".to_string(),
                                     contents: "contents".to_string(),
+                                    ..Default::default()
                                 },
                                 File {
                                     name: "name".to_string(),
                                     contents: "contents".to_string(),
+                                    ..Default::default()
                                 },
                             ]),
                             directories: Some(vec![
                                 Directory {
                                     name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Directory {
                                     name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                         Directory {
                             name: "name".to_string(),
@@ -315,34 +331,36 @@ async fn test_service_create_big_entity_with_wiremock() {
                                 File {
                                     name: "name".to_string(),
                                     contents: "contents".to_string(),
+                                    ..Default::default()
                                 },
                                 File {
                                     name: "name".to_string(),
                                     contents: "contents".to_string(),
+                                    ..Default::default()
                                 },
                             ]),
                             directories: Some(vec![
                                 Directory {
                                     name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
+                                    ..Default::default()
                                 },
                                 Directory {
                                     name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
+                                    ..Default::default()
                                 },
                             ]),
+                            ..Default::default()
                         },
                     ]),
+                    ..Default::default()
                 }),
                 moment: Some(Moment {
                     id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                     date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -359,7 +377,7 @@ async fn test_service_create_big_entity_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_service_refresh_token_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),

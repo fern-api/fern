@@ -1,4 +1,4 @@
-import { AbstractExtension } from "../AbstractExtension";
+import { AbstractExtension } from "../AbstractExtension.js";
 
 export declare namespace AudienceExtension {
     export interface Args extends AbstractExtension.Args {

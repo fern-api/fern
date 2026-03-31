@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
 	internal "github.com/file-upload/fern/internal"
@@ -70,6 +71,22 @@ func (c *Client) JustFileWithQueryParams(
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.JustFileWithQueryParams(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) JustFileWithOptionalQueryParams(
+	ctx context.Context,
+	request *fern.JustFileWithOptionalQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
 		ctx,
 		request,
 		opts...,
@@ -160,6 +177,22 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
+func (c *Client) WithJsonProperty(
+	ctx context.Context,
+	request *fern.WithJsonPropertyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithJsonProperty(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -172,4 +205,20 @@ func (c *Client) Simple(
 		return err
 	}
 	return nil
+}
+
+func (c *Client) WithLiteralAndEnumTypes(
+	ctx context.Context,
+	request *fern.LiteralEnumRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
 }

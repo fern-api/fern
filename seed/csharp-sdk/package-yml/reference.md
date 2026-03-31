@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedPackageYml/SeedPackageYmlClient.cs">EchoAsync</a>(id, EchoRequest { ... }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/SeedPackageYml/SeedPackageYmlClient.cs">EchoAsync</a>(id, EchoRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -95,3 +95,4 @@ await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
 </dd>
 </dl>
 </details>
+

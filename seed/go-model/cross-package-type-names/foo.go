@@ -5,6 +5,7 @@ package crosspackagetypenames
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/cross-package-type-names/fern/internal"
 )
 

@@ -1,11 +1,10 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -45,14 +44,14 @@ export class ReferenceConfigAssembler {
         return builder;
     }
 
-    private getReferenceSectionTitle(service: HttpService): string {
+    private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
             service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
         );
     }
 
     private getEndpointReferencesForService(
-        service: HttpService,
+        service: FernIr.HttpService,
         serviceId: string
     ): FernGeneratorCli.EndpointReference[] {
         return service.endpoints
@@ -81,8 +80,8 @@ export class ReferenceConfigAssembler {
         serviceId,
         endpointSnippet
     }: {
-        endpoint: HttpEndpoint;
-        service: HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        service: FernIr.HttpService;
         serviceId: string;
         endpointSnippet: string;
     }): FernGeneratorCli.EndpointReference {
@@ -114,8 +113,8 @@ export class ReferenceConfigAssembler {
     }
 
     private buildMethodSignature(
-        endpoint: HttpEndpoint,
-        service: HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        service: FernIr.HttpService,
         serviceId: string
     ): {
         clientPath: string;
@@ -144,7 +143,7 @@ export class ReferenceConfigAssembler {
         };
     }
 
-    private getServicePath(service: HttpService, serviceId: string): string | undefined {
+    private getServicePath(service: FernIr.HttpService, serviceId: string): string | undefined {
         // If this is the root service, no path needed
         if (this.context.ir.rootPackage.service === serviceId) {
             return undefined;
@@ -154,7 +153,7 @@ export class ReferenceConfigAssembler {
         return service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("().");
     }
 
-    private buildParameterSignature(endpoint: HttpEndpoint): string {
+    private buildParameterSignature(endpoint: FernIr.HttpEndpoint): string {
         const params: string[] = [];
 
         // Add path parameters
@@ -185,7 +184,7 @@ export class ReferenceConfigAssembler {
         return `(${params.join(", ")})`;
     }
 
-    private buildReturnTypeSignature(endpoint: HttpEndpoint): string {
+    private buildReturnTypeSignature(endpoint: FernIr.HttpEndpoint): string {
         if (endpoint.response?.body) {
             return endpoint.response.body._visit<string>({
                 json: (jsonResponse) => {
@@ -203,7 +202,7 @@ export class ReferenceConfigAssembler {
         return "Result<(), ApiError>";
     }
 
-    private buildParameterDocs(endpoint: HttpEndpoint): FernGeneratorCli.EndpointReference["parameters"] {
+    private buildParameterDocs(endpoint: FernIr.HttpEndpoint): FernGeneratorCli.EndpointReference["parameters"] {
         const params: FernGeneratorCli.EndpointReference["parameters"] = [];
 
         // Path parameters
@@ -241,7 +240,7 @@ export class ReferenceConfigAssembler {
         return params;
     }
 
-    private getEndpointFilepath(endpoint: HttpEndpoint, service: HttpService, serviceId: string): string {
+    private getEndpointFilepath(endpoint: FernIr.HttpEndpoint, service: FernIr.HttpService, serviceId: string): string {
         // Determine the file location based on service structure
         if (this.context.ir.rootPackage.service === serviceId) {
             // Root service endpoint
@@ -253,7 +252,7 @@ export class ReferenceConfigAssembler {
         }
     }
 
-    private getRustTypeForTypeReference(typeRef: TypeReference): string {
+    private getRustTypeForTypeReference(typeRef: FernIr.TypeReference): string {
         return typeRef._visit<string>({
             primitive: (primitive) => {
                 switch (primitive.v1) {
@@ -316,7 +315,7 @@ export class ReferenceConfigAssembler {
         });
     }
 
-    private isOptionalType(typeRef: TypeReference): boolean {
+    private isOptionalType(typeRef: FernIr.TypeReference): boolean {
         return typeRef._visit<boolean>({
             primitive: () => false,
             named: () => false,

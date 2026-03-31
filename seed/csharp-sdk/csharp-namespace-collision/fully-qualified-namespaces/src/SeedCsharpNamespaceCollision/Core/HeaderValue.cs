@@ -1,11 +1,29 @@
-using OneOf;
-
 namespace SeedCsharpNamespaceCollision.Core;
 
-internal sealed class HeaderValue(
-    OneOf<string, Func<string>, Func<ValueTask<string>>, Func<Task<string>>> value
-) : OneOfBase<string, Func<string>, Func<ValueTask<string>>, Func<Task<string>>>(value)
+internal sealed class HeaderValue
 {
+    private readonly Func<ValueTask<string>> _resolver;
+
+    public HeaderValue(string value)
+    {
+        _resolver = () => new ValueTask<string>(value);
+    }
+
+    public HeaderValue(Func<string> value)
+    {
+        _resolver = () => new ValueTask<string>(value());
+    }
+
+    public HeaderValue(Func<ValueTask<string>> value)
+    {
+        _resolver = value;
+    }
+
+    public HeaderValue(Func<Task<string>> value)
+    {
+        _resolver = () => new ValueTask<string>(value());
+    }
+
     public static implicit operator HeaderValue(string value) => new(value);
 
     public static implicit operator HeaderValue(Func<string> value) => new(value);
@@ -14,13 +32,13 @@ internal sealed class HeaderValue(
 
     public static implicit operator HeaderValue(Func<Task<string>> value) => new(value);
 
-    internal ValueTask<string> ResolveAsync()
-    {
-        return Match(
-            str => new ValueTask<string>(str),
-            syncFunc => new ValueTask<string>(syncFunc()),
-            valueTaskFunc => valueTaskFunc(),
-            taskFunc => new ValueTask<string>(taskFunc())
-        );
-    }
+    public static HeaderValue FromString(string value) => new(value);
+
+    public static HeaderValue FromFunc(Func<string> value) => new(value);
+
+    public static HeaderValue FromValueTaskFunc(Func<ValueTask<string>> value) => new(value);
+
+    public static HeaderValue FromTaskFunc(Func<Task<string>> value) => new(value);
+
+    internal ValueTask<string> ResolveAsync() => _resolver();
 }

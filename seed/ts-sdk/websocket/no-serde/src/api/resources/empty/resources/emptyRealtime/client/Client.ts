@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { EmptyRealtimeSocket } from "./Socket.js";
 
@@ -9,12 +10,20 @@ export declare namespace EmptyRealtimeClient {
     export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
+        /** Additional query parameters to send with the websocket connect request. */
+        queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
         reconnectAttempts?: number;
+        /** The timeout for establishing the WebSocket connection in seconds. */
+        connectionTimeoutInSeconds?: number;
+        /** A signal to abort the WebSocket connection. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,18 +35,24 @@ export class EmptyRealtimeClient {
     }
 
     public async connect(args: EmptyRealtimeClient.ConnectArgs = {}): Promise<EmptyRealtimeSocket> {
-        const { headers, debug, reconnectAttempts } = args;
-        const _headers: Record<string, unknown> = { ...headers };
+        const { protocols, queryParams, headers, debug, reconnectAttempts, connectionTimeoutInSeconds, abortSignal } =
+            args;
+        const _headers: Record<string, unknown> = mergeHeaders(this._options?.headers, headers);
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/empty/realtime/",
             ),
-            protocols: [],
-            queryParameters: {},
+            protocols: protocols ?? [],
+            queryParameters: queryParams ?? {},
             headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
+            options: {
+                debug: debug ?? false,
+                maxRetries: reconnectAttempts ?? 30,
+                connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
+            },
+            abortSignal: abortSignal,
         });
         return new EmptyRealtimeSocket({ socket });
     }

@@ -1,24 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    AuthScheme,
-    AuthSchemesRequirement,
-    ErrorDeclaration,
-    ExampleEndpointCall,
-    ExampleEndpointErrorResponse,
-    ExampleInlinedRequestBody,
-    ExampleObjectType,
-    ExampleObjectTypeWithTypeId,
-    ExampleRequestBody,
-    ExampleResponse,
-    ExampleTypeReference,
-    HttpEndpoint,
-    HttpMethod,
-    HttpService,
-    IntermediateRepresentation,
-    Name,
-    OAuthTokenEndpoint,
-    ObjectPropertyAccess
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DependencyManager,
     DependencyType,
@@ -41,7 +22,7 @@ const DEFAULT_PACKAGE_PATH = "src";
 
 export declare namespace TestGenerator {
     interface Args {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         dependencyManager: DependencyManager;
         rootDirectory: Directory;
         includeSerdeLayer: boolean;
@@ -62,7 +43,7 @@ export declare namespace TestGenerator {
 }
 
 export class TestGenerator {
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly dependencyManager: DependencyManager;
     private readonly rootDirectory: Directory;
     private readonly writeUnitTests: boolean;
@@ -195,6 +176,10 @@ export class TestGenerator {
             import { defineConfig } from "vitest/config";
             export default defineConfig({
                 test: {
+                    typecheck: {
+                        enabled: true,
+                        tsconfig: "./${this.relativeTestPath}/tsconfig.json"
+                    },
                     projects: [
                         {
                             test: {
@@ -229,7 +214,7 @@ export class TestGenerator {
         await vitestConfig.save();
     }
 
-    public getTestFile(service: HttpService): ExportedFilePath {
+    public getTestFile(service: FernIr.HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
@@ -264,12 +249,16 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                this.dependencyManager.addDependency("vitest", "^4.1.1", {
                     type: DependencyType.DEV
                 });
                 break;
         }
         if (this.generateWireTests) {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
             this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
@@ -335,8 +324,7 @@ export class TestGenerator {
     "extends": "${extendsPath}",
     "compilerOptions": {
         "outDir": null,
-        "rootDir": "..",
-        "baseUrl": ".."${
+        "rootDir": ".."${
             this.testFramework === "vitest"
                 ? `,
             "types": ["vitest/globals"]`
@@ -582,7 +570,7 @@ export function ${functionName}(server: MockServer): void {
         const authOptions: Record<string, Code> = {};
 
         // Check if this is ANY or ENDPOINT_SECURITY auth which requires nested options structure
-        const requiresNestedAuth = AuthSchemesRequirement._visit(this.ir.auth.requirement, {
+        const requiresNestedAuth = FernIr.AuthSchemesRequirement._visit(this.ir.auth.requirement, {
             any: () => true,
             all: () => false,
             endpointSecurity: () => true,
@@ -745,7 +733,7 @@ export function ${functionName}(server: MockServer): void {
 
                     const authRequestParameters = this.getAuthRequestExampleOptions({
                         request: example,
-                        auth: AuthScheme.inferred(auth),
+                        auth: FernIr.AuthScheme.inferred(auth),
                         context
                     });
 
@@ -769,8 +757,8 @@ export function ${functionName}(server: MockServer): void {
         auth,
         context
     }: {
-        request: ExampleEndpointCall;
-        auth: AuthScheme;
+        request: FernIr.ExampleEndpointCall;
+        auth: FernIr.AuthScheme;
         context: SdkContext;
     }): Record<string, Code> {
         const result: Record<string, Code> = {};
@@ -830,8 +818,8 @@ export function ${functionName}(server: MockServer): void {
         tokenEndpoint,
         context
     }: {
-        example: ExampleRequestBody | undefined;
-        tokenEndpoint: OAuthTokenEndpoint;
+        example: FernIr.ExampleRequestBody | undefined;
+        tokenEndpoint: FernIr.OAuthTokenEndpoint;
         context: SdkContext;
     }): Code | undefined {
         if (!example) {
@@ -882,7 +870,7 @@ export function ${functionName}(server: MockServer): void {
         });
     }
 
-    private getAuthRequestParameters({ shape }: ExampleTypeReference): Record<string, Code> {
+    private getAuthRequestParameters({ shape }: FernIr.ExampleTypeReference): Record<string, Code> {
         const getAuthRequestParameters = this.getAuthRequestParameters.bind(this);
         const createRawJsonExample = this.createRawJsonExample.bind(this);
         return shape._visit<Record<string, Code>>({
@@ -944,7 +932,7 @@ export function ${functionName}(server: MockServer): void {
 
     public buildFile(
         serviceName: string,
-        service: HttpService,
+        service: FernIr.HttpService,
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
@@ -1037,7 +1025,7 @@ describe("${serviceName}", () => {
     }
 
     private buildEndpointTests(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -1050,6 +1038,32 @@ describe("${serviceName}", () => {
         if (this.neverThrowErrors) {
             // remove error examples because we don't have time to implement them properly right now
             examples = examples.filter((example) => example.response.type === "ok");
+        }
+        // Skip error examples whose status code is already handled by a prior error in the endpoint's
+        // error list. The code generator deduplicates errors by status code (keeping the first), so
+        // tests for shadowed errors would expect the wrong error type.
+        // This only applies to status-code discrimination; property-discriminated errors use the
+        // discriminant value (not status code) and don't deduplicate.
+        if (this.ir.errorDiscriminationStrategy.type === "statusCode") {
+            const firstErrorIdByStatusCode = new Map<number, string>();
+            for (const responseError of endpoint.errors) {
+                const errorDecl = this.ir.errors[responseError.error.errorId];
+                if (errorDecl != null && !firstErrorIdByStatusCode.has(errorDecl.statusCode)) {
+                    firstErrorIdByStatusCode.set(errorDecl.statusCode, responseError.error.errorId);
+                }
+            }
+            examples = examples.filter((example) => {
+                if (example.response.type !== "error") {
+                    return true;
+                }
+                const exampleErrorId = example.response.error.errorId;
+                const errorDecl = this.ir.errors[exampleErrorId];
+                if (errorDecl == null) {
+                    return true;
+                }
+                const firstId = firstErrorIdByStatusCode.get(errorDecl.statusCode);
+                return firstId === exampleErrorId;
+            });
         }
         if (examples.length === 0) {
             return [];
@@ -1082,8 +1096,8 @@ describe("${serviceName}", () => {
         importStatement,
         baseOptions
     }: {
-        endpoint: HttpEndpoint;
-        example: ExampleEndpointCall;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
         exampleIndex: number;
         hasMultipleExamples: boolean;
         serviceGenerator: GeneratedSdkClientClass;
@@ -1114,7 +1128,34 @@ describe("${serviceName}", () => {
         }
 
         const rawRequestBody = this.getRequestExample(example.request);
-        const rawResponseBody = this.getResponseExample(example.response);
+        const isSSEStreaming =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
+        const rawResponseBody = this.getResponseExample(
+            example.response,
+            isSSEStreaming ? { endpoint, context } : undefined
+        );
+        // For URI/path pagination, compute a next-page URL override so that getNextPage()
+        // actually hits the mock server (which listens at server.baseUrl).
+        // uri: full URL = server.baseUrl + endpoint path
+        // path: just the endpoint path
+        let uriPathNextOverride: { wireKey: string; nextValueCode: Code } | undefined;
+        if (rawResponseBody != null && endpoint.pagination != null) {
+            const pagination = endpoint.pagination;
+            if (pagination.type === "uri" || pagination.type === "path") {
+                const nextProperty = pagination.type === "uri" ? pagination.nextUri : pagination.nextPath;
+                // Only override if the next property is top-level; nested paths would require
+                // deep-merging the response body which is not worth the complexity.
+                // If nested, isCursorMissing is forced to true below to skip getNextPage().
+                if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
+                    const wireKey = nextProperty.property.name.wireValue;
+                    const nextValueCode =
+                        pagination.type === "uri"
+                            ? code`\`\${server.baseUrl}${example.url}\``
+                            : code`${literalOf(example.url)}`;
+                    uriPathNextOverride = { wireKey, nextValueCode };
+                }
+            }
+        }
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
             ir: this.ir
@@ -1128,6 +1169,10 @@ describe("${serviceName}", () => {
             context,
             neverThrowErrors: this.neverThrowErrors
         });
+
+        const sseExpectedEvents: Code | undefined = isSSEStreaming
+            ? this.getSseExpectedEvents({ endpoint, example, context })
+            : undefined;
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -1182,7 +1227,7 @@ describe("${serviceName}", () => {
             }
         });
 
-        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
+        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === FernIr.HttpMethod.Head;
 
         const matchesOAuthTokenEndpoint = this.ir.auth.schemes.some((scheme) => {
             if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
@@ -1267,7 +1312,9 @@ describe("${serviceName}", () => {
         // hasPagination determines if we need { once: false } for multiple mock requests
         // This is set after isCursorMissing is computed to ensure we don't allow multiple
         // requests when cursor is missing (since there's no next page to request)
-        let hasPagination = endpoint.pagination !== undefined;
+        const supportsPaginatedResponse =
+            endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination);
+        let hasPagination = supportsPaginatedResponse;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1287,16 +1334,45 @@ describe("${serviceName}", () => {
                 endpoint
             });
 
-        const isCursorMissing =
+        let isCursorMissing =
             endpoint.pagination !== undefined &&
             isPaginationCursorMissingInExample({
                 example,
                 endpoint
             });
 
+        // For URI/path pagination: if the next property is nested we can't safely override it in the
+        // mock response body, so fall back to skipping getNextPage() (same as missing cursor).
+        if (
+            !isCursorMissing &&
+            (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") &&
+            uriPathNextOverride == null
+        ) {
+            isCursorMissing = true;
+        }
+
         // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
         if (isCursorMissing) {
             hasPagination = false;
+        }
+
+        // Extract pagination page field paths to ignore in request body matching
+        // When getNextPage() is called, the SDK sends a different page/cursor value than the original request
+        const paginationIgnoredFields: string[] = [];
+        if (endpoint.pagination !== undefined) {
+            // Cursor and offset pagination have a "page" property that changes between requests
+            // URI/path pagination does not have a "page" property since they use URLs from the response
+            if (
+                paginationGeneratesPageObject(endpoint.pagination) &&
+                (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset")
+            ) {
+                const pageProperty = endpoint.pagination.page;
+                const pathParts = [
+                    ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
+                    pageProperty.property.name.wireValue
+                ];
+                paginationIgnoredFields.push(pathParts.join("."));
+            }
         }
 
         const expectedDeclaration = code`const expected = ${expected};`;
@@ -1312,7 +1388,7 @@ describe("${serviceName}", () => {
                 ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
-                    endpoint.pagination.type !== "custom"
+                    endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination)
                         ? isCursorMissing
                             ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
@@ -1339,6 +1415,7 @@ describe("${serviceName}", () => {
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+        ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
@@ -1353,13 +1430,22 @@ describe("${serviceName}", () => {
                     `;
                 })}${
                 rawRequestBody
-                    ? code`.${mockBodyMethod}(rawRequestBody)
+                    ? paginationIgnoredFields.length > 0
+                        ? code`.${mockBodyMethod}(rawRequestBody, { ignoredFields: ${literalOf(paginationIgnoredFields)} })
+                `
+                        : code`.${mockBodyMethod}(rawRequestBody)
                 `
                     : ""
             }.respondWith()
             .statusCode(${responseStatusCode})${
                 rawResponseBody
-                    ? code`.jsonBody(rawResponseBody)
+                    ? isSSEStreaming && !willThrowError
+                        ? code`.sseBody(rawResponseBody)
+                `
+                        : uriPathNextOverride != null
+                          ? code`.jsonBody(mockResponseBody)
+                `
+                          : code`.jsonBody(rawResponseBody)
                 `
                     : ""
             }.build();
@@ -1370,29 +1456,41 @@ describe("${serviceName}", () => {
             await expect(async () => {
                 return ${getTextOfTsNode(generatedExample.endpointInvocation)}
             }).rejects.toThrow(${literalOf(expected)});`
-                : isHeadersResponse
-                  ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                : isSSEStreaming
+                  ? code`
+            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+            const events: unknown[] = [];
+            for await (const event of response) {
+                events.push(event);
+            }
+            ${
+                sseExpectedEvents != null
+                    ? code`expect(events).toEqual(${sseExpectedEvents});`
+                    : code`expect(events.length).toBeGreaterThan(0);`
+            }`
+                  : isHeadersResponse
+                    ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                  : code`
-                    ${
-                        endpoint.pagination !== undefined
-                            ? paginationBlock
-                            : code`
-                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                            expect(response).toEqual(${expected});
-                          `
-                    }
-                `
+                    : code`
+                        ${
+                            supportsPaginatedResponse
+                                ? paginationBlock
+                                : code`
+                                const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                                expect(response).toEqual(${expected});
+                              `
+                        }
+                    `
         }
     });
           `;
     }
 
-    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+    private getName({ name, context }: { name: FernIr.Name; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
-    private getMockBodyMethod(endpoint: HttpEndpoint): string {
+    private getMockBodyMethod(endpoint: FernIr.HttpEndpoint): string {
         const contentType = endpoint.requestBody?.contentType;
         if (contentType === "application/x-www-form-urlencoded") {
             return "formUrlEncodedBody";
@@ -1400,7 +1498,65 @@ describe("${serviceName}", () => {
         return "jsonBody";
     }
 
-    private shouldBuildTest(endpoint: HttpEndpoint): boolean {
+    private getSseExpectedEvents({
+        endpoint,
+        example,
+        context
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
+        context: SdkContext;
+    }): Code | undefined {
+        const sseEvents = example.response._visit<FernIr.ExampleServerSideEvent[] | undefined>({
+            ok: (value) =>
+                value._visit({
+                    sse: (events) => events,
+                    body: () => undefined,
+                    stream: () => undefined,
+                    _other: () => undefined
+                }),
+            error: () => undefined,
+            _other: () => undefined
+        });
+        if (sseEvents == null || sseEvents.length === 0) {
+            return undefined;
+        }
+
+        // Determine the SSE protocol discriminant field, if any
+        let discriminantField: string | undefined;
+        const ssePayload =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse"
+                ? endpoint.response.body.value.payload
+                : undefined;
+        if (ssePayload != null && ssePayload.type === "named") {
+            const typeDeclaration = context.type.getTypeDeclaration(ssePayload);
+            if (
+                typeDeclaration.shape.type === "union" &&
+                typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
+            ) {
+                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
+                discriminantField = context.includeSerdeLayer
+                    ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
+                    : typeDeclaration.shape.discriminant.wireValue;
+            }
+        }
+
+        const eventCodes = sseEvents.map((event) => {
+            // Build the deserialized (camelCase) representation of the event data
+            const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
+            if (discriminantField != null) {
+                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
+                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
+            }
+            return code`${getTextOfTsNode(deserializedData)}`;
+        });
+        return code`${arrayOf(...eventCodes)}`;
+    }
+
+    private shouldBuildTest(endpoint: FernIr.HttpEndpoint): boolean {
         if (
             this.ir.auth.schemes.some((scheme) => {
                 switch (scheme.type) {
@@ -1437,9 +1593,15 @@ describe("${serviceName}", () => {
             case "fileDownload":
             case "text":
             case "bytes":
-            case "streaming":
             case "streamParameter":
                 return false; // not supported
+            case "streaming": {
+                const body = endpoint.response?.body;
+                if (body != null && body.type === "streaming" && body.value.type === "sse") {
+                    break; // SSE streaming is supported
+                }
+                return false;
+            }
             case "json":
             case "undefined":
                 break; // supported
@@ -1456,7 +1618,7 @@ describe("${serviceName}", () => {
         return true;
     }
 
-    getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
+    getRequestExample(request: FernIr.ExampleRequestBody | undefined): Code | undefined {
         if (!request) {
             return undefined;
         }
@@ -1512,7 +1674,10 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: ExampleResponse | undefined): Code | undefined {
+    getResponseExample(
+        response: FernIr.ExampleResponse | undefined,
+        opts?: { endpoint: FernIr.HttpEndpoint; context: SdkContext }
+    ): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -1529,8 +1694,42 @@ describe("${serviceName}", () => {
                     stream: () => {
                         throw new Error("Stream not supported in wire tests");
                     },
-                    sse: () => {
-                        throw new Error("SSE not supported in wire tests");
+                    sse: (events) => {
+                        // For SSE endpoints with a protocol-discriminated union, the discriminant travels as
+                        // the SSE `event:` field and must be stripped from the data JSON.
+                        let discriminantField: string | undefined;
+                        if (opts != null) {
+                            const ssePayload =
+                                opts.endpoint.response?.body?.type === "streaming" &&
+                                opts.endpoint.response.body.value.type === "sse"
+                                    ? opts.endpoint.response.body.value.payload
+                                    : undefined;
+                            if (ssePayload != null && ssePayload.type === "named") {
+                                const typeDeclaration = opts.context.type.getTypeDeclaration(ssePayload);
+                                if (
+                                    typeDeclaration.shape.type === "union" &&
+                                    typeDeclaration.shape.discriminatorContext ===
+                                        FernIr.UnionDiscriminatorContext.Protocol
+                                ) {
+                                    discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                                }
+                            }
+                        }
+                        const sseLines = events.map((event) => {
+                            let dataJson: unknown = event.data.jsonExample;
+                            if (
+                                discriminantField != null &&
+                                dataJson != null &&
+                                typeof dataJson === "object" &&
+                                !Array.isArray(dataJson)
+                            ) {
+                                const copy = { ...(dataJson as Record<string, unknown>) };
+                                delete copy[discriminantField];
+                                dataJson = copy;
+                            }
+                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
+                        });
+                        return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },
                     _other: () => {
                         throw new Error("Unsupported response type");
@@ -1538,6 +1737,26 @@ describe("${serviceName}", () => {
                 });
             },
             error: (value) => {
+                // For property-discriminated errors, the mock response body must include
+                // the discriminant property (e.g., errorName) so the generated switch
+                // statement can match the correct error case. The generated client code
+                // checks body?.errorName then passes the full body to the serializer,
+                // so the discriminant must be at the same level as the error content.
+                if (this.ir.errorDiscriminationStrategy.type === "property") {
+                    const discriminantWireValue = this.ir.errorDiscriminationStrategy.discriminant.wireValue;
+                    const errorDecl = this.ir.errors[value.error.errorId];
+                    const errorName = errorDecl?.discriminantValue.wireValue ?? value.error.name.originalName;
+                    if (!value.body) {
+                        return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)} }`;
+                    }
+                    const bodyCode = createRawJsonExample({
+                        example: value.body,
+                        isForRequest: false,
+                        isForResponse: true
+                    });
+                    return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)}, ...${bodyCode} }`;
+                }
+
                 if (!value.body) {
                     return undefined;
                 }
@@ -1563,7 +1782,7 @@ describe("${serviceName}", () => {
         isForRequest,
         isForResponse
     }: {
-        example: ExampleTypeReference;
+        example: FernIr.ExampleTypeReference;
         isForRequest: boolean;
         isForResponse: boolean;
     }): Code {
@@ -1691,13 +1910,13 @@ describe("${serviceName}", () => {
                                         }
                                         if (
                                             filterOutReadonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                            p.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
                                         ) {
                                             return false;
                                         }
                                         if (
                                             filterOutWriteonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                            p.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly
                                         ) {
                                             return false;
                                         }
@@ -1764,13 +1983,13 @@ describe("${serviceName}", () => {
                                             }
                                             if (
                                                 filterOutReadonlyProps &&
-                                                p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                                p.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
                                             ) {
                                                 return false;
                                             }
                                             if (
                                                 filterOutWriteonlyProps &&
-                                                p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                                p.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly
                                             ) {
                                                 return false;
                                             }
@@ -1834,8 +2053,8 @@ function getExampleResponseStatusCode({
     response,
     ir
 }: {
-    response: ExampleResponse;
-    ir: IntermediateRepresentation;
+    response: FernIr.ExampleResponse;
+    ir: FernIr.IntermediateRepresentation;
 }): number {
     return response._visit({
         ok: () => 200,
@@ -1854,7 +2073,7 @@ function getExampleResponseStatusCode({
  */
 function getUnusedPropertiesFromJsonExample(
     jsonExample: unknown,
-    shape: ExampleObjectType | ExampleObjectTypeWithTypeId | ExampleInlinedRequestBody
+    shape: FernIr.ExampleObjectType | FernIr.ExampleObjectTypeWithTypeId | FernIr.ExampleInlinedRequestBody
 ): [string, unknown][] {
     const properties = "object" in shape ? shape.object.properties : shape.properties;
     const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
@@ -1875,7 +2094,7 @@ function getExpectedResponse({
     context,
     neverThrowErrors
 }: {
-    response: ExampleResponse;
+    response: FernIr.ExampleResponse;
     context: SdkContext;
     neverThrowErrors: boolean;
 }): Code {
@@ -1896,12 +2115,15 @@ function getExpectedResponse({
                     throw new Error("Stream not supported in wire tests");
                 },
                 sse: () => {
-                    throw new Error("SSE not supported in wire tests");
+                    return undefined;
                 },
                 _other: () => {
                     throw new Error("Unsupported response type");
                 }
             });
+            if (result === undefined) {
+                return code`undefined`;
+            }
             if (neverThrowErrors) {
                 return code`{
                     body: ${result},
@@ -1929,9 +2151,9 @@ function getExampleErrorDeclarationOrThrow({
     exampleError,
     ir
 }: {
-    exampleError: ExampleEndpointErrorResponse;
-    ir: IntermediateRepresentation;
-}): ErrorDeclaration {
+    exampleError: FernIr.ExampleEndpointErrorResponse;
+    ir: FernIr.IntermediateRepresentation;
+}): FernIr.ErrorDeclaration {
     const error = ir.errors[exampleError.error.errorId];
     if (!error) {
         throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
@@ -1956,7 +2178,7 @@ function getParameterNameForVariable({
     variableName,
     retainOriginalCasing
 }: {
-    variableName: Name;
+    variableName: FernIr.Name;
     retainOriginalCasing: boolean;
 }): string {
     if (retainOriginalCasing) {
@@ -1965,7 +2187,7 @@ function getParameterNameForVariable({
     return variableName.camelCase.safeName;
 }
 
-function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
+function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown | undefined {
     return response._visit({
         ok: (okResp) =>
             okResp._visit({
@@ -1979,12 +2201,28 @@ function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefi
     });
 }
 
+function paginationGeneratesPageObject(
+    pagination: FernIr.Pagination
+): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Uri | FernIr.Pagination.Path {
+    switch (pagination.type) {
+        case "cursor":
+        case "offset":
+        case "uri":
+        case "path":
+            return true;
+        case "custom":
+            return false;
+        default:
+            assertNever(pagination);
+    }
+}
+
 function isPaginationResultsPathMissingInExample({
     example,
     endpoint
 }: {
-    example: ExampleEndpointCall;
-    endpoint: HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    endpoint: FernIr.HttpEndpoint;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null || pagination.results == null) {
@@ -2029,8 +2267,8 @@ function isPaginationCursorMissingInExample({
     example,
     endpoint
 }: {
-    example: ExampleEndpointCall;
-    endpoint: HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    endpoint: FernIr.HttpEndpoint;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null) {
@@ -2042,19 +2280,27 @@ function isPaginationCursorMissingInExample({
         return true;
     }
 
-    // Get the cursor property based on pagination type
     let cursorProperty;
-    if (pagination.type === "cursor") {
-        cursorProperty = pagination.next;
-    } else if (pagination.type === "offset") {
-        cursorProperty = pagination.hasNextPage;
-        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
-        if (cursorProperty == null) {
+    switch (pagination.type) {
+        case "cursor":
+            cursorProperty = pagination.next;
+            break;
+        case "offset":
+            cursorProperty = pagination.hasNextPage;
+            if (cursorProperty == null) {
+                return false;
+            }
+            break;
+        case "uri":
+            cursorProperty = pagination.nextUri;
+            break;
+        case "path":
+            cursorProperty = pagination.nextPath;
+            break;
+        case "custom":
             return false;
-        }
-    } else {
-        // Custom pagination - skip this check
-        return false;
+        default:
+            assertNever(pagination);
     }
 
     if (cursorProperty == null) {

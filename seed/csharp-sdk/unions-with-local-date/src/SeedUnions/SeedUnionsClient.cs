@@ -2,13 +2,14 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-public partial class SeedUnionsClient
+public partial class SeedUnionsClient : ISeedUnionsClient
 {
     private readonly RawClient _client;
 
     public SeedUnionsClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedUnionsClient
                 { "User-Agent", "Fernunions-with-local-date/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -31,9 +31,9 @@ public partial class SeedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public BigunionClient Bigunion { get; }
+    public IBigunionClient Bigunion { get; }
 
-    public TypesClient Types { get; }
+    public ITypesClient Types { get; }
 
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 }

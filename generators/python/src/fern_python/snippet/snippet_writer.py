@@ -205,6 +205,19 @@ class SnippetWriter:
             float_=lambda float_: AST.Expression(str(float_)),
             base_64=lambda base_64: AST.Expression(repr(base_64)),
             big_integer=lambda big_integer: AST.Expression(str(big_integer)),
+            datetime_rfc_2822=lambda datetime_rfc_2822: AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.ClassReference(
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.snippet(
+                                module_path=("email", "utils"),
+                            )
+                        ),
+                        qualified_name_excluding_import=("parsedate_to_datetime",),
+                    ),
+                    args=[AST.Expression(f'"{str(datetime_rfc_2822.raw)}"')],
+                ),
+            ),
         )
 
     def _get_snippet_for_string_primitive(
@@ -237,31 +250,35 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),
-            optional=lambda optional: self.get_snippet_for_example_type_reference(
-                example_type_reference=optional.optional,
-                use_typeddict_request=use_typeddict_request,
-                as_request=as_request,
-                in_typeddict=in_typeddict,
-            )
-            if optional.optional is not None
-            else None,
-            nullable=lambda nullable: self.get_snippet_for_example_type_reference(
-                example_type_reference=nullable.nullable,
-                use_typeddict_request=use_typeddict_request,
-                as_request=as_request,
-                in_typeddict=in_typeddict,
-            )
-            if nullable.nullable is not None
-            else None,
+            optional=lambda optional: (
+                self.get_snippet_for_example_type_reference(
+                    example_type_reference=optional.optional,
+                    use_typeddict_request=use_typeddict_request,
+                    as_request=as_request,
+                    in_typeddict=in_typeddict,
+                )
+                if optional.optional is not None
+                else None
+            ),
+            nullable=lambda nullable: (
+                self.get_snippet_for_example_type_reference(
+                    example_type_reference=nullable.nullable,
+                    use_typeddict_request=use_typeddict_request,
+                    as_request=as_request,
+                    in_typeddict=in_typeddict,
+                )
+                if nullable.nullable is not None
+                else None
+            ),
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map.map_,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
             ),
-            literal=lambda lit: self._get_snippet_for_primitive(lit.literal)
-            if in_typeddict or force_include_literals
-            else None,
+            literal=lambda lit: (
+                self._get_snippet_for_primitive(lit.literal) if in_typeddict or force_include_literals else None
+            ),
         )
 
     def _get_snippet_for_unknown(

@@ -3,9 +3,9 @@ using SeedExamples.File_.Notification;
 
 namespace SeedExamples.File_;
 
-public partial class FileClient
+public partial class FileClient : IFileClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FileClient(RawClient client)
     {
@@ -14,7 +14,7 @@ public partial class FileClient
         Service = new ServiceClient(_client);
     }
 
-    public NotificationClient Notification { get; }
+    public INotificationClient Notification { get; }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

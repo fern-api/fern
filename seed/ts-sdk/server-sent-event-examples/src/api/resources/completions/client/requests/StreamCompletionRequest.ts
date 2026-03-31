@@ -5,6 +5,11 @@
  *     {
  *         query: "foo"
  *     }
+ *
+ * @example
+ *     {
+ *         query: ""
+ *     }
  */
 export interface StreamCompletionRequest {
     query: string;

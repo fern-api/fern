@@ -3,11 +3,15 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExampleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateFields } from "../generateFields";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ObjectGenerator } from "../object/ObjectGenerator";
-import { ExampleGenerator } from "../snippets/ExampleGenerator";
+
+type ExampleUnionType = FernIr.ExampleUnionType;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
+
+import { generateFields } from "../generateFields.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { ObjectGenerator } from "../object/ObjectGenerator.js";
+import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
 const basePropertiesClassName = "BaseProperties";
 
@@ -425,7 +429,19 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 });
                 // we can't have an implicit cast from object or (IEnumerable<T>)
                 const underlyingType = memberType.asNonOptional();
-                if (!is.Primitive.object(underlyingType) && !is.Collection.list(underlyingType)) {
+                // When memberType is optional and the underlying type has the same name as the inner class,
+                // the implicit operator would be a self-conversion (CS0555) because within the inner class
+                // scope, the unqualified type name refers to the inner class itself.
+                // e.g., for `optional<Foo>`, the inner class `Foo` wrapping `Foo?` would generate
+                // `implicit operator Foo(Foo? value)` which is a self-conversion.
+                const innerClassName = this.getUnionTypeClassReferenceByTypeName(
+                    type.discriminantValue.name.pascalCase.safeName
+                ).name;
+                const isSelfConversion =
+                    memberType.isOptional &&
+                    is.ClassReference(underlyingType) &&
+                    underlyingType.name === innerClassName;
+                if (!is.Primitive.object(underlyingType) && !is.Collection.list(underlyingType) && !isSelfConversion) {
                     unionTypeClass.addOperator({
                         type: ast.Class.CastOperator.Type.Implicit,
                         parameter: this.csharp.parameter({
@@ -553,6 +569,40 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 );
                 writer.writeLine();
 
+                // For samePropertiesAsObject variants, we need to strip the discriminant
+                // from the JSON before deserializing to avoid it leaking into
+                // AdditionalProperties. However, if the subtype itself has a property
+                // with the same wire name as the discriminant, we must use the full JSON
+                // to preserve that property.
+                const samePropertiesAsObjectTypes = this.unionDeclaration.types.filter(
+                    (type): type is FernIr.SingleUnionType & { shape: { propertiesType: "samePropertiesAsObject" } } =>
+                        type.shape.propertiesType === "samePropertiesAsObject"
+                );
+                const variantsNeedingStrippedJson = new Set<string>();
+                for (const type of samePropertiesAsObjectTypes) {
+                    const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
+                    const hasDiscriminantProperty =
+                        typeDecl.shape.type === "object" &&
+                        [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
+                            (prop) => prop.name.wireValue === discriminatorPropName
+                        );
+                    if (!hasDiscriminantProperty) {
+                        variantsNeedingStrippedJson.add(type.discriminantValue.wireValue);
+                    }
+                }
+                const needsStrippedJson = variantsNeedingStrippedJson.size > 0;
+                if (needsStrippedJson) {
+                    writer.writeLine(
+                        "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
+                    );
+                    writer.writeLine("var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
+                    writer.writeLine(`jsonObject?.Remove("${discriminatorPropName}");`);
+                    writer.writeTextStatement(
+                        "var jsonWithoutDiscriminator = jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json"
+                    );
+                    writer.writeLine();
+                }
+
                 writer.writeLine("var value = discriminator switch");
                 writer.pushScope();
 
@@ -564,7 +614,13 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                writer.write("json");
+                                // Use stripped JSON only if the subtype doesn't have a property
+                                // matching the discriminant name
+                                if (variantsNeedingStrippedJson.has(type.discriminantValue.wireValue)) {
+                                    writer.write("jsonWithoutDiscriminator");
+                                } else {
+                                    writer.write("json");
+                                }
                                 break;
                             case "singleProperty":
                                 writer.write(`json.GetProperty("${type.shape.name.wireValue}")`);
@@ -714,6 +770,61 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 writer.writeTextStatement("json.WriteTo(writer, options)");
             })
         });
+        // ReadAsPropertyName method - for dictionary key deserialization
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: unionReference,
+            name: "ReadAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.System.Text.Json.Utf8JsonReader
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement(
+                    `var stringValue = reader.GetString() ?? throw new JsonException("The JSON property name could not be read as a string.")`
+                );
+                writer.write("return new ");
+                writer.writeNode(unionReference);
+                writer.writeTextStatement(`(stringValue, stringValue)`);
+            })
+        });
+
+        // WriteAsPropertyName method - for dictionary key serialization
+        class_.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "WriteAsPropertyName",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.System.Text.Json.Utf8JsonWriter
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: unionReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement(`writer.WritePropertyName(value.${discriminant.name})`);
+            })
+        });
+
         enclosingClass.addNestedClass(class_);
         return class_;
     }

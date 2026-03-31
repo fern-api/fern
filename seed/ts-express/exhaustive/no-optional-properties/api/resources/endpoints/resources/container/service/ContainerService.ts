@@ -75,6 +75,20 @@ export interface ContainerServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    getAndReturnMapOfPrimToUndiscriminatedUnion(
+        req: express.Request<
+            never,
+            Record<string, SeedExhaustive.types.MixedType>,
+            Record<string, SeedExhaustive.types.MixedType>,
+            never
+        >,
+        res: {
+            send: (responseBody: Record<string, SeedExhaustive.types.MixedType>) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     getAndReturnOptional(
         req: express.Request<
             never,
@@ -360,6 +374,52 @@ export class ContainerService {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnMapOfPrimToObject' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/map-prim-to-union", async (req, res, next) => {
+            const request = serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.parse(
+                req.body,
+            );
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getAndReturnMapOfPrimToUndiscriminatedUnion(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" },
+                                    ),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedExhaustiveError) {
+                        console.warn(
+                            `Endpoint 'getAndReturnMapOfPrimToUndiscriminatedUnion' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {

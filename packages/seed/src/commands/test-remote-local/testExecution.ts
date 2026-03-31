@@ -1,8 +1,9 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { cp, mkdir, rm, stat, writeFile } from "fs/promises";
 import path from "path";
-import { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration";
+import { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration.js";
 import {
     DEFINITION_DIRECTORY_NAME,
     DIFF_COMMAND,
@@ -20,10 +21,9 @@ import {
     MSG_OUTPUTS_DIFFER,
     MSG_OUTPUTS_MATCH,
     TEST_DEFINITIONS_RELATIVE_PATH
-} from "./constants";
-import { runGeneration } from "./generation";
-import type { GenerationResult, GenerationResultSuccess, RemoteVsLocalTestCase, TestCaseResult } from "./types";
-
+} from "./constants.js";
+import { runGeneration } from "./generation.js";
+import type { GenerationResult, GenerationResultSuccess, RemoteVsLocalTestCase, TestCaseResult } from "./types.js";
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<TestCaseResult> {
     const { generator, fixture, outputMode, localGeneratorVersions, remoteGeneratorVersions, context } = testCase;
     const { fernRepoDirectory, workingDirectory, logger } = context;
@@ -175,22 +175,28 @@ async function compareResults(
     localResult: GenerationResultSuccess,
     remoteResult: GenerationResultSuccess
 ): Promise<TestCaseResult> {
-    const { context } = testCase;
+    const { generator, context } = testCase;
     const { logger, workingDirectory } = context;
 
     logger.debug(`Running diff between:\n  Remote: ${remoteResult.outputFolder}\n  Local: ${localResult.outputFolder}`);
 
+    // Build diff exclusion args
+    const diffExcludeArgs = [
+        "--exclude=.git",
+        "--exclude=node_modules",
+        "--exclude=.DS_Store",
+        "--exclude=.fern" // Ignore .fern/metadata.json for all generators
+    ];
+
+    // TypeScript SDK generates pnpm-lock.yaml which may differ between local/remote
+    if (generator === "ts-sdk") {
+        diffExcludeArgs.push("--exclude=pnpm-lock.yaml");
+    }
+
     const diffResult = await loggingExeca(
         logger,
         DIFF_COMMAND,
-        [
-            DIFF_RECURSIVE_FLAG,
-            "--exclude=.git",
-            "--exclude=node_modules",
-            "--exclude=.DS_Store",
-            remoteResult.outputFolder,
-            localResult.outputFolder
-        ],
+        [DIFF_RECURSIVE_FLAG, ...diffExcludeArgs, remoteResult.outputFolder, localResult.outputFolder],
         {
             cwd: workingDirectory,
             reject: false // Don't reject on non-zero exit (diff returns 1 when files differ)
@@ -255,6 +261,6 @@ async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<
         }
     } catch (error) {
         // Non-fatal - log warning but don't fail the test
-        logger.warn(`Failed to clean up .git folders: ${error instanceof Error ? error.message : String(error)}`);
+        logger.warn(`Failed to clean up .git folders: ${extractErrorMessage(error)}`);
     }
 }

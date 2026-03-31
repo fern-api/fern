@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "crateName": "custom_simple_sdk",
+    "crateVersion": "1.2.0",
+    "clientClassName": "CustomSimpleClient",
+    "enableWireTests": true
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

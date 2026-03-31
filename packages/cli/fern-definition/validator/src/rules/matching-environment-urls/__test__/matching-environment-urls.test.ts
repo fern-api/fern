@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls.js";
 
 describe("matching-environment-urls", () => {
     it("matching-urls", async () => {
@@ -31,30 +31,35 @@ describe("matching-environment-urls", () => {
                 message: "Environment SingleUrl is missing URL for A",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment SingleUrl is missing URL for B",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment SingleUrl is missing URL for C",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment Staging is missing URL for C",
                 nodePath: ["environments", "Staging"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment Production is missing URL for A",
                 nodePath: ["environments", "Production"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             }
         ];

@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { Reference } from "../referencing";
-import { CoreUtility } from "./CoreUtility";
+import { Reference } from "../referencing/index.js";
+import { CoreUtility } from "./CoreUtility.js";
 
 export interface SchemaOptions {
     unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
@@ -20,6 +20,7 @@ export interface Zurg {
     list: (itemSchema: Zurg.Schema) => Zurg.Schema;
     set: (itemSchema: Zurg.Schema) => Zurg.Schema;
     record: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
+    partialRecord: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
     enum: (values: string[]) => Zurg.Schema;
     string: () => Zurg.Schema;
     stringLiteral: (literal: string) => Zurg.Schema;
@@ -136,7 +137,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     name: "schemas",
     pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } },
     getFilesPatterns: () => {
-        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"] };
+        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"], ignore: ["**/benchmarks/**"] };
     }
 };
 export class ZurgImpl extends CoreUtility implements Zurg {
@@ -440,6 +441,27 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     isNullable: false,
                     toExpression: () =>
                         ts.factory.createCallExpression(record.getExpression(), undefined, [
+                            keySchema.toExpression(),
+                            valueSchema.toExpression()
+                        ])
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
+
+    public partialRecord = this.withExportedName(
+        "partialRecord",
+        (partialRecord: Reference) =>
+            ({ keySchema, valueSchema }: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(partialRecord.getExpression(), undefined, [
                             keySchema.toExpression(),
                             valueSchema.toExpression()
                         ])

@@ -57,6 +57,18 @@ public class AsyncServiceClient {
      * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
      * </ul>
      */
+    public CompletableFuture<Void> patchComplex(String id, RequestOptions requestOptions) {
+        return this.rawClient.patchComplex(id, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
     public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request) {
         return this.rawClient.patchComplex(id, request).thenApply(response -> response.body());
     }
@@ -120,6 +132,13 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Void> regularPatch(String id) {
         return this.rawClient.regularPatch(id).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id, RequestOptions requestOptions) {
+        return this.rawClient.regularPatch(id, requestOptions).thenApply(response -> response.body());
     }
 
     /**

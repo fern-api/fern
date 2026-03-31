@@ -1,6 +1,7 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
+using System.Globalization;
 
 namespace Usage;
 
@@ -14,10 +15,10 @@ public class Example26
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
-                Query = "query"
+        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+            new ObjectWithDatetimeLikeString {
+                DatetimeLikeString = "2023-08-31T14:15:22Z",
+                ActualDatetime = DateTime.Parse("2023-08-31T14:15:22Z", null, DateTimeStyles.AdjustToUniversal)
             }
         );
     }

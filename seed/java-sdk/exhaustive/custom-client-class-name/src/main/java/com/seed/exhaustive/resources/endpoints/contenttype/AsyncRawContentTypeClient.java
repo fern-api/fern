@@ -36,17 +36,25 @@ public class AsyncRawContentTypeClient {
         return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
     }
 
+    public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentType(RequestOptions requestOptions) {
+        return postJsonPatchContentType(ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentType(ObjectWithOptionalField request) {
         return postJsonPatchContentType(request, null);
     }
 
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("foo")
-                .addPathSegments("bar")
-                .build();
+                .addPathSegments("bar");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -56,7 +64,7 @@ public class AsyncRawContentTypeClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json-patch+json")
@@ -98,17 +106,27 @@ public class AsyncRawContentTypeClient {
     }
 
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentWithCharsetType(
+            RequestOptions requestOptions) {
+        return postJsonPatchContentWithCharsetType(
+                ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request) {
         return postJsonPatchContentWithCharsetType(request, null);
     }
 
     public CompletableFuture<BestHttpResponse<Void>> postJsonPatchContentWithCharsetType(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("foo")
-                .addPathSegments("baz")
-                .build();
+                .addPathSegments("baz");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -118,7 +136,7 @@ public class AsyncRawContentTypeClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")

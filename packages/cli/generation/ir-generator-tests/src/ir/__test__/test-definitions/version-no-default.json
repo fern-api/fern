@@ -126,7 +126,8 @@
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "forwardCompatible": null
         }
     },
     "apiName": {
@@ -1398,6 +1399,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

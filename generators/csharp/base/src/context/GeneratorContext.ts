@@ -1,38 +1,45 @@
 import { fail } from "node:assert";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    DeclaredErrorName,
-    EnumTypeDeclaration,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    IntermediateRepresentation,
-    Name,
-    ObjectPropertyAccess,
-    ObjectTypeDeclaration,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    ProtobufService,
-    ServiceId,
-    Subpackage,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { AsIsFiles } from "../AsIs";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-import { CsharpProject } from "../project";
-import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
-import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
-import { ProtobufResolver } from "../proto/ProtobufResolver";
-import { CsharpTypeMapper } from "./CsharpTypeMapper";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type DeclaredErrorName = FernIr.DeclaredErrorName;
+type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type FernFilepath = FernIr.FernFilepath;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpHeader = FernIr.HttpHeader;
+type HttpService = FernIr.HttpService;
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type Name = FernIr.Name;
+type ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
+type PrimitiveType = FernIr.PrimitiveType;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type ProtobufService = FernIr.ProtobufService;
+type ServiceId = FernIr.ServiceId;
+type Subpackage = FernIr.Subpackage;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeId = FernIr.TypeId;
+type TypeReference = FernIr.TypeReference;
+type UndiscriminatedUnionTypeDeclaration = FernIr.UndiscriminatedUnionTypeDeclaration;
+type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
+
+import { AsIsFiles } from "../AsIs.js";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo.js";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject.js";
+import { CsharpProject } from "../project/index.js";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper.js";
+import { ProtobufResolver } from "../proto/ProtobufResolver.js";
+import { CsharpTypeMapper } from "./CsharpTypeMapper.js";
 
 type Namespace = string;
 
@@ -71,91 +78,106 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
             ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
+
+        // Log deprecation warning if the old flag is used
+        if (this.customConfig["experimental-readonly-constants"] === true) {
+            this.logger.warn(
+                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead.'
+            );
+        }
     }
+
+    /**
+     * Backing field for the lazily-initialized formatter.
+     * Declared here so that sibling subclasses (SdkGeneratorContext,
+     * ModelGeneratorContext) share a single property declaration and
+     * remain structurally compatible in TypeScript.
+     */
+    protected _formatter: AbstractFormatter | undefined;
 
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     /** Provides access to C# code generation utilities */
-    public get csharp() {
+    public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
 
     /** Provides access to generation settings and configuration */
-    public get settings() {
+    public get settings(): Generation["settings"] {
         return this.generation.settings;
     }
 
     /** Provides access to generation constants */
-    public get constants() {
+    public get constants(): Generation["constants"] {
         return this.generation.constants;
     }
 
     /** Provides access to namespace management utilities */
-    public get namespaces() {
+    public get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
 
     /** Provides access to naming utilities for generating consistent identifiers */
-    public get names() {
+    public get names(): Generation["names"] {
         return this.generation.names;
     }
 
     /** Provides access to the model navigation and inspection utilities */
-    public get model() {
+    public get model(): Generation["model"] {
         return this.generation.model;
     }
     /** Provides access to text formatting utilities */
-    public get format() {
+    public get format(): Generation["format"] {
         return this.generation.format;
     }
 
     /** Provides access to the type registry for looking up generated types */
-    public get registry() {
+    public get registry(): Generation["registry"] {
         return this.generation.registry;
     }
     /** Provides access to type information and utilities */
-    public get Types() {
+    public get Types(): Generation["Types"] {
         return this.generation.Types;
     }
 
     /** Provides access to .NET System namespace types and utilities */
-    public get System() {
+    public get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
 
     /** Provides access to NUnit testing framework types */
-    public get NUnit() {
+    public get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
 
     /** Provides access to OneOf discriminated union library types */
-    public get OneOf() {
+    public get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
 
     /** Provides access to Google protocol buffer types */
-    public get Google() {
+    public get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    public get Grpc() {
+    public get Grpc(): Generation["extern"]["Grpc"] {
         return this.generation.extern.Grpc;
     }
     /** Provides access to WireMock.Net testing/mocking library types */
-    public get WireMock() {
+    public get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
     /** Provides access to primitive types */
-    public get Primitive() {
+    public get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
     /** Provides access to value types */
-    public get Value() {
+    public get Value(): Generation["Value"] {
         return this.generation.Value;
     }
     /** Provides access to collection types */
-    public get Collection() {
+    public get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -173,6 +195,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
     public hasIdempotencyHeaders(): boolean {
         return this.getIdempotencyHeaders().length > 0;
+    }
+
+    public hasBaseUrl(): boolean {
+        return this.ir.environments?.environments.type !== "multipleBaseUrls";
     }
 
     public getCoreDirectory(): RelativeFilePath {
@@ -315,6 +341,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         if (this.allTypeClassReferences == null) {
             const resultMap = new Map<string, Set<string>>();
+
+            // Track API types
             Object.values(this.ir.types).forEach((typeDeclaration) => {
                 const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
                 const key = classReference.name;
@@ -326,6 +354,21 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
                 resultMap.get(key)?.add(value);
             });
+
+            // Track subpackage interface references to detect collisions
+            // (e.g., ITemplatesClient in multiple namespaces)
+            Object.values(this.ir.subpackages).forEach((subpackage) => {
+                const interfaceRef = this.getSubpackageInterfaceReference(subpackage);
+                const key = interfaceRef.name;
+                const value = interfaceRef.namespace;
+
+                if (!resultMap.has(key)) {
+                    resultMap.set(key, new Set<string>());
+                }
+
+                resultMap.get(key)?.add(value);
+            });
+
             this.allTypeClassReferences = resultMap;
         }
         return this.allTypeClassReferences;
@@ -341,7 +384,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
 
-    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
+    public createJsonAccessAttribute(propertyAccess: FernIr.ObjectPropertyAccess): ast.Annotation {
         let argument: string;
         switch (propertyAccess) {
             case "READ_ONLY":
@@ -355,7 +398,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
         return this.csharp.annotation({
             reference: this.csharp.classReference({
-                origin: this.model.staticExplicit("JsonAccess"),
+                origin: this.model.staticExplicit("JsonAccessAttribute"),
                 namespace: this.namespaces.core
             }),
             argument
@@ -366,6 +409,24 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.csharp.annotation({
             reference: this.System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
+        });
+    }
+
+    public createOptionalAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("OptionalAttribute"),
+                namespace: this.namespaces.core
+            })
+        });
+    }
+
+    public createNullableAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("NullableAttribute"),
+                namespace: this.namespaces.core
+            })
         });
     }
 
@@ -469,7 +530,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "nullable";
+                if (typeReference.container.type === "nullable") {
+                    return true;
+                }
+                // Only check through optional wrapper if experimental flag is enabled
+                if (this.settings.enableExplicitNullableOptional && typeReference.container.type === "optional") {
+                    return this.isNullable(typeReference.container.optional);
+                }
+                return false;
         }
         return false;
     }
@@ -541,7 +609,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): ast.CodeBlock {
-        return PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
+        return FernIr.PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
             integer: () => this.csharp.codeblock("0"),
             long: () => this.csharp.codeblock("0"),
             uint: () => this.csharp.codeblock("0"),
@@ -555,6 +623,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             uuid: () => this.csharp.codeblock('""'),
             base64: () => this.csharp.codeblock('""'),
             bigInteger: () => this.csharp.codeblock('""'),
+            dateTimeRfc2822: () => this.csharp.codeblock("DateTime.MinValue"),
             _other: () => this.csharp.codeblock("null")
         });
     }
@@ -591,7 +660,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return undefined;
     }
 
-    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+    public getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {
@@ -692,6 +761,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
+    public getSubpackageInterfaceReference(subpackage: Subpackage): ast.ClassReference {
+        return this.csharp.classReference({
+            name: `I${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
+            origin: this.model.explicit(subpackage, "Interface")
+        });
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId
@@ -763,7 +840,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // types that can get used
         this.Types.ReadOnlyAdditionalProperties();
         this.Types.JsonUtils;
-        this.Types.StringEnumSerializer;
         this.Types.IStringEnum;
 
         // start with the models
@@ -788,6 +864,18 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         this.csharp.classReference({
                             origin: this.model.explicit(typeDeclaration, "Values"),
                             enclosingType
+                        });
+
+                        // Register nested serializer class reference
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            enclosingType
+                        });
+                    } else {
+                        // Register companion serializer class reference for regular enums
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            namespace: enclosingType.namespace
                         });
                     }
                 },

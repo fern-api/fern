@@ -1,19 +1,20 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
+import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace RequestGenerator {
     interface Args {
         name: string;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-        extendedProperties?: ObjectProperty[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+        extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -21,8 +22,8 @@ export declare namespace RequestGenerator {
 
 export class RequestGenerator {
     private readonly name: string;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-    private readonly extendedProperties: ObjectProperty[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+    private readonly extendedProperties: FernIr.ObjectProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
@@ -44,20 +45,14 @@ export class RequestGenerator {
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
 
-        // Add regular properties (mix of ObjectProperty and InlinedRequestBodyProperty)
+        // Add regular properties (mix of FernIr.ObjectProperty and FernIr.InlinedRequestBodyProperty)
         fields.push(...this.properties.map((property) => this.generateRustFieldForProperty(property)));
 
         // Build documentation for the request type
         let docs = undefined;
         if (this.docsContent) {
             docs = rust.docComment({
-                summary: this.docsContent,
-                description: `Request type for the ${this.name} operation.`
-            });
-        } else {
-            // Fallback documentation
-            docs = rust.docComment({
-                summary: `Request type for API operation`
+                summary: this.docsContent
             });
         }
 
@@ -76,8 +71,8 @@ export class RequestGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
-        // Default - only add if all properties are optional
-        if (this.allPropertiesAreOptional()) {
+        // Default - add if all fields support Default
+        if (this.canDeriveDefault()) {
             derives.push("Default");
         }
 
@@ -96,15 +91,18 @@ export class RequestGenerator {
         return attributes;
     }
 
-    private allPropertiesAreOptional(): boolean {
-        // Check if all regular properties are optional
-        const allRegularPropsOptional = this.properties.every((property) => isOptionalType(property.valueType));
+    private canDeriveDefault(): boolean {
+        // Check if all regular properties have types that implement Default in Rust
+        const propertiesSupport = this.properties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        // Check if there are any extended properties (inheritance fields)
-        // If there are extended properties, we can't derive Default because we can't default the parent type
-        const hasExtendedProperties = this.extendedProperties.length > 0;
+        // Check if all extended properties (inheritance fields) support Default
+        const extendsSupport = this.extendedProperties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        return allRegularPropsOptional && !hasExtendedProperties;
+        return propertiesSupport && extendsSupport;
     }
 
     private needsPartialEq(): boolean {
@@ -153,9 +151,9 @@ export class RequestGenerator {
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
     }
 
-    private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
+    private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldAttributes = generateFieldAttributes(property);
+        const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         // Add field documentation if available
@@ -209,6 +207,11 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+
+        // Write builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
+
         writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();

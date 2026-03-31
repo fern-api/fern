@@ -45,6 +45,7 @@ class PydanticModel:
         pydantic_base_model: Optional[AST.ClassReference] = None,
         is_root_model: bool = False,
         coerce_numbers_to_str: bool = False,
+        positional_single_property_constructors: bool = False,
     ):
         self._source_file = source_file
 
@@ -81,6 +82,7 @@ class PydanticModel:
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
+        self._positional_single_property_constructors = positional_single_property_constructors
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -120,28 +122,75 @@ class PydanticModel:
             else field.default_value
         )
 
-        initializer = get_field_name_initializer(
-            alias=field.json_field_name if (is_aliased and self._use_pydantic_field_aliases) else None,
-            default_factory=field.default_factory,
-            description=field.description,
-            default=default_value,
-            version=self._version,
-        )
+        # For aliased fields, we use the Annotated pattern where pydantic.Field(alias=...)
+        # is inside Annotated. This makes mypy see the Python field name in the constructor
+        # signature, while Pydantic still uses the alias for JSON serialization.
+        # See: https://github.com/pydantic/pydantic/issues/5893#issuecomment-2512807073
+        #
+        # This pattern works for all Pydantic versions (V1, V2, Both, V1_ON_V2) with one caveat:
+        # Pydantic V1 does NOT support Field(default=...) inside Annotated, but it DOES support
+        # Field(alias=...) and Field(default_factory=...). So for non-V2 modes, we put the
+        # default value as a plain initializer outside the Annotated pattern.
+        use_annotated_pattern = is_aliased
 
-        if is_aliased and not self._use_pydantic_field_aliases:
+        if use_annotated_pattern:
+            is_pure_v2 = self._version == PydanticVersionCompatibility.V2
+
+            # For V2: include default in Field inside Annotated
+            # For non-V2: only include alias and default_factory; default goes outside
+            pydantic_field_annotation = get_pydantic_field_annotation(
+                alias=field.json_field_name,
+                default_factory=field.default_factory,
+                default=default_value if is_pure_v2 else None,
+                description=field.description,
+                version=self._version,
+            )
+
+            # Build the Annotated type hint with FieldMetadata and pydantic.Field
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
+            # Store the original type hint (without any annotations) for validators
+            original_type_hint = field.type_hint
+
+            # Build full Annotated type with FieldMetadata AND pydantic.Field (for field definition)
             aliased_type_hint = AST.TypeHint.annotated(
-                type=field.type_hint,
-                annotation=field_metadata.get_as_node(),
+                field.type_hint,
+                field_metadata.get_as_node(),
+                pydantic_field_annotation,
             )
 
             prev_fields = field.__dict__
             del prev_fields["type_hint"]
+            if "raw_type_hint" in prev_fields:
+                del prev_fields["raw_type_hint"]
             field = PydanticField(
                 **(field.__dict__),
                 type_hint=aliased_type_hint,
+                raw_type_hint=original_type_hint,
+            )
+
+            # For V2: no initializer needed (Field inside Annotated handles everything)
+            # For non-V2: use plain default as initializer (V1 rejects default in Annotated Field)
+            if is_pure_v2:
+                initializer = None
+            elif default_value is not None or field.default_factory is not None:
+                # For non-V2 with default_factory, it's already in Field inside Annotated
+                # Only need plain initializer for regular defaults
+                if field.default_factory is not None:
+                    initializer = None
+                else:
+                    initializer = default_value
+            else:
+                initializer = None
+        else:
+            # No alias - use the original behavior
+            initializer = get_field_name_initializer(
+                alias=None,
+                default_factory=field.default_factory,
+                description=field.description,
+                default=default_value,
+                version=self._version,
             )
 
         self._class_declaration.add_class_var(
@@ -292,7 +341,81 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
+        self._maybe_add_positional_init()
         self._maybe_model_config()
+
+    def _maybe_add_positional_init(self) -> None:
+        if not self._positional_single_property_constructors:
+            return
+
+        # Find fields that are required (no default value) and NOT discriminator fields
+        # A discriminator field is a Literal type with a default value
+        required_non_discriminator_fields: List[PydanticField] = []
+        for field in self._fields:
+            has_explicit_default = field.default_value is not None or field.default_factory is not None
+            # Optional fields get a default value of None in add_field, so they're not required
+            is_optional_field = field.type_hint.is_optional and not self._require_optional_fields
+            has_default = has_explicit_default or is_optional_field
+            is_discriminator = field.type_hint.is_literal and has_default
+            # Only count fields that are required (no default) and not discriminators
+            if not has_default and not is_discriminator:
+                required_non_discriminator_fields.append(field)
+
+        # Only generate positional init if there's exactly one required non-discriminator field
+        if len(required_non_discriminator_fields) != 1:
+            return
+
+        single_field = required_non_discriminator_fields[0]
+
+        # Generate the __init__ method body using *args/**kwargs to be compatible with
+        # pydantic's internal deserialization. When pydantic deserializes a response from JSON,
+        # it may call __init__(**data) where data uses alias keys (e.g. "ticketReference")
+        # rather than the Python field name (e.g. "ticket_reference"). A required positional
+        # parameter would cause a TypeError in that case. Using *args/**kwargs with overloads
+        # preserves the positional construction API while allowing pydantic to pass data freely.
+        def write_init_body(writer: AST.NodeWriter) -> None:
+            writer.write_line("if args:")
+            with writer.indent():
+                writer.write_line(f"kwargs.pop('{single_field.name}', None)")
+                writer.write_line(f"super().__init__({single_field.name}=args[0], **kwargs)")
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write("super().__init__(**kwargs)")
+
+        # Overload 1: positional construction - e.g. Isin("US0378331005")
+        overload_positional = AST.FunctionSignature(
+            parameters=[
+                AST.FunctionParameter(
+                    name=single_field.name,
+                    type_hint=single_field.type_hint,
+                ),
+            ],
+            return_type=AST.TypeHint.none(),
+        )
+
+        # Overload 2: keyword construction - e.g. Isin(isin="US0378331005")
+        overload_keyword = AST.FunctionSignature(
+            named_parameters=[
+                AST.NamedFunctionParameter(
+                    name=single_field.name,
+                    type_hint=single_field.type_hint,
+                ),
+            ],
+            return_type=AST.TypeHint.none(),
+        )
+
+        init_declaration = AST.FunctionDeclaration(
+            name="__init__",
+            signature=AST.FunctionSignature(
+                include_args=True,
+                include_kwargs=True,
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(write_init_body),
+            overloads=[overload_positional, overload_keyword],
+        )
+
+        self._class_declaration.add_method(declaration=init_declaration)
 
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
@@ -623,6 +746,64 @@ def get_field_name_initializer(
             writer.write_line('"""')
             writer.write_line(escape_docstring(description))
             writer.write_line('"""')
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_pydantic_field_annotation(
+    *,
+    alias: str,
+    default: Optional[AST.Expression],
+    default_factory: Optional[AST.Expression],
+    description: Optional[str],
+    version: PydanticVersionCompatibility,
+) -> AST.Expression:
+    """
+    Generate a pydantic.Field(alias=..., default=..., default_factory=..., description=...) expression
+    for use inside Annotated[]. This allows mypy to see the Python field name in the
+    constructor signature while Pydantic uses the alias for JSON serialization.
+    """
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_reference(Pydantic(version).Field())
+        writer.write("(")
+        writer.write(f'alias="{alias}"')
+        if default is not None:
+            writer.write(", default=")
+            writer.write_node(default)
+        if default_factory is not None:
+            writer.write(", default_factory=")
+            writer.write_node(default_factory)
+        if description is not None:
+            # Escape for use in a regular double-quoted string literal
+            escaped_description = (
+                description.replace("\\", "\\\\")
+                .replace('"', '\\"')
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t")
+            )
+            writer.write(f', description="{escaped_description}"')
+        writer.write(")")
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_field_description_initializer(
+    *,
+    description: Optional[str],
+) -> Optional[AST.Expression]:
+    """
+    Generate just the description docstring for a field (no pydantic.Field() call).
+    Used when the pydantic.Field() is inside Annotated[].
+    """
+    if description is None:
+        return None
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_line('"""')
+        writer.write_line(escape_docstring(description))
+        writer.write_line('"""')
 
     return AST.Expression(AST.CodeWriter(write))
 

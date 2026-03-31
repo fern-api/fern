@@ -2,13 +2,14 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-public partial class SeedErrorPropertyClient
+public partial class SeedErrorPropertyClient : ISeedErrorPropertyClient
 {
     private readonly RawClient _client;
 
     public SeedErrorPropertyClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedErrorPropertyClient
                 { "User-Agent", "Fernerror-property/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public PropertyBasedErrorClient PropertyBasedError { get; }
+    public IPropertyBasedErrorClient PropertyBasedError { get; }
 }

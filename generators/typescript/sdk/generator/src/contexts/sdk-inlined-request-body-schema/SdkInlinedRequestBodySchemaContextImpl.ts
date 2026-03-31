@@ -1,12 +1,12 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkInlinedRequestBodySchemaContextImpl {
     export interface Init {
@@ -45,7 +45,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
 
     public getGeneratedInlinedRequestBodySchema(
         packageId: PackageId,
-        endpointName: Name
+        endpointName: FernIr.Name
     ): GeneratedSdkInlinedRequestBodySchema {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -64,7 +64,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
         });
     }
 
-    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: Name): Reference {
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.Name): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

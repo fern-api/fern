@@ -129,6 +129,9 @@ export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavi
             ]);
         case "changelog":
             return item.changelog;
+        case "librarySection":
+            // Library docs pages are generated locally, but referenced via _navigation.yml
+            return [];
         default:
             assertNever(item);
     }

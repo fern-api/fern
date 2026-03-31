@@ -1,21 +1,14 @@
 import { assertDefined, assertNever, SymbolRegistry as Namespace } from "@fern-api/core-utils";
 import { uniqWith } from "lodash-es";
-import { swift } from "..";
-import { LiteralEnum } from "../helpers";
-import { RequestsNamespace } from "./requests-namespace";
-import { SourceModuleNamespace } from "./source-module-namespace";
-import { TestModuleNamespace } from "./test-module-namespace";
+import { LiteralEnum } from "../helpers/index.js";
+import { swift } from "../index.js";
+import { RequestsNamespace } from "./requests-namespace.js";
+import { SourceModuleNamespace } from "./source-module-namespace.js";
+import { TestModuleNamespace } from "./test-module-namespace.js";
 
 type UndiscriminatedUnionVariant = {
     caseName: string;
     swiftType: swift.TypeReference;
-    docsContent: string | undefined;
-};
-
-type DiscriminatedUnionVariant = {
-    caseName: string;
-    symbolName: string;
-    discriminantWireValue: string;
     docsContent: string | undefined;
 };
 
@@ -33,7 +26,6 @@ export class NameRegistry {
     private readonly requestTypeSymbols: swift.Symbol[];
     private readonly subClientSymbols: swift.Symbol[];
     private readonly nestedLiteralEnumSymbolsByParentSymbolId: Map<string, Map<string, swift.Symbol>>;
-    private readonly discriminatedUnionVariantsByParentSymbolId: Map<string, DiscriminatedUnionVariant[]>;
     private readonly undiscriminatedUnionVariantsByParentSymbolId: Map<string, UndiscriminatedUnionVariant[]>;
 
     private constructor() {
@@ -46,7 +38,6 @@ export class NameRegistry {
         this.requestTypeSymbols = [];
         this.subClientSymbols = [];
         this.nestedLiteralEnumSymbolsByParentSymbolId = new Map();
-        this.discriminatedUnionVariantsByParentSymbolId = new Map();
         this.undiscriminatedUnionVariantsByParentSymbolId = new Map();
     }
 
@@ -432,46 +423,6 @@ export class NameRegistry {
                 literalValue,
                 caseLabel: LiteralEnum.generateEnumCaseLabel(literalValue)
             }));
-    }
-
-    public registerDiscriminatedUnionVariants({
-        parentSymbol,
-        variants
-    }: {
-        parentSymbol: swift.Symbol | string;
-        variants: DiscriminatedUnionVariant[];
-    }) {
-        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        const sortedVariants = [...variants].sort((a, b) => a.caseName.localeCompare(b.caseName));
-        this.discriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, sortedVariants);
-        sortedVariants.forEach((variant) => {
-            this.symbolRegistry.registerNestedType({
-                parentSymbol,
-                symbolName: variant.symbolName,
-                shape: { type: "struct" }
-            });
-        });
-        return sortedVariants;
-    }
-
-    public getDiscriminatedUnionVariantSymbolOrThrow(
-        parentSymbol: swift.Symbol | string,
-        discriminantWireValue: string
-    ): swift.Symbol {
-        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        const variants = this.discriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
-        const variant = variants.find((v) => v.discriminantWireValue === discriminantWireValue);
-        assertDefined(
-            variant,
-            `Discriminated union variant symbol not found for discriminant wire value "${discriminantWireValue}" in parent symbol "${parentSymbolId}"`
-        );
-        const symbolId = this.symbolRegistry.inferSymbolIdForNestedType(parentSymbolId, variant.symbolName);
-        return swift.Symbol.create(symbolId, variant.symbolName, { type: "struct" });
-    }
-
-    public getAllDiscriminatedUnionVariantsOrThrow(parentSymbol: swift.Symbol | string): DiscriminatedUnionVariant[] {
-        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        return this.discriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
     }
 
     public registerUndiscriminatedUnionVariants({

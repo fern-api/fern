@@ -1,7 +1,7 @@
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FileGenerator } from "./FileGenerator";
-import { CSharpFile } from "./project";
+import { FileGenerator } from "./FileGenerator.js";
+import { CSharpFile } from "./project/index.js";
 
 export class TestFileGenerator extends FileGenerator<CSharpFile> {
     protected getFilepath(): RelativeFilePath {

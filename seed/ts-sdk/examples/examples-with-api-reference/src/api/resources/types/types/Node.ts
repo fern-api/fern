@@ -32,6 +32,6 @@ import type * as SeedExamples from "../../../index.js";
  */
 export interface Node {
     name: string;
-    nodes?: SeedExamples.Node[];
-    trees?: SeedExamples.Tree[];
+    nodes?: SeedExamples.Node[] | undefined;
+    trees?: SeedExamples.Tree[] | undefined;
 }

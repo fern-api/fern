@@ -1,6 +1,6 @@
 import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
 
-import { stringifyFernFilepath } from "./stringifyFernFilepath";
+import { stringifyFernFilepath } from "./stringifyFernFilepath.js";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {

@@ -1,11 +1,11 @@
-import { ComputedProperty } from "./ComputedProperty";
-import { AstNode, Writer } from "./core";
-import { DocComment } from "./DocComment";
-import type { EnumWithRawValues } from "./EnumWithRawValues";
-import { Initializer } from "./Initializer";
-import { Method } from "./Method";
-import { Protocol } from "./Protocol";
-import { Struct } from "./Struct";
+import { ComputedProperty } from "./ComputedProperty.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DocComment } from "./DocComment.js";
+import type { EnumWithRawValues } from "./EnumWithRawValues.js";
+import { Initializer } from "./Initializer.js";
+import { Method } from "./Method.js";
+import { Protocol } from "./Protocol.js";
+import { Struct } from "./Struct.js";
 
 export declare namespace Extension {
     interface Args {

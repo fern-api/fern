@@ -82,6 +82,22 @@ public final class FunctionSignature {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof FunctionSignature && value.equals(((FunctionSignature) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -112,6 +128,7 @@ public final class FunctionSignature {
     @JsonIgnoreProperties("type")
     private static final class VoidValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private VoidFunctionSignature value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -151,6 +168,7 @@ public final class FunctionSignature {
     @JsonIgnoreProperties("type")
     private static final class NonVoidValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private NonVoidFunctionSignature value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -190,6 +208,7 @@ public final class FunctionSignature {
     @JsonIgnoreProperties("type")
     private static final class VoidThatTakesActualResultValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private VoidFunctionSignatureThatTakesActualResult value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

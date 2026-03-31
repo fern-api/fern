@@ -6,14 +6,13 @@
 // Client and configuration
 pub use crate::config::ClientConfig;
 pub use crate::core::{HttpClient, RequestOptions};
-pub use crate::error::ApiError;
+pub use crate::error::{ApiError, BuildError};
 
 // Main client and resource clients
 pub use crate::api::*;
 
 // Re-export commonly used external types
-pub use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
-pub use ordered_float::OrderedFloat;
+pub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};

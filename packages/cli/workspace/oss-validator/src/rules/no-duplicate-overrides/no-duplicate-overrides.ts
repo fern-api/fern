@@ -3,8 +3,8 @@ import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { readFile } from "fs/promises";
 
-import { Rule } from "../../Rule";
-import { ValidationViolation } from "../../ValidationViolation";
+import { Rule } from "../../Rule.js";
+import { ValidationViolation } from "../../ValidationViolation.js";
 
 export const NoDuplicateOverridesRule: Rule = {
     name: "no-duplicate-overrides",
@@ -19,7 +19,8 @@ export const NoDuplicateOverridesRule: Rule = {
                 const openAPI = await loadOpenAPI({
                     absolutePathToOpenAPI: spec.absoluteFilepath,
                     context,
-                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
+                    absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
                 });
 
                 const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;
@@ -61,6 +62,7 @@ export const NoDuplicateOverridesRule: Rule = {
                                     const displayGroup =
                                         spec.namespace != null ? `${spec.namespace}.${sdkGroupName}` : sdkGroupName;
                                     violations.push({
+                                        name: "no-duplicate-overrides",
                                         severity: "fatal",
                                         relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                         nodePath: ["paths", path, method],

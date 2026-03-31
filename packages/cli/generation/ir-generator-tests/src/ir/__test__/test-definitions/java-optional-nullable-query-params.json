@@ -117,7 +117,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1865,6 +1866,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Search endpoint with optional nullable query params with defaults"
                 }

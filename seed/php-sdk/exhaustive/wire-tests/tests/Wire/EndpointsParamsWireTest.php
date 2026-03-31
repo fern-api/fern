@@ -198,12 +198,35 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
+    public function testUploadWithPath(): void {
+        $testId = 'endpoints.params.upload_with_path.0';
+        $this->client->endpoints->params->uploadWithPath(
+            'upload-path',
+            ,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.params.upload_with_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/params/path/{param}",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     protected function setUp(): void {
         parent::setUp();
+        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
         $this->client = new SeedClient(
             token: 'test-token',
         options: [
-            'baseUrl' => 'http://localhost:8080',
+            'baseUrl' => $wiremockUrl,
         ],
         );
     }

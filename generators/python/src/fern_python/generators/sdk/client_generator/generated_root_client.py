@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 from fern_python.codegen import AST
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
@@ -11,6 +11,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 class RootClient:
     class_reference: AST.ClassReference
     parameters: List[ConstructorParameter]
+    init_parameters: Optional[List[ConstructorParameter]] = field(default=None)
 
 
 @dataclass

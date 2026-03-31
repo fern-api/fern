@@ -3,11 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class ReceiveEvent3(UniversalBaseModel):
-    receive_text_3: str = pydantic.Field(alias="receiveText3")
+    receive_text_3: typing_extensions.Annotated[
+        str, FieldMetadata(alias="receiveText3"), pydantic.Field(alias="receiveText3")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

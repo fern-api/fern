@@ -1,0 +1,40 @@
+types:
+  # A type alias to a string literal - this is the problematic case
+  SortField:
+    type: literal<"DEFAULT">
+    docs: A sort field that only allows the value "DEFAULT"
+
+  # A request type that uses the optional literal alias
+  SearchRequest:
+    properties:
+      # This field is optional and uses the literal alias
+      # In Go, this generates: Field *SortField
+      # The bug is that dynamic snippets generate: &SortField("DEFAULT")
+      # which is invalid Go code (can't take address of type conversion)
+      sortField:
+        type: optional<SortField>
+        docs: The sort field to use
+      query:
+        type: string
+        docs: The search query
+
+  SearchResponse:
+    properties:
+      result: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    search:
+      path: /search
+      method: POST
+      request: SearchRequest
+      response: SearchResponse
+      examples:
+        - request:
+            sortField: "DEFAULT"
+            query: "test query"
+          response:
+            body:
+              result: "search result"

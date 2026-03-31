@@ -3,12 +3,18 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 
 
 class FindRequest(UniversalBaseModel):
-    public_property: typing.Optional[str] = pydantic.Field(alias="publicProperty", default=None)
-    private_property: typing.Optional[int] = pydantic.Field(alias="privateProperty", default=None)
+    public_property: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="publicProperty"), pydantic.Field(alias="publicProperty")
+    ] = None
+    private_property: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="privateProperty"), pydantic.Field(alias="privateProperty")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

@@ -9,14 +9,14 @@ export const SearchRequest: core.serialization.Schema<
     SeedNullableOptional.SearchRequest
 > = core.serialization.object({
     query: core.serialization.string(),
-    filters: core.serialization.record(core.serialization.string(), core.serialization.string().nullable()).optional(),
+    filters: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
     includeTypes: core.serialization.list(core.serialization.string()).nullable(),
 });
 
 export declare namespace SearchRequest {
     export interface Raw {
         query: string;
-        filters?: Record<string, string | null | undefined> | null;
+        filters?: Record<string, string | null> | null;
         includeTypes?: string[] | null;
     }
 }

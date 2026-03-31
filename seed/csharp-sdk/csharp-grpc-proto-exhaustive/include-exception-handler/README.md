@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedApi)](https://nuget.org/packages/SeedApi)
+[![nuget shield](https://img.shields.io/nuget/v/Ferncsharp-grpc-proto-exhaustive)](https://nuget.org/packages/Ferncsharp-grpc-proto-exhaustive)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -11,10 +11,13 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -24,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedApi
+dotnet add package Ferncsharp-grpc-proto-exhaustive
 ```
 
 ## Reference
@@ -39,7 +42,20 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.Dataservice.FooAsync();
+await client.DataService.CheckAsync();
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedApi;
+
+var client = new SeedApiClient(new ClientOptions
+{
+    BaseUrl = SeedApiEnvironment.Default
+});
 ```
 
 ## Exception Handling
@@ -51,7 +67,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.Dataservice.FooAsync(...);
+    var response = await client.DataService.CheckAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -75,7 +91,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -88,12 +104,57 @@ var response = await client.Dataservice.FooAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
+var response = await client.DataService.CheckAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.DataService.CheckAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var aspectRatio = AspectRatio.AspectRatioUnspecified;
+
+// Using a custom value
+var customAspectRatio = AspectRatio.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (aspectRatio.Value)
+{
+    case AspectRatio.Values.AspectRatioUnspecified:
+        Console.WriteLine("AspectRatioUnspecified");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {aspectRatio.Value}");
+        break;
+}
+
+// Explicit casting
+string aspectRatioString = (string)AspectRatio.AspectRatioUnspecified;
+AspectRatio aspectRatioFromString = (AspectRatio)"ASPECT_RATIO_UNSPECIFIED";
 ```
 
 ## Contributing

@@ -1,7 +1,7 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 
-import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl";
+import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl.js";
 
 export declare namespace ExpressErrorSchemaGenerator {
     export interface Init {
@@ -12,7 +12,7 @@ export declare namespace ExpressErrorSchemaGenerator {
     export namespace generateError {
         export interface Args {
             errorName: string;
-            errorDeclaration: ErrorDeclaration;
+            errorDeclaration: FernIr.ErrorDeclaration;
         }
     }
 }

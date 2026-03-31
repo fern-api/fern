@@ -1,9 +1,9 @@
 import { Arguments } from "@fern-api/browser-compatible-base-generator";
 
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { writeArguments } from "./utils/writeArguments";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { writeArguments } from "./utils/writeArguments.js";
 
 export declare namespace ClassInstantiation {
     interface Args {

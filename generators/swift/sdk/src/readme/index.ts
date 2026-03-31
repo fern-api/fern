@@ -1,1 +1,1 @@
-export * from "./ReadmeConfigBuilder";
+export * from "./ReadmeConfigBuilder.js";

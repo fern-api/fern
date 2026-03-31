@@ -123,6 +123,10 @@ public final class RefreshTokenRequest {
     public interface _FinalStage {
         RefreshTokenRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage scope(Optional<String> scope);
 
         _FinalStage scope(String scope);
@@ -189,6 +193,18 @@ public final class RefreshTokenRequest {
         @java.lang.Override
         public RefreshTokenRequest build() {
             return new RefreshTokenRequest(clientId, clientSecret, refreshToken, scope, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

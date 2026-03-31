@@ -53,6 +53,10 @@ public class AsyncUserClient {
         return this.rawClient.createUsernameOptional().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> createUsernameOptional(RequestOptions requestOptions) {
+        return this.rawClient.createUsernameOptional(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> createUsernameOptional(Optional<CreateUsernameBodyOptionalProperties> request) {
         return this.rawClient.createUsernameOptional(request).thenApply(response -> response.body());
     }

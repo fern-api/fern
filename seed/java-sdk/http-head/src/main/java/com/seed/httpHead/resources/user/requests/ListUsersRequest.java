@@ -5,9 +5,9 @@ package com.seed.httpHead.resources.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.httpHead.core.ObjectMappers;
@@ -27,7 +27,7 @@ public final class ListUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("limit")
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
@@ -69,6 +69,10 @@ public final class ListUsersRequest {
 
     public interface _FinalStage {
         ListUsersRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -96,6 +100,18 @@ public final class ListUsersRequest {
         @java.lang.Override
         public ListUsersRequest build() {
             return new ListUsersRequest(limit, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

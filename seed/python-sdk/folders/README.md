@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -25,6 +39,7 @@ from seed import SeedApi
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.foo()
 ```
 
@@ -58,7 +73,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.foo(...)
+    client.foo()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -74,11 +89,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-)
-response = client.with_raw_response.foo(...)
+client = SeedApi(...)
+response = client.with_raw_response.foo()
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -97,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.foo(..., request_options={
+client.foo(request_options={
     "max_retries": 1
 })
 ```
@@ -107,17 +121,12 @@ client.foo(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.foo(..., request_options={
+client.foo(request_options={
     "timeout_in_seconds": 1
 })
 ```

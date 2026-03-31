@@ -5,8 +5,8 @@ import type * as SeedExhaustive from "../../../../../index.js";
 export interface Error_ {
     category: SeedExhaustive.endpoints.ErrorCategory;
     code: SeedExhaustive.endpoints.ErrorCode;
-    detail?: string;
-    field?: string;
+    detail?: string | undefined;
+    field?: string | undefined;
 }
 
 export const ErrorCategory = {
@@ -32,5 +32,5 @@ export const ErrorCode = {
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
 
 export interface PutResponse {
-    errors?: SeedExhaustive.endpoints.Error_[];
+    errors?: SeedExhaustive.endpoints.Error_[] | undefined;
 }

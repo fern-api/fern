@@ -29,6 +29,10 @@ public class AsyncContentTypeClient {
         return this.rawClient.postJsonPatchContentType().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> postJsonPatchContentType(RequestOptions requestOptions) {
+        return this.rawClient.postJsonPatchContentType(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
         return this.rawClient.postJsonPatchContentType(request).thenApply(response -> response.body());
     }
@@ -40,6 +44,12 @@ public class AsyncContentTypeClient {
 
     public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
         return this.rawClient.postJsonPatchContentWithCharsetType().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> postJsonPatchContentWithCharsetType(RequestOptions requestOptions) {
+        return this.rawClient
+                .postJsonPatchContentWithCharsetType(requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {

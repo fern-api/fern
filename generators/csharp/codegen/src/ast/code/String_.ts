@@ -1,7 +1,7 @@
-import { type Generation } from "../../context/generation-info";
-import { escapeForCSharpString } from "../../utils/escapeForCSharpString";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { type Generation } from "../../context/generation-info.js";
+import { escapeForCSharpString } from "../../utils/escapeForCSharpString.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
 
 export declare namespace String_ {
     interface Args {

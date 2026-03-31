@@ -55,6 +55,18 @@ service:
           properties:
             file: file
 
+    justFileWithOptionalQueryParams:
+      path: /just-file-with-optional-query-params
+      method: POST
+      request:
+        name: JustFileWithOptionalQueryParamsRequest
+        query-parameters:
+          maybeString: optional<string>
+          maybeInteger: optional<integer>
+        body:
+          properties:
+            file: file
+
     withContentType:
       path: "/with-content-type"
       method: POST
@@ -187,9 +199,40 @@ service:
 
         # add one non-file endpoint to force snippet generation
 
+    withJsonProperty:
+      path: /with-json-property
+      method: POST
+      request:
+        name: WithJsonPropertyRequest
+        body:
+          properties:
+            file: file
+            json: optional<MyObject>
+        content-type: multipart/form-data
+      response:
+        status-code: 200
+        type: string
+
     simple:
       path: "/snippet"
       method: POST
+
+    withLiteralAndEnumTypes:
+      path: /with-literal-enum
+      method: POST
+      request:
+        body:
+          properties:
+            file: file
+            model_type: optional<ModelType>
+            open_enum: optional<OpenEnumType>
+            maybe_name: optional<string>
+        content-type: multipart/form-data
+        name: LiteralEnumRequest
+      response:
+        status-code: 200
+        type: string
+
 types:
   Id: string
 
@@ -215,3 +258,11 @@ types:
     inline: true
     properties:
       bar: string
+
+  ModelType: literal<"model_v1">
+
+  OpenEnumType:
+    enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C

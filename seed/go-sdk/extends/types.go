@@ -36,6 +36,27 @@ func (i *Inlined) SetUnique(unique string) {
 	i.require(inlinedFieldUnique)
 }
 
+func (i *Inlined) UnmarshalJSON(data []byte) error {
+	type unmarshaler Inlined
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*i = Inlined(body)
+	return nil
+}
+
+func (i *Inlined) MarshalJSON() ([]byte, error) {
+	type embed Inlined
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	docsFieldDocs = big.NewInt(1 << 0)
 )
@@ -58,6 +79,9 @@ func (d *Docs) GetDocs() string {
 }
 
 func (d *Docs) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -103,6 +127,9 @@ func (d *Docs) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Docs) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -145,6 +172,9 @@ func (e *ExampleType) GetName() string {
 }
 
 func (e *ExampleType) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -197,6 +227,9 @@ func (e *ExampleType) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExampleType) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -239,6 +272,9 @@ func (j *Json) GetRaw() string {
 }
 
 func (j *Json) GetExtraProperties() map[string]interface{} {
+	if j == nil {
+		return nil
+	}
 	return j.extraProperties
 }
 
@@ -291,6 +327,9 @@ func (j *Json) MarshalJSON() ([]byte, error) {
 }
 
 func (j *Json) String() string {
+	if j == nil {
+		return "<nil>"
+	}
 	if len(j.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
 			return value
@@ -342,6 +381,9 @@ func (n *NestedType) GetName() string {
 }
 
 func (n *NestedType) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -401,6 +443,9 @@ func (n *NestedType) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedType) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value

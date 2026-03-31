@@ -28,7 +28,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path/#{params[:param]}",
+            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
             request_options: request_options
           )
           begin
@@ -60,7 +60,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path/#{params[:param]}",
+            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
             request_options: request_options
           )
           begin
@@ -178,7 +178,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path-query/#{params[:param]}",
+            path: "/params/path-query/#{URI.encode_uri_component(params[:param].to_s)}",
             query: query_params,
             request_options: request_options
           )
@@ -217,7 +217,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path-query/#{params[:param]}",
+            path: "/params/path-query/#{URI.encode_uri_component(params[:param].to_s)}",
             query: query_params,
             request_options: request_options
           )
@@ -250,7 +250,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
-            path: "/params/path/#{params[:param]}",
+            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
             body: params,
             request_options: request_options
           )
@@ -286,7 +286,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
-            path: "/params/path/#{params[:param]}",
+            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
             body: body_params,
             request_options: request_options
           )
@@ -300,6 +300,40 @@ module Seed
 
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
+        end
+
+        # POST bytes with path param returning object
+        #
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :param
+        #
+        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        def upload_with_path(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

@@ -1,9 +1,22 @@
 import { MediaType } from "@fern-api/core-utils";
-import { HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
-import { Converters, SchemaOrReferenceConverter } from "@fern-api/v3-importer-commons";
+import {
+    HttpHeader,
+    HttpResponseBody,
+    JsonResponse,
+    PrimitiveTypeV2,
+    StreamingResponse,
+    TypeReference,
+    V2SchemaExamples
+} from "@fern-api/ir-sdk";
+import {
+    AbstractConverter,
+    Converters,
+    ExampleConverter,
+    SchemaOrReferenceConverter
+} from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming.js";
 
 export declare namespace ResponseBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -15,6 +28,7 @@ export declare namespace ResponseBodyConverter {
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         responseBody: HttpResponseBody;
         streamResponseBody: HttpResponseBody | undefined;
+        headers: HttpHeader[];
     }
 }
 
@@ -71,7 +85,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (this.streamingExtension.type === "stream") {
             const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
             const contentTypes = Object.keys(this.responseBody.content ?? {});
-            for (const contentType of contentTypes) {
+
+            // When format is SSE, prefer text/event-stream content type over others
+            const sortedContentTypes =
+                this.streamingExtension.format === "sse"
+                    ? [
+                          ...contentTypes.filter((type) => type.includes("text/event-stream")),
+                          ...contentTypes.filter((type) => !type.includes("text/event-stream"))
+                      ]
+                    : contentTypes;
+
+            for (const contentType of sortedContentTypes) {
                 const mediaTypeObject = this.responseBody.content?.[contentType];
                 if (mediaTypeObject == null) {
                     continue;
@@ -150,14 +174,30 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
         }
 
-        // For success status codes (2xx), return an empty response instead of undefined
+        // For success status codes (2xx), return an empty response instead of undefined.
+        // Skip 204 No Content responses — they have no body by definition,
+        // and creating a synthetic body would prevent generators from detecting
+        // the no-content case and making the return type optional.
         const statusCodeNum = parseInt(this.statusCode);
-        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
+        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300 && statusCodeNum !== 204) {
+            // Preserve examples from the original media type object when the response
+            // has no schema but does have examples (e.g., OpenAPI specs that define
+            // response examples without a corresponding schema).
+            const originalJsonMediaTypeObject = jsonContentTypes
+                .map((ct) => this.responseBody.content?.[ct])
+                .find((mto) => mto != null);
+
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
                     type: "object",
                     description: "Empty response body"
-                }
+                },
+                ...(originalJsonMediaTypeObject?.examples != null && {
+                    examples: originalJsonMediaTypeObject.examples
+                }),
+                ...(originalJsonMediaTypeObject?.example != null && {
+                    example: originalJsonMediaTypeObject.example
+                })
             };
 
             const convertedSchema = this.parseMediaTypeObject({
@@ -208,14 +248,15 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 StreamingResponse.json({
                     docs: description,
                     payload: convertedStreamingSchema.type,
-                    terminator: undefined,
+                    terminator: this.streamingExtension?.terminator,
                     v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
                 })
             ),
             inlinedTypes: {
                 ...convertedStreamingSchema.inlinedTypes,
                 ...convertedNonStreamingSchema.inlinedTypes
-            }
+            },
+            headers: this.convertResponseHeaders()
         };
     }
 
@@ -238,7 +279,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.json({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -248,7 +289,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     ),
                     streamResponseBody: undefined,
                     inlinedTypes: convertedSchema.inlinedTypes,
-                    examples: convertedSchema.examples
+                    examples: convertedSchema.examples,
+                    headers: this.convertResponseHeaders()
                 };
             }
             case "sse": {
@@ -257,7 +299,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.sse({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -267,7 +309,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     ),
                     streamResponseBody: undefined,
                     inlinedTypes: convertedSchema.inlinedTypes,
-                    examples: convertedSchema.examples
+                    examples: convertedSchema.examples,
+                    headers: this.convertResponseHeaders()
                 };
             }
             default: {
@@ -297,7 +340,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             ),
             streamResponseBody: undefined,
             inlinedTypes: convertedSchema.inlinedTypes,
-            examples: convertedSchema.examples
+            examples: convertedSchema.examples,
+            headers: this.convertResponseHeaders()
         };
     }
 
@@ -316,7 +360,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 })
             }),
             streamResponseBody: undefined,
-            inlinedTypes: {}
+            inlinedTypes: {},
+            headers: this.convertResponseHeaders()
         };
     }
 
@@ -335,7 +380,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 })
             }),
             streamResponseBody: undefined,
-            inlinedTypes: {}
+            inlinedTypes: {},
+            headers: this.convertResponseHeaders()
         };
     }
 
@@ -354,7 +400,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 })
             }),
             streamResponseBody: undefined,
-            inlinedTypes: {}
+            inlinedTypes: {},
+            headers: this.convertResponseHeaders()
         };
     }
 
@@ -392,5 +439,153 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
 
     private shouldReturnTextResponse(contentType: string): boolean {
         return MediaType.parse(contentType)?.isText() ?? false;
+    }
+
+    public convertResponseHeaders(): HttpHeader[] {
+        const headers: HttpHeader[] = [];
+        const responseHeaders = this.responseBody.headers;
+
+        if (responseHeaders == null) {
+            return headers;
+        }
+
+        for (const [headerName, headerOrRef] of Object.entries(responseHeaders)) {
+            const resolvedHeader = this.context.resolveMaybeReference<OpenAPIV3_1.HeaderObject>({
+                schemaOrReference: headerOrRef,
+                breadcrumbs: [...this.breadcrumbs, "headers", headerName]
+            });
+
+            if (resolvedHeader == null) {
+                continue;
+            }
+
+            const headerSchema = resolvedHeader.schema;
+            let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
+
+            if (headerSchema != null) {
+                const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: headerSchema,
+                    breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"]
+                });
+
+                if (resolvedSchema != null) {
+                    if (resolvedSchema.type === "number" || resolvedSchema.type === "integer") {
+                        valueType = TypeReference.primitive({
+                            v1: resolvedSchema.type === "integer" ? "INTEGER" : "DOUBLE",
+                            v2:
+                                resolvedSchema.type === "integer"
+                                    ? PrimitiveTypeV2.integer({ default: undefined, validation: undefined })
+                                    : PrimitiveTypeV2.double({ default: undefined, validation: undefined })
+                        });
+                    } else if (resolvedSchema.type === "boolean") {
+                        valueType = TypeReference.primitive({
+                            v1: "BOOLEAN",
+                            v2: PrimitiveTypeV2.boolean({ default: undefined })
+                        });
+                    }
+                }
+            }
+
+            const v2Examples = this.convertHeaderExamples({
+                header: resolvedHeader,
+                headerName,
+                schema: headerSchema
+            });
+
+            headers.push({
+                name: this.context.casingsGenerator.generateNameAndWireValue({
+                    name: headerName,
+                    wireValue: headerName
+                }),
+                docs: resolvedHeader.description,
+                valueType,
+                env: undefined,
+                v2Examples,
+                availability: undefined
+            });
+        }
+
+        return headers;
+    }
+
+    private convertHeaderExamples({
+        header,
+        headerName,
+        schema
+    }: {
+        header: OpenAPIV3_1.HeaderObject;
+        headerName: string;
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+    }): V2SchemaExamples {
+        const v2Examples: V2SchemaExamples = {
+            userSpecifiedExamples: {},
+            autogeneratedExamples: {}
+        };
+
+        const headerExample = header.example;
+        const headerExamples = header.examples;
+
+        for (const [key, example] of Object.entries(headerExamples ?? {})) {
+            const resolvedExample = this.context.resolveExampleWithValue(example);
+            if (resolvedExample != null) {
+                v2Examples.userSpecifiedExamples[key] = this.generateHeaderExample({
+                    schema,
+                    example: resolvedExample
+                });
+            }
+        }
+
+        if (headerExample != null) {
+            const exampleName = this.context.generateUniqueName({
+                prefix: `${headerName}_example`,
+                existingNames: Object.keys(v2Examples.userSpecifiedExamples)
+            });
+            v2Examples.userSpecifiedExamples[exampleName] = this.generateHeaderExample({
+                schema,
+                example: headerExample
+            });
+        }
+
+        if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
+            const exampleName = `${headerName}_example`;
+            v2Examples.autogeneratedExamples[exampleName] = this.generateHeaderExample({
+                schema,
+                example: undefined,
+                ignoreErrors: true
+            });
+        }
+
+        return v2Examples;
+    }
+
+    private generateHeaderExample({
+        schema,
+        example,
+        ignoreErrors
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+        example: unknown;
+        ignoreErrors?: boolean;
+    }): unknown {
+        if (schema == null) {
+            return example;
+        }
+
+        const exampleConverter = new ExampleConverter({
+            breadcrumbs: this.breadcrumbs,
+            context: this.context,
+            schema,
+            example
+        });
+        const { validExample: convertedExample, errors } = exampleConverter.convert();
+        if (!ignoreErrors) {
+            errors.forEach((error) => {
+                this.context.errorCollector.collect({
+                    message: error.message,
+                    path: error.path
+                });
+            });
+        }
+        return convertedExample;
     }
 }

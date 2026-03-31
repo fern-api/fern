@@ -62,6 +62,52 @@ type ColorOrOperand struct {
 	Operand *Operand
 }
 
+// Tests forward-compatible enums that accept
+// both known values and arbitrary strings.
+type ForwardCompatibleEnum string
+
+const (
+	ForwardCompatibleEnumActive   = "active"
+	ForwardCompatibleEnumInactive = "inactive"
+)
+
+func NewForwardCompatibleEnumFromString(s string) (ForwardCompatibleEnum, error) {
+	switch s {
+	case "active":
+		return ForwardCompatibleEnumActive, nil
+	case "inactive":
+		return ForwardCompatibleEnumInactive, nil
+	}
+	var t ForwardCompatibleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f ForwardCompatibleEnum) Ptr() *ForwardCompatibleEnum {
+	return &f
+}
+
+type EnumWithSpecialCharacters string
+
+const (
+	EnumWithSpecialCharactersBla = "\\$bla"
+	EnumWithSpecialCharactersYo  = "\\$yo"
+)
+
+func NewEnumWithSpecialCharactersFromString(s string) (EnumWithSpecialCharacters, error) {
+	switch s {
+	case "\\$bla":
+		return EnumWithSpecialCharactersBla, nil
+	case "\\$yo":
+		return EnumWithSpecialCharactersYo, nil
+	}
+	var t EnumWithSpecialCharacters
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EnumWithSpecialCharacters) Ptr() *EnumWithSpecialCharacters {
+	return &e
+}
+
 type EnumWithCustom string
 
 const (
@@ -90,33 +136,33 @@ const (
 	SpecialEnumA  = ""
 	SpecialEnumB  = `Hello \"World\"`
 	SpecialEnumC  = "Hello 'World'"
-	SpecialEnumD  = "Hello\\World"
-	SpecialEnumE  = "Hello\nWorld"
-	SpecialEnumF  = "Hello\rWorld"
-	SpecialEnumH  = "Hello\tWorld"
-	SpecialEnumI  = "Hello\fWorld"
-	SpecialEnumJ  = "Hello\u0008World"
-	SpecialEnumK  = "Hello\vWorld"
-	SpecialEnumL  = "Hello\x00World"
-	SpecialEnumM  = "Hello\u0007World"
-	SpecialEnumN  = "Hello\u0001World"
-	SpecialEnumO  = "Hello\u0002World"
-	SpecialEnumP  = "Hello\u001FWorld"
-	SpecialEnumQ  = "Hello\u007FWorld"
-	SpecialEnumR  = "Hello\u009FWorld"
+	SpecialEnumD  = "Hello\\\\World"
+	SpecialEnumE  = "Hello\\nWorld"
+	SpecialEnumF  = "Hello\\rWorld"
+	SpecialEnumH  = "Hello\\tWorld"
+	SpecialEnumI  = "Hello\\fWorld"
+	SpecialEnumJ  = "Hello\\u0008World"
+	SpecialEnumK  = "Hello\\vWorld"
+	SpecialEnumL  = "Hello\\x00World"
+	SpecialEnumM  = "Hello\\u0007World"
+	SpecialEnumN  = "Hello\\u0001World"
+	SpecialEnumO  = "Hello\\u0002World"
+	SpecialEnumP  = "Hello\\u001FWorld"
+	SpecialEnumQ  = "Hello\\u007FWorld"
+	SpecialEnumR  = "Hello\\u009FWorld"
 	SpecialEnumS  = `Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null`
-	SpecialEnumT  = "\n\r\t\x00\u0008\f\v\u0007"
+	SpecialEnumT  = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
 	SpecialEnumU  = "Hello 世界"
 	SpecialEnumV  = "café"
 	SpecialEnumW  = "🚀"
-	SpecialEnumX  = "\\n"
-	SpecialEnumY  = "\\"
+	SpecialEnumX  = "\\\\n"
+	SpecialEnumY  = "\\\\"
 	SpecialEnumZ  = `{"name": "John", "age": 30, "city": "New York"}`
-	SpecialEnumAa = "SELECT * FROM users WHERE name = 'John O\\'Reilly'"
-	SpecialEnumBb = "C:\\Users\\John\\Documents\\file.txt"
+	SpecialEnumAa = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'"
+	SpecialEnumBb = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt"
 	SpecialEnumCc = "/usr/local/bin/app"
-	SpecialEnumDd = "\\d{3}-\\d{2}-\\d{4}"
-	SpecialEnumEe = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+	SpecialEnumDd = "\\\\d{3}-\\\\d{2}-\\\\d{4}"
+	SpecialEnumEe = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}"
 	SpecialEnumFf = `transcript[transcriptType="final"]`
 	SpecialEnumGg = "transcript[transcriptType='final']"
 )
@@ -129,37 +175,37 @@ func NewSpecialEnumFromString(s string) (SpecialEnum, error) {
 		return SpecialEnumB, nil
 	case "Hello 'World'":
 		return SpecialEnumC, nil
-	case "Hello\\World":
+	case "Hello\\\\World":
 		return SpecialEnumD, nil
-	case "Hello\nWorld":
+	case "Hello\\nWorld":
 		return SpecialEnumE, nil
-	case "Hello\rWorld":
+	case "Hello\\rWorld":
 		return SpecialEnumF, nil
-	case "Hello\tWorld":
+	case "Hello\\tWorld":
 		return SpecialEnumH, nil
-	case "Hello\fWorld":
+	case "Hello\\fWorld":
 		return SpecialEnumI, nil
-	case "Hello\u0008World":
+	case "Hello\\u0008World":
 		return SpecialEnumJ, nil
-	case "Hello\vWorld":
+	case "Hello\\vWorld":
 		return SpecialEnumK, nil
-	case "Hello\x00World":
+	case "Hello\\x00World":
 		return SpecialEnumL, nil
-	case "Hello\u0007World":
+	case "Hello\\u0007World":
 		return SpecialEnumM, nil
-	case "Hello\u0001World":
+	case "Hello\\u0001World":
 		return SpecialEnumN, nil
-	case "Hello\u0002World":
+	case "Hello\\u0002World":
 		return SpecialEnumO, nil
-	case "Hello\u001FWorld":
+	case "Hello\\u001FWorld":
 		return SpecialEnumP, nil
-	case "Hello\u007FWorld":
+	case "Hello\\u007FWorld":
 		return SpecialEnumQ, nil
-	case "Hello\u009FWorld":
+	case "Hello\\u009FWorld":
 		return SpecialEnumR, nil
 	case `Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null`:
 		return SpecialEnumS, nil
-	case "\n\r\t\x00\u0008\f\v\u0007":
+	case "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007":
 		return SpecialEnumT, nil
 	case "Hello 世界":
 		return SpecialEnumU, nil
@@ -167,21 +213,21 @@ func NewSpecialEnumFromString(s string) (SpecialEnum, error) {
 		return SpecialEnumV, nil
 	case "🚀":
 		return SpecialEnumW, nil
-	case "\\n":
+	case "\\\\n":
 		return SpecialEnumX, nil
-	case "\\":
+	case "\\\\":
 		return SpecialEnumY, nil
 	case `{"name": "John", "age": 30, "city": "New York"}`:
 		return SpecialEnumZ, nil
-	case "SELECT * FROM users WHERE name = 'John O\\'Reilly'":
+	case "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'":
 		return SpecialEnumAa, nil
-	case "C:\\Users\\John\\Documents\\file.txt":
+	case "C:\\\\Users\\\\John\\\\Documents\\\\file.txt":
 		return SpecialEnumBb, nil
 	case "/usr/local/bin/app":
 		return SpecialEnumCc, nil
-	case "\\d{3}-\\d{2}-\\d{4}":
+	case "\\\\d{3}-\\\\d{2}-\\\\d{4}":
 		return SpecialEnumDd, nil
-	case "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}":
+	case "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}":
 		return SpecialEnumEe, nil
 	case `transcript[transcriptType="final"]`:
 		return SpecialEnumFf, nil

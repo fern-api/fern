@@ -5,9 +5,10 @@ package object
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	uuid "github.com/google/uuid"
 	internal "github.com/object/fern/internal"
-	time "time"
 )
 
 // Exercises all of the built-in types.
@@ -72,7 +73,7 @@ func (t *Type) GetFour() bool {
 
 func (t *Type) GetFive() int64 {
 	if t == nil {
-		return 0
+		return int64(0)
 	}
 	return t.Five
 }
@@ -184,7 +185,7 @@ func (t *Type) GetTwenty() int {
 
 func (t *Type) GetTwentyone() int64 {
 	if t == nil {
-		return 0
+		return int64(0)
 	}
 	return t.Twentyone
 }

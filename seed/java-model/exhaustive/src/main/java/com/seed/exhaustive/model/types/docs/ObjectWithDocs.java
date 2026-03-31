@@ -51,6 +51,10 @@ public final class ObjectWithDocs {
    * <li>/**: Block comment start</li>
    * <li>** /: Block comment end</li>
    * </ul>
+   * <p>XMLDoc (C#) (Example of actual XML tags):
+   * See <a href="https://example.com/docs">the docs</a> for more info.
+   * Use <code>getValue()</code> to retrieve the value.
+   * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
    * <p>Javadoc (Java):</p>
    * <ul>
    * <li>@: Used for Javadoc tags</li>
@@ -149,6 +153,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -241,6 +249,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -307,6 +319,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>

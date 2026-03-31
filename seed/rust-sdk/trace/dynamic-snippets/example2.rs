@@ -1,12 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate,
-    InternalError, KeyValuePair, MapValue, NodeId, RecordedTestCaseUpdate, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListNodeValue, SinglyLinkedListValue, SubmissionId, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseId, TestCaseNonHiddenGrade, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -21,9 +13,7 @@ async fn main() {
         .send_test_submission_update(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &TestSubmissionUpdate {
-                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 update_info: TestSubmissionUpdateInfo::Running {
                     value: Default::default(),
                 },

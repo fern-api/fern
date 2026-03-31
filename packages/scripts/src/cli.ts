@@ -5,7 +5,7 @@ import yaml from "yaml";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { convertChangelogToVersions } from "./convertChangelogToVersionsYml";
+import { convertChangelogToVersions } from "./convertChangelogToVersionsYml.js";
 
 async function main() {
     try {

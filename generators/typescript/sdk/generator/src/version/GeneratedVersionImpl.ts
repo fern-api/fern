@@ -1,10 +1,10 @@
-import { ApiVersionScheme, HttpHeader } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedVersion, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export class GeneratedVersionImpl implements GeneratedVersion {
-    private apiVersion: ApiVersionScheme;
+    private apiVersion: FernIr.ApiVersionScheme;
     private versionEnumName: string;
     private firstEnumValue: string;
 
@@ -13,7 +13,7 @@ export class GeneratedVersionImpl implements GeneratedVersion {
         versionEnumName,
         firstEnumValue
     }: {
-        apiVersion: ApiVersionScheme;
+        apiVersion: FernIr.ApiVersionScheme;
         versionEnumName: string;
         firstEnumValue: string;
     }) {
@@ -53,7 +53,7 @@ export class GeneratedVersionImpl implements GeneratedVersion {
         return this.apiVersion.value.default.name.wireValue;
     }
 
-    public getHeader(): HttpHeader {
+    public getHeader(): FernIr.HttpHeader {
         return this.apiVersion.header;
     }
 }

@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
@@ -6,16 +7,16 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClientGenerator } from "./client/ClientGenerator";
-import { InternalFilesGenerator } from "./internal/InternalFilesGenerator";
-import { RawClientGenerator } from "./raw-client/RawClientGenerator";
-import { buildReference } from "./reference/buildReference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ClientGenerator } from "./client/ClientGenerator.js";
+import { InternalFilesGenerator } from "./internal/InternalFilesGenerator.js";
+import { RawClientGenerator } from "./raw-client/RawClientGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -24,7 +25,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -72,22 +73,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 });
             } catch (e) {
-                context.logger.error("Failed to generate README.md");
-                if (e instanceof Error) {
-                    context.logger.debug(e.message);
-                    context.logger.debug(e.stack ?? "");
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.warn((error as Error)?.message);
-                context.logger.warn((error as Error)?.stack ?? "");
-            }
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await context.project.persist({ tidy: true });

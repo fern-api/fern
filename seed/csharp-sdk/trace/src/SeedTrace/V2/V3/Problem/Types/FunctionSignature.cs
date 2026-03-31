@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -78,7 +78,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignature AsVoid() =>
         IsVoid
             ? (SeedTrace.V2.V3.VoidFunctionSignature)Value!
-            : throw new System.Exception("FunctionSignature.Type is not 'void'");
+            : throw new global::System.Exception("FunctionSignature.Type is not 'void'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.NonVoidFunctionSignature AsNonVoid() =>
         IsNonVoid
             ? (SeedTrace.V2.V3.NonVoidFunctionSignature)Value!
-            : throw new System.Exception("FunctionSignature.Type is not 'nonVoid'");
+            : throw new global::System.Exception("FunctionSignature.Type is not 'nonVoid'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
         IsVoidThatTakesActualResult
             ? (SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "FunctionSignature.Type is not 'voidThatTakesActualResult'"
             );
 
@@ -203,12 +203,12 @@ public record FunctionSignature
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FunctionSignature>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FunctionSignature).IsAssignableFrom(typeToConvert);
 
         public override FunctionSignature Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -233,18 +233,30 @@ public record FunctionSignature
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "void" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
-                    ),
-                "nonVoid" => json.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
-                    ),
+                "void" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
+                        ),
+                "nonVoid" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
+                        ),
                 "voidThatTakesActualResult" =>
-                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult?>(
                         options
                     )
                         ?? throw new JsonException(
@@ -274,6 +286,27 @@ public record FunctionSignature
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override FunctionSignature ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new FunctionSignature(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            FunctionSignature value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

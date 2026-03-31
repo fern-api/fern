@@ -2,7 +2,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
+import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite.js";
 
 export async function generateDynamicSnippetsTestSuite({
     ir,
@@ -17,10 +17,13 @@ export async function generateDynamicSnippetsTestSuite({
     return {
         ir: ir.dynamic,
         config,
-        requests: Object.values(ir.dynamic.endpoints).flatMap((endpoint) =>
+        requests: Object.entries(ir.dynamic.endpoints).flatMap(([endpointId, endpoint]) =>
             (endpoint.examples ?? []).map((example) => ({
-                ...example,
-                baseUrl: "https://api.fern.com"
+                endpointId,
+                request: {
+                    ...example,
+                    baseUrl: "https://api.fern.com"
+                }
             }))
         )
     };

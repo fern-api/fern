@@ -1,15 +1,15 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { PackageId, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
 
 export declare namespace AbstractGeneratedEndpointTypeSchema {
     export interface Init extends AbstractGeneratedSchema.Init {
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -18,8 +18,8 @@ export abstract class AbstractGeneratedEndpointTypeSchema
     implements GeneratedEndpointTypeSchema
 {
     protected packageId: PackageId;
-    protected service: HttpService;
-    protected endpoint: HttpEndpoint;
+    protected service: FernIr.HttpService;
+    protected endpoint: FernIr.HttpEndpoint;
 
     constructor({ packageId, service, endpoint, ...superInit }: AbstractGeneratedEndpointTypeSchema.Init) {
         super(superInit);

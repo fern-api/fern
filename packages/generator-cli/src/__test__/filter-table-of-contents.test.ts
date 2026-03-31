@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/filter-table-of-contents/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/filter-table-of-contents/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("filter table of contents", () => {
     testGenerateReadme({

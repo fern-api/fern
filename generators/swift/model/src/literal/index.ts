@@ -1,1 +1,1 @@
-export * from "./LiteralEnumGenerator";
+export * from "./LiteralEnumGenerator.js";

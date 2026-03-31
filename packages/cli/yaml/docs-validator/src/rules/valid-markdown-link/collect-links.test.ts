@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { collectLinksAndSources } from "./collect-links";
+import { collectLinksAndSources } from "./collect-links.js";
 
 describe("collectLinksAndSources", () => {
     it("should match on .md and .mdx", () => {

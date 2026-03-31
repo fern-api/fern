@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { Constants } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CoreUtilities,
     CoreUtilitiesManager,
@@ -20,7 +20,7 @@ export declare namespace BaseContextImpl {
         exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
-        fernConstants: Constants;
+        fernConstants: FernIr.Constants;
         type: TypeContext;
         typeSchema: TypeSchemaContext;
         jsonContext: JsonContext;
@@ -35,7 +35,7 @@ export class BaseContextImpl implements BaseContext {
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: Constants;
+    public readonly fernConstants: FernIr.Constants;
     public readonly type: TypeContext;
     public readonly typeSchema: TypeSchemaContext;
     public readonly includeSerdeLayer: boolean;

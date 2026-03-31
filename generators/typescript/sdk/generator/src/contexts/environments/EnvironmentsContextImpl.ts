@@ -1,14 +1,14 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
 
-import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
+import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer.js";
 
 export declare namespace EnvironmentsContextImpl {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
         importsManager: ImportsManager;
@@ -18,7 +18,7 @@ export declare namespace EnvironmentsContextImpl {
 }
 
 export class EnvironmentsContextImpl implements EnvironmentsContext {
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private environmentsGenerator: EnvironmentsGenerator;
     private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
     private importsManager: ImportsManager;

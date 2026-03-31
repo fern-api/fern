@@ -1,12 +1,15 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-FROM node:23.11.1-bookworm AS node
+# Updated Node.js to 24.13.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
+FROM node:24.13.0-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
-FROM gradle:jdk11-jammy
+# Use Corretto to fix January 2026 Oracle CPU CVEs:
+# - CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933
+FROM gradle:jdk11-corretto
 
 # Remove vulnerable jars from Gradle base image - not used by this generator
 # CVE-2025-4949: jgit 5.13.3
@@ -22,36 +25,53 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
-# Remove vulnerable packages not needed at runtime and update vulnerable packages
-# CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
-# CVE-2024-46901: subversion vulnerability
-# Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
-# CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
-# CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506: libpng16-16 vulnerabilities
-# Use purge instead of remove to fully remove packages from dpkg database
-# Add retry logic for apt-get update to handle transient mirror sync issues
-RUN set -eux; \
-    max=5; \
-    count=0; \
-    until apt-get update; do \
-      count=$((count + 1)); \
-      if [ "$count" -ge "$max" ]; then \
-        echo "apt-get update failed after ${count} attempts"; \
-        exit 1; \
-      fi; \
-      echo "apt-get update failed, retrying in 20s..."; \
-      sleep 20; \
-    done; \
-    apt-get install -y --only-upgrade libpng16-16 && \
-    apt-get purge -y --allow-remove-essential \
-        python3.10 python3.10-minimal \
-        python3 python3-minimal \
-        libpython3.10-minimal libpython3.10-stdlib libpython3-stdlib \
-        subversion \
-        git-lfs \
-        wget && \
-    apt-get autoremove -y --purge && \
-    rm -rf /var/lib/apt/lists/*
+# Replace vulnerable plexus-utils in Gradle distribution to fix GHSA-6fmv-xxpf-w3cw
+# (Directory Traversal vulnerability in extractFile method)
+RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar \
+      -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar && \
+    echo "421ff6ed146c53a9d4eaade8f629b52b12af7187101f1bd06c2c64e904019f3c  /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar" | sha256sum -c -
+
+# Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
+# (async parser bypasses maxNumberLength constraint, leading to potential DoS)
+RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
+      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
+    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
+
+# Update packages to get latest security fixes and remove unnecessary packages
+# Amazon Linux 2023 uses dnf instead of apt-get
+# Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
+# need to update what's present and remove what we don't need
+# Security update 2026-02-09: use --releasever=latest to get patches beyond the
+# base image's pinned repo snapshot (2023.10.20260120) for CVE-2025-15467,
+# CVE-2025-13151, CVE-2025-61726, CVE-2026-21441, CVE-2026-0990, CVE-2026-0992,
+# CVE-2026-0989, CVE-2026-22695, CVE-2026-22801, CVE-2019-13232
+# Security update 2026-02-20: add gnupg2-minimal (CVE-2026-24882),
+# curl-minimal/libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524,
+# CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
+# expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
+# Security update 2026-03-30: add freetype (CVE-2026-23865, ALAS2023-2026-1486)
+RUN dnf --releasever=latest update -y \
+    openssl-fips-provider-latest \
+    openssl-libs \
+    libtasn1 \
+    libcap \
+    python3-pip-wheel \
+    libxml2 \
+    libpng \
+    unzip \
+    gnupg2-minimal \
+    curl-minimal \
+    libcurl-minimal \
+    alsa-lib \
+    expat \
+    openssh \
+    openssh-clients \
+    freetype && \
+    dnf remove -y git-lfs wget || true && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
@@ -67,7 +87,7 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@latest && npm install -g glob@11.1.0
+RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
 
 # Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
@@ -76,6 +96,62 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf glob-11.1.0.tgz && \
     mv package glob && \
     rm glob-11.1.0.tgz
+
+# Patch npm's bundled tar to 7.5.11 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx,
+# GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative Linkpath)
+# Note: We use curl instead of npm pack because npm pack depends on tar itself
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    rm -rf tar && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.11.tgz -o tar-7.5.11.tgz && \
+    tar -xzf tar-7.5.11.tgz && \
+    mv package tar && \
+    rm tar-7.5.11.tgz
+
+# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
+# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
+RUN for dir in \
+      /usr/local/lib/node_modules/glob/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
+        tar -xzf minimatch-10.2.3.tgz && \
+        mv package minimatch && \
+        rm minimatch-10.2.3.tgz; \
+      fi; \
+    done
+
+# Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob quantifiers),
+# GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character Classes)
+# Location: npm's bundled tinyglobby depends on picomatch
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done
+
+# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
+# (Zero-step sequence causes process hang and memory exhaustion)
+# Location: npm bundles its own copy of brace-expansion
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
@@ -86,22 +162,5 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
     git config --global user.name "fern-api"
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
-
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
-
-# Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
-# Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
-# Also install fast-content-type-parse which is a new dependency in @octokit/request@10.0.7
-RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit && \
-    rm -rf request && \
-    npm pack @octokit/request@10.0.7 && \
-    tar -xzf octokit-request-10.0.7.tgz && \
-    mv package request && \
-    rm octokit-request-10.0.7.tgz && \
-    cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
-    npm pack fast-content-type-parse@2.0.1 && \
-    tar -xzf fast-content-type-parse-2.0.1.tgz && \
-    mv package fast-content-type-parse && \
-    rm fast-content-type-parse-2.0.1.tgz
 
 ENTRYPOINT ["sh", "/init.sh"]

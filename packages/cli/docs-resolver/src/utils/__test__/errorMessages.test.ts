@@ -1,4 +1,4 @@
-import { cannotFindSubpackageByLocatorError, normalizeLocatorString } from "../errorMessages";
+import { cannotFindSubpackageByLocatorError, normalizeLocatorString } from "../errorMessages.js";
 
 describe("cannotFindSubpackageByLocatorError", () => {
     it("returns base error when no matches", () => {

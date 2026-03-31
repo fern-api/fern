@@ -1,15 +1,15 @@
 import { assertDefined } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, Package, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator.js";
 
 export declare namespace WireTestSuiteGenerator {
     interface Args {
         symbol: swift.Symbol;
         subclientName: string;
-        packageOrSubpackage: Package | Subpackage;
+        packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
@@ -17,9 +17,9 @@ export declare namespace WireTestSuiteGenerator {
 export class WireTestSuiteGenerator {
     private readonly symbol: swift.Symbol;
     private readonly subclientName: string;
-    private readonly packageOrSubpackage: Package | Subpackage;
+    private readonly packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
-    private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private readonly dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
 
     public constructor({
         symbol,

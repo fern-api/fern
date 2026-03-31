@@ -35,4 +35,13 @@ groups:
       - name: fernapi/fern-python-sdk
         version: 2.16.0
         config: {}
+  autorelease-disabled:
+    generators:
+      - name: fernapi/fern-python-sdk
+        autorelease: false
+        version: 3.0.0
+        config: {}
+      - name: fernapi/fern-java-sdk
+        version: 0.0.1
+        config: {}
 default-group: local

@@ -1,0 +1,64 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { Writable } from "stream";
+import { Context } from "../../context/Context.js";
+
+/**
+ * Create a Context for testing.
+ *
+ * This creates a Context instance with streams that discard output,
+ * suitable for unit tests where console output is not needed.
+ */
+export function createTestContext({ cwd }: { cwd: AbsoluteFilePath }): Context {
+    return new Context({
+        stdout: createNullStream(),
+        stderr: createNullStream(),
+        cwd
+    });
+}
+
+/**
+ * Create a Context whose stdout/stderr are captured for assertion.
+ */
+export function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): {
+    context: Context;
+    getStdout: () => string;
+    getStderr: () => string;
+} {
+    const stdout = createCapturingStream();
+    const stderr = createCapturingStream();
+    return {
+        context: new Context({ stdout: stdout.stream, stderr: stderr.stream, cwd }),
+        getStdout: stdout.getOutput,
+        getStderr: stderr.getOutput
+    };
+}
+
+/**
+ * Create a writable stream that captures all written chunks so they can be
+ * inspected after the test completes.
+ */
+function createCapturingStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
+    const chunks: Buffer[] = [];
+    const stream = new Writable({
+        write(chunk, _encoding, callback) {
+            chunks.push(Buffer.from(chunk));
+            callback();
+        }
+    }) as NodeJS.WriteStream;
+    return {
+        stream,
+        getOutput: () => Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8")
+    };
+}
+
+/**
+ * A writable stream that discards all output.
+ * Used for testing to suppress console output.
+ */
+function createNullStream(): NodeJS.WriteStream {
+    return new Writable({
+        write(_chunk, _encoding, callback) {
+            callback();
+        }
+    }) as NodeJS.WriteStream;
+}

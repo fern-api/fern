@@ -1,18 +1,18 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace ClientGeneratorContext {
     interface Args {
         symbol: swift.Symbol;
-        packageOrSubpackage: Package | Subpackage;
+        packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class ClientGeneratorContext {
     private readonly symbol: swift.Symbol;
-    private readonly packageOrSubpackage: Package | Subpackage;
+    private readonly packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
     public readonly httpClient: { property: swift.Property; clientName: string };

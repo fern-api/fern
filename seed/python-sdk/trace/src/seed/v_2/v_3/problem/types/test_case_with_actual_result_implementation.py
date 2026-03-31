@@ -13,9 +13,13 @@ from .non_void_function_definition import NonVoidFunctionDefinition
 
 
 class TestCaseWithActualResultImplementation(UniversalBaseModel):
-    get_actual_result: typing_extensions.Annotated[NonVoidFunctionDefinition, FieldMetadata(alias="getActualResult")]
+    get_actual_result: typing_extensions.Annotated[
+        NonVoidFunctionDefinition, FieldMetadata(alias="getActualResult"), pydantic.Field(alias="getActualResult")
+    ]
     assert_correctness_check: typing_extensions.Annotated[
-        AssertCorrectnessCheck, FieldMetadata(alias="assertCorrectnessCheck")
+        AssertCorrectnessCheck,
+        FieldMetadata(alias="assertCorrectnessCheck"),
+        pydantic.Field(alias="assertCorrectnessCheck"),
     ]
 
     if IS_PYDANTIC_V2:

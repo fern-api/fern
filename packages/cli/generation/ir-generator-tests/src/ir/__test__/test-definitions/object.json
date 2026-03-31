@@ -261,7 +261,8 @@
                                 "v1": "LONG",
                                 "v2": {
                                     "type": "long",
-                                    "default": null
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -612,7 +613,8 @@
                                         "v1": "LONG",
                                         "v2": {
                                             "type": "long",
-                                            "default": null
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -2148,7 +2150,8 @@
                                                     "v1": "LONG",
                                                     "v2": {
                                                         "type": "long",
-                                                        "default": null
+                                                        "default": null,
+                                                        "validation": null
                                                     }
                                                 }
                                             }

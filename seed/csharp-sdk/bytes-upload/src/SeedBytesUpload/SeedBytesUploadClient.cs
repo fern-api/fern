@@ -2,13 +2,14 @@ using SeedBytesUpload.Core;
 
 namespace SeedBytesUpload;
 
-public partial class SeedBytesUploadClient
+public partial class SeedBytesUploadClient : ISeedBytesUploadClient
 {
     private readonly RawClient _client;
 
     public SeedBytesUploadClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedBytesUploadClient
                 { "User-Agent", "Fernbytes-upload/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedBytesUploadClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

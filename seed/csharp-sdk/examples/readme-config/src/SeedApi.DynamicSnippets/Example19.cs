@@ -101,14 +101,10 @@ public class Example19
                             Name = "name",
                             Nodes = new List<Node>(){
                                 new Node {
-                                    Name = "name",
-                                    Nodes = new List<Node>(),
-                                    Trees = new List<Tree>()
+                                    Name = "name"
                                 },
                                 new Node {
-                                    Name = "name",
-                                    Nodes = new List<Node>(),
-                                    Trees = new List<Tree>()
+                                    Name = "name"
                                 },
                             }
                             ,
@@ -126,14 +122,10 @@ public class Example19
                             Name = "name",
                             Nodes = new List<Node>(){
                                 new Node {
-                                    Name = "name",
-                                    Nodes = new List<Node>(),
-                                    Trees = new List<Tree>()
+                                    Name = "name"
                                 },
                                 new Node {
-                                    Name = "name",
-                                    Nodes = new List<Node>(),
-                                    Trees = new List<Tree>()
+                                    Name = "name"
                                 },
                             }
                             ,
@@ -212,14 +204,10 @@ public class Example19
                             ,
                             Directories = new List<SeedExamples.Directory>(){
                                 new SeedExamples.Directory {
-                                    Name = "name",
-                                    Files = new List<SeedExamples.File>(),
-                                    Directories = new List<SeedExamples.Directory>()
+                                    Name = "name"
                                 },
                                 new SeedExamples.Directory {
-                                    Name = "name",
-                                    Files = new List<SeedExamples.File>(),
-                                    Directories = new List<SeedExamples.Directory>()
+                                    Name = "name"
                                 },
                             }
 
@@ -239,14 +227,10 @@ public class Example19
                             ,
                             Directories = new List<SeedExamples.Directory>(){
                                 new SeedExamples.Directory {
-                                    Name = "name",
-                                    Files = new List<SeedExamples.File>(),
-                                    Directories = new List<SeedExamples.Directory>()
+                                    Name = "name"
                                 },
                                 new SeedExamples.Directory {
-                                    Name = "name",
-                                    Files = new List<SeedExamples.File>(),
-                                    Directories = new List<SeedExamples.Directory>()
+                                    Name = "name"
                                 },
                             }
 

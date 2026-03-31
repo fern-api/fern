@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BasePhpCustomConfigSchema = z.object({
     clientName: z.string().optional(),
@@ -10,6 +10,7 @@ export const BasePhpCustomConfigSchema = z.object({
     namespace: z.string().optional(),
     composerJson: z.optional(z.record(z.any())),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
+    omitFernHeaders: z.boolean().optional(),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
 });

@@ -6,8 +6,9 @@ namespace SeedUndiscriminatedUnionWithResponseProperty;
 public class SeedUndiscriminatedUnionWithResponsePropertyApiException(
     string message,
     int statusCode,
-    object body
-) : SeedUndiscriminatedUnionWithResponsePropertyException(message)
+    object body,
+    Exception? innerException = null
+) : SeedUndiscriminatedUnionWithResponsePropertyException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

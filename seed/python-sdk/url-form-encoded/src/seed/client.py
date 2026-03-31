@@ -4,9 +4,11 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.post_submit_response import PostSubmitResponse
+from .types.token_response import TokenResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -33,6 +35,9 @@ class SeedApi:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedApi
@@ -50,6 +55,7 @@ class SeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -63,6 +69,7 @@ class SeedApi:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -112,6 +119,43 @@ class SeedApi:
         _response = self._raw_client.submit_form_data(username=username, email=email, request_options=request_options)
         return _response.data
 
+    def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenResponse:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+            Token issued successfully
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get_token(
+            client_id="client_id",
+            client_secret="client_secret",
+        )
+        """
+        _response = self._raw_client.get_token(
+            client_id=client_id, client_secret=client_secret, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncSeedApi:
     """
@@ -134,6 +178,9 @@ class AsyncSeedApi:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedApi
@@ -151,6 +198,7 @@ class AsyncSeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -164,6 +212,7 @@ class AsyncSeedApi:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -220,5 +269,50 @@ class AsyncSeedApi:
         """
         _response = await self._raw_client.submit_form_data(
             username=username, email=email, request_options=request_options
+        )
+        return _response.data
+
+    async def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenResponse:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+            Token issued successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.get_token(
+                client_id="client_id",
+                client_secret="client_secret",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_token(
+            client_id=client_id, client_secret=client_secret, request_options=request_options
         )
         return _response.data

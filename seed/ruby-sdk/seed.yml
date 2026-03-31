@@ -25,7 +25,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
-    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/ruby-sdk
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
@@ -54,6 +54,12 @@ fixtures:
     - customConfig:
         flattenModuleStructure: true
       outputFolder: flattened-module-structure
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: with-defaults
 allowedFailures:
   - accept-header
   - examples:wire-tests
@@ -97,6 +103,7 @@ allowedFailures:
   - inferred-auth-implicit-no-expiry
   - inferred-auth-implicit-api-key
   - inferred-auth-implicit-reference
+  - inline-enum-request
   - license
   - literal
   - literals-unions
@@ -133,13 +140,16 @@ allowedFailures:
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
-  - request-parameters
+  - request-parameters:no-custom-config
+  - request-parameters:with-defaults
   - required-nullable
   - reserved-keywords
   - response-property
   - ruby-reserved-word-properties
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
+  - server-url-templating
   - simple-api
   - simple-fhir
   - single-url-environment-default
@@ -161,9 +171,11 @@ allowedFailures:
   - variables
   - version
   - version-no-default
+  - webhook-audience
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
+  - pagination-uri-path
 
 features:
   requestOptions: true

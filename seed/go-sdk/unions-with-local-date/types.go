@@ -32,6 +32,9 @@ func (b *Bar) GetName() string {
 }
 
 func (b *Bar) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (b *Bar) MarshalJSON() ([]byte, error) {
 }
 
 func (b *Bar) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -110,6 +116,9 @@ func (f *Foo) GetName() string {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -155,6 +164,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -197,6 +209,9 @@ func (f *FooExtended) GetAge() int {
 }
 
 func (f *FooExtended) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -249,6 +264,9 @@ func (f *FooExtended) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FooExtended) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value

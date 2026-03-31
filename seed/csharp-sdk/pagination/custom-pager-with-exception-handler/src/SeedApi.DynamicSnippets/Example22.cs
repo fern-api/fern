@@ -12,9 +12,11 @@ public class Example22
             }
         );
 
-        await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-            new SeedPagination.ListUsersExtendedRequestForOptionalData {
-                Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+        await client.Users.ListWithOffsetPaginationHasNextPageAsync(
+            new SeedPagination.ListWithOffsetPaginationHasNextPageRequest {
+                Page = 1,
+                Limit = 1,
+                Order = SeedPagination.Order.Asc
             }
         );
     }

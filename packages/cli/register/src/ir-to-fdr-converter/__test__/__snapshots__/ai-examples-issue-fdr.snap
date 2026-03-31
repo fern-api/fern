@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "Successfully created plant",
             "path": "/plant",
             "pathParameters": {},
             "queryParameters": {},
@@ -138,6 +138,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -158,6 +159,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
@@ -246,6 +248,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -273,8 +277,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -409,6 +416,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -450,8 +459,11 @@
                   "type": "primitive",
                   "value": {
                     "default": undefined,
+                    "exclusiveMaximum": undefined,
+                    "exclusiveMinimum": undefined,
                     "maximum": undefined,
                     "minimum": undefined,
+                    "multipleOf": undefined,
                     "type": "double",
                   },
                 },
@@ -472,8 +484,11 @@
                   "type": "primitive",
                   "value": {
                     "default": undefined,
+                    "exclusiveMaximum": undefined,
+                    "exclusiveMinimum": undefined,
                     "maximum": undefined,
                     "minimum": undefined,
+                    "multipleOf": undefined,
                     "type": "integer",
                   },
                 },

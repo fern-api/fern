@@ -1,16 +1,15 @@
-import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace ClientGeneratorContext {
     interface Args {
-        packageOrSubpackage: Package | Subpackage;
+        packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class ClientGeneratorContext {
-    private readonly packageOrSubpackage: Package | Subpackage;
+    private readonly packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
     public readonly subClients: { fieldName: string; clientName: string }[];

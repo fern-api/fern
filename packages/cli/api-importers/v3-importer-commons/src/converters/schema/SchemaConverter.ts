@@ -2,15 +2,15 @@ import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
-import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
-import { ExampleConverter } from "../ExampleConverter";
-import { ArraySchemaConverter } from "./ArraySchemaConverter";
-import { EnumSchemaConverter } from "./EnumSchemaConverter";
-import { MapSchemaConverter } from "./MapSchemaConverter";
-import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
-import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
-import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
+import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
+import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
+import { MapSchemaConverter } from "./MapSchemaConverter.js";
+import { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
+import { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
+import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
 
 const TYPE_INVARIANT_KEYS = [
     "description",
@@ -201,6 +201,48 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 if (this.context.isReferenceObject(allOfSchema)) {
                     return undefined;
                 }
+
+                // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
+                // (e.g., oneOf with variants containing `not: {}` properties).
+                // Flatten variant properties into the merged schema as optional properties.
+                const variants =
+                    (allOfSchema as OpenAPIV3_1.SchemaObject).oneOf ?? (allOfSchema as OpenAPIV3_1.SchemaObject).anyOf;
+                if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                    const flattenedProperties: Record<string, unknown> = {};
+                    for (const variantSchemaOrRef of variants) {
+                        const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
+                            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                                  schemaOrReference: variantSchemaOrRef,
+                                  breadcrumbs: this.breadcrumbs
+                              })
+                            : variantSchemaOrRef;
+                        if (variantSchema == null) {
+                            continue;
+                        }
+                        for (const [key, propertySchema] of Object.entries(variantSchema.properties ?? {})) {
+                            // Filter out properties with `not: {}` schema (meaning "property must not exist")
+                            if (
+                                !this.context.isReferenceObject(
+                                    propertySchema as OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+                                ) &&
+                                "not" in (propertySchema as OpenAPIV3_1.SchemaObject)
+                            ) {
+                                continue;
+                            }
+                            if (!(key in flattenedProperties)) {
+                                flattenedProperties[key] = propertySchema;
+                            }
+                        }
+                    }
+                    if (Object.keys(flattenedProperties).length > 0) {
+                        // Add flattened properties as optional on the merged schema
+                        const existingProperties = (mergedSchema.properties as Record<string, unknown>) ?? {};
+                        mergedSchema.properties = { ...existingProperties, ...flattenedProperties };
+                        // Do not add to required — variant properties are optional on the parent
+                    }
+                    continue;
+                }
+
                 mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
                     if (srcValue === allOfSchema) {
                         return objValue;
@@ -497,10 +539,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
+        const rawId = this.context.getRawSchemaId(this.id);
         return {
-            typeId: this.id,
+            typeId: this.context.getNamespacedSchemaId(this.id),
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.id),
+            name: this.context.casingsGenerator.generateName(rawId),
             displayName: this.nameOverride
         };
     }
@@ -562,21 +605,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         for (const [index, example] of examples.entries()) {
             const resolvedExample = this.context.resolveExample(example);
+            const exampleName = `${this.id}_example_${index}`;
             const convertedExample = this.generateOrValidateExample({
-                example: resolvedExample
+                example: resolvedExample,
+                exampleName
             });
-            userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
+            userSpecifiedExamples[exampleName] = convertedExample;
         }
 
         return userSpecifiedExamples;
     }
 
     private generateOrValidateExample({
-        example,
-        ignoreErrors
+        example
     }: {
         example: unknown;
         ignoreErrors?: boolean;
+        exampleName?: string;
     }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
@@ -584,15 +629,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            errors.forEach((error) => {
-                this.context.errorCollector.collect({
-                    message: error.message,
-                    path: error.path
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 }

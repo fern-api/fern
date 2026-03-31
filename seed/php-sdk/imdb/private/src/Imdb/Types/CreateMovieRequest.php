@@ -46,6 +46,7 @@ class CreateMovieRequest extends JsonSerializableType
     public function setTitle(string $value): self
     {
         $this->title = $value;
+        $this->_setField('title');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class CreateMovieRequest extends JsonSerializableType
     public function setRating(float $value): self
     {
         $this->rating = $value;
+        $this->_setField('rating');
         return $this;
     }
 

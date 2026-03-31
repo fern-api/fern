@@ -4,10 +4,10 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { transformContentForLanguage } from "./content-transformer";
-import { ContentTransformation } from "./types";
-import { addLanguageSuffixToUrl } from "./url-utils";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { transformContentForLanguage } from "./content-transformer.js";
+import { ContentTransformation } from "./types.js";
+import { addLanguageSuffixToUrl } from "./url-utils.js";
 
 type DocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.Raw;
 type Language = docsYml.RawSchemas.Language;

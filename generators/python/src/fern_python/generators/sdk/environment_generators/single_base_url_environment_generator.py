@@ -30,10 +30,11 @@ class SingleBaseUrlEnvironmentGenerator:
             class_var_name = self._get_enum_value_name(single_base_url_env)
             if i == 0:
                 example_environment = class_var_name
+            url = self._get_preferred_url(single_base_url_env)
             enum_class.add_class_var(
                 AST.VariableDeclaration(
                     name=class_var_name,
-                    initializer=AST.Expression(f'"{single_base_url_env.url}"'),
+                    initializer=AST.Expression(f'"{url}"'),
                     docstring=AST.Docstring(single_base_url_env.docs) if single_base_url_env.docs is not None else None,
                 )
             )
@@ -72,6 +73,11 @@ class SingleBaseUrlEnvironmentGenerator:
             writer.write_line(f".{self._get_enum_value_name(environment)}")
 
         return AST.Expression(AST.CodeWriter(write))
+
+    def _get_preferred_url(self, environment: ir_types.SingleBaseUrlEnvironment) -> str:
+        if environment.default_url is not None:
+            return environment.default_url
+        return environment.url
 
     def _get_enum_value_name(self, environment: ir_types.SingleBaseUrlEnvironment) -> str:
         return environment.name.screaming_snake_case.safe_name

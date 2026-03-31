@@ -10,6 +10,7 @@ from .publisher import Publisher
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.version import GithubCIPythonVersionResolver
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import (
@@ -74,7 +75,7 @@ class AbstractGenerator(ABC):
                                     update={"installation_token": ir_publish_config.token}
                                 )
 
-        python_version = "^3.8"
+        python_version = "^3.10"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
 
@@ -94,12 +95,29 @@ class AbstractGenerator(ABC):
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
         enable_wire_tests = False
-        if generator_config.custom_config is not None and "enable_wire_tests" in generator_config.custom_config:
-            enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
+        if generator_config.custom_config is not None:
+            # Check wire_tests.enabled first (preferred), fall back to enable_wire_tests (deprecated)
+            wire_tests_config = generator_config.custom_config.get("wire_tests")
+            wire_tests_enabled = None
+            if wire_tests_config is not None and isinstance(wire_tests_config, dict):
+                wire_tests_enabled = wire_tests_config.get("enabled")
+            # Use wire_tests.enabled if explicitly set, otherwise fall back to enable_wire_tests
+            if wire_tests_enabled is not None:
+                enable_wire_tests = wire_tests_enabled
+            elif "enable_wire_tests" in generator_config.custom_config:
+                enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
 
         package_path = None
         if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
             package_path = generator_config.custom_config.get("package_path")
+
+        mypy_exclude = None
+        if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
+            mypy_exclude = generator_config.custom_config.get("mypy_exclude")
+
+        import_paths = None
+        if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
+            import_paths = generator_config.custom_config.get("import_paths")
 
         with Project(
             filepath=generator_config.output.path,
@@ -126,6 +144,8 @@ class AbstractGenerator(ABC):
             recursion_limit=recursion_limit,
             enable_wire_tests=enable_wire_tests,
             generator_exec_wrapper=generator_exec_wrapper,
+            mypy_exclude=mypy_exclude,
+            import_paths=import_paths,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -150,6 +170,7 @@ class AbstractGenerator(ABC):
                     write_unit_tests=(
                         self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
                     ),
+                    python_version_constraint=python_version,
                 ),
                 publish=lambda x: None,
             )
@@ -170,11 +191,11 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_install()
+            publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_install()
+            publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
@@ -212,9 +233,11 @@ class AbstractGenerator(ABC):
         return generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
-            github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
-            if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
-            else None,
+            github=lambda github: (
+                cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
+                if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
+                else None
+            ),
         )
 
     def _publish(
@@ -237,11 +260,16 @@ class AbstractGenerator(ABC):
         output_mode: GithubOutputMode,
         write_unit_tests: bool,
         publish_config: GeneratorPublishConfig | None,
+        python_version_constraint: str,
     ) -> None:
         import logging
 
         logger = logging.getLogger("fern_python.cli.abstract_generator._write_files_for_github_repo")
         logger.debug("Starting to write files for GitHub repository...")
+
+        resolved_version = GithubCIPythonVersionResolver.resolve(python_version_constraint)
+        ci_python_version = resolved_version.spec.to_string()
+        logger.debug(f"CI Python version: {ci_python_version} (from constraint: {python_version_constraint})")
 
         logger.debug("Adding .gitignore file to project.")
         project.add_file(
@@ -286,10 +314,10 @@ class AbstractGenerator(ABC):
         workflow_path = ".github/workflows/ci.yml"
         logger.debug(f"Adding workflow file: {workflow_path} (use_oidc_workflow={use_oidc_workflow})")
         if use_oidc_workflow:
-            workflow_content = self._get_github_workflow(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow(output_mode, write_unit_tests, ci_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow (OIDC):\n{workflow_content}")
         else:
-            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests, ci_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow_legacy (legacy):\n{workflow_content}")
 
         project.add_file(
@@ -304,9 +332,16 @@ class AbstractGenerator(ABC):
         project.add_source_file("tests/custom/test_client.py", client_test_content)
         logger.debug("Finished writing files for GitHub repository.")
 
-    def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
-        workflow_yaml = """name: ci
+    def _get_github_workflow_legacy(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+    ) -> str:
+        workflow_yaml = f"""name: ci
 on: [push]
+
+concurrency:
+  group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -316,7 +351,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -332,7 +367,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -341,8 +376,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """
@@ -371,7 +406,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -387,11 +422,18 @@ jobs:
 """
         return workflow_yaml
 
-    def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+    def _get_github_workflow(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+    ) -> str:
         # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
-        workflow_yaml = """name: ci
+        workflow_yaml = f"""name: ci
 
 on: [push]
+
+concurrency:
+  group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -401,7 +443,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -417,7 +459,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -426,8 +468,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """
@@ -445,7 +487,7 @@ jobs:
                 publish_info_union.should_generate_publish_workflow is None
                 or publish_info_union.should_generate_publish_workflow
             ):
-                workflow_yaml += """
+                workflow_yaml += f"""
   build:
     name: Build distribution
     runs-on: ubuntu-latest
@@ -455,7 +497,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1

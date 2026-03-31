@@ -3,7 +3,7 @@
 export interface Page {
     /** The current page */
     page: number;
-    next?: Page.Next;
+    next?: Page.Next | undefined;
     per_page: number;
     total_page: number;
 }

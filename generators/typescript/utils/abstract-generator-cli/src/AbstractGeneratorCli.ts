@@ -3,30 +3,23 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR,
-    type RawGithubConfig,
-    resolveGitHubConfig
+    parseIR
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
     constructNpmPackageFromArgs,
-    getRepoUrlFromUrl,
     NpmPackage,
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { writeFile } from "fs/promises";
-import tmp from "tmp-promise";
-import { publishPackage } from "./publishPackage";
-import { writeGenerationMetadata } from "./writeGenerationMetadata";
-import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import { publishPackage } from "./publishPackage.js";
+import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -120,6 +113,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
+            const codeGenStartTime = Date.now();
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
@@ -127,6 +121,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 generatorContext,
                 intermediateRepresentation: ir
             });
+            logger.debug(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
@@ -164,12 +159,21 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await typescriptProject.npmPackTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else {
+                        await typescriptProject.npmPackTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
+                    }
                 },
                 github: async (githubOutputMode) => {
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
@@ -183,19 +187,50 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                     });
                     await typescriptProject.generateLockfile(logger);
+                    if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
+                        await typescriptProject.installCheckFixDependencies(logger);
+                    }
                     await typescriptProject.checkFix(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.copyProjectTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else {
+                        await typescriptProject.copyProjectTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
+                    }
                 },
                 downloadFiles: async () => {
-                    await typescriptProject.installDependencies(logger);
+                    // Determine the output strategy to avoid installing all
+                    // dependencies unnecessarily. Source-only output paths only
+                    // need devDependencies (formatters, linters) — the build
+                    // path requires a full install of production deps too.
+                    const needsBuild = !this.outputSrcOnly(customConfig) && !this.outputSourceFiles(customConfig);
+
+                    if (needsBuild) {
+                        await typescriptProject.installDependencies(logger);
+                    } else if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
+                        await typescriptProject.installCheckFixDependencies(logger);
+                    }
                     await typescriptProject.checkFix(logger);
 
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                        return;
+                    }
                     if (this.shouldGenerateFullProject(ir)) {
                         await typescriptProject.copyProjectTo({
                             destinationPath,
@@ -259,16 +294,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         customConfig: CustomConfig;
         npmPackage: NpmPackage | undefined;
         generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
+    protected abstract outputSrcOnly(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
-    private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
+    private shouldGenerateFullProject(ir: FernIr.IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
         if (publishConfig == null) {
             return false;
@@ -282,39 +318,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             default:
                 assertNever(publishConfig);
         }
-    }
-
-    private async pushToGitHub(
-        ir: IntermediateRepresentation,
-        sourceDirectory: string,
-        logger: Logger
-    ): Promise<string> {
-        const rawGithubConfig = this.getRawGitHubConfig({ ir, sourceDirectory });
-        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger });
-        const file = await tmp.file();
-        await writeFile(file.path, JSON.stringify(githubConfig));
-        const filePath = AbsoluteFilePath.of(file.path);
-        const cmd = githubConfig.mode === "pull-request" ? "pr" : "push";
-        const args = ["github", cmd, "--config", filePath];
-        const loggingExecutable = createLoggingExecutable("generator-cli", { cwd: process.cwd(), logger });
-        const content = await loggingExecutable(args);
-        return content.stdout;
-    }
-
-    public getRawGitHubConfig({
-        ir,
-        sourceDirectory
-    }: {
-        ir: IntermediateRepresentation;
-        sourceDirectory: string;
-    }): RawGithubConfig {
-        return {
-            sourceDirectory,
-            type: ir.publishConfig?.type,
-            uri: ir.publishConfig?.type === "github" ? ir.publishConfig.uri : undefined,
-            token: ir.publishConfig?.type === "github" ? ir.publishConfig.token : undefined,
-            mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
-        };
     }
 }
 
@@ -365,10 +368,6 @@ function npmPackageInfoFromPublishConfig(
                 }
                 break;
         }
-    }
-
-    if (args.repoUrl) {
-        args.repoUrl = getRepoUrlFromUrl(args.repoUrl);
     }
 
     return {

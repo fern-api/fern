@@ -36,6 +36,7 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
     public function setOffset(?int $value = null): self
     {
         $this->offset = $value;
+        $this->_setField('offset');
         return $this;
     }
 }

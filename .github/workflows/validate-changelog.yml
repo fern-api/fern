@@ -23,8 +23,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   validate-changelogs:
@@ -32,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 

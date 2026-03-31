@@ -3,6 +3,7 @@ export * from "./ListUsersExtendedResponse.js";
 export * from "./ListUsersMixedTypePaginationResponse.js";
 export * from "./ListUsersOptionalDataPaginationResponse.js";
 export * from "./ListUsersPaginationResponse.js";
+export * from "./ListUsersTopLevelCursorPaginationResponse.js";
 export * from "./NextPage.js";
 export * from "./Order.js";
 export * from "./Page.js";

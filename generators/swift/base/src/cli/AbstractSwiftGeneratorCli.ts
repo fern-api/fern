@@ -1,17 +1,16 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-
-import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
+import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext.js";
 
 export abstract class AbstractSwiftGeneratorCli<
     CustomConfig extends BaseSwiftCustomConfigSchema,
     SwiftGeneratorContext extends AbstractSwiftGeneratorContext<CustomConfig>
-> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, SwiftGeneratorContext> {
-    protected async parseIntermediateRepresentation(irFilepath: string): Promise<IntermediateRepresentation> {
-        return await parseIR<IntermediateRepresentation>({
+> extends AbstractGeneratorCli<CustomConfig, FernIr.IntermediateRepresentation, SwiftGeneratorContext> {
+    protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+        return await parseIR<FernIr.IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });

@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
@@ -18,7 +18,7 @@ export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
         packageId: PackageId;
         includeSerdeLayer: boolean;
-        channel: WebSocketChannel;
+        channel: FernIr.WebSocketChannel;
         serviceClassName: string;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
@@ -37,7 +37,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly MESSAGE_PARAMETER_NAME = "message";
     private static readonly CLOSE_CODE_VALUE = 1000;
 
-    private readonly channel: WebSocketChannel;
+    private readonly channel: FernIr.WebSocketChannel;
     private readonly includeSerdeLayer: boolean;
     private readonly serviceClassName: string;
     private readonly packageId: PackageId;
@@ -120,7 +120,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                             description: "The current state of the connection; this is one of the readyState constants."
                         }
                     ],
-                    returnType: "number",
+                    returnType: `${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState`,
                     statements: [`return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState;`]
                 }
             ],
@@ -310,20 +310,48 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private generateSendHelperMethods(context: SdkContext): MethodDeclarationStructure[] {
         return this.getMessagesForOrigin("client").map((message) => {
-            const node = this.getNodeForMessage(context, message);
-            return this.generateSendMessage(context, message, node);
+            const bodyType = message.body.type === "reference" ? message.body.bodyType : undefined;
+            const isBytes = bodyType != null && this.isBytesType(context, bodyType);
+            const node = isBytes
+                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword) // placeholder, not used
+                : this.getNodeForMessage(context, message);
+            return this.generateSendMessage(context, message, node, isBytes);
         });
     }
 
     private generateSendMessage(
         context: SdkContext,
-        message: WebSocketMessage,
-        node: ts.TypeNode
+        message: FernIr.WebSocketMessage,
+        node: ts.TypeNode,
+        isBytes: boolean
     ): MethodDeclarationStructure {
-        const messageType = camelCase(message.type);
+        const methodName =
+            message.methodName != null
+                ? camelCase(message.methodName)
+                : `send${camelCase(message.type).charAt(0).toUpperCase() + camelCase(message.type).slice(1)}`;
+
+        if (isBytes) {
+            return {
+                kind: StructureKind.Method,
+                name: methodName,
+                scope: Scope.Public,
+                parameters: [
+                    {
+                        name: GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME,
+                        type: "ArrayBuffer | Blob | ArrayBufferView"
+                    }
+                ],
+                returnType: "void",
+                statements: [
+                    "this.assertSocketIsOpen();",
+                    `this.sendBinary(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`
+                ]
+            };
+        }
+
         return {
             kind: StructureKind.Method,
-            name: `send${messageType.charAt(0).toUpperCase() + messageType.slice(1)}`,
+            name: methodName,
             scope: Scope.Public,
             parameters: [
                 {
@@ -401,7 +429,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isAsync: true,
             returnType: `Promise<${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}>`,
             statements: [
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
+                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
                 `    return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
                 "}",
                 "return new Promise((resolve, reject) => {",
@@ -433,7 +461,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 '    throw new Error("Socket is not connected.");',
                 "}",
                 "",
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.OPEN) {`,
+                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState !== ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
                 '    throw new Error("Socket is not open.");',
                 "}"
             ],
@@ -479,7 +507,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             parameters: [
                 {
                     name: "payload",
-                    type: "ArrayBufferLike | Blob | ArrayBufferView"
+                    type: "ArrayBuffer | Blob | ArrayBufferView"
                 }
             ],
             statements: [`this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.send(payload);`],
@@ -561,7 +589,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private getSerializedExpression(
-        subscribeMessage: WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference,
+        subscribeMessage: FernIr.WebSocketMessageBody.InlinedBody | FernIr.WebSocketMessageBody.Reference,
         requestBodyReference: string,
         context: SdkContext
     ): ts.Expression {
@@ -593,7 +621,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             .deserializeResponse(ts.factory.createIdentifier("data"), context);
     }
 
-    private getMessagesForOrigin(origin: "client" | "server"): WebSocketMessage[] {
+    private getMessagesForOrigin(origin: "client" | "server"): FernIr.WebSocketMessage[] {
         return this.channel.messages.filter((message) => message.origin === origin);
     }
 
@@ -612,11 +640,28 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
-    private getNodeForMessage(context: SdkContext, message: WebSocketMessage): ts.TypeNode {
+    private getNodeForMessage(context: SdkContext, message: FernIr.WebSocketMessage): ts.TypeNode {
         if (message.body.type === "inlinedBody") {
             throw new Error("Websocket inlined schemas are not supported at the moment.");
         }
         const generatedType = context.type.getReferenceToType(message.body.bodyType);
         return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
+    }
+
+    private isBytesType(context: SdkContext, bodyType: FernIr.TypeReference): boolean {
+        const resolved = context.type.resolveTypeReference(bodyType);
+        if (resolved.type !== "primitive") {
+            return false;
+        }
+        const primitive = resolved.primitive;
+        // Check for Fern's native `bytes` type which maps to BASE_64
+        if (primitive.v1 === "BASE_64") {
+            return true;
+        }
+        // Check for AsyncAPI/OpenAPI string with format: binary
+        if (primitive.v2 != null && primitive.v2.type === "string" && primitive.v2.validation?.format === "binary") {
+            return true;
+        }
+        return false;
     }
 }

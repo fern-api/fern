@@ -83,6 +83,19 @@ public class AsyncRawSeedApiClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "filter", request.getFilter().get(), true);
         }
+        if (request.getTags().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "tags", request.getTags().get(), true);
+        }
+        if (request.getOptionalTags().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "optionalTags", request.getOptionalTags().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

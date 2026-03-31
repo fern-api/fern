@@ -1,7 +1,7 @@
 import { createWriteStream } from "fs";
 import { JsonStreamStringify } from "json-stream-stringify";
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
 
 export async function streamObjectToFile(
     filepath: AbsoluteFilePath,

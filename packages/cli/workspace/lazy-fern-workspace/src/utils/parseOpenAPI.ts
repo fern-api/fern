@@ -3,15 +3,17 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundle, Source } from "@redocly/openapi-core";
 import { OpenAPI } from "openapi-types";
 
-import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver";
+import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver.js";
 
 export async function parseOpenAPI({
     absolutePathToOpenAPI,
     absolutePathToOpenAPIOverrides,
+    absolutePathToOpenAPIOverlays,
     parsed
 }: {
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
+    absolutePathToOpenAPIOverlays?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
     const result =
@@ -22,12 +24,18 @@ export async function parseOpenAPI({
                       source: new Source(absolutePathToOpenAPI, "<openapi>"),
                       parsed
                   },
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  externalRefResolver: new OpenAPIRefResolver({
+                      absolutePathToOpenAPIOverrides,
+                      absolutePathToOpenAPIOverlays
+                  })
               })
             : await bundle({
                   ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                   ref: absolutePathToOpenAPI,
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  externalRefResolver: new OpenAPIRefResolver({
+                      absolutePathToOpenAPIOverrides,
+                      absolutePathToOpenAPIOverlays
+                  })
               });
 
     return result.bundle.parsed;

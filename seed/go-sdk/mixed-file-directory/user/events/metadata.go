@@ -41,8 +41,8 @@ var (
 )
 
 type Metadata struct {
-	Id    fern.Id     `json:"id" url:"id"`
-	Value interface{} `json:"value" url:"value"`
+	Id    fern.Id `json:"id" url:"id"`
+	Value any     `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -58,7 +58,7 @@ func (m *Metadata) GetId() fern.Id {
 	return m.Id
 }
 
-func (m *Metadata) GetValue() interface{} {
+func (m *Metadata) GetValue() any {
 	if m == nil {
 		return nil
 	}
@@ -66,6 +66,9 @@ func (m *Metadata) GetValue() interface{} {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -85,7 +88,7 @@ func (m *Metadata) SetId(id fern.Id) {
 
 // SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetValue(value interface{}) {
+func (m *Metadata) SetValue(value any) {
 	m.Value = value
 	m.require(metadataFieldValue)
 }
@@ -118,6 +121,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value

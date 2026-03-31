@@ -94,6 +94,10 @@ public final class DiscriminatedUnion1InlineType2 {
 
     public interface _FinalStage {
         DiscriminatedUnion1InlineType2 build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -141,6 +145,18 @@ public final class DiscriminatedUnion1InlineType2 {
         @java.lang.Override
         public DiscriminatedUnion1InlineType2 build() {
             return new DiscriminatedUnion1InlineType2(baz, ref, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

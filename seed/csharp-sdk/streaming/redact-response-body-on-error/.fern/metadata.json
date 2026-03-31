@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "redact-response-body-on-error": true
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

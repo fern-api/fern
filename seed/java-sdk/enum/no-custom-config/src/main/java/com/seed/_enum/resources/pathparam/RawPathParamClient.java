@@ -33,14 +33,18 @@ public class RawPathParamClient {
 
     public SeedEnumHttpResponse<Void> send(
             Operand operand, ColorOrOperand operandOrColor, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("path")
                 .addPathSegment(operand.toString())
-                .addPathSegment(operandOrColor.toString())
-                .build();
+                .addPathSegment(operandOrColor.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();

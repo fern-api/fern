@@ -1,12 +1,12 @@
 import { doesPathExist } from "@fern-api/fs-utils";
 import chardet from "chardet";
-import { fileTypeFromBuffer, type MimeType } from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
-const ALLOWED_FILE_TYPES = new Set<MimeType>([
+const ALLOWED_FILE_TYPES = new Set<string>([
     // image files
     "image/jpeg",
     "image/png",
@@ -26,11 +26,22 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // document files
     "application/pdf",
     "application/xml",
+    // spreadsheet files
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+    "application/x-cfb", // .xls (and other legacy Microsoft Office formats)
     // font files
     "font/woff",
     "font/woff2",
     "font/otf",
-    "font/ttf"
+    "font/ttf",
+    // archive files
+    "application/x-tar",
+    "application/gzip",
+    "application/zip",
+    "application/x-bzip2",
+    // image files (additional)
+    "image/bmp",
+    "image/heif"
 ]);
 
 // allowed text encodings

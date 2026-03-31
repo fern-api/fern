@@ -1,5 +1,4 @@
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata, Request};
 
 #[tokio::main]
 async fn main() {
@@ -15,6 +14,7 @@ async fn main() {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
                     HashMap::from([("union".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
+                ..Default::default()
             },
             None,
         )

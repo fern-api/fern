@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v65
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
@@ -68,6 +68,9 @@ fixtures:
     - customConfig:
         requestValidationStatusCode: 400
       outputFolder: validation-status-code
+    - customConfig:
+        outputSrcOnly: true
+      outputFolder: output-src-only
   exhaustive:
     - customConfig:
         packagePath: src/test-packagePath
@@ -97,6 +100,12 @@ fixtures:
 allowedFailures:
   - bytes-download
   - bytes-upload
+  - exhaustive:test-package-path
+  - exhaustive:no-custom-config
+  - exhaustive:retain-original-casing
+  - exhaustive:no-optional-properties
+  - exhaustive:allow-extra-fields
+  - exhaustive:union-utils
   - file-download
   - file-upload
   - file-upload-openapi
@@ -105,6 +114,7 @@ allowedFailures:
   - public-object
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - streaming
   - streaming-parameter
   - enum

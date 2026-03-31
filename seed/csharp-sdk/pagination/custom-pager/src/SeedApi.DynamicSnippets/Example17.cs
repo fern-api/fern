@@ -12,12 +12,10 @@ public class Example17
             }
         );
 
-        await client.Users.ListWithDoubleOffsetPaginationAsync(
-            new SeedPagination.ListUsersDoubleOffsetPaginationRequest {
-                Page = 1.1,
-                PerPage = 1.1,
-                Order = SeedPagination.Order.Asc,
-                StartingAfter = "starting_after"
+        await client.Users.ListWithTopLevelBodyCursorPaginationAsync(
+            new ListUsersTopLevelBodyCursorPaginationRequest {
+                Cursor = "cursor",
+                Filter = "filter"
             }
         );
     }

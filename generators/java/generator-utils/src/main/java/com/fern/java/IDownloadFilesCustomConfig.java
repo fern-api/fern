@@ -55,4 +55,10 @@ public interface IDownloadFilesCustomConfig {
     default Boolean gradleCentralDependencyManagement() {
         return false;
     }
+
+    @Value.Default
+    @JsonProperty("output-directory")
+    default ICustomConfig.OutputDirectory outputDirectory() {
+        return ICustomConfig.OutputDirectory.PROJECT_ROOT;
+    }
 }

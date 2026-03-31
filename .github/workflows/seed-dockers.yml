@@ -29,6 +29,14 @@ on:
         description: Rebuild C# seed container
         type: boolean
         default: false
+      php:
+        description: Rebuild PHP seed container
+        type: boolean
+        default: false
+      go:
+        description: Rebuild Go seed container
+        type: boolean
+        default: false
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -36,6 +44,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  DO_NOT_TRACK: "1"
   DOCKER_BUILDKIT: 1
 
 jobs:
@@ -46,10 +55,13 @@ jobs:
       java: ${{ steps.set-output.outputs.java }}
       python: ${{ steps.set-output.outputs.python }}
       csharp: ${{ steps.set-output.outputs.csharp }}
+      php: ${{ steps.set-output.outputs.php }}
+      go: ${{ steps.set-output.outputs.go }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
-          fetch-depth: 200
+          fetch-depth: 2
+          fetch-tags: false
 
       - name: Check for ts changes
         id: ts
@@ -75,6 +87,18 @@ jobs:
         with:
           files: docker/seed/Dockerfile.csharp
 
+      - name: Check for php changes
+        id: php
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.php
+
+      - name: Check for go changes
+        id: go
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.go
+
       - name: Check for workflow changes
         id: workflow
         uses: ./.github/actions/check-for-changed-files
@@ -91,12 +115,16 @@ jobs:
               echo "java=true" >> $GITHUB_OUTPUT
               echo "python=true" >> $GITHUB_OUTPUT
               echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "php=true" >> $GITHUB_OUTPUT
+              echo "go=true" >> $GITHUB_OUTPUT
               echo "Manual run: rebuilding all images"
             else
               echo "ts=${{ inputs.ts }}" >> $GITHUB_OUTPUT
               echo "java=${{ inputs.java }}" >> $GITHUB_OUTPUT
               echo "python=${{ inputs.python }}" >> $GITHUB_OUTPUT
               echo "csharp=${{ inputs.csharp }}" >> $GITHUB_OUTPUT
+              echo "php=${{ inputs.php }}" >> $GITHUB_OUTPUT
+              echo "go=${{ inputs.go }}" >> $GITHUB_OUTPUT
               echo "Manual run: selected images set from inputs"
             fi
           else
@@ -106,12 +134,16 @@ jobs:
               echo "java=true" >> $GITHUB_OUTPUT
               echo "python=true" >> $GITHUB_OUTPUT
               echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "php=true" >> $GITHUB_OUTPUT
+              echo "go=true" >> $GITHUB_OUTPUT
               echo "Workflow changed, rebuilding all images"
             else
               echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "java=${{ steps.java.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "python=${{ steps.python.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "php=${{ steps.php.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "go=${{ steps.go.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "Set outputs based on individual file changes"
             fi
           fi
@@ -121,7 +153,7 @@ jobs:
     outputs:
       sha: ${{ steps.sha.outputs.sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: sha
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
@@ -141,16 +173,16 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: fernapi/ts-seed
           tags: |
@@ -158,13 +190,13 @@ jobs:
             type=raw,value=latest-${{ matrix.arch }}
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/seed/Dockerfile.ts
@@ -190,16 +222,16 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: fernapi/java-seed
           tags: |
@@ -207,13 +239,13 @@ jobs:
             type=raw,value=latest-${{ matrix.arch }}
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/seed/Dockerfile.java
@@ -239,16 +271,16 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: fernapi/python-seed
           tags: |
@@ -256,13 +288,13 @@ jobs:
             type=raw,value=latest-${{ matrix.arch }}
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/seed/Dockerfile.python
@@ -288,16 +320,16 @@ jobs:
     needs: [changes, generate-sha]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: fernapi/csharp-seed
           tags: |
@@ -305,13 +337,13 @@ jobs:
             type=raw,value=latest-${{ matrix.arch }}
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/seed/Dockerfile.csharp
@@ -322,16 +354,114 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  build-php:
+    if: ${{ needs.changes.outputs.php == 'true' }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        arch: [amd64, arm64]
+        exclude:
+          - runner: ubuntu-latest
+            arch: arm64
+          - runner: ubuntu-24.04-arm
+            arch: amd64
+    runs-on: ${{ matrix.runner }}
+    needs: [changes, generate-sha]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: fernapi/php-seed
+          tags: |
+            type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
+            type=raw,value=latest-${{ matrix.arch }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./docker/seed/Dockerfile.php
+          platforms: linux/${{ matrix.arch }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-go:
+    if: ${{ needs.changes.outputs.go == 'true' }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        arch: [amd64, arm64]
+        exclude:
+          - runner: ubuntu-latest
+            arch: arm64
+          - runner: ubuntu-24.04-arm
+            arch: amd64
+    runs-on: ${{ matrix.runner }}
+    needs: [changes, generate-sha]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: fernapi/go-seed
+          tags: |
+            type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
+            type=raw,value=latest-${{ matrix.arch }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./docker/seed/Dockerfile.go
+          platforms: linux/${{ matrix.arch }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
   merge-manifests:
-    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true') }}
-    needs: [changes, build-ts, build-java, build-python, build-csharp, generate-sha]
+    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.php == 'true' || needs.changes.outputs.go == 'true') }}
+    needs: [changes, build-ts, build-java, build-python, build-csharp, build-php, build-go, generate-sha]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
@@ -351,6 +481,12 @@ jobs:
           fi
           if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
             packages+="csharp "
+          fi
+          if [[ "${{ needs.changes.outputs.php }}" == "true" ]]; then
+            packages+="php "
+          fi
+          if [[ "${{ needs.changes.outputs.go }}" == "true" ]]; then
+            packages+="go "
           fi
           echo "packages=${packages% }" >> $GITHUB_OUTPUT
           echo "Building manifests for: ${packages% }"

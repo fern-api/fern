@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { Migration } from "../../../types/Migration";
+import { Migration } from "../../../types/Migration.js";
 
 export const migration: Migration = {
     name: "enable-smart-casing",

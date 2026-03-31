@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../symbol";
-import { AstNode, Writer } from "./core";
+import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../symbol/index.js";
+import { AstNode, Writer } from "./core/index.js";
 
 type Symbol = {
     type: "symbol";

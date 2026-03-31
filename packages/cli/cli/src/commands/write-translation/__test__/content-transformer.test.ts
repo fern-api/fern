@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { CliContext } from "../../../cli-context/CliContext";
-import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "../content-transformer";
-import { ContentTransformation } from "../types";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "../content-transformer.js";
+import { ContentTransformation } from "../types.js";
 
 vi.mock("../translation-service", () => ({
     translateText: vi.fn(({ text }: { text: string }) => Promise.resolve(`[TRANSLATED] ${text}`))

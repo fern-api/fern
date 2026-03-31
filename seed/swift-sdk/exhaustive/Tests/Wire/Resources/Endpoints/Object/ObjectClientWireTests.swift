@@ -437,4 +437,210 @@ import Exhaustive
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func getAndReturnWithUnknownField1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "unknown": {
+                    "$ref": "https://example.com/schema"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithUnknownField(
+            unknown: JSONValue.object(
+                [
+                    "$ref": JSONValue.string("https://example.com/schema")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithUnknownField(
+            request: ObjectWithUnknownField(
+                unknown: .object([
+                    "$ref": .string("https://example.com/schema")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithUnknownField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "unknown": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithUnknownField(
+            unknown: JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithUnknownField(
+            request: ObjectWithUnknownField(
+                unknown: .object([
+                    "key": .string("value")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithDocumentedUnknownType1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "documentedUnknownType": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDocumentedUnknownType(
+            documentedUnknownType: JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(
+            request: ObjectWithDocumentedUnknownType(
+                documentedUnknownType: .object([
+                    "key": .string("value")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnMapOfDocumentedUnknownType1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "string": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            "string": JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        ]
+        let response = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(
+            request: [
+                "string": .object([
+                    "key": .string("value")
+                ])
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "datetimeLikeString": "2023-08-31T14:15:22Z",
+                  "actualDatetime": "2023-08-31T14:15:22Z"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDatetimeLikeString(
+            datetimeLikeString: "2023-08-31T14:15:22Z",
+            actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
+            request: ObjectWithDatetimeLikeString(
+                datetimeLikeString: "2023-08-31T14:15:22Z",
+                actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithDatetimeLikeString2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "datetimeLikeString": "datetimeLikeString",
+                  "actualDatetime": "2024-01-15T09:30:00Z"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDatetimeLikeString(
+            datetimeLikeString: "datetimeLikeString",
+            actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
+            request: ObjectWithDatetimeLikeString(
+                datetimeLikeString: "datetimeLikeString",
+                actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

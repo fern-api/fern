@@ -67,6 +67,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithCursorPagination(
+                ListUsersCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithCursorPagination(
             ListUsersCursorPaginationRequest request) {
         return listWithCursorPagination(request, null);
     }
@@ -91,6 +97,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -155,6 +166,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithMixedTypeCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithMixedTypeCursorPagination(
+                ListUsersMixedTypeCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest request) {
         return listWithMixedTypeCursorPagination(request, null);
     }
@@ -167,6 +184,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -231,16 +253,26 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyCursorPagination(
+                ListUsersBodyCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request) {
         return listWithBodyCursorPagination(request, null);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users")
-                .build();
+                .addPathSegments("inline-users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -249,7 +281,7 @@ public class AsyncRawInlineUsersClient {
             throw new SeedPaginationException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -318,6 +350,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetPagination(
+                ListUsersOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request) {
         return listWithOffsetPagination(request, null);
     }
@@ -342,6 +380,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -407,6 +450,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithDoubleOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithDoubleOffsetPagination(
+                ListUsersDoubleOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithDoubleOffsetPagination(
             ListUsersDoubleOffsetPaginationRequest request) {
         return listWithDoubleOffsetPagination(request, null);
     }
@@ -431,6 +480,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -497,16 +551,26 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyOffsetPagination(
+                ListUsersBodyOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request) {
         return listWithBodyOffsetPagination(request, null);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users")
-                .build();
+                .addPathSegments("inline-users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -515,7 +579,7 @@ public class AsyncRawInlineUsersClient {
             throw new SeedPaginationException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -586,6 +650,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetStepPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetStepPagination(
+                ListUsersOffsetStepPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest request) {
         return listWithOffsetStepPagination(request, null);
     }
@@ -606,6 +676,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order", request.getOrder().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -673,6 +748,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPaginationHasNextPage(
+            RequestOptions requestOptions) {
+        return listWithOffsetPaginationHasNextPage(
+                ListWithOffsetPaginationHasNextPageRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPaginationHasNextPage(
             ListWithOffsetPaginationHasNextPageRequest request) {
         return listWithOffsetPaginationHasNextPage(request, null);
     }
@@ -693,6 +774,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order", request.getOrder().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -758,6 +844,11 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithExtendedResults(
+            RequestOptions requestOptions) {
+        return listWithExtendedResults(ListUsersExtendedRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithExtendedResults(
             ListUsersExtendedRequest request) {
         return listWithExtendedResults(request, null);
     }
@@ -770,6 +861,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -834,6 +930,12 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>>
+            listWithExtendedResultsAndOptionalData(RequestOptions requestOptions) {
+        return listWithExtendedResultsAndOptionalData(
+                ListUsersExtendedRequestForOptionalData.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>>
             listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData request) {
         return listWithExtendedResultsAndOptionalData(request, null);
     }
@@ -847,6 +949,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -910,6 +1017,11 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernames(
+            RequestOptions requestOptions) {
+        return listUsernames(ListUsernamesRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernames(
             ListUsernamesRequest request) {
         return listUsernames(request, null);
     }
@@ -922,6 +1034,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -986,6 +1103,11 @@ public class AsyncRawInlineUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listWithGlobalConfig(
+            RequestOptions requestOptions) {
+        return listWithGlobalConfig(ListWithGlobalConfigRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request) {
         return listWithGlobalConfig(request, null);
     }
@@ -998,6 +1120,11 @@ public class AsyncRawInlineUsersClient {
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "offset", request.getOffset().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

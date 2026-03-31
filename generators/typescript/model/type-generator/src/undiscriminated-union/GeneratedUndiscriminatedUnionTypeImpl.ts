@@ -1,11 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
-    ExampleTypeShape,
-    TypeReference,
-    UndiscriminatedUnionMember,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import {
     GetReferenceOpts,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure,
@@ -21,10 +15,10 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<UndiscriminatedUnionTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionType<Context>
 {
     public readonly type = "undiscriminatedUnion";
@@ -167,15 +161,15 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return alias;
     }
 
-    private getTypeReferenceNode(context: Context, member: UndiscriminatedUnionMember): TypeReferenceNode {
+    private getTypeReferenceNode(context: Context, member: FernIr.UndiscriminatedUnionMember): TypeReferenceNode {
         return context.type.getReferenceToTypeForInlineUnion(member.type);
     }
 
-    private getTypeNode(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
+    private getTypeNode(context: Context, member: FernIr.UndiscriminatedUnionMember): ts.TypeNode {
         return this.getTypeReferenceNode(context, member).typeNode;
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "undiscriminatedUnion") {
             throw new Error("Example is not for an undiscriminated union");
         }
@@ -183,7 +177,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return context.type.getGeneratedExample(example.singleUnionType).build(context, opts);
     }
 
-    private isSelfRecursive(context: Context, typeRef: TypeReference): boolean {
+    private isSelfRecursive(context: Context, typeRef: FernIr.TypeReference): boolean {
         const unwrappedRef = unwrapOptionalAndNullable(typeRef);
         if (unwrappedRef.type !== "named") {
             return false;
@@ -195,7 +189,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
     private applyIndexSignatureSubstitution(
         context: Context,
-        member: UndiscriminatedUnionMember,
+        member: FernIr.UndiscriminatedUnionMember,
         typeNode: ts.TypeNode
     ): ts.TypeNode {
         if (member.type.type !== "container") {
@@ -225,7 +219,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return typeNode;
     }
 
-    private getTypeNodeForMember(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
+    private getTypeNodeForMember(context: Context, member: FernIr.UndiscriminatedUnionMember): ts.TypeNode {
         if (member.type.type !== "container") {
             return this.getTypeNode(context, member);
         }

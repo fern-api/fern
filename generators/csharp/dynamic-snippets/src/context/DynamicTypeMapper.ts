@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -22,7 +22,9 @@ export class DynamicTypeMapper extends WithGeneration {
     public convert(args: DynamicTypeMapper.Args): ast.Type {
         switch (args.typeReference.type) {
             case "list":
-                return this.Collection.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.list(
+                    this.convert({ typeReference: args.typeReference.value, unboxOptionals: true })
+                );
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map": {
@@ -46,7 +48,9 @@ export class DynamicTypeMapper extends WithGeneration {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                return this.Collection.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.set(
+                    this.convert({ typeReference: args.typeReference.value, unboxOptionals: true })
+                );
             case "unknown":
                 return this.convertUnknown();
             default:
@@ -82,6 +86,12 @@ export class DynamicTypeMapper extends WithGeneration {
                 });
 
             case "undiscriminatedUnion":
+                if (this.settings.shouldGenerateUndiscriminatedUnions) {
+                    return this.csharp.classReference({
+                        origin: named.declaration,
+                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                    });
+                }
                 return this.OneOf.OneOf(
                     named.types.map((typeReference) => {
                         return this.convert({ typeReference });

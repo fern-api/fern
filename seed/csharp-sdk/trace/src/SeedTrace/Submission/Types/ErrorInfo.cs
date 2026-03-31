@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,7 @@ public record ErrorInfo
     public SeedTrace.CompileError AsCompileError() =>
         IsCompileError
             ? (SeedTrace.CompileError)Value!
-            : throw new System.Exception("ErrorInfo.Type is not 'compileError'");
+            : throw new global::System.Exception("ErrorInfo.Type is not 'compileError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RuntimeError"/> if <see cref="Type"/> is 'runtimeError', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ErrorInfo
     public SeedTrace.RuntimeError AsRuntimeError() =>
         IsRuntimeError
             ? (SeedTrace.RuntimeError)Value!
-            : throw new System.Exception("ErrorInfo.Type is not 'runtimeError'");
+            : throw new global::System.Exception("ErrorInfo.Type is not 'runtimeError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.InternalError"/> if <see cref="Type"/> is 'internalError', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ErrorInfo
     public SeedTrace.InternalError AsInternalError() =>
         IsInternalError
             ? (SeedTrace.InternalError)Value!
-            : throw new System.Exception("ErrorInfo.Type is not 'internalError'");
+            : throw new global::System.Exception("ErrorInfo.Type is not 'internalError'");
 
     public T Match<T>(
         Func<SeedTrace.CompileError, T> onCompileError,
@@ -191,12 +191,12 @@ public record ErrorInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ErrorInfo>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ErrorInfo).IsAssignableFrom(typeToConvert);
 
         public override ErrorInfo Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -221,14 +221,23 @@ public record ErrorInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "compileError" => json.Deserialize<SeedTrace.CompileError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
-                "runtimeError" => json.Deserialize<SeedTrace.RuntimeError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
-                "internalError" => json.Deserialize<SeedTrace.InternalError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
+                "compileError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.CompileError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
+                "runtimeError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.RuntimeError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
+                "internalError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.InternalError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
                 _ => json.Deserialize<object?>(options),
             };
             return new ErrorInfo(discriminator, value);
@@ -250,6 +259,27 @@ public record ErrorInfo
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override ErrorInfo ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new ErrorInfo(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ErrorInfo value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

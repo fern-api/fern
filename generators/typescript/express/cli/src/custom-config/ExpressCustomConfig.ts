@@ -13,6 +13,7 @@ export interface ExpressCustomConfig {
     requestValidationStatusCode: number;
     outputEsm: boolean;
     outputSourceFiles: boolean;
+    outputSrcOnly: boolean;
     retainOriginalCasing: boolean;
     allowExtraFields: boolean;
     useBigInt: boolean;

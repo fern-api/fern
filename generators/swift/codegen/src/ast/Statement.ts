@@ -1,14 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
-import { escapeReservedKeyword } from "../syntax";
-import { AccessLevel } from "./AccessLevel";
-import { CodeBlock } from "./CodeBlock";
-import { AstNode, Writer } from "./core";
-import { DeclarationType } from "./DeclarationType";
-import { DocComment } from "./DocComment";
-import { Expression } from "./Expression";
-import { FunctionParameter } from "./FunctionParameter";
-import { Pattern } from "./Pattern";
-import { TypeReference } from "./TypeReference";
+import { escapeReservedKeyword } from "../syntax/index.js";
+import { AccessLevel } from "./AccessLevel.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DeclarationType } from "./DeclarationType.js";
+import { DocComment } from "./DocComment.js";
+import { Expression } from "./Expression.js";
+import { FunctionParameter } from "./FunctionParameter.js";
+import { Pattern } from "./Pattern.js";
+import { TypeReference } from "./TypeReference.js";
 
 type TypealiasDeclaration = {
     type: "typealias-declaration";

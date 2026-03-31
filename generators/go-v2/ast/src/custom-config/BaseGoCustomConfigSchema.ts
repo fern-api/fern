@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
-import { moduleConfigSchema } from "./ModuleConfigSchema";
-import { relativePathSchema } from "./RelativePathSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+import { moduleConfigSchema } from "./ModuleConfigSchema.js";
+import { relativePathSchema } from "./RelativePathSchema.js";
 
 export const baseGoCustomConfigSchema = z.object({
     module: moduleConfigSchema.optional(),
@@ -25,7 +25,8 @@ export const baseGoCustomConfigSchema = z.object({
     enableWireTests: z.boolean().optional(),
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
-    customPagerName: z.string().optional()
+    customPagerName: z.string().optional(),
+    omitFernHeaders: z.boolean().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

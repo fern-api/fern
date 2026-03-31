@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fern_python.codegen import AST
 
 JSON_MODULE = AST.Module.built_in(("json",))
@@ -28,10 +30,10 @@ class Json:
         )
 
     @staticmethod
-    def dumps(obj: AST.Expression) -> AST.FunctionInvocation:
+    def dumps(obj: AST.Expression, alias: Optional[str] = None) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
-                import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                import_=AST.ReferenceImport(module=AST.Module.built_in(("json",)), alias=alias),
                 qualified_name_excluding_import=("dumps",),
             ),
             args=[obj],

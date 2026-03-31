@@ -4,9 +4,9 @@ import {
     ExampleSseResponseSchema,
     ExampleStreamResponseSchema,
     HttpEndpointSchema
-} from "../schemas";
-import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema";
-import { isSseStreamResponseSchema } from "./isSseStreamResponseSchema";
+} from "../schemas/index.js";
+import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema.js";
+import { isSseStreamResponseSchema } from "./isSseStreamResponseSchema.js";
 
 export interface ExampleResponseSchemaVisitor<T> {
     body: (example: ExampleBodyResponseSchema) => T;

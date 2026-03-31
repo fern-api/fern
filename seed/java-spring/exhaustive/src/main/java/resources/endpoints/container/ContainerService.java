@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.types.object.types.ObjectWithRequiredField;
+import resources.types.union.types.MixedType;
 
 @RequestMapping(
     path = "/container"
@@ -71,6 +72,15 @@ public interface ContainerService {
   Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
       @RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestBody Map<String, ObjectWithRequiredField> body);
+
+  @PostMapping(
+      value = "/map-prim-to-union",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
+      @RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @RequestBody Map<String, MixedType> body);
 
   @PostMapping(
       value = "/opt-objects",

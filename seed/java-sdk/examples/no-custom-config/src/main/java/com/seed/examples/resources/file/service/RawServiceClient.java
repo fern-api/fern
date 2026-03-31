@@ -38,6 +38,13 @@ public class RawServiceClient {
     /**
      * This endpoint returns a file by its name.
      */
+    public SeedExamplesHttpResponse<File> getFile(String filename, RequestOptions requestOptions) {
+        return getFile(filename, GetFileRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * This endpoint returns a file by its name.
+     */
     public SeedExamplesHttpResponse<File> getFile(String filename, GetFileRequest request) {
         return getFile(filename, request, null);
     }
@@ -47,13 +54,17 @@ public class RawServiceClient {
      */
     public SeedExamplesHttpResponse<File> getFile(
             String filename, GetFileRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("file")
-                .addPathSegment(filename)
-                .build();
+                .addPathSegment(filename);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");

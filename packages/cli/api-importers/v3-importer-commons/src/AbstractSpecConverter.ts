@@ -9,10 +9,10 @@ import {
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter } from "./AbstractConverter";
-import { AbstractConverterContext } from "./AbstractConverterContext";
-import { SchemaConverter } from "./converters/schema/SchemaConverter";
-import { FernIgnoreExtension } from "./extensions";
+import { AbstractConverter } from "./AbstractConverter.js";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
+import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
+import { FernIgnoreExtension } from "./extensions/index.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -140,6 +140,23 @@ export abstract class AbstractSpecConverter<
     }
 
     protected finalizeIr(): IntermediateRepresentation {
+        // Compute sdkConfig flags from actual endpoints
+        const hasStreamingEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
+        });
+        const hasPaginatedEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.pagination != null);
+        });
+        const hasFileDownloadEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
+        });
+        this.ir.sdkConfig = {
+            ...this.ir.sdkConfig,
+            hasStreamingEndpoints,
+            hasPaginatedEndpoints,
+            hasFileDownloadEndpoints
+        };
+
         let ir = {
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
@@ -193,7 +210,12 @@ export abstract class AbstractSpecConverter<
             Object.entries(ir.websocketChannels ?? {}).filter(([channelId]) => filteredChannels.has(channelId))
         );
         ir.webhookGroups = Object.fromEntries(
-            Object.entries(ir.webhookGroups).filter(([webhookId]) => filteredWebhooks.has(webhookId))
+            Object.entries(ir.webhookGroups).map(([webhookGroupId, webhookGroup]) => {
+                const filteredWebhookGroup = webhookGroup.filter(
+                    (webhook) => webhook.id != null && filteredWebhooks.has(webhook.id)
+                );
+                return [webhookGroupId, filteredWebhookGroup];
+            })
         );
         return ir;
     }
@@ -430,8 +452,9 @@ export abstract class AbstractSpecConverter<
          */
         const { convertedSchema, inlinedTypes } = output;
 
-        const shouldPostfixId = Object.keys(inlinedTypes).some((inlineTypeId) => inlineTypeId === typeId);
-        const safeTypeId = shouldPostfixId ? `${typeId}Wrapper` : typeId;
+        const namespacedTypeId = this.context.getNamespacedSchemaId(typeId);
+        const shouldPostfixId = Object.keys(inlinedTypes).some((inlineTypeId) => inlineTypeId === namespacedTypeId);
+        const safeTypeId = shouldPostfixId ? `${namespacedTypeId}Wrapper` : namespacedTypeId;
 
         this.addTypeToPackage(safeTypeId);
         this.addTypesToIr({

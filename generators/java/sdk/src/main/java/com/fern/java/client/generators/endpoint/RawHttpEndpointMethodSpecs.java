@@ -52,6 +52,22 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
     }
 
     @Override
+    public Optional<MethodSpec> getBodyOnlyMethodSpec() {
+        return httpEndpointMethodSpecs.getBodyOnlyMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getBodyOnlyWithRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
     public Optional<MethodSpec> getByteArrayMethodSpec() {
         return httpEndpointMethodSpecs.getByteArrayMethodSpec().map(methodSpec -> methodSpec.toBuilder()
                 .returns(wrapInRawHttpResponse(methodSpec.returnType))

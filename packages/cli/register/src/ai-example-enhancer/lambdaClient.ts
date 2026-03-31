@@ -1,6 +1,12 @@
 import { FernToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
+import { isNetworkError } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types.js";
+
+// Configuration constants for AI enhancement
+const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total
+const DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS = 15000; // 15 seconds
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">;
@@ -18,14 +24,15 @@ export class LambdaExampleEnhancer {
     private token: FernToken;
     private jwtPromise: Promise<string> | undefined;
     private organizationId: string;
+    private venusAirGappedResult: boolean | undefined;
 
     constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken, organizationId: string) {
         this.config = {
             enabled: config.enabled,
             openaiApiKey: config.openaiApiKey,
             model: config.model ?? "gpt-4o-mini",
-            maxRetries: config.maxRetries ?? 1, // Single retry - caller handles additional retries
-            requestTimeoutMs: 75000, // Increased timeout for larger batches
+            maxRetries: config.maxRetries ?? DEFAULT_AI_ENHANCEMENT_MAX_RETRIES,
+            requestTimeoutMs: config.requestTimeoutMs ?? DEFAULT_AI_ENHANCEMENT_TIMEOUT_MS,
             styleInstructions: config.styleInstructions
         };
         this.context = context;
@@ -44,6 +51,39 @@ export class LambdaExampleEnhancer {
 
         this.token = token;
         this.organizationId = organizationId;
+    }
+
+    /**
+     * Check if Venus is reachable. This is a separate check from the global air-gapped detection
+     * because in self-hosted environments, the local FDR server may be reachable while Venus is not.
+     * The result is cached for the lifetime of this instance.
+     */
+    private async isVenusAirGapped(): Promise<boolean> {
+        if (this.venusAirGappedResult !== undefined) {
+            return this.venusAirGappedResult;
+        }
+
+        this.context.logger.debug(`Checking Venus connectivity at ${this.venusOrigin}/health`);
+
+        try {
+            await fetch(`${this.venusOrigin}/health`, {
+                method: "GET",
+                signal: AbortSignal.timeout(5000) // 5 second timeout
+            });
+            this.venusAirGappedResult = false;
+            this.context.logger.debug("Venus connectivity check succeeded");
+            return false;
+        } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            if (isNetworkError(errorMessage)) {
+                this.venusAirGappedResult = true;
+                this.context.logger.debug(`Venus connectivity check failed - air-gapped mode: ${errorMessage}`);
+                return true;
+            }
+            // Non-network error - assume not air-gapped
+            this.venusAirGappedResult = false;
+            return false;
+        }
     }
 
     /**
@@ -98,6 +138,18 @@ export class LambdaExampleEnhancer {
             };
         }
 
+        // Check for air-gapped environment before attempting network calls
+        // This uses a Venus-specific check that doesn't rely on the global cache,
+        // since in self-hosted environments the local FDR server may be reachable while Venus is not
+        const isAirGapped = await this.isVenusAirGapped();
+        if (isAirGapped) {
+            this.context.logger.debug("Skipping AI example enhancement - Venus is not reachable");
+            return {
+                enhancedRequestExample: request.originalRequestExample,
+                enhancedResponseExample: request.originalResponseExample
+            };
+        }
+
         // Fetch JWT from Venus (cached after first call)
         let jwt: string;
         try {
@@ -113,10 +165,11 @@ export class LambdaExampleEnhancer {
         }
 
         let lastError: Error | undefined;
-        for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
+        const maxAttempts = this.config.maxRetries + 1; // maxRetries=0 means 1 attempt, maxRetries=1 means 2 attempts
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 this.context.logger.debug(
-                    `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${this.config.maxRetries})`
+                    `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${maxAttempts})`
                 );
 
                 const requestBody = {
@@ -166,19 +219,17 @@ export class LambdaExampleEnhancer {
                 };
             } catch (error) {
                 lastError = error as Error;
-                this.context.logger.warn(`Attempt ${attempt} failed to enhance example: ${error}`);
+                this.context.logger.debug(`Attempt ${attempt} failed to enhance example: ${error}`);
 
-                if (attempt < this.config.maxRetries) {
-                    // Exponential backoff
+                if (attempt < maxAttempts) {
+                    // Exponential backoff before retry
                     const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
                     await new Promise((resolve) => setTimeout(resolve, delay));
                 }
             }
         }
 
-        this.context.logger.error(
-            `Failed to enhance example after ${this.config.maxRetries} attempts: ${lastError?.message}`
-        );
+        this.context.logger.error(`Failed to enhance example after ${maxAttempts} attempts: ${lastError?.message}`);
 
         // Return original examples if enhancement fails
         return {

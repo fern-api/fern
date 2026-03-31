@@ -21,8 +21,38 @@ paths:
               properties:
                 query:
                   type: string
+                  example: foo
               required:
                 - query
+            examples:
+              Stream completions:
+                value:
+                  query: foo
+  /stream-no-terminator:
+    post:
+      operationId: completions_streamWithoutTerminator
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: query
+              required:
+                - query
+            examples:
+              Stream without terminator:
+                value:
+                  query: query
 components:
   schemas:
     StreamedCompletion:

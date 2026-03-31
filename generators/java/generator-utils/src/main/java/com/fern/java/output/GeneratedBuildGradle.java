@@ -6,6 +6,7 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.generator.exec.model.config.LicenseConfig;
 import com.fern.generator.exec.model.config.PublishingMetadata;
+import com.fern.java.ICustomConfig;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
@@ -178,14 +179,22 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     /**
      * Reads a license file and extracts the license name. For standard licenses (Apache, MIT, etc.), returns the SPDX
-     * identifier. For custom licenses, returns the first line of the file as the license name.
+     * identifier. For custom licenses, returns the first non-empty line of the file as the license name, with markdown
+     * formatting stripped.
      */
     private String extractLicenseFromFile(String filename) {
         try {
             Path licensePath = Paths.get(filename);
 
+            // When running inside Docker, the CLI mounts the license file at /tmp/<filename>
             if (!Files.exists(licensePath)) {
-                // Return a descriptive name if file not found
+                Path tmpPath = Paths.get("/tmp/LICENSE");
+                if (Files.exists(tmpPath)) {
+                    licensePath = tmpPath;
+                }
+            }
+
+            if (!Files.exists(licensePath)) {
                 return "Custom License (" + licensePath.getFileName().toString() + ")";
             }
 
@@ -214,6 +223,13 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                         .findFirst()
                         .orElse("Custom License");
 
+                // Strip markdown formatting (headers, bold, italic, etc.)
+                firstLine = firstLine.replaceAll("^#+\\s*", "");
+                firstLine = firstLine.replaceAll("\\*\\*([^*]+)\\*\\*", "$1"); // bold
+                firstLine = firstLine.replaceAll("\\*([^*]+)\\*", "$1"); // italic
+                firstLine = firstLine.replaceAll("_([^_]+)_", "$1");
+                firstLine = firstLine.replaceAll("\\[([^\\]]+)\\]\\([^)]+\\)", "$1");
+
                 firstLine = firstLine.trim().replaceAll("[.:;]+$", "").replaceAll("\\s+", " ");
 
                 firstLine = firstLine.replace("'", "\\'");
@@ -221,7 +237,6 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 return firstLine;
             }
         } catch (IOException e) {
-            // Return a descriptive name instead of null
             return "Custom License (" + Paths.get(filename).getFileName().toString() + ")";
         }
     }
@@ -361,7 +376,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.endControlFlow();
     }
 
-    public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)
+    @Override
+    public final void writeToFile(
+            Path directory,
+            boolean _isLocal,
+            Optional<String> _existingPrefix,
+            ICustomConfig.OutputDirectory _outputDirectoryMode)
             throws IOException {
         Files.writeString(directory.resolve("build.gradle"), getContents());
     }

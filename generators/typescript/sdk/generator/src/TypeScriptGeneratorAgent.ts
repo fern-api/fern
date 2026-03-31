@@ -2,15 +2,15 @@ import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generato
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private publishConfig: PublishingConfig | undefined;
+    private publishConfig: FernIr.PublishingConfig | undefined;
 
     public constructor({
         logger,
@@ -21,7 +21,7 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: false });
         this.readmeConfigBuilder = readmeConfigBuilder;

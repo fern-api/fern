@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it } from "vitest";
-import { OpenAPIPruner } from "../pruner";
+import { OpenAPIPruner } from "../pruner.js";
 
 describe("Example Usage", () => {
     it("should demonstrate basic pruning", () => {

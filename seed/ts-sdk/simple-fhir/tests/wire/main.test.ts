@@ -24,15 +24,63 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                             {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         ],
                         memo: {
@@ -41,8 +89,32 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         },
                     },
@@ -55,15 +127,63 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                             {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         ],
                         memo: {
@@ -72,8 +192,32 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         },
                     },
@@ -88,15 +232,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -134,15 +326,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -183,15 +423,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -236,15 +524,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -282,15 +618,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -331,15 +715,63 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            ],
+                            memo: {
+                                description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: { description: "description" },
+                                },
+                            },
                         },
                         id: "id",
                         related_resources: [
@@ -384,15 +816,63 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         ],
                         id: "id",
@@ -459,21 +939,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -481,21 +946,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -506,21 +956,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -538,15 +973,63 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         ],
                         id: "id",
@@ -613,21 +1096,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -635,21 +1103,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -660,21 +1113,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -695,15 +1133,63 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                ],
+                                memo: {
+                                    description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: { description: "description" },
+                                    },
+                                },
                             },
                         ],
                         id: "id",
@@ -770,21 +1256,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -792,21 +1263,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -817,21 +1273,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: { description: "description" },
@@ -840,6 +1281,7 @@ describe("SeedApiClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .get("/account/account_id")
@@ -865,18 +1307,74 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -886,9 +1384,37 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -902,18 +1428,74 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -923,9 +1505,37 @@ describe("SeedApiClient", () => {
                                 resource_type: "Account",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -941,18 +1551,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -997,18 +1663,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -1056,18 +1778,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -1119,18 +1897,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -1175,18 +2009,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -1234,18 +2124,74 @@ describe("SeedApiClient", () => {
                             name: "name",
                             scripts: [],
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         practitioner: {
                             resource_type: "Practitioner",
                             name: "name",
                             id: "id",
-                            related_resources: [],
+                            related_resources: [
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                                {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
+                            ],
                             memo: {
                                 description: "description",
+                                account: {
+                                    resource_type: "Account",
+                                    name: "name",
+                                    id: "id",
+                                    related_resources: [],
+                                    memo: {
+                                        description: "description",
+                                    },
+                                },
                             },
                         },
                         id: "id",
@@ -1297,18 +2243,74 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -1388,25 +2390,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1416,25 +2399,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1447,25 +2411,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1485,18 +2430,74 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -1576,25 +2577,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1604,25 +2586,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1635,25 +2598,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1676,18 +2620,74 @@ describe("SeedApiClient", () => {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                             {
                                 resource_type: "Script",
                                 name: "name",
                                 id: "id",
-                                related_resources: [],
+                                related_resources: [
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                    {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
+                                ],
                                 memo: {
                                     description: "description",
+                                    account: {
+                                        resource_type: "Account",
+                                        name: "name",
+                                        id: "id",
+                                        related_resources: [],
+                                        memo: {
+                                            description: "description",
+                                        },
+                                    },
                                 },
                             },
                         ],
@@ -1767,25 +2767,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1795,25 +2776,6 @@ describe("SeedApiClient", () => {
                         {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {
@@ -1826,25 +2788,6 @@ describe("SeedApiClient", () => {
                         account: {
                             resource_type: "Account",
                             name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
                             id: "id",
                             related_resources: [],
                             memo: {

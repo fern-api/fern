@@ -6,8 +6,9 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 public class SeedMultiUrlEnvironmentNoDefaultApiException(
     string message,
     int statusCode,
-    object body
-) : SeedMultiUrlEnvironmentNoDefaultException(message)
+    object body,
+    Exception? innerException = null
+) : SeedMultiUrlEnvironmentNoDefaultException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

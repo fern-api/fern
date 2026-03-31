@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -10,10 +10,10 @@ export interface RequestParameter {
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
     getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
-    getAllQueryParameters: (context: SdkContext) => QueryParameter[];
-    getReferenceToNonLiteralHeader: (header: HttpHeader, context: SdkContext) => ts.Expression;
+    getAllQueryParameters: (context: SdkContext) => FernIr.QueryParameter[];
+    getReferenceToNonLiteralHeader: (header: FernIr.HttpHeader, context: SdkContext) => ts.Expression;
     withQueryParameter: (
-        queryParameter: QueryParameter,
+        queryParameter: FernIr.QueryParameter,
         context: SdkContext,
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
@@ -24,7 +24,7 @@ export interface RequestParameter {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
     isOptional({ context }: { context: SdkContext }): boolean;

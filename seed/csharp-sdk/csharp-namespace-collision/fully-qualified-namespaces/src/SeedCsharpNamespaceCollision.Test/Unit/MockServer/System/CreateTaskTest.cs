@@ -1,9 +1,10 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.Test.Utils;
 
 namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTaskTest : BaseMockServerTest
 {
     [Test]
@@ -19,6 +20,14 @@ public class CreateTaskTest : BaseMockServerTest
                 "state": "state",
                 "zip": "zip",
                 "country": "USA"
+              },
+              "owner": {
+                "line1": "line1",
+                "line2": "line2",
+                "city": "city",
+                "state": "state",
+                "zip": "zip",
+                "country": "USA"
               }
             }
             """;
@@ -27,6 +36,14 @@ public class CreateTaskTest : BaseMockServerTest
             {
               "name": "name",
               "user": {
+                "line1": "line1",
+                "line2": "line2",
+                "city": "city",
+                "state": "state",
+                "zip": "zip",
+                "country": "USA"
+              },
+              "owner": {
                 "line1": "line1",
                 "line2": "line2",
                 "city": "city",
@@ -65,14 +82,17 @@ public class CreateTaskTest : BaseMockServerTest
                     Zip = "zip",
                     Country = "USA",
                 },
+                Owner = new SeedCsharpNamespaceCollision.System.User
+                {
+                    Line1 = "line1",
+                    Line2 = "line2",
+                    City = "city",
+                    State = "state",
+                    Zip = "zip",
+                    Country = "USA",
+                },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedCsharpNamespaceCollision.System.Task>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

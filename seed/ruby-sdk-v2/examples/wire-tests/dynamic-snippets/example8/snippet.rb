@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.health.service.check(id: 'id-2sdx82h');
+client.health.service.check(id: "id-2sdx82h")

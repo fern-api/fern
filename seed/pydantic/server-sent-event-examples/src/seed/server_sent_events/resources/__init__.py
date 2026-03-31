@@ -3,6 +3,31 @@
 # isort: skip_file
 
 from . import completions
-from .completions import StreamedCompletion
+from .completions import (
+    CompletionEvent,
+    ErrorEvent,
+    EventEvent,
+    StreamEvent,
+    StreamEventContextProtocol,
+    StreamEventContextProtocol_Completion,
+    StreamEventContextProtocol_Error,
+    StreamEventContextProtocol_Event,
+    StreamEvent_Completion,
+    StreamEvent_Error,
+    StreamedCompletion,
+)
 
-__all__ = ["StreamedCompletion", "completions"]
+__all__ = [
+    "CompletionEvent",
+    "ErrorEvent",
+    "EventEvent",
+    "StreamEvent",
+    "StreamEventContextProtocol",
+    "StreamEventContextProtocol_Completion",
+    "StreamEventContextProtocol_Error",
+    "StreamEventContextProtocol_Event",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+    "completions",
+]

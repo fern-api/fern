@@ -1,11 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { produce } from "immer";
-import { IPackageJson } from "package-json-type";
+import { produce, WritableDraft } from "immer";
+import { IPackageJson, IPeerDependenciesMeta } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { DependencyType } from "../dependency-manager/DependencyManager";
-import { mergeExtraConfigs } from "./mergeExtraConfigs";
-import { TypescriptProject } from "./TypescriptProject";
+import { DependencyType } from "../dependency-manager/DependencyManager.js";
+import { mergeExtraConfigs } from "./mergeExtraConfigs.js";
+import { TypescriptProject } from "./TypescriptProject.js";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {}
@@ -118,7 +118,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 this.getPathForStubTypesDeclarationFile(folder),
                 `// this is needed for older versions of TypeScript
 // that don't read the "exports" field in package.json
-export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
+export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
             `
             );
         }
@@ -146,7 +146,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath,
             isolatedModules: true,
             isolatedDeclarations: true,
             verbatimModuleSyntax: true
@@ -237,7 +236,9 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             }
 
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
-                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta };
+                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta } as
+                    | WritableDraft<IPeerDependenciesMeta>
+                    | undefined;
             }
 
             const devDependencies = {
@@ -253,7 +254,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 fs: false,
                 os: false,
                 path: false,
-                stream: false
+                stream: false,
+                crypto: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
@@ -261,7 +263,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 draft["packageManager"] = "yarn@1.22.22";
             }
             if (this.packageManager === "pnpm") {
-                draft["packageManager"] = "pnpm@10.20.0";
+                draft["packageManager"] = "pnpm@10.33.0";
             }
             draft["engines"] = {
                 node: ">=18.0.0"
@@ -289,17 +291,21 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         pathToTypesFile: string;
     }): {
         node: string;
-        import: string;
-        require: string;
+        import: { types: string; default: string };
+        require: { types: string; default: string };
         default: string;
-        types: string;
     } {
         return {
             node: this.getPathToNodeDistFile(bundleFilename),
-            import: this.getPathToBrowserEsmDistFile(bundleFilename),
-            require: this.getPathToBrowserCjsDistFile(bundleFilename),
-            default: this.getPathToBrowserCjsDistFile(bundleFilename),
-            types: pathToTypesFile
+            import: {
+                types: pathToTypesFile,
+                default: this.getPathToBrowserEsmDistFile(bundleFilename)
+            },
+            require: {
+                types: pathToTypesFile,
+                default: this.getPathToBrowserCjsDistFile(bundleFilename)
+            },
+            default: this.getPathToBrowserCjsDistFile(bundleFilename)
         };
     }
 

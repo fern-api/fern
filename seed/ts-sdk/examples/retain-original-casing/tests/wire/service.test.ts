@@ -23,6 +23,7 @@ describe("ServiceClient", () => {
             },
             revenue: 1000000,
         };
+
         server
             .mockEndpoint()
             .get("/movie/movie-c06a4ad7")
@@ -71,6 +72,7 @@ describe("ServiceClient", () => {
             revenue: 1000000,
         };
         const rawResponseBody = "movie-c06a4ad7";
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -111,6 +113,7 @@ describe("ServiceClient", () => {
             tags: ["development", "public"],
             value: "<head>...</head>",
         };
+
         server
             .mockEndpoint()
             .get("/metadata")
@@ -172,18 +175,12 @@ describe("ServiceClient", () => {
                 nodes: [
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                 ],
@@ -215,10 +212,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                     {
                         name: "name",
@@ -226,10 +220,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                 ],
             },
@@ -246,6 +237,7 @@ describe("ServiceClient", () => {
                 { type: "primitive", value: "value", label: "label" },
             ],
         };
+
         server
             .mockEndpoint()
             .post("/big-entity")
@@ -330,13 +322,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -353,13 +341,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -431,13 +415,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },
@@ -456,13 +436,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },

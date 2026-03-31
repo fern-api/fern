@@ -8,7 +8,7 @@ export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
     serializers.WorkspaceStarterFilesResponseV2.Raw,
     SeedTrace.WorkspaceStarterFilesResponseV2
 > = core.serialization.object({
-    filesByLanguage: core.serialization.record(
+    filesByLanguage: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),

@@ -57,6 +57,7 @@ class GetUserSpecificsRequest extends JsonSerializableType
     public function setTenantId(string $value): self
     {
         $this->tenantId = $value;
+        $this->_setField('tenantId');
         return $this;
     }
 
@@ -74,6 +75,7 @@ class GetUserSpecificsRequest extends JsonSerializableType
     public function setUserId(string $value): self
     {
         $this->userId = $value;
+        $this->_setField('userId');
         return $this;
     }
 
@@ -91,6 +93,7 @@ class GetUserSpecificsRequest extends JsonSerializableType
     public function setVersion(int $value): self
     {
         $this->version = $value;
+        $this->_setField('version');
         return $this;
     }
 
@@ -108,6 +111,7 @@ class GetUserSpecificsRequest extends JsonSerializableType
     public function setThought(string $value): self
     {
         $this->thought = $value;
+        $this->_setField('thought');
         return $this;
     }
 }

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "required_field": {
+      "type": "string"
+    },
+    "optional_field": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "required_field"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

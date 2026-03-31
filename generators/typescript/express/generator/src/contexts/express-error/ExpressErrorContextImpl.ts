@@ -1,11 +1,11 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
+import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer.js";
 
 export declare namespace ExpressErrorContextImpl {
     export interface Init {
@@ -42,7 +42,7 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
         this.errorResolver = errorResolver;
     }
 
-    public getReferenceToError(errorName: DeclaredErrorName): Reference {
+    public getReferenceToError(errorName: FernIr.DeclaredErrorName): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
@@ -52,18 +52,18 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
         });
     }
 
-    public getGeneratedExpressError(errorName: DeclaredErrorName): GeneratedExpressError {
+    public getGeneratedExpressError(errorName: FernIr.DeclaredErrorName): GeneratedExpressError {
         return this.expressErrorGenerator.generateError({
             errorName: this.getErrorClassName(errorName),
             errorDeclaration: this.getErrorDeclaration(errorName)
         });
     }
 
-    public getErrorDeclaration(errorName: DeclaredErrorName): ErrorDeclaration {
+    public getErrorDeclaration(errorName: FernIr.DeclaredErrorName): FernIr.ErrorDeclaration {
         return this.errorResolver.getErrorDeclarationFromName(errorName);
     }
 
-    public getErrorClassName(errorName: DeclaredErrorName): string {
+    public getErrorClassName(errorName: FernIr.DeclaredErrorName): string {
         return this.errorDeclarationReferencer.getExportedName(errorName);
     }
 }

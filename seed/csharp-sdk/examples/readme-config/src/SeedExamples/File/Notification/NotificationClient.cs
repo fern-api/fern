@@ -2,9 +2,9 @@ using SeedExamples.Core;
 
 namespace SeedExamples.File_.Notification;
 
-public partial class NotificationClient
+public partial class NotificationClient : INotificationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NotificationClient(RawClient client)
     {
@@ -12,5 +12,5 @@ public partial class NotificationClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

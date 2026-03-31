@@ -3,13 +3,19 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from ..commons.language import Language
 
 
 class UnexpectedLanguageError(UniversalBaseModel):
-    expected_language: Language = pydantic.Field(alias="expectedLanguage")
-    actual_language: Language = pydantic.Field(alias="actualLanguage")
+    expected_language: typing_extensions.Annotated[
+        Language, FieldMetadata(alias="expectedLanguage"), pydantic.Field(alias="expectedLanguage")
+    ]
+    actual_language: typing_extensions.Annotated[
+        Language, FieldMetadata(alias="actualLanguage"), pydantic.Field(alias="actualLanguage")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

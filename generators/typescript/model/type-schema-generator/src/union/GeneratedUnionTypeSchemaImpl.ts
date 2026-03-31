@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -8,19 +8,19 @@ import {
 } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
-import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
-import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
+import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType.js";
+import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType.js";
 
 export declare namespace GeneratedUnionTypeSchemaImpl {
     export interface Init<Context extends ModelContext>
-        extends AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context> {
+        extends AbstractGeneratedTypeSchema.Init<FernIr.UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
     }
 }
 
 export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
-    extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.UnionTypeDeclaration, Context>
     implements GeneratedUnionTypeSchema<Context>
 {
     public readonly type = "union";
@@ -42,7 +42,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
             baseProperties: this.shape.baseProperties,
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
                 const discriminantValue = singleUnionType.discriminantValue;
-                return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
+                return FernIr.SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
                     noProperties: () =>
                         new RawNoPropertiesSingleUnionType({
                             discriminant,
@@ -63,7 +63,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
                         }),
                     _other: () => {
                         throw new Error(
-                            "Unknown SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
+                            "Unknown FernIr.SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
                         );
                     }
                 });

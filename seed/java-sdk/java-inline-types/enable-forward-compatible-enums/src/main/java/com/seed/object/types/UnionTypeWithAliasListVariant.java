@@ -61,6 +61,23 @@ public final class UnionTypeWithAliasListVariant {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnionTypeWithAliasListVariant
+                && value.equals(((UnionTypeWithAliasListVariant) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -206,6 +223,10 @@ public final class UnionTypeWithAliasListVariant {
 
         public interface _FinalStage {
             AliasVariantItem build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -233,6 +254,18 @@ public final class UnionTypeWithAliasListVariant {
             @java.lang.Override
             public AliasVariantItem build() {
                 return new AliasVariantItem(prop, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }

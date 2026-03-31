@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -78,7 +78,7 @@ public record FieldValue
     public SeedApi.PrimitiveValue AsPrimitiveValue() =>
         IsPrimitiveValue
             ? (SeedApi.PrimitiveValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'primitive_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'primitive_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ObjectValue"/> if <see cref="Type"/> is 'object_value', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FieldValue
     public SeedApi.ObjectValue AsObjectValue() =>
         IsObjectValue
             ? (SeedApi.ObjectValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'object_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'object_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ContainerValue"/> if <see cref="Type"/> is 'container_value', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FieldValue
     public SeedApi.ContainerValue AsContainerValue() =>
         IsContainerValue
             ? (SeedApi.ContainerValue)Value!
-            : throw new System.Exception("FieldValue.Type is not 'container_value'");
+            : throw new global::System.Exception("FieldValue.Type is not 'container_value'");
 
     public T Match<T>(
         Func<SeedApi.PrimitiveValue, T> onPrimitiveValue,
@@ -191,12 +191,12 @@ public record FieldValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FieldValue>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FieldValue).IsAssignableFrom(typeToConvert);
 
         public override FieldValue Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -221,16 +221,23 @@ public record FieldValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "primitive_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.PrimitiveValue?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
-                "object_value" => json.Deserialize<SeedApi.ObjectValue?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
+                    ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
+                "object_value" => jsonWithoutDiscriminator.Deserialize<SeedApi.ObjectValue?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
                 "container_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.ContainerValue?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
+                    ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
                 _ => json.Deserialize<object?>(options),
             };
             return new FieldValue(discriminator, value);
@@ -258,6 +265,27 @@ public record FieldValue
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override FieldValue ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new FieldValue(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            FieldValue value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

@@ -1,5 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { ModuleSymbol, Symbol, TypeSymbol, TypeSymbolShape } from "./symbol";
+import { ModuleSymbol, Symbol, TypeSymbol, TypeSymbolShape } from "./symbol.js";
 
 export class SymbolGraph {
     private readonly symbolsById = new Map<string, Symbol>();

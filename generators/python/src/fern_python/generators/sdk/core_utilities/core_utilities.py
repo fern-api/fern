@@ -25,7 +25,8 @@ class CoreUtilities:
 
     def __init__(
         self,
-        has_paginated_endpoints: bool,
+        has_standard_paginated_endpoints: bool,
+        has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
     ) -> None:
@@ -35,7 +36,8 @@ class CoreUtilities:
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = custom_config.pydantic_config.skip_validation
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
-        self._has_paginated_endpoints = has_paginated_endpoints
+        self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
+        self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -43,8 +45,18 @@ class CoreUtilities:
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
+        self._import_paths = custom_config.import_paths
+        self._datetime_milliseconds = custom_config.datetime_milliseconds
 
     def copy_to_project(self, *, project: Project) -> None:
+        datetime_replacements = (
+            {
+                "v.isoformat().replace": 'v.isoformat(timespec="milliseconds").replace',
+                "return v.isoformat()\n": 'return v.isoformat(timespec="milliseconds")\n',
+            }
+            if self._datetime_milliseconds
+            else None
+        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="datetime_utils.py",
@@ -52,7 +64,10 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
+            exports={"serialize_datetime", "parse_rfc2822_datetime", "Rfc2822DateTime"}
+            if not self._exclude_types_from_init_exports
+            else set(),
+            string_replacements=datetime_replacements,
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:
@@ -73,6 +88,15 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="api_error"),
             ),
             exports={"ApiError"} if not self._exclude_types_from_init_exports else set(),
+        )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="parse_error.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="parse_error"),
+            ),
+            exports={"ParsingError"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -119,6 +143,17 @@ class CoreUtilities:
                 "File",
                 "with_content_type",
             },
+        )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="logging.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="logging"),
+            ),
+            exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -214,7 +249,7 @@ class CoreUtilities:
             else set(),
         )
 
-        if self._has_paginated_endpoints:
+        if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="pagination.py",
@@ -224,7 +259,8 @@ class CoreUtilities:
                 ),
                 exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
-            # Copy custom pagination file (for user customization)
+
+        if self._has_custom_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="custom_pagination.py",
@@ -264,6 +300,17 @@ class CoreUtilities:
                     file=Filepath.FilepathPart(module_name="events"),
                 ),
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
+            )
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="websocket_compat.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="websocket_compat"),
+                ),
+                exports={"InvalidWebSocketStatus", "get_status_code"}
+                if not self._exclude_types_from_init_exports
+                else set(),
             )
 
         # Copy the entire http_sse folder
@@ -365,6 +412,15 @@ class CoreUtilities:
             import_=AST.ReferenceImport(module=module, named_import="ApiError"),
         )
 
+    def get_reference_to_parsing_error(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "parse_error"),
+                named_import="ParsingError",
+            ),
+        )
+
     def get_oauth_token_provider(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -379,6 +435,24 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "oauth_token_provider"),
                 named_import="AsyncOAuthTokenProvider",
+            ),
+        )
+
+    def get_inferred_auth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "inferred_auth_token_provider"),
+                named_import="InferredAuthTokenProvider",
+            ),
+        )
+
+    def get_async_inferred_auth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "inferred_auth_token_provider"),
+                named_import="AsyncInferredAuthTokenProvider",
             ),
         )
 
@@ -439,6 +513,33 @@ class CoreUtilities:
             if body is not None:
                 writer.write("body=")
                 writer.write_node(body)
+            writer.write_line(")")
+
+        return AST.CodeWriter(code_writer=_write)
+
+    def instantiate_parsing_error(
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
+    ) -> AST.AstNode:
+        def _write(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(self.get_reference_to_parsing_error()))
+            writer.write("(")
+            if status_code is not None:
+                writer.write("status_code=")
+                writer.write_node(status_code)
+                writer.write(", ")
+            if headers is not None:
+                writer.write("headers=dict(")
+                writer.write_node(headers)
+                writer.write("), ")
+            if body is not None:
+                writer.write("body=")
+                writer.write_node(body)
+                writer.write(", ")
+            writer.write("cause=e")
             writer.write_line(")")
 
         return AST.CodeWriter(code_writer=_write)
@@ -524,6 +625,18 @@ class CoreUtilities:
             )
         )
 
+    def get_rfc2822_datetime_type_hint(self) -> AST.TypeHint:
+        """Return a type hint referencing Rfc2822DateTime from datetime_utils (V1/V2 compatible)."""
+        return AST.TypeHint(
+            AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "datetime_utils"),
+                    named_import="Rfc2822DateTime",
+                ),
+            )
+        )
+
     def get_reference_to_request_options(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -575,6 +688,7 @@ class CoreUtilities:
         base_timeout: AST.Expression,
         is_async: bool,
         async_base_headers: Optional[AST.Expression] = None,
+        logging_config: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -585,6 +699,8 @@ class CoreUtilities:
             func_args.append(("base_url", base_url))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
+        if logging_config is not None:
+            func_args.append(("logging_config", logging_config))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -628,6 +744,9 @@ class CoreUtilities:
             if self._allow_skipping_validation
             else self.get_universal_base_model()
         )
+
+    def get_construct_or_parse_ref(self) -> AST.Reference:
+        return self.get_construct_type() if self._allow_skipping_validation else self.get_parse_obj_as()
 
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(
@@ -789,6 +908,45 @@ class CoreUtilities:
             ),
         )
 
+    def get_parse_sse_obj(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_sse_obj"
+            ),
+        )
+
+    def get_construct_sse(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
+        """Generate a parse_sse_obj call for SSE handling."""
+        return self._parse_sse_obj(type_of_obj, sse_obj)
+
+    def _parse_sse_obj(self, type_of_obj: AST.TypeHint, sse_obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_parse_sse_obj())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("sse =")
+                sse_obj.write(writer=writer)
+                writer.write(", ")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.TypeHint.invoke_cast(
+                    type_casted_to=type_of_obj,
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
+                )
+            )
+
+        return AST.Expression(AST.CodeWriter(write))
+
     def get_is_pydantic_v2(self) -> AST.Expression:
         return AST.Expression(
             AST.Reference(
@@ -843,3 +1001,43 @@ class CoreUtilities:
     def _sanitize_pager_name(self, name: str) -> str:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
+
+    def get_reference_to_invalid_websocket_status(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="InvalidWebSocketStatus",
+            ),
+        )
+
+    def get_reference_to_get_status_code(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="get_status_code",
+            ),
+        )
+
+    def get_import_paths(self) -> Optional[list[str]]:
+        """Get the list of import paths for auto-loading user-defined files."""
+        return self._import_paths
+
+    def get_reference_to_log_config(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="LogConfig",
+            ),
+        )
+
+    def get_reference_to_logger(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="Logger",
+            ),
+        )

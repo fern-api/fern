@@ -1,5 +1,4 @@
 use seed_objects_with_imports::prelude::*;
-use seed_objects_with_imports::SendOptionalBodyRequest;
 
 #[tokio::main]
 async fn main() {
@@ -13,6 +12,7 @@ async fn main() {
         .send_optional_typed_body(
             &Some(SendOptionalBodyRequest {
                 message: "message".to_string(),
+                ..Default::default()
             }),
             None,
         )

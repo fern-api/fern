@@ -25,7 +25,10 @@ export const ComplexProfile: core.serialization.ObjectSchema<
     optionalNullableArray: core.serialization.list(core.serialization.string()).optionalNullable(),
     nullableListOfNullables: core.serialization.list(core.serialization.string().nullable()).nullable(),
     nullableMapOfNullables: core.serialization
-        .record(core.serialization.string(), core.serialization.lazyObject(() => serializers.Address).nullable())
+        .record(
+            core.serialization.string(),
+            core.serialization.lazyObject(() => serializers.Address),
+        )
         .nullable(),
     nullableListOfUnions: core.serialization
         .list(core.serialization.lazy(() => serializers.NotificationMethod))
@@ -56,7 +59,7 @@ export declare namespace ComplexProfile {
         optionalArray?: string[] | null;
         optionalNullableArray?: (string[] | null | undefined) | null;
         nullableListOfNullables?: (string | null | undefined)[] | null;
-        nullableMapOfNullables?: Record<string, serializers.Address.Raw | null | undefined> | null;
+        nullableMapOfNullables?: Record<string, serializers.Address.Raw | null> | null;
         nullableListOfUnions?: serializers.NotificationMethod.Raw[] | null;
         optionalMapOfEnums?: Record<string, serializers.UserRole.Raw> | null;
     }

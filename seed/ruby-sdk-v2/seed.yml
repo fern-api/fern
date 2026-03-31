@@ -40,10 +40,15 @@ scripts:
         - bundle exec rake test
 
 fixtures:
+  basic-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+        clientModuleName: MyClient
   pagination-custom:
     - customConfig:
         customPagerName: FooPager
@@ -51,6 +56,9 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
@@ -103,3 +111,5 @@ features:
   additionalProperties: true
   whitelabel: false
   apiReferenceGeneration: false
+allowedFailures:
+  - server-sent-events-openapi

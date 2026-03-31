@@ -249,6 +249,7 @@ client.Nested.Api.GetSomething(
 ```go
 client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }
 ```
@@ -305,3 +306,4 @@ client.Simple.GetSomething(
 </dd>
 </dl>
 </details>
+

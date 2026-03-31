@@ -1,4 +1,4 @@
-import { SymbolRegistry } from "../symbol-registry";
+import { SymbolRegistry } from "../symbol-registry.js";
 
 describe("SymbolRegistry", () => {
     describe("for no name collisions with Swift types", () => {

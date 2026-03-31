@@ -47,6 +47,27 @@ func (c *CreateUserRequest) SetAge(age *int) {
 	c.require(createUserRequestFieldAge)
 }
 
+func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserRequest(body)
+	return nil
+}
+
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 // A user object. This type is used throughout the following APIs:
 //   - createUser
 //   - getUser
@@ -95,6 +116,9 @@ func (u *User) GetAge() *int {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -154,6 +178,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

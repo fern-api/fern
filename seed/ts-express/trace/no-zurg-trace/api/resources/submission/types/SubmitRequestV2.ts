@@ -7,6 +7,6 @@ export interface SubmitRequestV2 {
     language: SeedTrace.Language;
     submissionFiles: SeedTrace.SubmissionFileInfo[];
     problemId: SeedTrace.ProblemId;
-    problemVersion?: number;
-    userId?: string;
+    problemVersion?: number | undefined;
+    userId?: string | undefined;
 }

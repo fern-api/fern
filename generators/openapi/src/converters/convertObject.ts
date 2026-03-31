@@ -1,19 +1,15 @@
-import {
-    DeclaredTypeName,
-    ExampleInlinedRequestBodyProperty,
-    ExampleObjectProperty,
-    NameAndWireValue,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
+import { convertAvailabilityStatus } from "../utils/convertAvailability.js";
+import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter.js";
 
 export interface ObjectProperty {
     docs: string | undefined;
-    name: NameAndWireValue;
-    valueType: TypeReference;
-    example?: ExampleObjectProperty | ExampleInlinedRequestBodyProperty;
+    availability?: FernIr.Availability;
+    name: FernIr.NameAndWireValue;
+    valueType: FernIr.TypeReference;
+    example?: FernIr.ExampleObjectProperty | FernIr.ExampleInlinedRequestBodyProperty;
 }
 
 export function convertObject({
@@ -23,7 +19,7 @@ export function convertObject({
 }: {
     docs: string | undefined;
     properties: ObjectProperty[];
-    extensions: DeclaredTypeName[];
+    extensions: FernIr.DeclaredTypeName[];
 }): OpenAPIV3.SchemaObject {
     const convertedProperties: Record<string, OpenApiComponentSchema> = {};
     const required: string[] = [];
@@ -42,11 +38,20 @@ export function convertObject({
             example = objectProperty.example.value.jsonExample;
         }
 
-        convertedProperties[objectProperty.name.wireValue] = {
+        const propertySchema: Record<string, unknown> = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
             example
         };
+
+        if (objectProperty.availability != null) {
+            const availabilityValue = convertAvailabilityStatus(objectProperty.availability.status);
+            if (availabilityValue != null) {
+                propertySchema["x-fern-availability"] = availabilityValue;
+            }
+        }
+
+        convertedProperties[objectProperty.name.wireValue] = propertySchema as OpenApiComponentSchema;
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {

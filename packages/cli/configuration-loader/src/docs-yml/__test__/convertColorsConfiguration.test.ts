@@ -1,6 +1,6 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { convertColorsConfiguration, getColorType } from "../convertColorsConfiguration";
+import { convertColorsConfiguration, getColorType } from "../convertColorsConfiguration.js";
 
 describe("getColorType", () => {
     it("should return dark if background is dark", () => {

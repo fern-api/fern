@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Streaming](#streaming)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -25,11 +40,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
+
+client.completions.stream(
     query="foo",
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Async Client
@@ -47,11 +61,9 @@ client = AsyncSeedServerSentEvents(
 
 
 async def main() -> None:
-    response = await client.completions.stream(
+    await client.completions.stream(
         query="foo",
     )
-    async for chunk in response.data:
-        yield chunk
 
 
 asyncio.run(main())
@@ -66,7 +78,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.completions.stream()
+    client.completions.stream(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -82,11 +94,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
+
+client.completions.stream(
     query="foo",
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Advanced
@@ -99,13 +110,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedServerSentEvents
 
-client = SeedServerSentEvents(
-    ...,
-)
-with client.completions.with_raw_response.stream() as response:
-    print(response.headers)  # access the response headers
-    for chunk in response.data:
-        print(chunk)  # access the underlying object(s)
+client = SeedServerSentEvents(...)
+response = client.completions.with_raw_response.stream(...)
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
 ```
 
 ### Retries
@@ -123,7 +132,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.completions.stream(request_options={
+client.completions.stream(..., request_options={
     "max_retries": 1
 })
 ```
@@ -133,17 +142,12 @@ client.completions.stream(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedServerSentEvents
 
-client = SeedServerSentEvents(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedServerSentEvents(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.completions.stream(request_options={
+client.completions.stream(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

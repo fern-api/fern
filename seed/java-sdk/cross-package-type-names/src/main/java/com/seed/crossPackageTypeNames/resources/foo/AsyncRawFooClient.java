@@ -46,6 +46,11 @@ public class AsyncRawFooClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(

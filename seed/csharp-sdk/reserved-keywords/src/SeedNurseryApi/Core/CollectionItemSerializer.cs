@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace SeedNurseryApi.Core;
 
@@ -10,8 +10,10 @@ namespace SeedNurseryApi.Core;
 /// <typeparam name="TConverterType">Converter to use for individual items.</typeparam>
 internal class CollectionItemSerializer<TDatatype, TConverterType>
     : JsonConverter<IEnumerable<TDatatype>>
-    where TConverterType : JsonConverter
+    where TConverterType : JsonConverter, new()
 {
+    private static readonly TConverterType _converter = new TConverterType();
+
     /// <summary>
     /// Reads a json string and deserializes it into an object.
     /// </summary>
@@ -32,7 +34,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
 
         var jsonSerializerOptions = new JsonSerializerOptions(options);
         jsonSerializerOptions.Converters.Clear();
-        jsonSerializerOptions.Converters.Add(Activator.CreateInstance<TConverterType>());
+        jsonSerializerOptions.Converters.Add(_converter);
 
         var returnValue = new List<TDatatype>();
 
@@ -67,7 +69,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
         JsonSerializerOptions options
     )
     {
-        if (value == null)
+        if (value is null)
         {
             writer.WriteNullValue();
             return;
@@ -75,7 +77,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
 
         var jsonSerializerOptions = new JsonSerializerOptions(options);
         jsonSerializerOptions.Converters.Clear();
-        jsonSerializerOptions.Converters.Add(Activator.CreateInstance<TConverterType>());
+        jsonSerializerOptions.Converters.Add(_converter);
 
         writer.WriteStartArray();
 

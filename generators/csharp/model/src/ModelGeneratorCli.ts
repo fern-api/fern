@@ -1,11 +1,14 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-base";
 import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { generateVersion } from "./generateVersion";
-import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { generateModels } from "./generateModels.js";
+import { generateVersion } from "./generateVersion.js";
+import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({
@@ -54,9 +57,14 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
     }
 
     private async generate(context: ModelGeneratorContext): Promise<void> {
-        const generatedTypes = generateModels({ context });
+        const generateStartTime = Date.now();
+        const { files: generatedTypes, literalTypeFiles } = generateModels({ context });
+        context.logger.debug(`[TIMING] generateModels took ${Date.now() - generateStartTime}ms`);
         for (const file of generatedTypes) {
             context.project.addSourceFiles(file);
+        }
+        for (const file of literalTypeFiles) {
+            context.project.addSourceRawFile(file);
         }
 
         context.project.addSourceFiles(generateVersion({ context }));
@@ -68,6 +76,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
             }
         }
 
+        context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
     }
 }

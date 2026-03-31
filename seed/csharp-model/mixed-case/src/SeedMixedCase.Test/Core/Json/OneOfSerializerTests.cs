@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using NUnit.Framework;
 using OneOf;
 using SeedMixedCase.Core;
@@ -286,7 +286,7 @@ public class OneOfSerializerTests
         const string oneOfSingleString = "\"single\"";
 
         var result = JsonUtils.Serialize(oneOfSingle);
-        Assert.That(result, Is.EqualTo(oneOfSingleString));
+        Assert.That(result, Is.EqualTo(oneOfSingleString).IgnoreWhiteSpace);
     }
 
     [Test]

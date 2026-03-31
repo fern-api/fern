@@ -7,6 +7,6 @@ export interface TraceResponsesPageV2 {
      * If present, use this to load subsequent pages.
      * The offset is the id of the next trace response to load.
      */
-    offset?: number;
+    offset?: number | undefined;
     traceResponses: SeedTrace.TraceResponseV2[];
 }

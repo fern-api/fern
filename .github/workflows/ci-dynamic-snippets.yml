@@ -15,13 +15,21 @@ on:
 permissions:
   contents: read
 
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
 jobs:
   test-typescript:
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.changed_files, 'generators/typescript-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -29,11 +37,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -51,7 +59,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/python-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -59,11 +67,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -81,7 +89,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/csharp/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -89,11 +97,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -111,7 +119,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/go-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -119,11 +127,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -141,7 +149,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/ruby-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -149,11 +157,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -171,7 +179,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/php/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -179,11 +187,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -201,7 +209,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/swift/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -209,11 +217,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -231,7 +239,7 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/java-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
@@ -239,11 +247,11 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 

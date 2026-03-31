@@ -76,6 +76,13 @@ public class NullableOptionalClient {
     /**
      * Update a user (partial update)
      */
+    public UserResponse updateUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, requestOptions).body();
+    }
+
+    /**
+     * Update a user (partial update)
+     */
     public UserResponse updateUser(String userId, UpdateUserRequest request) {
         return this.rawClient.updateUser(userId, request).body();
     }
@@ -92,6 +99,13 @@ public class NullableOptionalClient {
      */
     public List<UserResponse> listUsers() {
         return this.rawClient.listUsers().body();
+    }
+
+    /**
+     * List all users
+     */
+    public List<UserResponse> listUsers(RequestOptions requestOptions) {
+        return this.rawClient.listUsers(requestOptions).body();
     }
 
     /**
@@ -155,6 +169,13 @@ public class NullableOptionalClient {
      */
     public ComplexProfile updateComplexProfile(String profileId) {
         return this.rawClient.updateComplexProfile(profileId).body();
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public ComplexProfile updateComplexProfile(String profileId, RequestOptions requestOptions) {
+        return this.rawClient.updateComplexProfile(profileId, requestOptions).body();
     }
 
     /**

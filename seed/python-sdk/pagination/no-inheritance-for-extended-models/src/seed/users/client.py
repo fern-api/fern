@@ -13,6 +13,7 @@ from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
 from .types.list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from .types.list_users_pagination_response import ListUsersPaginationResponse
+from .types.list_users_top_level_cursor_pagination_response import ListUsersTopLevelCursorPaginationResponse
 from .types.order import Order
 from .types.user import User
 from .types.username_container import UsernameContainer
@@ -165,6 +166,56 @@ class UsersClient:
             yield page
         """
         return self._raw_client.list_with_body_cursor_pagination(pagination=pagination, request_options=request_options)
+
+    def list_with_top_level_body_cursor_pagination(
+        self,
+        *,
+        cursor: typing.Optional[str] = OMIT,
+        filter: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[User, ListUsersTopLevelCursorPaginationResponse]:
+        """
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        filter : typing.Optional[str]
+            An optional filter to apply to the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersTopLevelCursorPaginationResponse]
+
+        Examples
+        --------
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_top_level_body_cursor_pagination(
+            cursor="initial_cursor",
+            filter="active",
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_with_top_level_body_cursor_pagination(
+            cursor=cursor, filter=filter, request_options=request_options
+        )
 
     def list_with_offset_pagination(
         self,
@@ -811,6 +862,65 @@ class AsyncUsersClient:
         """
         return await self._raw_client.list_with_body_cursor_pagination(
             pagination=pagination, request_options=request_options
+        )
+
+    async def list_with_top_level_body_cursor_pagination(
+        self,
+        *,
+        cursor: typing.Optional[str] = OMIT,
+        filter: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[User, ListUsersTopLevelCursorPaginationResponse]:
+        """
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        filter : typing.Optional[str]
+            An optional filter to apply to the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersTopLevelCursorPaginationResponse]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_top_level_body_cursor_pagination(
+                cursor="initial_cursor",
+                filter="active",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_with_top_level_body_cursor_pagination(
+            cursor=cursor, filter=filter, request_options=request_options
         )
 
     async def list_with_offset_pagination(

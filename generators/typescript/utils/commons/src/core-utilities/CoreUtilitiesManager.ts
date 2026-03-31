@@ -4,26 +4,27 @@ import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ExportsManager } from "../exports-manager";
-import { ImportsManager } from "../imports-manager";
-import { getReferenceToExportViaNamespaceImport } from "../referencing";
-import { AuthImpl } from "./Auth";
-import { CallbackQueueImpl } from "./CallbackQueue";
-import { CoreUtilities } from "./CoreUtilities";
-import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { CustomPaginationImpl } from "./CustomPagination";
-import { FetcherImpl } from "./Fetcher";
-import { FileUtilsImpl } from "./FileUtils";
-import { FormDataUtilsImpl } from "./FormDataUtils";
-import { LoggingImpl } from "./Logging";
-import { PaginationImpl } from "./Pagination";
-import { RuntimeImpl } from "./Runtime";
-import { StreamImpl } from "./Stream";
-import { UrlUtilsImpl } from "./UrlUtils";
-import { UtilsImpl } from "./Utils";
-import { WebsocketImpl } from "./Websocket";
-import { ZurgImpl } from "./Zurg";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { ExportsManager } from "../exports-manager/index.js";
+import { ImportsManager } from "../imports-manager/index.js";
+import { getReferenceToExportViaNamespaceImport } from "../referencing/index.js";
+import { AuthImpl } from "./Auth.js";
+import { CallbackQueueImpl } from "./CallbackQueue.js";
+import { CoreUtilities } from "./CoreUtilities.js";
+import { CoreUtility, CoreUtilityName } from "./CoreUtility.js";
+import { CustomPaginationImpl } from "./CustomPagination.js";
+import { FetcherImpl } from "./Fetcher.js";
+import { FileUtilsImpl } from "./FileUtils.js";
+import { FormDataUtilsImpl } from "./FormDataUtils.js";
+import { LoggingImpl } from "./Logging.js";
+import { PaginationImpl } from "./Pagination.js";
+import { RuntimeImpl } from "./Runtime.js";
+import { StreamImpl } from "./Stream.js";
+import { UrlUtilsImpl } from "./UrlUtils.js";
+import { UtilsImpl } from "./Utils.js";
+import { WebhookCryptoImpl } from "./WebhookCrypto.js";
+import { WebsocketImpl } from "./Websocket.js";
+import { ZurgImpl } from "./Zurg.js";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -134,6 +135,10 @@ export class CoreUtilitiesManager {
             logging: new LoggingImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            webhookCrypto: new WebhookCryptoImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
             })
         };
     }
@@ -240,19 +245,35 @@ export class CoreUtilitiesManager {
         }
 
         if (this.referencedCoreUtilities["customPagination"] != null) {
-            let contents = await readFile(path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"), "utf8");
-            contents = contents.replaceAll("CustomPager", this.customPagerName);
-            const customPagerPath = path.join(
-                pathToRoot,
-                this.getPackagePathImport(),
-                "core",
-                "pagination",
-                `${this.customPagerName}.ts`
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            let customPagerContents = await readFile(
+                path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
+                "utf8"
             );
-            await mkdir(path.dirname(customPagerPath), { recursive: true });
-            await writeFile(customPagerPath, contents, {
+            customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
+            await writeFile(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents, {
                 encoding: "utf8"
             });
+        }
+
+        if (this.referencedCoreUtilities["pagination"] != null) {
+            const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            if (hasCustomPagination) {
+                await writeFile(
+                    path.join(paginationDir, "index.ts"),
+                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`,
+                    { encoding: "utf8" }
+                );
+            } else {
+                await writeFile(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`, {
+                    encoding: "utf8"
+                });
+            }
         }
     }
 

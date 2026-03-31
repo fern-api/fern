@@ -3,16 +3,24 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 from ...commons.types.problem_id import ProblemId
 from ...commons.types.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
 
 
 class TestSubmissionState(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    default_test_cases: typing_extensions.Annotated[
+        typing.List[TestCase], FieldMetadata(alias="defaultTestCases"), pydantic.Field(alias="defaultTestCases")
+    ]
+    custom_test_cases: typing_extensions.Annotated[
+        typing.List[TestCase], FieldMetadata(alias="customTestCases"), pydantic.Field(alias="customTestCases")
+    ]
     status: TestSubmissionStatus
 
     if IS_PYDANTIC_V2:

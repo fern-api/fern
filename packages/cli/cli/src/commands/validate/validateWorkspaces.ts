@@ -1,13 +1,13 @@
+import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
-
-import { CliContext } from "../../cli-context/CliContext";
-import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport";
-import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues";
-import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
+import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
+import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
 export async function validateWorkspaces({
     project,
@@ -136,6 +136,13 @@ export async function validateWorkspaces({
             context
         });
     });
+
+    if (cliContext.isJsonMode) {
+        const showApiNames = apiResults.length > 1;
+        cliContext.writeJsonToStdout(
+            buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })
+        );
+    }
 
     if (hasErrors || hasAnyErrors) {
         cliContext.failAndThrow();

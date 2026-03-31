@@ -70,6 +70,25 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn just_file_with_optional_query_params(
+        &self,
+        request: &JustFileWithOptionalQueryParamsRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_multipart_request(
+                Method::POST,
+                "/just-file-with-optional-query-params",
+                request.clone().to_multipart(),
+                QueryBuilder::new()
+                    .string("maybeString", request.maybe_string.clone())
+                    .int("maybeInteger", request.maybe_integer.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     pub async fn with_content_type(
         &self,
         request: &WithContentTypeRequest,
@@ -150,9 +169,41 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn with_json_property(
+        &self,
+        request: &WithJsonPropertyRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_multipart_request(
+                Method::POST,
+                "/with-json-property",
+                request.clone().to_multipart(),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)
+            .await
+    }
+
+    pub async fn with_literal_and_enum_types(
+        &self,
+        request: &WithLiteralAndEnumTypesRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_multipart_request(
+                Method::POST,
+                "/with-literal-enum",
+                request.clone().to_multipart(),
+                None,
+                options,
+            )
             .await
     }
 }

@@ -1,0 +1,21 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/union.UserId"
+    },
+    {
+      "$ref": "#/definitions/union.Name"
+    }
+  ],
+  "definitions": {
+    "union.UserId": {
+      "type": "string"
+    },
+    "union.Name": {
+      "type": "string"
+    }
+  }
+}

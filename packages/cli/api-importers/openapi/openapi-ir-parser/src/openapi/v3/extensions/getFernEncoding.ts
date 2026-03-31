@@ -2,8 +2,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export function getFernEncoding({
     schema,

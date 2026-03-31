@@ -15,6 +15,7 @@ from .resources.endpoints.resources.content_type.service.service import Abstract
 from .resources.endpoints.resources.enum.service.service import AbstractEndpointsEnumService
 from .resources.endpoints.resources.http_methods.service.service import AbstractEndpointsHttpMethodsService
 from .resources.endpoints.resources.object.service.service import AbstractEndpointsObjectService
+from .resources.endpoints.resources.pagination.service.service import AbstractEndpointsPaginationService
 from .resources.endpoints.resources.params.service.service import AbstractEndpointsParamsService
 from .resources.endpoints.resources.primitive.service.service import AbstractEndpointsPrimitiveService
 from .resources.endpoints.resources.put.service.service import AbstractEndpointsPutService
@@ -27,12 +28,13 @@ from .resources.req_with_headers.service.service import AbstractReqWithHeadersSe
 from fastapi import params
 
 
-def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsContainerService, endpoints_content_type: AbstractEndpointsContentTypeService, endpoints_enum: AbstractEndpointsEnumService, endpoints_http_methods: AbstractEndpointsHttpMethodsService, endpoints_object: AbstractEndpointsObjectService, endpoints_params: AbstractEndpointsParamsService, endpoints_primitive: AbstractEndpointsPrimitiveService, endpoints_put: AbstractEndpointsPutService, endpoints_union: AbstractEndpointsUnionService, endpoints_urls: AbstractEndpointsUrlsService, inlined_requests: AbstractInlinedRequestsService, no_auth: AbstractNoAuthService, no_req_body: AbstractNoReqBodyService, req_with_headers: AbstractReqWithHeadersService, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
+def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsContainerService, endpoints_content_type: AbstractEndpointsContentTypeService, endpoints_enum: AbstractEndpointsEnumService, endpoints_http_methods: AbstractEndpointsHttpMethodsService, endpoints_object: AbstractEndpointsObjectService, endpoints_pagination: AbstractEndpointsPaginationService, endpoints_params: AbstractEndpointsParamsService, endpoints_primitive: AbstractEndpointsPrimitiveService, endpoints_put: AbstractEndpointsPutService, endpoints_union: AbstractEndpointsUnionService, endpoints_urls: AbstractEndpointsUrlsService, inlined_requests: AbstractInlinedRequestsService, no_auth: AbstractNoAuthService, no_req_body: AbstractNoReqBodyService, req_with_headers: AbstractReqWithHeadersService, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
     _app.include_router(__register_service(endpoints_container), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_content_type), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_enum), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_http_methods), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_object), dependencies=dependencies)
+    _app.include_router(__register_service(endpoints_pagination), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_params), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_primitive), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_put), dependencies=dependencies)

@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using OneOf;
 
 namespace Usage;
 
@@ -14,9 +14,9 @@ public class Example6
             }
         );
 
-        await client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField {
-                String = "string"
+        await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+            new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
+                ["string"] = 1.1,
             }
         );
     }

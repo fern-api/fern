@@ -42,6 +42,14 @@ public class AsyncRawSeedJavaOptionalNullableQueryParamsClient {
      * Search endpoint with optional nullable query params with defaults
      */
     public CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> search(
+            RequestOptions requestOptions) {
+        return search(SearchRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Search endpoint with optional nullable query params with defaults
+     */
+    public CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> search(
             SearchRequest request) {
         return search(request, null);
     }
@@ -78,6 +86,11 @@ public class AsyncRawSeedJavaOptionalNullableQueryParamsClient {
                     "regularOptionalNoDefault",
                     request.getRegularOptionalNoDefault().orElse(null),
                     false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.put.add(id: "id")
+    _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
 }
 
 try await main()

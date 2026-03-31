@@ -28,6 +28,9 @@ Upload a file to the database
 
 ```go
 request := &fern.UploadFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
         Name: "name",
     }
 client.FileUploadExample.UploadFile(
@@ -45,3 +48,4 @@ client.FileUploadExample.UploadFile(
 </dd>
 </dl>
 </details>
+

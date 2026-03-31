@@ -2,18 +2,17 @@ import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { HttpService, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
 
 export declare namespace SubClientGenerator {
     interface Args {
-        subpackageId: SubpackageId;
-        subpackage: Subpackage;
+        subpackageId: FernIr.SubpackageId;
+        subpackage: FernIr.Subpackage;
         context: SdkGeneratorContext;
     }
 }
@@ -21,8 +20,8 @@ export declare namespace SubClientGenerator {
 const CLIENT_CLASS_NAME = "Client";
 
 export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private subpackageId: SubpackageId;
-    private subpackage: Subpackage;
+    private subpackageId: FernIr.SubpackageId;
+    private subpackage: FernIr.Subpackage;
 
     constructor({ subpackage, context, subpackageId }: SubClientGenerator.Args) {
         super(context);
@@ -128,7 +127,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         });
     }
 
-    private generateEndpoints(service: HttpService): ruby.Method[] {
+    private generateEndpoints(service: FernIr.HttpService): ruby.Method[] {
         const methods: ruby.Method[] = [];
         for (const endpoint of service.endpoints) {
             if (this.subpackage.service != null) {
@@ -178,7 +177,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         });
     }
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.subpackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });

@@ -1,5 +1,4 @@
 use seed_api::prelude::*;
-use seed_api::PlainObject;
 
 #[tokio::main]
 async fn main() {
@@ -14,11 +13,9 @@ async fn main() {
             &"path_param".to_string(),
             &TestMethodNameRequest {
                 body: Some(PlainObject {
-                    id: None,
-                    name: None,
+                    ..Default::default()
                 }),
-                query_param_object: None,
-                query_param_integer: None,
+                ..Default::default()
             },
             None,
         )

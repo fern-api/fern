@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
-import { ContainerType, Literal, NameAndWireValue, TypeReference } from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 const IGNORE_TAG = "-";
 const OMIT_EMPTY_TAG = "omitempty";
@@ -12,9 +12,9 @@ export declare namespace GoFieldMapper {
 
     interface Args {
         /* The name of the field. */
-        name: NameAndWireValue;
+        name: FernIr.NameAndWireValue;
         /* The type of the field. */
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
         /* The docs of the field, if any. */
         docs?: string;
         /* The set of tags to include in the field. */
@@ -60,9 +60,9 @@ export class GoFieldMapper {
         docs,
         includeTags
     }: {
-        container: ContainerType;
-        name: NameAndWireValue;
-        reference: TypeReference;
+        container: FernIr.ContainerType;
+        name: FernIr.NameAndWireValue;
+        reference: FernIr.TypeReference;
         docs?: string;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field {
@@ -85,7 +85,7 @@ export class GoFieldMapper {
         }
     }
 
-    private convertLiteral({ name, literal }: { name: NameAndWireValue; literal: Literal }): go.Field {
+    private convertLiteral({ name, literal }: { name: FernIr.NameAndWireValue; literal: FernIr.Literal }): go.Field {
         switch (literal.type) {
             case "boolean":
                 return go.field({
@@ -107,8 +107,8 @@ export class GoFieldMapper {
         reference,
         includeTags
     }: {
-        name: NameAndWireValue;
-        reference: TypeReference;
+        name: FernIr.NameAndWireValue;
+        reference: FernIr.TypeReference;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field.Tag[] {
         const includedTags = new Set<GoFieldMapper.Tag>(includeTags);
@@ -124,8 +124,8 @@ export class GoFieldMapper {
         includedTags,
         tag
     }: {
-        name: NameAndWireValue;
-        reference: TypeReference;
+        name: FernIr.NameAndWireValue;
+        reference: FernIr.TypeReference;
         includedTags: Set<GoFieldMapper.Tag>;
         tag: GoFieldMapper.Tag;
     }): go.Field.Tag {

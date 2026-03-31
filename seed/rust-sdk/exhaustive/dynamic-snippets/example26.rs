@@ -10,11 +10,12 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_path_and_query(
-            &"param".to_string(),
-            &GetWithPathAndQueryQueryRequest {
-                query: "query".to_string(),
+        .object
+        .get_and_return_with_datetime_like_string(
+            &ObjectWithDatetimeLikeString {
+                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
+                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+                ..Default::default()
             },
             None,
         )

@@ -1,17 +1,17 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    ExampleObjectType,
-    NameAndWireValue,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { generateFields } from "../generateFields";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExampleGenerator } from "../snippets/ExampleGenerator";
+type ExampleObjectType = FernIr.ExampleObjectType;
+type NameAndWireValue = FernIr.NameAndWireValue;
+type ObjectProperty = FernIr.ObjectProperty;
+type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
+type TypeDeclaration = FernIr.TypeDeclaration;
+
+import { generateFields } from "../generateFields.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -29,12 +29,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     public doGenerate(): CSharpFile {
-        const interfaces = [];
-        if (this.settings.generateNewAdditionalProperties) {
-            interfaces.push(this.System.Text.Json.Serialization.IJsonOnDeserialized);
-            if (this.objectDeclaration.extraProperties) {
-                interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
-            }
+        const interfaces = [this.System.Text.Json.Serialization.IJsonOnDeserialized];
+        if (this.objectDeclaration.extraProperties) {
+            interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
         }
 
         const class_ = this.csharp.class_({
@@ -46,7 +43,11 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             annotations: [this.System.Serializable]
         });
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
-        generateFields(class_, { properties, className: this.classReference.name, context: this.context });
+        generateFields(class_, {
+            properties,
+            className: this.classReference.name,
+            context: this.context
+        });
 
         this.addExtensionDataField(class_);
         const additionalProperties = this.addAdditionalPropertiesProperty(class_);
@@ -72,90 +73,67 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     private addExtensionDataField(class_: ast.Class): void {
-        if (this.settings.generateNewAdditionalProperties) {
-            class_.addField({
-                origin: class_.explicit("_extensionData"),
-                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-                access: ast.Access.Private,
-                readonly: true,
-                type: this.Collection.idictionary(
-                    this.Primitive.string,
-                    this.objectDeclaration.extraProperties
-                        ? this.Primitive.object.asOptional()
-                        : this.System.Text.Json.JsonElement,
-                    {
-                        dontSimplify: true
-                    }
-                ),
-                initializer: this.objectDeclaration.extraProperties
-                    ? this.System.Collections.Generic.Dictionary(
-                          this.Primitive.string,
-                          this.Primitive.object.asOptional()
-                      ).new()
-                    : this.System.Collections.Generic.Dictionary(
-                          this.Primitive.string,
-                          this.System.Text.Json.JsonElement
-                      ).new()
-            });
-        }
-    }
-
-    private addAdditionalPropertiesProperty(class_: ast.Class) {
-        return this.settings.generateNewAdditionalProperties
-            ? class_.addField({
-                  origin: class_.explicit("AdditionalProperties"),
-                  annotations: [this.System.Text.Json.Serialization.JsonIgnore],
-                  access: ast.Access.Public,
-                  type: this.objectDeclaration.extraProperties
-                      ? this.Types.AdditionalProperties()
-                      : this.Types.ReadOnlyAdditionalProperties(),
-
-                  get: true,
-                  set: this.objectDeclaration.extraProperties ? true : ast.Access.Private,
-                  initializer: this.csharp.codeblock("new()")
-              })
-            : class_.addField({
-                  origin: class_.explicit("AdditionalProperties"),
-                  doc: {
-                      summary: "Additional properties received from the response, if any.",
-                      remarks: "[EXPERIMENTAL] This API is experimental and may change in future releases."
-                  },
-                  annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-                  access: ast.Access.Public,
-                  type: this.Collection.idictionary(this.Primitive.string, this.System.Text.Json.JsonElement),
-                  set: ast.Access.Internal,
-                  get: ast.Access.Public,
-                  initializer: this.System.Collections.Generic.Dictionary(
+        class_.addField({
+            origin: class_.explicit("_extensionData"),
+            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.Collection.idictionary(
+                this.Primitive.string,
+                this.objectDeclaration.extraProperties
+                    ? this.Primitive.object.asOptional()
+                    : this.System.Text.Json.JsonElement,
+                {
+                    dontSimplify: true
+                }
+            ),
+            initializer: this.objectDeclaration.extraProperties
+                ? this.System.Collections.Generic.Dictionary(
+                      this.Primitive.string,
+                      this.Primitive.object.asOptional()
+                  ).new()
+                : this.System.Collections.Generic.Dictionary(
                       this.Primitive.string,
                       this.System.Text.Json.JsonElement
                   ).new()
-              });
+        });
+    }
+
+    private addAdditionalPropertiesProperty(class_: ast.Class) {
+        return class_.addField({
+            origin: class_.explicit("AdditionalProperties"),
+            annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+            access: ast.Access.Public,
+            type: this.objectDeclaration.extraProperties
+                ? this.Types.AdditionalProperties()
+                : this.Types.ReadOnlyAdditionalProperties(),
+
+            get: true,
+            set: this.objectDeclaration.extraProperties ? true : ast.Access.Private,
+            initializer: this.csharp.codeblock("new()")
+        });
     }
 
     private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {
-        if (this.settings.generateNewAdditionalProperties) {
-            if (this.objectDeclaration.extraProperties) {
-                class_.addMethod({
-                    name: "OnSerializing",
-                    interfaceReference: this.System.Text.Json.Serialization.IJsonOnSerializing,
-                    parameters: [],
-                    bodyType: ast.Method.BodyType.Expression,
-                    body: this.csharp.codeblock(`${additionalProperties.name}.CopyToExtensionData(_extensionData)`)
-                });
-            }
+        if (this.objectDeclaration.extraProperties) {
+            class_.addMethod({
+                name: "OnSerializing",
+                interfaceReference: this.System.Text.Json.Serialization.IJsonOnSerializing,
+                parameters: [],
+                bodyType: ast.Method.BodyType.Expression,
+                body: this.csharp.codeblock(`${additionalProperties.name}.CopyToExtensionData(_extensionData)`)
+            });
         }
     }
 
     private addOnDeserialized(class_: ast.Class, additionalProperties: ast.Field): void {
-        if (this.settings.generateNewAdditionalProperties) {
-            class_.addMethod({
-                name: "OnDeserialized",
-                interfaceReference: this.System.Text.Json.Serialization.IJsonOnDeserialized,
-                parameters: [],
-                bodyType: ast.Method.BodyType.Expression,
-                body: this.csharp.codeblock(`${additionalProperties.name}.CopyFromExtensionData(_extensionData)`)
-            });
-        }
+        class_.addMethod({
+            name: "OnDeserialized",
+            interfaceReference: this.System.Text.Json.Serialization.IJsonOnDeserialized,
+            parameters: [],
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock(`${additionalProperties.name}.CopyFromExtensionData(_extensionData)`)
+        });
     }
 
     public doGenerateSnippet({
@@ -178,11 +156,50 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             // are completely excluded from object initializers
             return { name: propertyName, assignment };
         });
+
+        if (
+            this.objectDeclaration.extraProperties &&
+            exampleObject.extraProperties != null &&
+            exampleObject.extraProperties.length > 0
+        ) {
+            const extraPropertiesSnippet = this.generateExtraPropertiesSnippet({
+                extraProperties: exampleObject.extraProperties,
+                parseDatetimes
+            });
+            args.push({
+                name: "AdditionalProperties",
+                assignment: extraPropertiesSnippet
+            });
+        }
+
         const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args
         });
         return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+    }
+
+    private generateExtraPropertiesSnippet({
+        extraProperties,
+        parseDatetimes
+    }: {
+        extraProperties: { name: NameAndWireValue; value: FernIr.ExampleTypeReference }[];
+        parseDatetimes: boolean;
+    }): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
+            writer.writeLine("new AdditionalProperties");
+            writer.pushScope();
+            for (const extraProperty of extraProperties) {
+                const valueSnippet = this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: extraProperty.value,
+                    parseDatetimes
+                });
+                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.writeNode(valueSnippet);
+                writer.writeLine(",");
+            }
+            writer.popScope();
+        });
     }
 
     private addProtobufMappers({ class_, properties }: { class_: ast.Class; properties: ObjectProperty[] }): void {

@@ -1,5 +1,5 @@
-export { getPackageName } from "./getPackageName";
-export { getSdkVersion } from "./getSdkVersion";
+export { getPackageName } from "./getPackageName.js";
+export { getSdkVersion } from "./getSdkVersion.js";
 export {
     addGlobalFileFilter,
     addGlobalFunctionFilter,
@@ -8,4 +8,4 @@ export {
     getFramesForTaggedObject,
     StackTraces,
     stacktrace
-} from "./stacktrace";
+} from "./stacktrace.js";

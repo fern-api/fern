@@ -1,3 +1,3 @@
-export * from "./VariableDeclarationSchema";
-export * from "./VariableDeclarationDetailed";
-export * from "./VariableReferenceSchema";
+export * from "./VariableDeclarationDetailed.js";
+export * from "./VariableDeclarationSchema.js";
+export * from "./VariableReferenceSchema.js";

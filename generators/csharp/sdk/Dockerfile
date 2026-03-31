@@ -7,8 +7,8 @@ ENV DOTNET_NOLOGO=1
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
-RUN apk --no-cache add bash curl git zip
-RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+RUN apk --no-cache add bash curl git zip && \
+    git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
 # Copy over node contents to be able to run the compiled CLI
@@ -17,8 +17,7 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-RUN dotnet tool install -g csharpier --version "1.2.1"
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
+RUN dotnet tool install -g csharpier --version "1.2.6"
 
 COPY generators/csharp/sdk/features.yml /assets/features.yml
 COPY generators/csharp/sdk/dist /dist

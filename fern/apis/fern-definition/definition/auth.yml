@@ -63,6 +63,10 @@ types:
     extends:
       - WithEnvironmentVariable
       - commons.WithName
+    properties:
+      omit:
+        type: optional<boolean>
+        docs: If true, the auth variable will be omitted from the SDK.
 
   HeaderAuthSchemeSchema:
     extends:

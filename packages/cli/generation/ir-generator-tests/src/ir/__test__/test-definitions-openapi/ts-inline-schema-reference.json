@@ -1405,7 +1405,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -3843,6 +3844,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -5666,6 +5668,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

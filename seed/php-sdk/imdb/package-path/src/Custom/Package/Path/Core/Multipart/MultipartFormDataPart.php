@@ -2,7 +2,7 @@
 
 namespace Custom\Package\Path\Core\Multipart;
 
-use GuzzleHttp\Psr7\Utils;
+use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamInterface;
 
 class MultipartFormDataPart
@@ -13,9 +13,9 @@ class MultipartFormDataPart
     private string $name;
 
     /**
-     * @var StreamInterface
+     * @var StreamInterface|string
      */
-    private StreamInterface $contents;
+    private StreamInterface|string $contents;
 
     /**
      * @var ?string
@@ -40,37 +40,23 @@ class MultipartFormDataPart
         ?array $headers = null
     ) {
         $this->name = $name;
-        $this->contents = Utils::streamFor($value);
+        $this->contents = $value instanceof StreamInterface ? $value : (string)$value;
         $this->filename = $filename;
         $this->headers = $headers;
     }
 
     /**
-     * Converts the multipart form data part into an array suitable
-     * for Guzzle's multipart form data.
+     * Adds this part to a MultipartStreamBuilder.
      *
-     * @return array{
-     *     name: string,
-     *     contents: StreamInterface,
-     *     filename?: string,
-     *     headers?: array<string, string>
-     * }
+     * @param MultipartStreamBuilder $builder
      */
-    public function toArray(): array
+    public function addToBuilder(MultipartStreamBuilder $builder): void
     {
-        $formData = [
-            'name' => $this->name,
-            'contents' => $this->contents,
-        ];
+        $options = array_filter([
+            'filename' => $this->filename,
+            'headers' => $this->headers,
+        ], fn ($value) => $value !== null);
 
-        if ($this->filename != null) {
-            $formData['filename'] = $this->filename;
-        }
-
-        if ($this->headers != null) {
-            $formData['headers'] = $this->headers;
-        }
-
-        return $formData;
+        $builder->addResource($this->name, $this->contents, $options);
     }
 }

@@ -1,9 +1,9 @@
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -69,6 +69,7 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
     )?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
+
     for (const section of irCustomSections ?? []) {
         if (section.language === "go" && !customConfigSections?.some((s) => s.title === section.title)) {
             sections.push({

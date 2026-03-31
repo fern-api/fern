@@ -187,6 +187,7 @@ Executes a deployed Workflow and streams back its results.",
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "WorkflowStreamEvent",
               },
               "source": {
@@ -393,6 +394,7 @@ Generate a stream of completions using a previously defined deployment.
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "GenerateStreamResponse",
               },
               "source": {
@@ -2281,7 +2283,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "TerminalNodeResultOutput": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2411,7 +2416,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowNodeResultData": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2481,7 +2489,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowRequestInputRequest": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2550,7 +2561,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowResultEventOutputData": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -2621,7 +2635,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowStreamEvent": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -4132,7 +4149,9 @@ types:
     source:
       openapi: ../openapi.yml
   TerminalNodeResultOutput:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: TerminalNodeStringResult
@@ -4212,7 +4231,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowNodeResultData:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       PROMPT: PromptNodeResult
@@ -4258,7 +4279,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowRequestInputRequest:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: WorkflowRequestStringInputRequest
@@ -4296,7 +4319,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowResultEventOutputData:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       STRING: WorkflowResultEventOutputDataString
@@ -4350,7 +4375,9 @@ types:
     source:
       openapi: ../openapi.yml
   WorkflowStreamEvent:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       WORKFLOW: WorkflowExecutionWorkflowResultEvent

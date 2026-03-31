@@ -12,9 +12,19 @@ buildScripts:
       - golangci-lint run --timeout=5m
   testScript:
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - go test -v ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      - |
+        PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+          export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+        fi
+        go test -v ./...
+        TEST_EXIT_CODE=$?
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+        fi
+        exit $TEST_EXIT_CODE
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -121,14 +131,18 @@ fixtures:
         enableWireTests: true
         packageName: testPackageName
         errorCodes: per-endpoint
+        clientConstructorName: NewIMDBClient
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
     - outputFolder: deep-package-path
-      customConfig: 
+      customConfig:
         packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -215,6 +229,10 @@ fixtures:
         packageName: sse
         module:
           path: github.com/fern-api/sse-go
+  server-sent-events-openapi:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -235,6 +253,10 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  oauth-client-credentials:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
@@ -242,19 +264,78 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: PayrocPager
+  go-optional-literal-alias:
+    - outputFolder: .
+      customConfig: null
+  go-undiscriminated-union-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        packageName: fern
+        module:
+          path: github.com/go-undiscriminated-union-wire-tests/fern
+  go-deterministic-ordering:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig:
+        enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
+  inferred-auth-implicit:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-explicit:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  inferred-auth-implicit-api-key:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-no-expiry:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-reference:
+    - outputFolder: .
+      customConfig: null
 scripts:
-  - image: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:2.0.0
     commands:
+      build:
+        - |
+          printf 'version: "2"\nlinters:\n  exclusions:\n    paths:\n      - dynamic-snippets\n' > .golangci.yml
+          golangci-lint run --timeout=5m --allow-parallel-runners
       test:
-        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-        - CGO_ENABLED=0 go test ./...
-        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+        - |
+          PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+            export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            for i in $(seq 1 30); do
+              if wget -q --spider "$WIREMOCK_URL/__admin/mappings" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
+          fi
+          CGO_ENABLED=0 go test ./...
+          TEST_EXIT_CODE=$?
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          fi
+          exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
+  - bytes-upload
   - bytes-download
   - enum
   - errors
-  - exhaustive
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
@@ -263,8 +344,10 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-url-templating
   - trace
   - property-access
+  - oauth-client-credentials:.
   - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.
@@ -279,8 +362,10 @@ allowedFailures:
   - variables
 
   # Will include these back in once we fix dynamic snippets for inline file properties
-  - file-upload:no-custom-config 
-  - file-upload:package-name 
+  - file-upload:no-custom-config
+  - file-upload:package-name
   - file-upload-openapi
 
   - pagination-custom:.
+
+  # exhaustive fixtures now pass after fixing bytes endpoint wire test generation

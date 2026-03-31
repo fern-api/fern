@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
@@ -64,14 +64,14 @@ public record EventInfo
     public SeedExamples.Commons.Metadata AsMetadata() =>
         IsMetadata
             ? (SeedExamples.Commons.Metadata)Value!
-            : throw new System.Exception("EventInfo.Type is not 'metadata'");
+            : throw new global::System.Exception("EventInfo.Type is not 'metadata'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'tag', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'tag'.</exception>
     public string AsTag() =>
-        IsTag ? (string)Value! : throw new System.Exception("EventInfo.Type is not 'tag'");
+        IsTag ? (string)Value! : throw new global::System.Exception("EventInfo.Type is not 'tag'");
 
     public T Match<T>(
         Func<SeedExamples.Commons.Metadata, T> onMetadata,
@@ -144,12 +144,12 @@ public record EventInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<EventInfo>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(EventInfo).IsAssignableFrom(typeToConvert);
 
         public override EventInfo Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -174,14 +174,19 @@ public record EventInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "metadata" => json.Deserialize<SeedExamples.Commons.Metadata?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedExamples.Commons.Metadata"
-                    ),
+                "metadata" => jsonWithoutDiscriminator.Deserialize<SeedExamples.Commons.Metadata?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedExamples.Commons.Metadata"),
                 "tag" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new EventInfo(discriminator, value);
@@ -205,6 +210,27 @@ public record EventInfo
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override EventInfo ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new EventInfo(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            EventInfo value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

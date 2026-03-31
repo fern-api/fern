@@ -1,10 +1,10 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildVariables(context: OpenApiIrConverterContext): void {
     for (const [variable, variableSchema] of Object.entries(context.ir.variables)) {

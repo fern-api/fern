@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportDeclaration,
     ExportedDirectory,
@@ -9,7 +9,7 @@ import {
 } from "@fern-typescript/commons";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 const SERVICE_DIRECTORY = "service";
 
@@ -53,7 +53,7 @@ export abstract class AbstractExpressServiceDeclarationReferencer<Name> extends 
         ];
     }
 
-    private getFernFilepathFromName(name: Name): FernFilepath {
+    private getFernFilepathFromName(name: Name): FernIr.FernFilepath {
         return this.packageResolver.resolvePackage(this.getPackageIdFromName(name)).fernFilepath;
     }
 

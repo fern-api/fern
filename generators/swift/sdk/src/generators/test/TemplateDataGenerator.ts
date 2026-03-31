@@ -2,9 +2,9 @@ import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { TestTemplateFileId } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
 
 export declare namespace TemplateDataGenerator {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace TemplateDataGenerator {
 
 export class TemplateDataGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private readonly dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private readonly endpointSnippetGenerator: EndpointSnippetGenerator;
 
@@ -252,7 +252,7 @@ export class TemplateDataGenerator {
         return undefined;
     }
 
-    private getDynamicEndpointForEndpoint(endpoint: HttpEndpoint) {
+    private getDynamicEndpointForEndpoint(endpoint: FernIr.HttpEndpoint) {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         assertDefined(dynamicEndpoint, "Dynamic endpoint is required to generate wire tests.");
         return dynamicEndpoint;

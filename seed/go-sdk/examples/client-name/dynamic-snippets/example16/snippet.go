@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    context "context"
 )
 
 func do() {
@@ -33,7 +34,7 @@ func do() {
                 "key": "value",
             },
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
     client.Service.CreateMovie(
         context.TODO(),

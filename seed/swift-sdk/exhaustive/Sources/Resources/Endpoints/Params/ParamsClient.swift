@@ -114,4 +114,18 @@ public final class ParamsClient: Sendable {
             responseType: String.self
         )
     }
+
+    /// POST bytes with path param returning object
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func uploadWithPath(param: String, request: Data, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/path/\(param)",
+            contentType: .applicationOctetStream,
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithRequiredField.self
+        )
+    }
 }

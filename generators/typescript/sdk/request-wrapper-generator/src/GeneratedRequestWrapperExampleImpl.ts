@@ -1,12 +1,4 @@
-import {
-    ExampleEndpointCall,
-    ExampleInlinedRequestBody,
-    ExampleTypeReference,
-    ExampleTypeReferenceShape,
-    HttpRequestBody,
-    Name,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, isExpressionUndefined, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -14,10 +6,10 @@ import { ts } from "ts-morph";
 export declare namespace GeneratedRequestWrapperExampleImpl {
     export interface Init {
         bodyPropertyName: string;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         packageId: PackageId;
-        endpointName: Name;
-        requestBody: HttpRequestBody | undefined;
+        endpointName: FernIr.Name;
+        requestBody: FernIr.HttpRequestBody | undefined;
         flattenRequestParameters: boolean;
     }
 }
@@ -26,10 +18,10 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private static readonly DEFAULT_FILE_PATH = "/path/to/your/file";
 
     private bodyPropertyName: string;
-    private example: ExampleEndpointCall;
+    private example: FernIr.ExampleEndpointCall;
     private packageId: PackageId;
-    private endpointName: Name;
-    private requestBody: HttpRequestBody | undefined;
+    private endpointName: FernIr.Name;
+    private requestBody: FernIr.HttpRequestBody | undefined;
     private flattenRequestParameters: boolean;
 
     constructor({
@@ -158,7 +150,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildInlinedRequestBodyProperties(
-        body: ExampleInlinedRequestBody,
+        body: FernIr.ExampleInlinedRequestBody,
         context: SdkContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
@@ -172,7 +164,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                         if (originalTypeForProperty.type === "union") {
                             const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                                 name: property.name,
-                                type: TypeReference.named({
+                                type: FernIr.TypeReference.named({
                                     ...property.originalTypeDeclaration,
                                     default: undefined,
                                     inline: undefined
@@ -232,7 +224,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildReferencedBodyProperties(
-        type: ExampleTypeReference,
+        type: FernIr.ExampleTypeReference,
         context: SdkContext,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -247,7 +239,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         return [ts.factory.createPropertyAssignment(getPropertyKey(this.bodyPropertyName), generatedExample)];
     }
 
-    private isNotLiteral(shape: ExampleTypeReferenceShape): boolean {
+    private isNotLiteral(shape: FernIr.ExampleTypeReferenceShape): boolean {
         if (shape.type === "named" && shape.shape.type === "alias") {
             return this.isNotLiteral(shape.shape.value.shape);
         }

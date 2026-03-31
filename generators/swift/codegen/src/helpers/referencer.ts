@@ -1,5 +1,5 @@
-import { swift } from "..";
-import { NameRegistry } from "../name-registry";
+import { swift } from "../index.js";
+import { NameRegistry } from "../name-registry/index.js";
 
 export class Referencer {
     private readonly nameRegistry: NameRegistry;

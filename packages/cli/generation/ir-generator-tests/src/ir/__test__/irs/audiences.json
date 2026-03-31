@@ -1209,6 +1209,7 @@
                     ],
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }
@@ -1267,6 +1268,12 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
@@ -1388,6 +1395,69 @@
                     },
                     "docs": null
                 },
+                "signatureVerification": {
+                    "type": "hmac",
+                    "signatureHeaderName": {
+                        "name": {
+                            "originalName": "x-webhook-signature",
+                            "camelCase": {
+                                "unsafeName": "xWebhookSignature",
+                                "safeName": "xWebhookSignature"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "x_webhook_signature",
+                                "safeName": "x_webhook_signature"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "X_WEBHOOK_SIGNATURE",
+                                "safeName": "X_WEBHOOK_SIGNATURE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "XWebhookSignature",
+                                "safeName": "XWebhookSignature"
+                            }
+                        },
+                        "wireValue": "x-webhook-signature"
+                    },
+                    "algorithm": "SHA256",
+                    "encoding": "HEX",
+                    "signaturePrefix": "sha256=",
+                    "payloadFormat": {
+                        "components": [
+                            "TIMESTAMP",
+                            "BODY"
+                        ],
+                        "delimiter": ".",
+                        "bodySort": null
+                    },
+                    "timestamp": {
+                        "headerName": {
+                            "name": {
+                                "originalName": "x-webhook-timestamp",
+                                "camelCase": {
+                                    "unsafeName": "xWebhookTimestamp",
+                                    "safeName": "xWebhookTimestamp"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_webhook_timestamp",
+                                    "safeName": "x_webhook_timestamp"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_WEBHOOK_TIMESTAMP",
+                                    "safeName": "X_WEBHOOK_TIMESTAMP"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XWebhookTimestamp",
+                                    "safeName": "XWebhookTimestamp"
+                                }
+                            },
+                            "wireValue": "x-webhook-timestamp"
+                        },
+                        "format": "UNIX_SECONDS",
+                        "tolerance": 300
+                    }
+                },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

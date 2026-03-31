@@ -3,13 +3,12 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, WebSocketChannel } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: FernIr.HttpEndpoint;
+    fernFilepath: FernIr.FernFilepath;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -20,15 +19,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static WEBSOCKET_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKET";
+    private static AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
+    private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
+    private readonly prerenderedSnippetsByEndpointId: Record<FernIr.EndpointId, string> = {};
+    private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
+    private cachedEnvironmentUrlVariables?: FernIr.ServerVariable[];
 
     constructor({
         context,
@@ -136,13 +137,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Always show OAuth token override documentation when OAuth client credentials are present
         if (this.hasOAuthClientCredentials()) {
-            const oauthDoc = this.getOAuthTokenOverrideDocumentation();
-            // Append to existing Usage addendum or create new one
-            if (addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage]) {
-                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] += "\n\n" + oauthDoc;
-            } else {
-                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = oauthDoc;
-            }
+            addendumsByFeatureId[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] =
+                this.getOAuthTokenOverrideDocumentation();
         }
 
         return addendumsByFeatureId;
@@ -158,7 +154,7 @@ For PATCH requests, the SDK uses \`OptionalNullable<T>\` to handle three-state n
 - **PRESENT**: Field has a non-null value
 
 \`\`\`java
-import com.seed.api.core.OptionalNullable;
+import ${this.context.getCorePackageName()}.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -186,16 +182,15 @@ UpdateRequest request = UpdateRequest.builder()
 
     private getOAuthTokenOverrideDocumentation(): string {
         const clientClassName = this.context.getRootClientClassName();
-        return `## Authentication
-
-This SDK supports two authentication methods:
+        return `This SDK supports two authentication methods:
 
 ### Option 1: Direct Bearer Token
 
 If you already have a valid access token, you can use it directly:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withToken("your-access-token")
+${clientClassName} client = ${clientClassName}.builder()
+    .token("your-access-token")
     .url("https://api.example.com")
     .build();
 \`\`\`
@@ -205,7 +200,8 @@ ${clientClassName} client = ${clientClassName}.withToken("your-access-token")
 The SDK can automatically handle token acquisition and refresh:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withCredentials("client-id", "client-secret")
+${clientClassName} client = ${clientClassName}.builder()
+    .credentials("client-id", "client-secret")
     .url("https://api.example.com")
     .build();
 \`\`\``;
@@ -216,9 +212,15 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true,
         backupRenderer: (endpoint: EndpointWithFilepath) => string
     ): string[] {
+        // For Usage snippets, always use the backup renderer when environment URL variables
+        // exist, since prerendered snippets from the dynamic generator don't include them.
+        const hasUrlVariables = this.getEnvironmentUrlVariables().length > 0;
         return this.getEndpointsForFeature(featureId)
             .filter(predicate)
             .map((endpoint) => {
+                if (hasUrlVariables && featureId === FernGeneratorCli.StructuredFeatureId.Usage) {
+                    return backupRenderer(endpoint);
+                }
                 const prerendered = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 return prerendered ?? backupRenderer(endpoint);
             });
@@ -237,15 +239,7 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
         const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
-        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
-            for (const variable of this.context.ir.variables) {
-                const variableName = variable.name.camelCase.unsafeName;
-                builderParameters.push({
-                    name: variableName,
-                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
-                });
-            }
-        }
+        this.addClientBuilderParameters(builderParameters);
 
         const clientBuilder = java.TypeLiteral.builder({
             classReference: clientClassReference,
@@ -520,9 +514,8 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
             arguments_: [ReadmeSnippetBuilder.ELLIPSES]
         });
 
-        // Get the endpoint name for the response type
-        const endpointMethodName = this.getEndpointMethodName(endpoint.endpoint);
-        const responseTypeName = this.capitalizeFirstLetter(endpointMethodName) + "HttpResponse";
+        // Get the HttpResponse class name (matches v1's naming: {BaseNamePrefix}HttpResponse)
+        const responseTypeName = this.context.getHttpResponseClassName();
 
         const snippet = java.codeblock((writer) => {
             writer.write(responseTypeName);
@@ -640,8 +633,8 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         return this.renderSnippet(snippet);
     }
 
-    private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+    private buildEndpointsById(): Record<FernIr.EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
@@ -655,11 +648,11 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
 
     private buildPrerenderedSnippetsByEndpointId(
         endpointSnippets: FernGeneratorExec.Endpoint[]
-    ): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+    ): Record<FernIr.EndpointId, string> {
+        const snippets: Record<FernIr.EndpointId, string> = {};
         const exampleStyle = this.context.ir.readmeConfig?.exampleStyle;
 
-        const snippetsByEndpointId: Record<EndpointId, FernGeneratorExec.Endpoint[]> = {};
+        const snippetsByEndpointId: Record<FernIr.EndpointId, FernGeneratorExec.Endpoint[]> = {};
 
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
@@ -782,16 +775,16 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         return filteredLines.join("\n");
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
+    private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
         return endpointIds.map(this.lookupEndpointById.bind(this));
     }
 
-    private getConfiguredEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath {
+    private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
             throw new Error(`Internal error; missing endpoint ${endpointId}`);
@@ -807,14 +800,16 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         });
     }
 
-    private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + "()");
+    private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): java.AstNode {
+        const clientAccessParts = fernFilepath.allParts.map(
+            (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+        );
         return clientAccessParts.length > 0
             ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
             : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME);
     }
 
-    private getEndpointMethodName(endpoint: HttpEndpoint): string {
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
@@ -833,7 +828,9 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         return "client";
     }
 
-    private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
+    private getDefaultEndpointIdWithMaybeEmptySnippets(
+        endpointSnippets: FernGeneratorExec.Endpoint[]
+    ): FernIr.EndpointId {
         if (endpointSnippets.length > 0) {
             return this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -864,7 +861,7 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         });
 
         if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
-            // Return the EndpointId of the first Endpoint
+            // Return the FernIr.EndpointId of the first Endpoint
             return endpointsWithReferencedRequestBody[0][0];
         }
 
@@ -895,14 +892,113 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    /**
+     * Adds all common client builder parameters: auth, IR variables, path parameters, and URL variables.
+     */
+    private addClientBuilderParameters(builderParameters: Array<{ name: string; value: java.TypeLiteral }>): void {
+        // Auth parameters
+        if (this.context.ir.auth.schemes.length > 0) {
+            const authScheme = this.context.ir.auth.schemes[0];
+            if (authScheme?.type === "bearer") {
+                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
+                builderParameters.push({
+                    name: tokenName,
+                    value: java.TypeLiteral.string("<token>")
+                });
+            } else if (authScheme?.type === "basic") {
+                builderParameters.push({
+                    name: "username",
+                    value: java.TypeLiteral.string("<username>")
+                });
+                builderParameters.push({
+                    name: "password",
+                    value: java.TypeLiteral.string("<password>")
+                });
+            } else if (authScheme?.type === "header") {
+                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
+                builderParameters.push({
+                    name: headerName,
+                    value: java.TypeLiteral.string("<api-key>")
+                });
+            }
+        }
+        // IR variables
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                builderParameters.push({
+                    name: variable.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+        // Path parameters
+        if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
+            for (const param of this.context.ir.pathParameters.filter((p) => p.variable == null)) {
+                builderParameters.push({
+                    name: param.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${param.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+        // Environment URL variables (e.g., tenantDomain)
+        for (const urlVariable of this.getEnvironmentUrlVariables()) {
+            builderParameters.push({
+                name: urlVariable.name.camelCase.unsafeName,
+                value: java.TypeLiteral.string(`YOUR_${urlVariable.name.screamingSnakeCase.unsafeName}`)
+            });
+        }
+    }
+
+    /**
+     * Extracts URL variables from the first environment definition (e.g., tenantDomain from
+     * server URL templates like "https://{tenantDomain}/my-org").
+     */
+    private getEnvironmentUrlVariables(): FernIr.ServerVariable[] {
+        if (this.cachedEnvironmentUrlVariables != null) {
+            return this.cachedEnvironmentUrlVariables;
+        }
+        const result = this.computeEnvironmentUrlVariables();
+        this.cachedEnvironmentUrlVariables = result;
+        return result;
+    }
+
+    private computeEnvironmentUrlVariables(): FernIr.ServerVariable[] {
+        const environments = this.context.ir.environments;
+        if (environments == null) {
+            return [];
+        }
+        const envType = environments.environments;
+        if (envType.type === "singleBaseUrl") {
+            const firstEnv = envType.environments[0];
+            return firstEnv?.urlVariables ?? [];
+        }
+        if (envType.type === "multipleBaseUrls") {
+            const firstEnv = envType.environments[0];
+            if (firstEnv?.urlVariables != null) {
+                const seenIds = new Set<string>();
+                const variables: FernIr.ServerVariable[] = [];
+                for (const vars of Object.values(firstEnv.urlVariables)) {
+                    for (const v of vars) {
+                        if (!seenIds.has(v.id)) {
+                            seenIds.add(v.id);
+                            variables.push(v);
+                        }
+                    }
+                }
+                return variables;
+            }
+        }
+        return [];
+    }
+
     private hasWebSocketChannels(): boolean {
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
 
     private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
         // Find first WebSocket channel by checking subpackages and root package
-        let channel: WebSocketChannel | null = null;
-        let fernFilepath: FernFilepath | null = null;
+        let channel: FernIr.WebSocketChannel | null = null;
+        let fernFilepath: FernIr.FernFilepath | null = null;
 
         // Check root package first
         if (this.context.ir.rootPackage.websocket != null && this.context.ir.websocketChannels != null) {
@@ -933,7 +1029,8 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part: { camelCase: { safeName: string } }) => part.camelCase.safeName + "()"
+            (part: { camelCase: { safeName: string } }) =>
+                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
@@ -943,44 +1040,7 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         // Build client initialization with auth if needed
         const clientClassReference = this.context.getRootClientClassReference();
         const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
-
-        // Add auth parameters if auth is configured
-        if (this.context.ir.auth.schemes.length > 0) {
-            const authScheme = this.context.ir.auth.schemes[0];
-            if (authScheme?.type === "bearer") {
-                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
-                builderParameters.push({
-                    name: tokenName,
-                    value: java.TypeLiteral.string("<token>")
-                });
-            } else if (authScheme?.type === "basic") {
-                builderParameters.push({
-                    name: "username",
-                    value: java.TypeLiteral.string("<username>")
-                });
-                builderParameters.push({
-                    name: "password",
-                    value: java.TypeLiteral.string("<password>")
-                });
-            } else if (authScheme?.type === "header") {
-                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
-                builderParameters.push({
-                    name: headerName,
-                    value: java.TypeLiteral.string("<api-key>")
-                });
-            }
-        }
-
-        // Add environment variables if any
-        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
-            for (const variable of this.context.ir.variables) {
-                const variableName = variable.name.camelCase.unsafeName;
-                builderParameters.push({
-                    name: variableName,
-                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
-                });
-            }
-        }
+        this.addClientBuilderParameters(builderParameters);
 
         const clientBuilder = java.TypeLiteral.builder({
             classReference: clientClassReference,
@@ -1039,14 +1099,29 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
             }
         }
 
+        // Build the factory method name: <channelName>WebSocket()
+        const channelName = channel.name.camelCase.safeName;
+        const wsFactoryMethod = `${channelName}WebSocket`;
+
+        // Build connect options class name: <PascalName>ConnectOptions
+        const channelPascalName = channel.name.pascalCase.safeName;
+        const connectOptionsClass = `${channelPascalName}ConnectOptions`;
+
+        // Check if there are required query parameters for the connect options
+        const hasRequiredQueryParams = channel.queryParameters.some((qp) => !qp.allowMultiple);
+
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(" client = ");
             writer.writeNodeStatement(clientBuilder);
             writer.newLine();
-            writer.writeLine("// Connect to the WebSocket");
-            writer.writeLine(`var ws = ${wsClientAccess};`);
-            writer.writeLine("ws.connect().join();");
+            writer.writeLine("// Create the WebSocket client and connect");
+            writer.writeLine(`var ws = ${wsClientAccess}.${wsFactoryMethod}();`);
+            if (hasRequiredQueryParams) {
+                writer.writeLine(`ws.connect(${connectOptionsClass}.builder()...build()).join();`);
+            } else {
+                writer.writeLine(`ws.connect(${connectOptionsClass}.builder().build()).join();`);
+            }
             writer.newLine();
 
             if (firstReceiveMessageName) {
@@ -1076,5 +1151,14 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private static RESERVED_METHOD_NAMES = new Set(["getClass", "notify", "notifyAll", "wait"]);
+
+    private getKeyWordCompatibleMethodName(methodName: string): string {
+        if (ReadmeSnippetBuilder.RESERVED_METHOD_NAMES.has(methodName)) {
+            return methodName + "_";
+        }
+        return methodName;
     }
 }

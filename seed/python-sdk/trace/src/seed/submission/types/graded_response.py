@@ -13,9 +13,11 @@ from .test_case_result_with_stdout import TestCaseResultWithStdout
 
 
 class GradedResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    submission_id: typing_extensions.Annotated[
+        SubmissionId, FieldMetadata(alias="submissionId"), pydantic.Field(alias="submissionId")
+    ]
     test_cases: typing_extensions.Annotated[
-        typing.Dict[str, TestCaseResultWithStdout], FieldMetadata(alias="testCases")
+        typing.Dict[str, TestCaseResultWithStdout], FieldMetadata(alias="testCases"), pydantic.Field(alias="testCases")
     ]
 
     if IS_PYDANTIC_V2:

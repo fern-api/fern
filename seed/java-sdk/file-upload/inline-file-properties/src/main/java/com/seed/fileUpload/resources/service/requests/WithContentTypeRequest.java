@@ -108,6 +108,10 @@ public final class WithContentTypeRequest {
     public interface _FinalStage {
         WithContentTypeRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage fooBar(Optional<MyObject> fooBar);
 
         _FinalStage fooBar(MyObject fooBar);
@@ -174,6 +178,18 @@ public final class WithContentTypeRequest {
         @java.lang.Override
         public WithContentTypeRequest build() {
             return new WithContentTypeRequest(file, foo, bar, fooBar, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

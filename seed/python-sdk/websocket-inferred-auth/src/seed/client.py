@@ -6,6 +6,8 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.inferred_auth_token_provider import AsyncInferredAuthTokenProvider, InferredAuthTokenProvider
+from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .auth.client import AsyncAuthClient, AuthClient
@@ -23,6 +25,18 @@ class SeedWebsocketAuth:
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    x_api_key : str
+        Credential used for inferred authentication.
+
+    client_id : str
+        Credential used for inferred authentication.
+
+    client_secret : str
+        Credential used for inferred authentication.
+
+    scope : typing.Optional[str]
+        Credential used for inferred authentication.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -32,12 +46,18 @@ class SeedWebsocketAuth:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedWebsocketAuth
 
     client = SeedWebsocketAuth(
         base_url="https://yourhost.com/path/to/api",
+        x_api_key="YOUR_X_API_KEY",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
     """
 
@@ -46,12 +66,34 @@ class SeedWebsocketAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        x_api_key: str,
+        client_id: str,
+        client_secret: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
+        inferred_auth_token_provider = InferredAuthTokenProvider(
+            x_api_key=x_api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            scope=scope,
+            client_wrapper=SyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                logging=logging,
+            ),
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
@@ -62,6 +104,8 @@ class SeedWebsocketAuth:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
+            auth_headers=inferred_auth_token_provider.get_headers,
         )
         self._auth: typing.Optional[AuthClient] = None
 
@@ -86,6 +130,18 @@ class AsyncSeedWebsocketAuth:
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    x_api_key : str
+        Credential used for inferred authentication.
+
+    client_id : str
+        Credential used for inferred authentication.
+
+    client_secret : str
+        Credential used for inferred authentication.
+
+    scope : typing.Optional[str]
+        Credential used for inferred authentication.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -95,12 +151,18 @@ class AsyncSeedWebsocketAuth:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedWebsocketAuth
 
     client = AsyncSeedWebsocketAuth(
         base_url="https://yourhost.com/path/to/api",
+        x_api_key="YOUR_X_API_KEY",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
     """
 
@@ -109,12 +171,34 @@ class AsyncSeedWebsocketAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        x_api_key: str,
+        client_id: str,
+        client_secret: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
+        inferred_auth_token_provider = AsyncInferredAuthTokenProvider(
+            x_api_key=x_api_key,
+            client_id=client_id,
+            client_secret=client_secret,
+            scope=scope,
+            client_wrapper=AsyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                logging=logging,
+            ),
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
@@ -125,6 +209,8 @@ class AsyncSeedWebsocketAuth:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
+            async_auth_headers=inferred_auth_token_provider.get_headers,
         )
         self._auth: typing.Optional[AsyncAuthClient] = None
 

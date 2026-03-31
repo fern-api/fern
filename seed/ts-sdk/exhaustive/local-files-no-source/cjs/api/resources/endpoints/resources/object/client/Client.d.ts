@@ -165,4 +165,59 @@ export declare class ObjectClient {
      */
     getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
+    /**
+     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithUnknownField({
+     *         unknown: {
+     *             "$ref": "https://example.com/schema"
+     *         }
+     *     })
+     */
+    getAndReturnWithUnknownField(request: SeedExhaustive.types.ObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField>;
+    private __getAndReturnWithUnknownField;
+    /**
+     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+     *         documentedUnknownType: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    getAndReturnWithDocumentedUnknownType(request: SeedExhaustive.types.ObjectWithDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDocumentedUnknownType>;
+    private __getAndReturnWithDocumentedUnknownType;
+    /**
+     * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    getAndReturnMapOfDocumentedUnknownType(request: SeedExhaustive.types.MapOfDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.MapOfDocumentedUnknownType>;
+    private __getAndReturnMapOfDocumentedUnknownType;
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+     * without being converted to "2023-08-31T14:15:22.000Z".
+     *
+     * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+     *         datetimeLikeString: "2023-08-31T14:15:22Z",
+     *         actualDatetime: "2023-08-31T14:15:22Z"
+     *     })
+     */
+    getAndReturnWithDatetimeLikeString(request: SeedExhaustive.types.ObjectWithDatetimeLikeString, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDatetimeLikeString>;
+    private __getAndReturnWithDatetimeLikeString;
 }

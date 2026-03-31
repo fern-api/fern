@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../../../index";
 
 export interface GetGeneratedTestCaseFileRequest {
-    template?: SeedTrace.v2.v3.TestCaseTemplate;
+    template?: SeedTrace.v2.v3.TestCaseTemplate | undefined;
     testCase: SeedTrace.v2.v3.TestCaseV2;
 }

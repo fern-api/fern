@@ -4,9 +4,9 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2;
 
-public partial class V2Client
+public partial class V2Client : IV2Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal V2Client(RawClient client)
     {
@@ -15,9 +15,9 @@ public partial class V2Client
         V3 = new V3Client(_client);
     }
 
-    public ProblemClient Problem { get; }
+    public IProblemClient Problem { get; }
 
-    public V3Client V3 { get; }
+    public IV3Client V3 { get; }
 
     /// <example><code>
     /// await client.V2.TestAsync();
@@ -27,13 +27,19 @@ public partial class V2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -44,7 +50,9 @@ public partial class V2Client
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -2,9 +2,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { UnionTypeDeclaration } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
 
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
-import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema";
-import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
+import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema.js";
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema.js";
 
 export declare namespace convertUnionToJsonSchema {
     interface Args {

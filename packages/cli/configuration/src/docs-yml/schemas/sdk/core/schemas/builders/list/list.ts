@@ -1,7 +1,7 @@
-import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
+import { type BaseSchema, type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {
@@ -44,30 +44,20 @@ function validateAndTransformArray<Raw, Parsed>(
         };
     }
 
-    const maybeValidItems = value.map((item, index) => transformItem(item, index));
+    const result: Parsed[] = [];
+    const errors: ValidationError[] = [];
 
-    return maybeValidItems.reduce<MaybeValid<Parsed[]>>(
-        (acc, item) => {
-            if (acc.ok && item.ok) {
-                return {
-                    ok: true,
-                    value: [...acc.value, item.value],
-                };
-            }
+    for (let i = 0; i < value.length; i++) {
+        const item = transformItem(value[i], i);
+        if (item.ok) {
+            result.push(item.value);
+        } else {
+            errors.push(...item.errors);
+        }
+    }
 
-            const errors: ValidationError[] = [];
-            if (!acc.ok) {
-                errors.push(...acc.errors);
-            }
-            if (!item.ok) {
-                errors.push(...item.errors);
-            }
-
-            return {
-                ok: false,
-                errors,
-            };
-        },
-        { ok: true, value: [] },
-    );
+    if (errors.length === 0) {
+        return { ok: true, value: result };
+    }
+    return { ok: false, errors };
 }

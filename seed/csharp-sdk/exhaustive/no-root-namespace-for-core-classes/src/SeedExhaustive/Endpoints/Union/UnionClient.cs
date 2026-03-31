@@ -1,37 +1,39 @@
-using System.Text.Json;
+using global::System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class UnionClient
+public partial class UnionClient : IUnionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UnionClient(RawClient client)
     {
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
-    /// );
-    /// </code></example>
-    public async Task<Animal> GetAndReturnUnionAsync(
+    private async Task<WithRawResponse<Animal>> GetAndReturnUnionAsyncCore(
         Animal request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/union",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -39,24 +41,58 @@ public partial class UnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
-                return JsonUtils.Deserialize<Animal>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<Animal>(responseBody)!;
+                return new WithRawResponse<Animal>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExhaustiveException("Failed to deserialize response", e);
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Union.GetAndReturnUnionAsync(
+    ///     new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Animal> GetAndReturnUnionAsync(
+        Animal request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Animal>(
+            GetAndReturnUnionAsyncCore(request, options, cancellationToken)
+        );
     }
 }

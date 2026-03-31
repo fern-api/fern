@@ -12,8 +12,8 @@ require "seed"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = "http://localhost:8080"
-  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"
+  WIREMOCK_BASE_URL = ENV["WIREMOCK_URL"] || "http://localhost:8080"
+  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 
   def setup
     super
@@ -30,7 +30,8 @@ class WireMockTestCase < Minitest::Test
   # @param query_params [Hash, nil] Query parameters to match
   # @param expected [Integer] Expected number of requests
   def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
-    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
 

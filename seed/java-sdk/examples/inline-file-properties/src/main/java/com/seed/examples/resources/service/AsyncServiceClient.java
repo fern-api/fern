@@ -59,6 +59,10 @@ public class AsyncServiceClient {
         return this.rawClient.createBigEntity().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Response> createBigEntity(RequestOptions requestOptions) {
+        return this.rawClient.createBigEntity(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Response> createBigEntity(BigEntity request) {
         return this.rawClient.createBigEntity(request).thenApply(response -> response.body());
     }
@@ -69,6 +73,10 @@ public class AsyncServiceClient {
 
     public CompletableFuture<Void> refreshToken() {
         return this.rawClient.refreshToken().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> refreshToken(RequestOptions requestOptions) {
+        return this.rawClient.refreshToken(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> refreshToken(Optional<RefreshTokenRequest> request) {

@@ -1,11 +1,11 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
 
 export declare namespace EndpointErrorUnionContextImpl {
     export interface Init {
@@ -42,7 +42,10 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
         this.packageResolver = packageResolver;
     }
 
-    public getGeneratedEndpointErrorUnion(packageId: PackageId, endpointName: Name): GeneratedEndpointErrorUnion {
+    public getGeneratedEndpointErrorUnion(
+        packageId: PackageId,
+        endpointName: FernIr.Name
+    ): GeneratedEndpointErrorUnion {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -58,7 +61,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
 
     public getReferenceToEndpointTypeExport(
         packageId: PackageId,
-        endpointName: Name,
+        endpointName: FernIr.Name,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

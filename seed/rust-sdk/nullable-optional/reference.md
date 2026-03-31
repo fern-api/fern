@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_user</a>(user_id: String) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_user</a>(user_id: String) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_user</a>(request: CreateUserRequest) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,6 @@ Create a new user
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {
@@ -109,15 +108,17 @@ async fn main() {
                 username: "username".to_string(),
                 email: Some("email".to_string()),
                 phone: Some("phone".to_string()),
-                address: Some(Some(Address {
+                address: Some(Address {
                     street: "street".to_string(),
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
-                })),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -134,7 +135,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -162,7 +163,6 @@ Update a user (partial update)
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{Address, NullableUserId, OptionalUserId, UpdateUserRequest};
 
 #[tokio::main]
 async fn main() {
@@ -176,17 +176,19 @@ async fn main() {
             &"userId".to_string(),
             &UpdateUserRequest {
                 username: Some("username".to_string()),
-                email: Some(Some("email".to_string())),
+                email: Some("email".to_string()),
                 phone: Some("phone".to_string()),
-                address: Some(Some(Address {
+                address: Some(Address {
                     street: "street".to_string(),
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
-                })),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -218,7 +220,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">list_users</a>(limit: Option<Option<i64>>, offset: Option<Option<i64>>, include_deleted: Option<Option<bool>>, sort_by: Option<Option<Option<String>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">list_users</a>(limit: Option&lt;Option&lt;i64&gt;&gt;, offset: Option&lt;Option&lt;i64&gt;&gt;, include_deleted: Option&lt;Option&lt;bool&gt;&gt;, sort_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -260,7 +262,8 @@ async fn main() {
                 limit: Some(1),
                 offset: Some(1),
                 include_deleted: Some(true),
-                sort_by: Some(Some("sortBy".to_string())),
+                sort_by: Some("sortBy".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -316,7 +319,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">search_users</a>(query: Option<String>, department: Option<Option<String>>, role: Option<Option<String>>, is_active: Option<Option<Option<bool>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">search_users</a>(query: Option&lt;String&gt;, department: Option&lt;Option&lt;String&gt;&gt;, role: Option&lt;Option&lt;String&gt;&gt;, is_active: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -358,7 +361,7 @@ async fn main() {
                 query: "query".to_string(),
                 department: Some("department".to_string()),
                 role: Some("role".to_string()),
-                is_active: Some(Some(true)),
+                is_active: Some(true),
             },
             None,
         )
@@ -414,7 +417,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_complex_profile</a>(request: ComplexProfile) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_complex_profile</a>(request: ComplexProfile) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -442,11 +445,6 @@ Create a complex profile to test nullable enums and unions
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{
-    Address, ComplexProfile, Document, EmailNotification, NotificationMethod, NullableUserId,
-    OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification, UserResponse,
-    UserRole, UserStatus,
-};
 
 #[tokio::main]
 async fn main() {
@@ -461,15 +459,16 @@ async fn main() {
                 id: "id".to_string(),
                 nullable_role: Some(UserRole::Admin),
                 optional_role: Some(UserRole::Admin),
-                optional_nullable_role: Some(Some(UserRole::Admin)),
+                optional_nullable_role: Some(UserRole::Admin),
                 nullable_status: Some(UserStatus::Active),
                 optional_status: Some(UserStatus::Active),
-                optional_nullable_status: Some(Some(UserStatus::Active)),
+                optional_nullable_status: Some(UserStatus::Active),
                 nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_notification: Some(NotificationMethod::Email {
@@ -477,38 +476,38 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
-                optional_nullable_notification: Some(Some(NotificationMethod::Email {
+                optional_nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                })),
+                }),
                 nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 optional_search_result: Some(SearchResult::User {
@@ -517,23 +516,21 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
@@ -544,10 +541,10 @@ async fn main() {
                     "optionalArray".to_string(),
                     "optionalArray".to_string(),
                 ]),
-                optional_nullable_array: Some(Some(vec![
+                optional_nullable_array: Some(vec![
                     "optionalNullableArray".to_string(),
                     "optionalNullableArray".to_string(),
-                ])),
+                ]),
                 nullable_list_of_nullables: Some(vec![
                     Some("nullableListOfNullables".to_string()),
                     Some("nullableListOfNullables".to_string()),
@@ -559,9 +556,10 @@ async fn main() {
                         city: Some("city".to_string()),
                         state: Some("state".to_string()),
                         zip_code: "zipCode".to_string(),
-                        country: Some(Some("country".to_string())),
+                        country: Some("country".to_string()),
                         building_id: NullableUserId(Some("buildingId".to_string())),
                         tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                        ..Default::default()
                     }),
                 )])),
                 nullable_list_of_unions: Some(vec![
@@ -570,6 +568,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                     NotificationMethod::Email {
@@ -577,6 +576,7 @@ async fn main() {
                             email_address: "emailAddress".to_string(),
                             subject: "subject".to_string(),
                             html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
                         },
                     },
                 ]),
@@ -584,6 +584,7 @@ async fn main() {
                     "optionalMapOfEnums".to_string(),
                     UserRole::Admin,
                 )])),
+                ..Default::default()
             },
             None,
         )
@@ -600,7 +601,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_complex_profile</a>(profile_id: String) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_complex_profile</a>(profile_id: String) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -666,7 +667,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_complex_profile</a>(profile_id: String, request: UpdateComplexProfileRequest) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_complex_profile</a>(profile_id: String, request: UpdateComplexProfileRequest) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -694,11 +695,6 @@ Update complex profile to test nullable field updates
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{
-    Address, Document, EmailNotification, NotificationMethod, NullableUserId, OptionalUserId,
-    Organization, PushNotification, SearchResult, SmsNotification, UserResponse, UserRole,
-    UserStatus,
-};
 
 #[tokio::main]
 async fn main() {
@@ -711,44 +707,44 @@ async fn main() {
         .update_complex_profile(
             &"profileId".to_string(),
             &UpdateComplexProfileRequest {
-                nullable_role: Some(Some(UserRole::Admin)),
-                nullable_status: Some(Some(UserStatus::Active)),
-                nullable_notification: Some(Some(NotificationMethod::Email {
+                nullable_role: Some(UserRole::Admin),
+                nullable_status: Some(UserStatus::Active),
+                nullable_notification: Some(NotificationMethod::Email {
                     data: EmailNotification {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                })),
-                nullable_search_result: Some(Some(SearchResult::User {
+                }),
+                nullable_search_result: Some(SearchResult::User {
                     data: UserResponse {
                         id: "id".to_string(),
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
-                })),
-                nullable_array: Some(Some(vec![
+                }),
+                nullable_array: Some(vec![
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
-                ])),
+                ]),
+                ..Default::default()
             },
             None,
         )
@@ -820,7 +816,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">test_deserialization</a>(request: DeserializationTestRequest) -> Result<DeserializationTestResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">test_deserialization</a>(request: DeserializationTestRequest) -> Result&lt;DeserializationTestResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -848,11 +844,6 @@ Test endpoint for validating null deserialization
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{
-    Address, DeserializationTestRequest, Document, EmailNotification, NotificationMethod,
-    NullableUserId, OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification,
-    UserResponse, UserRole, UserStatus,
-};
 
 #[tokio::main]
 async fn main() {
@@ -867,7 +858,7 @@ async fn main() {
                 required_string: "requiredString".to_string(),
                 nullable_string: Some("nullableString".to_string()),
                 optional_string: Some("optionalString".to_string()),
-                optional_nullable_string: Some(Some("optionalNullableString".to_string())),
+                optional_nullable_string: Some("optionalNullableString".to_string()),
                 nullable_enum: Some(UserRole::Admin),
                 optional_enum: Some(UserStatus::Active),
                 nullable_union: Some(NotificationMethod::Email {
@@ -875,6 +866,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_union: Some(SearchResult::User {
@@ -883,23 +875,21 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_list: Some(vec!["nullableList".to_string(), "nullableList".to_string()]),
@@ -909,16 +899,19 @@ async fn main() {
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
                 optional_object: Some(Organization {
                     id: "id".to_string(),
                     name: "name".to_string(),
                     domain: Some("domain".to_string()),
                     employee_count: Some(1),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -935,7 +928,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">filter_by_role</a>(role: Option<Option<UserRole>>, status: Option<Option<UserStatus>>, secondary_role: Option<Option<Option<UserRole>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">filter_by_role</a>(role: Option&lt;Option&lt;UserRole&gt;&gt;, status: Option&lt;Option&lt;UserStatus&gt;&gt;, secondary_role: Option&lt;Option&lt;Option&lt;UserRole&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -963,7 +956,6 @@ Filter users by role with nullable enum
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {
@@ -977,7 +969,8 @@ async fn main() {
             &FilterByRoleQueryRequest {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
-                secondary_role: Some(Some(UserRole::Admin)),
+                secondary_role: Some(UserRole::Admin),
+                ..Default::default()
             },
             None,
         )
@@ -1025,7 +1018,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_notification_settings</a>(user_id: String) -> Result<Option<NotificationMethod>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_notification_settings</a>(user_id: String) -> Result&lt;Option&lt;NotificationMethod&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1091,7 +1084,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_tags</a>(user_id: String, request: UpdateTagsRequest) -> Result<Vec<String>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_tags</a>(user_id: String, request: UpdateTagsRequest) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1133,7 +1126,8 @@ async fn main() {
             &UpdateTagsRequest {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
-                labels: Some(Some(vec!["labels".to_string(), "labels".to_string()])),
+                labels: Some(vec!["labels".to_string(), "labels".to_string()]),
+                ..Default::default()
             },
             None,
         )
@@ -1189,7 +1183,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_search_results</a>(request: SearchRequest) -> Result<Option<Vec<SearchResult>>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_search_results</a>(request: SearchRequest) -> Result&lt;Option&lt;Vec&lt;SearchResult&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1280,3 +1274,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

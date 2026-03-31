@@ -1,4 +1,4 @@
-import { ts } from "../..";
+import { ts } from "../../index.js";
 
 describe("Reference", () => {
     describe("toStringWithDefaultImport", () => {

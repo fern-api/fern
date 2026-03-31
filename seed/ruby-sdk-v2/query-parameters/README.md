@@ -11,7 +11,10 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 - [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
+  - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Reference
@@ -25,42 +28,42 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.user.get_username(
   limit: 1,
-  id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  date: '2023-01-15',
-  deadline: '2024-01-15T09:30:00Z',
-  bytes: 'SGVsbG8gd29ybGQh',
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  date: "2023-01-15",
+  deadline: "2024-01-15T09:30:00Z",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
   user_list: [{
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }, {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }],
-  optional_deadline: '2024-01-15T09:30:00Z',
+  optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
-    keyValue: 'keyValue'
+    keyValue: "keyValue"
   },
-  optional_string: 'optionalString',
+  optional_string: "optionalString",
   nested_user: {
-    name: 'name',
+    name: "name",
     user: {
-      name: 'name',
-      tags: ['tags', 'tags']
+      name: "name",
+      tags: %w[tags tags]
     }
   },
   optional_user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }
-);
+)
 ```
 
 ## Environments
@@ -104,6 +107,28 @@ end
 
 ## Advanced
 
+### Retries
+
+The SDK is instrumented with automatic retries. A request will be retried as long as the request is deemed
+retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` option to configure this behavior.
+
+```ruby
+require "seed"
+
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    max_retries: 3  # Configure max retries (default is 2)
+)
+```
+
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
@@ -114,6 +139,40 @@ require "seed"
 response = client.user.get_username(
     ...,
     timeout: 30  # 30 second timeout
+)
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additional_headers` request option.
+
+```ruby
+require "seed"
+
+response = client.user.get_username(
+    ...,
+    request_options: {
+        additional_headers: {
+            "X-Custom-Header" => "custom-value"
+        }
+    }
+)
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
+
+```ruby
+require "seed"
+
+response = client.user.get_username(
+    ...,
+    request_options: {
+        additional_query_parameters: {
+            "custom_param" => "custom-value"
+        }
+    }
 )
 ```
 

@@ -1,9 +1,9 @@
-import { type Generation } from "../../context/generation-info";
-import { is } from "../../utils/type-guards";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { ClassReference } from "../types/ClassReference";
-import { Type } from "../types/IType";
+import { type Generation } from "../../context/generation-info.js";
+import { is } from "../../utils/type-guards.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { ClassReference } from "../types/ClassReference.js";
+import { Type } from "../types/IType.js";
 
 /**
  * Represents a field in a class constructor initialization.

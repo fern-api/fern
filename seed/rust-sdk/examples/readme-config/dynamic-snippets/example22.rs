@@ -1,5 +1,4 @@
 use seed_examples::prelude::*;
-use seed_examples::RefreshTokenRequest;
 
 #[tokio::main]
 async fn main() {
@@ -11,6 +10,12 @@ async fn main() {
     let client = ExamplesClient::new(config).expect("Failed to build client");
     client
         .service
-        .refresh_token(&Some(RefreshTokenRequest { ttl: 1 }), None)
+        .refresh_token(
+            &Some(RefreshTokenRequest {
+                ttl: 1,
+                ..Default::default()
+            }),
+            None,
+        )
         .await;
 }

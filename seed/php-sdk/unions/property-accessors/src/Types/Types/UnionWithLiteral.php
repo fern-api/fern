@@ -66,6 +66,7 @@ class UnionWithLiteral extends JsonSerializableType
     public function setBase(string $value): self
     {
         $this->base = $value;
+        $this->_setField('base');
         return $this;
     }
 

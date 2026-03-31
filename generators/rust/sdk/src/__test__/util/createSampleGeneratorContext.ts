@@ -1,12 +1,12 @@
-import { EnvironmentsConfig, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 interface CreateSampleGeneratorContextArgs {
-    environments?: EnvironmentsConfig;
+    environments?: FernIr.EnvironmentsConfig;
 }
 
 export function createSampleGeneratorContext(args: CreateSampleGeneratorContextArgs = {}): SdkGeneratorContext {
-    const mockIR: IntermediateRepresentation = {
+    const mockIR: FernIr.IntermediateRepresentation = {
         apiName: {
             originalName: "TestAPI",
             camelCase: { unsafeName: "testApi", safeName: "testApi" },
@@ -31,12 +31,14 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
             navigationConfig: undefined
         },
         subpackages: {}
-    } as unknown as IntermediateRepresentation;
+    } as unknown as FernIr.IntermediateRepresentation;
 
     return {
         ir: mockIR,
         getClientName: () => "TestClient",
         getApiClientBuilderClientName: () => "TestClient",
+        getCrateName: () => "test_api",
+        getCrateVersion: () => "0.1.0",
         customConfig: {}
     } as SdkGeneratorContext;
 }

@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
 
-import { NodeIdGenerator } from "./NodeIdGenerator";
-import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
+import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle.js";
 
 dayjs.extend(utc);
 

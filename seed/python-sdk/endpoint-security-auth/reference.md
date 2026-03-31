@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,10 +16,10 @@
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -55,6 +55,22 @@ client.auth.get_token(
 <dl>
 <dd>
 
+**audience:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grant_type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -68,7 +84,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_bearer</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_bearer</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -84,10 +100,10 @@ client.auth.get_token(
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.user.get_with_bearer()
 
 ```
@@ -116,7 +132,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_api_key</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_api_key</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -132,11 +148,11 @@ client.user.get_with_bearer()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_api_key()
+
+client.user.get_with_bearer()
 
 ```
 </dd>
@@ -164,7 +180,7 @@ client.user.get_with_api_key()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_o_auth</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_o_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -180,11 +196,11 @@ client.user.get_with_api_key()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_o_auth()
+
+client.user.get_with_bearer()
 
 ```
 </dd>
@@ -212,7 +228,7 @@ client.user.get_with_o_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_basic</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_basic</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -228,11 +244,11 @@ client.user.get_with_o_auth()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_basic()
+
+client.user.get_with_bearer()
 
 ```
 </dd>
@@ -260,7 +276,7 @@ client.user.get_with_basic()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_inferred_auth</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_inferred_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -276,11 +292,11 @@ client.user.get_with_basic()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_inferred_auth()
+
+client.user.get_with_bearer()
 
 ```
 </dd>
@@ -308,7 +324,7 @@ client.user.get_with_inferred_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_any_auth</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_any_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -324,11 +340,11 @@ client.user.get_with_inferred_auth()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_any_auth()
+
+client.user.get_with_bearer()
 
 ```
 </dd>
@@ -356,7 +372,7 @@ client.user.get_with_any_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_all_auth</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_all_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -372,11 +388,11 @@ client.user.get_with_any_auth()
 from seed import SeedEndpointSecurityAuth
 
 client = SeedEndpointSecurityAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
-client.user.get_with_all_auth()
+
+client.user.get_with_bearer()
 
 ```
 </dd>

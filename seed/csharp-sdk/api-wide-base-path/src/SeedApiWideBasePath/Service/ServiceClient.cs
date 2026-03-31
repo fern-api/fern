@@ -2,9 +2,9 @@ using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
@@ -23,11 +23,16 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApiWideBasePath.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/test/{0}/{1}/{2}/{3}",
@@ -36,6 +41,7 @@ public partial class ServiceClient
                         ValueConvert.ToPathParameterString(endpointParam),
                         ValueConvert.ToPathParameterString(resourceParam)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -46,7 +52,9 @@ public partial class ServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedApiWideBasePathApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

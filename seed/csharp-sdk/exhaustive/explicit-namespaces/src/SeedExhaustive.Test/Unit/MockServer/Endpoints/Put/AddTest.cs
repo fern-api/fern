@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Put;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Put;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class AddTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -40,9 +41,6 @@ public class AddTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PutResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

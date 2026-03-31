@@ -1,19 +1,19 @@
-import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { RawSingleUnionType } from "./RawSingleUnionType";
+import { RawSingleUnionType } from "./RawSingleUnionType.js";
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {
-        discriminant: NameAndWireValue;
-        discriminantValue: NameAndWireValue;
+        discriminant: FernIr.NameAndWireValue;
+        discriminantValue: FernIr.NameAndWireValue;
     }
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private discriminant: NameAndWireValue;
-    private discriminantValueWithAllCasings: NameAndWireValue;
+    private discriminant: FernIr.NameAndWireValue;
+    private discriminantValueWithAllCasings: FernIr.NameAndWireValue;
 
     constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
         this.discriminant = discriminant;
@@ -26,7 +26,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: this.discriminantValueWithAllCasings.name.pascalCase.unsafeName,
+            name: sanitizeIdentifier(this.discriminantValueWithAllCasings.name.pascalCase.unsafeName),
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
@@ -55,4 +55,13 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
     protected abstract getNonDiscriminantPropertiesForSchema(
         context: Context
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"];
+}
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
 }

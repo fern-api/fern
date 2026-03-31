@@ -1,4 +1,4 @@
-import { LogLevel } from "./LogLevel";
+import { LogLevel } from "./LogLevel.js";
 
 export interface Logger {
     disable: () => void;

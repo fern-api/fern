@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    context "context"
 )
 
 func do() {
@@ -33,7 +34,7 @@ func do() {
                 "key": "value",
             },
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
     client.Service.CreateMovie(
         context.TODO(),

@@ -1,14 +1,14 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 
-import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
+import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl.js";
 
 export declare namespace RequestWrapperGenerator {
     export namespace generateRequestWrapper {
         export interface Args {
-            service: HttpService;
-            endpoint: HttpEndpoint;
+            service: FernIr.HttpService;
+            endpoint: FernIr.HttpEndpoint;
             wrapperName: string;
             packageId: PackageId;
             includeSerdeLayer: boolean;
@@ -19,6 +19,7 @@ export declare namespace RequestWrapperGenerator {
             formDataSupport: "Node16" | "Node18";
             flattenRequestParameters: boolean;
             parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+            resolveQueryParameterNameConflicts: boolean;
         }
     }
 }
@@ -36,7 +37,8 @@ export class RequestWrapperGenerator {
         shouldInlinePathParameters,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        resolveQueryParameterNameConflicts
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -50,7 +52,8 @@ export class RequestWrapperGenerator {
             shouldInlinePathParameters,
             formDataSupport,
             flattenRequestParameters,
-            parameterNaming
+            parameterNaming,
+            resolveQueryParameterNameConflicts
         });
     }
 }

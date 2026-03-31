@@ -1,9 +1,4 @@
 use seed_pagination::prelude::*;
-use seed_pagination::{
-    MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-    MultipleFilterSearchRequestValue, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest,
-    SingleFilterSearchRequestOperator, StartingAfterPaging,
-};
 
 #[tokio::main]
 async fn main() {
@@ -21,11 +16,13 @@ async fn main() {
                 pagination: Some(StartingAfterPaging {
                     per_page: 1,
                     starting_after: Some("starting_after".to_string()),
+                    ..Default::default()
                 }),
                 query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
                     field: Some("field".to_string()),
                     operator: Some(SingleFilterSearchRequestOperator::Equals),
                     value: Some("value".to_string()),
+                    ..Default::default()
                 }),
             },
             None,

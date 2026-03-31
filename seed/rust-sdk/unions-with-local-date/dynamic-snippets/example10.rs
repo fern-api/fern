@@ -1,5 +1,4 @@
 use seed_unions::prelude::*;
-use seed_unions::{Circle, Shape, Square};
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +11,10 @@ async fn main() {
         .union_
         .update(
             &Shape::Circle {
-                data: Circle { radius: 1.1 },
+                data: Circle {
+                    radius: 1.1,
+                    ..Default::default()
+                },
             },
             None,
         )

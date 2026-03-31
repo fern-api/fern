@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.listUsernamesCustom() -> FernCustomPaginator&lt;UsernameCursor&gt;</code></summary>
+<details><summary><code>client.users.listUsernamesCustom() -> FernCustomPaginator&amp;lt;UsernameCursor&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,3 +47,4 @@ the next page of results.
 </dd>
 </dl>
 </details>
+

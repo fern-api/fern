@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>> { ... }) -> OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, int, IEnumerable&lt;int&gt;, IEnumerable&lt;IEnumerable&lt;int&gt;&gt;, HashSet&lt;string&gt;&gt; { ... }) -> WithRawResponseTask&lt;OneOf&lt;string, IEnumerable&lt;string&gt;, int, IEnumerable&lt;int&gt;, IEnumerable&lt;IEnumerable&lt;int&gt;&gt;, HashSet&lt;string&gt;&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Union.GetAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> Dictionary<OneOf<KeyType, string>, string></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;OneOf&lt;KeyType, string&gt;, string&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<Dictionary<string, object?>?, NamedMetadata> { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf&lt;Dictionary&lt;string, object?&gt;?, NamedMetadata&gt; { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +113,7 @@ await client.Union.UpdateMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">CallAsync</a>(Request { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">CallAsync</a>(Request { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -164,7 +164,7 @@ await client.Union.CallAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf<string, IEnumerable<string>, int, HashSet<string>> { ... }) -> OneOf<string, IEnumerable<string>, int, HashSet<string>></code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, int, HashSet&lt;string&gt;&gt; { ... }) -> WithRawResponseTask&lt;OneOf&lt;string, IEnumerable&lt;string&gt;, int, HashSet&lt;string&gt;&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -204,7 +204,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>> { ... }) -> string</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, OneOf&lt;int, HashSet&lt;string&gt;, IEnumerable&lt;string&gt;, OneOf&lt;bool, HashSet&lt;string&gt;, IEnumerable&lt;string&gt;&gt;&gt;&gt; { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -244,7 +244,7 @@ await client.Union.NestedUnionsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">TestCamelCasePropertiesAsync</a>(PaymentRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">TestCamelCasePropertiesAsync</a>(PaymentRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 

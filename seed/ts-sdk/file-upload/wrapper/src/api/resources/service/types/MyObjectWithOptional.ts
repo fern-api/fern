@@ -2,5 +2,5 @@
 
 export interface MyObjectWithOptional {
     prop: string;
-    optionalProp?: string;
+    optionalProp?: string | undefined;
 }

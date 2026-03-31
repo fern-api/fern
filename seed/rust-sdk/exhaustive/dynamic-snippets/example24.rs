@@ -10,11 +10,11 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_query(
-            &GetWithQueryQueryRequest {
-                query: "query".to_string(),
-                number: 1,
+        .object
+        .get_and_return_with_documented_unknown_type(
+            &ObjectWithDocumentedUnknownType {
+                documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+                ..Default::default()
             },
             None,
         )

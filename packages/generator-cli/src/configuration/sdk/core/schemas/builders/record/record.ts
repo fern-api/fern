@@ -1,21 +1,22 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { entries } from "../../utils/entries";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { isPlainObject } from "../../utils/isPlainObject";
-import { MaybePromise } from "../../utils/MaybePromise";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
-import { BaseRecordSchema, RecordSchema } from "./types";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { isPlainObject } from "../../utils/isPlainObject.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
+import type { BaseRecordSchema, RecordSchema } from "./types.js";
+
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
-    valueSchema: Schema<RawValue, ParsedValue>
+    valueSchema: Schema<RawValue, ParsedValue>,
 ): RecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {
     const baseSchema: BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> = {
-        parse: async (raw, opts) => {
+        parse: (raw, opts) => {
             return validateAndTransformRecord({
                 value: raw,
-                isKeyNumeric: (await keySchema.getType()) === SchemaType.NUMBER,
+                isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
                     keySchema.parse(key, {
                         ...opts,
@@ -29,10 +30,10 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
-        json: async (parsed, opts) => {
+        json: (parsed, opts) => {
             return validateAndTransformRecord({
                 value: parsed,
-                isKeyNumeric: (await keySchema.getType()) === SchemaType.NUMBER,
+                isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
                 transformKey: (key) =>
                     keySchema.json(key, {
                         ...opts,
@@ -55,7 +56,7 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
     };
 }
 
-async function validateAndTransformRecord<TransformedKey extends string | number, TransformedValue>({
+function validateAndTransformRecord<TransformedKey extends string | number, TransformedValue>({
     value,
     isKeyNumeric,
     transformKey,
@@ -64,10 +65,10 @@ async function validateAndTransformRecord<TransformedKey extends string | number
 }: {
     value: unknown;
     isKeyNumeric: boolean;
-    transformKey: (key: string | number) => MaybePromise<MaybeValid<TransformedKey>>;
-    transformValue: (value: unknown, key: string | number) => MaybePromise<MaybeValid<TransformedValue>>;
+    transformKey: (key: string | number) => MaybeValid<TransformedKey>;
+    transformValue: (value: unknown, key: string | number) => MaybeValid<TransformedValue>;
     breadcrumbsPrefix: string[] | undefined;
-}): Promise<MaybeValid<Record<TransformedKey, TransformedValue>>> {
+}): MaybeValid<Record<TransformedKey, TransformedValue>> {
     if (!isPlainObject(value)) {
         return {
             ok: false,
@@ -80,52 +81,42 @@ async function validateAndTransformRecord<TransformedKey extends string | number
         };
     }
 
-    return entries(value).reduce<Promise<MaybeValid<Record<TransformedKey, TransformedValue>>>>(
-        async (accPromise, [stringKey, value]) => {
-            // skip nullish keys
-            if (value == null) {
-                return accPromise;
+    const result = {} as Record<TransformedKey, TransformedValue>;
+    const errors: ValidationError[] = [];
+
+    for (const stringKey in value) {
+        if (!_hasOwn.call(value, stringKey)) {
+            continue;
+        }
+        const entryValue = (value as Record<string, unknown>)[stringKey];
+        if (entryValue === undefined) {
+            continue;
+        }
+
+        let key: string | number = stringKey;
+        if (isKeyNumeric) {
+            const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
+            if (!Number.isNaN(numberKey)) {
+                key = numberKey;
             }
+        }
+        const transformedKey = transformKey(key);
+        const transformedValue = transformValue(entryValue, key);
 
-            const acc = await accPromise;
-
-            let key: string | number = stringKey;
-            if (isKeyNumeric) {
-                const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-                if (!isNaN(numberKey)) {
-                    key = numberKey;
-                }
-            }
-            const transformedKey = await transformKey(key);
-
-            const transformedValue = await transformValue(value, key);
-
-            if (acc.ok && transformedKey.ok && transformedValue.ok) {
-                return {
-                    ok: true,
-                    value: {
-                        ...acc.value,
-                        [transformedKey.value]: transformedValue.value,
-                    },
-                };
-            }
-
-            const errors: ValidationError[] = [];
-            if (!acc.ok) {
-                errors.push(...acc.errors);
-            }
+        if (transformedKey.ok && transformedValue.ok) {
+            result[transformedKey.value] = transformedValue.value;
+        } else {
             if (!transformedKey.ok) {
                 errors.push(...transformedKey.errors);
             }
             if (!transformedValue.ok) {
                 errors.push(...transformedValue.errors);
             }
+        }
+    }
 
-            return {
-                ok: false,
-                errors,
-            };
-        },
-        Promise.resolve({ ok: true, value: {} as Record<TransformedKey, TransformedValue> })
-    );
+    if (errors.length === 0) {
+        return { ok: true, value: result };
+    }
+    return { ok: false, errors };
 }

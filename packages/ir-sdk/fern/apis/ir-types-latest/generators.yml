@@ -3,32 +3,35 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.45.1
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
         output:
           location: local-file-system
           path: ../../../src/sdk
         config:
           outputSourceFiles: true
+          outputSrcOnly: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false
   dynamic-ir:
     audiences:
       - dynamic
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.45.1
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
         output:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
           token: ${NPM_TOKEN}
         config:
           noOptionalProperties: false
-          noSerdeLayer: true
+        smart-casing: false
   node:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.51.4
+        version: 3.49.0
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -36,17 +39,20 @@ groups:
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false
   java:
     generators:
-      - name: fernapi/java-model
-        version: 0.9.28
+      - name: fernapi/fern-java-model
+        version: 1.8.5
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV60
+          coordinate: com.fern.fern:irV65
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
+        smart-casing: false
   python:
     generators:
       - name: fernapi/fern-pydantic-model
@@ -54,13 +60,13 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v60
+          package-name: fern_fern_ir_v65
         config:
-          # wrapped_aliases: true
           include_union_utils: true
           frozen: true
           version: v2
           enum_type: python_enums
+        smart-casing: false
   go:
     generators:
       - name: fernapi/fern-go-model
@@ -68,3 +74,4 @@ groups:
         config: {}
         github:
           repository: fern-api/ir-go
+        smart-casing: false

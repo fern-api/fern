@@ -9,7 +9,13 @@ async fn main() {
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .no_auth
-        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
+        .endpoints
+        .primitive
+        .get_and_return_base_64(
+            &base64::engine::general_purpose::STANDARD
+                .decode("SGVsbG8gd29ybGQh")
+                .unwrap(),
+            None,
+        )
         .await;
 }

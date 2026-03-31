@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 /**
  * Schema for configuring output paths for generated C# SDK files.
@@ -41,12 +41,17 @@ export const CsharpConfigSchema = z.object({
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
+    "use-undiscriminated-unions": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
     // new experimental options
     "experimental-enable-websockets": z.boolean().optional(),
     "experimental-readonly-constants": z.boolean().optional(),
+    "generate-literals": z.boolean().optional(),
+    "experimental-explicit-nullable-optional": z.boolean().optional(),
+    "use-default-request-parameter-values": z.boolean().optional(),
+    "redact-response-body-on-error": z.boolean().optional(),
 
     // temporary options to unblock websocket URIs generation
     //
@@ -83,7 +88,6 @@ export const CsharpConfigSchema = z.object({
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
-    "additional-properties": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
@@ -91,6 +95,8 @@ export const CsharpConfigSchema = z.object({
     "include-exception-handler": z.boolean().optional(),
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
+    "omit-fern-headers": z.boolean().optional(),
+    "unified-client-options": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
@@ -102,7 +108,12 @@ export const CsharpConfigSchema = z.object({
     "pascal-case-environments": z.boolean().optional(),
 
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
-    "experimental-additional-properties": z.boolean().optional()
+
+    // Solution file format option.
+    // "sln" generates both .sln and .slnx files for compatibility with older
+    // .NET tooling or CI systems that do not yet support .slnx.
+    // "slnx" (default) generates only the modern .slnx format.
+    "sln-format": z.enum(["sln", "slnx"]).optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

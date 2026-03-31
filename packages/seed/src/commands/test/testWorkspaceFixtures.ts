@@ -4,9 +4,9 @@ import fs from "fs";
 import { difference } from "lodash-es";
 import path from "path";
 
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { printTestCases } from "./printTestCases";
-import { TestRunner } from "./test-runner";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { printTestCases } from "./printTestCases.js";
+import { TestRunner } from "./test-runner/index.js";
 
 export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
 

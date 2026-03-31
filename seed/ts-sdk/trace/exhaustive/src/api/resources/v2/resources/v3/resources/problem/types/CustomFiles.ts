@@ -14,10 +14,10 @@ export namespace CustomFiles {
 
     export interface Custom {
         type: "custom";
-        value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>;
+        value: Partial<Record<SeedTrace.Language, SeedTrace.v2.v3.Files>>;
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

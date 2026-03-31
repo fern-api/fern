@@ -1,10 +1,11 @@
 using NUnit.Framework;
 using SeedCsharpSystemCollision;
-using SeedCsharpSystemCollision.Core;
+using SeedCsharpSystemCollision.Test.Utils;
 
 namespace SeedCsharpSystemCollision.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -58,9 +59,6 @@ public class CreateUserTest : BaseMockServerTest
                 Country = "USA",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

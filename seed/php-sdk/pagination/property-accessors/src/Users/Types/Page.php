@@ -62,6 +62,7 @@ class Page extends JsonSerializableType
     public function setPage(int $value): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 
@@ -79,6 +80,7 @@ class Page extends JsonSerializableType
     public function setNext(?NextPage $value = null): self
     {
         $this->next = $value;
+        $this->_setField('next');
         return $this;
     }
 
@@ -96,6 +98,7 @@ class Page extends JsonSerializableType
     public function setPerPage(int $value): self
     {
         $this->perPage = $value;
+        $this->_setField('perPage');
         return $this;
     }
 
@@ -113,6 +116,7 @@ class Page extends JsonSerializableType
     public function setTotalPage(int $value): self
     {
         $this->totalPage = $value;
+        $this->_setField('totalPage');
         return $this;
     }
 

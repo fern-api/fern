@@ -35,6 +35,7 @@ import com.fern.java.client.generators.endpoint.RawHttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -183,6 +184,25 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                 }
 
+                if (httpEndpointMethodSpecs.getBodyOnlyMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(
+                            rawHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getBodyOnlyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
                 rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
 
@@ -298,41 +318,12 @@ public abstract class AbstractClientGeneratorUtils {
                                             + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
                 }
 
-                // Add query parameters
-                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-                    TypeName paramType =
-                            generatorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-                    String paramName =
-                            queryParam.getName().getName().getCamelCase().getSafeName();
-
-                    // Check if already optional
-                    if (!queryParam.getValueType().getContainer().isPresent()
-                            || !queryParam.getValueType().getContainer().get().isOptional()) {
-                        paramType = ParameterizedTypeName.get(ClassName.get(Optional.class), paramType);
-                    }
-
-                    webSocketFactoryMethod.addParameter(paramType, paramName);
-                    webSocketFactoryMethod.addJavadoc(
-                            "@param $L $L\n",
-                            paramName,
-                            queryParam.getDocs().orElse("Optional " + paramName + " query parameter"));
-                }
-
                 // Build the return statement with all parameters
                 StringBuilder returnStatement = new StringBuilder("return new $T($N");
                 for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
                     returnStatement
                             .append(", ")
                             .append(pathParam.getName().getCamelCase().getSafeName());
-                }
-                for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
-                    returnStatement
-                            .append(", ")
-                            .append(queryParam
-                                    .getName()
-                                    .getName()
-                                    .getCamelCase()
-                                    .getSafeName());
                 }
                 returnStatement.append(")");
 
@@ -373,7 +364,8 @@ public abstract class AbstractClientGeneratorUtils {
     }
 
     private MethodSpec.Builder getBaseSubpackageMethod(Subpackage subpackage, ClassName subpackageClientInterface) {
-        return MethodSpec.methodBuilder(subpackage.getName().getCamelCase().getSafeName())
+        return MethodSpec.methodBuilder(KeyWordUtils.getKeyWordCompatibleMethodName(
+                        subpackage.getName().getCamelCase().getSafeName()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(subpackageClientInterface);
     }

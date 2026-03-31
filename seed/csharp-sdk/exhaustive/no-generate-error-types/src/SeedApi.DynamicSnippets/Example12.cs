@@ -13,8 +13,7 @@ public class Example12
             }
         );
 
-        await client.Endpoints.HttpMethods.TestPutAsync(
-            "id",
+        await client.Endpoints.HttpMethods.TestPostAsync(
             new ObjectWithRequiredField {
                 String = "string"
             }

@@ -10,6 +10,6 @@ public class Example49 {
             .url("https://api.fern.com")
             .build();
 
-        client.noReqBody().postWithNoRequestBody();
+        client.endpoints().urls().withMixedCase();
     }
 }

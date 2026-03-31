@@ -3,6 +3,8 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct OptionalArgsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
     pub image_file: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request: Option<serde_json::Value>,
@@ -28,4 +30,37 @@ impl OptionalArgsRequest {
 
     form
 }
+}
+
+impl OptionalArgsRequest {
+    pub fn builder() -> OptionalArgsRequestBuilder {
+        <OptionalArgsRequestBuilder as Default>::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct OptionalArgsRequestBuilder {
+    image_file: Option<Vec<u8>>,
+    request: Option<serde_json::Value>,
+}
+
+impl OptionalArgsRequestBuilder {
+    pub fn image_file(mut self, value: Vec<u8>) -> Self {
+        self.image_file = Some(value);
+        self
+    }
+
+    pub fn request(mut self, value: serde_json::Value) -> Self {
+        self.request = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`OptionalArgsRequest`].
+    pub fn build(self) -> Result<OptionalArgsRequest, BuildError> {
+        Ok(OptionalArgsRequest {
+            image_file: self.image_file,
+            request: self.request,
+        })
+    }
 }

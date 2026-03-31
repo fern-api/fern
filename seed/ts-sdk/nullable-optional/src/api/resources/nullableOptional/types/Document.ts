@@ -5,5 +5,5 @@ export interface Document {
     title: string;
     content: string;
     author: string | null;
-    tags?: string[];
+    tags?: string[] | undefined;
 }

@@ -1,17 +1,17 @@
-import { NameAndWireValue, ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
-import { RawSingleUnionType } from "./RawSingleUnionType";
+import { RawSingleUnionType } from "./RawSingleUnionType.js";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
-        shape: UnionTypeDeclaration | undefined;
-        discriminant: NameAndWireValue;
+        shape: FernIr.UnionTypeDeclaration | undefined;
+        discriminant: FernIr.NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
-        baseProperties?: ObjectProperty[];
+        baseProperties?: FernIr.ObjectProperty[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
         shouldIncludeDefaultCaseInTransform: boolean;
@@ -23,14 +23,14 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private static readonly VALUE_PARAMETER_NAME = "value";
     private static readonly BASE_SCHEMA_NAME = "_Base";
 
-    private readonly discriminant: NameAndWireValue;
+    private readonly discriminant: FernIr.NameAndWireValue;
     private readonly singleUnionTypes: RawSingleUnionType<Context>[];
-    private readonly baseProperties: ObjectProperty[];
+    private readonly baseProperties: FernIr.ObjectProperty[];
     private readonly getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
     protected readonly getReferenceToSchema: (context: Context) => Reference;
     private readonly shouldIncludeDefaultCaseInTransform: boolean;
     private readonly includeUtilsOnUnionMembers: boolean;
-    private readonly shape: UnionTypeDeclaration | undefined;
+    private readonly shape: FernIr.UnionTypeDeclaration | undefined;
 
     constructor({
         shape,

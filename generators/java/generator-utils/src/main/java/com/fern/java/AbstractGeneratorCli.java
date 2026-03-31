@@ -491,8 +491,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     customConfig.gradlePluginManagement(),
                     customConfig.gradleCentralDependencyManagement());
         }
-        generatedFiles.forEach(
-                generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
+        ICustomConfig.OutputDirectory outputDirectoryMode = customConfig.outputDirectory();
+        generatedFiles.forEach(generatedFile ->
+                generatedFile.write(outputDirectory, true, customConfig.packagePrefix(), outputDirectoryMode));
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
             copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
@@ -541,7 +542,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(
+                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
         copyLicenseFile(generatorConfig);
         copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
@@ -586,7 +588,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 customConfig.gradlePluginManagement(),
                 customConfig.gradleCentralDependencyManagement());
 
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(
+                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
         copyLicenseFile(generatorConfig);
         copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
@@ -632,6 +635,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
     public abstract List<AbstractGradleDependency> getBuildGradleDependencies();
 
     public abstract List<String> getSubProjects();
+
+    public List<GradlePlugin> getCustomPlugins() {
+        return List.of();
+    }
 
     public List<String> getAdditionalBuildGradleBlocks() {
         return List.of();
@@ -710,6 +717,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             // Generate script to populate that file
             addGeneratedFile(new GeneratedPublishScript());
         }
+
+        // Add custom plugins from configuration
+        buildGradle.addAllPlugins(getCustomPlugins());
+
         if (addTestBlock) {
             buildGradle.addCustomBlocks("test {\n"
                     + "    useJUnitPlatform()\n"

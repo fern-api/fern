@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_query_parameters::prelude::*;
-use seed_query_parameters::{NestedUser, User};
 
 #[tokio::main]
 async fn main() {
@@ -58,28 +57,29 @@ async fn main() {
                 limit: 1,
                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
-                bytes: "SGVsbG8gd29ybGQh".to_string(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                bytes: base64::engine::general_purpose::STANDARD
+                    .decode("SGVsbG8gd29ybGQh")
+                    .unwrap(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 },
                 user_list: vec![
                     User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
                     User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
                 ],
                 optional_deadline: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 key_value: HashMap::from([("keyValue".to_string(), "keyValue".to_string())]),
                 optional_string: Some("optionalString".to_string()),
@@ -88,15 +88,19 @@ async fn main() {
                     user: User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
                 optional_user: Some(User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 }),
                 exclude_user: vec![User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 }],
                 filter: vec!["filter".to_string()],
             },

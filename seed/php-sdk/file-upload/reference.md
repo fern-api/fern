@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->post($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;post($request)</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->service->post($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->justFile($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justFile($request)</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,9 @@ $client->service->post($request);
 
 ```php
 $client->service->justFile(
-    new JustFileRequest([]),
+    new JustFileRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
 );
 ```
 </dd>
@@ -52,7 +54,7 @@ $client->service->justFile(
 </dl>
 </details>
 
-<details><summary><code>$client->service->justFileWithQueryParams($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justFileWithQueryParams($request)</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +126,55 @@ $client->service->justFileWithQueryParams($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withContentType($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justFileWithOptionalQueryParams($request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->justFileWithOptionalQueryParams($request);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$maybeString:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maybeInteger:** `?int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;withContentType($request)</code></summary>
 <dl>
 <dd>
 
@@ -149,7 +199,7 @@ $client->service->withContentType($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withFormEncoding($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withFormEncoding($request)</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +224,7 @@ $client->service->withFormEncoding($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->withFormEncodedContainers($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withFormEncodedContainers($request)</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +249,7 @@ $client->service->withFormEncodedContainers($request);
 </dl>
 </details>
 
-<details><summary><code>$client->service->optionalArgs($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalArgs($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +263,9 @@ $client->service->withFormEncodedContainers($request);
 
 ```php
 $client->service->optionalArgs(
-    new OptionalArgsRequest([]),
+    new OptionalArgsRequest([
+        'imageFile' => File::createFromString("example_image_file", "example_image_file"),
+    ]),
 );
 ```
 </dd>
@@ -226,7 +278,7 @@ $client->service->optionalArgs(
 </dl>
 </details>
 
-<details><summary><code>$client->service->withInlineType($request) -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withInlineType($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -239,7 +291,7 @@ $client->service->optionalArgs(
 <dd>
 
 ```php
-$client->service->withInlineType($request): string;
+$client->service->withInlineType($request): ?string;
 ```
 </dd>
 </dl>
@@ -251,7 +303,32 @@ $client->service->withInlineType($request): string;
 </dl>
 </details>
 
-<details><summary><code>$client->service->simple()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withJsonProperty($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withJsonProperty($request): ?string;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>
 
@@ -275,3 +352,29 @@ $client->service->simple();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withLiteralAndEnumTypes($request): ?string;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

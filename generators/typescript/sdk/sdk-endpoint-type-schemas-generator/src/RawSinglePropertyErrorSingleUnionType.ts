@@ -1,4 +1,4 @@
-import { DeclaredErrorName, ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
@@ -6,14 +6,14 @@ import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace RawSinglePropertyErrorSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {
-        errorName: DeclaredErrorName;
-        discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+        errorName: FernIr.DeclaredErrorName;
+        discriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
     }
 }
 
 export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnionType<SdkContext> {
-    private errorName: DeclaredErrorName;
-    private discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+    private errorName: FernIr.DeclaredErrorName;
+    private discriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
 
     constructor({ errorName, discriminationStrategy, ...superInit }: RawSinglePropertyErrorSingleUnionType.Init) {
         super(superInit);

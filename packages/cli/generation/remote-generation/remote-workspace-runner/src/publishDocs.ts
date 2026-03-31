@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -23,14 +24,59 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { measureImageSizes } from "./measureImageSizes";
-import { asyncPool } from "./utils/asyncPool";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { measureImageSizes } from "./measureImageSizes.js";
+import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
+
+/**
+ * Sanitizes a preview ID to be valid in a DNS subdomain label.
+ * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
+ * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
+ */
+function sanitizePreviewId(id: string): string {
+    const sanitized = id
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-{2,}/g, "-")
+        .replace(/^-+|-+$/g, "");
+    if (sanitized.length === 0) {
+        return "default";
+    }
+    return sanitized;
+}
+
+export class DocsPublishConflictError extends Error {
+    constructor() {
+        super("Another docs publish is currently in progress for this domain.");
+        this.name = "DocsPublishConflictError";
+    }
+}
+
+async function unlockDeploy({
+    fdrOrigin,
+    token,
+    domain,
+    basepath
+}: {
+    fdrOrigin: string;
+    token: string;
+    domain: string;
+    basepath?: string;
+}): Promise<void> {
+    try {
+        await axios.post(
+            `${fdrOrigin}/docs-deployment/unlock`,
+            { domain, basepath },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+    } catch {
+        // Best-effort: if unlock fails, the staleness timeout will still release the lock
+    }
+}
 
 interface FileWithMimeType {
     mediaType: string;
@@ -38,9 +84,29 @@ interface FileWithMimeType {
     relativeFilePath: RelativeFilePath;
 }
 
+interface FileWithSanitizedPathAndMimeType extends FileWithMimeType {
+    sanitizedPath: RelativeFilePath;
+}
+
 export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | string): Promise<string> {
     const fileBuffer = await readFile(absoluteFilePath);
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
+}
+
+export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
+    // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
+    // that cause S3 signature mismatches when paths contain parent directory references
+    return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
+}
+
+interface CISource {
+    type: "github" | "gitlab" | "bitbucket";
+    repo?: string;
+    runId?: string;
+    runUrl?: string;
+    commitSha?: string;
+    branch?: string;
+    actor?: string;
 }
 
 export async function publishDocs({
@@ -53,12 +119,17 @@ export async function publishDocs({
     ossWorkspaces,
     context,
     preview,
+    previewId,
     editThisPage,
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = true,
-    targetAudiences
+    excludeApis = false,
+    targetAudiences,
+    docsUrl,
+    cliVersion,
+    ciSource
 }: {
     token: FernToken;
     organization: string;
@@ -69,376 +140,506 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
+    previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
+    excludeApis?: boolean;
     targetAudiences?: string[];
-}): Promise<void> {
-    const fdr = createFdrService({ token: token.value });
+    docsUrl?: string;
+    cliVersion?: string;
+    ciSource?: CISource;
+}): Promise<string> {
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
+    if (isAirGapped) {
+        context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
+    }
+
+    const headers: Record<string, string> = {};
+    if (cliVersion != null) {
+        headers["X-CLI-Version"] = cliVersion;
+    }
+    if (ciSource != null) {
+        headers["X-CI-Source"] = JSON.stringify(ciSource);
+        context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
+    const fdr = createFdrService({
+        token: token.value,
+        ...(Object.keys(headers).length > 0 && { headers })
+    });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+
+    if (excludeApis) {
+        context.logger.debug(
+            "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
+        );
+    }
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
-        docsWorkspace.config.experimental && !docsWorkspace.config.experimental.dynamicSnippets;
+        docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
+    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
 
-    const resolver = new DocsDefinitionResolver({
-        domain,
-        docsWorkspace,
-        ossWorkspaces,
-        apiWorkspaces,
-        taskContext: context,
-        editThisPage,
-        uploadFiles: async (files) => {
-            const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
-            const filesWithMimeType: FileWithMimeType[] = files
-                .map((fileMetadata) => ({
-                    ...fileMetadata,
-                    mediaType: mime.lookup(fileMetadata.absoluteFilePath)
-                }))
-                .filter((fileMetadata): fileMetadata is FileWithMimeType => fileMetadata.mediaType !== false);
-
-            const imagesToMeasure = filesWithMimeType
-                .filter((file) => MediaType.parse(file.mediaType)?.isImage() ?? false)
-                .map((file) => file.absoluteFilePath);
-
-            const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
-
-            context.logger.debug(`Hashing ${measuredImages.size} image files with concurrency ${HASH_CONCURRENCY}...`);
-            const hashImageStart = performance.now();
-
-            const imageArray = Array.from(measuredImages.values());
-            const hashedImages: Array<DocsV2Write.ImageFilePath | null> = await asyncPool(
-                HASH_CONCURRENCY,
-                imageArray,
-                async (image) => {
-                    const filePath = filesMap.get(image.filePath);
-                    if (filePath == null) {
-                        return null;
-                    }
-
-                    const obj = {
-                        filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
-                        ),
-                        width: image.width,
-                        height: image.height,
-                        blurDataUrl: image.blurDataUrl,
-                        alt: undefined,
-                        fileHash: await calculateFileHash(filePath.absoluteFilePath)
-                    } as DocsV2Write.ImageFilePath;
-                    return obj;
-                }
-            );
-
-            const images: DocsV2Write.ImageFilePath[] = hashedImages.filter(
-                (img): img is DocsV2Write.ImageFilePath => img != null
-            );
-            const hashImageTime = performance.now() - hashImageStart;
-            context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
-
-            const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
-
-            context.logger.debug(
-                `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
-            );
-            const hashNonImageStart = performance.now();
-            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
-                HASH_CONCURRENCY,
-                nonImageFiles,
-                async (file) => ({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
-                    fileHash: await calculateFileHash(file.absoluteFilePath)
-                })
-            );
-            const hashNonImageTime = performance.now() - hashNonImageStart;
-            context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
-
-            if (preview) {
-                const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
-                    orgId: CjsFdrSdk.OrgId(organization),
-                    authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                    filepaths: filepaths,
-                    images,
-                    basePath
-                });
-                if (startDocsRegisterResponse.ok) {
-                    urlToOutput = startDocsRegisterResponse.body.previewUrl;
-                    docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    context.logger.debug(`Received preview registration ID: ${docsRegistrationId}`);
-
-                    if (skipUpload) {
-                        context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
-                    } else {
-                        const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
-                        const urlsToUpload = Object.fromEntries(
-                            Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
-                                ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
-                            )
-                        );
-
-                        const uploadCount = Object.keys(urlsToUpload).length;
-                        const skippedCount = skippedSet.size;
-
-                        if (uploadCount > 0) {
-                            context.logger.debug(`Uploading ${uploadCount} files (${skippedCount} skipped)...`);
-                            await uploadFiles(
-                                urlsToUpload,
-                                docsWorkspace.absoluteFilePath,
-                                context,
-                                UPLOAD_FILE_BATCH_SIZE
-                            );
-                        } else {
-                            context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
-                        }
-                    }
-                    return convertToFilePathPairs(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
-                    );
-                } else {
-                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
-                }
-            } else {
-                const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
-                    domain,
-                    customDomains,
-                    authConfig,
-                    apiId: CjsFdrSdk.ApiId(""),
-                    orgId: CjsFdrSdk.OrgId(organization),
-                    filepaths: filepaths,
-                    images
-                });
-                if (startDocsRegisterResponse.ok) {
-                    docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
-                    context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
-
-                    const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
-                    if (skippedCount > 0) {
-                        context.logger.info(
-                            `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
-                        );
-                    }
-
-                    if (skipUpload) {
-                        context.logger.debug("Skip-upload mode: skipping file uploads for docs");
-                    } else {
-                        const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
-                        const urlsToUpload = Object.fromEntries(
-                            Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
-                                ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
-                            )
-                        );
-
-                        const uploadCount = Object.keys(urlsToUpload).length;
-
-                        if (uploadCount > 0) {
-                            context.logger.info(`↑ Uploading ${uploadCount} files...`);
-                            await uploadFiles(
-                                urlsToUpload,
-                                docsWorkspace.absoluteFilePath,
-                                context,
-                                UPLOAD_FILE_BATCH_SIZE
-                            );
-                        } else {
-                            context.logger.info("No files to upload (all up to date)");
-                        }
-                    }
-                    return convertToFilePathPairs(
-                        startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
-                    );
-                } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
-                }
-            }
-        },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
-
-            const aiEnhancerConfig = getAIEnhancerConfig(
-                withAiExamples,
-                docsWorkspace.config.experimental?.aiExampleStyleInstructions
-            );
-            if (aiEnhancerConfig && workspace) {
-                const sources = workspace.getSources();
-                const openApiSource = sources.find((source) => source.type === "openapi");
-                const sourceFilePath = openApiSource?.absoluteFilePath;
-
-                apiDefinition = await enhanceExamplesWithAI(
-                    apiDefinition,
-                    aiEnhancerConfig,
-                    context,
-                    token,
-                    organization,
-                    sourceFilePath
-                );
-            }
-
-            // create dynamic IR + metadata for each generator language
-            let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-            if (!disableDynamicSnippets) {
-                // Check for existing SDK dynamic IRs before generating
-                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
-                    fdr,
-                    workspace,
-                    organization,
-                    context,
-                    snippetsConfig
-                });
-
-                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
-                    dynamicIRsByLanguage = existingSdkDynamicIrs;
-                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
-                    context.logger.debug(
-                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
-                    );
-                }
-
-                // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
-                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
-                    workspace,
-                    organization,
-                    context,
-                    snippetsConfig,
-                    skipLanguages: languagesWithExistingSdkDynamicIr
-                });
-
-                if (generatedDynamicIRs) {
-                    dynamicIRsByLanguage = {
-                        ...dynamicIRsByLanguage,
-                        ...generatedDynamicIRs
-                    };
-                }
-            }
-
-            const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition,
-                definitionV2: undefined,
-                dynamicIRs: dynamicIRsByLanguage
-            });
-
-            if (response.ok) {
-                context.logger.debug(`Registered API Definition ${apiName}: ${response.body.apiDefinitionId}`);
-
-                if (response.body.dynamicIRs && dynamicIRsByLanguage) {
-                    if (skipUpload) {
-                        context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
-                    } else {
-                        await uploadDynamicIRs({
-                            dynamicIRs: dynamicIRsByLanguage,
-                            dynamicIRUploadUrls: response.body.dynamicIRs,
-                            context,
-                            apiId: response.body.apiDefinitionId
-                        });
-                    }
-                }
-
-                return response.body.apiDefinitionId;
-            } else {
-                switch (response.error.error) {
-                    case "UnauthorizedError":
-                    case "UserNotInOrgError": {
-                        return context.failAndThrow(
-                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
-                        );
-                    }
-                    default: {
-                        const errorDetails = extractErrorDetails(response.error);
-                        context.logger.error(
-                            `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
-                        );
-                        if (apiName != null) {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
-                                errorDetails
-                            );
-                        } else {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
-                                errorDetails
-                            );
-                        }
-                    }
-                }
-            }
-        },
-        targetAudiences
-    });
-
-    context.logger.info("Resolving docs definition...");
-    const resolveStart = performance.now();
-    let docsDefinition = await resolver.resolve();
-    const resolveTime = performance.now() - resolveStart;
-
-    if (docsWorkspace.config.settings?.substituteEnvVars) {
-        context.logger.debug("Applying environment variable substitution to docs definition...");
-        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
-        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
-        const substitutedDocs = replaceEnvVariables(
-            docsWithoutJsFiles,
-            { onError: (e) => context.failAndThrow(e) },
-            { substituteAsEmpty: false }
-        );
-        docsDefinition = { ...substitutedDocs, jsFiles };
+    if (isBasepathAware) {
+        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
     }
 
-    const pageCount = Object.keys(docsDefinition.pages).length;
-    const apiWorkspaceCount = apiWorkspaces.length;
-    const resolveMemory = process.memoryUsage();
-    context.logger.info(
-        `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages${apiWorkspaceCount ? `, ${apiWorkspaceCount} API workspaces` : ""}`
-    );
-    context.logger.debug(
-        `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
-    );
-
-    if (docsRegistrationId == null) {
-        return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
-    }
-
-    context.logger.info("Publishing docs to FDR...");
-    const publishStart = performance.now();
-    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
-        DocsV1Write.DocsRegistrationId(docsRegistrationId),
-        {
-            docsDefinition,
-            excludeApis: false
+    let deployLocked = false;
+    const doUnlock = () => {
+        if (deployLocked && !preview) {
+            deployLocked = false;
+            context.logger.debug("Unlocking docs deploy due to early exit...");
+            void unlockDeploy({ fdrOrigin, token: token.value, domain, basepath: basePath });
         }
-    );
+    };
+    const onSignal = async () => {
+        if (deployLocked && !preview) {
+            deployLocked = false;
+            context.logger.debug("Unlocking docs deploy due to signal...");
+            await unlockDeploy({ fdrOrigin, token: token.value, domain, basepath: basePath });
+        }
+        process.exit(1);
+    };
+    process.on("SIGINT", onSignal);
+    process.on("SIGTERM", onSignal);
 
-    if (registerDocsResponse.ok) {
-        const publishTime = performance.now() - publishStart;
-        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+    try {
+        const resolver = new DocsDefinitionResolver({
+            domain,
+            docsWorkspace,
+            ossWorkspaces,
+            apiWorkspaces,
+            taskContext: context,
+            editThisPage,
+            uploadFiles: async (files) => {
+                // Pre-compute sanitized paths and attach to file objects
+                const filesWithSanitizedPaths = files.map((file) => ({
+                    ...file,
+                    sanitizedPath: sanitizeRelativePathForS3(file.relativeFilePath)
+                }));
 
-        const url = wrapWithHttps(urlToOutput);
-        await updateAiChatFromDocsDefinition({
-            docsDefinition,
-            isPreview: preview,
-            context
+                const filesMap = new Map(filesWithSanitizedPaths.map((file) => [file.absoluteFilePath, file]));
+                const sanitizedToAbsoluteMap = new Map(
+                    filesWithSanitizedPaths.map((file) => [file.sanitizedPath, file.absoluteFilePath])
+                );
+                const filesWithMimeType: FileWithSanitizedPathAndMimeType[] = filesWithSanitizedPaths
+                    .map((fileMetadata) => ({
+                        ...fileMetadata,
+                        mediaType: mime.lookup(fileMetadata.absoluteFilePath)
+                    }))
+                    .filter(
+                        (fileMetadata): fileMetadata is FileWithSanitizedPathAndMimeType =>
+                            fileMetadata.mediaType !== false
+                    );
+
+                const imagesToMeasure = filesWithMimeType
+                    .filter((file) => MediaType.parse(file.mediaType)?.isImage() ?? false)
+                    .map((file) => file.absoluteFilePath);
+
+                const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
+
+                context.logger.debug(
+                    `Hashing ${measuredImages.size} image files with concurrency ${HASH_CONCURRENCY}...`
+                );
+                const hashImageStart = performance.now();
+
+                const imageArray = Array.from(measuredImages.values());
+                const hashedImages: Array<DocsV2Write.ImageFilePath | null> = await asyncPool(
+                    HASH_CONCURRENCY,
+                    imageArray,
+                    async (image) => {
+                        const filePath = filesMap.get(image.filePath);
+                        if (filePath == null) {
+                            return null;
+                        }
+
+                        const sanitizedPath = filePath.sanitizedPath;
+                        const obj = {
+                            filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                                convertToFernHostRelativeFilePath(sanitizedPath)
+                            ),
+                            width: image.width,
+                            height: image.height,
+                            blurDataUrl: image.blurDataUrl,
+                            alt: undefined,
+                            fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                        } as DocsV2Write.ImageFilePath;
+                        return obj;
+                    }
+                );
+
+                const images: DocsV2Write.ImageFilePath[] = hashedImages.filter(
+                    (img): img is DocsV2Write.ImageFilePath => img != null
+                );
+                const hashImageTime = performance.now() - hashImageStart;
+                context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
+
+                const nonImageFiles = filesWithSanitizedPaths.filter(
+                    ({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath)
+                );
+
+                context.logger.debug(
+                    `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
+                );
+                const hashNonImageStart = performance.now();
+                const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
+                    HASH_CONCURRENCY,
+                    nonImageFiles,
+                    async (file) => {
+                        return {
+                            path: CjsFdrSdk.docs.v1.write.FilePath(
+                                convertToFernHostRelativeFilePath(file.sanitizedPath)
+                            ),
+                            fileHash: await calculateFileHash(file.absoluteFilePath)
+                        };
+                    }
+                );
+                const hashNonImageTime = performance.now() - hashNonImageStart;
+                context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
+
+                if (preview) {
+                    // previewId is defined in the oRPC contract but not yet exposed
+                    // on the FdrClient's Fern-generated StartDocsPreviewRegisterRequestV2 type.
+                    // The server accepts it, so we use a cast here until the client is migrated.
+                    const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
+                        orgId: CjsFdrSdk.OrgId(organization),
+                        authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
+                        filepaths: filepaths,
+                        images,
+                        basePath,
+                        previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
+                    } as DocsV2Write.StartDocsPreviewRegisterRequestV2);
+                    if (startDocsRegisterResponse.ok) {
+                        urlToOutput = startDocsRegisterResponse.body.previewUrl;
+                        docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                        context.logger.debug(`Received preview registration ID: ${docsRegistrationId}`);
+
+                        if (skipUpload) {
+                            context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
+                        } else {
+                            const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
+                            const urlsToUpload = Object.fromEntries(
+                                Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
+                                    ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
+                                )
+                            );
+
+                            const uploadCount = Object.keys(urlsToUpload).length;
+                            const skippedCount = skippedSet.size;
+
+                            if (uploadCount > 0) {
+                                context.logger.debug(`Uploading ${uploadCount} files (${skippedCount} skipped)...`);
+                                await uploadFiles(
+                                    urlsToUpload,
+                                    docsWorkspace.absoluteFilePath,
+                                    context,
+                                    UPLOAD_FILE_BATCH_SIZE,
+                                    sanitizedToAbsoluteMap
+                                );
+                            } else {
+                                context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
+                            }
+                        }
+                        return convertToFilePathPairs(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            sanitizedToAbsoluteMap
+                        );
+                    } else {
+                        return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                    }
+                } else {
+                    const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
+                        domain,
+                        customDomains,
+                        authConfig,
+                        apiId: CjsFdrSdk.ApiId(""),
+                        orgId: CjsFdrSdk.OrgId(organization),
+                        filepaths: filepaths,
+                        images,
+                        ...(isBasepathAware && { basepathAware: true })
+                    });
+                    if (startDocsRegisterResponse.ok) {
+                        docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                        deployLocked = true;
+                        context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
+
+                        const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
+                        if (skippedCount > 0) {
+                            context.logger.info(
+                                `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
+                            );
+                        }
+
+                        if (skipUpload) {
+                            context.logger.debug("Skip-upload mode: skipping file uploads for docs");
+                        } else {
+                            const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
+                            const urlsToUpload = Object.fromEntries(
+                                Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
+                                    ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
+                                )
+                            );
+
+                            const uploadCount = Object.keys(urlsToUpload).length;
+
+                            if (uploadCount > 0) {
+                                context.logger.info(`↑ Uploading ${uploadCount} files...`);
+                                await uploadFiles(
+                                    urlsToUpload,
+                                    docsWorkspace.absoluteFilePath,
+                                    context,
+                                    UPLOAD_FILE_BATCH_SIZE,
+                                    sanitizedToAbsoluteMap
+                                );
+                            } else {
+                                context.logger.info("No files to upload (all up to date)");
+                            }
+                        }
+                        return convertToFilePathPairs(
+                            startDocsRegisterResponse.body.uploadUrls,
+                            docsWorkspace.absoluteFilePath,
+                            sanitizedToAbsoluteMap
+                        );
+                    } else {
+                        return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                    }
+                }
+            },
+            registerApi: async ({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                apiName,
+                workspace,
+                graphqlOperations,
+                graphqlTypes
+            }) => {
+                // Use apiName from docs.yml (folder name) as the API identifier for FDR
+                // This ensures users can reference APIs by their folder name in docs components
+                let apiDefinition = convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context,
+                    apiNameOverride: apiName
+                });
+
+                const aiEnhancerConfig = getAIEnhancerConfig(
+                    withAiExamples,
+                    docsWorkspace.config.aiExamples?.style ??
+                        docsWorkspace.config.experimental?.aiExampleStyleInstructions
+                );
+                if (aiEnhancerConfig) {
+                    const sources = workspace?.getSources();
+                    const openApiSources = sources
+                        ?.filter((source) => source.type === "openapi")
+                        .map((source) => ({
+                            absoluteFilePath: source.absoluteFilePath,
+                            absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+                        }));
+
+                    if (openApiSources == null || openApiSources.length === 0) {
+                        context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
+                    } else {
+                        apiDefinition = await enhanceExamplesWithAI(
+                            apiDefinition,
+                            aiEnhancerConfig,
+                            context,
+                            token,
+                            organization,
+                            openApiSources
+                        );
+                    }
+                }
+
+                // create dynamic IR + metadata for each generator language
+                let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+                let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
+                if (Object.keys(snippetsConfig).length === 0) {
+                    context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+                } else if (!disableDynamicSnippets) {
+                    // Check for existing SDK dynamic IRs before generating
+                    const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                        fdr,
+                        workspace,
+                        organization,
+                        context,
+                        snippetsConfig
+                    });
+
+                    if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                        dynamicIRsByLanguage = existingSdkDynamicIrs;
+                        languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                        context.logger.debug(
+                            `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                        );
+                    }
+
+                    // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
+                    const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                        workspace,
+                        organization,
+                        context,
+                        snippetsConfig,
+                        skipLanguages: languagesWithExistingSdkDynamicIr
+                    });
+
+                    if (generatedDynamicIRs) {
+                        dynamicIRsByLanguage = {
+                            ...dynamicIRsByLanguage,
+                            ...generatedDynamicIRs
+                        };
+                    }
+                }
+
+                const response = await fdr.api.v1.register.registerApiDefinition({
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
+                    definition: apiDefinition,
+                    definitionV2: undefined,
+                    dynamicIRs: dynamicIRsByLanguage,
+                    docsUrl
+                });
+
+                if (response.ok) {
+                    context.logger.debug(`Registered API Definition ${apiName}: ${response.body.apiDefinitionId}`);
+
+                    if (response.body.dynamicIRs && dynamicIRsByLanguage) {
+                        if (skipUpload) {
+                            context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
+                        } else {
+                            await uploadDynamicIRs({
+                                dynamicIRs: dynamicIRsByLanguage,
+                                dynamicIRUploadUrls: response.body.dynamicIRs,
+                                context,
+                                apiId: response.body.apiDefinitionId
+                            });
+                        }
+                    }
+
+                    return response.body.apiDefinitionId;
+                } else {
+                    switch (response.error.error) {
+                        case "UnauthorizedError":
+                        case "UserNotInOrgError": {
+                            return context.failAndThrow(
+                                "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                            );
+                        }
+                        default: {
+                            const errorDetails = extractErrorDetails(response.error);
+                            context.logger.error(
+                                `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                            );
+                            if (apiName != null) {
+                                return context.failAndThrow(
+                                    `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                                    errorDetails
+                                );
+                            } else {
+                                return context.failAndThrow(
+                                    `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                                    errorDetails
+                                );
+                            }
+                        }
+                    }
+                }
+            },
+            targetAudiences
         });
 
-        const link = terminalLink(url, url);
-        context.logger.info(chalk.green(`Published docs to ${link}`));
-    } else {
-        switch (registerDocsResponse.error.error) {
-            case "UnauthorizedError":
-            case "UserNotInOrgError":
-                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
-            case "DocsRegistrationIdNotFound":
-                return context.failAndThrow(
-                    "Failed to publish docs to " + domain,
-                    `Docs registration ID ${docsRegistrationId} does not exist.`
-                );
-            default:
-                return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
+        context.logger.info("Resolving docs definition...");
+        const resolveStart = performance.now();
+        let docsDefinition = await resolver.resolve();
+        const resolveTime = performance.now() - resolveStart;
+
+        if (docsWorkspace.config.settings?.substituteEnvVars) {
+            context.logger.debug("Applying environment variable substitution to docs definition...");
+            // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+            const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+            const substitutedDocs = replaceEnvVariables(
+                docsWithoutJsFiles,
+                { onError: (e) => context.failAndThrow(e) },
+                { substituteAsEmpty: false }
+            );
+            docsDefinition = { ...substitutedDocs, jsFiles };
         }
+
+        const pageCount = Object.keys(docsDefinition.pages).length;
+        const apiWorkspaceCount = apiWorkspaces.length;
+        const resolveMemory = process.memoryUsage();
+        context.logger.info(
+            `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages${apiWorkspaceCount ? `, ${apiWorkspaceCount} API workspaces` : ""}`
+        );
+        context.logger.debug(
+            `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
+        );
+
+        if (docsRegistrationId == null) {
+            doUnlock();
+            return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
+        }
+
+        context.logger.info("Publishing docs to FDR...");
+        const publishStart = performance.now();
+        const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
+            DocsV1Write.DocsRegistrationId(docsRegistrationId),
+            {
+                docsDefinition,
+                excludeApis,
+                ...(isBasepathAware && !preview && { basepathAware: true })
+            }
+        );
+
+        if (registerDocsResponse.ok) {
+            const publishTime = performance.now() - publishStart;
+            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+
+            const url = wrapWithHttps(urlToOutput);
+            await updateAiChatFromDocsDefinition({
+                docsDefinition,
+                isPreview: preview,
+                context
+            });
+
+            const link = terminalLink(url, url);
+            context.logger.info(chalk.green(`Published docs to ${link}`));
+            return url;
+        } else {
+            switch (registerDocsResponse.error.error) {
+                case "UnauthorizedError":
+                case "UserNotInOrgError":
+                    return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
+                case "DocsRegistrationIdNotFound":
+                    return context.failAndThrow(
+                        "Failed to publish docs to " + domain,
+                        `Docs registration ID ${docsRegistrationId} does not exist.`
+                    );
+                case "LibraryDocsJobInvalidForRegistrationError":
+                    return context.failAndThrow(
+                        "Failed to publish docs to " + domain,
+                        "Library docs job is invalid for registration. The job may not exist, may not be completed, or may belong to a different organization."
+                    );
+                default:
+                    return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
+            }
+        }
+    } catch (error) {
+        doUnlock();
+        throw error;
+    } finally {
+        deployLocked = false;
+        process.removeListener("SIGINT", onSignal);
+        process.removeListener("SIGTERM", onSignal);
     }
 }
 
@@ -446,7 +647,8 @@ async function uploadFiles(
     filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
-    batchSize: number
+    batchSize: number,
+    sanitizedToAbsoluteMap: Map<string, AbsoluteFilePath>
 ): Promise<void> {
     const startTime = Date.now();
     const totalFiles = Object.keys(filesToUpload).length;
@@ -456,8 +658,9 @@ async function uploadFiles(
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async ([key, { uploadUrl }]) => {
-                const relativeFilePath = RelativeFilePath.of(key);
-                const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+                // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+                const absoluteFilePath =
+                    sanitizedToAbsoluteMap.get(key) || resolve(docsWorkspacePath, RelativeFilePath.of(key));
                 try {
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
@@ -483,12 +686,14 @@ async function uploadFiles(
 
 function convertToFilePathPairs(
     uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
-    docsWorkspacePath: AbsoluteFilePath
+    docsWorkspacePath: AbsoluteFilePath,
+    sanitizedToAbsoluteMap?: Map<string, AbsoluteFilePath>
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
     for (const [key, value] of Object.entries(uploadUrls)) {
         const relativeFilePath = RelativeFilePath.of(key);
-        const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+        // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+        const absoluteFilePath = sanitizedToAbsoluteMap?.get(key) || resolve(docsWorkspacePath, relativeFilePath);
         toRet.push({
             relativeFilePath,
             absoluteFilePath,
@@ -500,7 +705,8 @@ function convertToFilePathPairs(
 
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
-    context: TaskContext
+    context: TaskContext,
+    organization: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -508,6 +714,18 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const errorObj = error as unknown as Record<string, unknown>;
+    const errorContent = errorObj?.content as Record<string, unknown> | undefined;
+    if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
+        throw new DocsPublishConflictError();
+    }
+
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    if (authErrorMessage != null) {
+        return context.failAndThrow(authErrorMessage);
+    }
+
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -518,10 +736,14 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+            return context.failAndThrow(
+                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -530,6 +752,25 @@ async function startDocsRegisterFailed(
         default:
             return context.failAndThrow("Failed to publish docs.", error);
     }
+}
+
+function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    if (content?.reason === "status-code") {
+        const statusCode = content.statusCode as number | undefined;
+
+        if (statusCode === 401 || statusCode === 403) {
+            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const contactMessage =
+                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
+
+            return `${baseMessage}\n\n${contactMessage}`;
+        }
+    }
+
+    return undefined;
 }
 
 function parseBasePath(domain: string): string | undefined {
@@ -612,7 +853,10 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         return undefined;
     }
 }
-
+// normalize Go package names by stripping https:// prefix to match how upload keys are generated.
+function normalizeGoPackageForLookup(repository: string): string {
+    return repository.replace(/^https:\/\//, "");
+}
 async function buildSnippetConfigurationWithVersions({
     fdr,
     workspace,
@@ -648,7 +892,9 @@ async function buildSnippetConfigurationWithVersions({
         },
         {
             language: "go",
-            snippetName: snippetsConfig.goSdk?.githubRepo,
+            // Normalize to match S3 upload key format (github.com/owner/repo vs https://github.com/owner/repo)
+            snippetName:
+                snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
             explicitVersion: snippetsConfig.goSdk?.version
         },
         {
@@ -820,17 +1066,12 @@ async function generateLanguageSpecificDynamicIRs({
         return undefined;
     }
 
-    if (Object.keys(snippetsConfig).length === 0) {
-        context.logger.warn(`WARNING: No snippets defined for ${workspace.workspaceName}.`);
-        context.logger.warn("Did you add snippets to your docs configuration?");
-        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
-    }
-
     let snippetConfiguration = {
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
         java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo,
+        // normalize Go package name to match generator package format for comparison logic
+        go: snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,

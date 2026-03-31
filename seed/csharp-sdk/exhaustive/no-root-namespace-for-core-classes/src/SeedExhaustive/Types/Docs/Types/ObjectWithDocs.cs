@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -35,6 +35,11 @@ public record ObjectWithDocs : IJsonOnDeserialized
     /// - ///: Comment marker
     /// - /**: Block comment start
     /// - ** /: Block comment end
+    ///
+    /// XMLDoc (C#) (Example of actual XML tags):
+    /// See <see href="https://example.com/docs">the docs</see> for more info.
+    /// Use <c>getValue()</c> to retrieve the value.
+    /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
     ///
     /// Javadoc (Java):
     /// - @: Used for Javadoc tags

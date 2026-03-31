@@ -78,6 +78,13 @@ public class AsyncNullableOptionalClient {
     /**
      * Update a user (partial update)
      */
+    public CompletableFuture<UserResponse> updateUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user (partial update)
+     */
     public CompletableFuture<UserResponse> updateUser(String userId, UpdateUserRequest request) {
         return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
     }
@@ -95,6 +102,13 @@ public class AsyncNullableOptionalClient {
      */
     public CompletableFuture<List<UserResponse>> listUsers() {
         return this.rawClient.listUsers().thenApply(response -> response.body());
+    }
+
+    /**
+     * List all users
+     */
+    public CompletableFuture<List<UserResponse>> listUsers(RequestOptions requestOptions) {
+        return this.rawClient.listUsers(requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -160,6 +174,13 @@ public class AsyncNullableOptionalClient {
      */
     public CompletableFuture<ComplexProfile> updateComplexProfile(String profileId) {
         return this.rawClient.updateComplexProfile(profileId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public CompletableFuture<ComplexProfile> updateComplexProfile(String profileId, RequestOptions requestOptions) {
+        return this.rawClient.updateComplexProfile(profileId, requestOptions).thenApply(response -> response.body());
     }
 
     /**

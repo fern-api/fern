@@ -227,6 +227,41 @@
   ],
   "additionalProperties": false,
   "definitions": {
+    "environments.ServerVariableSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
     "environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
       "properties": {
@@ -255,6 +290,39 @@
         },
         "url": {
           "type": "string"
+        },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url-template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/environments.ServerVariableSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -293,6 +361,48 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "url-templates": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-urls": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/environments.ServerVariableSchema"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -776,6 +886,16 @@
               "type": "null"
             }
           ]
+        },
+        "omit": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1107,6 +1227,58 @@
       },
       "additionalProperties": false
     },
+    "validation.ListValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "validation.ValidationSchema": {
       "anyOf": [
         {
@@ -1114,6 +1286,12 @@
         },
         {
           "$ref": "#/definitions/validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.ListValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/validation.MapValidationSchema"
         }
       ]
     },
@@ -1559,6 +1737,38 @@
       ],
       "additionalProperties": false
     },
+    "pagination.UriPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "next_uri": {
+          "type": "string"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "next_uri",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "pagination.PathPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "next_path": {
+          "type": "string"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "next_path",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -1569,6 +1779,12 @@
         },
         {
           "$ref": "#/definitions/pagination.CustomPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.UriPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.PathPaginationSchema"
         }
       ]
     },

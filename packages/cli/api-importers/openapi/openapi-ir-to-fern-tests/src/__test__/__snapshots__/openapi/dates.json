@@ -15,8 +15,8 @@
               "examples": [
                 {
                   "headers": {
-                    "date_header": "[object Object]",
-                    "date_time_header": "[object Object]",
+                    "date_header": "date_header",
+                    "date_time_header": "date_time_header",
                   },
                   "request": {},
                   "response": {
@@ -99,8 +99,8 @@
         status-code: 200
       examples:
         - headers:
-            date_header: '[object Object]'
-            date_time_header: '[object Object]'
+            date_header: date_header
+            date_time_header: date_time_header
           request: {}
           response:
             body:

@@ -20,6 +20,8 @@ export declare class HttpMethodsClient {
     testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __testGet;
     /**
+     * @deprecated
+     *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -31,6 +33,8 @@ export declare class HttpMethodsClient {
     testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPost;
     /**
+     * @deprecated Use testPatch instead.
+     *
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -43,6 +47,8 @@ export declare class HttpMethodsClient {
     testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPut;
     /**
+     * @beta This endpoint is in pre-release and may change.
+     *
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -69,6 +75,8 @@ export declare class HttpMethodsClient {
     testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __testPatch;
     /**
+     * @beta This endpoint is in development and may change.
+     *
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

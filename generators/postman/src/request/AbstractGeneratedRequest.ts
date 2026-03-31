@@ -1,12 +1,4 @@
-import {
-    HttpEndpoint,
-    HttpHeader,
-    HttpMethod,
-    HttpPath,
-    HttpService,
-    IntermediateRepresentation,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     PostmanHeader,
     PostmanMethod,
@@ -15,26 +7,25 @@ import {
     PostmanRequestBodyMode,
     PostmanUrlVariable
 } from "@fern-fern/postman-sdk/api";
-
-import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
-import { GeneratedRequest } from "./GeneratedRequest";
+import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils.js";
+import { GeneratedRequest } from "./GeneratedRequest.js";
 
 export declare namespace AbstractGeneratedRequest {
     export interface Init {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         authHeaders: PostmanHeader[];
-        httpService: HttpService;
-        httpEndpoint: HttpEndpoint;
-        allTypes: TypeDeclaration[];
+        httpService: FernIr.HttpService;
+        httpEndpoint: FernIr.HttpEndpoint;
+        allTypes: FernIr.TypeDeclaration[];
     }
 }
 
 export abstract class AbstractGeneratedRequest implements GeneratedRequest {
-    protected ir: IntermediateRepresentation;
+    protected ir: FernIr.IntermediateRepresentation;
     protected authHeaders: PostmanHeader[];
-    protected httpService: HttpService;
-    protected httpEndpoint: HttpEndpoint;
-    protected allTypes: TypeDeclaration[];
+    protected httpService: FernIr.HttpService;
+    protected httpEndpoint: FernIr.HttpEndpoint;
+    protected allTypes: FernIr.TypeDeclaration[];
 
     constructor({ authHeaders, httpEndpoint, httpService, allTypes, ir }: AbstractGeneratedRequest.Init) {
         this.ir = ir;
@@ -87,7 +78,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         };
     }
 
-    protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): PostmanHeader {
+    protected convertHeader({ header, value }: { header: FernIr.HttpHeader; value?: unknown }): PostmanHeader {
         const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
             key: header.name.wireValue,
@@ -97,8 +88,8 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         };
     }
 
-    private convertHttpMethod(httpMethod: HttpMethod): PostmanMethod {
-        return HttpMethod._visit<PostmanMethod>(httpMethod, {
+    private convertHttpMethod(httpMethod: FernIr.HttpMethod): PostmanMethod {
+        return FernIr.HttpMethod._visit<PostmanMethod>(httpMethod, {
             get: () => PostmanMethod.Get,
             post: () => PostmanMethod.Post,
             put: () => PostmanMethod.Put,
@@ -110,7 +101,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         });
     }
 
-    private getPathArray(path: HttpPath): string[] {
+    private getPathArray(path: FernIr.HttpPath): string[] {
         const urlParts: string[] = [];
         if (path.head !== "/") {
             this.splitPathString(path.head).forEach((splitPart) => urlParts.push(splitPart));

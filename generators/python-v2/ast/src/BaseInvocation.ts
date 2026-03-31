@@ -1,7 +1,7 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { MethodArgument } from "./MethodArgument";
-import { Reference } from "./Reference";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { MethodArgument } from "./MethodArgument.js";
+import { Reference } from "./Reference.js";
 
 export declare namespace BaseInvocation {
     interface Args {
@@ -54,6 +54,8 @@ export class BaseInvocation extends AstNode {
                 } else {
                     writer.write(" ");
                 }
+            } else if (this.multiline) {
+                writer.write(",");
             }
         });
         if (this.multiline) {

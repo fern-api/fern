@@ -1,9 +1,12 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedPagination.Core;
 
 namespace SeedPagination;
 
-[JsonConverter(typeof(StringEnumSerializer<SingleFilterSearchRequestOperator>))]
+[JsonConverter(
+    typeof(SingleFilterSearchRequestOperator.SingleFilterSearchRequestOperatorSerializer)
+)]
 [Serializable]
 public readonly record struct SingleFilterSearchRequestOperator : IStringEnum
 {
@@ -69,6 +72,56 @@ public readonly record struct SingleFilterSearchRequestOperator : IStringEnum
     public static explicit operator string(SingleFilterSearchRequestOperator value) => value.Value;
 
     public static explicit operator SingleFilterSearchRequestOperator(string value) => new(value);
+
+    internal class SingleFilterSearchRequestOperatorSerializer
+        : JsonConverter<SingleFilterSearchRequestOperator>
+    {
+        public override SingleFilterSearchRequestOperator Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SingleFilterSearchRequestOperator(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SingleFilterSearchRequestOperator value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+
+        public override SingleFilterSearchRequestOperator ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new SingleFilterSearchRequestOperator(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SingleFilterSearchRequestOperator value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

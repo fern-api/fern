@@ -4,7 +4,7 @@ import type * as SeedTrace from "../../../index.js";
 
 export interface TestCaseNonHiddenGrade {
     passed: boolean;
-    actualResult?: SeedTrace.VariableValue;
-    exception?: SeedTrace.ExceptionV2;
+    actualResult?: SeedTrace.VariableValue | undefined;
+    exception?: SeedTrace.ExceptionV2 | undefined;
     stdout: string;
 }

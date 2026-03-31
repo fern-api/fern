@@ -3,9 +3,9 @@ using SeedApi.Core;
 
 namespace SeedApi.A.C;
 
-public partial class CClient
+public partial class CClient : ICClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CClient(RawClient client)
     {
@@ -20,13 +20,19 @@ public partial class CClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -37,7 +43,9 @@ public partial class CClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

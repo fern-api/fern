@@ -38,9 +38,14 @@ public class RawServiceClient {
     }
 
     public SeedContentTypesHttpResponse<Void> patch(PatchProxyRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -50,7 +55,7 @@ public class RawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -93,6 +98,18 @@ public class RawServiceClient {
      * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
      * </ul>
      */
+    public SeedContentTypesHttpResponse<Void> patchComplex(String id, RequestOptions requestOptions) {
+        return patchComplex(id, PatchComplexRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
     public SeedContentTypesHttpResponse<Void> patchComplex(String id, PatchComplexRequest request) {
         return patchComplex(id, request, null);
     }
@@ -107,11 +124,15 @@ public class RawServiceClient {
      */
     public SeedContentTypesHttpResponse<Void> patchComplex(
             String id, PatchComplexRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("complex")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -121,7 +142,7 @@ public class RawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -158,11 +179,15 @@ public class RawServiceClient {
      */
     public SeedContentTypesHttpResponse<Void> namedPatchWithMixed(
             String id, NamedMixedPatchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("named-mixed")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -172,7 +197,7 @@ public class RawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -217,10 +242,14 @@ public class RawServiceClient {
      */
     public SeedContentTypesHttpResponse<Void> optionalMergePatchTest(
             OptionalMergePatchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("optional-merge-patch-test")
-                .build();
+                .addPathSegments("optional-merge-patch-test");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -230,7 +259,7 @@ public class RawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
@@ -263,6 +292,13 @@ public class RawServiceClient {
     /**
      * Regular PATCH endpoint without merge-patch semantics
      */
+    public SeedContentTypesHttpResponse<Void> regularPatch(String id, RequestOptions requestOptions) {
+        return regularPatch(id, RegularPatchRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
     public SeedContentTypesHttpResponse<Void> regularPatch(String id, RegularPatchRequest request) {
         return regularPatch(id, request, null);
     }
@@ -272,11 +308,15 @@ public class RawServiceClient {
      */
     public SeedContentTypesHttpResponse<Void> regularPatch(
             String id, RegularPatchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("regular")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -285,7 +325,7 @@ public class RawServiceClient {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

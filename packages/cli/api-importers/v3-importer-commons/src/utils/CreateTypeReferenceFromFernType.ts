@@ -31,10 +31,18 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                             v1: "DATE_TIME",
                             v2: FernIr.PrimitiveTypeV2.dateTime({})
                         });
+                    case "DATE_TIME_RFC_2822":
+                        return FernIr.TypeReference.primitive({
+                            v1: "DATE_TIME_RFC_2822",
+                            v2: FernIr.PrimitiveTypeV2.dateTimeRfc2822({})
+                        });
                     case "FLOAT":
                         return FernIr.TypeReference.primitive({
                             v1: "FLOAT",
-                            v2: FernIr.PrimitiveTypeV2.float({})
+                            v2: FernIr.PrimitiveTypeV2.float({
+                                default: undefined,
+                                validation: undefined
+                            })
                         });
                     case "DOUBLE":
                         return FernIr.TypeReference.primitive({
@@ -47,12 +55,18 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                     case "UINT":
                         return FernIr.TypeReference.primitive({
                             v1: "UINT",
-                            v2: FernIr.PrimitiveTypeV2.uint({})
+                            v2: FernIr.PrimitiveTypeV2.uint({
+                                default: undefined,
+                                validation: undefined
+                            })
                         });
                     case "UINT_64":
                         return FernIr.TypeReference.primitive({
                             v1: "UINT_64",
-                            v2: FernIr.PrimitiveTypeV2.uint64({})
+                            v2: FernIr.PrimitiveTypeV2.uint64({
+                                default: undefined,
+                                validation: undefined
+                            })
                         });
                     case "INTEGER":
                         return FernIr.TypeReference.primitive({
@@ -66,7 +80,8 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                         return FernIr.TypeReference.primitive({
                             v1: "LONG",
                             v2: FernIr.PrimitiveTypeV2.long({
-                                default: undefined
+                                default: undefined,
+                                validation: undefined
                             })
                         });
                     case "STRING":

@@ -1,0 +1,331 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "OrderEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "orderId": "string",
+              "total": "optional<double>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PaymentEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "amount": "double",
+              "currency": "optional<string>",
+              "paymentId": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RefundEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "amount": "double",
+              "reason": "optional<string>",
+              "refundId": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "action": "string",
+              "userId": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  UserEvent:
+    properties:
+      userId: string
+      action: string
+    source:
+      openapi: ../openapi.yml
+  OrderEvent:
+    properties:
+      orderId: string
+      total: optional<double>
+    source:
+      openapi: ../openapi.yml
+  PaymentEvent:
+    properties:
+      paymentId: string
+      amount: double
+      currency: optional<string>
+    source:
+      openapi: ../openapi.yml
+  RefundEvent:
+    properties:
+      refundId: string
+      amount: double
+      reason: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "webhooks.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "webhooks": {
+          "orderPlaced": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "orderId": "orderId",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.OrderEvent",
+            "signature": {
+              "algorithm": "sha256",
+              "encoding": "hex",
+              "header": "x-webhook-signature",
+              "payload-format": {
+                "body-sort": "alphabetical",
+                "components": [
+                  "timestamp",
+                  "body",
+                ],
+                "delimiter": ".",
+              },
+              "signature-prefix": "sha256=",
+              "timestamp": {
+                "format": "unix-seconds",
+                "header": "x-webhook-timestamp",
+                "tolerance": 300,
+              },
+              "type": "hmac",
+            },
+          },
+          "paymentProcessed": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "amount": 1.1,
+                  "paymentId": "paymentId",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.PaymentEvent",
+            "signature": {
+              "asymmetric-algorithm": "rsa-sha256",
+              "encoding": "base64",
+              "header": "x-signature",
+              "jwks-url": "https://api.example.com/.well-known/jwks.json",
+              "key-id-header": "x-key-id",
+              "signature-prefix": "rsa=",
+              "timestamp": {
+                "format": "iso8601",
+                "header": "x-timestamp",
+                "tolerance": undefined,
+              },
+              "type": "asymmetric",
+            },
+          },
+          "refundProcessed": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "amount": 1.1,
+                  "refundId": "refundId",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.RefundEvent",
+            "signature": {
+              "asymmetric-algorithm": "ecdsa-sha256",
+              "encoding": "hex",
+              "header": "x-refund-signature",
+              "jwks-url": undefined,
+              "key-id-header": undefined,
+              "signature-prefix": undefined,
+              "timestamp": undefined,
+              "type": "asymmetric",
+            },
+          },
+          "userCreated": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "action": "action",
+                  "userId": "userId",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.UserEvent",
+            "signature": {
+              "algorithm": "sha256",
+              "encoding": "hex",
+              "header": "x-webhook-signature",
+              "payload-format": {
+                "body-sort": "alphabetical",
+                "components": [
+                  "timestamp",
+                  "body",
+                ],
+                "delimiter": ".",
+              },
+              "signature-prefix": "sha256=",
+              "timestamp": {
+                "format": "unix-seconds",
+                "header": "x-webhook-timestamp",
+                "tolerance": 300,
+              },
+              "type": "hmac",
+            },
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+webhooks:
+  userCreated:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.UserEvent
+    signature:
+      type: hmac
+      header: x-webhook-signature
+      algorithm: sha256
+      encoding: hex
+      signature-prefix: sha256=
+      payload-format:
+        components:
+          - timestamp
+          - body
+        delimiter: .
+        body-sort: alphabetical
+      timestamp:
+        header: x-webhook-timestamp
+        format: unix-seconds
+        tolerance: 300
+    examples:
+      - payload:
+          userId: userId
+          action: action
+  orderPlaced:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.OrderEvent
+    signature:
+      type: hmac
+      header: x-webhook-signature
+      algorithm: sha256
+      encoding: hex
+      signature-prefix: sha256=
+      payload-format:
+        components:
+          - timestamp
+          - body
+        delimiter: .
+        body-sort: alphabetical
+      timestamp:
+        header: x-webhook-timestamp
+        format: unix-seconds
+        tolerance: 300
+    examples:
+      - payload:
+          orderId: orderId
+  paymentProcessed:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.PaymentEvent
+    signature:
+      type: asymmetric
+      header: x-signature
+      asymmetric-algorithm: rsa-sha256
+      encoding: base64
+      signature-prefix: rsa=
+      jwks-url: https://api.example.com/.well-known/jwks.json
+      key-id-header: x-key-id
+      timestamp:
+        header: x-timestamp
+        format: iso8601
+    examples:
+      - payload:
+          paymentId: paymentId
+          amount: 1.1
+  refundProcessed:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.RefundEvent
+    signature:
+      type: asymmetric
+      header: x-refund-signature
+      asymmetric-algorithm: ecdsa-sha256
+      encoding: hex
+    examples:
+      - payload:
+          refundId: refundId
+          amount: 1.1
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Webhook Signature Verification Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Webhook Signature Verification Test
+",
+  },
+}

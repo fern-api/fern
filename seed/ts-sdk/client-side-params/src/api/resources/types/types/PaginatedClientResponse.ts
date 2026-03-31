@@ -13,7 +13,7 @@ export interface PaginatedClientResponse {
     /** Number of items returned */
     length: number;
     /** Total number of items (when include_totals=true) */
-    total?: number;
+    total?: number | undefined;
     /** List of clients */
     clients: SeedClientSideParams.Client[];
 }

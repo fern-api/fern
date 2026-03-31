@@ -1,4 +1,4 @@
-import { ImportStrategy } from "../declaration-referencers/DeclarationReferencer";
+import { ImportStrategy } from "../declaration-referencers/DeclarationReferencer.js";
 
 export function getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport: boolean }): ImportStrategy {
     return {

@@ -1,7 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
-import { runScript } from "../runScript";
+import { runScript } from "../runScript.js";
 
 // Replace the version string within the command, if one is specified
 // The idea here is to turn a command like "npm publish --tag $VERSION" into "npm publish --tag v1.0.0"

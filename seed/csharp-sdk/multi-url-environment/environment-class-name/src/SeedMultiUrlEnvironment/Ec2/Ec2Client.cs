@@ -2,9 +2,9 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
-public partial class Ec2Client
+public partial class Ec2Client : IEc2Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal Ec2Client(RawClient client)
     {
@@ -20,6 +20,12 @@ public partial class Ec2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMultiUrlEnvironment.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class Ec2Client
                     Method = HttpMethod.Post,
                     Path = "/ec2/boot",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -38,7 +45,9 @@ public partial class Ec2Client
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedMultiUrlEnvironmentApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

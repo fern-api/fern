@@ -2,6 +2,10 @@ name: ci
 
 on: [push, pull_request]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -14,7 +18,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
 
       - name: Run Rubocop
         run: bundle exec rubocop
@@ -30,7 +36,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
 
       - name: Run Tests
         run: bundle exec rake test
@@ -53,7 +61,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
 
-      - name: Publish to RubyGems
-        uses: rubygems/release-gem@v1
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Configure RubyGems credentials
+        uses: rubygems/configure-rubygems-credentials@v1.0.0
+
+      - name: Build gem
+        run: bundle exec rake build
+
+      - name: Push gem to RubyGems
+        run: gem push pkg/*.gem

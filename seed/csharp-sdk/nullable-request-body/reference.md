@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.TestGroup.<a href="/src/SeedApi/TestGroup/TestGroupClient.cs">TestMethodNameAsync</a>(TestMethodNameTestGroupRequest { ... }) -> object</code></summary>
+<details><summary><code>client.TestGroup.<a href="/src/SeedApi/TestGroup/TestGroupClient.cs">TestMethodNameAsync</a>(TestMethodNameTestGroupRequest { ... }) -> WithRawResponseTask&lt;object&gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,3 +55,4 @@ await client.TestGroup.TestMethodNameAsync(
 </dd>
 </dl>
 </details>
+

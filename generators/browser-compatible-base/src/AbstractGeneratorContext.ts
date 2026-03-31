@@ -1,6 +1,6 @@
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 
-import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
+import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService.js";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Trace]: FernGeneratorExec.logging.LogLevel.Debug,

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.Stream<SeedStreaming.StreamResponse></code></summary>
+<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.Stream&lt;SeedStreaming.StreamResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -54,3 +54,4 @@ for await (const item of response) {
 </dd>
 </dl>
 </details>
+

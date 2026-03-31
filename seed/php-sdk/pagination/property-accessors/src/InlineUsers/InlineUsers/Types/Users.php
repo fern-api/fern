@@ -39,6 +39,7 @@ class Users extends JsonSerializableType
     public function setUsers(array $value): self
     {
         $this->users = $value;
+        $this->_setField('users');
         return $this;
     }
 

@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -43,6 +44,7 @@
           "description": "Demonstrates oneOf without discriminator or mapping.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -170,6 +172,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -190,6 +193,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",
@@ -269,8 +273,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -311,7 +318,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "ErrorVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -322,7 +329,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "ErrorVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -381,8 +388,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -402,7 +412,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "OneOfVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -413,7 +423,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "OneOfVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",

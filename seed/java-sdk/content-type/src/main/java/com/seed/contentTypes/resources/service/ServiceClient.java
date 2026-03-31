@@ -56,6 +56,18 @@ public class ServiceClient {
      * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
      * </ul>
      */
+    public void patchComplex(String id, RequestOptions requestOptions) {
+        this.rawClient.patchComplex(id, requestOptions).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * <ul>
+     * <li>optional&lt;T&gt; fields (can be present or absent, but not null)</li>
+     * <li>optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)</li>
+     * </ul>
+     */
     public void patchComplex(String id, PatchComplexRequest request) {
         this.rawClient.patchComplex(id, request).body();
     }
@@ -117,6 +129,13 @@ public class ServiceClient {
      */
     public void regularPatch(String id) {
         this.rawClient.regularPatch(id).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id, RequestOptions requestOptions) {
+        this.rawClient.regularPatch(id, requestOptions).body();
     }
 
     /**

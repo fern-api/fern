@@ -12,7 +12,9 @@ from .function_implementation import FunctionImplementation
 
 class FunctionImplementationForMultipleLanguages(UniversalBaseModel):
     code_by_language: typing_extensions.Annotated[
-        typing.Dict[Language, FunctionImplementation], FieldMetadata(alias="codeByLanguage")
+        typing.Dict[Language, FunctionImplementation],
+        FieldMetadata(alias="codeByLanguage"),
+        pydantic.Field(alias="codeByLanguage"),
     ]
 
     if IS_PYDANTIC_V2:

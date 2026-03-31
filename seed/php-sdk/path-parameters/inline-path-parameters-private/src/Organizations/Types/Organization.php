@@ -47,6 +47,7 @@ class Organization extends JsonSerializableType
     public function setName(string $value): self
     {
         $this->name = $value;
+        $this->_setField('name');
         return $this;
     }
 
@@ -64,6 +65,7 @@ class Organization extends JsonSerializableType
     public function setTags(array $value): self
     {
         $this->tags = $value;
+        $this->_setField('tags');
         return $this;
     }
 

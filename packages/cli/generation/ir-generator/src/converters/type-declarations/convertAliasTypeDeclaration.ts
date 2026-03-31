@@ -9,9 +9,9 @@ import {
 } from "@fern-api/fern-definition-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration.js";
 
 export function convertAliasTypeDeclaration({
     alias,

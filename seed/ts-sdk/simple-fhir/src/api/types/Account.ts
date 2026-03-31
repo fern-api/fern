@@ -5,6 +5,6 @@ import type * as SeedApi from "../index.js";
 export interface Account extends SeedApi.BaseResource {
     resource_type: "Account";
     name: string;
-    patient?: SeedApi.Patient;
-    practitioner?: SeedApi.Practitioner;
+    patient?: SeedApi.Patient | undefined;
+    practitioner?: SeedApi.Practitioner | undefined;
 }

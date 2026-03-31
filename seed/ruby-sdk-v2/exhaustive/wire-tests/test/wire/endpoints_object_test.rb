@@ -6,7 +6,7 @@ class EndpointsObjectWireTest < WireMockTestCase
   def setup
     super
 
-    @client = Seed::Client.new(
+    @client = Seed::MyClient.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )
@@ -224,6 +224,85 @@ class EndpointsObjectWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/object/get-and-return-nested-with-required-field-list",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_object_get_and_return_with_unknown_field_with_wiremock
+    test_id = "endpoints.object.get_and_return_with_unknown_field.0"
+
+    @client.endpoints.object.get_and_return_with_unknown_field(request_options: {
+                                                                 additional_headers: {
+                                                                   "X-Test-Id" => "endpoints.object.get_and_return_with_unknown_field.0"
+                                                                 }
+                                                               })
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-unknown-field",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_object_get_and_return_with_documented_unknown_type_with_wiremock
+    test_id = "endpoints.object.get_and_return_with_documented_unknown_type.0"
+
+    @client.endpoints.object.get_and_return_with_documented_unknown_type(request_options: {
+                                                                           additional_headers: {
+                                                                             "X-Test-Id" => "endpoints.object.get_and_return_with_documented_unknown_type.0"
+                                                                           }
+                                                                         })
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-documented-unknown-type",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_object_get_and_return_map_of_documented_unknown_type_with_wiremock
+    test_id = "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+
+    @client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+      request: {},
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-map-of-documented-unknown-type",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock
+    test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
+
+    @client.endpoints.object.get_and_return_with_datetime_like_string(
+      datetime_like_string: "2023-08-31T14:15:22Z",
+      actual_datetime: "2023-08-31T14:15:22Z",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_with_datetime_like_string.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-datetime-like-string",
       query_params: nil,
       expected: 1
     )

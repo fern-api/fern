@@ -15,7 +15,7 @@ if [ "$test_tarball" = "true" ]; then
     
     echo "Creating tarball from $cli_dir..."
     cd "$cli_dir"
-    tarball_path="$(npm pack 2>&1 | tail -n 1)"
+    tarball_path="$(pnpm pack 2>&1 | tail -n 1)"
     echo "Created tarball: $tarball_path"
     
     install_dir="$(mktemp -d)"
@@ -33,7 +33,7 @@ cd "$test_dir"
 echo "Running Fern Commands in $test_dir!"
 set -x
 
-node "$cli_path" init --organization fern
+node "$cli_path" init --organization fern --fern-definition
 
 node "$cli_path" add fern-java-sdk
 node "$cli_path" add fern-python-sdk

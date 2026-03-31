@@ -1649,6 +1649,7 @@
                     ],
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -3816,6 +3817,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
@@ -3874,6 +3876,10 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -3898,6 +3904,10 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
@@ -4020,6 +4030,8 @@
                     },
                     "docs": null
                 },
+                "signatureVerification": null,
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
@@ -4123,6 +4135,8 @@
                     },
                     "docs": null
                 },
+                "signatureVerification": null,
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

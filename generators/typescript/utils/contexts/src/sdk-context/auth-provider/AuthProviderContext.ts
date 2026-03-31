@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
-import { SdkContext } from "../SdkContext";
+import { SdkContext } from "../SdkContext.js";
 
 export class AuthProviderContext {
     private readonly context: SdkContext;

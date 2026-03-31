@@ -1,20 +1,9 @@
-import {
-    BigIntegerType,
-    BooleanType,
-    DoubleType,
-    ExampleEndpointCall,
-    HttpHeader,
-    IntegerType,
-    LongType,
-    QueryParameter,
-    StringType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { createNumericLiteralSafe, GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 type DefaultNonBodyKeyName = string & {
     __DefaultNonBodyKeyName: void;
@@ -149,19 +138,19 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
         const requestWrapperExample = this.getGeneratedRequestWrapper(context).generateExample(example);
         return requestWrapperExample?.build(context, opts);
     }
 
-    public getAllQueryParameters(context: SdkContext): QueryParameter[] {
+    public getAllQueryParameters(context: SdkContext): FernIr.QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
     public withQueryParameter(
-        queryParameter: QueryParameter,
+        queryParameter: FernIr.QueryParameter,
         context: SdkContext,
         queryParamSetter: (value: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
@@ -208,7 +197,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): ts.Expression {
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(
                 this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header)
@@ -235,7 +224,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return alias;
     }
 
-    private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
+    private extractDefaultValue(typeReference: FernIr.TypeReference, context: SdkContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference);
 
         if (resolvedType.type === "container") {
@@ -251,13 +240,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
-                integer: (integerType: IntegerType) => {
+                integer: (integerType: FernIr.IntegerType) => {
                     if (integerType.default != null) {
                         return createNumericLiteralSafe(integerType.default);
                     }
                     return undefined;
                 },
-                long: (longType: LongType) => {
+                long: (longType: FernIr.LongType) => {
                     if (longType.default != null) {
                         if (useBigInt) {
                             return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
@@ -268,25 +257,25 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                     }
                     return undefined;
                 },
-                double: (doubleType: DoubleType) => {
+                double: (doubleType: FernIr.DoubleType) => {
                     if (doubleType.default != null) {
                         return createNumericLiteralSafe(doubleType.default);
                     }
                     return undefined;
                 },
-                string: (stringType: StringType) => {
+                string: (stringType: FernIr.StringType) => {
                     if (stringType.default != null) {
                         return ts.factory.createStringLiteral(stringType.default);
                     }
                     return undefined;
                 },
-                boolean: (booleanType: BooleanType) => {
+                boolean: (booleanType: FernIr.BooleanType) => {
                     if (booleanType.default != null) {
                         return booleanType.default ? ts.factory.createTrue() : ts.factory.createFalse();
                     }
                     return undefined;
                 },
-                bigInteger: (bigIntegerType: BigIntegerType) => {
+                bigInteger: (bigIntegerType: FernIr.BigIntegerType) => {
                     if (bigIntegerType.default != null) {
                         if (useBigInt) {
                             return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [

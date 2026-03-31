@@ -1,7 +1,7 @@
 import { camelCase, snakeCase } from "lodash-es";
-import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
+import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants/index.js";
 
-export { RustCycleDetector } from "./cycleDetector";
+export { RustCycleDetector } from "./cycleDetector.js";
 
 export function convertToSnakeCase(str: string): string {
     return snakeCase(str);

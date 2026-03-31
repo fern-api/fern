@@ -4,11 +4,12 @@ package pathparam
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/enum/fern"
 	core "github.com/enum/fern/core"
 	internal "github.com/enum/fern/internal"
 	option "github.com/enum/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseResultWithStdout AsGraded() =>
         IsGraded
             ? (SeedTrace.TestCaseResultWithStdout)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'graded'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'graded'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
@@ -87,7 +89,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseGrade AsGradedV2() =>
         IsGradedV2
             ? (SeedTrace.TestCaseGrade)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'gradedV2'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -96,7 +100,9 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TracedTestCase AsTraced() =>
         IsTraced
             ? (SeedTrace.TracedTestCase)Value!
-            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'traced'");
+            : throw new global::System.Exception(
+                "SubmissionStatusForTestCase.Type is not 'traced'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.TestCaseResultWithStdout, T> onGraded,
@@ -197,12 +203,12 @@ public record SubmissionStatusForTestCase
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusForTestCase>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionStatusForTestCase).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusForTestCase Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -227,16 +233,25 @@ public record SubmissionStatusForTestCase
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
-                    ),
+                "graded" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.TestCaseResultWithStdout?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
+                        ),
                 "gradedV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.TestCaseGrade?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
-                "traced" => json.Deserialize<SeedTrace.TracedTestCase?>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
+                "traced" => jsonWithoutDiscriminator.Deserialize<SeedTrace.TracedTestCase?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -262,6 +277,27 @@ public record SubmissionStatusForTestCase
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override SubmissionStatusForTestCase ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new SubmissionStatusForTestCase(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SubmissionStatusForTestCase value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

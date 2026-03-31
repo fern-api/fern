@@ -10,5 +10,5 @@ export interface PaginatedUserResponse {
     start: number;
     limit: number;
     length: number;
-    total?: number;
+    total?: number | undefined;
 }

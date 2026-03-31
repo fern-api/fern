@@ -369,13 +369,13 @@ request := &pleaseinhere.Movie{
                 "Florence Pugh",
                 "Willem Dafoe",
             },
-            "releaseDate": "2023-12-08",
             "ratings": map[string]any{
-                "rottenTomatoes": 97,
                 "imdb": 7.6,
+                "rottenTomatoes": 97,
             },
+            "releaseDate": "2023-12-08",
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
 client.Service.CreateMovie(
         context.TODO(),
@@ -520,7 +520,7 @@ request := &pleaseinhere.BigEntity{
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{
@@ -577,13 +577,9 @@ request := &pleaseinhere.BigEntity{
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -600,13 +596,9 @@ request := &pleaseinhere.BigEntity{
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -678,13 +670,9 @@ request := &pleaseinhere.BigEntity{
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },
@@ -703,13 +691,9 @@ request := &pleaseinhere.BigEntity{
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },
@@ -801,3 +785,4 @@ client.Service.RefreshToken(
 </dd>
 </dl>
 </details>
+

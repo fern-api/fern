@@ -1,15 +1,4 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.union = union;
 const Schema_1 = require("../../Schema");
@@ -20,6 +9,8 @@ const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
 const index_1 = require("../enum/index");
 const object_like_1 = require("../object-like");
 const index_2 = require("../schema-utils/index");
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 function union(discriminant, union) {
     const rawDiscriminant = typeof discriminant === "string" ? discriminant : discriminant.rawDiscriminant;
     const parsedDiscriminant = typeof discriminant === "string"
@@ -79,7 +70,13 @@ function transformAndValidateUnion({ value, discriminant, transformedDiscriminan
             ],
         };
     }
-    const _a = value, _b = discriminant, discriminantValue = _a[_b], additionalProperties = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
+    const discriminantValue = value[discriminant];
+    const additionalProperties = {};
+    for (const key in value) {
+        if (_hasOwn.call(value, key) && key !== discriminant) {
+            additionalProperties[key] = value[key];
+        }
+    }
     if (discriminantValue == null) {
         return {
             ok: false,

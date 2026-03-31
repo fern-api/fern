@@ -1,6 +1,6 @@
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 
-import { AbstractConverterContext } from "./AbstractConverterContext";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 

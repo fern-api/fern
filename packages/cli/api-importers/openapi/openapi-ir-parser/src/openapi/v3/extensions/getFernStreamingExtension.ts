@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 const REQUEST_PREFIX = "$request.";
 
@@ -10,13 +10,16 @@ export type FernStreamingExtension = OnlyStreamingEndpoint | StreamConditionEndp
 export interface OnlyStreamingEndpoint {
     type: "stream";
     format: "sse" | "json";
+    terminator: string | undefined;
 }
 
 export interface StreamConditionEndpoint {
     type: "streamCondition";
     format: "sse" | "json";
+    terminator: string | undefined;
     streamDescription: string | undefined;
     streamConditionProperty: string;
+    streamRequestName: string | undefined;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
@@ -28,8 +31,10 @@ declare namespace Raw {
         ["stream-condition"]: string;
         ["format"]: "sse" | "json" | undefined;
         ["stream-description"]: string | undefined;
+        ["stream-request-name"]: string | undefined;
         ["response-stream"]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
         response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+        terminator: string | undefined;
     }
 }
 
@@ -44,7 +49,8 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
         return streaming
             ? {
                   type: "stream",
-                  format: "json"
+                  format: "json",
+                  terminator: undefined
               }
             : undefined;
     }
@@ -52,15 +58,18 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
     if (streaming["stream-condition"] == null && streaming.format != null) {
         return {
             type: "stream",
-            format: streaming.format
+            format: streaming.format,
+            terminator: streaming.terminator
         };
     }
 
     return {
         type: "streamCondition",
         format: streaming.format ?? "json", // Default to "json"
+        terminator: streaming.terminator,
         streamDescription: streaming["stream-description"],
         streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
+        streamRequestName: streaming["stream-request-name"],
         responseStream: streaming["response-stream"],
         response: streaming.response
     };

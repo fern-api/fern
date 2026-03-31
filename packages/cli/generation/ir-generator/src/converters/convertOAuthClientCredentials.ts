@@ -1,12 +1,12 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OAuthClientCredentials } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { EndpointResolver } from "../resolvers/EndpointResolver";
-import { PropertyResolver } from "../resolvers/PropertyResolver";
-import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint";
-import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint";
-import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils";
+import { FernFileContext } from "../FernFileContext.js";
+import { EndpointResolver } from "../resolvers/EndpointResolver.js";
+import { PropertyResolver } from "../resolvers/PropertyResolver.js";
+import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint.js";
+import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint.js";
+import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils.js";
 
 export function convertOAuthClientCredentials({
     propertyResolver,

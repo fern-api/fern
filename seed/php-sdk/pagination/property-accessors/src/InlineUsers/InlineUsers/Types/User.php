@@ -46,6 +46,7 @@ class User extends JsonSerializableType
     public function setName(string $value): self
     {
         $this->name = $value;
+        $this->_setField('name');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class User extends JsonSerializableType
     public function setId(int $value): self
     {
         $this->id = $value;
+        $this->_setField('id');
         return $this;
     }
 

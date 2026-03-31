@@ -1,4 +1,4 @@
-import { MintNavigationItem } from "../mintlify";
+import { MintNavigationItem } from "../mintlify.js";
 
 export declare namespace getTabForMintItem {
     interface Args {

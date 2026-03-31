@@ -76,6 +76,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/container/map-prim-to-union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using OneOf;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { \"string\", 1.1 } }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
@@ -254,6 +266,66 @@
             }
         },
         {
+            "example_identifier": "BackslashExample",
+            "id": {
+                "path": "/object/get-and-return-with-unknown-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(\n    new ObjectWithUnknownField\n    {\n        Unknown = new Dictionary<object, object?>() { { \"$ref\", \"https://example.com/schema\" } },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/object/get-and-return-with-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(\n    new ObjectWithDocumentedUnknownType\n    {\n        DocumentedUnknownType = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/object/get-and-return-map-of-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": "DatetimeLikeStringExample",
+            "id": {
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(\n    new ObjectWithDatetimeLikeString\n    {\n        DatetimeLikeString = \"2023-08-31T14:15:22Z\",\n        ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/pagination",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/pagination.listItems"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Endpoints.Pagination;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nvar items = await client.Endpoints.Pagination.ListItemsAsync(\n    new ListItemsRequest { Cursor = \"cursor\", Limit = 1 }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
             "example_identifier": null,
             "id": {
                 "path": "/params/path/{param}",
@@ -347,6 +419,18 @@
             "snippet": {
                 "type": "csharp",
                 "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    new ModifyResourceAtInlinedPath { Param = \"param\", Body = \"string\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\nusing global::System.Text;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.UploadWithPathAsync(\n    \"upload-path\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
             }
         },
         {

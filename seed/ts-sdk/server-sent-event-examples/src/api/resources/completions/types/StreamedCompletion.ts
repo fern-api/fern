@@ -2,5 +2,5 @@
 
 export interface StreamedCompletion {
     delta: string;
-    tokens?: number;
+    tokens?: number | undefined;
 }

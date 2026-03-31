@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetAccountAsync</a>(accountId) -> Account</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetAccountAsync</a>(accountId) -> WithRawResponseTask&lt;Account&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,3 +38,4 @@ await client.GetAccountAsync("account_id");
 </dd>
 </dl>
 </details>
+

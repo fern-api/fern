@@ -11,7 +11,7 @@ import {
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming.js";
 
 export declare namespace RequestBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -159,7 +159,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs: this.description,
+                    docs: this.description ?? convertedSchema.schema?.typeDeclaration.docs,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
@@ -389,9 +389,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             properties: {
                 ...resolvedMediaTypeSchema.properties,
                 [this.streamingExtension.streamConditionProperty]: {
+                    ...streamConditionProperty,
                     type: "boolean",
-                    const: isStreaming,
-                    ...streamConditionProperty
+                    const: isStreaming
                 } as OpenAPIV3_1.SchemaObject
             },
             required: [...(resolvedMediaTypeSchema.required ?? []), this.streamingExtension.streamConditionProperty]
@@ -416,9 +416,11 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs: undefined,
+                    docs: this.description ?? convertedSchema.schema?.typeDeclaration.docs,
                     name: this.context.casingsGenerator.generateName(
-                        isStreaming ? `${this.schemaId}_streaming` : this.schemaId
+                        isStreaming
+                            ? (this.streamingExtension?.streamRequestName ?? `${this.schemaId}_streaming`)
+                            : this.schemaId
                     ),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,

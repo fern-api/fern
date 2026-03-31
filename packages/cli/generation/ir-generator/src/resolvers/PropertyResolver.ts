@@ -11,12 +11,12 @@ import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
     maybeFileFromResolvedType
-} from "../converters/services/convertProperty";
-import { convertQueryParameter } from "../converters/services/convertQueryParameter";
-import { FernFileContext } from "../FernFileContext";
-import { EndpointResolver } from "./EndpointResolver";
-import { ResolvedType } from "./ResolvedType";
-import { TypeResolver } from "./TypeResolver";
+} from "../converters/services/convertProperty.js";
+import { convertQueryParameter } from "../converters/services/convertQueryParameter.js";
+import { FernFileContext } from "../FernFileContext.js";
+import { EndpointResolver } from "./EndpointResolver.js";
+import { ResolvedType } from "./ResolvedType.js";
+import { TypeResolver } from "./TypeResolver.js";
 
 export interface PropertyResolver {
     resolveRequestProperty: (args: {

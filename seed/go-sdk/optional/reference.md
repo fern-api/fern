@@ -177,3 +177,4 @@ client.Optional.SendOptionalNullableWithAllOptionalProperties(
 </dd>
 </dl>
 </details>
+

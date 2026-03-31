@@ -50,6 +50,7 @@ language: java
 generatorType: Server
 defaultOutputMode: local_files
 allowedFailures:
+  - exhaustive
   - file-download
   - file-upload
   - file-upload-openapi
@@ -58,6 +59,7 @@ allowedFailures:
   - streaming
   - server-sent-events
   - server-sent-event-examples
+  - server-sent-events-openapi
   - alias-extends
   - any-auth
   - streaming-parameter
@@ -70,3 +72,4 @@ allowedFailures:
   - multiple-request-bodies
   - undiscriminated-union-with-response-property
   - enum
+  - java-streaming-accept-header

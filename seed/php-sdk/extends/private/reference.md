@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->extendedInlineRequestBody($request)</code></summary>
+<details><summary><code>$client-&gt;extendedInlineRequestBody($request)</code></summary>
 <dl>
 <dd>
 
@@ -44,3 +44,4 @@ $client->extendedInlineRequestBody(
 </dd>
 </dl>
 </details>
+

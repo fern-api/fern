@@ -7,16 +7,27 @@ import typing
 import pydantic
 import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel, universal_field_validator, universal_root_validator
+from ......core.serialization import FieldMetadata
 from .object_with_optional_field import ObjectWithOptionalField
 
 
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
+    nested_object: typing_extensions.Annotated[
+        typing.Optional[ObjectWithOptionalField],
+        FieldMetadata(alias="NestedObject"),
+        pydantic.Field(alias="NestedObject", default=None),
+    ]
 
     class Partial(typing.TypedDict):
         string: typing_extensions.NotRequired[typing.Optional[str]]
-        nested_object: typing_extensions.NotRequired[typing.Optional[ObjectWithOptionalField]]
+        nested_object: typing_extensions.NotRequired[
+            typing_extensions.Annotated[
+                typing.Optional[ObjectWithOptionalField],
+                FieldMetadata(alias="NestedObject"),
+                pydantic.Field(alias="NestedObject", default=None),
+            ]
+        ]
 
     class Validators:
         """

@@ -24,7 +24,7 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn get_with_path(
         &self,
-        param: &String,
+        param: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -49,7 +49,7 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn get_with_inline_path(
         &self,
-        param: &String,
+        param: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -130,7 +130,7 @@ impl ParamsClient {
     /// Empty response
     pub async fn get_with_path_and_query(
         &self,
-        param: &String,
+        param: &str,
         request: &GetWithPathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -158,7 +158,7 @@ impl ParamsClient {
     /// Empty response
     pub async fn get_with_inline_path_and_query(
         &self,
-        param: &String,
+        param: &str,
         request: &GetWithInlinePathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -186,15 +186,15 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn modify_with_path(
         &self,
-        param: &String,
-        request: &String,
+        param: &str,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -212,15 +212,41 @@ impl ParamsClient {
     /// JSON response from the API
     pub async fn modify_with_inline_path(
         &self,
-        param: &String,
-        request: &String,
+        param: &str,
+        request: &str,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// POST bytes with path param returning object
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn upload_with_path(
+        &self,
+        param: &str,
+        request: &Vec<u8>,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithRequiredField, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("/params/path/{}", param),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

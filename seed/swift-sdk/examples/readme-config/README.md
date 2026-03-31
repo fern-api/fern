@@ -7,6 +7,25 @@
 
 The Seed Swift library provides convenient access to the Seed APIs from Swift.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Timeouts](#timeouts)
+  - [Custom Networking Client](#custom-networking-client)
+- [Contributing](#contributing)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
@@ -76,6 +95,19 @@ private func main() async throws {
 }
 
 try await main()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Examples
+
+let client = ExamplesClient(
+    ...,
+    environment: .production
+)
 ```
 
 ## Errors

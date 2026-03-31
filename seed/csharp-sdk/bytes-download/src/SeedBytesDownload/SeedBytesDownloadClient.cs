@@ -2,13 +2,14 @@ using SeedBytesDownload.Core;
 
 namespace SeedBytesDownload;
 
-public partial class SeedBytesDownloadClient
+public partial class SeedBytesDownloadClient : ISeedBytesDownloadClient
 {
     private readonly RawClient _client;
 
     public SeedBytesDownloadClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedBytesDownloadClient
                 { "User-Agent", "Fernbytes-download/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedBytesDownloadClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

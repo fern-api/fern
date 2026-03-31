@@ -1,32 +1,35 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedNoRetries.Core;
 
 namespace SeedNoRetries;
 
-public partial class RetriesClient
+public partial class RetriesClient : IRetriesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal RetriesClient(RawClient client)
     {
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Retries.GetUsersAsync();
-    /// </code></example>
-    public async Task<IEnumerable<User>> GetUsersAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> GetUsersAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedNoRetries.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -34,24 +37,55 @@ public partial class RetriesClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedNoRetriesException("Failed to deserialize response", e);
+                throw new SeedNoRetriesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNoRetriesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Retries.GetUsersAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> GetUsersAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            GetUsersAsyncCore(options, cancellationToken)
+        );
     }
 }

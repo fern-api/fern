@@ -1,34 +1,52 @@
-using OneOf;
-
 namespace <%= namespace%>;
 
-internal sealed class HeaderValue(
-    OneOf<
-        string,
-        Func<string>,
-        Func<global::System.Threading.Tasks.ValueTask<string>>,
-        Func<global::System.Threading.Tasks.Task<string>>
-    > value
-)
-    : OneOfBase<
-        string,
-        Func<string>,
-        Func<global::System.Threading.Tasks.ValueTask<string>>,
-        Func<global::System.Threading.Tasks.Task<string>>
-    >(value)
+internal sealed class HeaderValue
 {
-    public static implicit operator HeaderValue(string value) => new(value);
-    public static implicit operator HeaderValue(Func<string> value) => new(value);
-    public static implicit operator HeaderValue(Func<global::System.Threading.Tasks.ValueTask<string>> value) => new(value);
-    public static implicit operator HeaderValue(Func<global::System.Threading.Tasks.Task<string>> value) => new(value);
+    private readonly Func<global::System.Threading.Tasks.ValueTask<string>> _resolver;
 
-    internal global::System.Threading.Tasks.ValueTask<string> ResolveAsync()
+    public HeaderValue(string value)
     {
-        return Match(
-            str => new global::System.Threading.Tasks.ValueTask<string>(str),
-            syncFunc => new global::System.Threading.Tasks.ValueTask<string>(syncFunc()),
-            valueTaskFunc => valueTaskFunc(),
-            taskFunc => new global::System.Threading.Tasks.ValueTask<string>(taskFunc())
-        );
+        _resolver = () => new global::System.Threading.Tasks.ValueTask<string>(value);
     }
+
+    public HeaderValue(Func<string> value)
+    {
+        _resolver = () => new global::System.Threading.Tasks.ValueTask<string>(value());
+    }
+
+    public HeaderValue(Func<global::System.Threading.Tasks.ValueTask<string>> value)
+    {
+        _resolver = value;
+    }
+
+    public HeaderValue(Func<global::System.Threading.Tasks.Task<string>> value)
+    {
+        _resolver = () => new global::System.Threading.Tasks.ValueTask<string>(value());
+    }
+
+    public static implicit operator HeaderValue(string value) => new(value);
+
+    public static implicit operator HeaderValue(Func<string> value) => new(value);
+
+    public static implicit operator HeaderValue(
+        Func<global::System.Threading.Tasks.ValueTask<string>> value
+    ) => new(value);
+
+    public static implicit operator HeaderValue(
+        Func<global::System.Threading.Tasks.Task<string>> value
+    ) => new(value);
+
+    public static HeaderValue FromString(string value) => new(value);
+
+    public static HeaderValue FromFunc(Func<string> value) => new(value);
+
+    public static HeaderValue FromValueTaskFunc(
+        Func<global::System.Threading.Tasks.ValueTask<string>> value
+    ) => new(value);
+
+    public static HeaderValue FromTaskFunc(
+        Func<global::System.Threading.Tasks.Task<string>> value
+    ) => new(value);
+
+    internal global::System.Threading.Tasks.ValueTask<string> ResolveAsync() => _resolver();
 }

@@ -9,12 +9,13 @@ import {
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
-import { convertProperties } from "../../utils/ConvertProperties";
-import { SchemaConverter } from "./SchemaConverter";
-import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
+import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { convertProperties } from "../../utils/ConvertProperties.js";
+import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
+import { SchemaConverter } from "./SchemaConverter.js";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -59,29 +60,120 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        if (
-            this.schema.discriminator != null &&
-            !this.unionVariantsContainLiteral({
-                discriminantProperty: this.schema.discriminator.propertyName
-            })
-        ) {
+        // If a discriminator is present, always convert as discriminated union
+        // This properly handles OpenAPI oneOf with discriminator where the discriminant
+        // property is defined in each variant schema
+        if (this.schema.discriminator != null) {
             return this.convertAsDiscriminatedUnion();
+        }
+
+        // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
+        // This runs after both x-fern-discriminated and discriminator checks so explicit overrides take precedence
+        if (this.context.settings.inferForwardCompatible) {
+            const openEndedEnum = this.convertAsOpenEndedEnum();
+            if (openEndedEnum != null) {
+                return openEndedEnum;
+            }
         }
 
         return this.convertAsUndiscriminatedUnion();
     }
 
-    private unionVariantsContainLiteral({ discriminantProperty }: { discriminantProperty: string }): boolean {
-        for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
-            const schema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                reference: { $ref: reference },
-                breadcrumbs: this.breadcrumbs
-            });
-            if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
-                return false;
+    /**
+     * Detects the pattern oneOf/anyOf with exactly [enum, string] or [$ref(enum), string]
+     * and converts it to a single enum type with forwardCompatible: true.
+     */
+    private convertAsOpenEndedEnum(): OneOfSchemaConverter.Output | undefined {
+        const subSchemas = this.schema.oneOf ?? this.schema.anyOf;
+        if (subSchemas == null || subSchemas.length !== 2) {
+            return undefined;
+        }
+
+        let enumSchema: OpenAPIV3_1.SchemaObject | undefined;
+        let hasStringSchema = false;
+
+        for (const subSchema of subSchemas) {
+            let resolved: OpenAPIV3_1.SchemaObject | undefined;
+
+            if (this.context.isReferenceObject(subSchema)) {
+                const result = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: subSchema,
+                    breadcrumbs: this.breadcrumbs,
+                    skipErrorCollector: true
+                });
+                if (result.resolved) {
+                    resolved = result.value;
+                }
+            } else {
+                resolved = subSchema;
+            }
+
+            if (resolved == null) {
+                continue;
+            }
+
+            if (
+                resolved.enum != null &&
+                resolved.enum.length > 1 &&
+                (resolved.type === "string" || resolved.type == null)
+            ) {
+                enumSchema = resolved;
+            } else if (resolved.type === "string" && resolved.enum == null) {
+                hasStringSchema = true;
             }
         }
-        return true;
+
+        if (enumSchema == null || !hasStringSchema) {
+            return undefined;
+        }
+
+        const fernEnumConverter = new FernEnumExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: enumSchema,
+            context: this.context
+        });
+        const maybeFernEnum = fernEnumConverter.convert();
+
+        const enumConverter = new EnumSchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: enumSchema,
+            maybeFernEnum,
+            forwardCompatible: true
+        });
+
+        const converted = enumConverter.convert();
+        if (converted == null) {
+            return undefined;
+        }
+
+        return {
+            ...converted,
+            referencedTypes: new Set(),
+            inlinedTypes: {}
+        };
+    }
+
+    /**
+     * Filters out the discriminant property from a schema's properties.
+     * This is needed when the discriminant is redeclared in variant schemas.
+     */
+    private filterDiscriminantFromSchema(
+        schema: OpenAPIV3_1.SchemaObject,
+        discriminantProperty: string
+    ): OpenAPIV3_1.SchemaObject {
+        if (schema.properties == null || !(discriminantProperty in schema.properties)) {
+            return schema;
+        }
+
+        const { [discriminantProperty]: _, ...filteredProperties } = schema.properties;
+        const filteredRequired = schema.required?.filter((prop) => prop !== discriminantProperty);
+
+        return {
+            ...schema,
+            properties: filteredProperties,
+            required: filteredRequired
+        };
     }
 
     private convertAsDiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
@@ -89,33 +181,60 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
+        const discriminantProperty = this.schema.discriminator.propertyName;
         const unionTypes: SingleUnionType[] = [];
         let referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
+            const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
+            const breadcrumbs = [...this.breadcrumbs, "discriminator", "mapping", discriminant];
+
+            // Resolve the reference to check if it contains the discriminant property
+            const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: { $ref: reference },
+                breadcrumbs
+            });
+
+            let schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = { $ref: reference };
+
+            // If the variant schema contains the discriminant property, filter it out
+            // and convert as an inlined schema with the original type ID
+            if (
+                resolvedSchema.resolved &&
+                resolvedSchema.value.properties != null &&
+                discriminantProperty in resolvedSchema.value.properties
+            ) {
+                // Create a filtered schema without the discriminant property
+                const filteredSchema = this.filterDiscriminantFromSchema(resolvedSchema.value, discriminantProperty);
+                schemaOrReference = filteredSchema;
+            }
+
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
                 context: this.context,
-                schemaOrReference: { $ref: reference },
-                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+                schemaOrReference,
+                schemaIdOverride: typeId ?? undefined,
+                breadcrumbs
             });
-            const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
+
             if (typeId != null) {
                 referencedTypes.add(typeId);
             }
             const convertedSchema = singleUnionTypeSchemaConverter.convert();
             if (convertedSchema?.type != null && typeId != null) {
-                for (const typeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
-                    referencedTypes.add(typeId);
+                for (const inlinedTypeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
+                    referencedTypes.add(inlinedTypeId);
                 }
-                for (const typeId of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
-                    referencedTypes.add(typeId);
+                for (const refTypeId of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
+                    referencedTypes.add(refTypeId);
                 }
                 const nameAndWireValue = this.context.casingsGenerator.generateNameAndWireValue({
                     name: discriminant,
                     wireValue: discriminant
                 });
 
+                // Extract raw schema name for display (not namespaced)
+                const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
                 unionTypes.push({
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
@@ -123,7 +242,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     displayName: discriminant,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
-                        name: this.context.casingsGenerator.generateName(typeId),
+                        name: this.context.casingsGenerator.generateName(rawSchemaName),
                         fernFilepath: {
                             allParts: [],
                             packagePath: [],
@@ -188,7 +307,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     wireValue: this.schema.discriminator.propertyName
                 }),
                 extends: extends_,
-                types: unionTypes
+                types: unionTypes,
+                discriminatorContext: undefined
             }),
             referencedTypes,
             inlinedTypes: {
@@ -295,10 +415,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: this.context.createNamedTypeReference(schemaId, displayName),
                         docs: subSchema.description
                     });
+                    const namespacedSchemaId = this.context.getNamespacedSchemaId(schemaId);
                     inlinedTypes = {
                         ...inlinedTypes,
                         ...convertedSchema.inlinedTypes,
-                        [schemaId]: convertedSchema.convertedSchema
+                        [namespacedSchemaId]: convertedSchema.convertedSchema
                     };
                 }
                 convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {

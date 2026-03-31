@@ -11,15 +11,19 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   fix-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,7 +47,7 @@ jobs:
       - name: Open PR with fixes
         if: steps.check-for-changes.outputs.lint-fixes == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.ACTIONS_PAT }}
           commit-message: "fix(lint): auto-fix lint issues"

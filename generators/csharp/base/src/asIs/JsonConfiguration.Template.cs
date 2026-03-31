@@ -1,4 +1,5 @@
-<% if (additionalProperties) { %>using global::System.Reflection; <% } %>
+using global::System.Reflection;
+using global::System.Text.Encodings.Web;
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -9,6 +10,7 @@ namespace <%= namespace%>;
 internal static partial class JsonOptions
 {
     internal static readonly JsonSerializerOptions JsonSerializerOptions;
+    internal static readonly JsonSerializerOptions JsonSerializerOptionsRelaxedEscaping;
 
     static JsonOptions()
     {
@@ -17,8 +19,9 @@ internal static partial class JsonOptions
             Converters = { new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
-#endif
-                new OneOfSerializer() },
+#endif<% if (!context.generation.settings.shouldGenerateUndiscriminatedUnions) { %>
+                new OneOfSerializer(),<% } %>
+                new OptionalJsonConverterFactory() },
 #if DEBUG
             WriteIndented = true,
 #endif
@@ -27,83 +30,160 @@ internal static partial class JsonOptions
             {
                 Modifiers =
                 {
-                    static typeInfo =>
-                    {
-                        if (typeInfo.Kind != JsonTypeInfoKind.Object)
-                            return;
-
-                        foreach (var propertyInfo in typeInfo.Properties)
-                        {
-                            var jsonAccessAttribute = propertyInfo
-                                .AttributeProvider?.GetCustomAttributes(
-                                    typeof(JsonAccessAttribute),
-                                    true
-                                )
-                                .OfType<JsonAccessAttribute>()
-                                .FirstOrDefault();
-
-                            if (jsonAccessAttribute != null)
-                            {
-                                propertyInfo.IsRequired = false;
-                                switch (jsonAccessAttribute.AccessType)
-                                {
-                                    case JsonAccessType.ReadOnly:
-                                        propertyInfo.ShouldSerialize = (_, _) => false;
-                                        break;
-                                    case JsonAccessType.WriteOnly:
-                                        propertyInfo.Set = null;
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                            }
-
-                            var jsonIgnoreAttribute = propertyInfo
-                                .AttributeProvider?.GetCustomAttributes(
-                                    typeof(JsonIgnoreAttribute),
-                                    true
-                                )
-                                .OfType<JsonIgnoreAttribute>()
-                                .FirstOrDefault();
-
-                            if (jsonIgnoreAttribute is not null)
-                            {
-                                propertyInfo.IsRequired = false;
-                            }
-                        }
-                        <% if (additionalProperties) { %>
-                        if (
-                            typeInfo.Kind == JsonTypeInfoKind.Object
-                            && typeInfo.Properties.All(prop => !prop.IsExtensionData)
-                        )
-                        {
-                            var extensionProp = typeInfo
-                                .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                                .FirstOrDefault(prop =>
-                                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null
-                                );
-
-                            if (extensionProp is not null)
-                            {
-                                var jsonPropertyInfo = typeInfo.CreateJsonPropertyInfo(
-                                    extensionProp.FieldType,
-                                    extensionProp.Name
-                                );
-                                jsonPropertyInfo.Get = extensionProp.GetValue;
-                                jsonPropertyInfo.Set = extensionProp.SetValue;
-                                jsonPropertyInfo.IsExtensionData = true;
-                                typeInfo.Properties.Add(jsonPropertyInfo);
-                            }
-                        }
-                        <% } %>
-                    },
+                    NullableOptionalModifier,
+                    JsonAccessAndIgnoreModifier,<% if (additionalProperties) { %>
+                    HandleExtensionDataFields,<% } %>
                 },
             },
         };
         ConfigureJsonSerializerOptions(options);
         JsonSerializerOptions = options;
+
+        var relaxedOptions = new JsonSerializerOptions(options)
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
+        JsonSerializerOptionsRelaxedEscaping = relaxedOptions;
     }
 
+    private static void NullableOptionalModifier(JsonTypeInfo typeInfo)
+    {
+        if (typeInfo.Kind != JsonTypeInfoKind.Object)
+            return;
+
+        foreach (var property in typeInfo.Properties)
+        {
+            var propertyInfo = property.AttributeProvider as global::System.Reflection.PropertyInfo;
+
+            if (propertyInfo is null)
+                continue;
+
+            // Check for ReadOnly JsonAccessAttribute - it overrides Optional/Nullable behavior
+            var jsonAccessAttribute = propertyInfo.GetCustomAttribute<JsonAccessAttribute>();
+            if (jsonAccessAttribute?.AccessType == JsonAccessType.ReadOnly)
+            {
+                // ReadOnly means "never serialize", which completely overrides Optional/Nullable.
+                // Skip Optional/Nullable processing since JsonAccessAndIgnoreModifier
+                // will set ShouldSerialize = false anyway.
+                continue;
+            }
+            // Note: WriteOnly doesn't conflict with Optional/Nullable since it only
+            // affects deserialization (Set), not serialization (ShouldSerialize)
+
+            var isOptionalType = property.PropertyType.IsGenericType &&
+                                 property.PropertyType.GetGenericTypeDefinition() == typeof(Optional<>);
+
+            var hasOptionalAttribute = propertyInfo.GetCustomAttribute<OptionalAttribute>() is not null;
+            var hasNullableAttribute = propertyInfo.GetCustomAttribute<NullableAttribute>() is not null;
+
+            if (isOptionalType && hasOptionalAttribute)
+            {
+                var originalGetter = property.Get;
+                if (originalGetter is not null)
+                {
+                    var capturedIsNullable = hasNullableAttribute;
+
+                    property.ShouldSerialize = (obj, value) =>
+                    {
+                        var optionalValue = originalGetter(obj);
+                        if (optionalValue is not IOptional optional)
+                            return false;
+
+                        if (!optional.IsDefined)
+                            return false;
+
+                        if (!capturedIsNullable)
+                        {
+                            var innerValue = optional.GetBoxedValue();
+                            if (innerValue is null)
+                                return false;
+                        }
+
+                        return true;
+                    };
+                }
+            }
+            else if (hasNullableAttribute)
+            {
+                // Force serialization of nullable properties even when null
+                property.ShouldSerialize = (obj, value) => true;
+            }
+        }
+    }
+
+    private static void JsonAccessAndIgnoreModifier(JsonTypeInfo typeInfo)
+    {
+        if (typeInfo.Kind != JsonTypeInfoKind.Object)
+            return;
+
+        foreach (var propertyInfo in typeInfo.Properties)
+        {
+            var jsonAccessAttribute = propertyInfo
+                .AttributeProvider?.GetCustomAttributes(
+                    typeof(JsonAccessAttribute),
+                    true
+                )
+                .OfType<JsonAccessAttribute>()
+                .FirstOrDefault();
+
+            if (jsonAccessAttribute is not null)
+            {
+                propertyInfo.IsRequired = false;
+                switch (jsonAccessAttribute.AccessType)
+                {
+                    case JsonAccessType.ReadOnly:
+                        propertyInfo.ShouldSerialize = (_, _) => false;
+                        break;
+                    case JsonAccessType.WriteOnly:
+                        propertyInfo.Set = null;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            var jsonIgnoreAttribute = propertyInfo
+                .AttributeProvider?.GetCustomAttributes(
+                    typeof(JsonIgnoreAttribute),
+                    true
+                )
+                .OfType<JsonIgnoreAttribute>()
+                .FirstOrDefault();
+
+            if (jsonIgnoreAttribute is not null)
+            {
+                propertyInfo.IsRequired = false;
+            }
+        }
+    }
+    <% if (additionalProperties) { %>
+    private static void HandleExtensionDataFields(JsonTypeInfo typeInfo)
+    {
+        if (
+            typeInfo.Kind == JsonTypeInfoKind.Object
+            && typeInfo.Properties.All(prop => !prop.IsExtensionData)
+        )
+        {
+            var extensionProp = typeInfo
+                .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+                .FirstOrDefault(prop =>
+                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() is not null
+                );
+
+            if (extensionProp is not null)
+            {
+                var jsonPropertyInfo = typeInfo.CreateJsonPropertyInfo(
+                    extensionProp.FieldType,
+                    extensionProp.Name
+                );
+                jsonPropertyInfo.Get = extensionProp.GetValue;
+                jsonPropertyInfo.Set = extensionProp.SetValue;
+                jsonPropertyInfo.IsExtensionData = true;
+                typeInfo.Properties.Add(jsonPropertyInfo);
+            }
+        }
+    }
+    <% } %>
     static partial void ConfigureJsonSerializerOptions(JsonSerializerOptions defaultOptions);
 }
 
@@ -112,8 +192,20 @@ internal static class JsonUtils
     internal static string Serialize<T>(T obj) =>
         JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptions);
 
+    internal static string Serialize(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptions);
+
+    internal static string SerializeRelaxedEscaping<T>(T obj) =>
+        JsonSerializer.Serialize(obj, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
+    internal static string SerializeRelaxedEscaping(object obj, global::System.Type type) =>
+        JsonSerializer.Serialize(obj, type, JsonOptions.JsonSerializerOptionsRelaxedEscaping);
+
     internal static JsonElement SerializeToElement<T>(T obj) =>
         JsonSerializer.SerializeToElement(obj, JsonOptions.JsonSerializerOptions);
+
+    internal static JsonElement SerializeToElement(object obj, global::System.Type type) =>
+        JsonSerializer.SerializeToElement(obj, type, JsonOptions.JsonSerializerOptions);
 
     internal static JsonDocument SerializeToDocument<T>(T obj) =>
         JsonSerializer.SerializeToDocument(obj, JsonOptions.JsonSerializerOptions);
@@ -129,7 +221,7 @@ internal static class JsonUtils
         object? additionalProperties = null
     )
     {
-        if (additionalProperties == null)
+        if (additionalProperties is null)
         {
             return Serialize(obj);
         }
@@ -158,7 +250,7 @@ internal static class JsonUtils
             if (!baseObject.TryGetPropertyValue(property.Key, out JsonNode? existingValue))
             {
                 baseObject[property.Key] =
-                    property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+                    property.Value is not null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
                 continue;
             }
             if (
@@ -172,7 +264,7 @@ internal static class JsonUtils
             }
             // Otherwise, the overrideObject takes precedence.
             baseObject[property.Key] =
-                property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+                property.Value is not null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
         }
     }
 
@@ -212,7 +304,7 @@ internal static class JsonUtils
     {
         try
         {
-            result = json.Deserialize<T>();
+            result = json.Deserialize<T>(JsonOptions.JsonSerializerOptions);
             return true;
         }
         catch (global::System.Exception)
@@ -227,7 +319,7 @@ internal static class JsonUtils
     {
         try
         {
-            result = json.Deserialize<T>();
+            result = json.Deserialize<T>(JsonOptions.JsonSerializerOptions);
             return true;
         }
         catch (global::System.Exception)

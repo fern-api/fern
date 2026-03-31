@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -131,6 +132,9 @@ public interface ICustomConfig {
         return false;
     }
 
+    @JsonProperty("custom-plugins")
+    Optional<List<String>> customPlugins();
+
     enum PackageLayout {
         NESTED("nested"),
         FLAT("flat");
@@ -161,5 +165,37 @@ public interface ICustomConfig {
         public String getValue() {
             return value;
         }
+    }
+
+    /**
+     * Controls how the output directory is interpreted during local generation.
+     *
+     * <ul>
+     *   <li>{@code SOURCE_ROOT} - Output path points directly to where .java files should go. Files are written without
+     *       adding src/main/java prefix.
+     *   <li>{@code PROJECT_ROOT} - Output path points to project root. Generator adds src/main/java prefix for
+     *       production files and src/test/java for test files.
+     * </ul>
+     */
+    enum OutputDirectory {
+        SOURCE_ROOT("source-root"),
+        PROJECT_ROOT("project-root");
+
+        private final String value;
+
+        OutputDirectory(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
+    @Value.Default
+    @JsonProperty("output-directory")
+    default OutputDirectory outputDirectory() {
+        return OutputDirectory.PROJECT_ROOT;
     }
 }

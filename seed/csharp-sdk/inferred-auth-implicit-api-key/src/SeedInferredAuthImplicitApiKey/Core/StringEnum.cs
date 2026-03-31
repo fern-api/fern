@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace SeedInferredAuthImplicitApiKey.Core;
 
 public interface IStringEnum : IEquatable<string>

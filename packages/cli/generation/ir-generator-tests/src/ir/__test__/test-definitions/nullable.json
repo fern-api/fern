@@ -1388,7 +1388,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -7871,6 +7872,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -11298,6 +11300,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -11625,6 +11628,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

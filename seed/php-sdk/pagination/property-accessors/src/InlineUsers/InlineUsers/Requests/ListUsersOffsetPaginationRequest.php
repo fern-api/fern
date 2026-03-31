@@ -61,6 +61,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
     public function setPage(?int $value = null): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 
@@ -78,6 +79,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
     public function setPerPage(?int $value = null): self
     {
         $this->perPage = $value;
+        $this->_setField('perPage');
         return $this;
     }
 
@@ -95,6 +97,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
     public function setOrder(?string $value = null): self
     {
         $this->order = $value;
+        $this->_setField('order');
         return $this;
     }
 
@@ -112,6 +115,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
     public function setStartingAfter(?string $value = null): self
     {
         $this->startingAfter = $value;
+        $this->_setField('startingAfter');
         return $this;
     }
 }

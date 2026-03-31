@@ -1,5 +1,4 @@
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{ConvertToken, PaymentMethodUnion, TokenizeCard};
 
 #[tokio::main]
 async fn main() {
@@ -15,6 +14,7 @@ async fn main() {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
                     method: "method".to_string(),
                     card_number: "cardNumber".to_string(),
+                    ..Default::default()
                 }),
             },
             None,

@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Determines the user-facing property name for SDK parameters (query, header, path, file).
  * This function centralizes parameter naming logic and supports the parameterNaming feature flag.
@@ -11,7 +10,7 @@ export function getSdkParameterPropertyName({
     retainOriginalCasing,
     parameterNaming
 }: {
-    name: NameAndWireValue | Name;
+    name: FernIr.NameAndWireValue | FernIr.Name;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -32,12 +31,15 @@ export function getSdkParameterPropertyName({
     }
 
     if (isNameAndWireValue(name)) {
-        return includeSerdeLayer && !retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue;
+        if (includeSerdeLayer && !retainOriginalCasing) {
+            return name.name.camelCase.unsafeName;
+        }
+        return name.wireValue;
     } else {
         return includeSerdeLayer && !retainOriginalCasing ? name.camelCase.unsafeName : name.originalName;
     }
 }
 
-function isNameAndWireValue(name: NameAndWireValue | Name): name is NameAndWireValue {
-    return (name as NameAndWireValue).wireValue !== undefined;
+function isNameAndWireValue(name: FernIr.NameAndWireValue | FernIr.Name): name is FernIr.NameAndWireValue {
+    return (name as FernIr.NameAndWireValue).wireValue !== undefined;
 }

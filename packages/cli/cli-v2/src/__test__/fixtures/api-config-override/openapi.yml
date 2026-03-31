@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: API Config Override Test
+  version: 1.0.0
+  description: Tests that fern.yml API config overrides OpenAPI security
+servers:
+  - url: https://api.openapi-default.com
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header

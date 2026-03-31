@@ -8,5 +8,9 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.urls.no_ending_slash(None).await;
+    client
+        .endpoints
+        .primitive
+        .get_and_return_double(&1.1, None)
+        .await;
 }

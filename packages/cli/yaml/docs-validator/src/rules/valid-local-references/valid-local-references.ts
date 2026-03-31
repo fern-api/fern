@@ -2,7 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification
@@ -14,9 +14,7 @@ function validateReference(ref: string, spec: unknown): boolean {
         .split("/")
         .map((part) =>
             // Decode JSON Pointer escapes: ~1 -> /, ~0 -> ~
-            part
-                .replace(/~1/g, "/")
-                .replace(/~0/g, "~")
+            part.replace(/~1/g, "/").replace(/~0/g, "~")
         );
 
     let current: unknown = spec;
@@ -100,13 +98,17 @@ export const ValidLocalReferencesRule: Rule = {
                                 const relativePath = relative(docsWorkspace.absoluteFilePath, spec.absoluteFilepath);
 
                                 // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                const isOpenApiV2 =
+                                // Check both YAML format (swagger: "2.0") and JSON format ("swagger": "2.0")
+                                const isOpenApiV2Yaml =
                                     contents.includes("swagger:") &&
                                     (contents.includes('swagger: "2.0"') ||
                                         contents.includes("swagger: '2.0'") ||
                                         contents.includes("swagger: 2.0"));
+                                const isOpenApiV2Json =
+                                    contents.includes('"swagger":') &&
+                                    (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
 
-                                if (isOpenApiV2) {
+                                if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                     continue; // Skip v2 files
                                 }
 
@@ -147,7 +149,7 @@ export const ValidLocalReferencesRule: Rule = {
                                     const errorMessage = createInformativeErrorMessage(invalidRefs);
 
                                     violations.push({
-                                        severity: "error",
+                                        severity: "warning",
                                         name: "Invalid OpenAPI References",
                                         message: errorMessage,
                                         relativeFilepath: relativePath

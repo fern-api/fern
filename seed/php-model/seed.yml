@@ -30,7 +30,8 @@ scripts:
   - image: composer:2.7.9
     commands:
       build:
-        - composer install
+        # Retry composer install up to 3 times to handle intermittent network failures
+        - for i in 1 2 3; do composer install --no-interaction && break || { echo "Attempt $i failed, retrying..."; sleep 5; }; done
         - composer build
         - composer analyze
       test:
@@ -45,3 +46,4 @@ allowedFailures:
   - circular-references-advanced
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  - server-sent-events-openapi

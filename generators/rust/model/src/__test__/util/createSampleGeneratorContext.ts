@@ -4,8 +4,8 @@ import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
 
-import { ModelCustomConfigSchema } from "../../ModelCustomConfig";
-import { ModelGeneratorContext } from "../../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));

@@ -1,12 +1,13 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    commons "github.com/examples/fern/pleaseinhere/commons"
-    uuid "github.com/google/uuid"
     context "context"
+
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
+    client "github.com/examples/fern/pleaseinhere/client"
+    commons "github.com/examples/fern/pleaseinhere/commons"
+    option "github.com/examples/fern/pleaseinhere/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -46,7 +47,7 @@ func do() {
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{
@@ -103,13 +104,9 @@ func do() {
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -126,13 +123,9 @@ func do() {
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -204,13 +197,9 @@ func do() {
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },
@@ -229,13 +218,9 @@ func do() {
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },

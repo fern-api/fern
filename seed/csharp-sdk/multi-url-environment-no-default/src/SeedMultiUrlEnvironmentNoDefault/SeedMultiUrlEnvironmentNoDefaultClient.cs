@@ -3,6 +3,7 @@ using SeedMultiUrlEnvironmentNoDefault.Core;
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class SeedMultiUrlEnvironmentNoDefaultClient
+    : ISeedMultiUrlEnvironmentNoDefaultClient
 {
     private readonly RawClient _client;
 
@@ -11,30 +12,37 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
         ClientOptions? clientOptions = null
     )
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironmentNoDefault" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmulti-url-environment-no-default/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>() { { "Authorization", $"Bearer {token ?? ""}" } }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
     }
 
-    public Ec2Client Ec2 { get; }
+    public IEc2Client Ec2 { get; }
 
-    public S3Client S3 { get; }
+    public IS3Client S3 { get; }
 }

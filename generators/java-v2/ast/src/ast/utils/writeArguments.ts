@@ -1,6 +1,6 @@
 import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
-import { Writer } from "../core/Writer";
-import { TypeLiteral } from "../TypeLiteral";
+import { Writer } from "../core/Writer.js";
+import { TypeLiteral } from "../TypeLiteral.js";
 
 export function writeArguments({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
     const filteredArguments = filterNopArguments(arguments_);

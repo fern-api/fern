@@ -8,17 +8,50 @@ namespace SeedOauthClientCredentials.Core;
 internal static class QueryStringConverter
 {
     /// <summary>
+    /// Converts an object into a query string collection using Deep Object notation with a prefix.
+    /// </summary>
+    /// <param name="prefix">The prefix to prepend to all keys (e.g., "session_settings"). Pass empty string for no prefix.</param>
+    /// <param name="value">Object to form URL-encode. Can be an object, array of objects, or dictionary.</param>
+    /// <exception cref="Exception">Throws when passing in a string or primitive value.</exception>
+    /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
+    internal static IEnumerable<KeyValuePair<string, string>> ToDeepObject(
+        string prefix,
+        object value
+    )
+    {
+        var queryCollection = new List<KeyValuePair<string, string>>();
+        var json = JsonUtils.SerializeToElement(value);
+        JsonToDeepObject(json, prefix, queryCollection);
+        return queryCollection;
+    }
+
+    /// <summary>
     /// Converts an object into a query string collection using Deep Object notation.
     /// </summary>
+    /// <param name="value">Object to form URL-encode. Can be an object, array of objects, or dictionary.</param>
+    /// <exception cref="Exception">Throws when passing in a string or primitive value.</exception>
+    /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
+    internal static IEnumerable<KeyValuePair<string, string>> ToDeepObject(object value)
+    {
+        return ToDeepObject("", value);
+    }
+
+    /// <summary>
+    /// Converts an object into a query string collection using Exploded Form notation with a prefix.
+    /// </summary>
+    /// <param name="prefix">The prefix to prepend to all keys. Pass empty string for no prefix.</param>
     /// <param name="value">Object to form URL-encode. You can pass in an object or dictionary, but not lists, strings, or primitives.</param>
     /// <exception cref="Exception">Throws when passing in a list, a string, or a primitive value.</exception>
     /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
-    internal static IEnumerable<KeyValuePair<string, string>> ToDeepObject(object value)
+    internal static IEnumerable<KeyValuePair<string, string>> ToExplodedForm(
+        string prefix,
+        object value
+    )
     {
         var queryCollection = new List<KeyValuePair<string, string>>();
         var json = JsonUtils.SerializeToElement(value);
         AssertRootJson(json);
-        JsonToDeepObject(json, "", queryCollection);
+        JsonToFormExploded(json, prefix, queryCollection);
         return queryCollection;
     }
 
@@ -30,11 +63,7 @@ internal static class QueryStringConverter
     /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
     internal static IEnumerable<KeyValuePair<string, string>> ToExplodedForm(object value)
     {
-        var queryCollection = new List<KeyValuePair<string, string>>();
-        var json = JsonUtils.SerializeToElement(value);
-        AssertRootJson(json);
-        JsonToFormExploded(json, "", queryCollection);
-        return queryCollection;
+        return ToExplodedForm("", value);
     }
 
     /// <summary>
@@ -202,8 +231,9 @@ internal static class QueryStringConverter
 
                 break;
             case JsonValueKind.Null:
-                break;
             case JsonValueKind.Undefined:
+                // Skip null and undefined values - don't add parameters for them
+                break;
             case JsonValueKind.String:
             case JsonValueKind.Number:
             case JsonValueKind.True:

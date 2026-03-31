@@ -30,14 +30,19 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/file-upload-openapi/fern/client"
-    fern "github.com/file-upload-openapi/fern"
     context "context"
+    strings "strings"
+
+    fern "github.com/file-upload-openapi/fern"
+    client "github.com/file-upload-openapi/fern/client"
 )
 
 func do() {
     client := client.NewClient()
     request := &fern.UploadFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
         Name: "name",
     }
     client.FileUploadExample.UploadFile(

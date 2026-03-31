@@ -15,5 +15,5 @@ export interface User {
      */
     name: string;
     /** The user's age. */
-    age?: number;
+    age?: number | undefined;
 }

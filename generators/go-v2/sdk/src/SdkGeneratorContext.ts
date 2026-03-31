@@ -5,30 +5,16 @@ import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    EnvironmentId,
-    EnvironmentUrl,
-    ExampleEndpointCall,
-    FernFilepath,
-    FileUploadRequest,
-    HttpEndpoint,
-    HttpMethod,
-    IntermediateRepresentation,
-    Name,
-    Pagination,
-    SdkRequestWrapper,
-    ServiceId,
-    StreamingResponse,
-    Subpackage
-} from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType";
-import { GoGeneratorAgent } from "./GoGeneratorAgent";
-import { Caller } from "./internal/Caller";
-import { Streamer } from "./internal/Streamer";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { getInferredAuthScheme, getOAuthClientCredentialsScheme } from "./authUtils.js";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType.js";
+import { GoGeneratorAgent } from "./GoGeneratorAgent.js";
+import { Caller } from "./internal/Caller.js";
+import { Streamer } from "./internal/Streamer.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly caller: Caller;
@@ -38,7 +24,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public readonly snippetGenerator: EndpointSnippetsGenerator;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -73,7 +59,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
 
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
-            files.push(AsIsFiles.Stream);
+            files.push(AsIsFiles.Stream, AsIsFiles.StreamTest);
+        }
+
+        if (getOAuthClientCredentialsScheme(this.ir) != null || getInferredAuthScheme(this.ir) != null) {
+            files.push(AsIsFiles.TokenProvider);
         }
 
         return files;
@@ -100,14 +90,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return files;
     }
 
-    public getClientClassName(subpackage?: Subpackage): string {
+    public getClientClassName(subpackage?: FernIr.Subpackage): string {
         if (subpackage == null && this.customConfig.clientName != null) {
             return this.customConfig.clientName;
         }
         return "Client";
     }
 
-    public getClientConstructorName(subpackage?: Subpackage): string {
+    public getClientConstructorName(subpackage?: FernIr.Subpackage): string {
         if (subpackage == null) {
             if (this.customConfig.clientConstructorName != null) {
                 return this.customConfig.clientConstructorName;
@@ -119,30 +109,30 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "NewClient";
     }
 
-    public getClientFilename(subpackage?: Subpackage): string {
+    public getClientFilename(subpackage?: FernIr.Subpackage): string {
         return "client.go";
     }
 
-    public getRawClientConstructorName(subpackage?: Subpackage): string {
+    public getRawClientConstructorName(subpackage?: FernIr.Subpackage): string {
         return `New${this.getRawClientClassName(subpackage)}`;
     }
 
-    public getRawClientClassName(subpackage?: Subpackage): string {
+    public getRawClientClassName(subpackage?: FernIr.Subpackage): string {
         if (subpackage != null) {
             return "RawClient";
         }
         return `Raw${this.getClientClassName()}`;
     }
 
-    public getRawClientFilename(subpackage?: Subpackage): string {
+    public getRawClientFilename(subpackage?: FernIr.Subpackage): string {
         return "raw_client.go";
     }
 
-    public getMethodName(name: Name): string {
+    public getMethodName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
     }
 
-    public getReceiverName(name: Name): string {
+    public getReceiverName(name: FernIr.Name): string {
         return name.camelCase.unsafeName.charAt(0);
     }
 
@@ -153,7 +143,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "c";
     }
 
-    public getDefaultBaseUrlTypeInstantiation(endpoint: HttpEndpoint): go.TypeInstantiation {
+    public getDefaultBaseUrlTypeInstantiation(endpoint: FernIr.HttpEndpoint): go.TypeInstantiation {
         const defaultBaseUrl = this.getDefaultBaseUrl(endpoint);
         if (defaultBaseUrl == null) {
             return go.TypeInstantiation.string("");
@@ -161,7 +151,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return go.TypeInstantiation.string(defaultBaseUrl);
     }
 
-    public getDefaultBaseUrl(endpoint: HttpEndpoint): EnvironmentUrl | undefined {
+    public getDefaultBaseUrl(endpoint: FernIr.HttpEndpoint): FernIr.EnvironmentUrl | undefined {
         if (endpoint.baseUrl != null) {
             return this.getEnvironmentUrlFromId(endpoint.baseUrl);
         }
@@ -171,7 +161,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return undefined;
     }
 
-    public getEnvironmentUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
+    public getEnvironmentUrlFromId(id: FernIr.EnvironmentId): FernIr.EnvironmentUrl | undefined {
         if (this.ir.environments == null) {
             return undefined;
         }
@@ -197,7 +187,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.ir.environments?.environments.type === "multipleBaseUrls";
     }
 
-    public getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+    public getBaseUrlNameForEndpoint(endpoint: FernIr.HttpEndpoint): string | undefined {
         if (!this.isMultipleBaseUrlsEnvironment() || this.ir.environments == null) {
             return undefined;
         }
@@ -251,8 +241,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage?: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage?: FernIr.Subpackage;
     }): go.TypeReference {
         if (subpackage == null) {
             return this.getRootClientClassReference();
@@ -267,8 +257,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage?: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage?: FernIr.Subpackage;
     }): go.TypeReference {
         if (subpackage == null) {
             return this.getRootRawClientClassReference();
@@ -283,8 +273,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage?: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage?: FernIr.Subpackage;
     }): string {
         const fileLocation = this.getClientFileLocation({ fernFilepath, subpackage });
         if (fileLocation.importPath === this.getRootImportPath()) {
@@ -297,8 +287,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage?: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage?: FernIr.Subpackage;
     }): FileLocation {
         return this.getFileLocationForClient({ fernFilepath, subpackage });
     }
@@ -307,8 +297,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage: FernIr.Subpackage;
     }): go.Field {
         return go.field({
             name: this.getClientClassName(subpackage),
@@ -486,7 +476,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
      * For subpackages, this is the package location based on the fernFilepath.
      * For the root package (when subpackage is undefined), this is the root import path.
      */
-    public getNamespaceImportPath(subpackage: Subpackage | undefined): string {
+    public getNamespaceImportPath(subpackage: FernIr.Subpackage | undefined): string {
         if (subpackage == null) {
             return this.getRootImportPath();
         }
@@ -560,7 +550,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public isFileUploadEndpoint(endpoint: HttpEndpoint): boolean {
+    public isFileUploadEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (requestBody == null) {
             return false;
@@ -577,7 +567,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public isEnabledPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+    public isEnabledPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         if (this.isPaginationWithRequestBodyEndpoint(endpoint)) {
             // TODO: The original Go generator did not handle pagination endpoints with request body properties.
             // To preserve compatibility, we generate a delegating endpoint for these cases.
@@ -592,7 +582,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.isPaginationEndpoint(endpoint);
     }
 
-    public isPaginationWithRequestBodyEndpoint(endpoint: HttpEndpoint): boolean {
+    public isPaginationWithRequestBodyEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const pagination = this.getPagination(endpoint);
         if (pagination == null) {
             return false;
@@ -608,19 +598,19 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public isPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+    public isPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return this.getPagination(endpoint) != null;
     }
 
-    public getPagination(endpoint: HttpEndpoint): Pagination | undefined {
+    public getPagination(endpoint: FernIr.HttpEndpoint): FernIr.Pagination | undefined {
         return endpoint.pagination;
     }
 
-    public isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
+    public isStreamingEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return this.getStreamingResponse(endpoint) != null;
     }
 
-    public getStreamingResponse(endpoint: HttpEndpoint): StreamingResponse | undefined {
+    public getStreamingResponse(endpoint: FernIr.HttpEndpoint): FernIr.StreamingResponse | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
             return undefined;
@@ -640,7 +630,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public getStreamPayload(streamingResponse: StreamingResponse): go.Type {
+    public getStreamPayload(streamingResponse: FernIr.StreamingResponse): go.Type {
         switch (streamingResponse.type) {
             case "json":
             case "sse":
@@ -652,7 +642,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public getRequestWrapperTypeReference(serviceId: ServiceId, requestName: Name): go.TypeReference {
+    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): go.TypeReference {
         return go.typeReference({
             name: this.getClassName(requestName),
             importPath: this.getLocationForWrappedRequest(serviceId).importPath
@@ -663,8 +653,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         endpoint,
         wrapper
     }: {
-        endpoint: HttpEndpoint;
-        wrapper: SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
     }): boolean {
         if (endpoint.sdkRequest == null) {
             return true;
@@ -696,7 +686,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         );
     }
 
-    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
+    public shouldGenerateSubpackageClient(subpackage: FernIr.Subpackage): boolean {
         if (subpackage.service != null) {
             return true;
         }
@@ -710,8 +700,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         endpoint,
         wrapper
     }: {
-        endpoint: HttpEndpoint;
-        wrapper: SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
     }): boolean {
         const inlinePathParameters = this.customConfig.inlinePathParameters;
         if (inlinePathParameters == null) {
@@ -721,7 +711,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
-    private fileUploadRequestHasProperties(fileUploadRequest: FileUploadRequest): boolean {
+    private fileUploadRequestHasProperties(fileUploadRequest: FernIr.FileUploadRequest): boolean {
         if (this.customConfig.inlineFileProperties) {
             return true;
         }
@@ -732,8 +722,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: Name;
-        propertyName: Name;
+        requestParameterName: FernIr.Name;
+        propertyName: FernIr.Name;
     }): string {
         const requestParameter = this.getParameterName(requestParameterName);
         return `${requestParameter}.${this.getFieldName(propertyName)}`;
@@ -746,7 +736,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getNetHttpMethodTypeReference(method: HttpMethod): go.TypeReference {
+    public getNetHttpMethodTypeReference(method: FernIr.HttpMethod): go.TypeReference {
         return go.typeReference({
             name: this.getNetHttpMethodTypeReferenceName(method),
             importPath: "net/http"
@@ -757,8 +747,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         fernFilepath,
         subpackage
     }: {
-        fernFilepath: FernFilepath;
-        subpackage?: Subpackage;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage?: FernIr.Subpackage;
     }): FileLocation {
         const parts = [];
         if (subpackage != null && subpackage.subpackages.length > 0 && subpackage.fernFilepath.file != null) {
@@ -776,7 +766,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         };
     }
 
-    private getNetHttpMethodTypeReferenceName(method: HttpMethod): string {
+    private getNetHttpMethodTypeReferenceName(method: FernIr.HttpMethod): string {
         switch (method) {
             case "GET":
                 return "MethodGet";
@@ -795,7 +785,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
+    private getLocationForWrappedRequest(serviceId: FernIr.ServiceId): FileLocation {
         if (this.customConfig.exportAllRequestsAtRoot) {
             // All inlined request types are generated in the root package's requests.go
             return this.getRootPackageLocation();
@@ -813,7 +803,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         };
     }
 
-    public maybeGetExampleEndpointCall(endpoint: HttpEndpoint): ExampleEndpointCall | null {
+    public maybeGetExampleEndpointCall(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
         // Try user-specified examples first
         if (endpoint.userSpecifiedExamples.length > 0) {
             const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
@@ -827,7 +817,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return exampleEndpointCall ?? null;
     }
 
-    public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): go.Type {
+    public getReturnTypeForEndpoint(httpEndpoint: FernIr.HttpEndpoint): go.Type {
         const responseBody = httpEndpoint.response?.body;
 
         if (responseBody == null) {

@@ -1,12 +1,12 @@
-import { InlinedRequestBody } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 
-import { GeneratedExpressInlinedRequestBodyImpl } from "./GeneratedExpressInlinedRequestBodyImpl";
+import { GeneratedExpressInlinedRequestBodyImpl } from "./GeneratedExpressInlinedRequestBodyImpl.js";
 
 export declare namespace ExpressInlinedRequestBodyGenerator {
     export namespace generateInlinedRequestBody {
         export interface Args {
-            requestBody: InlinedRequestBody;
+            requestBody: FernIr.InlinedRequestBody;
             typeName: string;
             retainOriginalCasing: boolean;
             includeSerdeLayer: boolean;

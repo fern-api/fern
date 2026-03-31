@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,8 +13,11 @@ public class Example31
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000L
+        await client.Endpoints.Params.GetWithQueryAsync(
+            new GetWithQuery {
+                Query = "query",
+                Number = 1
+            }
         );
     }
 

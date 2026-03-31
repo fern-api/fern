@@ -1,5 +1,4 @@
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBody;
 
 #[tokio::main]
 async fn main() {
@@ -17,6 +16,7 @@ async fn main() {
                     username: "username".to_string(),
                     password: "password".to_string(),
                     name: "test".to_string(),
+                    ..Default::default()
                 },
             },
             None,

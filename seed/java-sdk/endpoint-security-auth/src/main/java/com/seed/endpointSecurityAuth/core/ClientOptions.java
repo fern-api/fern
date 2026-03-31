@@ -23,13 +23,19 @@ public final class ClientOptions {
 
     private final int maxRetries;
 
+    private final AuthProvider authProvider;
+
+    private final Optional<LogConfig> logging;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
             int timeout,
-            int maxRetries) {
+            int maxRetries,
+            AuthProvider authProvider,
+            Optional<LogConfig> logging) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -37,12 +43,15 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:endpoint-security-auth/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:endpoint-security-auth-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
         this.maxRetries = maxRetries;
+        this.authProvider = authProvider;
+        this.logging = logging;
     }
 
     public Environment environment() {
@@ -88,6 +97,14 @@ public final class ClientOptions {
         return this.maxRetries;
     }
 
+    public Optional<LogConfig> logging() {
+        return this.logging;
+    }
+
+    public Map<String, String> getAuthHeaders(EndpointMetadata endpointMetadata) {
+        return this.authProvider.getAuthHeaders(endpointMetadata);
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -104,6 +121,10 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private Optional<LogConfig> logging = Optional.empty();
+
+        private AuthProvider authProvider;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -149,6 +170,22 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Set the authentication provider for routing auth to endpoints.
+         */
+        public Builder authProvider(AuthProvider authProvider) {
+            this.authProvider = authProvider;
+            return this;
+        }
+
+        /**
+         * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+         */
+        public Builder logging(LogConfig logging) {
+            this.logging = Optional.of(logging);
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient.Builder httpClientBuilder =
                     this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
@@ -168,11 +205,21 @@ public final class ClientOptions {
                         .addInterceptor(new RetryInterceptor(this.maxRetries));
             }
 
+            Logger logger = Logger.from(this.logging);
+            httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
             return new ClientOptions(
-                    environment, headers, headerSuppliers, httpClient, this.timeout.get(), this.maxRetries);
+                    environment,
+                    headers,
+                    headerSuppliers,
+                    httpClient,
+                    this.timeout.get(),
+                    this.maxRetries,
+                    this.authProvider,
+                    this.logging);
         }
 
         /**
@@ -186,6 +233,7 @@ public final class ClientOptions {
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();
+            builder.logging = clientOptions.logging();
             return builder;
         }
     }

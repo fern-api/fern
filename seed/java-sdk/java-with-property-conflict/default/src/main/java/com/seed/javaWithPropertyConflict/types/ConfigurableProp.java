@@ -121,6 +121,10 @@ public final class ConfigurableProp {
     public interface _FinalStage {
         ConfigurableProp build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The display label</p>
          */
@@ -243,6 +247,18 @@ public final class ConfigurableProp {
         @java.lang.Override
         public ConfigurableProp build() {
             return new ConfigurableProp(name, label, withLabel, description, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

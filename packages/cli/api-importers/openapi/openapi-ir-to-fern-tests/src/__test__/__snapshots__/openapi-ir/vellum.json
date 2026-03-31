@@ -4276,6 +4276,7 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
@@ -4521,9 +4522,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4566,9 +4565,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4629,9 +4626,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4720,9 +4715,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -5656,9 +5649,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6520,9 +6511,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6569,9 +6558,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6590,9 +6577,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6635,9 +6620,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6982,9 +6965,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7356,9 +7337,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -7828,9 +7807,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -7949,9 +7926,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7966,9 +7941,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -8552,9 +8525,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8569,9 +8540,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -8974,9 +8943,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9524,9 +9491,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -9687,9 +9652,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -10013,9 +9976,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11186,9 +11147,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11217,9 +11176,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11236,6 +11193,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "TerminalNodeResultOutput",
           "schemas": {
             "STRING": {
@@ -11806,9 +11764,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11851,9 +11807,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11942,9 +11896,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12011,9 +11963,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12030,6 +11980,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "WorkflowNodeResultData",
           "schemas": {
             "PROMPT": {
@@ -12154,9 +12105,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12326,6 +12275,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "WorkflowRequestInputRequest",
           "schemas": {
             "STRING": {
@@ -12492,9 +12442,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12572,6 +12520,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "WorkflowResultEventOutputData",
           "schemas": {
             "STRING": {
@@ -12641,9 +12590,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12758,9 +12705,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12873,9 +12818,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12948,6 +12891,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "WorkflowStreamEvent",
           "schemas": {
             "WORKFLOW": {

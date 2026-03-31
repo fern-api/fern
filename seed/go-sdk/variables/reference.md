@@ -15,6 +15,7 @@
 ```go
 client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }
 ```
@@ -42,3 +43,4 @@ client.Service.Post(
 </dd>
 </dl>
 </details>
+

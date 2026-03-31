@@ -1,18 +1,18 @@
-import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 export declare namespace RequestBodyParameter {
     export interface Init extends AbstractRequestParameter.Init {
-        requestBodyReference: HttpRequestBodyReference;
+        requestBodyReference: FernIr.HttpRequestBodyReference;
     }
 }
 
 export class RequestBodyParameter extends AbstractRequestParameter {
-    private requestBodyReference: HttpRequestBodyReference;
+    private requestBodyReference: FernIr.HttpRequestBodyReference;
 
     constructor({ requestBodyReference, ...superInit }: RequestBodyParameter.Init) {
         super(superInit);
@@ -36,7 +36,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         throw new Error("Cannot get reference to header because request is not wrapped");
     }
 
-    public getAllQueryParameters(): QueryParameter[] {
+    public getAllQueryParameters(): FernIr.QueryParameter[] {
         return [];
     }
 
@@ -63,7 +63,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
         if (example.request == null || example.request.type !== "reference") {

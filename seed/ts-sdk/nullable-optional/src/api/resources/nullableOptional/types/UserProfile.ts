@@ -15,13 +15,13 @@ export interface UserProfile {
     nullableObject: SeedNullableOptional.Address | null;
     nullableList: string[] | null;
     nullableMap: Record<string, string> | null;
-    optionalString?: string;
-    optionalInteger?: number;
-    optionalBoolean?: boolean;
-    optionalDate?: string;
-    optionalObject?: SeedNullableOptional.Address;
-    optionalList?: string[];
-    optionalMap?: Record<string, string>;
-    optionalNullableString?: string | null;
-    optionalNullableObject?: SeedNullableOptional.Address | null;
+    optionalString?: string | undefined;
+    optionalInteger?: number | undefined;
+    optionalBoolean?: boolean | undefined;
+    optionalDate?: string | undefined;
+    optionalObject?: SeedNullableOptional.Address | undefined;
+    optionalList?: string[] | undefined;
+    optionalMap?: Record<string, string> | undefined;
+    optionalNullableString?: (string | null) | undefined;
+    optionalNullableObject?: (SeedNullableOptional.Address | null) | undefined;
 }

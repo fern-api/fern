@@ -1,12 +1,13 @@
-using System.Globalization;
-using System.Text.Json;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UnionWithOptionalTimeTest
 {
     [NUnit.Framework.Test]
@@ -28,18 +29,13 @@ public class UnionWithOptionalTimeTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "date",
               "value": "1994-01-01"
             }
             """;
-        var actualObj = new UnionWithOptionalTime(
-            new UnionWithOptionalTime.Date(new DateOnly(1994, 1, 1))
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithOptionalTime>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -63,20 +59,13 @@ public class UnionWithOptionalTimeTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "datetime",
               "value": "1994-01-01T01:01:01Z"
             }
             """;
-        var actualObj = new UnionWithOptionalTime(
-            new UnionWithOptionalTime.Datetime(
-                DateTime.Parse("1994-01-01T01:01:01.000Z", null, DateTimeStyles.AdjustToUniversal)
-            )
-        );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithOptionalTime>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -96,16 +85,13 @@ public class UnionWithOptionalTimeTest
     [NUnit.Framework.Test]
     public void TestSerialization_3()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "date",
               "value": null
             }
             """;
-        var actualObj = new UnionWithOptionalTime(new UnionWithOptionalTime.Date(null));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithOptionalTime>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -125,15 +111,12 @@ public class UnionWithOptionalTimeTest
     [NUnit.Framework.Test]
     public void TestSerialization_4()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "type": "datetime",
               "value": null
             }
             """;
-        var actualObj = new UnionWithOptionalTime(new UnionWithOptionalTime.Datetime(null));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<UnionWithOptionalTime>(inputJson);
     }
 }

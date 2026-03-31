@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
@@ -9,31 +10,33 @@ import {
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
-import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
-import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
-import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
-import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
-import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
-import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
-import { generateSdkTests } from "./generateSdkTests";
-import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator";
-import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
-import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
-import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
-import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
-import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
-import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
-import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
-import { buildReference } from "./reference/buildReference";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
-import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator.js";
+import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator.js";
+import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { generateSdkTests } from "./generateSdkTests.js";
+import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator.js";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator.js";
+import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator.js";
+import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator.js";
+import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator.js";
+import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator.js";
+import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
+import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
+import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
+import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator.js";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({
@@ -42,7 +45,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: CsharpConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -84,7 +87,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         await this.generate(context);
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({
@@ -100,17 +103,25 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        const generateStartTime = Date.now();
         // generate names for everything up front.
+        const precalculateStartTime = Date.now();
         context.precalculate();
+        context.logger.debug(`[TIMING] precalculate took ${Date.now() - precalculateStartTime}ms`);
 
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
-        const models = generateModels({ context });
+        const modelsStartTime = Date.now();
+        const { files: models, literalTypeFiles } = generateModels({ context });
+        context.logger.debug(`[TIMING] generateModels took ${Date.now() - modelsStartTime}ms`);
 
         await context.snippetGenerator.populateSnippetsCache();
 
         for (const file of models) {
             context.project.addSourceFiles(file);
+        }
+        for (const file of literalTypeFiles) {
+            context.project.addSourceRawFile(file);
         }
 
         context.project.addSourceFiles(generateVersion({ context }));
@@ -131,6 +142,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             const service = subpackage.service != null ? context.getHttpService(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
             if (context.subPackageHasEndpointsRecursively(subpackage)) {
+                const subClientInterface = new SubPackageClientInterfaceGenerator({
+                    context,
+                    subpackage,
+                    serviceId: subpackage.service,
+                    service
+                });
+                context.project.addSourceFiles(subClientInterface.generate());
+
                 const subClient = new SubPackageClientGenerator({
                     context,
                     subpackage,
@@ -152,6 +171,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                         subpackage,
                         websocketChannel
                     });
+                    context.project.addSourceFiles(websocketApi.generateInterface());
                     context.project.addSourceFiles(websocketApi.generate());
                 }
             }
@@ -196,6 +216,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             const customExceptionInterceptor = new CustomExceptionInterceptorGenerator(context);
             context.project.addSourceFiles(customExceptionInterceptor.generate());
         }
+
+        const rootClientInterface = new RootClientInterfaceGenerator(context);
+        context.project.addSourceFiles(rootClientInterface.generate());
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
@@ -269,15 +292,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                context.logger.warn("Failed to generate reference.md, this is OK.");
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
+        context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
     }
 
@@ -304,6 +328,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
+        if (builder == null) {
+            context.logger.debug("No endpoint references found; skipping reference.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReference(builder);
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(

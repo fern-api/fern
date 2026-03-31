@@ -2,7 +2,8 @@
 FROM node:22.12-alpine3.20 AS node
 
 RUN apk --no-cache add git zip
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
 COPY generators/go-v2/sdk/dist/ /dist/
 
@@ -11,8 +12,9 @@ FROM golang:1.23.8-alpine3.20
 
 WORKDIR /workspace
 
-RUN apk add --no-cache ca-certificates git nodejs
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN apk add --no-cache ca-certificates git libstdc++
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
 COPY generators/go/go.mod generators/go/go.sum /workspace/
 RUN go mod download
@@ -36,7 +38,5 @@ RUN mv /bin/cli.cjs /bin/go-v2 && chmod +x /bin/go-v2
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
-
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["/fern-go-sdk"]

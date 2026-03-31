@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`requestOptionsParameter > getAbortSignalExpression > generates abort signal reference 1`] = `"requestOptions?.abortSignal"`;
+
+exports[`requestOptionsParameter > getMaxRetriesExpression > generates max retries with nullish coalescing 1`] = `"requestOptions?.maxRetries ?? this._options?.maxRetries"`;
+
+exports[`requestOptionsParameter > getTimeoutExpression > generates timeout with custom default seconds 1`] = `"(requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 30) * 1000"`;
+
+exports[`requestOptionsParameter > getTimeoutExpression > generates timeout with default 60 seconds 1`] = `"(requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000"`;
+
+exports[`requestOptionsParameter > getTimeoutExpression > generates timeout with infinity default 1`] = `"requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined"`;

@@ -6,9 +6,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 
-import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;

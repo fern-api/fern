@@ -110,6 +110,10 @@ public final class TestCaseNonHiddenGrade {
     public interface _FinalStage {
         TestCaseNonHiddenGrade build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage actualResult(Optional<VariableValue> actualResult);
 
         _FinalStage actualResult(VariableValue actualResult);
@@ -186,6 +190,18 @@ public final class TestCaseNonHiddenGrade {
         @java.lang.Override
         public TestCaseNonHiddenGrade build() {
             return new TestCaseNonHiddenGrade(passed, actualResult, exception, stdout, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

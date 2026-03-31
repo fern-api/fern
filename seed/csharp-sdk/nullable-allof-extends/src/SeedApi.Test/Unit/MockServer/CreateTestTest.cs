@@ -1,10 +1,11 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTestTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -43,10 +44,7 @@ public class CreateTestTest : BaseMockServerTest
         var response = await Client.CreateTestAsync(
             new RootObject { NormalField = "normalField", NullableField = "nullableField" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RootObject>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -79,9 +77,6 @@ public class CreateTestTest : BaseMockServerTest
             );
 
         var response = await Client.CreateTestAsync(new RootObject());
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RootObject>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

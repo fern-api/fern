@@ -2,6 +2,7 @@ package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemesRequirement;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.errors.ErrorDeclaration;
@@ -95,6 +96,10 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public List<AuthScheme> getResolvedAuthSchemes() {
         return resolvedAuthSchemes;
+    }
+
+    public boolean isEndpointSecurity() {
+        return ir.getAuth().getRequirement().equals(AuthSchemesRequirement.ENDPOINT_SECURITY);
     }
 
     public TypeDeclaration getTypeDeclaration(TypeId typeId) {

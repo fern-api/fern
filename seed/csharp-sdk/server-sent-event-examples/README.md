@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedServerSentEvents)](https://nuget.org/packages/SeedServerSentEvents)
+[![nuget shield](https://img.shields.io/nuget/v/Fernserver-sent-event-examples)](https://nuget.org/packages/Fernserver-sent-event-examples)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -15,6 +15,9 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -24,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedServerSentEvents
+dotnet add package Fernserver-sent-event-examples
 ```
 
 ## Reference
@@ -39,7 +42,7 @@ Instantiate and use the client with the following:
 using SeedServerSentEvents;
 
 var client = new SeedServerSentEventsClient();
-var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
+var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "" });
 
 await foreach (var item in items)
 {
@@ -97,6 +100,66 @@ var response = await client.Completions.StreamAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+    }
+);
+```
+
+### Raw Response
+
+Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+
+```csharp
+using SeedServerSentEvents;
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await client.Completions.StreamAsync(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await client.Completions.StreamAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Completions.StreamAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Completions.StreamAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
     }
 );
 ```

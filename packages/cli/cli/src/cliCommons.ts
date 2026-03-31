@@ -1,7 +1,7 @@
 import { LogLevel } from "@fern-api/logger";
 import { loadProject, Project } from "@fern-api/project-loader";
 
-import { CliContext } from "./cli-context/CliContext";
+import { CliContext } from "./cli-context/CliContext.js";
 
 export interface GlobalCliOptions {
     "log-level": LogLevel;

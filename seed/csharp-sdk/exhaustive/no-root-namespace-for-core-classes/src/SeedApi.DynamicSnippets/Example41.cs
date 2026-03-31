@@ -13,7 +13,9 @@ public class Example41
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
+            1.1
+        );
     }
 
 }

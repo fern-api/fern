@@ -1,6 +1,6 @@
 import { glob } from "glob";
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
 
 export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<AbsoluteFilePath[]> {
     const alphasort = (a: string, b: string) => a.localeCompare(b, "en");

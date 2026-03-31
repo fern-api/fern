@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
@@ -18,14 +19,7 @@ import {
     Type,
     UseStatement
 } from "@fern-api/rust-codegen";
-import {
-    EnvironmentBaseUrlWithId,
-    MultipleBaseUrlsEnvironment,
-    MultipleBaseUrlsEnvironments,
-    SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace EnvironmentGenerator {
     interface Args {
@@ -55,7 +49,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private generateSingleUrlEnvironment(config: SingleBaseUrlEnvironments): RustFile {
+    private generateSingleUrlEnvironment(config: FernIr.SingleBaseUrlEnvironments): RustFile {
         const useStatements = [
             new UseStatement({
                 path: "serde",
@@ -79,7 +73,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private generateMultiUrlEnvironment(config: MultipleBaseUrlsEnvironments): RustFile {
+    private generateMultiUrlEnvironment(config: FernIr.MultipleBaseUrlsEnvironments): RustFile {
         const useStatements = [
             new UseStatement({
                 path: "crate::prelude",
@@ -116,7 +110,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createEnvironmentEnum(environments: SingleBaseUrlEnvironment[]): Enum {
+    private createEnvironmentEnum(environments: FernIr.SingleBaseUrlEnvironment[]): Enum {
         const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
             name: environmentEnumName,
@@ -126,7 +120,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createEnumVariant(env: SingleBaseUrlEnvironment): EnumVariant {
+    private createEnumVariant(env: FernIr.SingleBaseUrlEnvironment): EnumVariant {
         const needsRename = env.name.pascalCase.safeName !== env.name.camelCase.safeName;
 
         return rust.enumVariant({
@@ -135,7 +129,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createEnvironmentImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
+    private createEnvironmentImplBlock(environments: FernIr.SingleBaseUrlEnvironment[]): ImplBlock {
         const urlMethod = this.createUrlMethod(environments);
         const environmentEnumName = this.getEnvironmentEnumName();
 
@@ -145,7 +139,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createUrlMethod(environments: SingleBaseUrlEnvironment[]): Method {
+    private createUrlMethod(environments: FernIr.SingleBaseUrlEnvironment[]): Method {
         // Create match arms for each environment using proper AST
         const matchArms = environments.map((env) => {
             const pattern = Pattern.variable(`Self::${env.name.pascalCase.safeName}`);
@@ -171,7 +165,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createDefaultImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
+    private createDefaultImplBlock(environments: FernIr.SingleBaseUrlEnvironment[]): ImplBlock {
         const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
         const defaultEnv = environments.find((env) => env.id === defaultEnvId) || environments[0];
         const environmentEnumName = this.getEnvironmentEnumName();
@@ -194,7 +188,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createUrlStruct(env: MultipleBaseUrlsEnvironment, baseUrls: EnvironmentBaseUrlWithId[]): Struct {
+    private createUrlStruct(env: FernIr.MultipleBaseUrlsEnvironment, baseUrls: FernIr.EnvironmentBaseUrlWithId[]): Struct {
         return rust.struct({
             name: `${env.name.pascalCase.safeName}Urls`,
             visibility: PUBLIC,
@@ -209,7 +203,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlEnvironmentEnum(environments: MultipleBaseUrlsEnvironment[]): Enum {
+    private createMultiUrlEnvironmentEnum(environments: FernIr.MultipleBaseUrlsEnvironment[]): Enum {
         const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
             name: environmentEnumName,
@@ -224,7 +218,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
+    private createMultiUrlImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): ImplBlock {
         const getUrlMethod = this.createMultiUrlGetUrlMethod(config);
         const environmentEnumName = this.getEnvironmentEnumName();
 
@@ -234,7 +228,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlGetUrlMethod(config: MultipleBaseUrlsEnvironments): Method {
+    private createMultiUrlGetUrlMethod(config: FernIr.MultipleBaseUrlsEnvironments): Method {
         const matchArms = config.environments.map((env) => {
             // Use tuple pattern for tuple enum variants
             const pattern = Pattern.raw(`Self::${env.name.pascalCase.safeName}(urls)`);
@@ -262,7 +256,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlDefaultImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
+    private createMultiUrlDefaultImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): ImplBlock {
         const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
         const defaultEnv = config.environments.find((env) => env.id === defaultEnvId) || config.environments[0];
         const environmentEnumName = this.getEnvironmentEnumName();

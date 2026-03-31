@@ -3,9 +3,9 @@ import { InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fer
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-import { getMigrationsToRun } from "./migrations/getMigrationsToRun";
-import { Migration } from "./types/Migration";
-import { VersionMigrations } from "./types/VersionMigrations";
+import { getMigrationsToRun } from "./migrations/getMigrationsToRun.js";
+import { Migration } from "./types/Migration.js";
+import { VersionMigrations } from "./types/VersionMigrations.js";
 
 interface MigrationWithTaskContext {
     migration: Migration;

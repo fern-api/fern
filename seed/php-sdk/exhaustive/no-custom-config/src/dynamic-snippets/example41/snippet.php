@@ -10,4 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->urls->noEndingSlash();
+$client->endpoints->primitive->getAndReturnDouble(
+    1.1,
+);

@@ -48,6 +48,7 @@
                     }
                 },
                 "usernameEnvVar": "USERNAME",
+                "usernameOmit": null,
                 "password": {
                     "originalName": "accessToken",
                     "camelCase": {
@@ -68,6 +69,7 @@
                     }
                 },
                 "passwordEnvVar": "PASSWORD",
+                "passwordOmit": null,
                 "key": "Basic",
                 "docs": null
             }
@@ -984,6 +986,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "GET request with basic auth scheme"
                 },
@@ -1662,6 +1665,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "POST request with basic auth scheme"
                 }

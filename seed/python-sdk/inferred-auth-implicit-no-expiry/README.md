@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,8 +37,13 @@ Instantiate and use the client with the following:
 from seed import SeedInferredAuthImplicitNoExpiry
 
 client = SeedInferredAuthImplicitNoExpiry(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.get_token_with_client_credentials(
     x_api_key="X-Api-Key",
     client_id="client_id",
@@ -43,6 +62,10 @@ import asyncio
 from seed import AsyncSeedInferredAuthImplicitNoExpiry
 
 client = AsyncSeedInferredAuthImplicitNoExpiry(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -84,11 +107,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedInferredAuthImplicitNoExpiry
 
-client = SeedInferredAuthImplicitNoExpiry(
-    ...,
-)
+client = SeedInferredAuthImplicitNoExpiry(...)
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -117,14 +139,9 @@ client.auth.get_token_with_client_credentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedInferredAuthImplicitNoExpiry
 
-client = SeedInferredAuthImplicitNoExpiry(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedInferredAuthImplicitNoExpiry(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token_with_client_credentials(..., request_options={

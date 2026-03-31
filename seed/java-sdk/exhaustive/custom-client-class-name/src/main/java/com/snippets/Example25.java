@@ -1,16 +1,22 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
+import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
+import java.util.HashMap;
 
 public class Example25 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints()
-                .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
+            {
+                put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
+                    {
+                        put("key", "value");
+                    }
+                }));
+            }
+        });
     }
 }

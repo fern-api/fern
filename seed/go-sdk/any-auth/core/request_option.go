@@ -28,6 +28,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	MaxBufSize      int
 	tokenGetter     TokenGetter
 	Token           string
 	ApiKey          string
@@ -35,6 +36,7 @@ type RequestOptions struct {
 	ClientSecret    string
 	Username        string
 	Password        string
+	ClientId        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -63,8 +65,13 @@ func (r *RequestOptions) ToHeader() http.Header {
 	if r.ApiKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
 	}
-	if r.Username != "" && r.Password != "" {
+	if r.Username != "" || r.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
+	}
+	if r.tokenGetter != nil {
+		if token, err := r.tokenGetter(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -132,6 +139,15 @@ func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
 }
 
+// MaxBufSizeOption implements the RequestOption interface.
+type MaxBufSizeOption struct {
+	MaxBufSize int
+}
+
+func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
@@ -194,4 +210,13 @@ type BasicAuthOption struct {
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
 	opts.Password = b.Password
+}
+
+// ClientIdOption implements the RequestOption interface.
+type ClientIdOption struct {
+	ClientId string
+}
+
+func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientId = c.ClientId
 }

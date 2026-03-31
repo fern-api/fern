@@ -1,24 +1,25 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { getReadableTypeNode } from "../getReadableTypeNode";
-import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
-import { buildUrl } from "./utils/buildUrl";
-import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { getReadableTypeNode } from "../getReadableTypeNode.js";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
+import { buildUrl } from "./utils/buildUrl.js";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from "./utils/requestOptionsParameter";
+} from "./utils/requestOptionsParameter.js";
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
     export interface Init {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -35,7 +36,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
 }
 
 export class GeneratedFileDownloadEndpointImplementation implements GeneratedEndpointImplementation {
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: FernIr.HttpEndpoint;
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
@@ -84,7 +85,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
 
     public getExample(args: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {
@@ -145,20 +146,28 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     }
 
     public getDocs(context: SdkContext): string | undefined {
-        const lines: string[] = [];
+        const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
         if (this.endpoint.docs) {
-            lines.push(this.endpoint.docs);
+            groups.push(this.endpoint.docs);
         }
 
+        const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            lines.push(`@throws {@link ${errorName}}`);
+            exceptions.push(`@throws {@link ${errorName}}`);
+        }
+        if (exceptions.length > 0) {
+            groups.push(exceptions.join("\n"));
         }
 
-        if (lines.length === 0) {
+        if (groups.length === 0) {
             return undefined;
         }
 
-        return lines.join("\n");
+        return groups.join("\n\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
-    fern "github.com/pagination/fern"
-    context "context"
 )
 
 func do() {
@@ -16,8 +17,19 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-    client.Users.ListWithMixedTypeCursorPagination(
+    request := &fern.ListUsersOffsetPaginationRequest{
+        Page: fern.Int(
+            1,
+        ),
+        PerPage: fern.Int(
+            1,
+        ),
+        Order: fern.OrderAsc.Ptr(),
+        StartingAfter: fern.String(
+            "starting_after",
+        ),
+    }
+    client.Users.ListWithOffsetPagination(
         context.TODO(),
         request,
     )

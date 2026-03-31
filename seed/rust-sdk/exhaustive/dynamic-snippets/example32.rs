@@ -10,7 +10,13 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_double(&1.1, None)
+        .params
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
+            },
+            None,
+        )
         .await;
 }

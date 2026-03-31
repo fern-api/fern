@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersDoubleOffsetPaginationRequest;
 import com.seed.pagination.resources.users.types.Order;
 
 public class Example19 {
@@ -12,10 +12,11 @@ public class Example19 {
                 .build();
 
         client.users()
-                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
-                        .page(1)
-                        .limit(1)
+                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
+                        .page(1.1)
+                        .perPage(1.1)
                         .order(Order.ASC)
+                        .startingAfter("starting_after")
                         .build());
     }
 }

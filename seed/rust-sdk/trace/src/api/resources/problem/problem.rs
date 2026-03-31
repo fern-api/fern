@@ -31,7 +31,7 @@ impl ProblemClient {
             .execute_request(
                 Method::POST,
                 "/problem-crud/create",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -57,7 +57,7 @@ impl ProblemClient {
             .execute_request(
                 Method::POST,
                 &format!("/problem-crud/update/{}", problem_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -107,7 +107,7 @@ impl ProblemClient {
             .execute_request(
                 Method::POST,
                 "/problem-crud/default-starter-files",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

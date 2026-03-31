@@ -1,3 +1,3 @@
-export { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator";
-export { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";
+export { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator.js";
+export { EndpointSnippetGenerator } from "./EndpointSnippetGenerator.js";

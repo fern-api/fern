@@ -14,6 +14,7 @@
         "description": "Returns tiered rate information with nullable balance_max",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -25,7 +26,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getRates_example",
             "path": "/rates",
             "pathParameters": {},
             "queryParameters": {},
@@ -122,6 +123,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -142,6 +144,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
@@ -185,6 +188,8 @@
                 "type": "id",
                 "value": "RateTier",
               },
+              "maxItems": undefined,
+              "minItems": undefined,
               "type": "list",
             },
           },
@@ -308,8 +313,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },

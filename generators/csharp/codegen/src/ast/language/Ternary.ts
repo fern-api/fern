@@ -1,7 +1,7 @@
 import { Ternary as CommonTernary } from "@fern-api/browser-compatible-base-generator";
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
 
 export declare namespace Ternary {
     type Args = CommonTernary.Args;

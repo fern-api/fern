@@ -169,6 +169,10 @@ public final class ComplexStaged {
     public interface _FinalStage {
         ComplexStaged build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage optionalX(Optional<String> optionalX);
 
         _FinalStage optionalX(String optionalX);
@@ -297,6 +301,18 @@ public final class ComplexStaged {
         public ComplexStaged build() {
             return new ComplexStaged(
                     fieldA, fieldB, fieldC, fieldD, fieldE, optionalX, optionalY, optionalZ, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

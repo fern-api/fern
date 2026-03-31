@@ -1,9 +1,8 @@
+import { logViolations } from "@fern-api/api-workspace-validator";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { Project } from "@fern-api/project-loader";
-
-import { CliContext } from "../../cli-context/CliContext";
-import { logViolations } from "./logViolations";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function validateDocsBrokenLinks({
     project,
@@ -23,13 +22,14 @@ export async function validateDocsBrokenLinks({
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         const startTime = performance.now();
-        const fernWorkspaces = await Promise.all(
-            project.apiWorkspaces.map(async (workspace) => {
-                return workspace.toFernWorkspace({ context });
-            })
-        );
         const ossWorkspaces = await filterOssWorkspaces(project);
-        const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, ossWorkspaces, true);
+        const violations = await validateDocsWorkspace(
+            docsWorkspace,
+            context,
+            project.apiWorkspaces,
+            ossWorkspaces,
+            true
+        );
 
         const elapsedMillis = performance.now() - startTime;
         logViolations({

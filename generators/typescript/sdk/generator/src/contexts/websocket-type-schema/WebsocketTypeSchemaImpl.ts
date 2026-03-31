@@ -1,12 +1,12 @@
-import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, WebsocketTypeSchemaContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace WebsocketTypeSchemaContextImpl {
     export interface Init {
@@ -45,8 +45,8 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
 
     public getGeneratedWebsocketResponseTypeSchema(
         packageId: PackageId,
-        channel: WebSocketChannel,
-        receiveMessages: WebSocketMessageBodyReference[]
+        channel: FernIr.WebSocketChannel,
+        receiveMessages: FernIr.WebSocketMessageBodyReference[]
     ): GeneratedWebsocketTypeSchema {
         return this.websocketTypeSchemaGenerator.generateInlinedWebsocketMessageBodySchema({
             packageId,
@@ -59,7 +59,7 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         });
     }
 
-    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: Name): Reference {
+    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: FernIr.Name): Reference {
         const channel = this.packageResolver.getWebSocketChannelDeclaration(packageId);
         if (channel == null) {
             throw new Error(`Channel ${channelName.originalName} does not exist`);

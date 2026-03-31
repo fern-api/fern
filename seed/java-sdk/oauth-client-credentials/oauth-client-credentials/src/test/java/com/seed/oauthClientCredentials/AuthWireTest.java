@@ -61,41 +61,10 @@ public class AuthWireTest {
                 "OAuth Authorization header should contain Bearer token from OAuth flow");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = ""
-                + "{\n"
-                + "  \"client_id\": \"my_oauth_app_123\",\n"
-                + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
-                + "  \"refresh_token\": \"refresh_token\",\n"
-                + "  \"audience\": \"https://api.example.com\",\n"
-                + "  \"grant_type\": \"refresh_token\",\n"
-                + "  \"scope\": \"read:users\"\n"
-                + "}";
-        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
-        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
-        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
-            String discriminator = null;
-            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
-            else if (actualJson.has("_type"))
-                discriminator = actualJson.get("_type").asText();
-            else if (actualJson.has("kind"))
-                discriminator = actualJson.get("kind").asText();
-            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
-            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
-        }
-
-        if (!actualJson.isNull()) {
-            Assertions.assertTrue(
-                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
-                    "request should be a valid JSON value");
-        }
-
-        if (actualJson.isArray()) {
-            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
-        }
-        if (actualJson.isObject()) {
-            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
-        }
+        String expectedRequestBody =
+                "client_id=my_oauth_app_123&client_secret=sk_live_abcdef123456789&refresh_token=refresh_token&audience=https%3A%2F%2Fapi.example.com&grant_type=refresh_token&scope=read%3Ausers";
+        Assertions.assertEquals(
+                expectedRequestBody, actualRequestBody, "Form-urlencoded request body does not match expected");
 
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");

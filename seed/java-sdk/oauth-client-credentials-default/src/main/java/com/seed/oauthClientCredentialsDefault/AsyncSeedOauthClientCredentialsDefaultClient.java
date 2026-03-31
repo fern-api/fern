@@ -65,4 +65,12 @@ public class AsyncSeedOauthClientCredentialsDefaultClient {
             String clientId, String clientSecret) {
         return AsyncSeedOauthClientCredentialsDefaultClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static AsyncSeedOauthClientCredentialsDefaultClientBuilder._Builder builder() {
+        return AsyncSeedOauthClientCredentialsDefaultClientBuilder.builder();
+    }
 }

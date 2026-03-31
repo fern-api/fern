@@ -3,6 +3,10 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ENVIRONMENTS
+    description: |
+      This SDK allows you to configure different environments for API requests.
+
   - id: AUTHENTICATION
     description: ""
 
@@ -159,6 +163,19 @@ features:
       ```
       </details>
 
+  - id: CUSTOM_FETCH
+    advanced: true
+    description: |
+      The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+      benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+      This is useful for calling API endpoints not yet supported in the SDK.
+
+  - id: CUSTOM_FETCHER
+    advanced: true
+    description: |
+      The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
+      unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
   - id: RUNTIME_COMPATIBILITY
     advanced: true
     description: |
@@ -176,8 +193,3 @@ features:
       - Deno v1.25+
       - Bun 1.0+
       - React Native
-
-      ### Customizing Fetch Client
-
-      The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-      unsupported environment, this provides a way for you to break glass and ensure the SDK works.

@@ -12,5 +12,5 @@
  */
 export interface Metadata {
     id: string;
-    data?: Record<string, string>;
+    data?: Record<string, string> | undefined;
 }

@@ -1,8 +1,8 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ResponseErrors } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { parseErrorName } from "../../utils/parseErrorName";
+import { FernFileContext } from "../../FernFileContext.js";
+import { parseErrorName } from "../../utils/parseErrorName.js";
 
 export function convertResponseErrors({
     errors,

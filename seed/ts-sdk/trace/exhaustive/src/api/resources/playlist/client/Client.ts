@@ -53,7 +53,7 @@ export class PlaylistClient {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, unknown> = {
             datetime,
-            optionalDatetime,
+            optionalDatetime: optionalDatetime != null ? optionalDatetime : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -346,7 +346,7 @@ export class PlaylistClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request != null ? request : undefined,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000

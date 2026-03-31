@@ -1,23 +1,23 @@
 import { SetRequired } from "@fern-api/core-utils";
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace GeneratedWrappedService {
     interface Init {
         wrapperService: GeneratedSdkClientClassImpl;
-        wrappedSubpackageId: SubpackageId;
-        wrappedSubpackage: Subpackage;
+        wrappedSubpackageId: FernIr.SubpackageId;
+        wrappedSubpackage: FernIr.Subpackage;
     }
 }
 
 export class GeneratedWrappedService {
     private wrapperService: GeneratedSdkClientClassImpl;
-    private wrappedSubpackageId: SubpackageId;
-    private wrappedSubpackage: Subpackage;
+    private wrappedSubpackageId: FernIr.SubpackageId;
+    private wrappedSubpackage: FernIr.Subpackage;
 
     constructor({ wrapperService, wrappedSubpackageId, wrappedSubpackage }: GeneratedWrappedService.Init) {
         this.wrapperService = wrapperService;

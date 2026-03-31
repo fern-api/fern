@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullableOptional.core.Nullable;
-import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,17 +44,17 @@ public final class ListUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("limit")
+    @JsonIgnore
     public Optional<Integer> getLimit() {
         return limit;
     }
 
-    @JsonProperty("offset")
+    @JsonIgnore
     public Optional<Integer> getOffset() {
         return offset;
     }
 
-    @JsonProperty("includeDeleted")
+    @JsonIgnore
     public Optional<Boolean> getIncludeDeleted() {
         return includeDeleted;
     }
@@ -66,12 +64,6 @@ public final class ListUsersRequest {
         if (sortBy == null) {
             return Optional.empty();
         }
-        return sortBy;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("sortBy")
-    private Optional<String> _getSortBy() {
         return sortBy;
     }
 
@@ -187,6 +179,16 @@ public final class ListUsersRequest {
 
         public ListUsersRequest build() {
             return new ListUsersRequest(limit, offset, includeDeleted, sortBy, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

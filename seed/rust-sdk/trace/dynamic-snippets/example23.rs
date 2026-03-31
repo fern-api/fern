@@ -1,5 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::{ListType, MapType, VariableType, VariableTypeAndName};
 
 #[tokio::main]
 async fn main() {

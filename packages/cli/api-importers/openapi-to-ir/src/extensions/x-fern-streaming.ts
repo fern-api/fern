@@ -8,8 +8,10 @@ const StreamingExtensionObjectSchema = z.object({
     "stream-condition": z.string().optional(),
     format: z.enum(["sse", "json"]).optional(),
     "stream-description": z.string().optional(),
+    "stream-request-name": z.string().optional(),
     "response-stream": z.any(),
-    response: z.any()
+    response: z.any(),
+    terminator: z.string().optional()
 });
 
 const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectSchema]);
@@ -17,13 +19,16 @@ const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectS
 type OnlyStreamingEndpoint = {
     type: "stream";
     format: "sse" | "json";
+    terminator: string | undefined;
 };
 
 type StreamConditionEndpoint = {
     type: "streamCondition";
     format: "sse" | "json";
+    terminator: string | undefined;
     streamDescription: string | undefined;
     streamConditionProperty: string;
+    streamRequestName: string | undefined;
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 };
@@ -61,11 +66,11 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
         }
 
         if (typeof result.data === "boolean") {
-            return result.data ? { type: "stream", format: "json" } : undefined;
+            return result.data ? { type: "stream", format: "json", terminator: undefined } : undefined;
         }
 
         if (result.data["stream-condition"] == null && result.data.format != null) {
-            return { type: "stream", format: result.data.format };
+            return { type: "stream", format: result.data.format, terminator: result.data.terminator };
         }
 
         if (result.data["stream-condition"] == null) {
@@ -79,11 +84,13 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
         return {
             type: "streamCondition",
             format: result.data.format ?? "json",
+            terminator: result.data.terminator,
             streamDescription: result.data["stream-description"],
             streamConditionProperty: AbstractConverterContext.maybeTrimPrefix(
                 result.data["stream-condition"],
                 REQUEST_PREFIX
             ),
+            streamRequestName: result.data["stream-request-name"],
             responseStream: result.data["response-stream"],
             response: result.data.response
         };

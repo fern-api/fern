@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -66,7 +66,7 @@ public record TestCaseImplementationDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationDescriptionBoard.Type is not 'html'"
             );
 
@@ -77,7 +77,7 @@ public record TestCaseImplementationDescriptionBoard
     public string AsParamId() =>
         IsParamId
             ? (string)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationDescriptionBoard.Type is not 'paramId'"
             );
 
@@ -156,12 +156,12 @@ public record TestCaseImplementationDescriptionBoard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationDescriptionBoard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseImplementationDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -189,9 +189,9 @@ public record TestCaseImplementationDescriptionBoard
             var value = discriminator switch
             {
                 "html" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 "paramId" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new TestCaseImplementationDescriptionBoard(discriminator, value);
@@ -218,6 +218,27 @@ public record TestCaseImplementationDescriptionBoard
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override TestCaseImplementationDescriptionBoard ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new TestCaseImplementationDescriptionBoard(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            TestCaseImplementationDescriptionBoard value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

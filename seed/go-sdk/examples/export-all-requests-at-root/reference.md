@@ -369,13 +369,13 @@ request := &fern.Movie{
                 "Florence Pugh",
                 "Willem Dafoe",
             },
-            "releaseDate": "2023-12-08",
             "ratings": map[string]any{
-                "rottenTomatoes": 97,
                 "imdb": 7.6,
+                "rottenTomatoes": 97,
             },
+            "releaseDate": "2023-12-08",
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
 client.Service.CreateMovie(
         context.TODO(),
@@ -520,7 +520,7 @@ request := &fern.BigEntity{
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &fern.Entity{
             Type: &fern.Type{
@@ -577,13 +577,9 @@ request := &fern.BigEntity{
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -600,13 +596,9 @@ request := &fern.BigEntity{
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -678,13 +670,9 @@ request := &fern.BigEntity{
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -703,13 +691,9 @@ request := &fern.BigEntity{
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -801,3 +785,4 @@ client.Service.RefreshToken(
 </dd>
 </dl>
 </details>
+

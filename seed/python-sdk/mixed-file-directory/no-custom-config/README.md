@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -25,6 +39,7 @@ from seed import SeedMixedFileDirectory
 client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.organization.create(
     name="name",
 )
@@ -78,11 +93,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedMixedFileDirectory
 
-client = SeedMixedFileDirectory(
-    ...,
-)
+client = SeedMixedFileDirectory(...)
 response = client.organization.with_raw_response.create(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -111,14 +125,9 @@ client.organization.create(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedMixedFileDirectory
 
-client = SeedMixedFileDirectory(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedMixedFileDirectory(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.organization.create(..., request_options={

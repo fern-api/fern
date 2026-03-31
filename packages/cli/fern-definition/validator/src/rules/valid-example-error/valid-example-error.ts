@@ -5,8 +5,8 @@ import {
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
 
 export const ValidExampleErrorRule: Rule = {
     name: "valid-example-error",

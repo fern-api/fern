@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->endpoint()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;endpoint()</code></summary>
 <dl>
 <dd>
 
@@ -24,3 +24,4 @@ $client->service->endpoint();
 </dd>
 </dl>
 </details>
+

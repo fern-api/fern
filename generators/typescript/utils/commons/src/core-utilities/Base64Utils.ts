@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "./CoreUtility";
+import { CoreUtility } from "./CoreUtility.js";
 
 export interface Base64Utils {
     base64Encode: {

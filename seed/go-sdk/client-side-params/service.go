@@ -3,6 +3,8 @@
 package clientsideparams
 
 import (
+	json "encoding/json"
+	internal "github.com/client-side-params/fern/internal"
 	big "math/big"
 )
 
@@ -477,8 +479,8 @@ type SearchResourcesRequest struct {
 	// Offset for pagination
 	Offset int `json:"-" url:"offset"`
 	// Search query text
-	Query   *string                `json:"query,omitempty" url:"-"`
-	Filters map[string]interface{} `json:"filters,omitempty" url:"-"`
+	Query   *string        `json:"query,omitempty" url:"-"`
+	Filters map[string]any `json:"filters,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -514,7 +516,28 @@ func (s *SearchResourcesRequest) SetQuery(query *string) {
 
 // SetFilters sets the Filters field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchResourcesRequest) SetFilters(filters map[string]interface{}) {
+func (s *SearchResourcesRequest) SetFilters(filters map[string]any) {
 	s.Filters = filters
 	s.require(searchResourcesRequestFieldFilters)
+}
+
+func (s *SearchResourcesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchResourcesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SearchResourcesRequest(body)
+	return nil
+}
+
+func (s *SearchResourcesRequest) MarshalJSON() ([]byte, error) {
+	type embed SearchResourcesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

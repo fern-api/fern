@@ -79,23 +79,25 @@ class TypeReferenceToTypeHintConverter:
         for_typeddict: bool = False,
     ) -> AST.TypeHint:
         return container.visit(
-            list_=lambda wrapped_type: AST.TypeHint.sequence(
-                self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                    as_if_type_checking_import=as_if_type_checking_import,
-                    in_endpoint=in_endpoint,
-                    for_typeddict=False,
+            list_=lambda wrapped_type: (
+                AST.TypeHint.sequence(
+                    self.get_type_hint_for_type_reference(
+                        type_reference=wrapped_type,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                        as_if_type_checking_import=as_if_type_checking_import,
+                        in_endpoint=in_endpoint,
+                        for_typeddict=False,
+                    )
                 )
-            )
-            if in_endpoint
-            else AST.TypeHint.list(
-                self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                    as_if_type_checking_import=as_if_type_checking_import,
-                    in_endpoint=in_endpoint,
-                    for_typeddict=False,
+                if in_endpoint
+                else AST.TypeHint.list(
+                    self.get_type_hint_for_type_reference(
+                        type_reference=wrapped_type,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                        as_if_type_checking_import=as_if_type_checking_import,
+                        in_endpoint=in_endpoint,
+                        for_typeddict=False,
+                    )
                 )
             ),
             map_=lambda map_type: AST.TypeHint.dict(
@@ -116,23 +118,25 @@ class TypeReferenceToTypeHintConverter:
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
             set_=lambda wrapped_type: wrapped_type.visit(
-                container=lambda type_reference: AST.TypeHint.sequence(
-                    self._get_type_hint_for_container(
-                        container=type_reference,
-                        must_import_after_current_declaration=must_import_after_current_declaration,
-                        as_if_type_checking_import=as_if_type_checking_import,
-                        in_endpoint=in_endpoint,
-                        for_typeddict=False,
+                container=lambda type_reference: (
+                    AST.TypeHint.sequence(
+                        self._get_type_hint_for_container(
+                            container=type_reference,
+                            must_import_after_current_declaration=must_import_after_current_declaration,
+                            as_if_type_checking_import=as_if_type_checking_import,
+                            in_endpoint=in_endpoint,
+                            for_typeddict=False,
+                        )
                     )
-                )
-                if in_endpoint
-                else AST.TypeHint.list(
-                    self._get_type_hint_for_container(
-                        container=type_reference,
-                        must_import_after_current_declaration=must_import_after_current_declaration,
-                        as_if_type_checking_import=as_if_type_checking_import,
-                        in_endpoint=in_endpoint,
-                        for_typeddict=False,
+                    if in_endpoint
+                    else AST.TypeHint.list(
+                        self._get_type_hint_for_container(
+                            container=type_reference,
+                            must_import_after_current_declaration=must_import_after_current_declaration,
+                            as_if_type_checking_import=as_if_type_checking_import,
+                            in_endpoint=in_endpoint,
+                            for_typeddict=False,
+                        )
                     )
                 ),
                 named=lambda type_reference: self._get_set_type_hint_for_named(
@@ -155,26 +159,28 @@ class TypeReferenceToTypeHintConverter:
                     for_typeddict=for_typeddict,
                 )
             ),
-            optional=lambda wrapped_type: AST.TypeHint.optional(
-                self.get_type_hint_for_type_reference(
-                    type_reference=self._unbox_type_reference(wrapped_type),
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                    as_if_type_checking_import=as_if_type_checking_import,
-                    in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+            optional=lambda wrapped_type: (
+                AST.TypeHint.optional(
+                    self.get_type_hint_for_type_reference(
+                        type_reference=self._unbox_type_reference(wrapped_type),
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                        as_if_type_checking_import=as_if_type_checking_import,
+                        in_endpoint=in_endpoint,
+                        for_typeddict=for_typeddict,
+                    )
                 )
-            )
-            if not for_typeddict
-            else AST.TypeHint.not_required(
-                self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                    as_if_type_checking_import=as_if_type_checking_import,
-                    in_endpoint=in_endpoint,
-                    # As soon as we handle the top-level typing_extensions.NotRequired, we don't
-                    #  want to propagate the TypedDict handling any further. The remaining nested
-                    #  type references should be handled as normal.
-                    for_typeddict=False,
+                if not for_typeddict
+                else AST.TypeHint.not_required(
+                    self.get_type_hint_for_type_reference(
+                        type_reference=wrapped_type,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                        as_if_type_checking_import=as_if_type_checking_import,
+                        in_endpoint=in_endpoint,
+                        # As soon as we handle the top-level typing_extensions.NotRequired, we don't
+                        #  want to propagate the TypedDict handling any further. The remaining nested
+                        #  type references should be handled as normal.
+                        for_typeddict=False,
+                    )
                 )
             ),
             literal=self.visit_literal,
@@ -212,13 +218,30 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
+        def is_bytes() -> bool:
+            if primitive.v_2 is None:
+                return False
+
+            v2_union = primitive.v_2.get_as_union()
+            if v2_union.type != "string":
+                return False
+
+            string_type: ir_types.StringType = v2_union
+            if string_type.validation is None:
+                return False
+
+            return string_type.validation.format == "binary"
+
+        str_type_hint = AST.TypeHint.bytes if is_bytes() else AST.TypeHint.str_
+
         to_return = primitive.v_1.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
-            string=AST.TypeHint.str_,
+            string=str_type_hint,
             boolean=AST.TypeHint.bool_,
             long_=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,
+            date_time_rfc_2822=AST.TypeHint.datetime,
             uuid_=AST.TypeHint.uuid,
             date=AST.TypeHint.date,
             base_64=AST.TypeHint.str_,

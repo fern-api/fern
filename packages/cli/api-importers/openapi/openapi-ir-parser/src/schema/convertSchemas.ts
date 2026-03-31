@@ -1,51 +1,95 @@
-import { Logger } from "@fern-api/logger";
+import type { Logger } from "@fern-api/logger";
 import {
-    Availability,
-    Encoding,
+    type Availability,
+    type Encoding,
     LiteralSchemaValue,
-    NamedFullExample,
+    type NamedFullExample,
     PrimitiveSchemaValueWithExample,
-    ReferencedSchema,
+    type ReferencedSchema,
     Schema,
     SchemaWithExample,
-    SdkGroupName,
-    Source
+    type SdkGroupName,
+    type Source
 } from "@fern-api/openapi-ir";
 import { size } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../getExtension";
-import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { getExamples } from "../openapi/v3/extensions/getExamples";
-import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
-import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
-import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
-import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
-import { getValueIfBoolean } from "../utils/getValue";
-import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
-import { convertArray } from "./convertArray";
-import { convertAvailability } from "./convertAvailability";
-import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
-import { convertEncoding } from "./convertEncoding";
-import { convertEnum } from "./convertEnum";
-import { convertInteger } from "./convertInteger";
-import { convertLiteral } from "./convertLiteral";
-import { convertNumber } from "./convertNumber";
-import { convertObject } from "./convertObject";
+import { getExtension } from "../getExtension.js";
+import { OpenAPIExtension } from "../openapi/v3/extensions/extensions.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { getExamples } from "../openapi/v3/extensions/getExamples.js";
+import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding.js";
+import { getFernEnum } from "../openapi/v3/extensions/getFernEnum.js";
+import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension.js";
+import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension.js";
+import { getValueIfBoolean } from "../utils/getValue.js";
+import { createSchemaCollisionTracker } from "../utils/schemaCollision.js";
+import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties.js";
+import { convertArray } from "./convertArray.js";
+import { convertAvailability } from "./convertAvailability.js";
+import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf.js";
+import { convertEncoding } from "./convertEncoding.js";
+import { convertEnum } from "./convertEnum.js";
+import { convertInteger } from "./convertInteger.js";
+import { convertLiteral } from "./convertLiteral.js";
+import { convertNumber } from "./convertNumber.js";
+import { convertObject } from "./convertObject.js";
 import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
-} from "./convertUndiscriminatedOneOf";
-import { getDefaultAsString } from "./defaults/getDefault";
-import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
-import { getGeneratedTypeName } from "./utils/getSchemaName";
-import { isReferenceObject } from "./utils/isReferenceObject";
+} from "./convertUndiscriminatedOneOf.js";
+import { getDefaultAsString } from "./defaults/getDefault.js";
+import {
+    getExampleAsArray,
+    getExampleAsBoolean,
+    getExampleAsNumber,
+    getExamplesString
+} from "./examples/getExample.js";
+import type { SchemaParserContext } from "./SchemaParserContext.js";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
+import { getGeneratedTypeName } from "./utils/getSchemaName.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
+
+// Module-level collision tracker for title-based name overrides
+const globalTitleCollisionTracker = createSchemaCollisionTracker();
+
+// Reset the global collision tracker (called at the start of document processing)
+export function resetTitleCollisionTracker(): void {
+    globalTitleCollisionTracker.reset();
+}
+
+function getDisambiguatedNameOverride(
+    schema: OpenAPIV3.SchemaObject,
+    context: SchemaParserContext,
+    originalName: string
+): string | undefined {
+    const explicitFernExtension = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const titleBasedName = context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined;
+    const baseOverride = explicitFernExtension ?? titleBasedName;
+
+    if (!baseOverride) {
+        return undefined;
+    }
+
+    // Only apply collision detection to component schemas (from #/components/schemas/) for clarity
+    const breadcrumbs = originalName.split(".");
+    const isComponentSchema =
+        explicitFernExtension != null || // Explicit extension = intentional naming
+        breadcrumbs.length === 1; // Single breadcrumb = component schema
+
+    if (!isComponentSchema) {
+        return baseOverride;
+    }
+    return globalTitleCollisionTracker.getUniqueTitleName(
+        baseOverride,
+        originalName,
+        context.logger,
+        context.options.resolveSchemaCollisions
+    );
+}
 
 function isInlinable(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -69,7 +113,10 @@ function isInlinable(
         case undefined:
             return false;
         default:
-            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            if ((resolvedSchema as OpenAPIV3.SchemaObject).type === ("null" as unknown)) {
+                return true;
+            }
+            // TODO(thomas): Handle type array that is not a SchemaObject and return to the promised land of assertNever
             // return assertNever(resolvedSchema);
             context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
             return false;
@@ -247,7 +294,7 @@ export function convertReferenceObject(
               new Set()
           )
         : SchemaWithExample.reference(
-              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
+              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds, context)
           );
 
     // if referenced schema would be found nullable in convertSchemaObject(),
@@ -324,9 +371,7 @@ export function convertSchemaObject(
     if (typeof schema === "string") {
         schema = { type: schema } as OpenAPIV3.SchemaObject;
     }
-    const nameOverride =
-        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
+    const nameOverride = getDisambiguatedNameOverride(schema, context, breadcrumbs.join("."));
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -424,8 +469,32 @@ export function convertSchemaObject(
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
-        if ("const" in schema) {
-            schema.enum = [schema.const];
+        const hasConst = "const" in schema;
+        // When coerceConstsTo is "enums", block the coerceEnumsToLiterals path
+        // so const-derived enums stay as enums. "enums-coerceable-to-literals" allows it.
+        const blockConstCoercionToLiteral = hasConst && context.options.coerceConstsTo === "enums";
+        if (hasConst) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- `const` is an OpenAPI 3.1 attribute not in the V3 types
+            const constValue = (schema as Record<string, unknown>).const;
+            if (context.options.coerceConstsTo === "literals") {
+                // Const directly becomes a literal — skip enum path entirely
+                if (typeof constValue === "string" || typeof constValue === "boolean") {
+                    return convertLiteral({
+                        nameOverride,
+                        generatedName,
+                        title,
+                        wrapAsOptional,
+                        wrapAsNullable,
+                        value: constValue,
+                        description,
+                        availability,
+                        namespace,
+                        groupName
+                    });
+                }
+            }
+            // "enums" and "enums-coerceable-to-literals": coerce to enum
+            schema.enum = [constValue];
         }
 
         // enums
@@ -464,6 +533,7 @@ export function convertSchemaObject(
 
             if (
                 context.options.coerceEnumsToLiterals &&
+                !blockConstCoercionToLiteral &&
                 schema.enum.length === 1 &&
                 schema.enum[0] != null &&
                 fernEnum == null
@@ -634,12 +704,38 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "string") {
+            // If the schema has contentMediaType: application/octet-stream (used by FastAPI >= 0.129.1
+            // for UploadFile fields), normalize it to format: binary for file upload detection.
+            if (
+                schema.format == null &&
+                (schema as Record<string, unknown>).contentMediaType === "application/octet-stream"
+            ) {
+                schema = { ...schema, format: "binary" };
+            }
+
             if (schema.format === "date-time") {
                 return wrapPrimitive({
                     nameOverride,
                     generatedName,
                     title,
                     primitive: PrimitiveSchemaValueWithExample.datetime({
+                        example: getExamplesString({ schema, logger: context.logger, fallback })
+                    }),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+
+            if (schema.format === "date-time-rfc-2822") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    primitive: PrimitiveSchemaValueWithExample.datetimeRfc2822({
                         example: getExamplesString({ schema, logger: context.logger, fallback })
                     }),
                     wrapAsOptional,
@@ -708,6 +804,25 @@ export function convertSchemaObject(
                 return result;
             }
 
+            if (schema.format === "byte" && context.options.respectByteFormat) {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    // TODO: We should actually expose a bytes primitive type in the IR.
+                    // For now, we're using base64 to represent bytes specifically in gRPC SDKs.
+                    primitive: PrimitiveSchemaValueWithExample.base64({
+                        example: getExamplesString({ schema, logger: context.logger, fallback })
+                    }),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+
             const maybeConstValue = getProperty<string>(schema, "const");
             if (maybeConstValue != null) {
                 return wrapLiteral({
@@ -761,7 +876,9 @@ export function convertSchemaObject(
                 namespace,
                 groupName,
                 example: getExampleAsArray({ schema, logger: context.logger, fallback }),
-                source
+                source,
+                minItems: schema.minItems,
+                maxItems: schema.maxItems
             });
         }
 
@@ -787,7 +904,9 @@ export function convertSchemaObject(
                 groupName,
                 encoding,
                 example: schema.example,
-                source
+                source,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         }
 
@@ -1233,8 +1352,50 @@ export function convertSchemaObject(
                 additionalProperties: schema.additionalProperties,
                 availability,
                 encoding,
-                source
+                source,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
+        }
+
+        // handle null type (OpenAPI 3.1)
+        // `type: "null"` means the value is always null.
+        // Represent as nullable wrapping an unknown inner type.
+        if ((schema.type as string) === "null") {
+            let result: SchemaWithExample = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description: undefined,
+                    availability: undefined,
+                    namespace,
+                    groupName,
+                    example: undefined
+                })
+            });
+            if (wrapAsOptional) {
+                result = SchemaWithExample.optional({
+                    availability,
+                    namespace,
+                    groupName,
+                    description,
+                    generatedName,
+                    inline: undefined,
+                    nameOverride,
+                    title,
+                    value: result
+                });
+            }
+            return result;
         }
 
         // handle vanilla object
@@ -1277,7 +1438,9 @@ export function convertSchemaObject(
                 namespace,
                 groupName,
                 encoding,
-                example: schema.example
+                example: schema.example,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         }
 
@@ -1372,7 +1535,8 @@ export function convertToReferencedSchema(
     schema: OpenAPIV3.ReferenceObject,
     breadcrumbs: string[],
     source: Source,
-    preserveSchemaIds: boolean
+    preserveSchemaIds: boolean,
+    context: SchemaParserContext
 ): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
@@ -1393,7 +1557,7 @@ export function convertToReferencedSchema(
         schema: schemaId,
         description: description ?? undefined,
         availability,
-        namespace: undefined,
+        namespace: context.getNamespace(schemaId),
         groupName: undefined,
         source
     });

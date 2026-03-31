@@ -1,0 +1,96 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/protocol-no-collision",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolNoCollision"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_protocol_no_collision()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_protocol_no_collision()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/protocol-collision",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolCollision"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_protocol_collision()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_protocol_collision()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/data-context",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamDataContext"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_data_context()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_data_context()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/no-context",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamNoContext"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_no_context()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_no_context()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/protocol-with-flat-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamProtocolWithFlatSchema"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_protocol_with_flat_schema()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_protocol_with_flat_schema()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/data-context-with-envelope-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamDataContextWithEnvelopeSchema"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_data_context_with_envelope_schema()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_data_context_with_envelope_schema()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/oas-spec-native",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamOasSpecNative"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_oas_spec_native()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_oas_spec_native()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

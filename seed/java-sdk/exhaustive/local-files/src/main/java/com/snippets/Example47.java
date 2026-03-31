@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 
 public class Example47 {
     public static void main(String[] args) {
@@ -11,8 +11,11 @@ public class Example47 {
             .url("https://api.fern.com")
             .build();
 
-        client.noAuth().postWithNoAuth(new 
-        HashMap<String, Object>() {{put("key", "value");
-        }});
+        client.endpoints().put().add(
+            PutRequest
+                .builder()
+                .id("id")
+                .build()
+        );
     }
 }

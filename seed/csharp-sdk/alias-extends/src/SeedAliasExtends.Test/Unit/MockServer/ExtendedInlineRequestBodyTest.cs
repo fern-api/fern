@@ -4,6 +4,7 @@ using SeedAliasExtends;
 namespace SeedAliasExtends.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ExtendedInlineRequestBodyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -11,8 +12,8 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "parent": "parent",
-              "child": "child"
+              "child": "child",
+              "parent": "parent"
             }
             """;
 

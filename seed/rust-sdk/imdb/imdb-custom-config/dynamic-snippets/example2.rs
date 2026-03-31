@@ -1,5 +1,4 @@
 use custom_imdb_sdk::prelude::*;
-use custom_imdb_sdk::MovieId;
 
 #[tokio::main]
 async fn main() {

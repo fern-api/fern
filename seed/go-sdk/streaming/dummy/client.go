@@ -4,11 +4,12 @@ package dummy
 
 import (
 	context "context"
+	http "net/http"
+
 	stream "github.com/fern-api/stream-go/v2"
 	core "github.com/fern-api/stream-go/v2/core"
 	internal "github.com/fern-api/stream-go/v2/internal"
 	option "github.com/fern-api/stream-go/v2/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -60,6 +61,7 @@ func (c *Client) GenerateStream(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
 			Request:         request,
 			ErrorDecoder:    internal.NewErrorDecoder(stream.ErrorCodes),
 		},

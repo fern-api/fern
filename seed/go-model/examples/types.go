@@ -5,10 +5,11 @@ package examples
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	commons "github.com/examples/fern/commons"
 	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type Type struct {
@@ -273,7 +274,7 @@ func (m *Movie) GetMetadata() map[string]any {
 
 func (m *Movie) GetRevenue() int64 {
 	if m == nil {
-		return 0
+		return int64(0)
 	}
 	return m.Revenue
 }
@@ -602,7 +603,7 @@ func (e *ExtendedMovie) GetMetadata() map[string]any {
 
 func (e *ExtendedMovie) GetRevenue() int64 {
 	if e == nil {
-		return 0
+		return int64(0)
 	}
 	return e.Revenue
 }

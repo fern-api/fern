@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
@@ -8,14 +9,15 @@ import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import { readFile, rm } from "fs/promises";
-import http from "http";
+import http, { type IncomingMessage } from "http";
 import path from "path";
+import { type Duplex } from "stream";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
-
-import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
-import { getPreviewDocsDefinition } from "./previewDocs";
+import { type BunServer, createBunServer } from "./createBunServer.js";
+import { DebugLogger } from "./DebugLogger.js";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -51,10 +53,12 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         pageActions: undefined,
         theme: undefined,
         header: undefined,
-        footer: undefined
+        footer: undefined,
+        editThisPageLaunch: undefined
     },
     jsFiles: undefined,
-    id: undefined
+    id: undefined,
+    apiNameToId: {}
 };
 
 /**
@@ -447,13 +451,25 @@ export async function runAppPreviewServer({
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
+    let bunServer: BunServer | undefined;
+
     // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
     const httpServer = http.createServer(app);
+
+    // Use noServer mode so we can handle upgrades explicitly.
+    // This ensures compatibility with both Node.js and Bun runtimes.
     const wss = new WebSocketServer({
-        server: httpServer,
+        noServer: true,
         clientTracking: true,
         perMessageDeflate: false
+    });
+
+    // Primary upgrade handler — works in Node.js where http.Server emits 'upgrade'.
+    httpServer.on("upgrade", (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            wss.emit("connection", ws, request);
+        });
     });
 
     const connections = new Map<
@@ -466,7 +482,7 @@ export async function runAppPreviewServer({
         }
     >();
 
-    function sendData(data: unknown) {
+    let sendData: (data: unknown) => void = (data: unknown) => {
         const message = JSON.stringify(data);
         const deadConnections: WebSocket[] = [];
 
@@ -490,7 +506,7 @@ export async function runAppPreviewServer({
                 connections.delete(conn);
             }
         });
-    }
+    };
 
     wss.on("connection", function connection(ws, req) {
         const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`;
@@ -598,9 +614,7 @@ export async function runAppPreviewServer({
                 .catch((err) => {
                     const validationTime = Date.now() - validationStartTime;
                     void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(
-                        `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
-                    );
+                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
                     // Still log validation errors to help developers
                     if (err instanceof Error && err.stack) {
                         context.logger.debug(`Validation error stack: ${err.stack}`);
@@ -639,7 +653,7 @@ export async function runAppPreviewServer({
             // Log CLI reload finish even on error
             void debugLogger.logCliReloadFinish(totalTime, {
                 error: true,
-                errorMessage: err instanceof Error ? err.message : String(err)
+                errorMessage: extractErrorMessage(err)
             });
             void debugLogger.logCliMemory();
 
@@ -677,21 +691,21 @@ export async function runAppPreviewServer({
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
+    function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
+        // Fall back to empty definition if the initial load failed
+        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        return {
+            baseUrl: { domain: instance.host, basePath: instance.pathname },
+            definition,
+            lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+            orgId: FernNavigation.OrgId(initialProject.config.organization)
+        };
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
-            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-            const response: DocsV2Read.LoadDocsForUrlResponse = {
-                baseUrl: {
-                    domain: instance.host,
-                    basePath: instance.pathname
-                },
-                definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-                orgId: FernNavigation.OrgId(initialProject.config.organization)
-            };
-            res.send(response);
+            res.send(buildDocsLoadResponse());
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -703,13 +717,23 @@ export async function runAppPreviewServer({
         return res.sendFile(`/${req.params[0]}`);
     });
 
-    // Start backend server first and wait for it to be ready
-    await new Promise<void>((resolve) => {
-        httpServer.listen(backendPort, () => {
-            context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
-            resolve();
+    // Start backend server first and wait for it to be ready.
+    //
+    // In Bun, http.createServer does not emit the 'upgrade' event that
+    // the ws package relies on (re: oven-sh/bun#5951).
+    const bunHandle = createBunServer({ port: backendPort, debugLogger, getDocsLoadResponse: buildDocsLoadResponse });
+    if (bunHandle != null) {
+        sendData = bunHandle.sendData;
+        bunServer = bunHandle;
+        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+    } else {
+        await new Promise<void>((resolve) => {
+            httpServer.listen(backendPort, () => {
+                context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+                resolve();
+            });
         });
-    });
+    }
 
     // Now start Next.js after backend is ready
     const env = {
@@ -925,7 +949,11 @@ export async function runAppPreviewServer({
             }
         }
         connections.clear();
-        httpServer.close();
+        if (bunServer != null) {
+            bunServer.stop();
+        } else {
+            httpServer.close();
+        }
     };
 
     // handle termination signals

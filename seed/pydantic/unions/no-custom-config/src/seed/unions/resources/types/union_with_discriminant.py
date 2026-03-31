@@ -7,18 +7,23 @@ import typing
 import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .bar import Bar
 from .foo import Foo
 
 
 class UnionWithDiscriminant_Foo(UniversalBaseModel):
     foo: Foo
-    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+    type: typing_extensions.Annotated[
+        typing.Literal["foo"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+    ] = "foo"
 
 
 class UnionWithDiscriminant_Bar(UniversalBaseModel):
     bar: Bar
-    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+    type: typing_extensions.Annotated[
+        typing.Literal["bar"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+    ] = "bar"
 
 
 UnionWithDiscriminant = typing_extensions.Annotated[

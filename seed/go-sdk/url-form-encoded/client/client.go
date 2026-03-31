@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	fern "github.com/url-form-encoded/fern"
 	core "github.com/url-form-encoded/fern/core"
 	internal "github.com/url-form-encoded/fern/internal"
@@ -39,6 +40,22 @@ func (c *Client) SubmitFormData(
 	opts ...option.RequestOption,
 ) (*fern.PostSubmitResponse, error) {
 	response, err := c.WithRawResponse.SubmitFormData(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetToken(
+	ctx context.Context,
+	request *fern.TokenRequest,
+	opts ...option.RequestOption,
+) (*fern.TokenResponse, error) {
+	response, err := c.WithRawResponse.GetToken(
 		ctx,
 		request,
 		opts...,

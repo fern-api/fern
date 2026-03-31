@@ -11,6 +11,9 @@ node_modules/
 # nx
 .nx
 
+# tsup
+.tsup
+
 # production
 packages/**/build
 packages/**/lib
@@ -80,6 +83,9 @@ seed/python-sdk/**/output.prof
 # Claude
 **/settings.local.json
 
+# Superpowers
+docs/superpowers/
+
 # Preview
 **/.preview/
 
@@ -88,6 +94,9 @@ seed/python-sdk/**/output.prof
 .pnpm-cache
 
 **/vitest.config.ts.*.mjs
+
+# coverage
+**/coverage/
 
 .local
 
@@ -106,3 +115,6 @@ seed/**/*.egg-info/
 # Seed remote-local test outputs, except for seed.yml files
 seed-remote-local/*
 !seed-remote-local/**/seed.yml
+
+# Test logs from test-remote-local.sh
+test-remote-local-logs-*/

@@ -1,4 +1,4 @@
-import { SchemaOptions } from "../core-utilities/Zurg";
+import { SchemaOptions } from "../core-utilities/Zurg.js";
 
 export function getSchemaOptions({
     allowExtraFields,

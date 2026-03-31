@@ -1,4 +1,4 @@
-import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "..";
+import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "../index.js";
 import { isEqual } from "lodash-es";
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {
@@ -31,8 +31,8 @@ function isPrimitiveSchemaValueEqual(a: PrimitiveSchemaValue, b: PrimitiveSchema
 }
 
 function areEnumValuesEqual(a: EnumValue[], b: EnumValue[]): boolean {
-    const aSet = new Set(...a.map((enumValue) => enumValue.value));
-    const bSet = new Set(...b.map((enumValue) => enumValue.value));
+    const aSet = new Set(a.map((enumValue) => enumValue.value));
+    const bSet = new Set(b.map((enumValue) => enumValue.value));
     return isEqual(aSet, bSet);
 }
 

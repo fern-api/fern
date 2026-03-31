@@ -9,13 +9,11 @@ RUN apk --no-cache add \
     nodejs \
     npm
     
-RUN gem install rubocop rubocop-minitest
+RUN gem install 'rubocop:~> 1.21' rubocop-minitest
 
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
-
-COPY generators/ruby-v2/sdk/features.yml /assets/features.yml
-COPY generators/ruby-v2/sdk/dist /dist
+COPY generators/ruby-v2/model/dist /dist
 
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

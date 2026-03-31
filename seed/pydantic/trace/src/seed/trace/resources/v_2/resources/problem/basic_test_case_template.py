@@ -3,17 +3,23 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.serialization import FieldMetadata
 from .parameter_id import ParameterId
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_template_id import TestCaseTemplateId
 
 
 class BasicTestCaseTemplate(UniversalBaseModel):
-    template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
+    template_id: typing_extensions.Annotated[
+        TestCaseTemplateId, FieldMetadata(alias="templateId"), pydantic.Field(alias="templateId")
+    ]
     name: str
     description: TestCaseImplementationDescription
-    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
+    expected_value_parameter_id: typing_extensions.Annotated[
+        ParameterId, FieldMetadata(alias="expectedValueParameterId"), pydantic.Field(alias="expectedValueParameterId")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

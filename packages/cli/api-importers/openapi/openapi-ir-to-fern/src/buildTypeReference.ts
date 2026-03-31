@@ -22,20 +22,20 @@ import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
-} from "./buildTypeDeclaration";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+} from "./buildTypeDeclaration.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
+import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
 import {
     getDefaultFromTypeReference,
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     getValidationFromTypeReference
-} from "./utils/getTypeFromTypeReference";
-import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+} from "./utils/getTypeFromTypeReference.js";
+import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -51,7 +51,8 @@ export function buildTypeReference({
     declarationFile = fileContainingReference,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: Schema;
     fileContainingReference: RelativeFilePath;
@@ -59,6 +60,7 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     if (context.shouldMarkSchemaAsReferenced()) {
         context.markSchemaAsReferenced(schema, namespace);
@@ -74,7 +76,8 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         case "map":
             return buildMapTypeReference({
@@ -83,14 +86,16 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         case "reference":
             return buildReferenceTypeReference({
                 schema,
                 fileContainingReference,
                 context,
-                namespace
+                namespace,
+                variant
             });
         case "unknown":
             return buildUnknownTypeReference();
@@ -101,7 +106,8 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         case "nullable":
             return buildNullableTypeReference({
@@ -110,7 +116,8 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         case "enum":
             return buildEnumTypeReference({
@@ -130,7 +137,8 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         case "oneOf":
             return buildOneOfTypeReference({
@@ -139,7 +147,8 @@ export function buildTypeReference({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
         default:
             assertNever(schema);
@@ -188,6 +197,7 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         double: () => "double",
         string: () => "string",
         datetime: () => "datetime",
+        datetimeRfc2822: () => "datetime-rfc-2822",
         date: () => "date",
         base64: () => "base64",
         boolean: () => "boolean",
@@ -447,25 +457,37 @@ export function buildReferenceTypeReference({
     schema,
     fileContainingReference,
     context,
-    namespace
+    variant
 }: {
     schema: ReferencedSchema;
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
-    const resolvedSchema = context.getSchema(schema.schema, namespace);
+    // Use schema.namespace (the reference's target namespace) to look up the schema,
+    // not the current context's namespace
+    const resolvedSchema = context.getSchema(schema.schema, schema.namespace);
     if (resolvedSchema == null) {
         return "unknown";
     }
 
-    const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const originalSchemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const schemaName =
+        context.options.respectReadonlySchemas && variant != null
+            ? context.getSchemaFinalName(originalSchemaName, variant)
+            : originalSchemaName;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);
+    // Use the reference's namespace (schema.namespace) to determine the declaration file,
+    // as this is the authoritative source for where the schema lives
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        declarationFile: convertSdkGroupNameToFile(groupName),
+        declarationFile: getDeclarationFileFromGroupName({
+            namespace: schema.namespace,
+            groupName
+        }),
         type: schemaName
     });
 
@@ -492,7 +514,8 @@ export function buildArrayTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: ArraySchema;
     fileContainingReference: RelativeFilePath;
@@ -500,6 +523,7 @@ export function buildArrayTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     const item = buildTypeReference({
         schema: schema.value,
@@ -507,7 +531,8 @@ export function buildArrayTypeReference({
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const type = `list<${getTypeFromTypeReference(item)}>`;
     if (schema.description == null && schema.title == null) {
@@ -526,7 +551,8 @@ export function buildMapTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: MapSchema;
     fileContainingReference: RelativeFilePath;
@@ -534,6 +560,7 @@ export function buildMapTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
 
@@ -543,7 +570,8 @@ export function buildMapTypeReference({
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
@@ -571,7 +599,8 @@ export function buildNullableTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: NullableSchema;
     fileContainingReference: RelativeFilePath;
@@ -579,6 +608,7 @@ export function buildNullableTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     if (!context.options.respectNullableSchemas) {
         return buildOptionalTypeReference({
@@ -587,7 +617,8 @@ export function buildNullableTypeReference({
             context,
             declarationFile,
             namespace,
-            declarationDepth
+            declarationDepth,
+            variant
         });
     }
 
@@ -597,7 +628,8 @@ export function buildNullableTypeReference({
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
@@ -645,7 +677,8 @@ export function buildOptionalTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: OptionalSchema;
     fileContainingReference: RelativeFilePath;
@@ -653,6 +686,7 @@ export function buildOptionalTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     const itemTypeReference = buildTypeReference({
         schema: schema.value,
@@ -660,7 +694,8 @@ export function buildOptionalTypeReference({
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
@@ -771,7 +806,8 @@ export function buildObjectTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: ObjectSchema;
     fileContainingReference: RelativeFilePath;
@@ -779,13 +815,15 @@ export function buildObjectTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     const objectTypeDeclaration = buildObjectTypeDeclaration({
         schema,
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
@@ -809,7 +847,8 @@ export function buildOneOfTypeReference({
     declarationFile,
     context,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: OneOfSchema;
     fileContainingReference: RelativeFilePath;
@@ -817,13 +856,15 @@ export function buildOneOfTypeReference({
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): RawSchemas.TypeReferenceSchema {
     const unionTypeDeclaration = buildOneOfTypeDeclaration({
         schema,
         declarationFile,
         context,
         namespace,
-        declarationDepth
+        declarationDepth,
+        variant
     });
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {

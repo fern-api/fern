@@ -50,6 +50,7 @@ class GetOrganizationUserRequest extends JsonSerializableType
     public function setTenantId(string $value): self
     {
         $this->tenantId = $value;
+        $this->_setField('tenantId');
         return $this;
     }
 
@@ -67,6 +68,7 @@ class GetOrganizationUserRequest extends JsonSerializableType
     public function setOrganizationId(string $value): self
     {
         $this->organizationId = $value;
+        $this->_setField('organizationId');
         return $this;
     }
 
@@ -84,6 +86,7 @@ class GetOrganizationUserRequest extends JsonSerializableType
     public function setUserId(string $value): self
     {
         $this->userId = $value;
+        $this->_setField('userId');
         return $this;
     }
 }

@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/oauth-client-credentials/fern"
 	core "github.com/oauth-client-credentials/fern/core"
 	internal "github.com/oauth-client-credentials/fern/internal"
 	option "github.com/oauth-client-credentials/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -46,6 +47,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -87,6 +89,7 @@ func (r *RawClient) RefreshToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

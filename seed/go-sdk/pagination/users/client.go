@@ -5,13 +5,14 @@ package users
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+	strconv "strconv"
+
 	uuid "github.com/google/uuid"
 	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
-	http "net/http"
-	strconv "strconv"
 )
 
 type Client struct {
@@ -158,6 +159,25 @@ func (c *Client) ListWithBodyCursorPagination(
 	opts ...option.RequestOption,
 ) (*fern.ListUsersPaginationResponse, error) {
 	response, err := c.WithRawResponse.ListWithBodyCursorPagination(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Pagination endpoint with a top-level cursor field in the request body.
+// This tests that the mock server correctly ignores cursor mismatches
+// when getNextPage() is called with a different cursor value.
+func (c *Client) ListWithTopLevelBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersTopLevelBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersTopLevelCursorPaginationResponse, error) {
+	response, err := c.WithRawResponse.ListWithTopLevelBodyCursorPagination(
 		ctx,
 		request,
 		opts...,

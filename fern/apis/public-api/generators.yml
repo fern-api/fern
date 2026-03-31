@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-
 groups:
   node-sdk:
     audiences:
@@ -16,6 +15,7 @@ groups:
           license: MIT
         config:
           namespaceExport: Fern
+        smart-casing: false
   python-sdk:
     audiences:
       - external
@@ -31,6 +31,7 @@ groups:
           license: MIT
         config:
           client_class_name: Fern
+        smart-casing: false
   java-sdk:
     audiences:
       - external
@@ -52,3 +53,4 @@ groups:
           mode: pull-request
         config:
           client_class_name: Fern
+        smart-casing: false

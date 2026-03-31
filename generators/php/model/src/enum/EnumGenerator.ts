@@ -1,19 +1,18 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: php.ClassReference;
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly enumDeclaration: EnumTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly enumDeclaration: FernIr.EnumTypeDeclaration
     ) {
         super(context);
         this.classReference = this.context.phpTypeMapper.convertToClassReference(this.typeDeclaration.name);

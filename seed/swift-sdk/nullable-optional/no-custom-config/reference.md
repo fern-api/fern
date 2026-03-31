@@ -250,7 +250,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">listUsers</a>(limit: Int?, offset: Int?, includeDeleted: Bool?, sortBy: Nullable<String>?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">listUsers</a>(limit: Int?, offset: Int?, includeDeleted: Bool?, sortBy: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -350,7 +350,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">searchUsers</a>(query: String, department: Nullable<String>, role: String?, isActive: Nullable<Bool>?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">searchUsers</a>(query: String, department: Nullable&lt;String&gt;, role: String?, isActive: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -492,28 +492,28 @@ private func main() async throws {
         optionalStatus: .active,
         optionalNullableStatus: .value(.active),
         nullableNotification: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         optionalNotification: NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         ),
         optionalNullableNotification: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         nullableSearchResult: .value(SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
@@ -532,7 +532,7 @@ private func main() async throws {
             )
         )),
         optionalSearchResult: SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
@@ -579,14 +579,14 @@ private func main() async throws {
         ]),
         nullableListOfUnions: .value([
             NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
             ),
             NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
@@ -744,14 +744,14 @@ private func main() async throws {
             nullableRole: .value(.admin),
             nullableStatus: .value(.active),
             nullableNotification: .value(NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
             )),
             nullableSearchResult: .value(SearchResult.user(
-                .init(
+                UserResponse(
                     id: "id",
                     username: "username",
                     email: .value("email"),
@@ -861,14 +861,14 @@ private func main() async throws {
         nullableEnum: .value(.admin),
         optionalEnum: .active,
         nullableUnion: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         optionalUnion: SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
@@ -946,7 +946,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">filterByRole</a>(role: Nullable<UserRole>, status: UserStatus?, secondaryRole: Nullable<UserRole>?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">filterByRole</a>(role: Nullable&lt;UserRole&gt;, status: UserStatus?, secondaryRole: Nullable&lt;UserRole&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1037,7 +1037,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getNotificationSettings</a>(userId: String, requestOptions: RequestOptions?) -> Nullable<NotificationMethod></code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getNotificationSettings</a>(userId: String, requestOptions: RequestOptions?) -> Nullable&lt;NotificationMethod&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1203,7 +1203,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getSearchResults</a>(request: Requests.SearchRequest, requestOptions: RequestOptions?) -> Nullable<[SearchResult]></code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getSearchResults</a>(request: Requests.SearchRequest, requestOptions: RequestOptions?) -> Nullable&lt;[SearchResult]&gt;</code></summary>
 <dl>
 <dd>
 

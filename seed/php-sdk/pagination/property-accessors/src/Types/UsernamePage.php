@@ -47,6 +47,7 @@ class UsernamePage extends JsonSerializableType
     public function setAfter(?string $value = null): self
     {
         $this->after = $value;
+        $this->_setField('after');
         return $this;
     }
 
@@ -64,6 +65,7 @@ class UsernamePage extends JsonSerializableType
     public function setData(array $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 

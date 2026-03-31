@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,17 +38,13 @@ Instantiate and use the client with the following:
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_usernames_custom(
+
+client.users.list_usernames_custom(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ## Async Client
@@ -46,21 +57,15 @@ import asyncio
 from seed import AsyncSeedPagination
 
 client = AsyncSeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    response = await client.users.list_usernames_custom(
+    await client.users.list_usernames_custom(
         starting_after="starting_after",
     )
-    async for item in response:
-        yield item
-
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
 
 
 asyncio.run(main())
@@ -75,7 +80,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_usernames_custom()
+    client.users.list_usernames_custom(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -89,22 +94,18 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_usernames_custom(
+
+client.users.list_usernames_custom(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ```python
 # You can also iterate through pages and access the typed response per page
-pager = client.users.list_usernames_custom()
+pager = client.users.list_usernames_custom(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -124,7 +125,7 @@ from seed import SeedPagination
 client = SeedPagination(
     ...,
 )
-pager = client.users.list_usernames_custom()
+pager = client.users.list_usernames_custom(...)
 print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
@@ -149,7 +150,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_usernames_custom(request_options={
+client.users.list_usernames_custom(..., request_options={
     "max_retries": 1
 })
 ```
@@ -159,17 +160,12 @@ client.users.list_usernames_custom(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPagination
 
-client = SeedPagination(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.users.list_usernames_custom(request_options={
+client.users.list_usernames_custom(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

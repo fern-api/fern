@@ -1,14 +1,30 @@
-using System.Net.WebSockets;
-using System.Text.Json;
+using global::System.ComponentModel;
+using global::System.Text;
+using global::System.Text.Json;
 using SeedWebsocket.Core;
-using SeedWebsocket.Core.Async;
-using SeedWebsocket.Core.Async.Events;
-using SeedWebsocket.Core.Async.Models;
+using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
-public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
+public partial class RealtimeApi
+    : IRealtimeApi,
+        IAsyncDisposable,
+        IDisposable,
+        INotifyPropertyChanged
 {
+    private readonly RealtimeApi.Options _options;
+
+    private readonly WebSocketClient _client;
+
+    /// <summary>
+    /// Event that is raised when a property value changes.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged
+    {
+        add => _client.PropertyChanged += value;
+        remove => _client.PropertyChanged -= value;
+    }
+
     /// <summary>
     /// Event handler for ReceiveEvent.
     /// Use ReceiveEvent.Subscribe(...) to receive messages.
@@ -34,77 +50,99 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
+    /// Event handler for TranscriptEvent.
+    /// Use TranscriptEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<TranscriptEvent> TranscriptEvent = new();
+
+    /// <summary>
+    /// Event handler for FlushedEvent.
+    /// Use FlushedEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<FlushedEvent> FlushedEvent = new();
+
+    /// <summary>
+    /// Event handler for ErrorEvent.
+    /// Use ErrorEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<ErrorEvent> ErrorEvent = new();
+
+    /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public readonly Event<JsonElement> UnknownMessage = new();
+
+    /// <summary>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
-        : base(options) { }
-
-    public string SessionId
     {
-        get => ApiOptions.SessionId;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.SessionId),
-                ApiOptions.SessionId = value
-            );
-    }
-
-    public string? Model
-    {
-        get => ApiOptions.Model;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.Model),
-                ApiOptions.Model = value
-            );
-    }
-
-    public int? Temperature
-    {
-        get => ApiOptions.Temperature;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.Temperature),
-                ApiOptions.Temperature = value
-            );
-    }
-
-    public string? LanguageCode
-    {
-        get => ApiOptions.LanguageCode;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.LanguageCode),
-                ApiOptions.LanguageCode = value
-            );
+        _options = options;
+        var uri = new UriBuilder(_options.BaseUrl)
+        {
+            Query = new SeedWebsocket.Core.QueryStringBuilder.Builder(capacity: 3)
+                .Add("model", _options.Model)
+                .Add("temperature", _options.Temperature)
+                .Add("language-code", _options.LanguageCode)
+                .Build(),
+        };
+        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
+        _client = new WebSocketClient(uri.Uri, OnTextMessage);
+        _client.HttpInvoker = _options.HttpInvoker;
+        _client.IsReconnectionEnabled = _options.IsReconnectionEnabled;
+        _client.ReconnectTimeout = _options.ReconnectTimeout;
+        _client.ErrorReconnectTimeout = _options.ErrorReconnectTimeout;
+        _client.LostReconnectTimeout = _options.LostReconnectTimeout;
+        _client.Backoff = _options.ReconnectBackoff;
     }
 
     /// <summary>
-    /// Creates the Uri for the websocket connection from the BaseUrl and parameters
+    /// Gets the current connection status of the WebSocket.
     /// </summary>
-    protected override Uri CreateUri()
-    {
-        var uri = new UriBuilder(BaseUrl)
-        {
-            Query = new Query()
-            {
-                { "model", Model },
-                { "temperature", Temperature },
-                { "language-code", LanguageCode },
-            },
-        };
-        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(SessionId)}";
-        return uri.Uri;
-    }
+    public ConnectionStatus Status => _client.Status;
 
-    protected override void SetConnectionOptions(ClientWebSocketOptions options) { }
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is established.
+    /// </summary>
+    public Event<Connected> Connected => _client.Connected;
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is closed.
+    /// </summary>
+    public Event<Closed> Closed => _client.Closed;
+
+    /// <summary>
+    /// Event that is raised when an exception occurs during WebSocket operations.
+    /// </summary>
+    public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Event raised when the WebSocket connection is re-established after a disconnect.
+    /// </summary>
+    public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
+
+    /// <summary>
+    /// Disposes of event subscriptions
+    /// </summary>
+    private void DisposeEvents()
+    {
+        ReceiveEvent.Dispose();
+        ReceiveSnakeCase.Dispose();
+        ReceiveEvent2.Dispose();
+        ReceiveEvent3.Dispose();
+        TranscriptEvent.Dispose();
+        FlushedEvent.Dispose();
+        ErrorEvent.Dispose();
+        UnknownMessage.Dispose();
+    }
 
     /// <summary>
     /// Dispatches incoming WebSocket messages
     /// </summary>
-    protected async override Task OnTextMessage(Stream stream)
+    private async Task OnTextMessage(Stream stream)
     {
-        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
+        using var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
         {
             await ExceptionOccurred
@@ -146,55 +184,137 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
             }
         }
 
-        await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
+        {
+            if (JsonUtils.TryDeserialize(json, out TranscriptEvent? message))
+            {
+                await TranscriptEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out FlushedEvent? message))
+            {
+                await FlushedEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out ErrorEvent? message))
+            {
+                await ErrorEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        await UnknownMessage.RaiseEvent(json.RootElement.Clone()).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Serializes and sends a JSON message to the server
+    /// </summary>
+    private async Task SendJsonAsync(object message, CancellationToken cancellationToken = default)
+    {
+        await _client
+            .SendInstant(JsonUtils.Serialize(message), cancellationToken)
             .ConfigureAwait(false);
     }
 
     /// <summary>
-    /// Disposes of event subscriptions
+    /// Injects a fake text message for testing. Dispatches through the normal message handling pipeline.
     /// </summary>
-    protected override void DisposeEvents()
+    internal async Task InjectTestMessage(string rawJson)
     {
-        ReceiveEvent.Dispose();
-        ReceiveSnakeCase.Dispose();
-        ReceiveEvent2.Dispose();
-        ReceiveEvent3.Dispose();
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawJson));
+        await OnTextMessage(stream).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Asynchronously establishes a WebSocket connection.
+    /// </summary>
+    public async Task ConnectAsync(CancellationToken cancellationToken = default)
+    {
+#if NET6_0_OR_GREATER
+        _client.DeflateOptions = _options.EnableCompression
+            ? new System.Net.WebSockets.WebSocketDeflateOptions()
+            : null;
+#endif
+        await _client.ConnectAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Asynchronously closes the WebSocket connection.
+    /// </summary>
+    public async Task CloseAsync(CancellationToken cancellationToken = default)
+    {
+        await _client.CloseAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
+    /// </summary>
+    public async ValueTask DisposeAsync()
+    {
+        await _client.DisposeAsync();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
+    /// </summary>
+    public void Dispose()
+    {
+        _client.Dispose();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
     /// Sends a SendEvent message to the server
     /// </summary>
-    public async Task Send(SendEvent message)
+    public async Task Send(SendEvent message, CancellationToken cancellationToken = default)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendSnakeCase message to the server
     /// </summary>
-    public async Task Send(SendSnakeCase message)
+    public async Task Send(SendSnakeCase message, CancellationToken cancellationToken = default)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Sends a SendEvent2 message to the server
     /// </summary>
-    public async Task Send(SendEvent2 message)
+    public async Task Send(SendEvent2 message, CancellationToken cancellationToken = default)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Options for the API client
     /// </summary>
-    public class Options : AsyncApiOptions
+    public class Options
     {
         /// <summary>
         /// The Websocket URL for the API connection.
         /// </summary>
-        override public string BaseUrl { get; set; } = "";
+        public string BaseUrl { get; set; } = "";
+
+        /// <summary>
+        /// Enable per-message deflate compression (RFC 7692). When true, the client sets <c>ClientWebSocketOptions.DangerousDeflateOptions</c> before connecting. Compression is negotiated during the handshake; if the server does not support it, the connection proceeds uncompressed. Default: <c>false</c>.
+        /// <para><b>Security warning:</b> do not enable compression when transmitting data containing secrets — compressed encrypted payloads are vulnerable to CRIME/BREACH side-channel attacks. See <see href="https://learn.microsoft.com/dotnet/api/system.net.websockets.clientwebsocketoptions.dangerousdeflateoptions">ClientWebSocketOptions.DangerousDeflateOptions</see> for details.</para>
+        /// </summary>
+        public bool EnableCompression { get; set; } = false;
+
+        /// <summary>
+        /// Optional HTTP/2 handler for multiplexed WebSocket connections (.NET 7+).
+        /// </summary>
+        public System.Net.Http.HttpMessageInvoker? HttpInvoker { get; set; }
 
         public string? Model { get; set; }
 
@@ -203,5 +323,30 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         public string? LanguageCode { get; set; }
 
         public required string SessionId { get; set; }
+
+        /// <summary>
+        /// Enable or disable automatic reconnection. Default: false.
+        /// </summary>
+        public bool IsReconnectionEnabled { get; set; } = false;
+
+        /// <summary>
+        /// Time to wait before reconnecting if no message comes from the server. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the last reconnection attempt failed. Set null to disable. Default: 1 minute.
+        /// </summary>
+        public TimeSpan? ErrorReconnectTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Time to wait before reconnecting if the connection is lost with a transient error. Set null to disable (reconnect immediately). Default: null.
+        /// </summary>
+        public TimeSpan? LostReconnectTimeout { get; set; }
+
+        /// <summary>
+        /// Backoff strategy for reconnection delays. Controls interval growth, jitter, and max attempts. Set to null to use fixed-interval reconnection (legacy behavior). Default: exponential backoff, 1s→60s, unlimited attempts, with jitter.
+        /// </summary>
+        public ReconnectStrategy? ReconnectBackoff { get; set; } = new ReconnectStrategy();
     }
 }

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -451,7 +451,7 @@ public record BigUnion
     public SeedUnions.NormalSweet AsNormalSweet() =>
         IsNormalSweet
             ? (SeedUnions.NormalSweet)Value!
-            : throw new System.Exception("BigUnion.Type is not 'normalSweet'");
+            : throw new global::System.Exception("BigUnion.Type is not 'normalSweet'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ThankfulFactor"/> if <see cref="Type"/> is 'thankfulFactor', otherwise throws an exception.
@@ -460,7 +460,7 @@ public record BigUnion
     public SeedUnions.ThankfulFactor AsThankfulFactor() =>
         IsThankfulFactor
             ? (SeedUnions.ThankfulFactor)Value!
-            : throw new System.Exception("BigUnion.Type is not 'thankfulFactor'");
+            : throw new global::System.Exception("BigUnion.Type is not 'thankfulFactor'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.JumboEnd"/> if <see cref="Type"/> is 'jumboEnd', otherwise throws an exception.
@@ -469,7 +469,7 @@ public record BigUnion
     public SeedUnions.JumboEnd AsJumboEnd() =>
         IsJumboEnd
             ? (SeedUnions.JumboEnd)Value!
-            : throw new System.Exception("BigUnion.Type is not 'jumboEnd'");
+            : throw new global::System.Exception("BigUnion.Type is not 'jumboEnd'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HastyPain"/> if <see cref="Type"/> is 'hastyPain', otherwise throws an exception.
@@ -478,7 +478,7 @@ public record BigUnion
     public SeedUnions.HastyPain AsHastyPain() =>
         IsHastyPain
             ? (SeedUnions.HastyPain)Value!
-            : throw new System.Exception("BigUnion.Type is not 'hastyPain'");
+            : throw new global::System.Exception("BigUnion.Type is not 'hastyPain'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.MistySnow"/> if <see cref="Type"/> is 'mistySnow', otherwise throws an exception.
@@ -487,7 +487,7 @@ public record BigUnion
     public SeedUnions.MistySnow AsMistySnow() =>
         IsMistySnow
             ? (SeedUnions.MistySnow)Value!
-            : throw new System.Exception("BigUnion.Type is not 'mistySnow'");
+            : throw new global::System.Exception("BigUnion.Type is not 'mistySnow'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DistinctFailure"/> if <see cref="Type"/> is 'distinctFailure', otherwise throws an exception.
@@ -496,7 +496,7 @@ public record BigUnion
     public SeedUnions.DistinctFailure AsDistinctFailure() =>
         IsDistinctFailure
             ? (SeedUnions.DistinctFailure)Value!
-            : throw new System.Exception("BigUnion.Type is not 'distinctFailure'");
+            : throw new global::System.Exception("BigUnion.Type is not 'distinctFailure'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PracticalPrinciple"/> if <see cref="Type"/> is 'practicalPrinciple', otherwise throws an exception.
@@ -505,7 +505,7 @@ public record BigUnion
     public SeedUnions.PracticalPrinciple AsPracticalPrinciple() =>
         IsPracticalPrinciple
             ? (SeedUnions.PracticalPrinciple)Value!
-            : throw new System.Exception("BigUnion.Type is not 'practicalPrinciple'");
+            : throw new global::System.Exception("BigUnion.Type is not 'practicalPrinciple'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.LimpingStep"/> if <see cref="Type"/> is 'limpingStep', otherwise throws an exception.
@@ -514,7 +514,7 @@ public record BigUnion
     public SeedUnions.LimpingStep AsLimpingStep() =>
         IsLimpingStep
             ? (SeedUnions.LimpingStep)Value!
-            : throw new System.Exception("BigUnion.Type is not 'limpingStep'");
+            : throw new global::System.Exception("BigUnion.Type is not 'limpingStep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.VibrantExcitement"/> if <see cref="Type"/> is 'vibrantExcitement', otherwise throws an exception.
@@ -523,7 +523,7 @@ public record BigUnion
     public SeedUnions.VibrantExcitement AsVibrantExcitement() =>
         IsVibrantExcitement
             ? (SeedUnions.VibrantExcitement)Value!
-            : throw new System.Exception("BigUnion.Type is not 'vibrantExcitement'");
+            : throw new global::System.Exception("BigUnion.Type is not 'vibrantExcitement'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ActiveDiamond"/> if <see cref="Type"/> is 'activeDiamond', otherwise throws an exception.
@@ -532,7 +532,7 @@ public record BigUnion
     public SeedUnions.ActiveDiamond AsActiveDiamond() =>
         IsActiveDiamond
             ? (SeedUnions.ActiveDiamond)Value!
-            : throw new System.Exception("BigUnion.Type is not 'activeDiamond'");
+            : throw new global::System.Exception("BigUnion.Type is not 'activeDiamond'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PopularLimit"/> if <see cref="Type"/> is 'popularLimit', otherwise throws an exception.
@@ -541,7 +541,7 @@ public record BigUnion
     public SeedUnions.PopularLimit AsPopularLimit() =>
         IsPopularLimit
             ? (SeedUnions.PopularLimit)Value!
-            : throw new System.Exception("BigUnion.Type is not 'popularLimit'");
+            : throw new global::System.Exception("BigUnion.Type is not 'popularLimit'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FalseMirror"/> if <see cref="Type"/> is 'falseMirror', otherwise throws an exception.
@@ -550,7 +550,7 @@ public record BigUnion
     public SeedUnions.FalseMirror AsFalseMirror() =>
         IsFalseMirror
             ? (SeedUnions.FalseMirror)Value!
-            : throw new System.Exception("BigUnion.Type is not 'falseMirror'");
+            : throw new global::System.Exception("BigUnion.Type is not 'falseMirror'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PrimaryBlock"/> if <see cref="Type"/> is 'primaryBlock', otherwise throws an exception.
@@ -559,7 +559,7 @@ public record BigUnion
     public SeedUnions.PrimaryBlock AsPrimaryBlock() =>
         IsPrimaryBlock
             ? (SeedUnions.PrimaryBlock)Value!
-            : throw new System.Exception("BigUnion.Type is not 'primaryBlock'");
+            : throw new global::System.Exception("BigUnion.Type is not 'primaryBlock'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.RotatingRatio"/> if <see cref="Type"/> is 'rotatingRatio', otherwise throws an exception.
@@ -568,7 +568,7 @@ public record BigUnion
     public SeedUnions.RotatingRatio AsRotatingRatio() =>
         IsRotatingRatio
             ? (SeedUnions.RotatingRatio)Value!
-            : throw new System.Exception("BigUnion.Type is not 'rotatingRatio'");
+            : throw new global::System.Exception("BigUnion.Type is not 'rotatingRatio'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.ColorfulCover"/> if <see cref="Type"/> is 'colorfulCover', otherwise throws an exception.
@@ -577,7 +577,7 @@ public record BigUnion
     public SeedUnions.ColorfulCover AsColorfulCover() =>
         IsColorfulCover
             ? (SeedUnions.ColorfulCover)Value!
-            : throw new System.Exception("BigUnion.Type is not 'colorfulCover'");
+            : throw new global::System.Exception("BigUnion.Type is not 'colorfulCover'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DisloyalValue"/> if <see cref="Type"/> is 'disloyalValue', otherwise throws an exception.
@@ -586,7 +586,7 @@ public record BigUnion
     public SeedUnions.DisloyalValue AsDisloyalValue() =>
         IsDisloyalValue
             ? (SeedUnions.DisloyalValue)Value!
-            : throw new System.Exception("BigUnion.Type is not 'disloyalValue'");
+            : throw new global::System.Exception("BigUnion.Type is not 'disloyalValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GruesomeCoach"/> if <see cref="Type"/> is 'gruesomeCoach', otherwise throws an exception.
@@ -595,7 +595,7 @@ public record BigUnion
     public SeedUnions.GruesomeCoach AsGruesomeCoach() =>
         IsGruesomeCoach
             ? (SeedUnions.GruesomeCoach)Value!
-            : throw new System.Exception("BigUnion.Type is not 'gruesomeCoach'");
+            : throw new global::System.Exception("BigUnion.Type is not 'gruesomeCoach'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TotalWork"/> if <see cref="Type"/> is 'totalWork', otherwise throws an exception.
@@ -604,7 +604,7 @@ public record BigUnion
     public SeedUnions.TotalWork AsTotalWork() =>
         IsTotalWork
             ? (SeedUnions.TotalWork)Value!
-            : throw new System.Exception("BigUnion.Type is not 'totalWork'");
+            : throw new global::System.Exception("BigUnion.Type is not 'totalWork'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HarmoniousPlay"/> if <see cref="Type"/> is 'harmoniousPlay', otherwise throws an exception.
@@ -613,7 +613,7 @@ public record BigUnion
     public SeedUnions.HarmoniousPlay AsHarmoniousPlay() =>
         IsHarmoniousPlay
             ? (SeedUnions.HarmoniousPlay)Value!
-            : throw new System.Exception("BigUnion.Type is not 'harmoniousPlay'");
+            : throw new global::System.Exception("BigUnion.Type is not 'harmoniousPlay'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UniqueStress"/> if <see cref="Type"/> is 'uniqueStress', otherwise throws an exception.
@@ -622,7 +622,7 @@ public record BigUnion
     public SeedUnions.UniqueStress AsUniqueStress() =>
         IsUniqueStress
             ? (SeedUnions.UniqueStress)Value!
-            : throw new System.Exception("BigUnion.Type is not 'uniqueStress'");
+            : throw new global::System.Exception("BigUnion.Type is not 'uniqueStress'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.UnwillingSmoke"/> if <see cref="Type"/> is 'unwillingSmoke', otherwise throws an exception.
@@ -631,7 +631,7 @@ public record BigUnion
     public SeedUnions.UnwillingSmoke AsUnwillingSmoke() =>
         IsUnwillingSmoke
             ? (SeedUnions.UnwillingSmoke)Value!
-            : throw new System.Exception("BigUnion.Type is not 'unwillingSmoke'");
+            : throw new global::System.Exception("BigUnion.Type is not 'unwillingSmoke'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FrozenSleep"/> if <see cref="Type"/> is 'frozenSleep', otherwise throws an exception.
@@ -640,7 +640,7 @@ public record BigUnion
     public SeedUnions.FrozenSleep AsFrozenSleep() =>
         IsFrozenSleep
             ? (SeedUnions.FrozenSleep)Value!
-            : throw new System.Exception("BigUnion.Type is not 'frozenSleep'");
+            : throw new global::System.Exception("BigUnion.Type is not 'frozenSleep'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.DiligentDeal"/> if <see cref="Type"/> is 'diligentDeal', otherwise throws an exception.
@@ -649,7 +649,7 @@ public record BigUnion
     public SeedUnions.DiligentDeal AsDiligentDeal() =>
         IsDiligentDeal
             ? (SeedUnions.DiligentDeal)Value!
-            : throw new System.Exception("BigUnion.Type is not 'diligentDeal'");
+            : throw new global::System.Exception("BigUnion.Type is not 'diligentDeal'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.AttractiveScript"/> if <see cref="Type"/> is 'attractiveScript', otherwise throws an exception.
@@ -658,7 +658,7 @@ public record BigUnion
     public SeedUnions.AttractiveScript AsAttractiveScript() =>
         IsAttractiveScript
             ? (SeedUnions.AttractiveScript)Value!
-            : throw new System.Exception("BigUnion.Type is not 'attractiveScript'");
+            : throw new global::System.Exception("BigUnion.Type is not 'attractiveScript'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.HoarseMouse"/> if <see cref="Type"/> is 'hoarseMouse', otherwise throws an exception.
@@ -667,7 +667,7 @@ public record BigUnion
     public SeedUnions.HoarseMouse AsHoarseMouse() =>
         IsHoarseMouse
             ? (SeedUnions.HoarseMouse)Value!
-            : throw new System.Exception("BigUnion.Type is not 'hoarseMouse'");
+            : throw new global::System.Exception("BigUnion.Type is not 'hoarseMouse'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.CircularCard"/> if <see cref="Type"/> is 'circularCard', otherwise throws an exception.
@@ -676,7 +676,7 @@ public record BigUnion
     public SeedUnions.CircularCard AsCircularCard() =>
         IsCircularCard
             ? (SeedUnions.CircularCard)Value!
-            : throw new System.Exception("BigUnion.Type is not 'circularCard'");
+            : throw new global::System.Exception("BigUnion.Type is not 'circularCard'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.PotableBad"/> if <see cref="Type"/> is 'potableBad', otherwise throws an exception.
@@ -685,7 +685,7 @@ public record BigUnion
     public SeedUnions.PotableBad AsPotableBad() =>
         IsPotableBad
             ? (SeedUnions.PotableBad)Value!
-            : throw new System.Exception("BigUnion.Type is not 'potableBad'");
+            : throw new global::System.Exception("BigUnion.Type is not 'potableBad'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.TriangularRepair"/> if <see cref="Type"/> is 'triangularRepair', otherwise throws an exception.
@@ -694,7 +694,7 @@ public record BigUnion
     public SeedUnions.TriangularRepair AsTriangularRepair() =>
         IsTriangularRepair
             ? (SeedUnions.TriangularRepair)Value!
-            : throw new System.Exception("BigUnion.Type is not 'triangularRepair'");
+            : throw new global::System.Exception("BigUnion.Type is not 'triangularRepair'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.GaseousRoad"/> if <see cref="Type"/> is 'gaseousRoad', otherwise throws an exception.
@@ -703,7 +703,7 @@ public record BigUnion
     public SeedUnions.GaseousRoad AsGaseousRoad() =>
         IsGaseousRoad
             ? (SeedUnions.GaseousRoad)Value!
-            : throw new System.Exception("BigUnion.Type is not 'gaseousRoad'");
+            : throw new global::System.Exception("BigUnion.Type is not 'gaseousRoad'");
 
     public T Match<T>(
         Func<SeedUnions.NormalSweet, T> onNormalSweet,
@@ -1328,12 +1328,12 @@ public record BigUnion
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BigUnion>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BigUnion).IsAssignableFrom(typeToConvert);
 
         public override BigUnion Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -1358,70 +1358,113 @@ public record BigUnion
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "normalSweet" => json.Deserialize<SeedUnions.NormalSweet?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet"),
-                "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.ThankfulFactor"),
-                "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd?>(options)
+                "normalSweet" => jsonWithoutDiscriminator.Deserialize<SeedUnions.NormalSweet?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet"),
+                "thankfulFactor" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.ThankfulFactor?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.ThankfulFactor"
+                        ),
+                "jumboEnd" => jsonWithoutDiscriminator.Deserialize<SeedUnions.JumboEnd?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.JumboEnd"),
-                "hastyPain" => json.Deserialize<SeedUnions.HastyPain?>(options)
+                "hastyPain" => jsonWithoutDiscriminator.Deserialize<SeedUnions.HastyPain?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.HastyPain"),
-                "mistySnow" => json.Deserialize<SeedUnions.MistySnow?>(options)
+                "mistySnow" => jsonWithoutDiscriminator.Deserialize<SeedUnions.MistySnow?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.MistySnow"),
-                "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.DistinctFailure"),
-                "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedUnions.PracticalPrinciple"
-                    ),
-                "limpingStep" => json.Deserialize<SeedUnions.LimpingStep?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep"),
-                "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedUnions.VibrantExcitement"
-                    ),
-                "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.ActiveDiamond"),
-                "popularLimit" => json.Deserialize<SeedUnions.PopularLimit?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit"),
-                "falseMirror" => json.Deserialize<SeedUnions.FalseMirror?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror"),
-                "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock"),
-                "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.RotatingRatio"),
-                "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.ColorfulCover"),
-                "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.DisloyalValue"),
-                "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.GruesomeCoach"),
-                "totalWork" => json.Deserialize<SeedUnions.TotalWork?>(options)
+                "distinctFailure" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.DistinctFailure?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.DistinctFailure"
+                        ),
+                "practicalPrinciple" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.PracticalPrinciple?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.PracticalPrinciple"
+                        ),
+                "limpingStep" => jsonWithoutDiscriminator.Deserialize<SeedUnions.LimpingStep?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep"),
+                "vibrantExcitement" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.VibrantExcitement?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.VibrantExcitement"
+                        ),
+                "activeDiamond" => jsonWithoutDiscriminator.Deserialize<SeedUnions.ActiveDiamond?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.ActiveDiamond"),
+                "popularLimit" => jsonWithoutDiscriminator.Deserialize<SeedUnions.PopularLimit?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit"),
+                "falseMirror" => jsonWithoutDiscriminator.Deserialize<SeedUnions.FalseMirror?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror"),
+                "primaryBlock" => jsonWithoutDiscriminator.Deserialize<SeedUnions.PrimaryBlock?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock"),
+                "rotatingRatio" => jsonWithoutDiscriminator.Deserialize<SeedUnions.RotatingRatio?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.RotatingRatio"),
+                "colorfulCover" => jsonWithoutDiscriminator.Deserialize<SeedUnions.ColorfulCover?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.ColorfulCover"),
+                "disloyalValue" => jsonWithoutDiscriminator.Deserialize<SeedUnions.DisloyalValue?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.DisloyalValue"),
+                "gruesomeCoach" => jsonWithoutDiscriminator.Deserialize<SeedUnions.GruesomeCoach?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.GruesomeCoach"),
+                "totalWork" => jsonWithoutDiscriminator.Deserialize<SeedUnions.TotalWork?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.TotalWork"),
-                "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.HarmoniousPlay"),
-                "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress"),
-                "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.UnwillingSmoke"),
-                "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep"),
-                "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal"),
-                "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.AttractiveScript"),
-                "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse"),
-                "circularCard" => json.Deserialize<SeedUnions.CircularCard?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard"),
-                "potableBad" => json.Deserialize<SeedUnions.PotableBad?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad"),
-                "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.TriangularRepair"),
-                "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad"),
+                "harmoniousPlay" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.HarmoniousPlay?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.HarmoniousPlay"
+                        ),
+                "uniqueStress" => jsonWithoutDiscriminator.Deserialize<SeedUnions.UniqueStress?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress"),
+                "unwillingSmoke" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.UnwillingSmoke?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.UnwillingSmoke"
+                        ),
+                "frozenSleep" => jsonWithoutDiscriminator.Deserialize<SeedUnions.FrozenSleep?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep"),
+                "diligentDeal" => jsonWithoutDiscriminator.Deserialize<SeedUnions.DiligentDeal?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal"),
+                "attractiveScript" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.AttractiveScript?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.AttractiveScript"
+                        ),
+                "hoarseMouse" => jsonWithoutDiscriminator.Deserialize<SeedUnions.HoarseMouse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse"),
+                "circularCard" => jsonWithoutDiscriminator.Deserialize<SeedUnions.CircularCard?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard"),
+                "potableBad" => jsonWithoutDiscriminator.Deserialize<SeedUnions.PotableBad?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad"),
+                "triangularRepair" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedUnions.TriangularRepair?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedUnions.TriangularRepair"
+                        ),
+                "gaseousRoad" => jsonWithoutDiscriminator.Deserialize<SeedUnions.GaseousRoad?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad"),
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
@@ -1491,6 +1534,27 @@ public record BigUnion
                 json[property.Key] = property.Value;
             }
             json.WriteTo(writer, options);
+        }
+
+        public override BigUnion ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new BigUnion(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            BigUnion value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

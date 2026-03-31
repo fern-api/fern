@@ -31,6 +31,7 @@ types:
       string: string
       # typed as string to handle invalid datetime strings
       datetime: string
+      datetimeRfc2822: string
       date: string
       base64: string
       boolean: boolean

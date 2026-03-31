@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
 
 export interface Stream {
     readonly Stream: {
@@ -31,6 +31,7 @@ export declare namespace Stream {
     export interface SSEEventShape {
         type: "sse";
         streamTerminator?: ts.Expression;
+        eventDiscriminator?: ts.Expression;
     }
 
     export interface MessageEventShape {
@@ -82,6 +83,14 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createIdentifier("streamTerminator"),
                                     eventShape.streamTerminator ?? ts.factory.createStringLiteral("\n")
+                                )
+                            );
+                        }
+                        if (eventShape.eventDiscriminator != null) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("eventDiscriminator"),
+                                    eventShape.eventDiscriminator
                                 )
                             );
                         }

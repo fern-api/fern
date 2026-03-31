@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result<MyUnion, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result&lt;MyUnion, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::MyUnion;
 
 #[tokio::main]
 async fn main() {
@@ -38,7 +37,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +71,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +85,6 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata};
 
 #[tokio::main]
 async fn main() {
@@ -116,7 +114,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +128,6 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata, Request};
 
 #[tokio::main]
 async fn main() {
@@ -145,6 +142,7 @@ async fn main() {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
                     HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
+                ..Default::default()
             },
             None,
         )
@@ -161,7 +159,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result<UnionWithDuplicateTypes, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -175,7 +173,6 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::UnionWithDuplicateTypes;
 
 #[tokio::main]
 async fn main() {
@@ -199,7 +196,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +210,6 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{NestedUnionL1, NestedUnionL2, NestedUnionRoot};
 
 #[tokio::main]
 async fn main() {
@@ -237,7 +233,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +247,6 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{ConvertToken, PaymentMethodUnion, TokenizeCard};
 
 #[tokio::main]
 async fn main() {
@@ -266,6 +261,7 @@ async fn main() {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
                     method: "card".to_string(),
                     card_number: "1234567890123456".to_string(),
+                    ..Default::default()
                 }),
             },
             None,
@@ -297,3 +293,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

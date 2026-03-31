@@ -67,6 +67,22 @@ public final class Animal {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof Animal && value.equals(((Animal) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -91,6 +107,7 @@ public final class Animal {
     @JsonIgnoreProperties("animal")
     private static final class DogValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "animal", allowSetters = true)
         private Dog value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -130,6 +147,7 @@ public final class Animal {
     @JsonIgnoreProperties("animal")
     private static final class CatValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "animal", allowSetters = true)
         private Cat value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

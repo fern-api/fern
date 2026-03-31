@@ -1,5 +1,4 @@
 use seed_api::prelude::*;
-use seed_api::{NestedUser, SearchRequestNeighbor, SearchRequestNeighborRequired, User};
 
 #[tokio::main]
 async fn main() {
@@ -14,22 +13,20 @@ async fn main() {
                 limit: 1,
                 id: "id".to_string(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 bytes: "bytes".to_string(),
                 user: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 },
                 user_list: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 optional_deadline: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),
@@ -41,24 +38,32 @@ async fn main() {
                     user: Some(User {
                         name: Some("name".to_string()),
                         tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                        ..Default::default()
                     }),
+                    ..Default::default()
                 }),
                 optional_user: Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
                 exclude_user: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 filter: vec![Some("filter".to_string())],
+                tags: vec![Some("tags".to_string())],
+                optional_tags: vec![Some("optionalTags".to_string())],
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })),
                 neighbor_required: SearchRequestNeighborRequired::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
             },
             None,

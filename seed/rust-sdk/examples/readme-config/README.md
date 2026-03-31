@@ -16,6 +16,7 @@ The CustomName Rust library provides convenient access to the CustomName APIs fr
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -65,7 +66,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::{Movie, MovieId, Tag};
 
 #[tokio::main]
 async fn main() {
@@ -103,6 +103,20 @@ async fn main() {
         )
         .await;
 }
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```rust
+use seed_examples::prelude::{*};
+
+let config = ClientConfig {
+    base_url: Environment::Production.url().to_string(),
+    ..Default::default()
+};
+let client = Client::new(config).expect("Failed to build client");
 ```
 
 ## Errors

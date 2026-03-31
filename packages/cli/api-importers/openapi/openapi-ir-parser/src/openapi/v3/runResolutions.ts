@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { getFernResolutions } from "./extensions/getFernResolutions";
+import { getFernResolutions } from "./extensions/getFernResolutions.js";
 
 export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): OpenAPIV3.Document {
     const resolutions = getFernResolutions(openapi);

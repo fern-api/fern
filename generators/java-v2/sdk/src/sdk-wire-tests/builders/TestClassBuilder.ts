@@ -1,6 +1,6 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { AuthScheme, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 interface MultiUrlEnvironment {
     urls?: Record<string, unknown>;
@@ -185,7 +185,7 @@ export class TestClassBuilder {
     /**
      * Determines if the environment configuration uses multiple URLs
      */
-    private isMultiUrlEnvironment(environments: EnvironmentsConfig | undefined): boolean {
+    private isMultiUrlEnvironment(environments: FernIr.EnvironmentsConfig | undefined): boolean {
         if (!environments?.environments) {
             return false;
         }
@@ -197,7 +197,7 @@ export class TestClassBuilder {
      * Generates client environment configuration for APIs with multiple base URLs.
      * Uses Environment.custom() builder which sets all URLs to the mock server.
      */
-    private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
+    private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: FernIr.EnvironmentsConfig): void {
         if (environments.environments.type !== "multipleBaseUrls") {
             writer.writeLine('.url(server.url("/").toString())');
             return;
@@ -255,7 +255,7 @@ export class TestClassBuilder {
      * Generates the appropriate auth configuration call for a given authentication scheme.
      * Maps each auth scheme type to its corresponding client builder method with appropriate test values.
      */
-    private getAuthCallForScheme(scheme: AuthScheme): string | undefined {
+    private getAuthCallForScheme(scheme: FernIr.AuthScheme): string | undefined {
         switch (scheme.type) {
             case "bearer":
                 return '.token("test-token")';

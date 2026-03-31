@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BaseRubyCustomConfigSchema = z.object({
-    module: z.optional(z.string()),
+    // The Ruby module name used for folder structure and module naming (e.g., "Square" -> lib/square/, module Square)
+    moduleName: z.optional(z.string()),
     clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     customPagerName: z.optional(z.string()),
@@ -16,6 +17,9 @@ export const BaseRubyCustomConfigSchema = z.object({
     // (e.g., ["custom_integration", "sentry_integration"] will load lib/<gem>/custom_integration.rb
     // and lib/<gem>/sentry_integration.rb if they exist)
     requirePaths: z.optional(z.array(z.string())),
+    // Apply IR-defined default values to query parameters and headers in request wrappers
+    useDefaultRequestParameterValues: z.boolean().optional(),
+    omitFernHeaders: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)

@@ -1,6 +1,6 @@
 import { NodePath } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor.js";
 
 export function createDocsVisitor(
     visitor: Partial<DefinitionFileAstVisitor>,

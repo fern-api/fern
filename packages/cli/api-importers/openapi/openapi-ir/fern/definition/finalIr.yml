@@ -100,8 +100,27 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
+      multipartFormData:
+        type: optional<MultipartFormDataWebhookPayload>
+        docs: |
+          Optional multipart form data payload for webhooks that use multipart/form-data content type.
+          This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<Response>
+      signatureVerification: optional<WebhookSignatureVerification>
       examples: list<WebhookExampleCall>
+
+  MultipartFormDataWebhookPayload:
+    docs: |
+      Represents a multipart form data payload for webhooks.
+      This is used when a webhook request body uses multipart/form-data encoding.
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+    properties:
+      name:
+        type: optional<string>
+        docs: If multipart was a reference, this will be the schema name.
+      properties: list<MultipartRequestProperty>
 
   WebhookExampleCall:
     extends: commons.WithDescription
@@ -118,6 +137,7 @@ types:
       path: string
       groupName: commons.SdkGroupName
       summary: optional<string>
+      connectMethodName: optional<string>
       handshake: WebsocketHandshake
       messages: list<WebsocketMessageSchema>
       servers: list<WebsocketServer>
@@ -162,11 +182,108 @@ types:
       - GET
       - POST
 
+  WebhookSignatureVerification:
+    discriminant: type
+    union:
+      hmac: HmacWebhookSignatureVerification
+      asymmetric: AsymmetricWebhookSignatureVerification
+
+  HmacWebhookSignatureVerification:
+    properties:
+      header: string
+      algorithm: optional<WebhookSignatureAlgorithm>
+      encoding: optional<WebhookSignatureEncoding>
+      signaturePrefix: optional<string>
+      payloadFormat: optional<WebhookPayloadFormat>
+      timestamp: optional<WebhookTimestamp>
+
+  AsymmetricWebhookSignatureVerification:
+    properties:
+      header: string
+      asymmetricAlgorithm: AsymmetricAlgorithm
+      encoding: optional<WebhookSignatureEncoding>
+      signaturePrefix: optional<string>
+      jwksUrl: optional<string>
+      keyIdHeader: optional<string>
+      timestamp: optional<WebhookTimestamp>
+
+  WebhookSignatureAlgorithm:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookSignatureEncoding:
+    enum:
+      - base64
+      - hex
+
+  WebhookTimestamp:
+    properties:
+      header: string
+      format: optional<WebhookTimestampFormat>
+      tolerance: optional<integer>
+
+  WebhookTimestampFormat:
+    enum:
+      - name: unixSeconds
+        value: unix-seconds
+      - name: unixMillis
+        value: unix-millis
+      - name: iso8601
+        value: iso8601
+
+  WebhookPayloadFormat:
+    properties:
+      components: list<WebhookPayloadComponent>
+      delimiter: optional<string>
+      bodySort: optional<WebhookPayloadBodySort>
+
+  WebhookPayloadBodySort:
+    enum:
+      - alphabetical
+
+  WebhookPayloadComponent:
+    enum:
+      - body
+      - timestamp
+      - name: notificationUrl
+        value: notification-url
+      - name: messageId
+        value: message-id
+
+  AsymmetricAlgorithm:
+    enum:
+      - name: rsaSha256
+        value: rsa-sha256
+      - name: rsaSha384
+        value: rsa-sha384
+      - name: rsaSha512
+        value: rsa-sha512
+      - name: ecdsaSha256
+        value: ecdsa-sha256
+      - name: ecdsaSha384
+        value: ecdsa-sha384
+      - name: ecdsaSha512
+        value: ecdsa-sha512
+      - name: ed25519
+        value: ed25519
+
   Availability:
     enum:
       - GenerallyAvailable
       - Beta
       - Deprecated
+
+  DiscriminatorContext:
+    docs: |
+      Defines the context where a discriminator property exists for union types.
+      "data" means the discriminator exists within the union data itself.
+      "protocol" means the discriminator exists at the SSE protocol level.
+    enum:
+      - data
+      - protocol
 
   Endpoint:
     extends:
@@ -243,6 +360,8 @@ types:
       cursor: CursorPagination
       offset: OffsetPagination
       custom: CustomPagination
+      uri: UriPagination
+      path: PathPagination
 
   CursorPagination:
     properties:
@@ -256,6 +375,22 @@ types:
       results: string
       step: optional<string>
       hasNextPage: optional<string>
+
+  UriPagination:
+    docs: |
+      Pagination where the next URI is contained in a response property.
+      The next URI is the complete URI to fetch the next page.
+    properties:
+      nextUri: string
+      results: string
+
+  PathPagination:
+    docs: |
+      Pagination where the next path is contained in a response property.
+      The next path is everything after the base hostname and port.
+    properties:
+      nextPath: string
+      results: string
 
   CustomPagination:
     docs: |
@@ -421,6 +556,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   Header:
     extends:
@@ -542,6 +681,7 @@ types:
     properties:
       schema: Schema
       responseProperty: optional<string>
+      terminator: optional<string>
 
   Schema:
     union:
@@ -555,7 +695,16 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: commons.WithName
+      unknown: UnknownSchema
+
+  UnknownSchema:
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithTitle
 
   PrimitiveSchema:
     extends:
@@ -578,6 +727,7 @@ types:
       double: DoubleSchema
       string: StringSchema
       datetime: {}
+      datetimeRfc2822: {}
       date: {}
       base64: {}
       boolean: BooleanSchema
@@ -658,6 +808,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
@@ -666,6 +817,8 @@ types:
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
       additionalProperties: boolean
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -716,6 +869,8 @@ types:
       - commons.WithInline
     properties:
       value: Schema
+      minItems: optional<integer>
+      maxItems: optional<integer>
 
   MapSchema:
     extends:
@@ -730,6 +885,8 @@ types:
     properties:
       key: PrimitiveSchema
       value: Schema
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   OptionalSchema:
     extends:
@@ -822,6 +979,18 @@ types:
       - commons.WithInline
     properties:
       discriminantProperty: string
+      discriminantPropertyNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-property-name` on a discriminator object.
+          When set, this is used as the code generation name while
+          discriminantProperty is used as the wire format.
+      discriminatorContext:
+        type: optional<DiscriminatorContext>
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means the discriminator is within the union data itself.
+          "protocol" means the discriminator is at the SSE protocol level.
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
 

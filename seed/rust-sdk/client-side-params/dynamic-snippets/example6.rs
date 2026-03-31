@@ -1,5 +1,4 @@
 use seed_client_side_params::prelude::*;
-use seed_client_side_params::UpdateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -29,6 +28,7 @@ async fn main() {
                 )])),
                 password: Some("password".to_string()),
                 blocked: Some(true),
+                ..Default::default()
             },
             None,
         )

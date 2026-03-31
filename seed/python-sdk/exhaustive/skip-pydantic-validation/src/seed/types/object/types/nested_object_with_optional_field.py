@@ -13,7 +13,9 @@ from .object_with_optional_field import ObjectWithOptionalField
 class NestedObjectWithOptionalField(UncheckedBaseModel):
     string: typing.Optional[str] = None
     nested_object: typing_extensions.Annotated[
-        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
+        typing.Optional[ObjectWithOptionalField],
+        FieldMetadata(alias="NestedObject"),
+        pydantic.Field(alias="NestedObject"),
     ] = None
 
     if IS_PYDANTIC_V2:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -12,6 +13,7 @@ from fern_python.codegen.ast.dependency.dependency import (
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 from fern.generator_exec import (
     BasicLicense,
@@ -44,12 +46,17 @@ class PyProjectToml:
         extras: typing.Dict[str, List[str]] = {},
         enable_wire_tests: bool = False,
         user_defined_toml: Optional[str] = None,
+        mypy_exclude: Optional[List[str]] = None,
     ):
         self._name = name
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
             package=package,
+            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(
+                python_version=python_version,
+                license_=license_,
+            ),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
             license_=license_,
@@ -60,6 +67,7 @@ class PyProjectToml:
         self._extras = extras
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
+        self._mypy_exclude = mypy_exclude
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -70,7 +78,7 @@ class PyProjectToml:
                 python_version=self._python_version,
                 enable_wire_tests=self._enable_wire_tests,
             ),
-            PyProjectToml.PluginConfigurationBlock(),
+            PyProjectToml.PluginConfigurationBlock(mypy_exclude=self._mypy_exclude),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = f"""[project]
@@ -107,6 +115,7 @@ dynamic = ["version"]
         name: str
         version: Optional[str]
         package: PyProjectTomlPackageConfig
+        classifiers: List[str]
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
         license_: Optional[LicenseConfig]
@@ -121,23 +130,7 @@ name = "{self.name}"'''
             authors: List[str] = []
             keywords: List[str] = []
             project_urls: List[str] = []
-            classifiers = [
-                "Intended Audience :: Developers",
-                "Programming Language :: Python",
-                "Programming Language :: Python :: 3",
-                "Programming Language :: Python :: 3.8",
-                "Programming Language :: Python :: 3.9",
-                "Programming Language :: Python :: 3.10",
-                "Programming Language :: Python :: 3.11",
-                "Programming Language :: Python :: 3.12",
-                "Operating System :: OS Independent",
-                "Operating System :: POSIX",
-                "Operating System :: MacOS",
-                "Operating System :: POSIX :: Linux",
-                "Operating System :: Microsoft :: Windows",
-                "Topic :: Software Development :: Libraries :: Python Modules",
-                "Typing :: Typed",
-            ]
+
             license_evaluated = ""
             if self.pypi_metadata is not None:
                 description = (
@@ -155,15 +148,13 @@ name = "{self.name}"'''
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on it's side
+                # TODO(armandobelardo): verify poetry handles custom licenses on its side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
                         license_evaluated = 'license = "MIT"'
-                        classifiers.append("License :: OSI Approved :: MIT License")
                     elif license_id == LicenseId.APACHE_2:
                         license_evaluated = 'license = "Apache-2.0"'
-                        classifiers.append("License :: OSI Approved :: Apache Software License")
 
             if self.github_output_mode is not None:
                 project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
@@ -178,7 +169,7 @@ readme = "README.md"
 authors = {json.dumps(authors, indent=4)}
 keywords = {json.dumps(keywords, indent=4)}
 {license_evaluated}
-classifiers = {json.dumps(classifiers, indent=4)}"""
+classifiers = {json.dumps(self.classifiers, indent=4)}"""
             if self.package._from is not None:
                 s += f"""
 packages = [
@@ -235,14 +226,32 @@ packages = [
             if self.enable_wire_tests:
                 wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
+            # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
+            # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
+            # pair when the project still supports Python 3.8.
+            #
+            # Extract the minimum minor version from the constraint string
+            # (e.g. "^3.8" -> 8, "^3.8.1" -> 8, "^3.10" -> 10, ">=3.9" -> 9).
+            min_minor = 0
+            match = re.search(r"(\d+)\.(\d+)", self.python_version)
+            if match:
+                min_minor = int(match.group(2))
+
+            if min_minor >= 9:
+                pytest_version = "^8.2.0"
+                pytest_asyncio_version = "^1.0.0"
+            else:
+                pytest_version = "^7.4.0"
+                pytest_asyncio_version = "^0.23.5"
+
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
-pytest = "^7.4.0"
-pytest-asyncio = "^0.23.5"
+pytest = "{pytest_version}"
+pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
@@ -250,14 +259,21 @@ types-python-dateutil = "^2.9.0.20240316"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
+        mypy_exclude: Optional[List[str]] = None
+
         def to_string(self) -> str:
-            return """
+            mypy_exclude_config = ""
+            if self.mypy_exclude:
+                exclude_patterns = ", ".join([f'"{pattern}"' for pattern in self.mypy_exclude])
+                mypy_exclude_config = f"\nexclude = [{exclude_patterns}]"
+
+            return f"""
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy"]{mypy_exclude_config}
 
 [tool.ruff]
 line-length = 120

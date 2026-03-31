@@ -6,8 +6,9 @@ namespace SeedOauthClientCredentialsReference;
 public class SeedOauthClientCredentialsReferenceApiException(
     string message,
     int statusCode,
-    object body
-) : SeedOauthClientCredentialsReferenceException(message)
+    object body,
+    Exception? innerException = null
+) : SeedOauthClientCredentialsReferenceException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

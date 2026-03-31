@@ -2,13 +2,62 @@ using SeedFileDownload.Core;
 
 namespace SeedFileDownload;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
         _client = client;
+    }
+
+    private async Task<WithRawResponse<global::System.IO.Stream>> DownloadFileAsyncCore(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedFileDownload.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var stream = await response.Raw.Content.ReadAsStreamAsync();
+            return new WithRawResponse<global::System.IO.Stream>()
+            {
+                Data = stream,
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedFileDownloadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <example><code>
@@ -19,13 +68,19 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedFileDownload.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/snippet",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -36,7 +91,9 @@ public partial class ServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedFileDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -45,34 +102,13 @@ public partial class ServiceClient
         }
     }
 
-    public async Task<System.IO.Stream> DownloadFileAsync(
+    public WithRawResponseTask<global::System.IO.Stream> DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return await response.Raw.Content.ReadAsStreamAsync();
-        }
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedFileDownloadApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<global::System.IO.Stream>(
+            DownloadFileAsyncCore(options, cancellationToken)
+        );
     }
 }

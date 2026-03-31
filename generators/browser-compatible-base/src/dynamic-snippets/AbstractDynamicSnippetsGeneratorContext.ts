@@ -2,11 +2,11 @@ import { assertNever, keys } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 
-import { FernGeneratorExec } from "../GeneratorNotificationService";
-import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance";
-import { ErrorReporter, Severity } from "./ErrorReporter";
-import { Options } from "./Options";
-import { TypeInstance } from "./TypeInstance";
+import { FernGeneratorExec } from "../GeneratorNotificationService.js";
+import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance.js";
+import { ErrorReporter, Severity } from "./ErrorReporter.js";
+import { Options } from "./Options.js";
+import { TypeInstance } from "./TypeInstance.js";
 
 export abstract class AbstractDynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.GeneratorConfig;
@@ -43,6 +43,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
@@ -115,6 +118,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
@@ -334,6 +340,18 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
         return endpoints;
+    }
+
+    public resolveEndpointById(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint | undefined {
+        return this._ir.endpoints[endpointId];
+    }
+
+    public resolveEndpointByIdOrThrow(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint {
+        const endpoint = this.resolveEndpointById(endpointId);
+        if (endpoint == null) {
+            throw new Error(`Failed to find endpoint with ID "${endpointId}"`);
+        }
+        return endpoint;
     }
 
     public needsRequestParameter({
@@ -634,7 +652,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         parsedEndpoint
     }: {
         endpoint: FernIr.dynamic.Endpoint;
-        parsedEndpoint: HttpEndpointReferenceParser.Parsed;
+        parsedEndpoint: { method: string; path: string; namespace?: string };
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;
     }

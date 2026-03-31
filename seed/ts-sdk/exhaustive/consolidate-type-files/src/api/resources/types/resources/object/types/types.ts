@@ -4,19 +4,19 @@ import type * as SeedExhaustive from "../../../../../index.js";
 
 export interface ObjectWithOptionalField {
     /** This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered. */
-    string?: string;
-    integer?: number;
-    long?: number;
-    double?: number;
-    bool?: boolean;
-    datetime?: string;
-    date?: string;
-    uuid?: string;
-    base64?: string;
-    list?: string[];
-    set?: string[];
-    map?: Record<number, string>;
-    bigint?: string;
+    string?: string | undefined;
+    integer?: number | undefined;
+    long?: number | undefined;
+    double?: number | undefined;
+    bool?: boolean | undefined;
+    datetime?: string | undefined;
+    date?: string | undefined;
+    uuid?: string | undefined;
+    base64?: string | undefined;
+    list?: string[] | undefined;
+    set?: string[] | undefined;
+    map?: Record<number, string> | undefined;
+    bigint?: string | undefined;
 }
 
 export interface ObjectWithRequiredField {
@@ -28,8 +28,8 @@ export interface ObjectWithMapOfMap {
 }
 
 export interface NestedObjectWithOptionalField {
-    string?: string;
-    NestedObject?: SeedExhaustive.types.ObjectWithOptionalField;
+    string?: string | undefined;
+    NestedObject?: SeedExhaustive.types.ObjectWithOptionalField | undefined;
 }
 
 export interface NestedObjectWithRequiredField {
@@ -42,3 +42,40 @@ export interface DoubleOptional {
 }
 
 export type OptionalAlias = string | undefined;
+
+/**
+ * This type tests that string fields containing datetime-like values
+ * are NOT reformatted by the wire test generator. The string field
+ * should preserve its exact value even if it looks like a datetime.
+ */
+export interface ObjectWithDatetimeLikeString {
+    /** A string field that happens to contain a datetime-like value */
+    datetimeLikeString: string;
+    /** An actual datetime field for comparison */
+    actualDatetime: string;
+}
+
+/**
+ * Tests that unknown/any values containing backslashes in map keys
+ * are properly escaped in Go string literals.
+ */
+export interface ObjectWithUnknownField {
+    unknown?: unknown | undefined;
+}
+
+/**
+ * Tests that unknown types are able to preserve their type names.
+ */
+export interface ObjectWithDocumentedUnknownType {
+    documentedUnknownType?: SeedExhaustive.types.DocumentedUnknownType | undefined;
+}
+
+/**
+ * Tests that unknown types are able to preserve their docstrings.
+ */
+export type DocumentedUnknownType = unknown;
+
+/**
+ * Tests that map value types with unknown types don't get spurious | undefined.
+ */
+export type MapOfDocumentedUnknownType = Record<string, SeedExhaustive.types.DocumentedUnknownType>;

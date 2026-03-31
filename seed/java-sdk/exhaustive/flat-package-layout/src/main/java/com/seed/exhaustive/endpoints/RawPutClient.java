@@ -31,17 +31,25 @@ public class RawPutClient {
         return add(id, PutRequest.builder().build());
     }
 
+    public SeedExhaustiveHttpResponse<PutResponse> add(String id, RequestOptions requestOptions) {
+        return add(id, PutRequest.builder().build(), requestOptions);
+    }
+
     public SeedExhaustiveHttpResponse<PutResponse> add(String id, PutRequest request) {
         return add(id, request, null);
     }
 
     public SeedExhaustiveHttpResponse<PutResponse> add(String id, PutRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");

@@ -3,39 +3,46 @@ using SeedPagination.InlineUsers;
 
 namespace SeedPagination;
 
-public partial class SeedPaginationClient
+public partial class SeedPaginationClient : ISeedPaginationClient
 {
     private readonly RawClient _client;
 
     public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedPagination" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernpagination/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>() { { "Authorization", $"Bearer {token}" } }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         Complex = new ComplexClient(_client);
         InlineUsers = new InlineUsersClient(_client);
         Users = new UsersClient(_client);
     }
 
-    public ComplexClient Complex { get; }
+    public IComplexClient Complex { get; }
 
-    public InlineUsersClient InlineUsers { get; }
+    public IInlineUsersClient InlineUsers { get; }
 
-    public UsersClient Users { get; }
+    public IUsersClient Users { get; }
 }

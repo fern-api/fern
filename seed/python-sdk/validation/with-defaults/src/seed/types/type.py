@@ -23,9 +23,9 @@ class Type(UniversalBaseModel):
     )
     """
 
-    decimal: float = 1.1
-    even: int = 42
-    name: str = "fern"
+    decimal: float
+    even: int
+    name: str
     shape: Shape
 
     if IS_PYDANTIC_V2:

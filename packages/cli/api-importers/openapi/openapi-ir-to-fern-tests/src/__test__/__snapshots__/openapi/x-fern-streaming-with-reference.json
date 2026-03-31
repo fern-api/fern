@@ -26,9 +26,26 @@
               "openapi": "../openapi.yml",
             },
           },
+          "CreateCompletionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "prompt": "string",
+              "stream": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
+  CreateCompletionRequest:
+    properties:
+      stream: optional<boolean>
+      prompt: string
+    source:
+      openapi: ../openapi.yml
   Completion:
     properties:
       text: optional<string>
@@ -122,13 +139,14 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "CreateChatCompletionsStreamRequest",
+                "name": "CreateCompletionRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "root.CompletionChunk",
               },
               "source": {
@@ -153,7 +171,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: CreateChatCompletionsStreamRequest
+        name: CreateCompletionRequestStreaming
         body:
           properties:
             stream: literal<true>

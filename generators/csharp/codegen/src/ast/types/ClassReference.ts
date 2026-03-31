@@ -1,14 +1,14 @@
-import { fail } from "node:assert";
-import { type Generation } from "../../context/generation-info";
-import { type Origin } from "../../context/model-navigator";
-import { type TypeScope } from "../../context/name-registry";
-import { type ClassInstantiation } from "../code/ClassInstantiation";
-import { Literal } from "../code/Literal";
-import { Node } from "../core/AstNode";
-import type { Writer } from "../core/Writer";
-import { type Field } from "./Field";
-import { Type } from "./IType";
-import { Optional } from "./Type";
+import { type Generation } from "../../context/generation-info.js";
+import { type Origin } from "../../context/model-navigator.js";
+import { type TypeScope } from "../../context/name-registry.js";
+import { fail } from "../../utils/fail.js";
+import { type ClassInstantiation } from "../code/ClassInstantiation.js";
+import { Literal } from "../code/Literal.js";
+import { Node } from "../core/AstNode.js";
+import type { Writer } from "../core/Writer.js";
+import { type Field } from "./Field.js";
+import { Type } from "./IType.js";
+import { Nullable, Optional } from "./Type.js";
 
 export declare namespace ClassReference {
     interface Identity {
@@ -108,8 +108,10 @@ export class ClassReference extends Node implements Type {
         this.namespaceSegments = this.namespace.split(".");
         this.isCollection = isCollection ?? false;
         if (enclosingType != null) {
+            // Use '+' separator for nested types to match the registry key format
+            // (structurally distinguishes nested types from sub-namespace types)
             this.fullyQualifiedName = enclosingType.fullyQualifiedName
-                ? `${enclosingType.fullyQualifiedName}.${name}`
+                ? `${enclosingType.fullyQualifiedName}+${name}`
                 : name;
         } else {
             this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
@@ -128,11 +130,28 @@ export class ClassReference extends Node implements Type {
         this.writeInternal(writer, true);
     }
 
+    /**
+     * Returns the C# source-code form of the fully qualified name.
+     * Converts the internal '+' separator (used for nested types in the registry)
+     * back to '.' for valid C# syntax.
+     */
+    public get csharpQualifiedName(): string {
+        return this.fullyQualifiedName.replaceAll("+", ".");
+    }
+
     public get scopedName() {
         return this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
     }
 
+    private getScopedName(isAttribute: boolean): string {
+        const nameToWrite =
+            isAttribute && this.name.endsWith("Attribute") ? this.name.slice(0, -"Attribute".length) : this.name;
+        return this.enclosingType ? `${this.enclosingType.name}.${nameToWrite}` : nameToWrite;
+    }
+
     private writeInternal(writer: Writer, isAttribute: boolean): void {
+        const nameToWrite = this.getScopedName(isAttribute);
+
         // if the name (or the enclosing type name) is ambiguous
         const isAmbiguous =
             this.registry.isAmbiguousTypeName(this.name) ||
@@ -143,27 +162,49 @@ export class ClassReference extends Node implements Type {
                 .some((each) => each !== this.namespace && this.registry.isRegisteredTypeName(`${each}.${this.name}`));
 
         const shouldGlobal =
+            !writer.skipGlobalQualifier &&
             // if the type is global, then we need to globally qualify the type
-            this.global ||
-            // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
-            this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
-            this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||
-            // or we always are going to be using fully qualified namespaces
-            writer.generation.settings.useFullyQualifiedNamespaces;
+            (this.global ||
+                // Always qualify System namespaces to prevent ambiguity when customer
+                // projects define a type or namespace named "System"
+                this.namespaceSegments[0] === "System" ||
+                // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
+                this.registry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
+                this.registry.isAmbiguousNamespaceName(this.namespaceSegments[0]) ||
+                // if the first namespace segment is both a type name and a namespace root,
+                // the C# compiler will resolve it to the type instead of the namespace (CS0426)
+                this.registry.hasTypeNamespaceConflict(this.namespaceSegments[0]) ||
+                // or we always are going to be using fully qualified namespaces
+                writer.generation.settings.useFullyQualifiedNamespaces);
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
+        // For attributes, strip the "Attribute" suffix from the fully qualified name
+        let fqNameBase = this.csharpQualifiedName;
+        if (isAttribute && fqNameBase.endsWith("Attribute")) {
+            // Replace the last occurrence of "Attribute" with empty string
+            const lastDotIndex = fqNameBase.lastIndexOf(".");
+            if (lastDotIndex >= 0) {
+                const namespacePart = fqNameBase.substring(0, lastDotIndex + 1);
+                const namePart = fqNameBase.substring(lastDotIndex + 1);
+                if (namePart.endsWith("Attribute")) {
+                    fqNameBase = namespacePart + namePart.slice(0, -"Attribute".length);
+                }
+            } else {
+                fqNameBase = fqNameBase.slice(0, -"Attribute".length);
+            }
+        }
+        const fqName = `${shouldGlobal ? "global::" : ""}${fqNameBase}`;
 
         if (!this.namespace) {
-            writer.write(this.name);
+            writer.write(nameToWrite);
             return;
         }
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
-            writer.write(`${alias}.${this.scopedName}`);
+            writer.write(`${alias}.${nameToWrite}`);
         } else {
             if (writer.skipImports) {
-                writer.write(this.scopedName);
+                writer.write(nameToWrite);
             } else {
                 if (this.fullyQualified) {
                     writer.write(fqName);
@@ -179,23 +220,30 @@ export class ClassReference extends Node implements Type {
                         // check to see if the abbreviation would be ambiguous
                         const segments = typeQualification.split(".");
                         if (
+                            shouldGlobal ||
                             this.registry.isAmbiguousTypeName(segments[0]) ||
-                            this.registry.isAmbiguousNamespaceName(segments[0])
+                            this.registry.isAmbiguousNamespaceName(segments[0]) ||
+                            this.registry.hasTypeNamespaceConflict(segments[0])
                         ) {
                             writer.write(fqName);
                         } else {
-                            writer.write(`${typeQualification}${this.scopedName}`);
+                            writer.write(`${typeQualification}${nameToWrite}`);
                         }
                     } else if (isAmbiguous && this.resolveNamespace() !== writer.namespace) {
                         // If the class is ambiguous and not in this specific namespace
                         // we must to fully qualify the type
                         // writer.addReference(this);
                         writer.write(fqName);
+                    } else if (this.registry.hasTypeNamespaceConflict(this.name)) {
+                        // If the class name itself matches a root namespace segment,
+                        // the C# compiler resolves it as the namespace instead of the type (CS0118).
+                        // Use the fully qualified name to disambiguate.
+                        writer.write(fqName);
                     } else {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name
                         writer.addReference(this);
-                        writer.write(this.scopedName);
+                        writer.write(nameToWrite);
                     }
                 }
             }
@@ -334,21 +382,37 @@ export class ClassReference extends Node implements Type {
             return true;
         }
 
+        // For attributes, check if there's a real conflict with another attribute type
+        // In C#, [Foo] automatically looks for FooAttribute, not Foo
+        // So [Nullable] won't conflict with System.Nullable<T> - it looks for NullableAttribute
+        if (isAttribute) {
+            const hasConflict = this.potentialConflictWithGeneratedType(writer, isAttribute);
+            if (!hasConflict) {
+                // No conflict with another attribute, so we can rely on the using statement
+                return false;
+            }
+        }
+
         // For child namespaces (like SeedCsharpNamespaceConflict.A.Aa from SeedCsharpNamespaceConflict.A),
         // we generally don't need qualification unless there's a specific conflict
         if (this.namespace.startsWith(`${currentNamespace}.`)) {
             // Only require qualification if there's an actual naming conflict
-            return this.potentialConflictWithGeneratedType(writer);
+            return this.potentialConflictWithGeneratedType(writer, isAttribute);
         }
 
         // Check for potential conflicts with generated types regardless of namespace
         // This handles both internal and external types consistently
-        return this.potentialConflictWithGeneratedType(writer);
+        return this.potentialConflictWithGeneratedType(writer, isAttribute);
     }
 
-    private potentialConflictWithGeneratedType(writer: Writer) {
+    private potentialConflictWithGeneratedType(writer: Writer, isAttribute: boolean = false) {
+        // For attributes, we check for conflicts differently
+        // In C#, [Foo] looks for FooAttribute first, then falls back to Foo
+        // Since our attribute classes are registered with names like "Nullable" (not "NullableAttribute"),
+        // we just check if there's another type with the same name in a different namespace
         const matchingNamespaces = writer.getAllTypeClassReferences().get(this.name);
         if (matchingNamespaces == null) {
+            // No types with this name at all, so no conflict
             return false;
         }
 
@@ -358,6 +422,12 @@ export class ClassReference extends Node implements Type {
         matchingNamespacesCopy.delete(this.namespace);
 
         if (matchingNamespacesCopy.size === 0) {
+            // No other types with this name in other namespaces
+            // For attributes in attribute context, there's no conflict with non-attribute types
+            // because C# looks for FooAttribute when you write [Foo]
+            if (isAttribute) {
+                return false;
+            }
             // Even if there's no type conflict, check for namespace conflicts
             // This handles cases like class "A" conflicting with namespace "A"
             return this.hasProjectNamespaceConflict(writer);
@@ -371,6 +441,12 @@ export class ClassReference extends Node implements Type {
             if (conflictingNamespace === currentNamespace || currentNamespace.startsWith(`${conflictingNamespace}.`)) {
                 return true;
             }
+        }
+
+        // For attributes, if we haven't found a conflict yet, there isn't one
+        // (because C# disambiguates [Foo] vs Foo<T> automatically)
+        if (isAttribute) {
+            return false;
         }
 
         // Also check if the class name matches any namespace segment in the project
@@ -430,6 +506,10 @@ export class ClassReference extends Node implements Type {
 
     public asOptional(): Type {
         return new Optional(this, this.generation);
+    }
+
+    public asNullable(): Type {
+        return new Nullable(this, this.generation);
     }
 
     public asNonOptional(): Type {

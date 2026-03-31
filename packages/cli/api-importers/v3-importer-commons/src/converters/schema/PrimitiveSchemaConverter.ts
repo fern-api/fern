@@ -9,7 +9,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -31,6 +31,14 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 const stringConst = this.context.getAsString(this.schema.const);
                 if (stringConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
+                }
+
+                // date-time-rfc-2822 is always recognized regardless of typeDatesAsStrings setting
+                if (this.schema.format === "date-time-rfc-2822") {
+                    return TypeReference.primitive({
+                        v1: PrimitiveTypeV1.DateTimeRfc2822,
+                        v2: PrimitiveTypeV2.dateTimeRfc2822({})
+                    });
                 }
 
                 if (this.context.settings.typeDatesAsStrings === false) {
@@ -87,8 +95,8 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: this.context.getAsNumber(this.schema.default)
-                                // TODO: add validation here
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
                             })
                         });
                     case "uint32":
@@ -147,8 +155,8 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: this.context.getAsNumber(this.schema.default)
-                                // TODO: add validation here
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
                             })
                         });
                     case "uint32":
@@ -184,7 +192,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 return TypeReference.primitive({
                     v1: "BOOLEAN",
                     v2: PrimitiveTypeV2.boolean({
-                        default: this.schema.default as boolean | undefined
+                        default: this.context.getAsBoolean(this.schema.default)
                     })
                 });
             }
@@ -194,21 +202,54 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
     }
 
     private getNumberValidation(schema: OpenAPIV3_1.SchemaObject): IntegerValidationRules | undefined {
+        // Handle both OpenAPI 3.0 (boolean) and OpenAPI 3.1 (number) formats for exclusive bounds
+        // OpenAPI 3.0: exclusiveMinimum/exclusiveMaximum are booleans that modify minimum/maximum
+        // OpenAPI 3.1: exclusiveMinimum/exclusiveMaximum are numbers representing the actual bounds
+        let min = schema.minimum;
+        let max = schema.maximum;
+        let exclusiveMin: boolean | undefined;
+        let exclusiveMax: boolean | undefined;
+
+        if (typeof schema.exclusiveMinimum === "boolean") {
+            // OpenAPI 3.0 format: boolean flag
+            exclusiveMin = schema.exclusiveMinimum;
+        } else if (typeof schema.exclusiveMinimum === "number") {
+            // OpenAPI 3.1 format: numeric value
+            min = schema.exclusiveMinimum;
+            exclusiveMin = true;
+        }
+
+        if (typeof schema.exclusiveMaximum === "boolean") {
+            // OpenAPI 3.0 format: boolean flag
+            exclusiveMax = schema.exclusiveMaximum;
+        } else if (typeof schema.exclusiveMaximum === "number") {
+            // OpenAPI 3.1 format: numeric value
+            max = schema.exclusiveMaximum;
+            exclusiveMax = true;
+        }
+
         return {
-            max: schema.maximum,
-            min: schema.minimum,
-            exclusiveMax: typeof schema.exclusiveMaximum === "boolean" ? schema.exclusiveMaximum : undefined,
-            exclusiveMin: typeof schema.exclusiveMinimum === "boolean" ? schema.exclusiveMinimum : undefined,
+            max,
+            min,
+            exclusiveMax,
+            exclusiveMin,
             multipleOf: schema.multipleOf
         };
     }
 
     private getStringValidation(schema: OpenAPIV3_1.SchemaObject): StringValidationRules | undefined {
+        // If the schema has contentMediaType: application/octet-stream (used by FastAPI >= 0.129.1
+        // for UploadFile fields), treat it as format: binary for file upload detection.
+        const format =
+            schema.format ??
+            ((schema as Record<string, unknown>).contentMediaType === "application/octet-stream"
+                ? "binary"
+                : undefined);
         return {
             minLength: schema.minLength,
             maxLength: schema.maxLength,
             pattern: schema.pattern,
-            format: schema.format
+            format
         };
     }
 }

@@ -1,8 +1,7 @@
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { createEndpointRequest } from "../request/EndpointRequestFactory";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { createEndpointRequest } from "../request/EndpointRequestFactory.js";
 
 export function getEndpointRequest({
     context,
@@ -10,8 +9,8 @@ export function getEndpointRequest({
     serviceId
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-    serviceId: ServiceId;
+    endpoint: FernIr.HttpEndpoint;
+    serviceId: FernIr.ServiceId;
 }): EndpointRequest | undefined {
     if (endpoint.sdkRequest == null) {
         return undefined;

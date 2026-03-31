@@ -8,13 +8,14 @@ import {
     Reference
 } from "@fern-typescript/commons";
 
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         namespaceExport: string;
         containingDirectory: ExportedDirectory[];
         consolidateTypeFiles?: boolean;
+        namingOverride?: string;
     }
 }
 
@@ -23,14 +24,18 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     protected containingDirectory: ExportedDirectory[];
     protected consolidateTypeFiles: boolean;
 
+    protected namingOverride: string | undefined;
+
     constructor({
         namespaceExport,
         containingDirectory,
-        consolidateTypeFiles = false
+        consolidateTypeFiles = false,
+        namingOverride
     }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
         this.consolidateTypeFiles = consolidateTypeFiles;
+        this.namingOverride = namingOverride;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

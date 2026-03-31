@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { swift } from "../..";
-import { AccessLevel } from "../AccessLevel";
+import { swift } from "../../index.js";
+import { AccessLevel } from "../AccessLevel.js";
 
 describe("Method", () => {
     describe("write", () => {

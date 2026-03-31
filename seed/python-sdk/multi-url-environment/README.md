@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,10 +38,24 @@ Instantiate and use the client with the following:
 from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
+
 client.ec_2.boot_instance(
     size="size",
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedMultiUrlEnvironment
+from seed.environment import SeedMultiUrlEnvironmentEnvironment
+
+client = SeedMultiUrlEnvironment(
+    environment=SeedMultiUrlEnvironmentEnvironment.PRODUCTION,
 )
 ```
 
@@ -40,7 +69,7 @@ import asyncio
 from seed import AsyncSeedMultiUrlEnvironment
 
 client = AsyncSeedMultiUrlEnvironment(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
 
 
@@ -78,11 +107,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedMultiUrlEnvironment
 
-client = SeedMultiUrlEnvironment(
-    ...,
-)
+client = SeedMultiUrlEnvironment(...)
 response = client.ec_2.with_raw_response.boot_instance(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -111,14 +139,9 @@ client.ec_2.boot_instance(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedMultiUrlEnvironment
 
-client = SeedMultiUrlEnvironment(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedMultiUrlEnvironment(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.ec_2.boot_instance(..., request_options={

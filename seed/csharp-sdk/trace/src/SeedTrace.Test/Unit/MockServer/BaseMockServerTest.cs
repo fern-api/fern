@@ -6,14 +6,13 @@ using WireMock.Settings;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedTraceClient Client { get; set; } = null!;
+    protected SeedTraceClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()
@@ -26,6 +25,7 @@ public class BaseMockServerTest
         // Initialize the Client
         Client = new SeedTraceClient(
             "TOKEN",
+            "X_RANDOM_HEADER",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -11,6 +11,8 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQu
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import java.io.InputStream;
 
 public class ParamsClient {
     protected final ClientOptions clientOptions;
@@ -139,5 +141,33 @@ public class ParamsClient {
      */
     public String modifyWithInlinePath(ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
         return this.rawClient.modifyWithInlinePath(request, requestOptions).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, InputStream request) {
+        return this.rawClient.uploadWithPath(param, request).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, InputStream request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, byte[] request) {
+        return this.rawClient.uploadWithPath(param, request).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, byte[] request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).body();
     }
 }

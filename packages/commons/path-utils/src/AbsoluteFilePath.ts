@@ -1,5 +1,5 @@
-import { convertToOsPath } from "./convertToOsPath";
-import { isAbsolute } from "./isAbsolute";
+import { convertToOsPath } from "./convertToOsPath.js";
+import { isAbsolute } from "./isAbsolute.js";
 
 export type AbsoluteFilePath = string & {
     __AbsoluteFilePath: void;

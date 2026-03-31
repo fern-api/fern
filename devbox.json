@@ -2,29 +2,31 @@
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": [
     "nodejs@22",
-    "pnpm@9.4.0",
+    "pnpm@10.28.0",
     "go@1.23",
     "python@3.10",
     "poetry@1.8",
     "jdk@17",
-    "dotnet-sdk_10@latest",
     "buf@1.50.0",
-    "git-lfs@latest"
+    "git-lfs@latest",
+    "git@latest",
+    "docker@latest",
+    "bun@latest"
   ],
   "shell": {
     "init_hook": [
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
-      "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@dc6f6fa 2>/dev/null || true",
-      "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
       "echo 'Go:' $(go version)",
       "echo 'Python:' $(python --version)",
       "echo 'Java:' $(java --version 2>&1 | head -1)",
-      "echo '.NET:' $(dotnet --version)",
+      "if command -v dotnet >/dev/null 2>&1; then echo '.NET:' $(dotnet --version); else echo '.NET: not installed (required for C# generators - install from https://dotnet.microsoft.com/download)'; fi",
       "echo 'buf:' $(buf --version)",
-      "echo 'protoc-gen-openapi:' $(ls -l ~/go/bin/protoc-gen-openapi 2>/dev/null | awk '{print $6,$7,$8}' || echo 'not installed')"
+      "echo 'Bun:' $(bun --version 2>/dev/null || echo 'not available')",
+      "echo 'Docker:' $(docker --version 2>/dev/null || echo 'not available')",
+      "echo 'Fern development environment loaded!'"
     ],
     "scripts": {
       "install": "pnpm install",

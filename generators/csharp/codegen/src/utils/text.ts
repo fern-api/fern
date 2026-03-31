@@ -1,4 +1,4 @@
-import { is } from "./type-guards";
+import { is } from "./type-guards.js";
 
 /**
  * Capitalizes the first character of a string.

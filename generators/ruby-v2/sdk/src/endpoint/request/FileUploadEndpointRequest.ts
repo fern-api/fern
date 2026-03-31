@@ -1,22 +1,22 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { FileUploadBodyProperty, FileUploadRequest, HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class FileUploadEndpointRequest extends EndpointRequest {
-    private fileUploadRequest: FileUploadRequest;
+    private fileUploadRequest: FernIr.FileUploadRequest;
 
     public constructor(
         context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        endpoint: HttpEndpoint,
-        fileUploadRequest: FileUploadRequest
+        sdkRequest: FernIr.SdkRequest,
+        endpoint: FernIr.HttpEndpoint,
+        fileUploadRequest: FernIr.FileUploadRequest
     ) {
         super(context, sdkRequest, endpoint);
         this.fileUploadRequest = fileUploadRequest;
@@ -110,7 +110,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
         };
     }
 
-    private getFormDataPartForNonFileProperty(property: FileUploadBodyProperty): ruby.CodeBlock | undefined {
+    private getFormDataPartForNonFileProperty(property: FernIr.FileUploadBodyProperty): ruby.CodeBlock | undefined {
         const snakeCaseName = property.name.name.snakeCase.safeName;
         switch (property.style) {
             case "json":

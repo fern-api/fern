@@ -2255,7 +2255,8 @@
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_:DiscriminatedUnion1InlineType1",
@@ -3870,7 +3871,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4109,7 +4111,8 @@
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1",
@@ -4797,7 +4800,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -8527,6 +8531,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -9548,6 +9553,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -10562,6 +10568,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

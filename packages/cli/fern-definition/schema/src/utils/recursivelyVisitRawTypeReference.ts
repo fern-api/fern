@@ -1,7 +1,7 @@
 import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
 
-import { ValidationSchema } from "../schemas";
-import { visitRawTypeReference } from "./visitRawTypeReference";
+import { ValidationSchema } from "../schemas/index.js";
+import { visitRawTypeReference } from "./visitRawTypeReference.js";
 
 export interface RecursiveRawTypeReferenceVisitor<R> {
     primitive: (primitive: PrimitiveType) => R;

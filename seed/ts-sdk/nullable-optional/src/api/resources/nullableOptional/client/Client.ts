@@ -759,9 +759,9 @@ export class NullableOptionalClient {
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { role, status, secondaryRole } = request;
         const _queryParams: Record<string, unknown> = {
-            role: role !== undefined ? role : null,
+            role: role !== undefined ? role : undefined,
             status: status != null ? status : undefined,
-            secondaryRole: secondaryRole !== undefined ? secondaryRole : null,
+            secondaryRole: secondaryRole !== undefined ? secondaryRole : undefined,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

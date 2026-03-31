@@ -4,10 +4,27 @@ import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type FernFilepath = FernIr.FernFilepath;
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type TypeId = FernIr.TypeId;
+type WellKnownProtobufType = FernIr.WellKnownProtobufType;
+const WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 export class ModelGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -31,7 +48,6 @@ export class ModelGeneratorContext extends GeneratorContext {
                 getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
     }
 
     override getAsyncCoreAsIsFiles(): string[] {
@@ -66,21 +82,25 @@ export class ModelGeneratorContext extends GeneratorContext {
         // JSON stuff
         files.push(
             ...[
-                AsIsFiles.Json.CollectionItemSerializer,
                 AsIsFiles.Json.DateOnlyConverter,
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
-                AsIsFiles.Json.OneOfSerializer
+                AsIsFiles.Json.Nullable,
+                AsIsFiles.Json.Optional,
+                AsIsFiles.Json.OptionalAttribute
             ]
         );
 
+        // When use-undiscriminated-unions is false, include OneOf serialization support
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.CollectionItemSerializer);
+            files.push(AsIsFiles.Json.OneOfSerializer);
+        }
+
         if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
 
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
@@ -92,29 +112,22 @@ export class ModelGeneratorContext extends GeneratorContext {
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
+            AsIsFiles.Test.Json.AdditionalPropertiesTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
-            AsIsFiles.Test.Json.JsonAccessAttributeTests,
-            AsIsFiles.Test.Json.OneOfSerializerTests
+            AsIsFiles.Test.Json.JsonAccessAttributeTests
         ];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        }
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
+
+        // Only include OneOfSerializerTests when OneOf serialization is in use
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Test.Json.OneOfSerializerTests);
         }
 
         return files;
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.FileParameter];
-        if (this.settings.generateNewAdditionalProperties) {
-            files.push(AsIsFiles.Json.AdditionalProperties);
-        }
-        return files;
+        return [AsIsFiles.FileParameter, AsIsFiles.Json.AdditionalProperties];
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

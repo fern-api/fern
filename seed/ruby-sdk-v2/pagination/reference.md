@@ -14,17 +14,17 @@
 
 ```ruby
 client.complex.search(
-  index: 'index',
+  index: "index",
   pagination: {
     per_page: 1,
-    starting_after: 'starting_after'
+    starting_after: "starting_after"
   },
   query: {
-    field: 'field',
-    operator: '=',
-    value: 'value'
+    field: "field",
+    operator: "=",
+    value: "value"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -84,9 +84,9 @@ client.complex.search(
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -161,7 +161,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 'cursor');
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 ```
 </dd>
 </dl>
@@ -209,7 +209,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination();
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
 ```
 </dd>
 </dl>
@@ -263,9 +263,9 @@ in order to fetch the next page of results.
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -343,9 +343,9 @@ the next page of results.
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1.1,
   per_page: 1.1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -420,7 +420,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination();
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
 ```
 </dd>
 </dl>
@@ -473,8 +473,8 @@ in order to fetch the next page of results.
 ```ruby
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
-  order: 'asc'
-);
+  order: "asc"
+)
 ```
 </dd>
 </dl>
@@ -544,8 +544,8 @@ paginated endpoint.
 ```ruby
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
-  order: 'asc'
-);
+  order: "asc"
+)
 ```
 </dd>
 </dl>
@@ -613,7 +613,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination();
+client.inline_users.inline_users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -661,7 +661,7 @@ client.inline_users.inline_users.list_with_cursor_pagination();
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination();
+client.inline_users.inline_users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -709,7 +709,7 @@ client.inline_users.inline_users.list_with_cursor_pagination();
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(starting_after: 'starting_after');
+client.inline_users.inline_users.list_with_cursor_pagination(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -760,7 +760,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination();
+client.inline_users.inline_users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -812,9 +812,9 @@ client.inline_users.inline_users.list_with_cursor_pagination();
 client.users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -889,7 +889,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination(cursor: 'cursor');
+client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 ```
 </dd>
 </dl>
@@ -937,7 +937,7 @@ client.users.list_with_mixed_type_cursor_pagination(cursor: 'cursor');
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination();
+client.users.list_with_mixed_type_cursor_pagination
 ```
 </dd>
 </dl>
@@ -975,6 +975,84 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_top_level_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.users.list_with_top_level_body_cursor_pagination(
+  cursor: "initial_cursor",
+  filter: "active"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `String` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `String` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Users::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
@@ -991,9 +1069,9 @@ in order to fetch the next page of results.
 client.users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -1071,9 +1149,9 @@ the next page of results.
 client.users.list_with_cursor_pagination(
   page: 1.1,
   per_page: 1.1,
-  order: 'asc',
-  starting_after: 'starting_after'
-);
+  order: "asc",
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>
@@ -1148,7 +1226,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination();
+client.users.list_with_mixed_type_cursor_pagination
 ```
 </dd>
 </dl>
@@ -1201,8 +1279,8 @@ in order to fetch the next page of results.
 ```ruby
 client.users.list_with_cursor_pagination(
   page: 1,
-  order: 'asc'
-);
+  order: "asc"
+)
 ```
 </dd>
 </dl>
@@ -1272,8 +1350,8 @@ paginated endpoint.
 ```ruby
 client.users.list_with_cursor_pagination(
   page: 1,
-  order: 'asc'
-);
+  order: "asc"
+)
 ```
 </dd>
 </dl>
@@ -1341,7 +1419,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination();
+client.users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -1389,7 +1467,7 @@ client.users.list_with_cursor_pagination();
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination();
+client.users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -1437,7 +1515,7 @@ client.users.list_with_cursor_pagination();
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: 'starting_after');
+client.users.list_with_cursor_pagination(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -1488,7 +1566,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: 'starting_after');
+client.users.list_with_cursor_pagination(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -1539,7 +1617,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination();
+client.users.list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -1587,7 +1665,7 @@ client.users.list_with_cursor_pagination();
 <dd>
 
 ```ruby
-client.users.list_with_optional_data(page: 1);
+client.users.list_with_optional_data(page: 1)
 ```
 </dd>
 </dl>
@@ -1621,3 +1699,4 @@ client.users.list_with_optional_data(page: 1);
 </dd>
 </dl>
 </details>
+

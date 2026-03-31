@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get_union</a>() -> Result<UnionResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get_union</a>() -> Result&lt;UnionResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -34,7 +34,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">list_unions</a>() -> Result<UnionListResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">list_unions</a>() -> Result&lt;UnionListResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -68,3 +68,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

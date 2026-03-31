@@ -1,15 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import { ObjectProperty, SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UnionTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UnionTypeDeclaration
     ) {
         super(context, typeDeclaration);
     }
@@ -49,7 +49,7 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
         });
     }
 
-    private getFieldForUnionType(unionType: SingleUnionType): go.Field {
+    private getFieldForUnionType(unionType: FernIr.SingleUnionType): go.Field {
         const shape = unionType.shape;
         switch (shape.propertiesType) {
             case "samePropertiesAsObject": {
@@ -76,8 +76,8 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
         }
     }
 
-    private getAllObjectProperties(): ObjectProperty[] {
-        const extendedProperties: ObjectProperty[] = [];
+    private getAllObjectProperties(): FernIr.ObjectProperty[] {
+        const extendedProperties: FernIr.ObjectProperty[] = [];
         for (const extendedType of this.unionDeclaration.extends) {
             const extendedTypeDeclaration = this.context.getTypeDeclarationOrThrow(extendedType.typeId);
             if (extendedTypeDeclaration.shape.type === "object") {

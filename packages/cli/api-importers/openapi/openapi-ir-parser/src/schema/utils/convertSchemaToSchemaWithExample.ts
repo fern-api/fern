@@ -26,8 +26,11 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 fullExamples: undefined,
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
+                encoding: schema.encoding,
                 source: schema.source,
-                inline: undefined
+                inline: undefined,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "array":
             return SchemaWithExample.array({
@@ -40,7 +43,9 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 example: undefined,
-                inline: undefined
+                inline: undefined,
+                minItems: schema.minItems,
+                maxItems: schema.maxItems
             });
         case "enum":
             return SchemaWithExample.enum({
@@ -125,7 +130,9 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 groupName: schema.groupName,
                 encoding: schema.encoding,
                 example: undefined,
-                inline: undefined
+                inline: undefined,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "reference":
             return SchemaWithExample.reference({
@@ -145,12 +152,12 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
             return SchemaWithExample.unknown({
                 nameOverride: schema.nameOverride,
                 generatedName: schema.generatedName,
-                title: undefined,
+                title: schema.title,
                 example: undefined,
-                namespace: undefined,
-                groupName: undefined,
-                description: undefined,
-                availability: undefined
+                namespace: schema.namespace,
+                groupName: schema.groupName,
+                description: schema.description,
+                availability: schema.availability
             });
         default:
             assertNever(schema);
@@ -163,12 +170,12 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
             return SchemaWithExample.optional({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                title: undefined,
-                description: undefined,
-                availability: undefined,
+                title: schema.title,
+                description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema),
-                namespace: undefined,
-                groupName: undefined,
+                namespace: schema.namespace,
+                groupName: schema.groupName,
                 inline: undefined
             });
         case "object":
@@ -234,6 +241,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 discriminantProperty: oneOfSchema.discriminantProperty,
+                discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
+                discriminatorContext: oneOfSchema.discriminatorContext,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,
@@ -293,6 +302,10 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "datetime":
             return PrimitiveSchemaValueWithExample.datetime({
+                example: undefined
+            });
+        case "datetimeRfc2822":
+            return PrimitiveSchemaValueWithExample.datetimeRfc2822({
                 example: undefined
             });
         case "double":

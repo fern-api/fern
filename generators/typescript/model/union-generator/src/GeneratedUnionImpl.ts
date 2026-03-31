@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     FernWriters,
     getPropertyKey,
@@ -23,14 +23,13 @@ import {
     VariableStatementStructure,
     WriterFunction
 } from "ts-morph";
-import { FernIr } from "../../../../../packages/ir-sdk/src";
-import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
-import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
+import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType.js";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType.js";
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {
         typeName: string;
-        shape: UnionTypeDeclaration | undefined;
+        shape: FernIr.UnionTypeDeclaration | undefined;
         discriminant: string;
         getDocs: ((context: Context) => string | null | undefined) | undefined;
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
@@ -42,7 +41,7 @@ export declare namespace GeneratedUnionImpl {
          */
         includeConstBuilders?: boolean;
         includeOtherInUnionTypes: boolean;
-        baseProperties?: ObjectProperty[];
+        baseProperties?: FernIr.ObjectProperty[];
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
@@ -68,12 +67,12 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private readonly getDocs: ((context: Context) => string | null | undefined) | undefined;
     private readonly typeName: string;
-    private readonly shape: UnionTypeDeclaration | undefined;
+    private readonly shape: FernIr.UnionTypeDeclaration | undefined;
     private readonly parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private readonly unknownSingleUnionType: ParsedSingleUnionType<Context>;
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly includeOtherInUnionTypes: boolean;
-    private readonly baseProperties: ObjectProperty[];
+    private readonly baseProperties: FernIr.ObjectProperty[];
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly includeConstBuilders: boolean;
@@ -285,7 +284,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return this._getBasePropertyKey(baseProperty);
     }
 
-    private _getBasePropertyKey(baseProperty: ObjectProperty): string {
+    private _getBasePropertyKey(baseProperty: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return baseProperty.name.name.camelCase.unsafeName;
         } else {
@@ -426,11 +425,24 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return module;
     }
 
+    /**
+     * Returns the list of global TypeScript types that are shadowed by union member
+     * interface names in this union's namespace.
+     */
+    private getShadowedGlobalTypes(): string[] {
+        const interfaceNames = new Set(
+            this.getAllSingleUnionTypesForAlias().map((singleUnionType) => singleUnionType.getTypeName())
+        );
+        return GLOBAL_TS_TYPES.filter((t) => interfaceNames.has(t));
+    }
+
     private getSingleUnionTypeInterfaces(context: Context): StatementStructures[] {
         const statements: StatementStructures[] = [];
         const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
         );
+
+        const shadowedGlobalTypes = this.getShadowedGlobalTypes();
 
         for (const interface_ of interfaces) {
             const hasBaseInterfaces = this.hasBaseInterfaces(context);
@@ -470,7 +482,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 name: interface_.name,
                 isExported: true,
                 extends: interface_.extends.map((e) => getTextOfTsNode(e.typeNode)),
-                properties: interface_.properties.map((p) => p.property)
+                properties: interface_.properties.map((p) =>
+                    qualifyShadowedGlobalTypes(p.property, shadowedGlobalTypes)
+                )
             });
             if (interface_.module) {
                 statements.push(interface_.module);
@@ -502,7 +516,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                             name: "Request",
                             isExported: true,
                             extends: requestExtends.map((e) => getTextOfTsNode(e)),
-                            properties: requestProperties.map((p) => p.requestProperty ?? p.property)
+                            properties: requestProperties.map((p) =>
+                                qualifyShadowedGlobalTypes(p.requestProperty ?? p.property, shadowedGlobalTypes)
+                            )
                         });
                     }
                     if (anyResponseExtends || anyWriteonlyProperties || anyResponseProperties) {
@@ -511,7 +527,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                             name: "Response",
                             isExported: true,
                             extends: responseExtends.map((e) => getTextOfTsNode(e)),
-                            properties: responseProperties.map((p) => p.responseProperty ?? p.property)
+                            properties: responseProperties.map((p) =>
+                                qualifyShadowedGlobalTypes(p.responseProperty ?? p.property, shadowedGlobalTypes)
+                            )
                         });
                     }
 
@@ -656,6 +674,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     private getVisitorInterface(context: Context): InterfaceDeclarationStructure {
+        const shadowedGlobalTypes = this.getShadowedGlobalTypes();
         return {
             kind: StructureKind.Interface,
             name: GeneratedUnionImpl.VISITOR_INTERFACE_NAME,
@@ -667,7 +686,10 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             properties: this.getAllSingleUnionTypesIncludingUnknown().map<OptionalKind<PropertySignatureStructure>>(
                 (singleUnionType) => ({
                     name: getPropertyKey(singleUnionType.getVisitorKey()),
-                    type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
+                    type: qualifyShadowedGlobalTypeText(
+                        getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this)),
+                        shadowedGlobalTypes
+                    )
                 })
             ),
             isExported: true
@@ -716,13 +738,17 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             throw new Error("Cannot create builders because union has base properties");
         }
 
+        const shadowedGlobalTypes = this.getShadowedGlobalTypes();
         const singleUnionTypes = this.includeOtherInUnionTypes
             ? this.getAllSingleUnionTypesIncludingUnknown()
             : this.parsedSingleUnionTypes;
         for (const singleUnionType of singleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
-                value: getTextOfTsNode(singleUnionType.getBuilder(context, this))
+                value: qualifyShadowedGlobalTypeText(
+                    getTextOfTsNode(singleUnionType.getBuilder(context, this)),
+                    shadowedGlobalTypes
+                )
             });
             writer.addNewLine();
         }
@@ -776,9 +802,19 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                             [
                                                 ts.factory.createReturnStatement(
                                                     parsedSingleUnionType.invokeVisitMethod({
-                                                        localReferenceToUnionValue: ts.factory.createIdentifier(
-                                                            GeneratedUnionImpl.VISITEE_PARAMETER_NAME
-                                                        ),
+                                                        localReferenceToUnionValue: this.needsCastInVisitBranches()
+                                                            ? ts.factory.createAsExpression(
+                                                                  ts.factory.createIdentifier(
+                                                                      GeneratedUnionImpl.VISITEE_PARAMETER_NAME
+                                                                  ),
+                                                                  this.getReferenceToSingleUnionType(
+                                                                      parsedSingleUnionType,
+                                                                      context
+                                                                  )
+                                                              )
+                                                            : ts.factory.createIdentifier(
+                                                                  GeneratedUnionImpl.VISITEE_PARAMETER_NAME
+                                                              ),
                                                         localReferenceToVisitor: ts.factory.createIdentifier(
                                                             GeneratedUnionImpl.VISITOR_PARAMETER_NAME
                                                         )
@@ -807,6 +843,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 )
             )
         });
+    }
+
+    private needsCastInVisitBranches(): boolean {
+        if (!this.includeOtherInUnionTypes) {
+            return false;
+        }
+        const unknownDiscriminantType = this.unknownSingleUnionType.getDiscriminantValueType();
+        return unknownDiscriminantType.kind !== ts.SyntaxKind.VoidKeyword;
     }
 
     private getAllSingleUnionTypesForAlias(): ParsedSingleUnionType<Context>[] {
@@ -875,4 +919,54 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         }
         return singleUnionType;
     }
+}
+
+/**
+ * Global TypeScript types that can be shadowed by union member interfaces
+ * declared inside a namespace. When a union has a variant named e.g. "Date",
+ * the generated `export interface Date { ... }` inside the namespace shadows
+ * `globalThis.Date`. If a sibling interface references `Date` as a property
+ * type, it would incorrectly resolve to the local interface instead of the
+ * global built-in.
+ */
+const GLOBAL_TS_TYPES: string[] = ["Date", "Error", "Object", "File", "Record", "Map", "Set", "Promise", "Array"];
+
+/**
+ * Post-processes a property signature to qualify any type references that would
+ * be shadowed by sibling union member interfaces. For example, if the union has
+ * a `Date` interface, a property typed as `Date` becomes `globalThis.Date`.
+ */
+/**
+ * Replaces standalone occurrences of shadowed global type names with globalThis-qualified
+ * versions in a type text string. For example, if "Date" is shadowed, `"Date"` becomes
+ * `"globalThis.Date"` while `"SeedApi.Date"` and `"DateRange"` are left unchanged.
+ */
+function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
+    if (shadowedGlobalTypes.length === 0) {
+        return typeText;
+    }
+    for (const globalType of shadowedGlobalTypes) {
+        // Replace standalone occurrences of the global type name with globalThis-qualified version.
+        // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
+        // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
+        const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
+        typeText = typeText.replace(pattern, `globalThis.${globalType}`);
+    }
+    return typeText;
+}
+
+function qualifyShadowedGlobalTypes(
+    property: PropertySignatureStructure,
+    shadowedGlobalTypes: string[]
+): PropertySignatureStructure {
+    if (shadowedGlobalTypes.length === 0 || property.type == null || typeof property.type !== "string") {
+        return property;
+    }
+
+    const qualifiedType = qualifyShadowedGlobalTypeText(property.type, shadowedGlobalTypes);
+    if (qualifiedType === property.type) {
+        return property;
+    }
+
+    return { ...property, type: qualifiedType };
 }

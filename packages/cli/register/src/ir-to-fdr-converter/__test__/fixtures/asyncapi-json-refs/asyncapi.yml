@@ -1,0 +1,39 @@
+asyncapi: 2.6.0
+info:
+  title: Plant Store Events API
+  version: 1.0.0
+  description: Real-time events for the Plant Store
+
+servers:
+  production:
+    url: wss://events.plantstore.dev
+    protocol: wss
+    description: Production WebSocket server
+
+channels:
+  plant/updates:
+    description: Receive real-time plant inventory updates
+    subscribe:
+      operationId: onPlantUpdate
+      summary: Plant inventory update event
+      message:
+        payload:
+          $ref: "./schemas/schemas.speak.v1.yml#/SpeakV1Encoding"
+
+  plant/orders:
+    description: Receive order status notifications
+    subscribe:
+      operationId: onOrderUpdate
+      summary: Order status change event
+      message:
+        payload:
+          type: object
+          properties:
+            orderId:
+              type: integer
+            status:
+              type: string
+              enum: [placed, processing, shipped, delivered]
+            timestamp:
+              type: string
+              format: date-time

@@ -513,4 +513,72 @@ export class ParamsClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
     }
+
+    /**
+     * POST bytes with path param returning object
+     *
+     * @param {core.file.Uploadable} uploadable
+     * @param {string} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
+     */
+    public uploadWithPath(
+        uploadable: core.file.Uploadable,
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(this.__uploadWithPath(uploadable, param, requestOptions));
+    }
+
+    private async __uploadWithPath(
+        uploadable: core.file.Uploadable,
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            _binaryUploadRequest.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            requestType: "bytes",
+            duplex: "half",
+            body: _binaryUploadRequest.body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
+    }
 }

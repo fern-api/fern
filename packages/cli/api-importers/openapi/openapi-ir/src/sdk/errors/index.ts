@@ -1,2 +1,2 @@
-export { FernOpenapiIrError } from "./FernOpenapiIrError";
-export { FernOpenapiIrTimeoutError } from "./FernOpenapiIrTimeoutError";
+export { FernOpenapiIrError } from "./FernOpenapiIrError.js";
+export { FernOpenapiIrTimeoutError } from "./FernOpenapiIrTimeoutError.js";

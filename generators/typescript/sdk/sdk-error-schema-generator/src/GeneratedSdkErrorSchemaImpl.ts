@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkErrorSchema, SdkContext } from "@fern-typescript/contexts";
@@ -8,8 +8,8 @@ import { ModuleDeclaration, ts } from "ts-morph";
 export declare namespace GeneratedSdkErrorSchemaImpl {
     export interface Init {
         errorName: string;
-        errorDeclaration: ErrorDeclaration;
-        type: TypeReference;
+        errorDeclaration: FernIr.ErrorDeclaration;
+        type: FernIr.TypeReference;
         skipValidation: boolean;
         includeSerdeLayer: boolean;
     }
@@ -19,8 +19,8 @@ export class GeneratedSdkErrorSchemaImpl
     extends AbstractGeneratedSchema<SdkContext>
     implements GeneratedSdkErrorSchema
 {
-    private errorDeclaration: ErrorDeclaration;
-    private type: TypeReference;
+    private errorDeclaration: FernIr.ErrorDeclaration;
+    private type: FernIr.TypeReference;
     private skipValidation: boolean;
     private includeSerdeLayer: boolean;
 

@@ -3,9 +3,9 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.ReqWithHeaders;
 
-public partial class ReqWithHeadersClient
+public partial class ReqWithHeadersClient : IReqWithHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReqWithHeadersClient(RawClient client)
     {
@@ -28,18 +28,18 @@ public partial class ReqWithHeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
-                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-            }
-        );
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add("X-TEST-SERVICE-HEADER", request.XTestServiceHeader)
+            .Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/test-headers/custom-header",
                     Body = request.Body,
@@ -54,7 +54,9 @@ public partial class ReqWithHeadersClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

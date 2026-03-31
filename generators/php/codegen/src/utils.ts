@@ -1,4 +1,4 @@
-import { PHP_RESERVED_KEYWORDS } from "./constants";
+import { PHP_RESERVED_KEYWORDS } from "./constants.js";
 
 /**
  * Returns a safe class name, adding a trailing underscore if the name

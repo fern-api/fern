@@ -16,8 +16,8 @@
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": "[object Object]",
-                    "Request-Timeout-Millis": "[object Object]",
+                    "Request-Timeout": "Request-Timeout",
+                    "Request-Timeout-Millis": "Request-Timeout-Millis",
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -70,8 +70,8 @@
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": "[object Object]",
-                    "Request-Timeout-Millis": "[object Object]",
+                    "Request-Timeout": "Request-Timeout",
+                    "Request-Timeout-Millis": "Request-Timeout-Millis",
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -104,13 +104,14 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ChatStreamRequest",
+                "name": "ChatRequestStreaming",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "ChatStreamedResponse",
               },
               "source": {
@@ -138,6 +139,24 @@
               "turn_id": {
                 "docs": "If the chat response was stored, the ID of the turn.",
                 "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ChatRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "query": {
+                "docs": "The chat message or question.",
+                "type": "string",
+              },
+              "stream_response": {
+                "default": false,
+                "docs": "Indicates whether the response should be streamed or not.",
+                "type": "optional<nullable<boolean>>",
               },
             },
             "source": {
@@ -173,7 +192,7 @@
         openapi: ../openapi.yml
       display-name: Start a chat
       request:
-        name: ChatStreamRequest
+        name: ChatRequestStreaming
         body:
           properties:
             query:
@@ -189,8 +208,8 @@
         format: json
       examples:
         - headers:
-            Request-Timeout: '[object Object]'
-            Request-Timeout-Millis: '[object Object]'
+            Request-Timeout: Request-Timeout
+            Request-Timeout-Millis: Request-Timeout-Millis
           request:
             query: How can I use the Vectara platform?
             stream_response: true
@@ -223,8 +242,8 @@
         status-code: 200
       examples:
         - headers:
-            Request-Timeout: '[object Object]'
-            Request-Timeout-Millis: '[object Object]'
+            Request-Timeout: Request-Timeout
+            Request-Timeout-Millis: Request-Timeout-Millis
           request:
             query: How can I use the Vectara platform?
             stream_response: false
@@ -236,6 +255,17 @@
   source:
     openapi: ../openapi.yml
 types:
+  ChatRequest:
+    properties:
+      query:
+        type: string
+        docs: The chat message or question.
+      stream_response:
+        type: optional<nullable<boolean>>
+        docs: Indicates whether the response should be streamed or not.
+        default: false
+    source:
+      openapi: ../openapi.yml
   ChatFullResponse:
     docs: Full response to a chat question when the result is not streamed.
     properties:

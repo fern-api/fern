@@ -19,29 +19,43 @@ class DeserializationTestRequest(UniversalBaseModel):
     Request body for testing deserialization of null values
     """
 
-    required_string: typing_extensions.Annotated[str, FieldMetadata(alias="requiredString")]
-    nullable_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nullableString")] = None
-    optional_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="optionalString")] = None
+    required_string: typing_extensions.Annotated[
+        str, FieldMetadata(alias="requiredString"), pydantic.Field(alias="requiredString")
+    ]
+    nullable_string: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="nullableString"), pydantic.Field(alias="nullableString")
+    ] = None
+    optional_string: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="optionalString"), pydantic.Field(alias="optionalString")
+    ] = None
     optional_nullable_string: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="optionalNullableString")
+        typing.Optional[str],
+        FieldMetadata(alias="optionalNullableString"),
+        pydantic.Field(alias="optionalNullableString"),
     ] = None
-    nullable_enum: typing_extensions.Annotated[typing.Optional[UserRole], FieldMetadata(alias="nullableEnum")] = None
-    optional_enum: typing_extensions.Annotated[typing.Optional[UserStatus], FieldMetadata(alias="optionalEnum")] = None
+    nullable_enum: typing_extensions.Annotated[
+        typing.Optional[UserRole], FieldMetadata(alias="nullableEnum"), pydantic.Field(alias="nullableEnum")
+    ] = None
+    optional_enum: typing_extensions.Annotated[
+        typing.Optional[UserStatus], FieldMetadata(alias="optionalEnum"), pydantic.Field(alias="optionalEnum")
+    ] = None
     nullable_union: typing_extensions.Annotated[
-        typing.Optional[NotificationMethod], FieldMetadata(alias="nullableUnion")
+        typing.Optional[NotificationMethod], FieldMetadata(alias="nullableUnion"), pydantic.Field(alias="nullableUnion")
     ] = None
-    optional_union: typing_extensions.Annotated[typing.Optional[SearchResult], FieldMetadata(alias="optionalUnion")] = (
-        None
-    )
+    optional_union: typing_extensions.Annotated[
+        typing.Optional[SearchResult], FieldMetadata(alias="optionalUnion"), pydantic.Field(alias="optionalUnion")
+    ] = None
     nullable_list: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="nullableList")
+        typing.Optional[typing.List[str]], FieldMetadata(alias="nullableList"), pydantic.Field(alias="nullableList")
     ] = None
     nullable_map: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, int]], FieldMetadata(alias="nullableMap")
+        typing.Optional[typing.Dict[str, int]], FieldMetadata(alias="nullableMap"), pydantic.Field(alias="nullableMap")
     ] = None
-    nullable_object: typing_extensions.Annotated[typing.Optional[Address], FieldMetadata(alias="nullableObject")] = None
+    nullable_object: typing_extensions.Annotated[
+        typing.Optional[Address], FieldMetadata(alias="nullableObject"), pydantic.Field(alias="nullableObject")
+    ] = None
     optional_object: typing_extensions.Annotated[
-        typing.Optional[Organization], FieldMetadata(alias="optionalObject")
+        typing.Optional[Organization], FieldMetadata(alias="optionalObject"), pydantic.Field(alias="optionalObject")
     ] = None
 
     if IS_PYDANTIC_V2:

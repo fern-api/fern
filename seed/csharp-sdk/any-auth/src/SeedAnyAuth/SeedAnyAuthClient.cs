@@ -2,13 +2,11 @@ using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
-public partial class SeedAnyAuthClient
+public partial class SeedAnyAuthClient : ISeedAnyAuthClient
 {
     private readonly RawClient _client;
 
     public SeedAnyAuthClient(
-        string clientId,
-        string clientSecret,
         string? token = null,
         string? apiKey = null,
         string? clientId = null,
@@ -42,44 +40,59 @@ public partial class SeedAnyAuthClient
             "MY_PASSWORD",
             "Please pass in password or set the environment variable MY_PASSWORD."
         );
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
-                { "X-API-Key", apiKey },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAnyAuth" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernany-auth/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "Authorization", $"Bearer {token}" },
+                { "X-API-Key", apiKey },
+            }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        if (username != null && password != null)
+        {
+            clientOptionsWithAuth.Headers["Authorization"] =
+                $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
+        }
         var inferredAuthProvider = new InferredAuthTokenProvider(
             clientId,
             clientSecret,
-            new AuthClient(new RawClient(clientOptions.Clone()))
+            new AuthClient(new RawClient(clientOptions))
         );
-        clientOptions.Headers["Authorization"] =
+        clientOptionsWithAuth.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
                 (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
                     .First()
                     .Value
             );
-        _client = new RawClient(clientOptions);
+        _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

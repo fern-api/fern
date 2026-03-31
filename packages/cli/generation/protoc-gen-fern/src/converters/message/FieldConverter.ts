@@ -2,12 +2,12 @@ import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/proto
 
 import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-import { getAvailability } from "../../commons/availability";
-import { PRIMITIVE_TYPES } from "../../commons/ProtobufSettings";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { ArrayFieldConverter } from "./ArrayFieldConverter";
-import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
-import { PrimitiveFieldConverter } from "./PrimitiveFieldConverter";
+import { getAvailability } from "../../commons/availability.js";
+import { PRIMITIVE_TYPES } from "../../commons/ProtobufSettings.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { ArrayFieldConverter } from "./ArrayFieldConverter.js";
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter.js";
+import { PrimitiveFieldConverter } from "./PrimitiveFieldConverter.js";
 
 export declare namespace FieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

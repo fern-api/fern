@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Auth\AuthClient;
 use Seed\Simple\SimpleClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Core\OAuthTokenProvider;
 

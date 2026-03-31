@@ -1,9 +1,4 @@
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{
-    Address, DeserializationTestRequest, Document, EmailNotification, NotificationMethod,
-    NullableUserId, OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification,
-    UserResponse, UserRole, UserStatus,
-};
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +14,7 @@ async fn main() {
                 required_string: "requiredString".to_string(),
                 nullable_string: Some("nullableString".to_string()),
                 optional_string: Some("optionalString".to_string()),
-                optional_nullable_string: Some(Some("optionalNullableString".to_string())),
+                optional_nullable_string: Some("optionalNullableString".to_string()),
                 nullable_enum: Some(UserRole::Admin),
                 optional_enum: Some(UserStatus::Active),
                 nullable_union: Some(NotificationMethod::Email {
@@ -27,6 +22,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 optional_union: Some(SearchResult::User {
@@ -35,23 +31,21 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
                             city: Some("city".to_string()),
                             state: Some("state".to_string()),
                             zip_code: "zipCode".to_string(),
-                            country: Some(Some("country".to_string())),
+                            country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_list: Some(vec!["nullableList".to_string(), "nullableList".to_string()]),
@@ -61,16 +55,19 @@ async fn main() {
                     city: Some("city".to_string()),
                     state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
-                    country: Some(Some("country".to_string())),
+                    country: Some("country".to_string()),
                     building_id: NullableUserId(Some("buildingId".to_string())),
                     tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
                 }),
                 optional_object: Some(Organization {
                     id: "id".to_string(),
                     name: "name".to_string(),
                     domain: Some("domain".to_string()),
                     employee_count: Some(1),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )

@@ -5,6 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/file-upload/fern/internal"
 )
 
@@ -195,4 +196,31 @@ func (m *MyInlineType) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
+}
+
+type ModelType = string
+
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA = "OPTION_A"
+	OpenEnumTypeOptionB = "OPTION_B"
+	OpenEnumTypeOptionC = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
 }

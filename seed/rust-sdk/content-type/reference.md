@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: PatchProxyRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: PatchProxyRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,6 +27,7 @@ async fn main() {
             &PatchProxyRequest {
                 application: Some("application".to_string()),
                 require_auth: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -66,7 +67,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch_complex</a>(id: String, request: PatchComplexRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch_complex</a>(id: String, request: PatchComplexRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -117,14 +118,15 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-                email: Some(Some("email".to_string())),
-                nickname: Some(Some("nickname".to_string())),
-                bio: Some(Some("bio".to_string())),
-                profile_image_url: Some(Some("profileImageUrl".to_string())),
-                settings: Some(Some(HashMap::from([(
+                email: Some("email".to_string()),
+                nickname: Some("nickname".to_string()),
+                bio: Some("bio".to_string()),
+                profile_image_url: Some("profileImageUrl".to_string()),
+                settings: Some(HashMap::from([(
                     "settings".to_string(),
                     serde_json::json!({"key":"value"}),
-                )]))),
+                )])),
+                ..Default::default()
             },
             None,
         )
@@ -236,7 +238,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">named_patch_with_mixed</a>(id: String, request: NamedMixedPatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">named_patch_with_mixed</a>(id: String, request: NamedMixedPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -280,6 +282,7 @@ async fn main() {
                 app_id: Some("appId".to_string()),
                 instructions: Some("instructions".to_string()),
                 active: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -335,7 +338,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optional_merge_patch_test</a>(request: OptionalMergePatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optional_merge_patch_test</a>(request: OptionalMergePatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -445,7 +448,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regular_patch</a>(id: String, request: RegularPatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regular_patch</a>(id: String, request: RegularPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -487,6 +490,7 @@ async fn main() {
             &RegularPatchRequest {
                 field_1: Some("field1".to_string()),
                 field_2: Some(1),
+                ..Default::default()
             },
             None,
         )
@@ -533,3 +537,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

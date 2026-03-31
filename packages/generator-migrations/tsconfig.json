@@ -1,0 +1,10 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "composite": false
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/*", "./src/**/*.test.ts"]
+}

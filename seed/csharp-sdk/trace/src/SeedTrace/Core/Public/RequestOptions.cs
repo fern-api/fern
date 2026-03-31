@@ -6,11 +6,6 @@ namespace SeedTrace;
 public partial class RequestOptions : IRequestOptions
 {
     /// <summary>
-    /// The http headers sent with the request.
-    /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
-
-    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string? BaseUrl { get;
@@ -36,7 +31,7 @@ public partial class RequestOptions : IRequestOptions
     /// Additional headers to be sent with the request.
     /// Headers previously set with matching keys will be overwritten.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
+    public IEnumerable<global::System.Collections.Generic.KeyValuePair<
         string,
         string?
     >> AdditionalHeaders { get;
@@ -48,7 +43,7 @@ public partial class RequestOptions : IRequestOptions
     } = [];
 
     /// <summary>
-    /// The http client used to make requests.
+    /// The max number of retries to attempt.
     /// </summary>
     public int? MaxRetries { get;
 #if NET5_0_OR_GREATER
@@ -72,7 +67,7 @@ public partial class RequestOptions : IRequestOptions
     /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
+    public IEnumerable<global::System.Collections.Generic.KeyValuePair<
         string,
         string
     >> AdditionalQueryParameters { get;
@@ -81,7 +76,7 @@ public partial class RequestOptions : IRequestOptions
 #else
         set;
 #endif
-    } = Enumerable.Empty<System.Collections.Generic.KeyValuePair<string, string>>();
+    } = Enumerable.Empty<global::System.Collections.Generic.KeyValuePair<string, string>>();
 
     /// <summary>
     /// Additional body properties sent with the request.

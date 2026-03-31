@@ -6,6 +6,7 @@ package com.seed.exhaustive.resources.endpoints.container;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.union.types.MixedType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -92,8 +93,26 @@ public class AsyncContainerClient {
                 .thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+            Map<String, MixedType> request) {
+        return this.rawClient
+                .getAndReturnMapOfPrimToUndiscriminatedUnion(request)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+            Map<String, MixedType> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
         return this.rawClient.getAndReturnOptional().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnOptional(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(

@@ -2,7 +2,7 @@ import { FernIr, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { DisplayNameExtension } from "../extensions/x-display-name";
+import { DisplayNameExtension } from "../extensions/x-display-name.js";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -48,6 +48,8 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         if (typeId == null) {
             return { ok: false };
         }
+        // Use raw schema name for display purposes (not namespaced)
+        const rawSchemaName = this.getRawSchemaNameFromReference(reference) ?? typeId;
         const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference, breadcrumbs });
         if (!resolvedReference.resolved) {
             return { ok: false };
@@ -93,7 +95,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                     packagePath: [],
                     file: undefined
                 },
-                name: this.casingsGenerator.generateName(typeId),
+                name: this.casingsGenerator.generateName(rawSchemaName),
                 typeId,
                 default: undefined,
                 inline: false,

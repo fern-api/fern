@@ -68,6 +68,6 @@ export namespace VariableValue {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

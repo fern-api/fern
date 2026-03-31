@@ -2,7 +2,7 @@ import { FernFile, ParsedFernFile } from "@fern-api/api-workspace-commons";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import yaml from "js-yaml";
 
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 export declare namespace Parser {
     export type Result = SuccessfulResult | FailedResult;

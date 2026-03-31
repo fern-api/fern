@@ -7,6 +7,7 @@ from .first_item_type import FirstItemType
 from .foo import Foo
 from .foo_extended import FooExtended
 from .second_item_type import SecondItemType
+from .type_with_optional_map import TypeWithOptionalMap
 from .union import Union, Union_Bar, Union_Foo
 from .union_with_base_properties import (
     UnionWithBaseProperties,
@@ -40,6 +41,16 @@ from .union_with_multiple_no_properties import (
     UnionWithMultipleNoProperties_Foo,
 )
 from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
+from .union_with_nullable_reference import (
+    UnionWithNullableReference,
+    UnionWithNullableReference_Bar,
+    UnionWithNullableReference_Foo,
+)
+from .union_with_optional_reference import (
+    UnionWithOptionalReference,
+    UnionWithOptionalReference_Bar,
+    UnionWithOptionalReference_Foo,
+)
 from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime
 from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
 from .union_with_same_number_types import (
@@ -65,6 +76,7 @@ __all__ = [
     "Foo",
     "FooExtended",
     "SecondItemType",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -93,6 +105,12 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithNoProperties_Empty",
     "UnionWithNoProperties_Foo",
+    "UnionWithNullableReference",
+    "UnionWithNullableReference_Bar",
+    "UnionWithNullableReference_Foo",
+    "UnionWithOptionalReference",
+    "UnionWithOptionalReference_Bar",
+    "UnionWithOptionalReference_Foo",
     "UnionWithOptionalTime",
     "UnionWithOptionalTime_Date",
     "UnionWithOptionalTime_Datetime",

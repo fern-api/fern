@@ -5,6 +5,22 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -13,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:trace'
+  implementation 'com.fern:trace:0.0.1'
 }
 ```
 
@@ -200,7 +216,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-UpdateTestSubmissionStatusHttpResponse response = client.admin().withRawResponse().updateTestSubmissionStatus(...);
+SeedTraceHttpResponse response = client.admin().withRawResponse().updateTestSubmissionStatus(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

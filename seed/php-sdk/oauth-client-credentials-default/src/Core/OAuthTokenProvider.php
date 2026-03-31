@@ -5,6 +5,7 @@ namespace Seed\Core;
 use Seed\Auth\AuthClient;
 use DateTime;
 use Seed\Auth\Requests\GetTokenRequest;
+use Seed\Exceptions\SeedException;
 
 /**
  * The OAuthTokenProvider retrieves an OAuth access token, refreshing it as needed.
@@ -86,6 +87,10 @@ class OAuthTokenProvider
         ]);
 
         $tokenResponse = $this->authClient->getToken($request);
+
+        if ($tokenResponse === null) {
+            throw new SeedException(message: "Expected a token response, but received an empty response.");
+        }
 
         $this->accessToken = $tokenResponse->accessToken;
         $this->expiresAt = $this->getExpiresAt($tokenResponse->expiresIn, $this->BUFFER_IN_MINUTES);

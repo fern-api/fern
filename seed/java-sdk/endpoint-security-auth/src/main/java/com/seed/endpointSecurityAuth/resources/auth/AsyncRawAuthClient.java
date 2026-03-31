@@ -5,6 +5,7 @@ package com.seed.endpointSecurityAuth.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
+import com.seed.endpointSecurityAuth.core.EndpointMetadata;
 import com.seed.endpointSecurityAuth.core.MediaTypes;
 import com.seed.endpointSecurityAuth.core.ObjectMappers;
 import com.seed.endpointSecurityAuth.core.RequestOptions;
@@ -14,6 +15,8 @@ import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthHttpResponse;
 import com.seed.endpointSecurityAuth.resources.auth.requests.GetTokenRequest;
 import com.seed.endpointSecurityAuth.resources.auth.types.TokenResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,10 +42,14 @@ public class AsyncRawAuthClient {
 
     public CompletableFuture<SeedEndpointSecurityAuthHttpResponse<TokenResponse>> getToken(
             GetTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token")
-                .build();
+                .addPathSegments("token");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -50,10 +57,12 @@ public class AsyncRawAuthClient {
         } catch (JsonProcessingException e) {
             throw new SeedEndpointSecurityAuthException("Failed to serialize request", e);
         }
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.empty()));
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(_headers))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();

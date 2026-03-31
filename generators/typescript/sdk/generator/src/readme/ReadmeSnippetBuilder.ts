@@ -2,7 +2,7 @@ import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { readFileSync } from "fs";
@@ -11,13 +11,13 @@ import { join } from "path";
 import { Code, code } from "ts-poet";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: FernIr.HttpEndpoint;
+    fernFilepath: FernIr.FernFilepath;
 }
 
 interface EndpointWithRequest {
-    endpoint: HttpEndpoint;
-    requestWrapper: SdkRequestWrapper;
+    endpoint: FernIr.HttpEndpoint;
+    requestWrapper: FernIr.SdkRequestWrapper;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -37,13 +37,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
     public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
     public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
+    private static readonly CUSTOM_FETCH_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCH";
+    private static readonly CUSTOM_FETCHER_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCHER";
+    private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
+    private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
-    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly snippets: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
+    private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
+    private readonly snippets: Record<FernIr.EndpointId, string> = {};
+    private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageName: string;
     private readonly rootClientConstructorName: string;
     private readonly clientVariableName: string;
@@ -54,17 +58,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         context,
         endpointSnippets,
         fileResponseType,
+        allowCustomFetcher,
         generateSubpackageExports
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
+        allowCustomFetcher: boolean;
         generateSubpackageExports: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.allowCustomFetcher = allowCustomFetcher;
         this.generateSubpackageExports = generateSubpackageExports;
 
         this.endpoints = this.buildEndpoints();
@@ -97,9 +104,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
+        snippets[ReadmeSnippetBuilder.CUSTOM_FETCH_FEATURE_ID] = this.buildCustomFetchSnippets();
+        snippets[ReadmeSnippetBuilder.CUSTOM_FETCHER_FEATURE_ID] = this.buildCustomFetcherSnippets();
+
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        }
 
         if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+            const paginationSnippets = this.buildPaginationSnippets();
+            if (paginationSnippets.length > 0) {
+                snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = paginationSnippets;
+            }
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
@@ -124,7 +140,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
+    private getExplicitlyConfiguredSnippets(featureId: FernIr.FeatureId): string[] | undefined {
         const endpointIds = this.getEndpointIdsForFeature(featureId);
         if (endpointIds != null) {
             return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter(isNonNullish);
@@ -480,6 +496,26 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         ];
     }
 
+    private buildCustomFetchSnippets(): string[] {
+        return [
+            this.writeCode(
+                code`
+const response = await ${this.clientVariableName}.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
+    },
+});
+
+const data = await response.json();
+`
+            )
+        ];
+    }
+
     private buildAuthenticationSnippets(): string[] | false {
         // Return false to explicitly skip snippets - the full description is built in buildAuthenticationDescription()
         return false;
@@ -515,7 +551,10 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         );
     }
 
-    private buildRuntimeCompatibilitySnippets(): string[] {
+    private buildCustomFetcherSnippets(): string[] | false {
+        if (!this.allowCustomFetcher) {
+            return false;
+        }
         const snippet = this.writeCode(
             code`
 import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";
@@ -529,16 +568,58 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return [snippet];
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
+    private buildRuntimeCompatibilitySnippets(): string[] {
+        return [];
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const environmentEnumName = `${this.context.namespaceExport}Environment`;
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        return [
+            this.writeCode(
+                code`
+import { ${this.rootClientConstructorName}, ${environmentEnumName} } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    environment: ${environmentEnumName}.${defaultEnvName},
+});
+`
+            )
+        ];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return defaultEnv.name.pascalCase.unsafeName;
+            }
+        }
+        return envs[0]?.name.pascalCase.unsafeName;
+    }
+
+    private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getEndpointIdsForFeature(featureId);
         return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
     }
 
-    private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
+    private getEndpoints(endpointIds: FernIr.EndpointId[]): EndpointWithFilepath[] {
         return endpointIds.map((endpointId) => {
             const endpoint = this.endpoints[endpointId];
             if (endpoint == null) {
@@ -548,8 +629,8 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         });
     }
 
-    private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+    private buildEndpoints(): Record<FernIr.EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
@@ -561,8 +642,8 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return endpoints;
     }
 
-    private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+    private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<FernIr.EndpointId, string> {
+        const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
@@ -572,7 +653,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippets;
     }
 
-    private getSnippetForEndpointIdOrThrow(endpointId: EndpointId): string {
+    private getSnippetForEndpointIdOrThrow(endpointId: FernIr.EndpointId): string {
         const snippet = this.getSnippetForEndpointId(endpointId);
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
@@ -580,7 +661,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippet;
     }
 
-    private getSnippetForEndpointId(endpointId: EndpointId): string | undefined {
+    private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string | undefined {
         return this.snippets[endpointId];
     }
 
@@ -659,14 +740,14 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
-    private getAccessFromRootClient(fernFilepath: FernFilepath): string {
+    private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
         const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.unsafeName);
         return clientAccessParts.length > 0
             ? `${this.clientVariableName}.${clientAccessParts.join(".")}`
             : this.clientVariableName;
     }
 
-    private getEndpointMethodName(endpoint: HttpEndpoint): string {
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 

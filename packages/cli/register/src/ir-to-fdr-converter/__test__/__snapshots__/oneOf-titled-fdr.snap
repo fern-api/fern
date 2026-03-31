@@ -6,6 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -43,6 +44,7 @@
           "description": "Demonstrates oneOf with title field per OpenAPI spec.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -170,6 +172,7 @@
               },
             },
           },
+          "responseHeaders": [],
           "responsesV2": {
             "responses": [
               {
@@ -190,6 +193,7 @@
           "slug": undefined,
         },
       ],
+      "graphqlOperations": [],
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",
@@ -248,8 +252,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -339,8 +346,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },

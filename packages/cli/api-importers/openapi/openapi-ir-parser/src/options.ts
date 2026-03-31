@@ -102,6 +102,35 @@ export interface ParseOpenAPIOptions {
      * The order to use for path parameters in generated code.
      */
     pathParameterOrder: generatorsYml.PathParameterOrder;
+
+    /**
+     * If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.
+     * If false, throw hard errors when schema collisions are detected.
+     * Defaults to false.
+     */
+    resolveSchemaCollisions: boolean;
+
+    /**
+     * If true, infer forward-compatible enums expressed as `oneOf: [enum, string]` or `anyOf: [enum, string]`
+     * in OpenAPI specs, and lower them to a single enum type with the `forwardCompatible` flag set to true.
+     * Defaults to false.
+     */
+    inferForwardCompatible: boolean;
+
+    /**
+     * Controls how `const` values in OpenAPI specs are represented.
+     * - `literals`: Convert const values directly to literals with defaults.
+     * - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+     * - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+     * Defaults to `enums-coerceable-to-literals`.
+     */
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals";
+
+    /**
+     * If true, treat OpenAPI `type: string, format: byte` as a base64/bytes primitive
+     * instead of a plain string. Defaults to false.
+     */
+    respectByteFormat: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -136,7 +165,11 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceOptionalSchemasToNullable: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
-    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder
+    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
+    resolveSchemaCollisions: false,
+    inferForwardCompatible: false,
+    coerceConstsTo: "enums-coerceable-to-literals",
+    respectByteFormat: false
 };
 
 function mergeOptions<T extends object>(params: {

@@ -81,6 +81,10 @@ public final class ExpressionLocation {
 
     public interface _FinalStage {
         ExpressionLocation build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -118,6 +122,18 @@ public final class ExpressionLocation {
         @java.lang.Override
         public ExpressionLocation build() {
             return new ExpressionLocation(start, offset, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

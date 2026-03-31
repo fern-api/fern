@@ -3,7 +3,7 @@ import { keys } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 type CircularImports = Record<RelativeFilePath, CircularImport[]>;
 

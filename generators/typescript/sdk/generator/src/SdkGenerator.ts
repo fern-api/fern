@@ -1,19 +1,10 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    Subpackage,
-    TypeDeclaration,
-    TypeId,
-    WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
 import {
     AsIsManager,
     BundledTypescriptProject,
@@ -52,31 +43,33 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, Project, SourceFile, ts } from "ts-morph";
-import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
-import { SdkContextImpl } from "./contexts/SdkContextImpl";
-import { ContributingGenerator } from "./contributing/ContributingGenerator";
-import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer";
-import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
-import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
-import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
-import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
-import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
-import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
-import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
-import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
-import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
-import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
-import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
-import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
-import { TestGenerator } from "./test-generator/TestGenerator";
-import { VersionFileGenerator } from "./version/VersionFileGenerator";
-import { VersionGenerator } from "./version/VersionGenerator";
+import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
+import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl.js";
+import { SdkContextImpl } from "./contexts/SdkContextImpl.js";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
+import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer.js";
+import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer.js";
+import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer.js";
+import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer.js";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer.js";
+import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer.js";
+import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer.js";
+import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer.js";
+import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
+import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer.js";
+import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer.js";
+import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/WebhooksHelperDeclarationReferencer.js";
+import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
+import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
+import { TestGenerator } from "./test-generator/TestGenerator.js";
+import { VersionFileGenerator } from "./version/VersionFileGenerator.js";
+import { VersionGenerator } from "./version/VersionGenerator.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 
 const FILE_HEADER = `// This file was auto-generated by Fern from our API Definition.
 `;
@@ -84,10 +77,26 @@ const FILE_HEADER = `// This file was auto-generated by Fern from our API Defini
 const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API Definition.
 `;
 
+interface WebhookVerificationEntry {
+    config: FernIr.WebhookSignatureVerification;
+    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+}
+
+export interface ResolvedNaming {
+    namespace: string;
+    client: string;
+    error: string;
+    timeoutError: string;
+    environment: string;
+    environmentUrls: string;
+    version: string;
+}
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
-        intermediateRepresentation: IntermediateRepresentation;
+        naming: ResolvedNaming;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
         generateJestTests: boolean;
@@ -109,7 +118,7 @@ export declare namespace SdkGenerator {
         outputEsm: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
-        shouldGenerateWebsocketClients: boolean;
+        generateWebSocketClients: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
@@ -160,19 +169,21 @@ export declare namespace SdkGenerator {
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
 export class SdkGenerator {
     private namespaceExport: string;
+    private naming: ResolvedNaming;
     private context: GeneratorContext;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
-    private shouldGenerateWebsocketClients: boolean;
+    private generateWebSocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
@@ -207,6 +218,7 @@ export class SdkGenerator {
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
     private nonStatusCodeErrorHandlerDeclarationReferencer: NonStatusCodeErrorHandlerDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
+    private webhooksHelperDeclarationReferencer: WebhooksHelperDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
     private typeGenerator: TypeGenerator;
@@ -242,8 +254,14 @@ export class SdkGenerator {
     private testDirectory: Directory;
     private packagePathDirectory: Directory;
 
+    // Cached shared params for SdkContextImpl creation — everything except sourceFile/importsManager
+    private cachedSharedContextParams:
+        | Omit<SdkContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">
+        | undefined;
+
     constructor({
         namespaceExport,
+        naming,
         intermediateRepresentation,
         context,
         npmPackage,
@@ -257,6 +275,7 @@ export class SdkGenerator {
 
         this.context = context;
         this.namespaceExport = namespaceExport;
+        this.naming = naming;
         this.intermediateRepresentation = intermediateRepresentation;
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
@@ -272,7 +291,7 @@ export class SdkGenerator {
         this.generateOAuthClients =
             config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
-        this.shouldGenerateWebsocketClients = config.shouldGenerateWebsocketClients;
+        this.generateWebSocketClients = config.generateWebSocketClients;
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -316,6 +335,7 @@ export class SdkGenerator {
         this.versionDeclarationReferencer = new VersionDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.version,
             apiVersion: this.intermediateRepresentation.apiVersion,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
@@ -340,6 +360,7 @@ export class SdkGenerator {
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.client,
             packageResolver: this.packageResolver
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
@@ -366,6 +387,8 @@ export class SdkGenerator {
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
+            namingOverride: naming.environment,
+            environmentUrlsNamingOverride: naming.environmentUrls,
             npmPackage: this.npmPackage,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
             relativePackagePath: this.relativePackagePath,
@@ -389,11 +412,13 @@ export class SdkGenerator {
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.error
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.timeoutError
         });
         this.nonStatusCodeErrorHandlerDeclarationReferencer = new NonStatusCodeErrorHandlerDeclarationReferencer({
             containingDirectory: [],
@@ -406,6 +431,10 @@ export class SdkGenerator {
                 }
             ],
             namespaceExport: "json"
+        });
+        this.webhooksHelperDeclarationReferencer = new WebhooksHelperDeclarationReferencer({
+            containingDirectory: [],
+            namespaceExport
         });
 
         this.versionGenerator = new VersionGenerator();
@@ -462,7 +491,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
-            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
+            generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
@@ -532,6 +561,7 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
+                allowCustomFetcher: config.allowCustomFetcher,
                 generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
@@ -569,7 +599,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generated errors");
         this.generateHandleNonStatusCodeError();
         this.context.logger.debug("Generated handleNonStatusCodeError");
-        if (this.shouldGenerateWebsocketClients) {
+        if (this.generateWebSocketClients) {
             if (this.config.includeSerdeLayer) {
                 this.generateUnionedResponseSchemas();
                 this.context.logger.debug("Generated unioned response schemas");
@@ -594,6 +624,8 @@ export class SdkGenerator {
         this.context.logger.debug("Generating auth providers");
         this.generateAuthProviders();
         this.context.logger.debug("Generated auth providers");
+        this.generateWebhooksHelper();
+        this.context.logger.debug("Generated webhooks helper");
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
@@ -609,8 +641,7 @@ export class SdkGenerator {
         let exportSerde: boolean = false;
         if (this.config.includeSerdeLayer) {
             this.generateTypeSchemas();
-            this.generateEndpointTypeSchemas();
-            this.generateInlinedRequestBodySchemas();
+            this.generatePerEndpointSerdeFiles();
             const serializationDirectory = this.rootDirectory.getDirectory("src/serialization");
             if (serializationDirectory != null && serializationDirectory?.getDescendantSourceFiles().length > 0) {
                 exportSerde = true;
@@ -661,20 +692,20 @@ export class SdkGenerator {
             try {
                 await this.generateReadme();
             } catch (e) {
-                this.context.logger.warn("Failed to generate README.md, this is OK");
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference();
             } catch (e) {
-                this.context.logger.warn("Failed to generate reference.md, this is OK");
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
 
             if (!this.config.whitelabel) {
                 try {
                     await this.generateContributing();
                 } catch (e) {
-                    this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+                    throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
                 }
             }
         }
@@ -741,7 +772,7 @@ export class SdkGenerator {
         await this.asIsManager.addToTsProject({ project: this.project });
     }
 
-    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+    private getTypesToGenerate(): Record<FernIr.TypeId, FernIr.TypeDeclaration> {
         if (this.config.enableInlineTypes) {
             return Object.fromEntries(
                 Object.entries(this.intermediateRepresentation.types).filter(
@@ -785,7 +816,7 @@ export class SdkGenerator {
     }
 
     private generateConsolidatedTypeDeclarations() {
-        const typesByFile = new Map<string, TypeDeclaration[]>();
+        const typesByFile = new Map<string, FernIr.TypeDeclaration[]>();
 
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             const filepath = this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name);
@@ -925,6 +956,46 @@ export class SdkGenerator {
         return { generated };
     }
 
+    /**
+     * Consolidates endpoint type schema and inlined request body schema generation
+     * into a single service iteration pass, avoiding redundant forEachService loops.
+     */
+    private generatePerEndpointSerdeFiles(): void {
+        this.forEachService((service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                // Generate endpoint type schemas (was generateEndpointTypeSchemas)
+                this.withSourceFile({
+                    filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
+                        packageId,
+                        endpoint
+                    }),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        context.sdkEndpointTypeSchemas
+                            .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
+                            .writeToFile(context);
+                    }
+                });
+
+                // Generate inlined request body schemas (was generateInlinedRequestBodySchemas)
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    this.withSourceFile({
+                        filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
+                            packageId,
+                            endpoint
+                        }),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            context.sdkInlinedRequestBodySchema
+                                .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
+                                .writeToFile(context);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     private generateRequestWrappers() {
         if (this.config.exportAllRequestsAtRoot) {
             this.generateAggregatedRequestWrappers();
@@ -948,7 +1019,7 @@ export class SdkGenerator {
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
-                        addExportTypeModifier: true
+                        dynamicExportTypeModifier: true
                     });
                 }
             }
@@ -956,7 +1027,7 @@ export class SdkGenerator {
     }
 
     private generateAggregatedRequestWrappers() {
-        const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
+        const requestWrappers: Array<{ packageId: PackageId; endpoint: FernIr.HttpEndpoint }> = [];
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -976,7 +1047,7 @@ export class SdkGenerator {
                     context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
                 }
             },
-            addExportTypeModifier: true
+            dynamicExportTypeModifier: true
         });
     }
 
@@ -1050,7 +1121,7 @@ export class SdkGenerator {
         this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
+            if (!package_.hasEndpointsInTree && (!this.generateWebSocketClients || package_.websocket == null)) {
                 continue;
             }
             this.withSourceFile({
@@ -1166,8 +1237,8 @@ export class SdkGenerator {
         importsManager: ImportsManager;
         rootPackage: PackageId;
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        example: ExampleEndpointCall;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
         includeImports: boolean;
     }): ts.Node[] | undefined {
         const context = this.generateSdkContext({ sourceFile, importsManager }, { isForSnippet: true });
@@ -1235,7 +1306,7 @@ export class SdkGenerator {
             const serviceFilepath = this.exportsManager.convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
-                let examplesForEndpoint: ExampleEndpointCall[] = [];
+                let examplesForEndpoint: FernIr.ExampleEndpointCall[] = [];
                 for (const userDefinedExample of endpoint.userSpecifiedExamples) {
                     if (userDefinedExample.example != null) {
                         examplesForEndpoint.push(userDefinedExample.example);
@@ -1371,7 +1442,7 @@ export class SdkGenerator {
         });
     }
 
-    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+    private getEndpointFunctionName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
@@ -1444,6 +1515,138 @@ export class SdkGenerator {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     routingAuthProvidersGenerator.writeToFile(context);
+                }
+            });
+        }
+    }
+
+    private getVerificationTimestampKey(
+        timestamp: FernIr.WebhookTimestampConfig | undefined
+    ): { headerName: string; format: string; tolerance: number | undefined } | null {
+        if (timestamp == null) {
+            return null;
+        }
+        return {
+            headerName: timestamp.headerName.wireValue,
+            format: timestamp.format,
+            tolerance: timestamp.tolerance
+        };
+    }
+
+    private computeVerificationKey(verification: FernIr.WebhookSignatureVerification): string {
+        const common = {
+            type: verification.type,
+            algorithm: verification.algorithm,
+            encoding: verification.encoding,
+            signaturePrefix: verification.signaturePrefix,
+            signatureHeaderName: verification.signatureHeaderName.wireValue,
+            timestamp: this.getVerificationTimestampKey(verification.timestamp)
+        };
+
+        switch (verification.type) {
+            case "hmac":
+                return JSON.stringify({
+                    ...common,
+                    payloadFormat: {
+                        components: verification.payloadFormat.components,
+                        delimiter: verification.payloadFormat.delimiter
+                    }
+                });
+            case "asymmetric": {
+                const keySource =
+                    verification.keySource.type === "jwks"
+                        ? {
+                              type: verification.keySource.type,
+                              url: verification.keySource.url,
+                              keyIdHeader: verification.keySource.keyIdHeader?.wireValue ?? null
+                          }
+                        : { type: verification.keySource.type };
+                return JSON.stringify({ ...common, keySource });
+            }
+            default:
+                return JSON.stringify({ type: "unknown" });
+        }
+    }
+
+    private collectWebhookVerificationConfigs(): {
+        defaultEntry: WebhookVerificationEntry | undefined;
+        overrideEntries: WebhookVerificationEntry[];
+    } {
+        const grouped = new Map<string, WebhookVerificationEntry>();
+
+        for (const webhookGroup of Object.values(this.intermediateRepresentation.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification == null) {
+                    continue;
+                }
+                const key = this.computeVerificationKey(webhook.signatureVerification);
+                const existing = grouped.get(key);
+                if (existing != null) {
+                    existing.webhookNames.push(webhook.name);
+                } else {
+                    grouped.set(key, {
+                        config: webhook.signatureVerification,
+                        webhookNames: [webhook.name]
+                    });
+                }
+            }
+        }
+
+        if (grouped.size === 0) {
+            return { defaultEntry: undefined, overrideEntries: [] };
+        }
+
+        // Pick the most frequent config as the default (ties broken by insertion order)
+        let defaultEntry: WebhookVerificationEntry | undefined;
+        let maxCount = 0;
+        for (const entry of grouped.values()) {
+            if (entry.webhookNames.length > maxCount) {
+                maxCount = entry.webhookNames.length;
+                defaultEntry = entry;
+            }
+        }
+
+        const overrideEntries: WebhookVerificationEntry[] = [];
+        for (const entry of grouped.values()) {
+            if (entry !== defaultEntry) {
+                overrideEntries.push(entry);
+            }
+        }
+
+        return { defaultEntry, overrideEntries };
+    }
+
+    private generateWebhooksHelper(): void {
+        const { defaultEntry, overrideEntries } = this.collectWebhookVerificationConfigs();
+        if (defaultEntry == null) {
+            return;
+        }
+
+        // Generate default WebhooksHelper
+        const defaultGenerator = new WebhooksHelperGenerator(defaultEntry.config);
+        this.withSourceFile({
+            filepath: this.webhooksHelperDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                defaultGenerator.writeToFile(context);
+            }
+        });
+
+        // Generate named override helpers
+        for (const overrideEntry of overrideEntries) {
+            const [firstWebhookName] = overrideEntry.webhookNames;
+            const className = `${firstWebhookName.pascalCase.safeName}WebhooksHelper`;
+            const overrideReferencer = new WebhooksHelperDeclarationReferencer({
+                containingDirectory: [],
+                namespaceExport: this.namespaceExport,
+                helperName: className
+            });
+            const overrideGenerator = new WebhooksHelperGenerator(overrideEntry.config, className);
+            this.withSourceFile({
+                filepath: overrideReferencer.getExportedFilepath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    overrideGenerator.writeToFile(context);
                 }
             });
         }
@@ -1563,13 +1766,13 @@ export class SdkGenerator {
         run,
         filepath,
         addExportTypeModifier,
-        overwrite,
+        dynamicExportTypeModifier,
         packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
-        overwrite?: boolean;
+        dynamicExportTypeModifier?: boolean;
         packagePath?: string;
     }) {
         filepath.rootDir = packagePath;
@@ -1588,7 +1791,17 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
+
+            // Determine export type modifier dynamically if requested
+            let effectiveAddExportTypeModifier = addExportTypeModifier;
+            if (dynamicExportTypeModifier) {
+                // Check if the source file has any value exports (namespaces with const/variable declarations)
+                // If it does, we should NOT use type-only exports
+                const hasValueExports = this.sourceFileHasValueExports(sourceFile);
+                effectiveAddExportTypeModifier = !hasValueExports;
+            }
+
+            this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
@@ -1604,15 +1817,95 @@ export class SdkGenerator {
         }
     }
 
+    /**
+     * Checks if a source file has any value exports (runtime values like const, function, class, enum).
+     * This is used to determine whether to use `export type { ... }` or `export { ... }` in index files.
+     * A namespace with const/variable declarations is considered a value export.
+     */
+    private sourceFileHasValueExports(sourceFile: SourceFile): boolean {
+        // Check for exported namespaces that contain value declarations (const, variable, function, etc.)
+        const modules = sourceFile.getModules();
+        for (const module of modules) {
+            if (module.isExported() && this.moduleHasValueDeclarations(module)) {
+                return true;
+            }
+        }
+
+        // Check for other value exports (const, function, class, enum at the top level)
+        const variableStatements = sourceFile.getVariableStatements();
+        for (const statement of variableStatements) {
+            if (statement.isExported()) {
+                return true;
+            }
+        }
+
+        const functions = sourceFile.getFunctions();
+        for (const func of functions) {
+            if (func.isExported()) {
+                return true;
+            }
+        }
+
+        const classes = sourceFile.getClasses();
+        for (const cls of classes) {
+            if (cls.isExported()) {
+                return true;
+            }
+        }
+
+        const enums = sourceFile.getEnums();
+        for (const enumDecl of enums) {
+            if (enumDecl.isExported()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a module (namespace) contains any value declarations (const, variable, function, etc.)
+     */
+    private moduleHasValueDeclarations(module: ModuleDeclaration): boolean {
+        const body = module.getBody();
+        if (body == null) {
+            return false;
+        }
+
+        // Check for variable statements (const, let, var)
+        const variableStatements = body.getDescendantsOfKind(SyntaxKind.VariableStatement);
+        if (variableStatements.length > 0) {
+            return true;
+        }
+
+        // Check for function declarations
+        const functions = body.getDescendantsOfKind(SyntaxKind.FunctionDeclaration);
+        if (functions.length > 0) {
+            return true;
+        }
+
+        // Check for class declarations
+        const classes = body.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
+        if (classes.length > 0) {
+            return true;
+        }
+
+        // Check for enum declarations
+        const enums = body.getDescendantsOfKind(SyntaxKind.EnumDeclaration);
+        if (enums.length > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     private async withRawFile({
         run,
         filepath,
-        overwrite,
         packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => Promise<void>;
         filepath: ExportedFilePath;
-        overwrite?: boolean;
         packagePath?: string;
     }) {
         filepath.rootDir = packagePath;
@@ -1636,7 +1929,7 @@ export class SdkGenerator {
         ];
     }
 
-    private forPackageChannel(run: (channel: WebSocketChannel, packageId: PackageId) => void): void {
+    private forPackageChannel(run: (channel: FernIr.WebSocketChannel, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const channel = this.packageResolver.getChannelDeclaration(packageId);
             if (channel != null) {
@@ -1644,13 +1937,90 @@ export class SdkGenerator {
             }
         }
     }
-    private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
+    private forEachService(run: (service: FernIr.HttpService, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const service = this.packageResolver.getServiceDeclaration(packageId);
             if (service != null) {
                 run(service, packageId);
             }
         }
+    }
+
+    private getSharedContextParams(): Omit<SdkContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet"> {
+        if (this.cachedSharedContextParams == null) {
+            this.cachedSharedContextParams = {
+                logger: this.context.logger,
+                version: this.context.version,
+                config: this.rawConfig,
+                ir: this.intermediateRepresentation,
+                npmPackage: this.npmPackage,
+                intermediateRepresentation: this.intermediateRepresentation,
+                coreUtilitiesManager: this.coreUtilitiesManager,
+                dependencyManager: this.dependencyManager,
+                fernConstants: this.intermediateRepresentation.constants,
+                // Shared by reference intentionally — all contexts accumulate exports into the same manager
+                exportsManager: this.exportsManager,
+                versionGenerator: this.versionGenerator,
+                versionDeclarationReferencer: this.versionDeclarationReferencer,
+                jsonDeclarationReferencer: this.jsonDeclarationReferencer,
+                typeResolver: this.typeResolver,
+                typeDeclarationReferencer: this.typeDeclarationReferencer,
+                typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                errorDeclarationReferencer: this.errorDeclarationReferencer,
+                sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
+                endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
+                sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
+                endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
+                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+                requestWrapperGenerator: this.requestWrapperGenerator,
+                sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,
+                sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
+                websocketTypeSchemaGenerator: this.websocketTypeSchemaGenerator,
+                websocketTypeSchemaDeclarationReferencer: this.websocketTypeSchemaDeclarationReferencer,
+                websocketSocketDeclarationReferencer: this.websocketSocketDeclarationReferencer,
+                websocketGenerator: this.websocketGenerator,
+                typeGenerator: this.typeGenerator,
+                sdkErrorGenerator: this.sdkErrorGenerator,
+                errorResolver: this.errorResolver,
+                packageResolver: this.packageResolver,
+                sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
+                typeSchemaGenerator: this.typeSchemaGenerator,
+                sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
+                environmentsGenerator: this.environmentsGenerator,
+                environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
+                baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
+                sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
+                sdkClientClassGenerator: this.sdkClientClassGenerator,
+                baseClientContext: this.baseClientContext,
+                genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
+                genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
+                timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
+                timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
+                nonStatusCodeErrorHandlerDeclarationReferencer: this.nonStatusCodeErrorHandlerDeclarationReferencer,
+                nonStatusCodeErrorHandlerGenerator: this.nonStatusCodeErrorHandlerGenerator,
+                treatUnknownAsAny: this.config.treatUnknownAsAny,
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                retainOriginalCasing: this.config.retainOriginalCasing,
+                inlineFileProperties: this.config.inlineFileProperties,
+                inlinePathParameters: this.config.inlinePathParameters,
+                enableInlineTypes: this.config.enableInlineTypes,
+                generateOAuthClients: this.generateOAuthClients,
+                omitUndefined: this.config.omitUndefined,
+                useBigInt: this.config.useBigInt,
+                neverThrowErrors: this.config.neverThrowErrors,
+                allowExtraFields: this.config.allowExtraFields,
+                relativePackagePath: this.relativePackagePath,
+                relativeTestPath: this.relativeTestPath,
+                formDataSupport: this.config.formDataSupport,
+                useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
+                generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
+                flattenRequestParameters: this.config.flattenRequestParameters,
+                parameterNaming: this.config.parameterNaming,
+                resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
+            } satisfies Omit<SdkContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;
+        }
+        return this.cachedSharedContextParams;
     }
 
     private generateSdkContext(
@@ -1664,76 +2034,10 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
-            logger: this.context.logger,
-            version: this.context.version,
-            config: this.rawConfig,
-            ir: this.intermediateRepresentation,
-            npmPackage: this.npmPackage,
-            isForSnippet: isForSnippet ?? false,
-            intermediateRepresentation: this.intermediateRepresentation,
+            ...this.getSharedContextParams(),
             sourceFile,
-            coreUtilitiesManager: this.coreUtilitiesManager,
-            dependencyManager: this.dependencyManager,
-            fernConstants: this.intermediateRepresentation.constants,
             importsManager,
-            exportsManager: this.exportsManager,
-            versionGenerator: this.versionGenerator,
-            versionDeclarationReferencer: this.versionDeclarationReferencer,
-            jsonDeclarationReferencer: this.jsonDeclarationReferencer,
-            typeResolver: this.typeResolver,
-            typeDeclarationReferencer: this.typeDeclarationReferencer,
-            typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-            typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-            errorDeclarationReferencer: this.errorDeclarationReferencer,
-            sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
-            endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
-            sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
-            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
-            requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-            requestWrapperGenerator: this.requestWrapperGenerator,
-            sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,
-            sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
-            websocketTypeSchemaGenerator: this.websocketTypeSchemaGenerator,
-            websocketTypeSchemaDeclarationReferencer: this.websocketTypeSchemaDeclarationReferencer,
-            websocketSocketDeclarationReferencer: this.websocketSocketDeclarationReferencer,
-            websocketGenerator: this.websocketGenerator,
-            typeGenerator: this.typeGenerator,
-            sdkErrorGenerator: this.sdkErrorGenerator,
-            errorResolver: this.errorResolver,
-            packageResolver: this.packageResolver,
-            sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
-            typeSchemaGenerator: this.typeSchemaGenerator,
-            sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
-            environmentsGenerator: this.environmentsGenerator,
-            environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
-            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
-            sdkClientClassGenerator: this.sdkClientClassGenerator,
-            baseClientContext: this.baseClientContext,
-            genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
-            genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
-            timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
-            timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
-            nonStatusCodeErrorHandlerDeclarationReferencer: this.nonStatusCodeErrorHandlerDeclarationReferencer,
-            nonStatusCodeErrorHandlerGenerator: this.nonStatusCodeErrorHandlerGenerator,
-            treatUnknownAsAny: this.config.treatUnknownAsAny,
-            includeSerdeLayer: this.config.includeSerdeLayer,
-            retainOriginalCasing: this.config.retainOriginalCasing,
-            inlineFileProperties: this.config.inlineFileProperties,
-            inlinePathParameters: this.config.inlinePathParameters,
-            enableInlineTypes: this.config.enableInlineTypes,
-            generateOAuthClients: this.generateOAuthClients,
-            omitUndefined: this.config.omitUndefined,
-            useBigInt: this.config.useBigInt,
-            neverThrowErrors: this.config.neverThrowErrors,
-            allowExtraFields: this.config.allowExtraFields,
-            relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath,
-            formDataSupport: this.config.formDataSupport,
-            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
-            generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
-            flattenRequestParameters: this.config.flattenRequestParameters,
-            parameterNaming: this.config.parameterNaming
+            isForSnippet: isForSnippet ?? false
         });
     }
 
@@ -1776,14 +2080,14 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
             }
 
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
-            const subpackage = package_ as Subpackage;
+            const subpackage = package_ as FernIr.Subpackage;
             if (subpackage.name != null) {
                 const packageName = subpackage.name.camelCase.safeName;
                 if (segments.length === 0 || segments[segments.length - 1] !== packageName) {
@@ -1815,7 +2119,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);
@@ -1834,6 +2138,16 @@ export class SdkGenerator {
                             moduleSpecifier: "./client/Client",
                             namedExports: [clientClassName]
                         });
+
+                        if (this.generateWebSocketClients && package_.websocket != null) {
+                            const socketClassName = this.websocketSocketDeclarationReferencer.getExportedName(
+                                packageId.subpackageId
+                            );
+                            sourceFile.addExportDeclaration({
+                                moduleSpecifier: "./client/Socket",
+                                namedExports: [socketClassName]
+                            });
+                        }
 
                         sourceFile.addExportDeclaration({
                             moduleSpecifier: "./client/index"

@@ -3,5 +3,5 @@
 export interface EmailNotification {
     emailAddress: string;
     subject: string;
-    htmlContent?: string;
+    htmlContent?: string | undefined;
 }

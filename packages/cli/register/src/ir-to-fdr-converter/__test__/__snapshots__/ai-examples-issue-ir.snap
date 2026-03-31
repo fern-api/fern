@@ -2122,6 +2122,7 @@
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
+          "responseHeaders": [],
           "retries": undefined,
           "sdkRequest": undefined,
           "security": undefined,
@@ -3440,6 +3441,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -3545,6 +3547,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
@@ -3677,6 +3680,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {

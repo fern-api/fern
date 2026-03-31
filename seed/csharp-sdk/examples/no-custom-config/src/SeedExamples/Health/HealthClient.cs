@@ -2,9 +2,9 @@ using SeedExamples.Core;
 
 namespace SeedExamples.Health;
 
-public partial class HealthClient
+public partial class HealthClient : IHealthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HealthClient(RawClient client)
     {
@@ -12,5 +12,5 @@ public partial class HealthClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">get_users</a>(avatar: Option<Option<String>>, extra: Option<Option<Option<bool>>>) -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">get_users</a>(avatar: Option&lt;Option&lt;String&gt;&gt;, extra: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -28,8 +28,8 @@ async fn main() {
                 usernames: vec![Some("usernames".to_string())],
                 avatar: Some("avatar".to_string()),
                 activated: vec![Some(true)],
-                tags: vec![Some(Some("tags".to_string()))],
-                extra: Some(Some(true)),
+                tags: vec![Some("tags".to_string())],
+                extra: Some(true),
             },
             None,
         )
@@ -93,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">create_user</a>(request: CreateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,6 @@ async fn main() {
 
 ```rust
 use seed_nullable::prelude::*;
-use seed_nullable::{Metadata, Status};
 
 #[tokio::main]
 async fn main() {
@@ -122,21 +121,17 @@ async fn main() {
                 username: "username".to_string(),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 metadata: Some(Metadata {
-                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                     avatar: Some("avatar".to_string()),
-                    activated: Some(Some(true)),
+                    activated: Some(true),
                     status: Status::Active,
                     values: Some(HashMap::from([(
                         "values".to_string(),
-                        Some(Some("values".to_string())),
+                        Some("values".to_string()),
                     )])),
                 }),
-                avatar: Some(Some("avatar".to_string())),
+                avatar: Some("avatar".to_string()),
             },
             None,
         )
@@ -192,7 +187,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">delete_user</a>(request: DeleteUserRequest) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">delete_user</a>(request: DeleteUserRequest) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +212,8 @@ async fn main() {
         .nullable
         .delete_user(
             &DeleteUserRequest {
-                username: Some(Some("xy".to_string())),
+                username: Some("xy".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -248,3 +244,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

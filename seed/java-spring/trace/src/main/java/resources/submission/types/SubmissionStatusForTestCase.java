@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -87,6 +88,22 @@ public final class SubmissionStatusForTestCase {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof SubmissionStatusForTestCase && value.equals(((SubmissionStatusForTestCase) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -124,6 +141,10 @@ public final class SubmissionStatusForTestCase {
   @JsonIgnoreProperties("type")
   private static final class GradedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TestCaseResultWithStdout value;
 
     @JsonCreator(
@@ -205,6 +226,10 @@ public final class SubmissionStatusForTestCase {
   @JsonIgnoreProperties("type")
   private static final class TracedValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private TracedTestCase value;
 
     @JsonCreator(

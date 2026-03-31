@@ -146,6 +146,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+            positional_single_property_constructors=self._custom_config.positional_single_property_constructors,
         ) as internal_pydantic_model_for_single_union_type:
             for pydantic_field in properties:
                 internal_pydantic_model_for_single_union_type.add_field(pydantic_field)
@@ -185,8 +186,10 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                 type_alias_declaration.add_ghost_reference(
                     self._context.get_class_reference_for_type_id(
                         type_id,
-                        must_import_after_current_declaration=lambda other_type_name: self._context.does_type_reference_other_type(
-                            type_id=other_type_name.type_id, other_type_id=self._name.type_id
+                        must_import_after_current_declaration=lambda other_type_name: (
+                            self._context.does_type_reference_other_type(
+                                type_id=other_type_name.type_id, other_type_id=self._name.type_id
+                            )
                         ),
                         as_request=False,
                     ),

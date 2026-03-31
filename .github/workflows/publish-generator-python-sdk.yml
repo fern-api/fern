@@ -18,15 +18,18 @@ permissions: # Required for OIDC
   id-token: write
   contents: read
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
-          fetch-depth: 2
+          fetch-depth: 10
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator

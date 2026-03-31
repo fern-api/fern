@@ -1,11 +1,11 @@
-import { SubpackageId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
-export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<SubpackageId> {
-    public getExportedFilepath(subpackageId: SubpackageId): ExportedFilePath {
+export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<FernIr.SubpackageId> {
+    public getExportedFilepath(subpackageId: FernIr.SubpackageId): ExportedFilePath {
         return {
             directories: this.getExportedDirectory(subpackageId),
             file: {
@@ -18,7 +18,7 @@ export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClass
         return "Socket.ts";
     }
 
-    public getExportedName(subpackageId: SubpackageId): string {
+    public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
         if (subpackage.name.pascalCase.safeName !== this.namespaceExport) {
             return `${subpackage.name.pascalCase.safeName}Socket`;
@@ -27,11 +27,13 @@ export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClass
         }
     }
 
-    public getReferenceToWebsocketSocket(args: DeclarationReferencer.getReferenceTo.Options<SubpackageId>): Reference {
+    public getReferenceToWebsocketSocket(
+        args: DeclarationReferencer.getReferenceTo.Options<FernIr.SubpackageId>
+    ): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 
-    protected getPackageIdFromName(subpackageId: SubpackageId): PackageId {
+    protected getPackageIdFromName(subpackageId: FernIr.SubpackageId): PackageId {
         return { isRoot: false, subpackageId };
     }
 }

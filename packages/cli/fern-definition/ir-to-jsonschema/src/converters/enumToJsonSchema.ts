@@ -1,7 +1,7 @@
 import { EnumTypeDeclaration } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
 
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
 
 export declare namespace convertEnumToJsonSchema {
     interface Args {

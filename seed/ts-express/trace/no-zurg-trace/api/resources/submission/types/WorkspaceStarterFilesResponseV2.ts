@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index";
 
 export interface WorkspaceStarterFilesResponseV2 {
-    filesByLanguage: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
+    filesByLanguage: Partial<Record<SeedTrace.Language, SeedTrace.v2.Files>>;
 }

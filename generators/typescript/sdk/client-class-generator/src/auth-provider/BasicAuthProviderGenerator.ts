@@ -11,7 +11,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import type { AuthProviderGenerator } from "./AuthProviderGenerator";
+import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
 export declare namespace BasicAuthProviderGenerator {
     export interface Init {

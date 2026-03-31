@@ -345,6 +345,22 @@
       ],
       "additionalProperties": false
     },
+    "docs.CollapsedStringValue": {
+      "type": "string",
+      "enum": [
+        "open-by-default"
+      ]
+    },
+    "docs.CollapsedValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/docs.CollapsedStringValue"
+        }
+      ]
+    },
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
@@ -398,6 +414,26 @@
           }
         },
         "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"
@@ -621,6 +657,16 @@
     "docs.PlaygroundSettings": {
       "type": "object",
       "properties": {
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "environments": {
           "oneOf": [
             {
@@ -921,6 +967,36 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -1049,6 +1125,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -1103,6 +1261,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -1244,7 +1405,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -1347,6 +1508,71 @@
       ],
       "additionalProperties": false
     },
+    "docs.LibraryName": {
+      "type": "string"
+    },
+    "docs.LibraryReferenceConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "library": {
+          "$ref": "#/definitions/docs.LibraryName"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "library"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
@@ -1429,6 +1655,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.TitleSource": {
+      "type": "string",
+      "enum": [
+        "frontmatter",
+        "filename"
+      ]
+    },
     "docs.FolderConfiguration": {
       "type": "object",
       "properties": {
@@ -1469,6 +1702,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
             },
             {
               "type": "null"
@@ -1518,6 +1761,26 @@
         "collapsed": {
           "oneOf": [
             {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
               "type": "boolean"
             },
             {
@@ -1551,6 +1814,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"

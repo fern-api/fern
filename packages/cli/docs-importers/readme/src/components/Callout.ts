@@ -1,8 +1,8 @@
 import type { Element, ElementContent } from "hast";
 
-import { assertIsStringArray } from "../assert";
-import { convertHastChildrenToMdast } from "../customComponents/children";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
+import { assertIsStringArray } from "../assert.js";
+import { convertHastChildrenToMdast } from "../customComponents/children.js";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes.js";
 
 export function scrapeCallout(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
     if (

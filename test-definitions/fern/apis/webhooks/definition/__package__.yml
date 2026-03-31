@@ -1,0 +1,119 @@
+types:
+  UserCreatedPayload:
+    properties:
+      userId: string
+      email: string
+      createdAt: string
+
+  OrderCompletedPayload:
+    properties:
+      orderId: string
+      total: double
+      currency: string
+
+  PaymentNotificationPayload:
+    properties:
+      paymentId: string
+      amount: double
+      status: string
+
+  RefundProcessedPayload:
+    properties:
+      refundId: string
+      amount: double
+      reason: optional<string>
+
+# Document-level default: HMAC SHA-256 with hex encoding and timestamp-based payload
+webhook-signature:
+  type: hmac
+  header: x-webhook-signature
+  algorithm: sha256
+  encoding: hex
+  signature-prefix: "sha256="
+  payload-format:
+    components:
+      - timestamp
+      - body
+    delimiter: "."
+  timestamp:
+    header: x-webhook-timestamp
+    format: unix-seconds
+    tolerance: 300
+
+webhooks:
+  # Inherits document-level HMAC config (no explicit signature)
+  userCreated:
+    display-name: User Created
+    docs: |
+      Fired when a new user is created. Inherits the document-level HMAC-SHA256
+      signature verification configuration.
+    method: POST
+    payload: UserCreatedPayload
+    examples:
+      - name: UserCreatedExample
+        payload:
+          userId: "user_123"
+          email: "john@example.com"
+          createdAt: "2024-01-15T09:30:00Z"
+
+  # Inherits document-level HMAC config (no explicit signature)
+  orderCompleted:
+    display-name: Order Completed
+    docs: |
+      Fired when an order is completed. Inherits the document-level HMAC-SHA256
+      signature verification configuration.
+    method: POST
+    payload: OrderCompletedPayload
+    examples:
+      - name: OrderCompletedExample
+        payload:
+          orderId: "order_abc"
+          total: 99.99
+          currency: "USD"
+
+  # Per-webhook override: Asymmetric RSA-SHA256 via JWKS endpoint with key ID header
+  paymentNotification:
+    display-name: Payment Notification
+    docs: |
+      Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature
+      verification with keys fetched from a JWKS endpoint, overriding the
+      document-level default.
+    method: POST
+    payload: PaymentNotificationPayload
+    signature:
+      type: asymmetric
+      header: x-payment-signature
+      asymmetric-algorithm: rsa-sha256
+      encoding: base64
+      signature-prefix: "rsa="
+      jwks-url: https://api.example.com/.well-known/jwks.json
+      key-id-header: x-key-id
+      timestamp:
+        header: x-payment-timestamp
+        format: iso8601
+    examples:
+      - name: PaymentNotificationExample
+        payload:
+          paymentId: "pay_xyz"
+          amount: 150.00
+          status: "completed"
+
+  # Per-webhook override: Asymmetric ECDSA-SHA256 with static public key (no JWKS)
+  refundProcessed:
+    display-name: Refund Processed
+    docs: |
+      Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature
+      verification with a static public key, overriding the document-level default.
+    method: POST
+    payload: RefundProcessedPayload
+    signature:
+      type: asymmetric
+      header: x-refund-signature
+      asymmetric-algorithm: ecdsa-sha256
+      encoding: hex
+    examples:
+      - name: RefundProcessedExample
+        payload:
+          refundId: "ref_456"
+          amount: 25.00
+          reason: "Customer request"

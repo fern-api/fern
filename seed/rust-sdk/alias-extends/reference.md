@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">extended_inline_request_body</a>(request: InlinedChildRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">extended_inline_request_body</a>(request: InlinedChildRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,3 +55,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

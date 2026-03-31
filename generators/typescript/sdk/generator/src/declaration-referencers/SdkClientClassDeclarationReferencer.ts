@@ -1,9 +1,9 @@
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
-import { SdkRootClientClassDeclarationReferencer } from "./SdkRootClientClassDeclarationReferencer";
-import { SdkSubpackageClientClassDeclarationReferencer } from "./SdkSubpackageClientClassDeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
+import { SdkRootClientClassDeclarationReferencer } from "./SdkRootClientClassDeclarationReferencer.js";
+import { SdkSubpackageClientClassDeclarationReferencer } from "./SdkSubpackageClientClassDeclarationReferencer.js";
 
 export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<PackageId> {
     private rootClientClassDeclarationReferencer: SdkRootClientClassDeclarationReferencer;

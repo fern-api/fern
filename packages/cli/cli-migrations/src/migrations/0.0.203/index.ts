@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import UnionSinglePropertyKeyMigration from "./union-single-property-key";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import UnionSinglePropertyKeyMigration from "./union-single-property-key/index.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.203",

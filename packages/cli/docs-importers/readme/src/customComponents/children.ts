@@ -4,8 +4,8 @@ import { defaultHandlers, toMdast } from "hast-util-to-mdast";
 import type { Root as MdastRoot, RootContent as MdastRootContent } from "mdast";
 import { unified } from "unified";
 
-import { ESCAPED_COMPONENTS } from "../constants";
-import { mdxJsxFlowElementHandler } from "../customComponents/selective";
+import { ESCAPED_COMPONENTS } from "../constants.js";
+import { mdxJsxFlowElementHandler } from "../customComponents/selective.js";
 
 export function convertHastChildrenToMdast(
     hastChildren: Array<HastRootContent | ElementContent | Element | Comment | Text>,

@@ -1,19 +1,19 @@
-import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
-import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
+import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType.js";
 
 export declare namespace GeneratedEndpointErrorSchemaImpl {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+        discriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
     }
 }
 
@@ -21,7 +21,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
     private static ERROR_SCHEMA_NAME = "Error";
 
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<SdkContext>;
 
     constructor({ packageId, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {

@@ -14,7 +14,7 @@ var (
 )
 
 type PaymentRequest struct {
-	PaymentMethod *PaymentMethodUnion `json:"paymentMethod,omitempty" url:"-"`
+	PaymentMethod *PaymentMethodUnion `json:"paymentMethod" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -32,6 +32,27 @@ func (p *PaymentRequest) require(field *big.Int) {
 func (p *PaymentRequest) SetPaymentMethod(paymentMethod *PaymentMethodUnion) {
 	p.PaymentMethod = paymentMethod
 	p.require(paymentRequestFieldPaymentMethod)
+}
+
+func (p *PaymentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PaymentRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PaymentRequest(body)
+	return nil
+}
+
+func (p *PaymentRequest) MarshalJSON() ([]byte, error) {
+	type embed PaymentRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -65,6 +86,9 @@ func (c *ConvertToken) GetTokenId() string {
 }
 
 func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -117,6 +141,9 @@ func (c *ConvertToken) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConvertToken) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -426,14 +453,17 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+// A name (alias for string)
+type Name = string
+
 var (
 	namedMetadataFieldName  = big.NewInt(1 << 0)
 	namedMetadataFieldValue = big.NewInt(1 << 1)
 )
 
 type NamedMetadata struct {
-	Name  string                 `json:"name" url:"name"`
-	Value map[string]interface{} `json:"value" url:"value"`
+	Name  string         `json:"name" url:"name"`
+	Value map[string]any `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -449,7 +479,7 @@ func (n *NamedMetadata) GetName() string {
 	return n.Name
 }
 
-func (n *NamedMetadata) GetValue() map[string]interface{} {
+func (n *NamedMetadata) GetValue() map[string]any {
 	if n == nil {
 		return nil
 	}
@@ -457,6 +487,9 @@ func (n *NamedMetadata) GetValue() map[string]interface{} {
 }
 
 func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -476,7 +509,7 @@ func (n *NamedMetadata) SetName(name string) {
 
 // SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NamedMetadata) SetValue(value map[string]interface{}) {
+func (n *NamedMetadata) SetValue(value map[string]any) {
 	n.Value = value
 	n.require(namedMetadataFieldValue)
 }
@@ -509,6 +542,9 @@ func (n *NamedMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NamedMetadata) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -793,7 +829,7 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
-type OptionalMetadata = map[string]interface{}
+type OptionalMetadata = map[string]any
 
 // Tests that nested properties with camelCase wire names are properly
 // converted from snake_case Ruby keys when passed as Hash values.
@@ -881,6 +917,9 @@ func (r *Request) GetUnion() *MetadataUnion {
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -926,6 +965,9 @@ func (r *Request) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Request) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -968,6 +1010,9 @@ func (t *TokenizeCard) GetCardNumber() string {
 }
 
 func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1020,6 +1065,9 @@ func (t *TokenizeCard) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenizeCard) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1053,6 +1101,9 @@ func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
 }
 
 func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1098,6 +1149,9 @@ func (t *TypeWithOptionalUnion) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TypeWithOptionalUnion) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1340,3 +1394,181 @@ func (u *UnionWithIdenticalStrings) Accept(visitor UnionWithIdenticalStringsVisi
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
+
+// Tests that union members named 'Type' or 'Value' don't collide with internal properties
+type UnionWithReservedNames struct {
+	TypeStringLiteral  string
+	ValueStringLiteral string
+	String             string
+
+	typ string
+}
+
+func NewUnionWithReservedNamesWithTypeStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "TypeStringLiteral", TypeStringLiteral: "type"}
+}
+
+func NewUnionWithReservedNamesWithValueStringLiteral() *UnionWithReservedNames {
+	return &UnionWithReservedNames{typ: "ValueStringLiteral", ValueStringLiteral: "value"}
+}
+
+func (u *UnionWithReservedNames) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithReservedNames) UnmarshalJSON(data []byte) error {
+	var valueTypeStringLiteral string
+	if err := json.Unmarshal(data, &valueTypeStringLiteral); err == nil {
+		u.typ = "TypeStringLiteral"
+		u.TypeStringLiteral = valueTypeStringLiteral
+		if u.TypeStringLiteral != "type" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "type", valueTypeStringLiteral)
+		}
+		return nil
+	}
+	var valueValueStringLiteral string
+	if err := json.Unmarshal(data, &valueValueStringLiteral); err == nil {
+		u.typ = "ValueStringLiteral"
+		u.ValueStringLiteral = valueValueStringLiteral
+		if u.ValueStringLiteral != "value" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "value", valueValueStringLiteral)
+		}
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithReservedNames) MarshalJSON() ([]byte, error) {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return json.Marshal("type")
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return json.Marshal("value")
+	}
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithReservedNamesVisitor interface {
+	VisitTypeStringLiteral(string) error
+	VisitValueStringLiteral(string) error
+	VisitString(string) error
+}
+
+func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) error {
+	if u.typ == "TypeStringLiteral" || u.TypeStringLiteral != "" {
+		return visitor.VisitTypeStringLiteral(u.TypeStringLiteral)
+	}
+	if u.typ == "ValueStringLiteral" || u.ValueStringLiteral != "" {
+		return visitor.VisitValueStringLiteral(u.ValueStringLiteral)
+	}
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// Union with multiple named type aliases that all resolve to the same C# type (string).
+// Without the fix, this would generate duplicate implicit operators:
+//
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//	public static implicit operator UnionWithTypeAliases(string value) => ...
+//
+// causing CS0557 compiler error.
+type UnionWithTypeAliases struct {
+	String string
+	UserId UserId
+	Name   Name
+
+	typ string
+}
+
+func (u *UnionWithTypeAliases) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithTypeAliases) GetUserId() UserId {
+	if u == nil {
+		return ""
+	}
+	return u.UserId
+}
+
+func (u *UnionWithTypeAliases) GetName() Name {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UnionWithTypeAliases) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	var valueUserId UserId
+	if err := json.Unmarshal(data, &valueUserId); err == nil {
+		u.typ = "UserId"
+		u.UserId = valueUserId
+		return nil
+	}
+	var valueName Name
+	if err := json.Unmarshal(data, &valueName); err == nil {
+		u.typ = "Name"
+		u.Name = valueName
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return json.Marshal(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return json.Marshal(u.Name)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithTypeAliasesVisitor interface {
+	VisitString(string) error
+	VisitUserId(UserId) error
+	VisitName(Name) error
+}
+
+func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "UserId" || u.UserId != "" {
+		return visitor.VisitUserId(u.UserId)
+	}
+	if u.typ == "Name" || u.Name != "" {
+		return visitor.VisitName(u.Name)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// A user identifier (alias for string)
+type UserId = string

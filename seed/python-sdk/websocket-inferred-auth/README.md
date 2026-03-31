@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Websockets](#websockets)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,8 +38,13 @@ Instantiate and use the client with the following:
 from seed import SeedWebsocketAuth
 
 client = SeedWebsocketAuth(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.get_token_with_client_credentials(
     x_api_key="X-Api-Key",
     client_id="client_id",
@@ -43,6 +63,10 @@ import asyncio
 from seed import AsyncSeedWebsocketAuth
 
 client = AsyncSeedWebsocketAuth(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -74,6 +98,36 @@ except ApiError as e:
     print(e.body)
 ```
 
+## Websockets
+
+The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
+You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
+
+```python
+from seed import SeedWebsocketAuth
+
+client = SeedWebsocketAuth(...)
+
+# Connect to the websocket (Sync)
+with client.realtime.connect(...) as socket:
+    # Iterate over the messages as they arrive
+    for message in socket:
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+
+import asyncio
+from seed import AsyncSeedWebsocketAuth
+
+client = AsyncSeedWebsocketAuth(...)
+
+# Connect to the websocket (Async)
+async with client.realtime.connect(...) as socket:
+    async for message in socket:
+        print(message)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -84,11 +138,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedWebsocketAuth
 
-client = SeedWebsocketAuth(
-    ...,
-)
+client = SeedWebsocketAuth(...)
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -117,14 +170,9 @@ client.auth.get_token_with_client_credentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedWebsocketAuth
 
-client = SeedWebsocketAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedWebsocketAuth(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token_with_client_credentials(..., request_options={

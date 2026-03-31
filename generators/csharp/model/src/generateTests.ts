@@ -2,11 +2,11 @@ import { CSharpFile } from "@fern-api/csharp-base";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTestGenerator";
-import { UnionGenerator } from "./union/UnionGenerator";
-import { UnionSerializationTestGenerator } from "./union/UnionSerializationTestGenerator";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { ObjectGenerator } from "./object/ObjectGenerator.js";
+import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTestGenerator.js";
+import { UnionGenerator } from "./union/UnionGenerator.js";
+import { UnionSerializationTestGenerator } from "./union/UnionSerializationTestGenerator.js";
 
 export function generateModelTests({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const types = Object.entries(context.ir.types)

@@ -5,6 +5,7 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/exhaustive/fern/internal"
 )
 
@@ -130,4 +131,11 @@ func (c *Cat) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+type MixedType struct {
+	Double     float64
+	Boolean    bool
+	String     string
+	StringList []string
 }

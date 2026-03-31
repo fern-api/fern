@@ -8,12 +8,15 @@ on:
         required: true
         type: string
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Fern CLI
         run: npm install -g fern-api

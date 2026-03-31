@@ -1,14 +1,4 @@
-import {
-    EnumTypeDeclaration,
-    ExampleType,
-    FernFilepath,
-    ObjectTypeDeclaration,
-    PrimitiveTypeV1,
-    Type,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 import {
     BaseContext,
@@ -20,12 +10,12 @@ import {
     GeneratedUnionType
 } from "@fern-typescript/contexts";
 
-import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
-import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
-import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
-import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl";
-import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl";
-import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
+import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl.js";
+import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl.js";
+import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl.js";
+import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl.js";
+import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl.js";
+import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl.js";
 
 export declare namespace TypeGenerator {
     export interface Init {
@@ -43,10 +33,10 @@ export declare namespace TypeGenerator {
     export namespace generateType {
         export interface Args<Context> {
             typeName: string;
-            shape: Type;
-            examples: ExampleType[];
+            shape: FernIr.Type;
+            examples: FernIr.ExampleType[];
             docs: string | undefined;
-            fernFilepath: FernFilepath;
+            fernFilepath: FernIr.FernFilepath;
             getReferenceToSelf: (context: Context) => Reference;
             includeSerdeLayer: boolean;
             retainOriginalCasing: boolean;
@@ -97,7 +87,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf,
         inline
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
-        return Type._visit<GeneratedType<Context>>(shape, {
+        return FernIr.Type._visit<GeneratedType<Context>>(shape, {
             union: (shape) =>
                 this.generateUnion({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf, inline }),
             undiscriminatedUnion: (shape) =>
@@ -136,10 +126,10 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf
     }: {
         typeName: string;
-        shape: UndiscriminatedUnionTypeDeclaration;
-        examples: ExampleType[];
+        shape: FernIr.UndiscriminatedUnionTypeDeclaration;
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedUndiscriminatedUnionType<Context> {
         return new GeneratedUndiscriminatedUnionTypeImpl({
@@ -167,10 +157,10 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         inline
     }: {
         typeName: string;
-        shape: UnionTypeDeclaration;
-        examples: ExampleType[];
+        shape: FernIr.UnionTypeDeclaration;
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
         inline: boolean;
     }): GeneratedUnionType<Context> {
@@ -201,10 +191,10 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf
     }: {
         typeName: string;
-        shape: ObjectTypeDeclaration;
-        examples: ExampleType[];
+        shape: FernIr.ObjectTypeDeclaration;
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedObjectType<Context> {
         return new GeneratedObjectTypeImpl({
@@ -231,10 +221,10 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf
     }: {
         typeName: string;
-        shape: EnumTypeDeclaration;
-        examples: ExampleType[];
+        shape: FernIr.EnumTypeDeclaration;
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedEnumType<Context> {
         return new GeneratedEnumTypeImpl({
@@ -263,10 +253,10 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf
     }: {
         typeName: string;
-        aliasOf: TypeReference;
-        examples: ExampleType[];
+        aliasOf: FernIr.TypeReference;
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedAliasType<Context> {
         return this.useBrandedStringAliases && isTypeStringLike(aliasOf)
@@ -299,11 +289,11 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     }
 }
 
-function isTypeStringLike(type: TypeReference): boolean {
+function isTypeStringLike(type: FernIr.TypeReference): boolean {
     if (type.type !== "primitive") {
         return false;
     }
-    return PrimitiveTypeV1._visit(type.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(type.primitive.v1, {
         integer: () => false,
         double: () => false,
         uint: () => false,

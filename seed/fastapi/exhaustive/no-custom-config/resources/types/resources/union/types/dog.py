@@ -3,12 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ......core.serialization import FieldMetadata
 
 
 class Dog(UniversalBaseModel):
     name: str
-    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+    likes_to_woof: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="likesToWoof"), pydantic.Field(alias="likesToWoof")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

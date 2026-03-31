@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import { migration } from "./update-settings-defaults/migration";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import { migration } from "./update-settings-defaults/migration.js";
 
 const versionMigrations: VersionMigrations = {
     version: "1.0.0",

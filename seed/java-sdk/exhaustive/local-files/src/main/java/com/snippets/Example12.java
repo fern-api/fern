@@ -11,8 +11,7 @@ public class Example12 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().httpMethods().testPut(
-            "id",
+        client.endpoints().httpMethods().testPost(
             ObjectWithRequiredField
                 .builder()
                 .string("string")

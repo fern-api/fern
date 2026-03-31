@@ -1,13 +1,4 @@
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    MapType,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    ShapeType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -74,7 +65,7 @@ export namespace ConvertTypeReferenceParams {
     }
 
     export interface WithTypeReference {
-        typeReference: TypeReference;
+        typeReference: FernIr.TypeReference;
     }
 
     export interface WithNullable {
@@ -126,7 +117,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     }
 
     public convert(params: ConvertTypeReferenceParams): T {
-        return TypeReference._visit<T>(params.typeReference, {
+        return FernIr.TypeReference._visit<T>(params.typeReference, {
             named: (type) => this.named(type, params),
             primitive: (type) => this.primitive(type, params),
             container: (type) => this.container(type, params),
@@ -137,8 +128,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
         });
     }
 
-    protected container(container: ContainerType, params: ConvertTypeReferenceParams): T {
-        return ContainerType._visit<T>(container, {
+    protected container(container: FernIr.ContainerType, params: ConvertTypeReferenceParams): T {
+        return FernIr.ContainerType._visit<T>(container, {
             map: (type) => this.map(type, setGenericIn(params, genericIn.Map)),
             list: (type) => this.list(type, setGenericIn(params, genericIn.List)),
             set: (type) => this.set(type, setGenericIn(params, genericIn.Set)),
@@ -151,23 +142,23 @@ export abstract class AbstractTypeReferenceConverter<T> {
         });
     }
 
-    protected abstract named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): T;
+    protected abstract named(typeName: FernIr.DeclaredTypeName, params: ConvertTypeReferenceParams): T;
     protected abstract string(): T;
     protected abstract number(params: ConvertTypeReferenceParams): T;
     protected abstract long(params: ConvertTypeReferenceParams): T;
     protected abstract bigInteger(params: ConvertTypeReferenceParams): T;
     protected abstract boolean(params: ConvertTypeReferenceParams): T;
     protected abstract dateTime(params: ConvertTypeReferenceParams): T;
-    protected abstract list(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
-    protected abstract set(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
-    protected abstract nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
-    protected abstract optional(itemType: TypeReference, params: ConvertTypeReferenceParams): T;
-    protected abstract literal(literal: Literal, params: ConvertTypeReferenceParams): T;
+    protected abstract list(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract set(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract nullable(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract optional(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): T;
+    protected abstract literal(literal: FernIr.Literal, params: ConvertTypeReferenceParams): T;
     protected abstract unknown(): T;
     protected abstract any(): T;
 
-    protected primitive(primitive: PrimitiveType, params: ConvertTypeReferenceParams): T {
-        return PrimitiveTypeV1._visit<T>(primitive.v1, {
+    protected primitive(primitive: FernIr.PrimitiveType, params: ConvertTypeReferenceParams): T {
+        return FernIr.PrimitiveTypeV1._visit<T>(primitive.v1, {
             boolean: () => this.boolean(params),
             double: () => this.number(params),
             integer: () => this.number(params),
@@ -187,34 +178,34 @@ export abstract class AbstractTypeReferenceConverter<T> {
         });
     }
 
-    protected map(mapType: MapType, params: ConvertTypeReferenceParams): T {
+    protected map(mapType: FernIr.MapType, params: ConvertTypeReferenceParams): T {
         const resolvedKeyType = this.context.type.resolveTypeReference(mapType.keyType);
-        if (resolvedKeyType.type === "named" && resolvedKeyType.shape === ShapeType.Enum) {
+        if (resolvedKeyType.type === "named" && resolvedKeyType.shape === FernIr.ShapeType.Enum) {
             return this.mapWithEnumKeys(mapType, params);
         } else {
             return this.mapWithNonEnumKeys(mapType, params);
         }
     }
 
-    protected abstract mapWithEnumKeys(mapType: MapType, params: ConvertTypeReferenceParams): T;
-    protected abstract mapWithNonEnumKeys(mapType: MapType, params: ConvertTypeReferenceParams): T;
+    protected abstract mapWithEnumKeys(mapType: FernIr.MapType, params: ConvertTypeReferenceParams): T;
+    protected abstract mapWithNonEnumKeys(mapType: FernIr.MapType, params: ConvertTypeReferenceParams): T;
 
-    protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
+    protected isTypeReferencePrimitive(typeReference: FernIr.TypeReference): boolean {
         const resolvedType = this.context.type.resolveTypeReference(typeReference);
         if (resolvedType.type === "primitive") {
             return true;
         }
-        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
+        if (resolvedType.type === "named" && resolvedType.shape === FernIr.ShapeType.Enum) {
             return true;
         }
         return false;
     }
 
-    public isTypeReferenceOptional(typeReference: TypeReference): boolean {
+    public isTypeReferenceOptional(typeReference: FernIr.TypeReference): boolean {
         return this.context.type.isOptional(typeReference);
     }
 
-    public isTypeReferenceNullable(typeReference: TypeReference): boolean {
+    public isTypeReferenceNullable(typeReference: FernIr.TypeReference): boolean {
         return this.context.type.isNullable(typeReference);
     }
 

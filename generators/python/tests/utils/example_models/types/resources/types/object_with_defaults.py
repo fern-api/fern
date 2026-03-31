@@ -11,9 +11,9 @@ class ObjectWithDefaults(UncheckedBaseModel):
     Defines properties with default values and validation rules.
     """
 
-    decimal: typing.Optional[float] = 1.1
-    string: typing.Optional[str] = "here's a sentence!"
-    required_string: str = "I neeeeeeeeeed this!"
+    decimal: typing.Optional[float] = None
+    string: typing.Optional[str] = None
+    required_string: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

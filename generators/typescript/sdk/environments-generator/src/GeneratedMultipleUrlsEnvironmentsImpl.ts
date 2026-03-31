@@ -1,10 +1,4 @@
-import {
-    EnvironmentBaseUrlId,
-    EnvironmentBaseUrlWithId,
-    EnvironmentId,
-    MultipleBaseUrlsEnvironment,
-    MultipleBaseUrlsEnvironments
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { FernWriters, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
@@ -13,16 +7,16 @@ export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {
         environmentEnumName: string;
         environmentUrlsTypeName: string;
-        defaultEnvironmentId: EnvironmentId | undefined;
-        environments: MultipleBaseUrlsEnvironments;
+        defaultEnvironmentId: FernIr.EnvironmentId | undefined;
+        environments: FernIr.MultipleBaseUrlsEnvironments;
     }
 }
 
 export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironments {
     private environmentEnumName: string;
     private environmentUrlsTypeName: string;
-    private environments: MultipleBaseUrlsEnvironments;
-    private defaultEnvironmentId: EnvironmentId | undefined;
+    private environments: FernIr.MultipleBaseUrlsEnvironments;
+    private defaultEnvironmentId: FernIr.EnvironmentId | undefined;
 
     constructor({
         environments,
@@ -133,7 +127,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         baseUrlId
     }: {
         referenceToEnvironmentValue: ts.Expression;
-        baseUrlId: EnvironmentBaseUrlId | undefined;
+        baseUrlId: FernIr.EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
         if (baseUrlId == null) {
             throw new Error("Cannot get reference to multiple environment URL because baseUrlId is not defined");
@@ -145,11 +139,11 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         return ts.factory.createPropertyAccessExpression(referenceToEnvironmentValue, this.getNameOfBaseUrl(baseUrl));
     }
 
-    private getNameOfEnvironment(environment: MultipleBaseUrlsEnvironment): string {
+    private getNameOfEnvironment(environment: FernIr.MultipleBaseUrlsEnvironment): string {
         return environment.name.pascalCase.unsafeName;
     }
 
-    private getNameOfBaseUrl(baseUrl: EnvironmentBaseUrlWithId): string {
+    private getNameOfBaseUrl(baseUrl: FernIr.EnvironmentBaseUrlWithId): string {
         return baseUrl.name.camelCase.unsafeName;
     }
 }

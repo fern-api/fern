@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
@@ -8,8 +8,8 @@ import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/expre
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
     export interface Init {
@@ -48,7 +48,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
 
     public getGeneratedInlinedRequestBodySchema(
         packageId: PackageId,
-        endpointName: Name
+        endpointName: FernIr.Name
     ): GeneratedExpressInlinedRequestBodySchema {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -67,7 +67,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
         });
     }
 
-    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: Name): Reference {
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.Name): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

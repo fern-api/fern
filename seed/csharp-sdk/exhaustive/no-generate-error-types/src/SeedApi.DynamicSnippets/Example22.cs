@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -12,8 +13,14 @@ public class Example22
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
+            new ObjectWithUnknownField {
+                Unknown = new Dictionary<string, object>()
+                {
+                    ["$ref"] = "https://example.com/schema",
+                }
+
+            }
         );
     }
 

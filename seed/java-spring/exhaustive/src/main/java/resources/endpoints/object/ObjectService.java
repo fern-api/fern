@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.types.object.types.NestedObjectWithOptionalField;
 import resources.types.object.types.NestedObjectWithRequiredField;
+import resources.types.object.types.ObjectWithDatetimeLikeString;
 import resources.types.object.types.ObjectWithMapOfMap;
 import resources.types.object.types.ObjectWithOptionalField;
 import resources.types.object.types.ObjectWithRequiredField;
@@ -75,4 +76,13 @@ public interface ObjectService {
   NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
       @RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestBody List<NestedObjectWithRequiredField> body);
+
+  @PostMapping(
+      value = "/get-and-return-with-datetime-like-string",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
+      @RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @RequestBody ObjectWithDatetimeLikeString body);
 }

@@ -29,6 +29,10 @@ public class UsersClient {
         return this.rawClient.listUsernamesCustom().body();
     }
 
+    public FernCustomPaginator<String> listUsernamesCustom(RequestOptions requestOptions) {
+        return this.rawClient.listUsernamesCustom(requestOptions).body();
+    }
+
     public FernCustomPaginator<String> listUsernamesCustom(ListUsernamesRequestCustom request) {
         return this.rawClient.listUsernamesCustom(request).body();
     }

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,10 +16,10 @@
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -55,6 +55,22 @@ client.auth.get_token(
 <dl>
 <dd>
 
+**audience:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grant_type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -68,7 +84,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -84,10 +100,10 @@ client.auth.get_token(
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.user.get()
 
 ```
@@ -116,7 +132,7 @@ client.user.get()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -132,10 +148,10 @@ client.user.get()
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.user.get_admins()
 
 ```

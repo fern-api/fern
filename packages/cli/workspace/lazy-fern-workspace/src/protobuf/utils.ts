@@ -1,4 +1,176 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
+import { access, cp, rm } from "fs/promises";
+import tmp from "tmp-promise";
+import { resolveBuf } from "./BufDownloader.js";
+
+/**
+ * Check if an error message indicates a network error.
+ * Used by both protobuf generation and AI example enhancement for air-gap detection.
+ */
+export function isNetworkError(errorMessage: string): boolean {
+    return (
+        errorMessage.includes("server hosted at that remote is unavailable") ||
+        errorMessage.includes("fetch failed") ||
+        errorMessage.includes("failed to connect") ||
+        errorMessage.includes("network") ||
+        errorMessage.includes("ENOTFOUND") ||
+        errorMessage.includes("ETIMEDOUT") ||
+        errorMessage.includes("TIMEDOUT") ||
+        errorMessage.includes("timed out") ||
+        errorMessage.includes("ECONNREFUSED") ||
+        errorMessage.includes("ECONNRESET") ||
+        errorMessage.includes("socket hang up")
+    );
+}
+
+// Global cache for air-gap detection result
+let airGapDetectionResult: boolean | undefined;
+let airGapDetectionPromise: Promise<boolean> | undefined;
+
+/**
+ * Detect if we're in an air-gapped environment by trying to reach a URL via HTTP.
+ * The result is cached globally to avoid repeated detection attempts.
+ * Used by both protobuf generation and AI example enhancement.
+ */
+export async function detectAirGappedMode(url: string, logger: Logger, timeoutMs: number = 5000): Promise<boolean> {
+    if (airGapDetectionResult !== undefined) {
+        return airGapDetectionResult;
+    }
+
+    if (airGapDetectionPromise == null) {
+        airGapDetectionPromise = performAirGapDetection(url, logger, timeoutMs);
+    }
+
+    return airGapDetectionPromise;
+}
+
+async function performAirGapDetection(url: string, logger: Logger, timeoutMs: number): Promise<boolean> {
+    logger.debug(`Detecting air-gapped mode by checking connectivity to ${url}`);
+
+    try {
+        await fetch(url, {
+            method: "GET",
+            signal: AbortSignal.timeout(timeoutMs)
+        });
+
+        airGapDetectionResult = false;
+        logger.debug("Network check succeeded - not in air-gapped mode");
+        return false;
+    } catch (error) {
+        const errorMessage = extractErrorMessage(error);
+        if (isNetworkError(errorMessage)) {
+            airGapDetectionResult = true;
+            logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
+            return true;
+        }
+        airGapDetectionResult = false;
+        return false;
+    }
+}
+
+/**
+ * Detect if we're in an air-gapped environment for protobuf generation.
+ * Uses buf dep update to check network availability.
+ * Returns true if air-gapped (network unavailable), false otherwise.
+ */
+export async function detectAirGappedModeForProtobuf(
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath,
+    logger: Logger,
+    bufCommand: string = "buf"
+): Promise<boolean> {
+    const bufLockPath = join(absoluteFilepathToProtobufRoot, RelativeFilePath.of("buf.lock"));
+
+    // Check if buf.lock exists (required for air-gapped mode)
+    let bufLockExists = false;
+    try {
+        await access(bufLockPath);
+        bufLockExists = true;
+        logger.debug(`Found buf.lock at: ${bufLockPath}`);
+    } catch {
+        logger.debug(`No buf.lock found at: ${bufLockPath}`);
+    }
+
+    if (!bufLockExists) {
+        // No buf.lock means we need network access - not air-gapped
+        return false;
+    }
+
+    // Try a network check with buf dep update using a 30-second timeout
+    const tmpDir = AbsoluteFilePath.of((await tmp.dir()).path);
+    try {
+        // Copy buf.yaml and buf.lock to temp dir for the test
+        const bufYamlPath = join(absoluteFilepathToProtobufRoot, RelativeFilePath.of("buf.yaml"));
+        try {
+            await cp(bufYamlPath, join(tmpDir, RelativeFilePath.of("buf.yaml")));
+            await cp(bufLockPath, join(tmpDir, RelativeFilePath.of("buf.lock")));
+        } catch {
+            // If we can't copy the files, assume not air-gapped
+            return false;
+        }
+
+        // Try buf dep update with a timeout (30 seconds)
+        try {
+            await runExeca(logger, bufCommand, ["dep", "update"], {
+                cwd: tmpDir,
+                stdio: "pipe",
+                timeout: 30000 // 30 second timeout for detection
+            });
+            // Network works - not air-gapped
+            logger.debug("Network check succeeded - not in air-gapped mode");
+            return false;
+        } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            if (isNetworkError(errorMessage)) {
+                logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage.substring(0, 100)}`);
+                return true;
+            }
+            // Non-network error - assume not air-gapped
+            return false;
+        }
+    } finally {
+        // Cleanup temp dir and its contents
+        try {
+            await rm(tmpDir, { recursive: true, force: true });
+        } catch {
+            // Ignore cleanup errors
+        }
+    }
+}
+
+/**
+ * Resolves the buf command: checks PATH first, then auto-downloads from GitHub Releases.
+ * Returns the command string to use ("buf" if on PATH, or the full path to the cached binary).
+ * Throws via failAndThrow if buf cannot be found or downloaded.
+ */
+export async function ensureBufCommand(logger: Logger): Promise<string> {
+    const which = createLoggingExecutable("which", {
+        cwd: AbsoluteFilePath.of(process.cwd()),
+        logger: undefined,
+        doNotPipeOutput: true
+    });
+
+    try {
+        const result = await which(["buf"]);
+        const bufPath = result.stdout?.trim();
+        if (bufPath) {
+            logger.debug(`Found buf on PATH: ${bufPath}`);
+        } else {
+            logger.debug("Found buf on PATH");
+        }
+        return "buf";
+    } catch {
+        logger.debug("buf not found on PATH, attempting auto-download");
+        const downloadedBufPath = await resolveBuf(logger);
+        if (downloadedBufPath != null) {
+            logger.debug(`Using auto-downloaded buf: ${downloadedBufPath}`);
+            return downloadedBufPath;
+        }
+        throw new Error("Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf').");
+    }
+}
 
 export const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 export const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";

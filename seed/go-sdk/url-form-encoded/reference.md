@@ -54,3 +54,52 @@ client.SubmitFormData(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.GetToken(request) -> *fern.TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.TokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+    }
+client.GetToken(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.TokenRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

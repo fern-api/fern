@@ -3,8 +3,12 @@ namespace SeedContentTypes;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedContentTypesApiException(string message, int statusCode, object body)
-    : SeedContentTypesException(message)
+public class SeedContentTypesApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedContentTypesException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

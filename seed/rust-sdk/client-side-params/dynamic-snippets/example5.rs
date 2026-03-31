@@ -1,5 +1,4 @@
 use seed_client_side_params::prelude::*;
-use seed_client_side_params::CreateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -28,6 +27,7 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 connection: "connection".to_string(),
+                ..Default::default()
             },
             None,
         )

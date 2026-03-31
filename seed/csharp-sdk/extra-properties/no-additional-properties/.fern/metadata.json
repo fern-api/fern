@@ -1,9 +1,0 @@
-{
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "latest",
-  "generatorConfig": {
-    "additional-properties": false
-  },
-  "sdkVersion": "0.0.1"
-}

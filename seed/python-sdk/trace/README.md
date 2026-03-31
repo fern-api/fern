@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -20,20 +35,31 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
+from seed import SeedTrace
 import uuid
 
+client = SeedTrace(
+    token="<token>",
+)
+
+client.admin.update_test_submission_status(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    request={
+        "type": "stopped"
+    },
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
 from seed import SeedTrace
-from seed.submission import TestSubmissionStatus
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.update_test_submission_status(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    request=TestSubmissionStatus(),
+    environment=SeedTraceEnvironment.PROD,
 )
 ```
 
@@ -46,20 +72,18 @@ import asyncio
 import uuid
 
 from seed import AsyncSeedTrace
-from seed.submission import TestSubmissionStatus
 
 client = AsyncSeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
+    token="<token>",
 )
 
 
 async def main() -> None:
     await client.admin.update_test_submission_status(
-        submission_id=uuid.UUID(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request=TestSubmissionStatus(),
+        submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        request={
+            "type": "stopped"
+        },
     )
 
 
@@ -91,11 +115,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedTrace
 
-client = SeedTrace(
-    ...,
-)
+client = SeedTrace(...)
 response = client.admin.with_raw_response.update_test_submission_status(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -124,14 +147,9 @@ client.admin.update_test_submission_status(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedTrace
 
-client = SeedTrace(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedTrace(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.admin.update_test_submission_status(..., request_options={

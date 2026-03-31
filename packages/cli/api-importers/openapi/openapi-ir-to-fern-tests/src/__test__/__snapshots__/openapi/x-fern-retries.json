@@ -44,7 +44,7 @@
               "examples": [
                 {
                   "headers": {
-                    "X-API-Key": "[object Object]",
+                    "X-API-Key": "X-API-Key",
                   },
                   "request": {
                     "message": "message",
@@ -87,7 +87,7 @@ service:
         content-type: application/json
       examples:
         - headers:
-            X-API-Key: '[object Object]'
+            X-API-Key: X-API-Key
           request:
             message: message
       retries:
@@ -115,7 +115,7 @@ service:
               "examples": [
                 {
                   "headers": {
-                    "X-API-Key": "[object Object]",
+                    "X-API-Key": "X-API-Key",
                   },
                   "request": {
                     "message": "message",
@@ -155,7 +155,7 @@ service:
         content-type: application/json
       examples:
         - headers:
-            X-API-Key: '[object Object]'
+            X-API-Key: X-API-Key
           request:
             message: message
       audiences:

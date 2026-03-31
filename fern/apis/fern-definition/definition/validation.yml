@@ -4,6 +4,8 @@ types:
     union:
       - StringValidationSchema
       - NumberValidationSchema
+      - ListValidationSchema
+      - MapValidationSchema
 
   StringValidationSchema:
     properties:
@@ -19,3 +21,13 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<double>
+
+  ListValidationSchema:
+    properties:
+      minItems: optional<integer>
+      maxItems: optional<integer>
+
+  MapValidationSchema:
+    properties:
+      minProperties: optional<integer>
+      maxProperties: optional<integer>

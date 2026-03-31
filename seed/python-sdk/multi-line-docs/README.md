@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -25,6 +39,7 @@ from seed import SeedMultiLineDocs
 client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.create_user(
     name="name",
     age=1,
@@ -80,11 +95,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedMultiLineDocs
 
-client = SeedMultiLineDocs(
-    ...,
-)
+client = SeedMultiLineDocs(...)
 response = client.user.with_raw_response.create_user(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 
@@ -113,14 +127,9 @@ client.user.create_user(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedMultiLineDocs
 
-client = SeedMultiLineDocs(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedMultiLineDocs(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.user.create_user(..., request_options={

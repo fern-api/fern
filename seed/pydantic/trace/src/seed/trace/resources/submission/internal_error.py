@@ -3,12 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .exception_info import ExceptionInfo
 
 
 class InternalError(UniversalBaseModel):
-    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
+    exception_info: typing_extensions.Annotated[
+        ExceptionInfo, FieldMetadata(alias="exceptionInfo"), pydantic.Field(alias="exceptionInfo")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

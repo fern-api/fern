@@ -1,6 +1,6 @@
 import { AbstractConverter, AbstractExtension } from "@fern-api/v3-importer-commons";
 
-import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema";
+import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema.js";
 
 export interface WebsocketSessionExampleMessage {
     type: string;

@@ -21,14 +21,11 @@ module Seed
       # @return [String]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[amount currency]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/payment",
-          body: Seed::Payment::Types::CreatePaymentRequest.new(body_bag).to_h,
+          body: Seed::Payment::Types::CreatePaymentRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -58,7 +55,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{params[:payment_id]}",
+          path: "/payment/#{URI.encode_uri_component(params[:payment_id].to_s)}",
           request_options: request_options
         )
         begin

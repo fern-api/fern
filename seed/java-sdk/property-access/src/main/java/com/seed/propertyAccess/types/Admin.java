@@ -162,6 +162,10 @@ public final class Admin implements IUser {
 
     public interface _FinalStage {
         Admin build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -255,6 +259,18 @@ public final class Admin implements IUser {
         @java.lang.Override
         public Admin build() {
             return new Admin(id, email, password, profile, adminLevel, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

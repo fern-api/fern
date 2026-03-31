@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
 export declare namespace AnyAuthProviderGenerator {
     export interface Init {

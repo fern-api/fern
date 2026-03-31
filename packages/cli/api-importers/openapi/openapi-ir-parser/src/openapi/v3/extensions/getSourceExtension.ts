@@ -1,8 +1,8 @@
 import { Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export function getSourceExtension(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): Source | undefined {
     const sourceFilepath = getExtension<string>(schema, FernOpenAPIExtension.SOURCE);

@@ -30,6 +30,10 @@ public class SeedApiClient {
         return this.rawClient.uploadJsonDocument().body();
     }
 
+    public UploadDocumentResponse uploadJsonDocument(RequestOptions requestOptions) {
+        return this.rawClient.uploadJsonDocument(requestOptions).body();
+    }
+
     public UploadDocumentResponse uploadJsonDocument(UploadDocumentRequest request) {
         return this.rawClient.uploadJsonDocument(request).body();
     }

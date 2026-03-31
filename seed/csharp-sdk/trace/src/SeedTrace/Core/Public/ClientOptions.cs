@@ -36,7 +36,7 @@ public partial class ClientOptions
     /// Additional headers to be sent with HTTP requests.
     /// Headers with matching keys will be overwritten by headers set on the request.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
+    public IEnumerable<global::System.Collections.Generic.KeyValuePair<
         string,
         string?
     >> AdditionalHeaders { get;
@@ -48,7 +48,7 @@ public partial class ClientOptions
     } = [];
 
     /// <summary>
-    /// The http client used to make requests.
+    /// The max number of retries to attempt.
     /// </summary>
     public int MaxRetries { get;
 #if NET5_0_OR_GREATER
@@ -81,6 +81,7 @@ public partial class ClientOptions
             MaxRetries = MaxRetries,
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            AdditionalHeaders = AdditionalHeaders,
         };
     }
 }

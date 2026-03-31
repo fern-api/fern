@@ -46,6 +46,7 @@ class NextPage extends JsonSerializableType
     public function setPage(int $value): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class NextPage extends JsonSerializableType
     public function setStartingAfter(string $value): self
     {
         $this->startingAfter = $value;
+        $this->_setField('startingAfter');
         return $this;
     }
 

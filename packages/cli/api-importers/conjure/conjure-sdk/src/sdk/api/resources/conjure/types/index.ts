@@ -1,2 +1,2 @@
-export * from "./ConjureServiceName";
-export * from "./DefinitionFile";
+export * from "./ConjureServiceName.js";
+export * from "./DefinitionFile.js";

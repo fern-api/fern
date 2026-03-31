@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints.Put;
 
 namespace Usage;
 
@@ -12,10 +13,9 @@ public class Example47
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
+        await client.Endpoints.Put.AddAsync(
+            new PutRequest {
+                Id = "id"
             }
         );
     }

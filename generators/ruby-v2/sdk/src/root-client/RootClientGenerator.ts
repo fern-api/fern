@@ -2,18 +2,17 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { InferredAuthScheme, Literal, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
-import { Comments } from "../utils/comments";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
+import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
 interface InferredAuthParameter {
     snakeName: string;
     isOptional: boolean;
-    literal?: Literal;
+    literal?: FernIr.Literal;
 }
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -102,8 +101,46 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
+        // Check if basic auth is configured so we can conditionally add the Authorization header
+        const basicAuthSchemes = this.context.ir.auth.schemes.filter(
+            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+        );
+        const hasBasicAuth = basicAuthSchemes.length > 0;
+        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+
         method.addStatement(
             ruby.codeblock((writer) => {
+                if (hasBasicAuth) {
+                    // Build headers in a variable so we can conditionally add basic auth
+                    writer.write(`headers = `);
+                    writer.writeNode(this.getRawClientHeaders());
+                    writer.newLine();
+                    for (let i = 0; i < basicAuthSchemes.length; i++) {
+                        const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
+                        const usernameName = basicAuthScheme.username.snakeCase.safeName;
+                        const passwordName = basicAuthScheme.password.snakeCase.safeName;
+                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                            if (i === 0) {
+                                writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
+                            } else {
+                                writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
+                            }
+                            writer.writeLine(
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                            );
+                            if (i === basicAuthSchemes.length - 1) {
+                                writer.writeLine(`end`);
+                            }
+                        } else {
+                            writer.writeLine(
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                            );
+                        }
+                    }
+                }
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
@@ -126,8 +163,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     writer.writeLine(`,`);
                 }
-                writer.write(`headers: `);
-                writer.writeNode(this.getRawClientHeaders());
+                if (hasBasicAuth) {
+                    writer.write(`headers: headers`);
+                } else {
+                    writer.write(`headers: `);
+                    writer.writeNode(this.getRawClientHeaders());
+                }
                 if (inferredAuth != null) {
                     writer.writeLine(`.merge(@auth_provider.auth_headers)`);
                 } else {
@@ -141,7 +182,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return method;
     }
 
-    private getInferredAuthInitializationStatement(scheme: InferredAuthScheme): ruby.AstNode {
+    private getInferredAuthInitializationStatement(scheme: FernIr.InferredAuthScheme): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
         // Get the auth service/endpoint info to determine the auth client class
@@ -300,6 +341,33 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(param);
                     break;
                 }
+                case "basic": {
+                    const usernameParam = ruby.parameters.keyword({
+                        name: scheme.username.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.usernameEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(usernameParam);
+                    const passwordParam = ruby.parameters.keyword({
+                        name: scheme.password.snakeCase.safeName,
+                        type: ruby.Type.string(),
+                        initializer:
+                            scheme.passwordEnvVar != null
+                                ? ruby.codeblock((writer) => {
+                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                  })
+                                : undefined,
+                        docs: undefined
+                    });
+                    parameters.push(passwordParam);
+                    break;
+                }
                 case "inferred": {
                     const inferredParams = this.getParametersForInferredAuth(scheme);
                     for (const inferredParam of inferredParams) {
@@ -321,7 +389,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return parameters;
     }
 
-    private getParametersForInferredAuth(scheme: InferredAuthScheme): InferredAuthParameter[] {
+    private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): InferredAuthParameter[] {
         const parameters: InferredAuthParameter[] = [];
 
         // Get the token endpoint to extract request properties
@@ -379,10 +447,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private maybeLiteral(typeReference: {
         type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
+        container?: { type: string; literal?: FernIr.Literal };
+    }): FernIr.Literal | undefined {
         if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            const container = typeReference as { type: string; container: { type: string; literal?: FernIr.Literal } };
             if (container.container?.type === "literal") {
                 return container.container.literal;
             }
@@ -393,17 +461,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getRawClientHeaders(): ruby.TypeLiteral {
         const headers: ruby.HashEntry[] = [];
 
-        if (this.context.ir.sdkConfig.platformHeaders.userAgent != null) {
+        if (!this.context.customConfig.omitFernHeaders) {
+            if (this.context.ir.sdkConfig.platformHeaders.userAgent != null) {
+                headers.push({
+                    key: ruby.TypeLiteral.string("User-Agent"),
+                    value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
+                });
+            }
+
             headers.push({
-                key: ruby.TypeLiteral.string("User-Agent"),
-                value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
+                key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
+                value: ruby.TypeLiteral.string("Ruby")
             });
         }
-
-        headers.push({
-            key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
-            value: ruby.TypeLiteral.string("Ruby")
-        });
 
         for (const header of this.context.ir.auth.schemes) {
             switch (header.type) {
@@ -424,6 +494,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 }
+                case "basic":
+                    // Basic auth header is added conditionally in the constructor body
+                    // to guard against nil credentials when auth is optional.
+                    break;
                 default:
                     break;
             }
@@ -466,7 +540,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
     }
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });

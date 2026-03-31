@@ -7,8 +7,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 
-import { getRequestBodyExamples } from "./getRequestBodyExamples";
-import { getResponseExamples } from "./getResponseExamples";
+import { getRequestBodyExamples } from "./getRequestBodyExamples.js";
+import { getResponseExamples } from "./getResponseExamples.js";
 
 export declare namespace generateEndpointExample {
     interface Args {

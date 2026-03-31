@@ -2,13 +2,14 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class SeedEnumClient
+public partial class SeedEnumClient : ISeedEnumClient
 {
     private readonly RawClient _client;
 
     public SeedEnumClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedEnumClient
                 { "User-Agent", "Fernenum/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -33,13 +33,13 @@ public partial class SeedEnumClient
         QueryParam = new QueryParamClient(_client);
     }
 
-    public HeadersClient Headers { get; }
+    public IHeadersClient Headers { get; }
 
-    public InlinedRequestClient InlinedRequest { get; }
+    public IInlinedRequestClient InlinedRequest { get; }
 
-    public MultipartFormClient MultipartForm { get; }
+    public IMultipartFormClient MultipartForm { get; }
 
-    public PathParamClient PathParam { get; }
+    public IPathParamClient PathParam { get; }
 
-    public QueryParamClient QueryParam { get; }
+    public IQueryParamClient QueryParam { get; }
 }

@@ -1,19 +1,25 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
+import { generateRustTypeForTypeReference } from "../converters/index.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import {
+    getInnerTypeFromOptional,
+    hasDefaultImpl,
+    isDateTimeOnlyType,
+    isOptionalType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils.js";
 
 export class AliasGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly aliasTypeDeclaration: AliasTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly aliasTypeDeclaration: FernIr.AliasTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        aliasTypeDeclaration: AliasTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        aliasTypeDeclaration: FernIr.AliasTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
@@ -58,7 +64,8 @@ export class AliasGenerator {
             innerType: generateRustTypeForTypeReference(this.aliasTypeDeclaration.aliasOf, this.context),
             visibility: PUBLIC,
             innerVisibility: PUBLIC,
-            attributes: this.generateNewtypeAttributes()
+            attributes: this.generateNewtypeAttributes(),
+            innerAttributes: this.generateInnerAttributes()
         });
     }
 
@@ -73,10 +80,43 @@ export class AliasGenerator {
             derives.push("Eq", "Hash");
         }
 
+        // Add Default if the aliased type supports it
+        if (this.canDeriveDefault()) {
+            derives.push("Default");
+        }
+
         attributes.push(Attribute.derive(derives));
 
-        // DateTime aliases will use default RFC 3339 string serialization
-        // No special serde handling needed for datetime aliases
+        return attributes;
+    }
+
+    private generateInnerAttributes(): rust.Attribute[] {
+        const attributes: rust.Attribute[] = [];
+
+        // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+        // Use deserialize_with instead of with to allow Serialize derive to work correctly
+        // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+        // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
+        const dateTimeType = this.context.getDateTimeType();
+        const aliasType = this.aliasTypeDeclaration.aliasOf;
+        const modulePath = dateTimeType === "utc" 
+            ? "crate::core::flexible_datetime::utc" 
+            : "crate::core::flexible_datetime::offset";
+
+        if (isDateTimeOnlyType(aliasType)) {
+            // Direct datetime type
+            attributes.push(Attribute.serde.deserializeWith(`${modulePath}::deserialize`));
+        } else if (isOptionalType(aliasType)) {
+            // Optional type - check if inner type is datetime
+            const innerType = getInnerTypeFromOptional(aliasType);
+            if (isDateTimeOnlyType(innerType)) {
+                // Optional datetime type
+                attributes.push(Attribute.serde.default());
+                attributes.push(
+                    Attribute.serde.deserializeWith(`${modulePath}::option::deserialize`)
+                );
+            }
+        }
 
         return attributes;
     }
@@ -84,5 +124,10 @@ export class AliasGenerator {
     private canDeriveHashAndEq(): boolean {
         // Check if the aliased type can support Hash and Eq derives
         return typeSupportsHashAndEq(this.aliasTypeDeclaration.aliasOf, this.context);
+    }
+
+    private canDeriveDefault(): boolean {
+        // Check if the aliased type supports Default in Rust
+        return hasDefaultImpl(this.aliasTypeDeclaration.aliasOf, this.context);
     }
 }

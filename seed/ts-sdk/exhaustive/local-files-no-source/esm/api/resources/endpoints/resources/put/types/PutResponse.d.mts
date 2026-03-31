@@ -1,4 +1,4 @@
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export interface PutResponse {
-    errors?: SeedExhaustive.endpoints.Error_[];
+    errors?: SeedExhaustive.endpoints.Error_[] | undefined;
 }

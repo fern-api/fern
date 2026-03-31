@@ -1,13 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { EndpointRequest } from "./request/EndpointRequest";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -21,9 +20,9 @@ export abstract class AbstractEndpointGenerator {
         service,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }): EndpointSignatureInfo {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
@@ -42,8 +41,8 @@ export abstract class AbstractEndpointGenerator {
         serviceId,
         endpoint
     }: {
-        serviceId: ServiceId;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        endpoint: FernIr.HttpEndpoint;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint });
         const pathParameters: php.Parameter[] = [];
@@ -90,7 +89,7 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
         const shape = endpoint.sdkRequest?.shape;
         if (shape == null) {
             return true;
@@ -113,8 +112,8 @@ export abstract class AbstractEndpointGenerator {
         pathParameter,
         includePathParametersInEndpointSignature
     }: {
-        sdkRequest: SdkRequest | undefined;
-        pathParameter: PathParameter;
+        sdkRequest: FernIr.SdkRequest | undefined;
+        pathParameter: FernIr.PathParameter;
         includePathParametersInEndpointSignature: boolean;
     }): string {
         if (sdkRequest == null || includePathParametersInEndpointSignature) {

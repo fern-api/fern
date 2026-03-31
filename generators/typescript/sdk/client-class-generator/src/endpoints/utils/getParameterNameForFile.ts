@@ -1,5 +1,4 @@
-import { FileProperty } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 export function getParameterNameForFile({
     property,
     wrapperName,
@@ -7,7 +6,7 @@ export function getParameterNameForFile({
     retainOriginalCasing,
     inlineFileProperties
 }: {
-    property: FileProperty;
+    property: FernIr.FileProperty;
     wrapperName: string;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;

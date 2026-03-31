@@ -1,29 +1,23 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    ErrorDiscriminationStrategy,
-    HttpEndpoint,
-    HttpService,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
-import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
-import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
-import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
+import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl.js";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl.js";
+import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema.js";
 
 export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
     export interface Init {
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
@@ -37,7 +31,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private static RESPONSE_SCHEMA_NAME = "Response";
     private static STREAM_DATA_SCHEMA_NAME = "StreamData";
 
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedStreamDataSchema: GeneratedEndpointTypeSchemaImpl | undefined;
@@ -158,11 +152,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy
     }: {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     }): GeneratedEndpointErrorSchema {
-        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: (propertyDiscriminationStrategy) =>
                 new GeneratedEndpointErrorSchemaImpl({
                     packageId,
@@ -172,7 +166,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
             }
         });
     }
@@ -270,8 +264,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "text") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))
-                    .typeNode
+                context.type.getReferenceToType(
+                    FernIr.TypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
+                ).typeNode
             );
         }
 

@@ -2,9 +2,9 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences.FolderA;
 
-public partial class FolderAClient
+public partial class FolderAClient : IFolderAClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FolderAClient(RawClient client)
     {
@@ -12,5 +12,5 @@ public partial class FolderAClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

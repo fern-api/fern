@@ -2,9 +2,9 @@ import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { StructureKind, ts } from "ts-morph";
 
-import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
-import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
-import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl.js";
+import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator.js";
+import { ParsedSingleUnionType } from "./ParsedSingleUnionType.js";
 
 export declare namespace AbstractParsedSingleUnionType {
     export interface Init<Context extends ModelContext> {

@@ -3039,6 +3039,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -3607,6 +3608,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -4484,6 +4486,7 @@
                     ],
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -4542,6 +4545,12 @@
                         }
                     },
                     "url": "https://api.example.a.com",
+                    "audiences": [
+                        "public"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -4566,6 +4575,12 @@
                         }
                     },
                     "url": "https://api.example.b.com",
+                    "audiences": [
+                        "private"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

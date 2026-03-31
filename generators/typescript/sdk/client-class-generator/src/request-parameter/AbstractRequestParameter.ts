@@ -1,31 +1,24 @@
-import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    QueryParameter,
-    SdkRequest
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
-import { RequestParameter } from "./RequestParameter";
+import { RequestParameter } from "./RequestParameter.js";
 
 export declare namespace AbstractRequestParameter {
     export interface Init {
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
-        sdkRequest: SdkRequest;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        sdkRequest: FernIr.SdkRequest;
     }
 }
 
 export abstract class AbstractRequestParameter implements RequestParameter {
     protected packageId: PackageId;
-    protected service: HttpService;
-    protected endpoint: HttpEndpoint;
-    protected sdkRequest: SdkRequest;
+    protected service: FernIr.HttpService;
+    protected endpoint: FernIr.HttpEndpoint;
+    protected sdkRequest: FernIr.SdkRequest;
 
     constructor({ packageId, service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
         this.packageId = packageId;
@@ -51,13 +44,13 @@ export abstract class AbstractRequestParameter implements RequestParameter {
 
     public abstract getType(context: SdkContext): ts.TypeNode;
     public abstract getInitialStatements(context: SdkContext, args: { variablesInScope: string[] }): ts.Statement[];
-    public abstract getAllQueryParameters(context: SdkContext): QueryParameter[];
+    public abstract getAllQueryParameters(context: SdkContext): FernIr.QueryParameter[];
     public abstract getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined;
     public abstract getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression;
     public abstract getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression;
-    public abstract getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression;
+    public abstract getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): ts.Expression;
     public abstract withQueryParameter(
-        queryParameter: QueryParameter,
+        queryParameter: FernIr.QueryParameter,
         context: SdkContext,
         queryParamSetter: (value: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
@@ -68,7 +61,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
     protected abstract getParameterType(context: SdkContext): {

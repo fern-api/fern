@@ -4,10 +4,10 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import {
     getIntermediateRepresentationMigrator,
     MigratedIntermediateMigration
-} from "../../IntermediateRepresentationMigrator";
-import { IrMigrationContext } from "../../IrMigrationContext";
-import { IrMigration } from "../../types/IrMigration";
-import { getIrForApi } from "./getIrForApi";
+} from "../../IntermediateRepresentationMigrator.js";
+import { IrMigrationContext } from "../../IrMigrationContext.js";
+import { IrMigration } from "../../types/IrMigration.js";
+import { getIrForApi } from "./getIrForApi.js";
 
 export interface MigrationTesterArgs {
     pathToFixture: AbsoluteFilePath;

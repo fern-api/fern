@@ -5,6 +5,6 @@ import type * as SeedTrace from "../../../index.js";
 export interface DoublyLinkedListNodeValue {
     nodeId: SeedTrace.NodeId;
     val: number;
-    next?: SeedTrace.NodeId;
-    prev?: SeedTrace.NodeId;
+    next?: SeedTrace.NodeId | undefined;
+    prev?: SeedTrace.NodeId | undefined;
 }

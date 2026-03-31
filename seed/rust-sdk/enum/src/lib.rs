@@ -6,7 +6,6 @@
 //!
 //! ```rust
 //! use seed_enum::prelude::*;
-//! use seed_enum::{Color, ColorOrOperand, Operand};
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -46,4 +45,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

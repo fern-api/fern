@@ -1,9 +1,10 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<Language>))]
+[JsonConverter(typeof(Language.LanguageSerializer))]
 [Serializable]
 public readonly record struct Language : IStringEnum
 {
@@ -51,6 +52,55 @@ public readonly record struct Language : IStringEnum
     public static explicit operator string(Language value) => value.Value;
 
     public static explicit operator Language(string value) => new(value);
+
+    internal class LanguageSerializer : JsonConverter<Language>
+    {
+        public override Language Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new Language(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Language value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+
+        public override Language ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new Language(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Language value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

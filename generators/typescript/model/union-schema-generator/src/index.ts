@@ -1,4 +1,4 @@
-export { AbstractRawSingleUnionType } from "./AbstractRawSingleUnionType";
-export { GeneratedUnionSchema } from "./GeneratedUnionSchema";
-export { RawNoPropertiesSingleUnionType } from "./RawNoPropertiesSingleUnionType";
-export { type RawSingleUnionType } from "./RawSingleUnionType";
+export { AbstractRawSingleUnionType } from "./AbstractRawSingleUnionType.js";
+export { GeneratedUnionSchema } from "./GeneratedUnionSchema.js";
+export { RawNoPropertiesSingleUnionType } from "./RawNoPropertiesSingleUnionType.js";
+export { type RawSingleUnionType } from "./RawSingleUnionType.js";

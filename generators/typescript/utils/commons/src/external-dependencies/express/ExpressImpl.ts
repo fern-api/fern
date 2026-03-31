@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { ExternalDependency } from "../ExternalDependency";
-import { Express, ExpressHttpVerb } from "./Express";
+import { ExternalDependency } from "../ExternalDependency.js";
+import { Express, ExpressHttpVerb } from "./Express.js";
 
 export class ExpressImpl extends ExternalDependency implements Express {
     protected override PACKAGE = { name: "express", version: "4.18.2" };

@@ -18,9 +18,12 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.SdkRequest;
 import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.types.TypeReference;
@@ -134,18 +137,40 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             sdkRequestBodyType.visit(
                     new RequestBodyInitializer(builder, generatedObjectMapper, endpoint, sendContentType, contentType));
 
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(
+                        "$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                        java.util.Map.class,
+                        java.util.HashMap.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                builder.add(
+                        "_headers.putAll($L.$L($L));\n",
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                        getEndpointMetadataCodeBlock(httpEndpoint));
+            }
+
             builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName())
                     .add(
-                            ".headers($T.of($L.$L($L)))\n",
-                            Headers.class,
-                            clientOptionsMember.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(".headers($T.of(_headers))\n", Headers.class);
+            } else {
+                builder.add(
+                        ".headers($T.of($L.$L($L)))\n",
+                        Headers.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            }
             if (sendContentType) {
                 sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
 
@@ -171,23 +196,110 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             }
             return builder.add(".build();\n").unindent().build();
         } else {
-            SdkRequestBodyType.typeReference(HttpRequestBodyReference.builder()
-                            .requestBodyType(TypeReference.unknown())
-                            .build())
-                    .visit(new RequestBodyInitializer(
-                            builder, generatedObjectMapper, endpoint, sendContentType, contentType));
+            // Check if the endpoint body is bytes (e.g., application/octet-stream).
+            // If so, use InputStreamRequestBody instead of JSON serialization.
+            boolean isBytes = endpoint.getRequestBody().isPresent()
+                    && endpoint.getRequestBody().get().visit(new HttpRequestBody.Visitor<Boolean>() {
+                        @Override
+                        public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitReference(HttpRequestBodyReference httpRequestBodyReference) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitFileUpload(FileUploadRequest fileUploadRequest) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitBytes(BytesRequest bytesRequest) {
+                            return true;
+                        }
+
+                        @Override
+                        public Boolean _visitUnknown(Object unknownType) {
+                            return false;
+                        }
+                    });
+
+            if (isBytes) {
+                BytesRequest bytesRequest = endpoint.getRequestBody()
+                        .get()
+                        .visit(new HttpRequestBody.Visitor<BytesRequest>() {
+                            @Override
+                            public BytesRequest visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                                return null;
+                            }
+
+                            @Override
+                            public BytesRequest visitReference(HttpRequestBodyReference httpRequestBodyReference) {
+                                return null;
+                            }
+
+                            @Override
+                            public BytesRequest visitFileUpload(FileUploadRequest fileUploadRequest) {
+                                return null;
+                            }
+
+                            @Override
+                            public BytesRequest visitBytes(BytesRequest bytesRequest) {
+                                return bytesRequest;
+                            }
+
+                            @Override
+                            public BytesRequest _visitUnknown(Object unknownType) {
+                                return null;
+                            }
+                        });
+                SdkRequestBodyType.bytes(bytesRequest)
+                        .visit(new RequestBodyInitializer(
+                                builder, generatedObjectMapper, endpoint, sendContentType, contentType));
+            } else {
+                SdkRequestBodyType.typeReference(HttpRequestBodyReference.builder()
+                                .requestBodyType(TypeReference.unknown())
+                                .build())
+                        .visit(new RequestBodyInitializer(
+                                builder, generatedObjectMapper, endpoint, sendContentType, contentType));
+            }
+
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(
+                        "$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                        java.util.Map.class,
+                        java.util.HashMap.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                builder.add(
+                        "_headers.putAll($L.$L($L));\n",
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                        getEndpointMetadataCodeBlock(httpEndpoint));
+            }
+
             builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName())
                     .add(
-                            ".headers($T.of($L.$L($L)))\n",
-                            Headers.class,
-                            clientOptionsMember.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(".headers($T.of(_headers))\n", Headers.class);
+            } else {
+                builder.add(
+                        ".headers($T.of($L.$L($L)))\n",
+                        Headers.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            }
             if (sendContentType) {
                 builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             }
@@ -257,6 +369,20 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             // Handle form-urlencoded content type
             if (contentType.equals("application/x-www-form-urlencoded")) {
                 initializeFormUrlEncodedBody(codeBlock, requestBodyGetter, isOptional, requestBodyGetterName);
+                return null;
+            }
+
+            // Handle octet-stream content type — send raw bytes using InputStreamRequestBody
+            if (contentType.equals("application/octet-stream")) {
+                codeBlock.addStatement(
+                        "$T $L = new $T($T.parse($S), new $T($L))",
+                        RequestBody.class,
+                        variables.getOkhttpRequestBodyName(),
+                        clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
+                        MediaType.class,
+                        "application/octet-stream",
+                        ClassName.get("java.io", "ByteArrayInputStream"),
+                        requestBodyGetter);
                 return null;
             }
 
@@ -365,6 +491,14 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
         @Override
         public Void visitBytes(BytesRequest bytes) {
+            Optional<String> requestBodyGetterName = getRequestBodyGetterName();
+            String bodySource;
+            if (requestBodyGetterName.isPresent()) {
+                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName() + "."
+                        + requestBodyGetterName.get() + "()";
+            } else {
+                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+            }
             codeBlock.addStatement(
                     "$T $L = new $T($T.parse($S), $L)",
                     RequestBody.class,
@@ -372,7 +506,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
                     MediaType.class,
                     bytes.getContentType().orElse(APPLICATION_OCTET_STREAM),
-                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
+                    bodySource);
             return null;
         }
 

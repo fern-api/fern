@@ -38,6 +38,7 @@ class Conversation extends JsonSerializableType
     public function setFoo(string $value): self
     {
         $this->foo = $value;
+        $this->_setField('foo');
         return $this;
     }
 

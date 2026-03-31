@@ -386,6 +386,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -898,7 +899,7 @@
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
-    "hasStreamingEndpoints": false,
+    "hasStreamingEndpoints": true,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",

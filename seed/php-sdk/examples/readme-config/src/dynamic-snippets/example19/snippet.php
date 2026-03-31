@@ -97,13 +97,9 @@ $client->service->createBigEntity(
                     'nodes' => [
                         new Node([
                             'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
                         ]),
                         new Node([
                             'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
                         ]),
                     ],
                     'trees' => [
@@ -120,13 +116,9 @@ $client->service->createBigEntity(
                     'nodes' => [
                         new Node([
                             'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
                         ]),
                         new Node([
                             'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
                         ]),
                     ],
                     'trees' => [
@@ -198,13 +190,9 @@ $client->service->createBigEntity(
                     'directories' => [
                         new Directory([
                             'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
                         ]),
                         new Directory([
                             'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
                         ]),
                     ],
                 ]),
@@ -223,13 +211,9 @@ $client->service->createBigEntity(
                     'directories' => [
                         new Directory([
                             'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
                         ]),
                         new Directory([
                             'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
                         ]),
                     ],
                 ]),

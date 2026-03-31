@@ -56,8 +56,8 @@ export interface Type {
     ten: number[];
     eleven: number[];
     twelve: Record<string, boolean>;
-    thirteen?: number;
-    fourteen?: unknown;
+    thirteen?: number | undefined;
+    fourteen?: unknown | undefined;
     fifteen: number[][];
     sixteen: Record<string, number>[];
     seventeen: (string | undefined)[];
@@ -67,6 +67,6 @@ export interface Type {
     twentyone: number;
     twentytwo: number;
     twentythree: string;
-    twentyfour?: string;
-    twentyfive?: string;
+    twentyfour?: string | undefined;
+    twentyfive?: string | undefined;
 }

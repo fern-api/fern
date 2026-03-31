@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
@@ -19,9 +19,8 @@ public class Example19 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().object().getAndReturnNestedWithRequiredField(
-            "string",
-            NestedObjectWithRequiredField
+        client.endpoints().object().getAndReturnNestedWithOptionalField(
+            NestedObjectWithOptionalField
                 .builder()
                 .string("string")
                 .nestedObject(

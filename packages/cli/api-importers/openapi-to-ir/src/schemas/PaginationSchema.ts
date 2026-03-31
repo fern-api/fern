@@ -13,8 +13,20 @@ export const OffsetPaginationExtensionSchema = z.object({
     "has-next-page": z.string().optional()
 });
 
+export const UriPaginationExtensionSchema = z.object({
+    next_uri: z.string(),
+    results: z.string()
+});
+
+export const PathPaginationExtensionSchema = z.object({
+    next_path: z.string(),
+    results: z.string()
+});
+
 export const PaginationExtensionSchema = z.union([
     z.boolean(),
     CursorPaginationExtensionSchema,
-    OffsetPaginationExtensionSchema
+    OffsetPaginationExtensionSchema,
+    UriPaginationExtensionSchema,
+    PathPaginationExtensionSchema
 ]);

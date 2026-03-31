@@ -1,28 +1,28 @@
-# Stage 1: Base Python image with dependencies
+# Stage 1: Copy Node.js from official image
+FROM node:20.19.4-slim AS node
+
+# Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base
 
-# Install node and npm.
-ENV NODE_VERSION=20.19.4
-RUN apt update && apt install -y curl git
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+# Copy Node.js and npm from the node stage
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl git && rm -rf /var/lib/apt/lists/*
 RUN node --version
 RUN npm --version
-RUN npm install -g npm@latest
 
 # Install ruff.
-RUN pip install ruff
+RUN pip install ruff==0.15.7
 RUN ruff --version
 
 # Set Python environment
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
-ENV HTTPX_LOG_LEVEL=trace
 
+# Keep in sync with the poetry-core version in pyproject.toml
 RUN pip3 install poetry==1.8.5
 RUN poetry config virtualenvs.create false
 
@@ -47,7 +47,5 @@ COPY ./generators/python/src ./src
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
-
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]

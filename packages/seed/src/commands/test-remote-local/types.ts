@@ -1,5 +1,5 @@
 import type { Logger } from "@fern-api/logger";
-import type { GenerationMode, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants";
+import type { GenerationMode, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants.js";
 
 export type GenerationResult = GenerationResultSuccess | GenerationResultFailure;
 

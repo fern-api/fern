@@ -1,15 +1,39 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+
+const JS_IDENTIFIER_REGEX = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+const jsIdentifier = z.string().refine((val) => JS_IDENTIFIER_REGEX.test(val), {
+    message: "Must be a valid JavaScript identifier (e.g., 'acme', 'MySDK')"
+});
+
+export const NamingObjectSchema = z.strictObject({
+    namespace: z.optional(jsIdentifier),
+    client: z.optional(z.string()),
+    error: z.optional(z.string()),
+    timeoutError: z.optional(z.string()),
+    environment: z.optional(z.string()),
+    environmentUrls: z.optional(z.string()),
+    version: z.optional(z.string())
+});
+
+export type NamingObjectSchema = z.infer<typeof NamingObjectSchema>;
+
+// Accepts either a string shorthand (e.g., `naming: acme`) or a full object.
+// The string form is equivalent to `naming: { namespace: "acme" }`.
+export const NamingConfigSchema = z.union([jsIdentifier, NamingObjectSchema]);
+
+export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
 
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
     outputSourceFiles: z.optional(z.boolean()),
+    outputSrcOnly: z.optional(z.boolean()),
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
-    shouldGenerateWebsocketClients: z.optional(z.boolean()),
+    generateWebSocketClients: z.optional(z.boolean()),
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
@@ -49,6 +73,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     enableInlineTypes: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
     inlinePathParameters: z.optional(z.boolean()),
+    naming: z.optional(NamingConfigSchema),
+    // @deprecated Use naming.namespace instead
+    // namespaceExport is kept for backwards compatibility
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
@@ -58,6 +85,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     useBrandedStringAliases: z.optional(z.boolean()),
     offsetSemantics: z.optional(z.enum(["item-index", "page-index"])),
     customPagerName: z.optional(z.string()),
+
+    resolveQueryParameterNameConflicts: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
@@ -72,6 +101,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean()),
+    // @deprecated Use generateWebSocketClients instead
+    shouldGenerateWebsocketClients: z.optional(z.boolean()),
 
     // internal - license name extracted from custom license file
     _fernLicenseName: z.optional(z.string())

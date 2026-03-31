@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedFileDownloadEndpointImplementation > getDocs > combines docs, availability, and exceptions 1`] = `
+"@deprecated
+
+Download a file.
+
+@throws {@link NotFoundError}"
+`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > getExample > returns endpoint invocation example 1`] = `"await client.service.testEndpoint("example-arg")"`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > getStatements > generates endpoint body with endpoint metadata 1`] = `
+"const _metadata: core.EndpointMetadata = { security: undefined };
+const _response = await this._options.fetcher.fetch({});
+return _response;"
+`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > getStatements > generates file download endpoint body with binary-response type 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response;"
+`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > getStatements > generates file download endpoint body with stream response type 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response;"
+`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > generates fetcher invocation with binary-response type 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > generates fetcher invocation with streaming response type 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > includes withCredentials when enabled 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > uses web stream type when streamType is web and fileResponseType is stream 1`] = `"const _response = await this._options.fetcher.fetch({});"`;

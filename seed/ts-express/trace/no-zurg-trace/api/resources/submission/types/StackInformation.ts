@@ -4,5 +4,5 @@ import type * as SeedTrace from "../../../index";
 
 export interface StackInformation {
     numStackFrames: number;
-    topStackFrame?: SeedTrace.StackFrame;
+    topStackFrame?: SeedTrace.StackFrame | undefined;
 }

@@ -11,11 +11,29 @@ servers:
   - url: /api/v31
 tags:
   - name: pet
-    description: Everything about your Pets
+    description: |-
+      Everything about your Pets.
+
+      Use the `{petId}` path parameter to identify a specific pet.
+      For example: `GET /pets/{petId}`
+
+      ```json
+      {
+        "id": 10,
+        "name": "doggie",
+        "status": "available"
+      }
+      ```
+
+      Filter pets with query params like `status=available` or `tags=<indoor>`.
   - name: store
     description: Access to Petstore orders
   - name: user
     description: Operations about user
+  - name: Study Collections
+    description: Manage study collections and their contents
+  - name: user-management
+    description: User management operations
 paths:
   /pet:
     put:
@@ -151,6 +169,41 @@ paths:
             - "write:pets"
             - "read:pets"
         - api_key: []
+  /study-collections:
+    get:
+      tags:
+        - Study Collections
+      summary: List all study collections
+      operationId: listStudyCollections
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+  /user-management/users:
+    get:
+      tags:
+        - user-management
+      summary: List all users
+      operationId: listUsers
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
 components:
   schemas:
     Order:

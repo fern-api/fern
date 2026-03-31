@@ -84,26 +84,40 @@
       "contents": {
         "channel": {
           "auth": false,
+          "connect-method-name": "createChatConnection",
           "docs": "Chat channel for testing custom method names",
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": {
+                    "text": "text",
+                  },
+                  "type": "userMessage",
+                },
+                {
+                  "body": {
+                    "message": "message",
+                    "type": "info",
+                  },
+                  "type": "serverNotification",
+                },
+              ],
             },
           ],
           "messages": {
             "serverNotification": {
               "body": "root.ServerNotificationPayload",
-              "method-name": "sendMessage",
+              "method-name": "onNotification",
               "origin": "server",
             },
             "userMessage": {
               "body": "root.UserMessagePayload",
-              "method-name": "onNotification",
               "origin": "client",
             },
           },
           "path": "/v1/ws/chat",
-          "url": "production",
+          "url": undefined,
         },
         "imports": {
           "root": "__package__.yml",
@@ -111,20 +125,26 @@
       },
       "rawContents": "channel:
   path: /v1/ws/chat
-  url: production
   auth: false
+  connect-method-name: createChatConnection
   docs: Chat channel for testing custom method names
   messages:
     serverNotification:
       origin: server
       body: root.ServerNotificationPayload
-      method-name: sendMessage
+      method-name: onNotification
     userMessage:
       origin: client
       body: root.UserMessagePayload
-      method-name: onNotification
   examples:
-    - messages: []
+    - messages:
+        - type: userMessage
+          body:
+            text: text
+        - type: serverNotification
+          body:
+            message: message
+            type: info
 imports:
   root: __package__.yml
 ",

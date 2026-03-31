@@ -1503,6 +1503,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -2246,6 +2247,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -2895,6 +2897,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -3880,7 +3883,8 @@
                                     "v1": "LONG",
                                     "v2": {
                                         "type": "long",
-                                        "default": 9223372036854776000
+                                        "default": 9223372036854776000,
+                                        "validation": null
                                     }
                                 }
                             },
@@ -6953,6 +6957,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

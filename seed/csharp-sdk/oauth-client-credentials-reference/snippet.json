@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\n"
+                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"client_id\", \"client_secret\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Simple.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"client_id\", \"client_secret\");\nawait client.Simple.GetSomethingAsync();\n"
             }
         }
     ]

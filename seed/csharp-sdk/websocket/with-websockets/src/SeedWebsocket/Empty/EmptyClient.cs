@@ -2,21 +2,21 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket.Empty;
 
-public partial class EmptyClient
+public partial class EmptyClient : IEmptyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EmptyClient(RawClient client)
     {
         _client = client;
     }
 
-    public EmptyRealtimeApi CreateEmptyRealtimeApi()
+    public IEmptyRealtimeApi CreateEmptyRealtimeApi()
     {
         return new EmptyRealtimeApi(new EmptyRealtimeApi.Options());
     }
 
-    public EmptyRealtimeApi CreateEmptyRealtimeApi(EmptyRealtimeApi.Options options)
+    public IEmptyRealtimeApi CreateEmptyRealtimeApi(EmptyRealtimeApi.Options options)
     {
         return new EmptyRealtimeApi(options);
     }

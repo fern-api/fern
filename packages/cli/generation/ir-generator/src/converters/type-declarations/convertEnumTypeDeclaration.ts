@@ -1,8 +1,8 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { convertDeclaration } from "../convertDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { convertDeclaration } from "../convertDeclaration.js";
 
 export function convertEnumTypeDeclaration({
     _enum,
@@ -32,7 +32,8 @@ export function convertEnumTypeDeclaration({
     }
     return {
         default: defaultValue,
-        values
+        values,
+        forwardCompatible: _enum["forward-compatible"] || undefined
     };
 }
 

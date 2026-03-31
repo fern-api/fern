@@ -1,5 +1,4 @@
 use seed_literal::prelude::*;
-use seed_literal::{ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral};
 
 #[tokio::main]
 async fn main() {
@@ -24,6 +23,7 @@ async fn main() {
                         literal_2: "literal2".to_string(),
                         str_prop: "strProp".to_string(),
                     }],
+                    ..Default::default()
                 },
             },
             None,

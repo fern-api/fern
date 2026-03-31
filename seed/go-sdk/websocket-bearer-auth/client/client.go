@@ -3,10 +3,11 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/websocket-bearer-auth/fern/core"
 	internal "github.com/websocket-bearer-auth/fern/internal"
 	option "github.com/websocket-bearer-auth/fern/option"
-	os "os"
 )
 
 type Client struct {

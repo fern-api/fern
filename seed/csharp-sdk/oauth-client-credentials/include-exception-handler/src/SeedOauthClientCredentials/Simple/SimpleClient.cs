@@ -2,9 +2,9 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials;
 
-public partial class SimpleClient
+public partial class SimpleClient : ISimpleClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SimpleClient(RawClient client)
     {
@@ -30,13 +30,19 @@ public partial class SimpleClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/get-something",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -47,7 +53,9 @@ public partial class SimpleClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     throw new SeedOauthClientCredentialsApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,

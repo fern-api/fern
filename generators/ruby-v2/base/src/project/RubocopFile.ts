@@ -1,6 +1,6 @@
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 
 export declare namespace RubocopFile {
     interface Args {
@@ -87,6 +87,15 @@ Minitest/MultipleAssertions:
 
 Minitest/UselessAssertion:
   Enabled: false
+
+# Dynamic snippets are code samples for documentation, not standalone Ruby files.
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "dynamic-snippets/**/*"
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - "dynamic-snippets/**/*"
 `;
     }
 }

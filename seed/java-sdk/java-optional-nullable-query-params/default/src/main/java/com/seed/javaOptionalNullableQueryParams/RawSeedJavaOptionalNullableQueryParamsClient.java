@@ -37,6 +37,13 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
     /**
      * Search endpoint with optional nullable query params with defaults
      */
+    public SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse> search(RequestOptions requestOptions) {
+        return search(SearchRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Search endpoint with optional nullable query params with defaults
+     */
     public SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse> search(SearchRequest request) {
         return search(request, null);
     }
@@ -73,6 +80,11 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
                     "regularOptionalNoDefault",
                     request.getRegularOptionalNoDefault().orElse(null),
                     false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

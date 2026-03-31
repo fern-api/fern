@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>$client->endpoints->container->getAndReturnListOfPrimitives($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnListOfPrimitives($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnListOfObjects($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnListOfObjects($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ $client->endpoints->container->getAndReturnListOfObjects(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnSetOfPrimitives($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnSetOfPrimitives($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -138,7 +138,7 @@ $client->endpoints->container->getAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnSetOfObjects($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnSetOfObjects($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -184,7 +184,7 @@ $client->endpoints->container->getAndReturnSetOfObjects(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnMapPrimToPrim($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapPrimToPrim($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -228,7 +228,7 @@ $client->endpoints->container->getAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnMapOfPrimToObject($request) -> array</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapOfPrimToObject($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -274,7 +274,51 @@ $client->endpoints->container->getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->container->getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapOfPrimToUndiscriminatedUnion($request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    [
+        'string' => 1.1,
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -319,7 +363,7 @@ $client->endpoints->container->getAndReturnOptional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>$client->endpoints->contentType->postJsonPatchContentType($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;postJsonPatchContentType($request)</code></summary>
 <dl>
 <dd>
 
@@ -382,7 +426,7 @@ $client->endpoints->contentType->postJsonPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->contentType->postJsonPatchContentWithCharsetType($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;postJsonPatchContentWithCharsetType($request)</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +490,7 @@ $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>$client->endpoints->enum->getAndReturnEnum($request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;enum-&gt;getAndReturnEnum($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -489,7 +533,7 @@ $client->endpoints->enum->getAndReturnEnum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>$client->endpoints->httpMethods->testGet($id) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testGet($id) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -531,7 +575,7 @@ $client->endpoints->httpMethods->testGet(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->httpMethods->testPost($request) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPost($request) -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -575,7 +619,7 @@ $client->endpoints->httpMethods->testPost(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->httpMethods->testPut($id, $request) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPut($id, $request) -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -628,7 +672,7 @@ $client->endpoints->httpMethods->testPut(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->httpMethods->testPatch($id, $request) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPatch($id, $request) -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -700,7 +744,7 @@ $client->endpoints->httpMethods->testPatch(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->httpMethods->testDelete($id) -> bool</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testDelete($id) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -743,7 +787,7 @@ $client->endpoints->httpMethods->testDelete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>$client->endpoints->object->getAndReturnWithOptionalField($request) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithOptionalField($request) -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -806,7 +850,7 @@ $client->endpoints->object->getAndReturnWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->object->getAndReturnWithRequiredField($request) -> ObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithRequiredField($request) -> ?ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -850,7 +894,7 @@ $client->endpoints->object->getAndReturnWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->object->getAndReturnWithMapOfMap($request) -> ObjectWithMapOfMap</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithMapOfMap($request) -> ?ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -898,7 +942,7 @@ $client->endpoints->object->getAndReturnWithMapOfMap(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->object->getAndReturnNestedWithOptionalField($request) -> NestedObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithOptionalField($request) -> ?NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -964,7 +1008,7 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->object->getAndReturnNestedWithRequiredField($string, $request) -> NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredField($string, $request) -> ?NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1039,7 +1083,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList($request) -> NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredFieldAsList($request) -> ?NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1132,8 +1176,275 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithUnknownField($request) -> ?ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithUnknownField(
+    new ObjectWithUnknownField([
+        'unknown' => [
+            '$ref' => "https://example.com/schema",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDocumentedUnknownType($request) -> ?ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+    new ObjectWithDocumentedUnknownType([
+        'documentedUnknownType' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnMapOfDocumentedUnknownType($request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
+    [
+        'string' => [
+            'key' => "value",
+        ],
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ?ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithDatetimeLikeString(
+    new ObjectWithDatetimeLikeString([
+        'datetimeLikeString' => '2023-08-31T14:15:22Z',
+        'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>$client-&gt;endpoints-&gt;pagination-&gt;listItems($request) -> ?PaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->pagination->listItems(
+    new ListItemsRequest([
+        'cursor' => 'cursor',
+        'limit' => 1,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$cursor:** `?string` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$limit:** `?int` — Maximum number of items to return
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
-<details><summary><code>$client->endpoints->params->getWithPath($param) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithPath($param) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1189,7 +1500,7 @@ $client->endpoints->params->getWithPath(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->getWithInlinePath($param) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithInlinePath($param) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1245,7 +1556,7 @@ $client->endpoints->params->getWithPath(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->getWithQuery($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithQuery($request)</code></summary>
 <dl>
 <dd>
 
@@ -1312,7 +1623,7 @@ $client->endpoints->params->getWithQuery(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->getWithAllowMultipleQuery($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithAllowMultipleQuery($request)</code></summary>
 <dl>
 <dd>
 
@@ -1379,7 +1690,7 @@ $client->endpoints->params->getWithQuery(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->getWithPathAndQuery($param, $request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithPathAndQuery($param, $request)</code></summary>
 <dl>
 <dd>
 
@@ -1446,7 +1757,7 @@ $client->endpoints->params->getWithPathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->getWithInlinePathAndQuery($param, $request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithInlinePathAndQuery($param, $request)</code></summary>
 <dl>
 <dd>
 
@@ -1513,7 +1824,7 @@ $client->endpoints->params->getWithPathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->modifyWithPath($param, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithPath($param, $request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1578,7 +1889,7 @@ $client->endpoints->params->modifyWithPath(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->params->modifyWithInlinePath($param, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithInlinePath($param, $request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1632,6 +1943,63 @@ $client->endpoints->params->modifyWithPath(
 <dd>
 
 **$request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadWithPath($param) -> ?ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadWithPath(
+    'upload-path',
+    ,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
     
 </dd>
 </dl>
@@ -1644,7 +2012,7 @@ $client->endpoints->params->modifyWithPath(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>$client->endpoints->primitive->getAndReturnString($request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnString($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1686,7 +2054,7 @@ $client->endpoints->primitive->getAndReturnString(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnInt($request) -> int</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnInt($request) -> ?int</code></summary>
 <dl>
 <dd>
 
@@ -1728,7 +2096,7 @@ $client->endpoints->primitive->getAndReturnInt(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnLong($request) -> int</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnLong($request) -> ?int</code></summary>
 <dl>
 <dd>
 
@@ -1770,7 +2138,7 @@ $client->endpoints->primitive->getAndReturnLong(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnDouble($request) -> float</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnDouble($request) -> ?float</code></summary>
 <dl>
 <dd>
 
@@ -1812,7 +2180,7 @@ $client->endpoints->primitive->getAndReturnDouble(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnBool($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnBool($request) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -1854,7 +2222,7 @@ $client->endpoints->primitive->getAndReturnBool(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnDatetime($request) -> DateTime</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnDatetime($request) -> ?DateTime</code></summary>
 <dl>
 <dd>
 
@@ -1896,7 +2264,7 @@ $client->endpoints->primitive->getAndReturnDatetime(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnDate($request) -> DateTime</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnDate($request) -> ?DateTime</code></summary>
 <dl>
 <dd>
 
@@ -1938,7 +2306,7 @@ $client->endpoints->primitive->getAndReturnDate(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnUuid($request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnUuid($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -1980,7 +2348,7 @@ $client->endpoints->primitive->getAndReturnUuid(
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->primitive->getAndReturnBase64($request) -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnBase64($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2023,7 +2391,7 @@ $client->endpoints->primitive->getAndReturnBase64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>$client->endpoints->put->add($id) -> PutResponse</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;put-&gt;add($id) -> ?PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2066,7 +2434,7 @@ $client->endpoints->put->add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>$client->endpoints->union->getAndReturnUnion($request) -> Animal</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;union-&gt;getAndReturnUnion($request) -> ?Animal</code></summary>
 <dl>
 <dd>
 
@@ -2112,7 +2480,7 @@ $client->endpoints->union->getAndReturnUnion(
 </details>
 
 ## Endpoints Urls
-<details><summary><code>$client->endpoints->urls->withMixedCase() -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;urls-&gt;withMixedCase() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2137,7 +2505,7 @@ $client->endpoints->urls->withMixedCase();
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->urls->noEndingSlash() -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;urls-&gt;noEndingSlash() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2162,7 +2530,7 @@ $client->endpoints->urls->noEndingSlash();
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->urls->withEndingSlash() -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;urls-&gt;withEndingSlash() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2187,7 +2555,7 @@ $client->endpoints->urls->withEndingSlash();
 </dl>
 </details>
 
-<details><summary><code>$client->endpoints->urls->withUnderscores() -> string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;urls-&gt;withUnderscores() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2213,7 +2581,7 @@ $client->endpoints->urls->withUnderscores();
 </details>
 
 ## InlinedRequests
-<details><summary><code>$client->inlinedRequests->postWithObjectBodyandResponse($request) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;inlinedRequests-&gt;postWithObjectBodyandResponse($request) -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2311,7 +2679,7 @@ $client->inlinedRequests->postWithObjectBodyandResponse(
 </details>
 
 ## NoAuth
-<details><summary><code>$client->noAuth->postWithNoAuth($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;noAuth-&gt;postWithNoAuth($request) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -2370,7 +2738,7 @@ $client->noAuth->postWithNoAuth(
 </details>
 
 ## NoReqBody
-<details><summary><code>$client->noReqBody->getWithNoRequestBody() -> ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;noReqBody-&gt;getWithNoRequestBody() -> ?ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2395,7 +2763,7 @@ $client->noReqBody->getWithNoRequestBody();
 </dl>
 </details>
 
-<details><summary><code>$client->noReqBody->postWithNoRequestBody() -> string</code></summary>
+<details><summary><code>$client-&gt;noReqBody-&gt;postWithNoRequestBody() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -2421,7 +2789,7 @@ $client->noReqBody->postWithNoRequestBody();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>$client->reqWithHeaders->getWithCustomHeader($request)</code></summary>
+<details><summary><code>$client-&gt;reqWithHeaders-&gt;getWithCustomHeader($request)</code></summary>
 <dl>
 <dd>
 
@@ -2474,3 +2842,4 @@ $client->reqWithHeaders->getWithCustomHeader(
 </dd>
 </dl>
 </details>
+

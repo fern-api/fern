@@ -39,6 +39,7 @@ class UserOptionalListContainer extends JsonSerializableType
     public function setUsers(?array $value = null): self
     {
         $this->users = $value;
+        $this->_setField('users');
         return $this;
     }
 

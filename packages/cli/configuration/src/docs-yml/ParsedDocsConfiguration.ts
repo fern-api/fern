@@ -1,7 +1,7 @@
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
-import { Audiences } from "../commons";
+import { Audiences } from "../commons/index.js";
 import {
     AiChatConfig,
     AnnouncementConfig,
@@ -9,11 +9,12 @@ import {
     DocsInstance,
     ExperimentalConfig,
     Language,
+    LibraryLanguage,
     PlaygroundSettings,
     Target,
     ThemeConfig,
     VersionAvailability
-} from "./schemas";
+} from "./schemas/index.js";
 
 export interface ParsedCustomPageAction {
     title: string;
@@ -46,6 +47,9 @@ export interface ParsedDocsConfiguration {
 
     /* RBAC declaration */
     roles: string[] | undefined;
+
+    /* library documentation */
+    libraries: Record<string, ParsedLibraryConfiguration> | undefined;
 
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
@@ -84,8 +88,9 @@ export interface ParsedDocsConfiguration {
 
     pageActions: ParsedPageActionsConfig | undefined;
 
-    header: undefined;
-    footer: undefined;
+    /* custom components */
+    header: AbsoluteFilePath | undefined;
+    footer: AbsoluteFilePath | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
@@ -104,10 +109,15 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
+    extends Omit<
+        CjsFdrSdk.docs.v1.commons.MetadataConfig,
+        "og:image" | "og:logo" | "twitter:image" | "og:background-image"
+    > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
+    "og:dynamic": boolean | undefined;
+    "og:background-image": FilepathOrUrl | undefined;
 }
 
 export type ColorConfiguration =
@@ -293,6 +303,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
+    | DocsNavigationItem.LibrarySection
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
@@ -317,7 +328,9 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
@@ -341,7 +354,7 @@ export declare namespace DocsNavigationItem {
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
@@ -367,6 +380,18 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
+        slug: string | undefined;
+    }
+
+    export interface LibrarySection
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "librarySection";
+        /** The name of the library (must match a key in the `libraries` section) */
+        libraryName: string;
+        /** Override display title for this library reference */
+        title: string | undefined;
+        /** Override URL slug for this library reference */
         slug: string | undefined;
     }
 
@@ -400,6 +425,9 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
@@ -432,6 +460,17 @@ export declare namespace ParsedApiReferenceLayoutItem {
         playground: PlaygroundSettings | undefined;
     }
 
+    export interface Operation
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "operation";
+        operation: string; // GraphQL operation locator (e.g., "QUERY account" or "QUERY namespace.createUser")
+        title: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        availability: Availability | undefined;
+    }
+
     export interface Item {
         type: "item";
         value: string; // this could be either an endpoint or subpackage.
@@ -443,5 +482,27 @@ export type ParsedApiReferenceLayoutItem =
     | ParsedApiReferenceLayoutItem.Section
     | ParsedApiReferenceLayoutItem.Package
     | ParsedApiReferenceLayoutItem.Endpoint
+    | ParsedApiReferenceLayoutItem.Operation
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;
+
+/**
+ * Parsed configuration for a library documentation source.
+ * Used by `fern docs md generate` to generate MDX files from library source code.
+ */
+export interface ParsedLibraryConfiguration {
+    /** Configuration for the library source location */
+    input: {
+        /** GitHub URL to the repository containing the library source code */
+        git: string;
+        /** Optional path within the repository to the library source */
+        subpath: string | undefined;
+    };
+    /** Configuration for the library documentation output */
+    output: {
+        /** The output directory where MDX files will be generated */
+        path: string;
+    };
+    /** The programming language of the library source code */
+    lang: LibraryLanguage;
+}

@@ -25,14 +25,11 @@ module Seed
       # @return [untyped]
       def boot_instance(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[size]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:ec_2),
           method: "POST",
           path: "/ec2/boot",
-          body: Seed::Ec2::Types::BootInstanceRequest.new(body_bag).to_h,
+          body: Seed::Ec2::Types::BootInstanceRequest.new(params).to_h,
           request_options: request_options
         )
         begin

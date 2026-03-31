@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(GetUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.Nullable.<a href="/src/SeedNullable/Nullable/NullableClient.cs">GetUsersAsync</a>(GetUsersRequest { ... }) -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

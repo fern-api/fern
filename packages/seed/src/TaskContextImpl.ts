@@ -14,8 +14,8 @@ import {
 } from "@fern-api/task-context";
 import chalk from "chalk";
 
-import { Log } from "./Log";
-import { logErrorMessage } from "./logErrorMessage";
+import { Log } from "./Log.js";
+import { logErrorMessage } from "./logErrorMessage.js";
 
 export declare namespace TaskContextImpl {
     export interface Init {

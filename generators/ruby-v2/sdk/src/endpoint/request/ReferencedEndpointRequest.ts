@@ -1,22 +1,22 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
-    private requestBodyShape: TypeReference;
+    private requestBodyShape: FernIr.TypeReference;
 
     public constructor(
         context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        endpoint: HttpEndpoint,
-        requestBodyShape: TypeReference
+        sdkRequest: FernIr.SdkRequest,
+        endpoint: FernIr.HttpEndpoint,
+        requestBodyShape: FernIr.TypeReference
     ) {
         super(context, sdkRequest, endpoint);
         this.requestBodyShape = requestBodyShape;

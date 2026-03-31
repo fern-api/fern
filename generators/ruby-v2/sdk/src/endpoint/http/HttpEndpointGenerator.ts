@@ -1,15 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getEndpointRequest } from "../utils/getEndpointRequest";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getEndpointRequest } from "../utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
 export declare namespace HttpEndpointGenerator {
     export interface GenerateArgs {
-        endpoint: HttpEndpoint;
-        serviceId: ServiceId;
+        endpoint: FernIr.HttpEndpoint;
+        serviceId: FernIr.ServiceId;
     }
 }
 
@@ -34,8 +34,8 @@ export class HttpEndpointGenerator {
         endpoint,
         serviceId
     }: {
-        endpoint: HttpEndpoint;
-        serviceId: ServiceId;
+        endpoint: FernIr.HttpEndpoint;
+        serviceId: FernIr.ServiceId;
     }): ruby.Method {
         const rawClient = new RawClient(this.context);
 
@@ -104,6 +104,8 @@ export class HttpEndpointGenerator {
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
         const requestOptionsDocs = this.generateRequestOptionsDocs();
 
+        // Pagination blocks use string keys for query_params to match initialization
+        // in WrappedEndpointRequest (e.g. query_params["page"], not query_params[:page])
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom": {
@@ -159,9 +161,8 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
                                     )
                                 })
                             ],
@@ -169,8 +170,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_cursor`
                                     ),
                                     ...requestStatements
                                 ]
@@ -190,9 +190,8 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -220,8 +219,7 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
-                                        // Keep wireValue for query params (sent over HTTP)
-                                        `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_page`
                                     ),
                                     ...requestStatements
                                 ]
@@ -263,7 +261,7 @@ export class HttpEndpointGenerator {
         sendRequestCodeBlock,
         storeResponseInVariable
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
         storeResponseInVariable?: boolean;
     }): ruby.AstNode[] {
@@ -338,7 +336,7 @@ export class HttpEndpointGenerator {
         return statements;
     }
 
-    private getPathParameterReferences({ endpoint }: { endpoint: HttpEndpoint }): Record<string, string> {
+    private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): Record<string, string> {
         const pathParameterReferences: Record<string, string> = {};
         for (const pathParam of endpoint.allPathParameters) {
             const parameterName = this.getPathParameterName({
@@ -349,7 +347,7 @@ export class HttpEndpointGenerator {
         return pathParameterReferences;
     }
 
-    private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
+    private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
         return pathParameter.name.snakeCase.safeName;
     }
 
@@ -359,7 +357,7 @@ export class HttpEndpointGenerator {
         storeInVariable
     }: {
         writer: ruby.Writer;
-        typeReference: TypeReference;
+        typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
         switch (typeReference.type) {
@@ -380,7 +378,7 @@ export class HttpEndpointGenerator {
     private generateEnhancedDocstring({
         endpoint
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
         return endpoint.docs ?? "";
@@ -396,7 +394,7 @@ export class HttpEndpointGenerator {
         return optionTags;
     }
 
-    private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
+    private generateSplatOptionDocs({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string[] {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
@@ -420,7 +418,7 @@ export class HttpEndpointGenerator {
         return optionTags;
     }
 
-    private typeReferenceToYardString(typeReference: TypeReference): string {
+    private typeReferenceToYardString(typeReference: FernIr.TypeReference): string {
         if (typeReference.type === "named") {
             const classRef = this.context.getClassReferenceForTypeId(typeReference.typeId);
             const modules = classRef.modules.length > 0 ? `${classRef.modules.join("::")}::` : "";
@@ -441,7 +439,7 @@ export class HttpEndpointGenerator {
         return normalized;
     }
 
-    private getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+    private getBaseUrlNameForEndpoint(endpoint: FernIr.HttpEndpoint): string | undefined {
         if (!this.context.isMultipleBaseUrlsEnvironment()) {
             return undefined;
         }

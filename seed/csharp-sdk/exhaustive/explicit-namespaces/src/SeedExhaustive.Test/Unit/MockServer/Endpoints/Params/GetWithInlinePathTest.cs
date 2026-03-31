@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Params;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithInlinePathTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -29,6 +30,6 @@ public class GetWithInlinePathTest : BaseMockServerTest
         var response = await Client.Endpoints.Params.GetWithInlinePathAsync(
             new GetWithInlinePath { Param = "param" }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

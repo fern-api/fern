@@ -1,15 +1,21 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeReference,
+    UnionDiscriminatorContext
+} from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../resolvers/ResolvedType";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getAvailability } from "../../utils/getAvailability";
-import { getDisplayName } from "../../utils/getDisplayName";
-import { getDocs } from "../../utils/getDocs";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertDeclaration } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ResolvedType } from "../../resolvers/ResolvedType.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { getAvailability } from "../../utils/getAvailability.js";
+import { getDisplayName } from "../../utils/getDisplayName.js";
+import { getDocs } from "../../utils/getDocs.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertDeclaration } from "../convertDeclaration.js";
+import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration.js";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
@@ -85,7 +91,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 displayName: getDisplayName(rawSingleUnionType),
                 availability: getAvailability(rawSingleUnionType)
             };
-        })
+        }),
+        discriminatorContext: getDiscriminatorContext({ union })
     });
 }
 
@@ -154,9 +161,15 @@ export function getSingleUnionTypeProperties({
     const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
 
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+
+    // Check if the type is wrapped in optional/nullable - if so, we should NOT use samePropertiesAsObject
+    // because the value can be undefined/null and needs to be wrapped in a value property
+    const isOptionalOrNullable = isWrappedInOptionalOrNullable(resolvedType);
+
     // Unwrap nullable/optional containers to check the underlying type
     const unwrappedType = unwrapNullableAndOptional(resolvedType);
     if (
+        !isOptionalOrNullable &&
         unwrappedType._type === "named" &&
         isRawObjectDefinition(unwrappedType.declaration) &&
         singlePropertyKey == null
@@ -197,9 +210,22 @@ function getSinglePropertyKeyValue(
 }
 
 /**
+ * Checks if the type is wrapped in optional or nullable containers.
+ * When a union variant type is optional/nullable, we should NOT use samePropertiesAsObject
+ * because the value can be undefined/null and needs proper handling with a value property.
+ */
+function isWrappedInOptionalOrNullable(resolvedType: ResolvedType): boolean {
+    if (resolvedType._type === "container") {
+        if (resolvedType.container._type === "nullable" || resolvedType.container._type === "optional") {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Unwraps nullable and optional containers to get the underlying type.
- * This is needed because nullable object types should still be treated as
- * `samePropertiesAsObject` in discriminated unions, not wrapped in a `value` property.
+ * This is used to check if the underlying type is an object for potential samePropertiesAsObject usage.
  */
 function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
     if (resolvedType._type === "container") {
@@ -208,4 +234,10 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
         }
     }
     return resolvedType;
+}
+
+function getDiscriminatorContext({ union }: { union: RawSchemas.DiscriminatedUnionSchema }): UnionDiscriminatorContext {
+    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+
+    return discriminantContext === "protocol" ? UnionDiscriminatorContext.Protocol : UnionDiscriminatorContext.Data;
 }

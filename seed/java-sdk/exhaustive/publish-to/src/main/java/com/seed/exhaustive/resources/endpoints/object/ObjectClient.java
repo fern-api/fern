@@ -7,10 +7,14 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectClient {
     protected final ClientOptions clientOptions;
@@ -31,6 +35,10 @@ public class ObjectClient {
 
     public ObjectWithOptionalField getAndReturnWithOptionalField() {
         return this.rawClient.getAndReturnWithOptionalField().body();
+    }
+
+    public ObjectWithOptionalField getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnWithOptionalField(requestOptions).body();
     }
 
     public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
@@ -67,6 +75,12 @@ public class ObjectClient {
         return this.rawClient.getAndReturnNestedWithOptionalField().body();
     }
 
+    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnNestedWithOptionalField(requestOptions)
+                .body();
+    }
+
     public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request) {
         return this.rawClient.getAndReturnNestedWithOptionalField(request).body();
     }
@@ -101,6 +115,61 @@ public class ObjectClient {
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnNestedWithRequiredFieldAsList(request, requestOptions)
+                .body();
+    }
+
+    public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+        return this.rawClient.getAndReturnWithUnknownField(request).body();
+    }
+
+    public ObjectWithUnknownField getAndReturnWithUnknownField(
+            ObjectWithUnknownField request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithUnknownField(request, requestOptions)
+                .body();
+    }
+
+    public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request) {
+        return this.rawClient.getAndReturnWithDocumentedUnknownType(request).body();
+    }
+
+    public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDocumentedUnknownType(request, requestOptions)
+                .body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+        return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).body();
+    }
+
+    public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(
+            Map<String, Object> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfDocumentedUnknownType(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public ObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString request) {
+        return this.rawClient.getAndReturnWithDatetimeLikeString(request).body();
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public ObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDatetimeLikeString(request, requestOptions)
                 .body();
     }
 }

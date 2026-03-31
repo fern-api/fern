@@ -1,4 +1,1115 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.3
+  changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.4.9 to 2.4.10.
+      type: chore
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix request body properties being stripped when query parameter names
+        collide with body property names and `resolveQueryParameterNameConflicts`
+        is enabled. The destructuring pattern in the generated client method now
+        correctly uses the renamed query parameter property (e.g. `filterIsComplete`)
+        instead of the wire value (e.g. `is_complete`), preventing body properties
+        from being accidentally extracted as query parameters.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections missing client-level default headers. The generated
+        `connect` method now includes `this._options?.headers` in the merged headers,
+        matching the behavior of HTTP endpoint methods. Previously, only auth headers
+        and user-provided connect-time headers were sent, causing Authorization and
+        other client-configured headers to be silently dropped on WebSocket connections.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 3.59.12
+  changelogEntry:
+    - summary: |
+        Fix duplicate property names in generated request interfaces when query
+        parameters and request body properties share the same wire name and
+        `x-fern-parameter-name` overrides are used with `noSerdeLayer: true`.
+        The generator now respects explicit name overrides (e.g.
+        `x-fern-parameter-name: filter_assigned_to`) even without a serde layer,
+        so query parameters use their override names instead of wire values.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+- version: 3.59.11
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints where expected event
+        assertions used snake_case wire format instead of camelCase deserialized format.
+        The `call_id` field (and similar snake_case properties) in SSE event data now
+        correctly appear as `callId` in test expectations, matching the SDK's runtime
+        deserialization behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.10
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.35.0 to 0.42.0, oxlint from 1.50.0 to 1.57.0, and oxlint-tsgolint from 0.14.2 to 0.17.4.
+      type: chore
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 3.59.9
+  changelogEntry:
+    - summary: |
+        Upgrade vitest from ^3.2.4 to ^4.1.1 in generated SDK test configuration.
+
+        Vitest 4 brings performance improvements (especially with project-based configs),
+        more accurate V8 coverage remapping, and stable browser mode. Note that vitest 4
+        requires Node.js >= 20 at test-run time (Node 18 is EOL).
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 3.59.8
+  changelogEntry:
+    - summary: |
+        Upgrade generated SDK dependencies to latest stable versions:
+
+        - typescript ~5.7.2 -> ~5.9.3
+        - @biomejs/biome 2.4.3 -> 2.4.9
+        - prettier 3.7.4 -> 3.8.1
+        - webpack ^5.97.1 -> ^5.105.4
+        - ts-loader ^9.5.1 -> ^9.5.4
+        - ws ^8.16.0 -> ^8.20.0
+        - @types/ws ^8.5.10 -> ^8.18.1
+        - readable-stream ^4.5.2 -> ^4.7.0
+        - @types/readable-stream ^4.0.18 -> ^4.0.23
+        - form-data-encoder ^4.0.2 -> ^4.1.0
+        - pnpm 10.20.0 -> 10.33.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.7
+  changelogEntry:
+    - summary: |
+        Extend `globalThis.` qualification for shadowed global types (e.g. `Date`) to
+        union visitor signatures and builder parameters, not just interface properties.
+      type: fix
+    - summary: |
+        Fix `Record` serialization schema for maps with optional value types to strip
+        the optional wrapper, matching the type converter's behavior.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.6
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.5
+  changelogEntry:
+    - summary: |
+        Fix unhandled WebSocket error crash when closing a connection in the CONNECTING state.
+        The `_disconnect()` and `_handleAbort()` methods removed all event listeners before
+        calling `close()`, but `close()` on a CONNECTING-state WebSocket emits an error event
+        asynchronously via `abortHandshake()`. A no-op error listener is now attached after
+        removing listeners to prevent this from crashing the Node.js process.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 3.59.4
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during GitHub output mode when removing the temporary
+        `.git` directory in `deleteGitIgnoredFiles`. The `fs.rm` call now uses
+        `maxRetries: 3` to handle race conditions with git background processes
+        (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 65
+
+- version: 3.59.3
+  changelogEntry:
+    - summary: |
+        Fix npm publish authentication failing when the registry URL includes a port number.
+        The `.npmrc` auth token key was constructed using `URL.hostname` (which strips the port)
+        instead of `URL.host` (which preserves it). For example, a registry at
+        `http://host.docker.internal:4873` would write the token under
+        `//host.docker.internal/:_authToken` instead of the correct
+        `//host.docker.internal:4873/:_authToken`.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.59.2
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method failing when no environment is explicitly set on
+        multi-URL environment SDKs. When the user relies on the default environment,
+        `Supplier.get(undefined)` returned `undefined` and the IIFE produced no base URL.
+        The generated code now derives the correct base URL property from the IR (using the
+        same base URL that HTTP endpoints resolve to) and falls back to the IR-defined
+        default environment, matching how regular endpoint methods resolve their base URL.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix generated README.md including the "Customizing Fetch Client" section
+        under "Runtime Compatibility" even when `allowCustomFetcher` is `false`.
+        The section and its code snippet are now conditionally omitted when the
+        custom fetcher option is disabled.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Make `readyState` on generated WebSocket socket classes return a `ReadyState`
+        enum (`CONNECTING`, `OPEN`, `CLOSING`, `CLOSED`) instead of a raw `number`,
+        improving developer experience with IDE autocompletion and self-documenting code.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.1
+  changelogEntry:
+    - summary: |
+        Export the generated Socket class from subpackage `exports.ts` when
+        WebSocket clients are enabled. Previously only the Client class was
+        exported, making the Socket class inaccessible through the public
+        exports path.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add explicit type annotation to `mockServerPool` export in generated test
+        mock-server code to satisfy `--isolatedDeclarations`.
+      type: fix
+    - summary: |
+        Enable vitest typechecking in generated vitest config so that type errors
+        in test and source files are caught when running `vitest`.
+      type: feat
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 3.57.2
+  changelogEntry:
+    - summary: |
+        Fix map types with unknown/any value types to not include spurious `| undefined`.
+        Previously, `map<string, UnknownType>` generated `Record<string, UnknownType | undefined>`
+        instead of `Record<string, UnknownType>`. The `| undefined` is now correctly omitted
+        from map value types.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Fix passthrough `fetch()` method producing 404s when the SDK environment is an
+        object (e.g. `{ base: string; production: string }`) instead of a plain string URL.
+        The generated code now resolves the environment supplier inline and projects object
+        environments to their `.base` property, instead of passing the raw object to
+        `makePassthroughRequest` where it would be stringified as `[object Object]`.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Expose an optional `protocols` field on `RealtimeClient.ConnectArgs` for WebSocket
+        subprotocol negotiation. The `ReconnectingWebSocket` constructor already accepted a
+        `protocols` parameter but it was hardcoded to an empty array. Browser callers can now
+        authenticate via subprotocols (e.g. `xai-client-secret.<token>`) where custom headers
+        are forbidden by the browser security model.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+- version: 3.56.4
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from generated `tsconfig.base.json` files. Setting `baseUrl`
+        to `src` was unnecessary alongside `rootDir` and caused unexpected module
+        resolution side effects in some project setups.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.3
+  changelogEntry:
+    - summary: |
+        Fix TypeScript SDK generator crash when generating WebSocket clients for
+        AsyncAPI specs that define a named server (e.g. `servers.production`) with
+        a single-URL environment. The `baseUrlId` assigned by the Fern IR converter
+        is now silently ignored for single-URL environments since there is only one
+        URL to resolve to.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.2
+  changelogEntry:
+    - summary: |
+        Rename the `shouldGenerateWebsocketClients` configuration option to
+        `generateWebSocketClients`. The old name is still accepted as a deprecated
+        fallback for backwards compatibility.
+      type: chore
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 3.56.1
+  changelogEntry:
+    - summary: |
+        Include root markdown files (README.md, reference.md, CONTRIBUTING.md) in
+        the output when `outputSourceFiles` is `false`. Previously, the compiled
+        CJS/ESM output mode only included the `dist/` directory contents, silently
+        dropping generated documentation files.
+      type: fix
+  createdAt: "2026-03-15"
+  irVersion: 65
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add a `naming` configuration object that gives you fine-grained control over the
+        exported namespace and generated class names (client, error, timeout error,
+        environment, environment URLs, version).
+
+        You can use it as a simple string shorthand to set the namespace:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming: acme
+        ```
+
+        Or as a full object to override individual names:
+        ```yaml
+        # generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  naming:
+                    namespace: acme
+                    client: AcmeApiClient
+                    error: AcmeApiError
+                    environment: AcmeRegion
+        ```
+
+        When individual overrides are not provided, they are derived from the namespace
+        using the `PascalCase(namespace) + Suffix` pattern (e.g. `namespace: acme` produces
+        `AcmeClient`, `AcmeError`, `AcmeTimeoutError`, `AcmeEnvironment`, `AcmeEnvironmentUrls`,
+        and `AcmeVersion` by default).
+
+        The existing `namespaceExport` config continues to work for backwards compatibility.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.55.0
+  changelogEntry:
+    - summary: |
+        Add a passthrough `fetch` method to the root client class of all generated TypeScript SDKs.
+        The method mimics the standard `fetch` API while automatically applying the SDK's configured
+        authentication, base URL resolution, retry logic with exponential backoff, request timeouts,
+        custom headers, and logging. This allows users to make requests to endpoints not yet exposed
+        in the SDK definition (e.g., new public endpoints, closed beta endpoints) without additional
+        setup. The method accepts three parameters: `url` (string or relative path), `init` (standard
+        `RequestInit`), and `requestOptions` (SDK-specific overrides for timeout, retries, headers,
+        and abort signal).
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination. Endpoints configured with
+        `next_uri` or `next_path` pagination now generate `Page<T, R>` return types
+        that automatically follow the next URL from the response body to load
+        subsequent pages.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.53.15
+  changelogEntry:
+    - summary: |
+        Fix `BinaryResponse.bytes` type to use `Promise<Uint8Array>` instead of
+        `ReturnType<Response["bytes"]>`. The previous type referenced `Response.bytes()`,
+        which only exists in `undici-types@7.x` (`@types/node@25.x`). Consumers using
+        `@types/node@18`/`20`/`22` with `skipLibCheck: false` would get `TS2339: Property
+        'bytes' does not exist on type 'Response'`. The new type is equivalent and compatible
+        with all Node.js versions.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 3.53.14
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from the generated test `tsconfig.json`. The `baseUrl` compiler
+        option is unnecessary for test compilation and can interfere with module resolution
+        in consuming projects.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.53.13
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections failing silently in Bun and Deno. The `getGlobalWebSocket()`
+        function now prefers the `ws` library for Bun and Deno runtimes, whose native WebSocket
+        constructors ignore the options argument containing authentication headers.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.53.12
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.53.11
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md, reference.md, and CONTRIBUTING.md
+        generation failures. Documentation generation errors now break the generation flow
+        so they are treated as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 3.53.10
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 3.53.9
+  changelogEntry:
+    - summary: |
+        Fix README generation in Docker by adding `ca-certificates` to the Debian slim
+        base image. Since the switch from Alpine to Debian slim in v3.48.4, the container
+        was missing CA certificates, causing `git clone` over HTTPS to fail with
+        "server certificate verification failed". This resulted in empty README files
+        being generated.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 3.53.8
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md, reference.md, and CONTRIBUTING.md generation
+        failures. The generator now logs the actual error message and stack trace instead
+        of a generic "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 3.53.7
+  changelogEntry:
+    - summary: |
+        Revert union member interface naming from `safeName` back to `unsafeName`.
+        The v3.53.4 change to use `safeName` for union variant interface names (e.g.,
+        `Date_` instead of `Date`, `Error_` instead of `Error`) was a breaking change.
+        Union member interfaces are generated inside a namespace, so they do not
+        shadow global TypeScript types like `Date` or `Error`.
+      type: fix
+    - summary: |
+        Qualify global type references with `globalThis.` inside union namespaces
+        when a sibling interface would shadow them. For example, if a union has both
+        `Date` and `Datetime` variants, the `Datetime` interface's `value: Date`
+        property now generates `value: globalThis.Date` to correctly reference the
+        built-in Date type instead of the local `Date` interface.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 3.53.6
+  changelogEntry:
+    - summary: |
+        Optimize SdkContextImpl by lazily initializing sub-contexts, external dependencies,
+        core utilities, and GeneratorNotificationService. Previously, every file generation
+        eagerly constructed all 19 sub-context objects plus utility instances regardless of
+        which were actually used. Now each sub-context is created on first access via lazy
+        getters, eliminating ~90% of unnecessary object allocations for large specs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 3.53.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for SSE streaming endpoints with error responses.
+
+        Error-case tests for SSE endpoints would generate `for await` iteration over the response,
+        but the client throws typed errors for non-2xx status codes. Error-response tests now use
+        `rejects.toThrow()` and mock the response with `jsonBody` instead of `sseBody`.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 3.53.4
+  changelogEntry:
+    - summary: |
+        Fix union member interfaces shadowing built-in TypeScript types like `Date` and `Error`.
+        Union variants such as `date` generated `export interface Date` inside the union namespace,
+        which shadowed the global `Date` type and caused compile errors when other variants
+        referenced it. Interface names now use `safeName` (e.g., `Date_`, `Error_`) to avoid
+        collisions with reserved identifiers.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 3.53.3
+  changelogEntry:
+    - summary: |
+        Add `ignoredFields` support to `formUrlEncodedBody` in wire test mock server.
+        Paginated POST endpoints using `application/x-www-form-urlencoded` content type
+        (e.g. Twilio) now correctly ignore pagination cursor fields when matching request
+        bodies in wire tests, matching the existing behavior for JSON body endpoints.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.53.2
+  changelogEntry:
+    - summary: |
+        Fix map types with enum keys to generate `Partial<Record<EnumType, ValueType>>` instead of
+        `Record<EnumType, ValueType | undefined>`. The previous type required all enum keys to be
+        explicitly provided (even as `undefined`), while the new type correctly allows keys to be
+        omitted entirely, matching the semantics of a sparse map.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.53.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate close event in WebSocket `_handleAbort` when `close()` was already called.
+        The abort handler now checks `_closeCalled` before dispatching a close event, preventing
+        applications from receiving duplicate close notifications.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.53.0
+  changelogEntry:
+    - summary: |
+        Add `connectionTimeoutInSeconds` and `abortSignal` options to WebSocket `ConnectArgs`.
+        The `connectionTimeoutInSeconds` option sets the timeout for establishing the WebSocket
+        connection (converted to milliseconds internally). The `abortSignal` option allows callers
+        to abort the WebSocket connection attempt using an `AbortController`.
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.52.9
+  changelogEntry:
+    - summary: |
+        Deduplicate `@example` JSDoc blocks in request wrapper and type declaration
+        comments. When multiple examples produce identical output, only the first is
+        kept. The endpoint method docs already had this deduplication; this fix extends
+        it to request wrappers and type declarations.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.52.8
+  changelogEntry:
+    - summary: |
+        Update generated CI workflow to publish older patch versions with `--tag backport`
+        instead of the default `latest` tag. When publishing a version older than the current
+        `latest` on npm (e.g. v1.3.2 after v1.4.0), the publish step now compares against
+        npm's current `latest` using `semver` and uses `--tag backport` to avoid moving the
+        `latest` pointer backwards.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.52.7
+  changelogEntry:
+    - summary: |
+        Disable commit signing and skip hooks for the throwaway git commit in
+        `deleteGitIgnoredFiles` to avoid triggering prompts (e.g. Touch ID on
+        macOS, 1Password SSH agent) during local generation.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.52.6
+  changelogEntry:
+    - summary: |
+        Fix TypeScript generator crash when discriminated union discriminant values start
+        with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
+        with an underscore to produce valid TypeScript.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.52.5
+  changelogEntry:
+    - summary: |
+        Fix Edge Runtime compatibility warning in Next.js. The runtime detection code
+        previously used `process.versions.node` directly, which caused Next.js bundlers
+        (Turbopack/webpack) to emit "A Node.js API is used which is not supported in
+        the Edge Runtime" warnings during static analysis, even though the code path was
+        guarded by an Edge Runtime check. The fix assigns `process` to a local variable
+        first, preventing bundlers from flagging the indirect property access.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.4
+  changelogEntry:
+    - summary: |
+        Fix publint warning for ambiguous `types` in package.json exports. Remove the top-level
+        `types` condition from export entries in `package.json` so that `import` and `require`
+        conditions each resolve to their own correctly-typed declaration file (`.d.mts` for ESM,
+        `.d.ts` for CJS). This eliminates the publint warning about CJS types being used when
+        resolving with the "import" condition.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.3
+  changelogEntry:
+    - summary: |
+        Handle nullable header types by converting null to undefined. HTTP headers
+        don't have a "null" concept — they're either present with a value or absent.
+        When a header's type is nullable (explicitly via `nullable: true` in the spec),
+        the generated code now wraps the value with `?? undefined` to ensure null values
+        are treated as "don't send the header" instead of causing type errors.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.2
+  changelogEntry:
+    - summary: |
+        Fix biome formatting not being applied in github output mode. The generator was calling
+        checkFix() (biome) without first installing biome, causing formatting to silently fail.
+        Now installs checkFix dependencies when tools are not globally available, matching the
+        existing behavior in downloadFiles mode.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Add JSDoc availability annotations for SDK endpoint methods. Endpoints marked as
+        `deprecated` in the Fern definition now generate a `@deprecated` JSDoc tag, causing
+        IDEs to show strikethrough and deprecation warnings. Endpoints marked as `in-development`
+        or `pre-release` generate a `@beta` JSDoc annotation. This applies to all endpoint types
+        (default, file download, and streaming).
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Enable `generateSubpackageExports` by default. Generated TypeScript SDKs now include
+        subpackage export entries in `package.json`, allowing users to import subpackage clients
+        directly (e.g., `import { FooClient } from '@acme/sdk/foo'`). This enables JavaScript
+        bundlers to tree-shake unused subpackages, resulting in smaller bundle sizes.
+        To opt out, explicitly set `generateSubpackageExports: false` in your generator config.
+      type: feat
+    - summary: |
+        Add tree-shaking smoke test to verify that importing a single subpackage produces a
+        significantly smaller webpack bundle than importing the full SDK.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.51.6
+  changelogEntry:
+    - summary: |
+        In downloadFiles mode, install only the configured formatter/linter
+        packages instead of the full dependency tree when outputting source files
+        only. This replaces the ~1.8s full `pnpm install` with a targeted
+        `pnpm add` of just the check:fix packages (e.g. @biomejs/biome,
+        prettier, oxfmt, oxlint).
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.51.5
+  changelogEntry:
+    - summary: |
+        Fix duplicate identifier collision in serialization schemas when two different packages
+        define types with the same name. The schema generator now tracks directly imported type
+        names and switches to namespace imports when a collision would occur, preventing
+        "Duplicate identifier" TypeScript errors in cross-package type references.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.51.4
+  changelogEntry:
+    - summary: |
+        Add `cache: "no-store"` to streaming and SSE fetch requests to prevent
+        Next.js from buffering streamed responses. The option is guarded by a
+        cached runtime feature-detection so it is safely skipped in runtimes
+        that do not support the `cache` RequestInit option (e.g. Cloudflare Workers).
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate case clauses in error handling switch statements when multiple errors
+        map to the same status code. The generator now deduplicates errors by status code,
+        keeping the first error for each status code.
+      type: fix
+    - summary: |
+        Fix test generator to skip error examples whose status code is already handled by
+        a prior error, matching the code generator's deduplication behavior.
+      type: fix
+    - summary: |
+        Fix test generator to include the error discriminant property (e.g., errorName) in
+        mock response bodies for property-discriminated errors, so the generated switch
+        statement can match the correct error case.
+      type: fix
+    - summary: |
+        Fix inferred auth provider to handle endpoints without wrapped request types,
+        preventing crashes during generation for non-wrapped endpoints.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.51.2
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
+      type: chore
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add event-level SSE discrimination support. When an SSE streaming endpoint returns a
+        discriminated union with `discriminatorContext: "protocol"`, the Stream class injects the
+        SSE `event:` field value into the JSON data as the discriminator key before deserialization.
+        This matches the Go SDK's approach and supports proper SSE event-level discrimination,
+        multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
+        Also adds wire test generation support for SSE streaming endpoints.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.50.1
+  changelogEntry:
+    - summary: |
+        Support custom WebSocket connection method names via the `connectMethodName` IR field
+        (sourced from `x-fern-sdk-method-name` on AsyncAPI channels). When specified, the
+        generated client uses the custom name instead of the default `connect`.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification helpers to generated SDKs. Define signature
+        verification via the `x-fern-webhook-signature` OpenAPI extension on individual webhooks
+        or as a document-level default, and the generator produces a `WebhooksHelper` class for
+        the most common config plus named helpers (e.g. `PaymentNotificationWebhooksHelper`) for
+        each unique per-webhook override. Supports HMAC (SHA-1/256/384/512) and asymmetric
+        (RSA-SHA256, ECDSA-SHA256) verification with configurable encoding, signature prefixes,
+        payload format composition, timestamp-based replay protection, and JWKS key resolution.
+        Includes unit tests for the underlying crypto primitives.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.49.3
+  changelogEntry:
+    - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  createdAt: "2026-02-24"
+  irVersion: 63
+- version: 3.49.2
+  changelogEntry:
+    - summary: |
+        Replace lodash-es `template` with Eta for template file processing. The lodash
+        templating engine crashes on backticks (template literals) because it uses
+        `new Function()` internally. Eta is a modern, lightweight, zero-dependency
+        templating engine that properly handles backticks and uses the same `<% %>`
+        syntax, requiring no changes to existing template files.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 63
+
+- version: 3.49.1
+  changelogEntry:
+    - summary: |
+        Change [TIMING] log statements from info to debug level so they are only
+        printed when debug logging is enabled.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 63
+
+- version: 3.49.0
+  changelogEntry:
+    - summary: |
+        Optimize schema serialization layer performance with 7.2x geometric mean speedup.
+        Replace O(n²) array/object spread patterns in list and record builders with O(n) loops,
+        lazily memoize property metadata in object schemas, simplify prototype chain check,
+        use for-in loops to avoid Object.entries() allocations, cache required-key Sets,
+        and eliminate rest spread in union discriminant extraction.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 63
+
+- version: 3.48.5
+  changelogEntry:
+    - summary: |
+        Add timing logs for each phase of SDK generation: code generation, package manager install,
+        lockfile generation, formatting/linting, build, and publish. Each phase logs its duration
+        in milliseconds with a `[TIMING]` prefix for easy identification.
+      type: chore
+  createdAt: "2026-02-20"
+  irVersion: 63
+
+- version: 3.48.4
+  changelogEntry:
+    - summary: |
+        Switch Docker base image from `node:22.12-alpine3.20` to `node:22.12-slim` (Debian).
+        Alpine uses musl instead of glibc, causing a ~14x performance regression for Biome
+        due to musl's allocator being significantly slower for allocation-heavy workloads like AST parsing.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 63
+
+- version: 3.48.3
+  changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.3.11 to 2.4.3.
+      type: chore
+  createdAt: "2026-02-20"
+  irVersion: 63
+
+- version: 3.48.2
+  changelogEntry:
+    - summary: |
+        Fix file upload tests to be OS-agnostic by using dynamic file size calculation instead
+        of hardcoded values. Previously, tests expected a specific file size (21 bytes) which
+        differs between operating systems due to line ending differences (CRLF on Windows vs
+        LF on Unix). Now uses `fs.statSync()` to dynamically read the test file size at runtime.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.48.1
+  changelogEntry:
+    - summary: |
+        Fix `_Unknown` union variant discriminant type from `void` to `string` when
+        `includeOtherInUnionTypes` is enabled.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 63
+
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Set `Accept: text/event-stream` header for SSE streaming endpoints. The fetcher now
+        handles `responseType: "sse"` by setting the appropriate Accept header, matching the
+        behavior of the Go and Rust generators. Non-SSE streaming endpoints (JSON/text) continue
+        to use the default Accept header.
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 3.47.1
+  changelogEntry:
+    - summary: |
+        Fix SSE stream terminator to be optional instead of defaulting to `"[DONE]"`. When no
+        `terminator` is specified in the Fern definition, the generated SDK no longer passes a
+        `streamTerminator` to the Stream constructor, allowing the stream to end only when the
+        connection closes.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 3.47.0
+  changelogEntry:
+    - summary: |
+        Add support for TypeScript's `exactOptionalPropertyTypes` compiler option when `noSerdeLayer: true`.
+        Optional properties are now generated as `propName?: Type | undefined` instead of `propName?: Type`,
+        allowing users to explicitly set properties to `undefined` (not just omit them). This prevents
+        double unions like `(T | undefined) | undefined` by stripping top-level undefined before adding
+        the union.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.46.3
+  changelogEntry:
+    - summary: |
+        Update oxfmt to 0.27.0, oxlint to 1.42.0, and oxlint-tsgolint to 0.11.4.
+      type: chore
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.46.2
+  changelogEntry:
+    - summary: |
+        Fix TypeScript circular reference error (TS7022/TS2456) when generating enums with visitor utilities enabled.
+        The enum type alias now references an intermediate `Values` const instead of using `Omit<typeof EnumName, "_visit">`,
+        which avoids the circular reference in the type's own initializer.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+- version: 3.46.1
+  changelogEntry:
+    - summary: |
+        Fix `outputSrcOnly` not working with `local-file-system` output mode when the organization has
+        `selfHostedSdKs` enabled. The `outputSrcOnly` check now takes priority over `shouldGenerateFullProject`,
+        ensuring that when a user explicitly sets `outputSrcOnly: true`, only the src contents are output
+        without the full project structure.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.46.0
+  changelogEntry:
+    - summary: |
+        Add `outputSrcOnly` configuration option that outputs only the contents of the `src/` directory
+        directly to the destination path, without the `src/` wrapper directory. This is useful when you
+        want to integrate the generated source files directly into another project without the extra
+        directory nesting. The option takes priority over `outputSourceFiles` when both are enabled.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.45.1
+  changelogEntry:
+    - summary: Remove check if body is `null` or `undefined`. If `null`, it is valid JSON `null`, and if `undefined`, it handles correctly to not have a body.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.45.0
+  changelogEntry:
+    - summary: |
+        Add support for additional query parameters in WebSocket connections. The `ConnectArgs`
+        interface now includes an optional `queryParams` property that allows users to pass
+        additional query parameters that get merged into the WebSocket URL alongside any
+        channel-defined query parameters.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.44.2
+  changelogEntry:
+    - summary: |
+        Fix README pagination section being included even when the SDK has no autopaginated endpoints.
+        The pagination section is now only included in the README when there is at least one endpoint
+        with pagination defined.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.44.1
+  changelogEntry:
+    - summary: |
+        Fix optional query parameters with date/datetime types throwing serialization errors when
+        undefined. Previously, optional query parameters that were named types aliasing Date (like
+        `before?: Before` where `Before = Date`) would call `jsonOrThrow` unconditionally, causing
+        "Expected Date object. Received undefined" errors when the parameter was omitted. Now the
+        generator adds a null check for optional date/datetime query parameters, matching the
+        behavior already used for object-type query parameters.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.44.0
+  changelogEntry:
+    - summary: |
+        Enable forward compatible enums when the serde layer is enabled. Previously, the
+        `enableForwardCompatibleEnums` option only worked when `noSerdeLayer` was true.
+        Now enum types include `| string` regardless of the serde layer setting when
+        `enableForwardCompatibleEnums` is enabled, allowing TypeScript SDKs to accept
+        unrecognized enum values from APIs.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.43.13
+  changelogEntry:
+    - summary: |
+        Fix nullable enum query parameters to be dropped when undefined is passed instead of being
+        sent as null. Previously, nullable query parameters like `role: nullable<UserRole>` would
+        generate code that converted undefined to null, causing the parameter to be included in the
+        request as an empty value. Now undefined values remain undefined and are properly dropped
+        from the query string.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.43.12
+  changelogEntry:
+    - summary: |
+        Fix passthrough() function to only include truly unknown/extra properties in the result.
+        Previously, when a type had `additionalProperties: true` and used property name mapping
+        (e.g., snake_case to camelCase), the passthrough would spread both the original raw object
+        and the transformed value, resulting in duplicate properties with both naming conventions.
+        Now the passthrough correctly filters out known properties before spreading, ensuring only
+        extra properties that aren't part of the schema definition are included.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.43.11
+  changelogEntry:
+    - summary: Update linters and formatters to latest versions.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.10
+  changelogEntry:
+    - summary: |
+        Update Dockerfile to only pre-cache for the default configuration options to reduce image size from 1.45GB to 823MB.
+        The following dependencies are no longer pre-cached:
+        * jest
+        * @types/jest
+        * node-fetch
+        * @types/node-fetch
+        * qs
+        * @types/qs
+        * readable-stream
+        * @types/readable-stream
+        * form-data
+        * formdata-node
+        * jest-environment-jsdom
+        * prettier
+        * oxfmt
+        * oxlint
+        * oxlint-tsgolint
+        * ts-jest
+        * form-data-encoder
+        * fetch-mock-jest
+
+        Additionally, the Dockerfile only pre-caches using pnpm, removing duplicate yarn cache.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.9
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.8
+  changelogEntry:
+    - summary: |
+        Fix wire test mock server to ignore cursor mismatches in pagination tests.
+        When pagination tests call `getNextPage()`, the SDK correctly sends the cursor from the response,
+        but the mock server was rejecting the request because the cursor didn't match the original request.
+        The mock server now accepts an `ignoredFields` option to specify which fields to ignore during
+        request body matching. The test generator extracts pagination cursor field names from the IR
+        and passes them to the mock server at code generation time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.7
+  changelogEntry:
+    - summary: |
+        Support `bytes` argument type and custom method names for websocket messages.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix GitHub repository URL format in package.json to use `git+https://` format,
+        ensuring local generation output matches remote generation.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
+- version: 3.43.4
+  changelogEntry:
+    - summary: |
+        Fix export of inline enum const values from request types. Previously, request types with inline enums
+        (defined directly in OpenAPI schemas) were exported using `export type { ... }` which only exports the
+        type, not the runtime const values. SDK consumers couldn't access enum values like `ConvertRequest.Resource.Auto`
+        at runtime. Now request types are exported using `export { ... }` which exports both the type and the const.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 63
+
+- version: 3.43.3
+  changelogEntry:
+    - summary: |
+        Fix repository URL format in package.json for self-hosted GitHub configurations to use full https URL
+        format matching Fiddle's output.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 63
+
 - version: 3.43.2
   changelogEntry:
     - summary: |

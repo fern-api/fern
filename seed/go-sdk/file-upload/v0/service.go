@@ -10,6 +10,61 @@ import (
 )
 
 var (
+	justFileWithOptionalQueryParamsRequestFieldMaybeString  = big.NewInt(1 << 0)
+	justFileWithOptionalQueryParamsRequestFieldMaybeInteger = big.NewInt(1 << 1)
+)
+
+type JustFileWithOptionalQueryParamsRequest struct {
+	MaybeString  *string `json:"-" url:"maybeString,omitempty"`
+	MaybeInteger *int    `json:"-" url:"maybeInteger,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) require(field *big.Int) {
+	if j.explicitFields == nil {
+		j.explicitFields = big.NewInt(0)
+	}
+	j.explicitFields.Or(j.explicitFields, field)
+}
+
+// SetMaybeString sets the MaybeString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeString(maybeString *string) {
+	j.MaybeString = maybeString
+	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeString)
+}
+
+// SetMaybeInteger sets the MaybeInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeInteger(maybeInteger *int) {
+	j.MaybeInteger = maybeInteger
+	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeInteger)
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithOptionalQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithOptionalQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithOptionalQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
 	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
 	justFileWithQueryParamsRequestFieldMaybeInteger          = big.NewInt(1 << 2)
@@ -70,8 +125,29 @@ func (j *JustFileWithQueryParamsRequest) SetOptionalListOfStrings(optionalListOf
 	j.require(justFileWithQueryParamsRequestFieldOptionalListOfStrings)
 }
 
+func (j *JustFileWithQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 type OptionalArgsRequest struct {
-	Request interface{} `json:"request,omitempty" url:"-"`
+	Request any `json:"request,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -90,7 +166,7 @@ type MyRequest struct {
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects         []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
-	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata      any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
 	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
@@ -109,6 +185,8 @@ func (m *MyRequest) require(field *big.Int) {
 }
 
 type Id = string
+
+type ModelType = string
 
 type MyAliasObject = *MyObject
 
@@ -136,6 +214,9 @@ func (m *MyInlineType) GetBar() string {
 }
 
 func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -181,6 +262,9 @@ func (m *MyInlineType) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyInlineType) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -214,6 +298,9 @@ func (m *MyObject) GetFoo() string {
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -259,6 +346,9 @@ func (m *MyObject) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObject) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -301,6 +391,9 @@ func (m *MyObjectWithOptional) GetOptionalProp() *string {
 }
 
 func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -353,6 +446,9 @@ func (m *MyObjectWithOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObjectWithOptional) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -386,6 +482,31 @@ func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
 
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA OpenEnumType = "OPTION_A"
+	OpenEnumTypeOptionB OpenEnumType = "OPTION_B"
+	OpenEnumTypeOptionC OpenEnumType = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
+}
+
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
@@ -408,7 +529,7 @@ type MyOtherRequest struct {
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects              []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
-	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata           any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
 	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals,omitempty" url:"-"`
@@ -454,4 +575,34 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 		i.explicitFields = big.NewInt(0)
 	}
 	i.explicitFields.Or(i.explicitFields, field)
+}
+
+type WithJsonPropertyRequest struct {
+	Json *MyObject `json:"json,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithJsonPropertyRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+type LiteralEnumRequest struct {
+	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *LiteralEnumRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
 }

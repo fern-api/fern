@@ -14,7 +14,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
 > = core.serialization.object({
     methodName: core.serialization.string(),
     signature: NonVoidFunctionSignature,
-    additionalFiles: core.serialization.record(Language, Files.optional()),
+    additionalFiles: core.serialization.partialRecord(Language, Files.optional()),
     basicTestCaseTemplate: BasicTestCaseTemplate,
 });
 

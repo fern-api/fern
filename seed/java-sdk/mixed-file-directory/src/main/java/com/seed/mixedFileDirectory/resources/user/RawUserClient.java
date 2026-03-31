@@ -39,6 +39,13 @@ public class RawUserClient {
     /**
      * List all users.
      */
+    public SeedMixedFileDirectoryHttpResponse<List<User>> list(RequestOptions requestOptions) {
+        return list(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all users.
+     */
     public SeedMixedFileDirectoryHttpResponse<List<User>> list(ListUsersRequest request) {
         return list(request, null);
     }
@@ -54,6 +61,11 @@ public class RawUserClient {
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "limit", request.getLimit().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .foo import Foo
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
+    from .type_with_optional_map import TypeWithOptionalMap
     from .union import Union, Union_Bar, Union_Foo
     from .union_with_base_properties import (
         UnionWithBaseProperties,
@@ -44,6 +45,16 @@ if typing.TYPE_CHECKING:
         UnionWithMultipleNoProperties_Foo,
     )
     from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
+    from .union_with_nullable_reference import (
+        UnionWithNullableReference,
+        UnionWithNullableReference_Bar,
+        UnionWithNullableReference_Foo,
+    )
+    from .union_with_optional_reference import (
+        UnionWithOptionalReference,
+        UnionWithOptionalReference_Bar,
+        UnionWithOptionalReference_Foo,
+    )
     from .union_with_optional_time import (
         UnionWithOptionalTime,
         UnionWithOptionalTime_Date,
@@ -72,6 +83,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Foo": ".foo",
     "FooExtended": ".foo_extended",
     "SecondItemType": ".second_item_type",
+    "TypeWithOptionalMap": ".type_with_optional_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithBaseProperties_Foo": ".union_with_base_properties",
@@ -100,6 +112,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".union_with_no_properties",
     "UnionWithNoProperties_Empty": ".union_with_no_properties",
     "UnionWithNoProperties_Foo": ".union_with_no_properties",
+    "UnionWithNullableReference": ".union_with_nullable_reference",
+    "UnionWithNullableReference_Bar": ".union_with_nullable_reference",
+    "UnionWithNullableReference_Foo": ".union_with_nullable_reference",
+    "UnionWithOptionalReference": ".union_with_optional_reference",
+    "UnionWithOptionalReference_Bar": ".union_with_optional_reference",
+    "UnionWithOptionalReference_Foo": ".union_with_optional_reference",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithOptionalTime_Date": ".union_with_optional_time",
     "UnionWithOptionalTime_Datetime": ".union_with_optional_time",
@@ -158,6 +176,7 @@ __all__ = [
     "Foo",
     "FooExtended",
     "SecondItemType",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -186,6 +205,12 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithNoProperties_Empty",
     "UnionWithNoProperties_Foo",
+    "UnionWithNullableReference",
+    "UnionWithNullableReference_Bar",
+    "UnionWithNullableReference_Foo",
+    "UnionWithOptionalReference",
+    "UnionWithOptionalReference_Bar",
+    "UnionWithOptionalReference_Foo",
     "UnionWithOptionalTime",
     "UnionWithOptionalTime_Date",
     "UnionWithOptionalTime_Datetime",

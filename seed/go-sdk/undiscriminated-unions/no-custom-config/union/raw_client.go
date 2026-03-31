@@ -4,11 +4,12 @@ package union
 
 import (
 	context "context"
+	http "net/http"
+
 	undiscriminated "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
 	internal "github.com/fern-api/undiscriminated-go/internal"
 	option "github.com/fern-api/undiscriminated-go/option"
-	http "net/http"
 )
 
 type RawClient struct {

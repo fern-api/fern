@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -65,14 +65,18 @@ public record Union
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new System.Exception("Union.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value!
+            : throw new global::System.Exception("Union.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value! : throw new System.Exception("Union.Type is not 'bar'");
+        IsBar
+            ? (SeedUnions.Bar)Value!
+            : throw new global::System.Exception("Union.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -145,12 +149,12 @@ public record Union
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Union>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Union).IsAssignableFrom(typeToConvert);
 
         public override Union Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,9 +182,9 @@ public record Union
             var value = discriminator switch
             {
                 "foo" => json.GetProperty("foo").Deserialize<SeedUnions.Foo?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 "bar" => json.GetProperty("bar").Deserialize<SeedUnions.Bar?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
                 _ => json.Deserialize<object?>(options),
             };
             return new Union(discriminator, value);
@@ -207,6 +211,27 @@ public record Union
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override Union ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Union(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Union value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

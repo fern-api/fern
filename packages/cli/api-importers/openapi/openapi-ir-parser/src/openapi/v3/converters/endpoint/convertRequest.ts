@@ -9,17 +9,17 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
-import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
-import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../../../getExtension.js";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties.js";
+import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import {
     findApplicationJsonRequest,
     getApplicationJsonSchemaMediaObject,
     getExamples
-} from "./getApplicationJsonSchema";
+} from "./getApplicationJsonSchema.js";
 
 function findApplicationUrlFormEncodedRequest({
     content,
@@ -63,12 +63,14 @@ function getApplicationUrlFormEncodedRequest({
 }
 
 function findMultipartFormDataRequest({
-    content
+    content,
+    context
 }: {
     content: Record<string, OpenAPIV3.MediaTypeObject>;
+    context: AbstractOpenAPIV3ParserContext;
 }): [string, OpenAPIV3.MediaTypeObject] | undefined {
     for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
-        const result = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+        const result = getMultipartFormDataRequest({ mediaType, mediaTypeObject, context });
         if (result) {
             return [mediaType, mediaTypeObject];
         }
@@ -78,18 +80,25 @@ function findMultipartFormDataRequest({
 
 function getMultipartFormDataRequest({
     mediaType,
-    mediaTypeObject
+    mediaTypeObject,
+    context
 }: {
     mediaType: string;
     mediaTypeObject: OpenAPIV3.MediaTypeObject;
+    context: AbstractOpenAPIV3ParserContext;
 }):
     | {
           schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
           encoding: Record<string, OpenAPIV3.EncodingObject> | undefined;
+          examples: NamedFullExample[];
       }
     | undefined {
     if (MediaType.parse(mediaType)?.isMultipart()) {
-        return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
+        return {
+            schema: mediaTypeObject.schema,
+            encoding: mediaTypeObject.encoding,
+            examples: getExamples(mediaTypeObject, context)
+        };
     }
     return undefined;
 }
@@ -124,7 +133,13 @@ function multipartRequestHasFile(
           };
     return (
         Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
-            return !isReferenceObject(definition) && definition.type === "string" && definition.format === "binary";
+            return (
+                !isReferenceObject(definition) &&
+                definition.type === "string" &&
+                (definition.format === "binary" ||
+                    (definition.format == null &&
+                        (definition as Record<string, unknown>).contentMediaType === "application/octet-stream"))
+            );
         }) != null
     );
 }
@@ -163,7 +178,7 @@ export function convertToSingleRequest({
         });
     }
 
-    const multipartFormDataRequest = findMultipartFormDataRequest({ content });
+    const multipartFormDataRequest = findMultipartFormDataRequest({ content, context });
     const jsonRequest = findApplicationJsonRequest({ content, context });
 
     // convert as application/json
@@ -295,9 +310,10 @@ export function convertRequest({
         });
     }
 
-    const multipartFormData = getMultipartFormDataRequest({ mediaType, mediaTypeObject });
+    const multipartFormData = getMultipartFormDataRequest({ mediaType, mediaTypeObject, context });
     const multipartSchema = multipartFormData?.schema;
     const multipartEncoding = multipartFormData?.encoding;
+    const multipartExamples = multipartFormData?.examples;
 
     // convert as multipart request
     if (multipartSchema) {
@@ -361,7 +377,8 @@ export function convertRequest({
             description: resolvedMultipartSchema.schema.description,
             properties,
             source,
-            sdkMethodName
+            sdkMethodName,
+            fullExamples: multipartExamples
         });
     }
 

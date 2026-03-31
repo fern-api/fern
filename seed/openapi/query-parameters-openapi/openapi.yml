@@ -98,6 +98,24 @@ paths:
             items:
               type: string
               nullable: true
+        - name: tags
+          in: query
+          description: List of tags. Serialized as a comma-separated list.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: optionalTags
+          in: query
+          description: Optional list of tags. Serialized as a comma-separated list.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
         - name: neighbor
           in: query
           required: false

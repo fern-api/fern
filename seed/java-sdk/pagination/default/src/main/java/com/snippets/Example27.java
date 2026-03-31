@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
+import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 
 public class Example27 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example27 {
                 .build();
 
         client.users()
-                .listWithOptionalData(
-                        ListUsersOptionalDataRequest.builder().page(1).build());
+                .listWithGlobalConfig(
+                        ListWithGlobalConfigRequest.builder().offset(1).build());
     }
 }

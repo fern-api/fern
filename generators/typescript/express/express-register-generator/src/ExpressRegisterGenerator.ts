@@ -1,12 +1,12 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedExpressRegisterImpl } from "./GeneratedExpressRegisterImpl";
+import { GeneratedExpressRegisterImpl } from "./GeneratedExpressRegisterImpl.js";
 
 export declare namespace ExpressRegisterGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         registerFunctionName: string;
         areImplementationsOptional: boolean;
         packageResolver: PackageResolver;
@@ -14,7 +14,7 @@ export declare namespace ExpressRegisterGenerator {
 }
 
 export class ExpressRegisterGenerator {
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private registerFunctionName: string;
     private areImplementationsOptional: boolean;
     private packageResolver: PackageResolver;

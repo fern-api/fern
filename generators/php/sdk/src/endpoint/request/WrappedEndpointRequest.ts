@@ -1,39 +1,23 @@
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    FileProperty,
-    FilePropertyArray,
-    FilePropertySingle,
-    FileUploadRequest,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    Name,
-    QueryParameter,
-    SdkRequest,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
         context: SdkGeneratorContext;
-        serviceId: ServiceId;
-        sdkRequest: SdkRequest;
-        wrapper: SdkRequestWrapper;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        sdkRequest: FernIr.SdkRequest;
+        wrapper: FernIr.SdkRequestWrapper;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -41,9 +25,9 @@ const QUERY_PARAMETER_BAG_NAME = "$query";
 const HEADER_BAG_NAME = "$headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
-    private serviceId: ServiceId;
-    private wrapper: SdkRequestWrapper;
-    private requestParameterName: Name;
+    private serviceId: FernIr.ServiceId;
+    private wrapper: FernIr.SdkRequestWrapper;
+    private requestParameterName: FernIr.Name;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, service, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, service, endpoint);
@@ -60,8 +44,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.endpoint.queryParameters.length === 0) {
             return undefined;
         }
-        const requiredQueryParameters: QueryParameter[] = [];
-        const optionalQueryParameters: QueryParameter[] = [];
+        const requiredQueryParameters: FernIr.QueryParameter[] = [];
+        const optionalQueryParameters: FernIr.QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
             if (this.context.isOptional(queryParameter.valueType)) {
                 optionalQueryParameters.push(queryParameter);
@@ -96,8 +80,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (headers.length === 0) {
             return undefined;
         }
-        const requiredHeaders: HttpHeader[] = [];
-        const optionalHeaders: HttpHeader[] = [];
+        const requiredHeaders: FernIr.HttpHeader[] = [];
+        const optionalHeaders: FernIr.HttpHeader[] = [];
         for (const header of headers) {
             if (this.context.isOptional(header.valueType)) {
                 optionalHeaders.push(header);
@@ -125,12 +109,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
         };
     }
 
-    private writeQueryParameter(writer: php.Writer, query: QueryParameter): void {
+    private writeQueryParameter(writer: php.Writer, query: FernIr.QueryParameter): void {
         writer.write(`${QUERY_PARAMETER_BAG_NAME}['${query.name.wireValue}'] = `);
         writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
     }
 
-    private writeHeader(writer: php.Writer, header: HttpHeader): void {
+    private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
         writer.write(`${HEADER_BAG_NAME}['${header.name.wireValue}'] = `);
         writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
@@ -140,7 +124,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         property
     }: {
         writer: php.Writer;
-        property: FileUploadRequestProperty;
+        property: FernIr.FileUploadRequestProperty;
     }): void {
         if (property.type !== "bodyProperty") {
             return;
@@ -200,7 +184,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private getMultipartBodyParameterValueAssignment(paramRef: string, typeReference: TypeReference): php.AstNode {
+    private getMultipartBodyParameterValueAssignment(
+        paramRef: string,
+        typeReference: FernIr.TypeReference
+    ): php.AstNode {
         if (this.context.isJsonEncodable(typeReference)) {
             return php.invokeMethod({
                 method: "encode",
@@ -226,7 +213,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }: {
         writer: php.Writer;
         paramRef: string;
-        property: FileProperty;
+        property: FernIr.FileProperty;
     }): void {
         const arguments_ =
             property.contentType != null
@@ -263,15 +250,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
         property
     }: {
         writer: php.Writer;
-        property: FilePropertyArray;
+        property: FernIr.FilePropertyArray;
     }): void {
         const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
-        this.writeMultipartPart({ writer, paramRef: "$file", property: FileProperty.fileArray(property) });
+        this.writeMultipartPart({ writer, paramRef: "$file", property: FernIr.FileProperty.fileArray(property) });
         writer.endControlFlow();
     }
 
-    private stringify({ reference, name }: { reference: TypeReference; name: Name }): php.CodeBlock {
+    private stringify({ reference, name }: { reference: FernIr.TypeReference; name: FernIr.Name }): php.CodeBlock {
         const parameter = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
             propertyName: name
@@ -367,7 +354,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
     }
 
-    private getFileUploadRequestBodyCode(fileUpload: FileUploadRequest): php.CodeBlock {
+    private getFileUploadRequestBodyCode(fileUpload: FernIr.FileUploadRequest): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write(`$${this.context.getPropertyName(this.wrapper.bodyKey)} = `);
             writer.writeNodeStatement(
@@ -395,7 +382,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
     }
 
-    private writeFile(writer: php.Writer, file: FileProperty): void {
+    private writeFile(writer: php.Writer, file: FernIr.FileProperty): void {
         switch (file.type) {
             case "file": {
                 this.writeSingleFile(writer, file);
@@ -411,21 +398,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private writeSingleFile(writer: php.Writer, file: FilePropertySingle): void {
+    private writeSingleFile(writer: php.Writer, file: FernIr.FilePropertySingle): void {
         const paramRef = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
             propertyName: file.key.name
         });
         if (file.isOptional) {
             writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
-            this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) });
+            this.writeMultipartPart({ writer, paramRef, property: FernIr.FileProperty.file(file) });
             writer.endControlFlow();
         } else {
-            this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) });
+            this.writeMultipartPart({ writer, paramRef, property: FernIr.FileProperty.file(file) });
         }
     }
 
-    private writeFileArray(writer: php.Writer, fileArray: FilePropertyArray): void {
+    private writeFileArray(writer: php.Writer, fileArray: FernIr.FilePropertyArray): void {
         if (fileArray.isOptional) {
             const ref = this.context.accessRequestProperty({
                 requestParameterName: this.sdkRequest.requestParameterName,

@@ -318,6 +318,10 @@
     "coerceOptionalSchemasToNullable": false,
     "removeDiscriminantsFromSchemas": "always",
     "defaultIntegerFormat": "int32",
-    "pathParameterOrder": "url-order"
+    "pathParameterOrder": "url-order",
+    "resolveSchemaCollisions": false,
+    "inferForwardCompatible": false,
+    "coerceConstsTo": "enums-coerceable-to-literals",
+    "respectByteFormat": false
   }
 }

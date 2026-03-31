@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">create_user</a>(request: User) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create_user</a>(request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```rust
 use seed_property_access::prelude::*;
-use seed_property_access::{User, UserProfile, UserProfileVerification};
 
 #[tokio::main]
 async fn main() {
@@ -31,9 +30,12 @@ async fn main() {
                     name: "name".to_string(),
                     verification: UserProfileVerification {
                         verified: "verified".to_string(),
+                        ..Default::default()
                     },
                     ssn: "ssn".to_string(),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )
@@ -49,3 +51,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

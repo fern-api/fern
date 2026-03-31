@@ -1,4 +1,4 @@
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
 
 export const StatusCodeDiscriminatedEndpointErrorSchema: GeneratedEndpointErrorSchema = {
     writeToFile: () => {

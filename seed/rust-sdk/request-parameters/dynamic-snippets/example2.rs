@@ -1,5 +1,4 @@
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBodyOptionalProperties;
 
 #[tokio::main]
 async fn main() {
@@ -11,11 +10,9 @@ async fn main() {
     client
         .user
         .create_username_optional(
-            &Some(Some(CreateUsernameBodyOptionalProperties {
-                username: None,
-                password: None,
-                name: None,
-            })),
+            &Some(CreateUsernameBodyOptionalProperties {
+                ..Default::default()
+            }),
             None,
         )
         .await;

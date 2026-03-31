@@ -5,19 +5,23 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
     universal_field_validator,
     universal_root_validator,
 )
+from ....core.serialization import FieldMetadata
 from ...types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 
 
 class PostWithObjectBody(UniversalBaseModel):
     string: str
     integer: int
-    nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+    nested_object: typing_extensions.Annotated[
+        ObjectWithOptionalField, FieldMetadata(alias="NestedObject"), pydantic.Field(alias="NestedObject")
+    ]
 
     class Validators:
         """

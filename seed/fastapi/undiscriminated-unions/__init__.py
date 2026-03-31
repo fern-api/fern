@@ -9,6 +9,7 @@ from .resources import (
     Metadata,
     MetadataUnion,
     MyUnion,
+    Name,
     NamedMetadata,
     NestedUnionL1,
     NestedUnionL2,
@@ -22,6 +23,9 @@ from .resources import (
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
     UnionWithIdenticalStrings,
+    UnionWithReservedNames,
+    UnionWithTypeAliases,
+    UserId,
     union,
 )
 
@@ -32,6 +36,7 @@ __all__ = [
     "Metadata",
     "MetadataUnion",
     "MyUnion",
+    "Name",
     "NamedMetadata",
     "NestedUnionL1",
     "NestedUnionL2",
@@ -45,5 +50,8 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
+    "UnionWithTypeAliases",
+    "UserId",
     "union",
 ]

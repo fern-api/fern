@@ -1,6 +1,6 @@
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ExportedDirectory } from "../exports-manager";
-import { Reference } from "../referencing";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { ExportedDirectory } from "../exports-manager/index.js";
+import { Reference } from "../referencing/index.js";
 
 export type CoreUtilityName = string;
 

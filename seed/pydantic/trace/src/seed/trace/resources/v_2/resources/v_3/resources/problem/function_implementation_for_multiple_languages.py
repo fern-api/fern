@@ -3,13 +3,19 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .......core.serialization import FieldMetadata
 from ......commons.language import Language
 from .function_implementation import FunctionImplementation
 
 
 class FunctionImplementationForMultipleLanguages(UniversalBaseModel):
-    code_by_language: typing.Dict[Language, FunctionImplementation] = pydantic.Field(alias="codeByLanguage")
+    code_by_language: typing_extensions.Annotated[
+        typing.Dict[Language, FunctionImplementation],
+        FieldMetadata(alias="codeByLanguage"),
+        pydantic.Field(alias="codeByLanguage"),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

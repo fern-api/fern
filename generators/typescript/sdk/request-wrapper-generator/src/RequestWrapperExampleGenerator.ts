@@ -1,8 +1,8 @@
-import { ExampleEndpointCall, HttpRequestBody, Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample } from "@fern-typescript/contexts";
 
-import { GeneratedRequestWrapperExampleImpl } from "./GeneratedRequestWrapperExampleImpl";
+import { GeneratedRequestWrapperExampleImpl } from "./GeneratedRequestWrapperExampleImpl.js";
 
 export class RequestWrapperExampleGenerator {
     public generateExample({
@@ -14,10 +14,10 @@ export class RequestWrapperExampleGenerator {
         flattenRequestParameters
     }: {
         bodyPropertyName: string;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         packageId: PackageId;
-        endpointName: Name;
-        requestBody: HttpRequestBody | undefined;
+        endpointName: FernIr.Name;
+        requestBody: FernIr.HttpRequestBody | undefined;
         flattenRequestParameters: boolean;
     }): GeneratedRequestWrapperExample {
         return new GeneratedRequestWrapperExampleImpl({

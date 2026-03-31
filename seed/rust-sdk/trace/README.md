@@ -10,6 +10,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -44,14 +45,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    ActualResult, BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, KeyValuePair,
-    MapValue, NodeId, RunningSubmissionState, RuntimeError, SinglyLinkedListNodeValue,
-    SinglyLinkedListValue, SubmissionId, SubmissionStatusForTestCase, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseNonHiddenGrade, TestCaseResult, TestCaseResultWithStdout,
-    TestSubmissionStatus, TracedTestCase, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -69,6 +62,20 @@ async fn main() {
         )
         .await;
 }
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```rust
+use seed_trace::prelude::{*};
+
+let config = ClientConfig {
+    base_url: Environment::Prod.url().to_string(),
+    ..Default::default()
+};
+let client = Client::new(config).expect("Failed to build client");
 ```
 
 ## Errors

@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Response Headers Test API
+servers:
+  - url: https://api.test.com
+    description: Test API
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      responses:
+        "200":
+          description: A list of users
+          headers:
+            X-Request-Id:
+              description: Unique request identifier
+              schema:
+                type: string
+              example: "abc-123"
+            X-Rate-Limit-Remaining:
+              description: Number of requests remaining
+              schema:
+                type: integer
+              example: 99
+            X-Is-Cached:
+              description: Whether the response was cached
+              schema:
+                type: boolean
+              example: true
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  /users/{userId}:
+    get:
+      operationId: getUser
+      summary: Get a user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A user
+          headers:
+            X-Request-Id:
+              description: Unique request identifier
+              schema:
+                type: string
+            X-Last-Modified:
+              description: When the user was last modified
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+          headers:
+            X-Request-Id:
+              description: Unique request identifier
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        code:
+          type: integer

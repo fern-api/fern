@@ -5,6 +5,22 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Authentication](#authentication)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -13,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:any-auth'
+  implementation 'com.fern:any-auth:0.0.1'
 }
 ```
 
@@ -60,29 +76,6 @@ public class Example {
     }
 }
 ```
-## Authentication
-
-This SDK supports two authentication methods:
-
-### Option 1: Direct Bearer Token
-
-If you already have a valid access token, you can use it directly:
-
-```java
-SeedAnyAuthClient client = SeedAnyAuthClient.withToken("your-access-token")
-    .url("https://api.example.com")
-    .build();
-```
-
-### Option 2: OAuth Client Credentials
-
-The SDK can automatically handle token acquisition and refresh:
-
-```java
-SeedAnyAuthClient client = SeedAnyAuthClient.withCredentials("client-id", "client-secret")
-    .url("https://api.example.com")
-    .build();
-```
 
 ## Base Url
 
@@ -109,6 +102,32 @@ try{
 } catch (SeedAnyAuthApiException e){
     // Do something with the API exception...
 }
+```
+
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Advanced
@@ -211,7 +230,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-GetTokenHttpResponse response = client.auth().withRawResponse().getToken(...);
+SeedAnyAuthHttpResponse response = client.auth().withRawResponse().getToken(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

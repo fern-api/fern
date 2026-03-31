@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/query-parameters-openapi-as-objects/fern"
     client "github.com/query-parameters-openapi-as-objects/fern/client"
     option "github.com/query-parameters-openapi-as-objects/fern/option"
-    fern "github.com/query-parameters-openapi-as-objects/fern"
-    context "context"
 )
 
 func do() {
@@ -91,6 +92,16 @@ func do() {
         Filter: []*string{
             fern.String(
                 "filter",
+            ),
+        },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        OptionalTags: []*string{
+            fern.String(
+                "optionalTags",
             ),
         },
         Neighbor: &fern.SearchRequestNeighbor{

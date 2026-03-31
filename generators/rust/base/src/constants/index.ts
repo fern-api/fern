@@ -55,6 +55,31 @@ export const RUST_KEYWORDS = new Set([
     "yield"
 ]);
 
+/**
+ * Static Rust source for the BuildError type used by generated builders.
+ * Shared between model and SDK generators so the definition stays in sync.
+ */
+export const BUILD_ERROR_RS = `/// Error returned when a required field was not set on a builder.
+#[derive(Debug)]
+pub struct BuildError {
+    field: &'static str,
+}
+
+impl BuildError {
+    pub fn missing_field(field: &'static str) -> Self {
+        Self { field }
+    }
+}
+
+impl std::fmt::Display for BuildError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "\`{}\` was not set but is required", self.field)
+    }
+}
+
+impl std::error::Error for BuildError {}
+`;
+
 export const RUST_RESERVED_TYPES = new Set([
     "Box",
     "Option",

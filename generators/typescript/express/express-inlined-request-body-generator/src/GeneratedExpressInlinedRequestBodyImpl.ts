@@ -1,10 +1,10 @@
-import { InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 
 export declare namespace GeneratedExpressInlinedRequestBodyImpl {
     export interface Init {
-        requestBody: InlinedRequestBody;
+        requestBody: FernIr.InlinedRequestBody;
         typeName: string;
         retainOriginalCasing: boolean;
         includeSerdeLayer: boolean;
@@ -12,7 +12,7 @@ export declare namespace GeneratedExpressInlinedRequestBodyImpl {
 }
 
 export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressInlinedRequestBody {
-    private requestBody: InlinedRequestBody;
+    private requestBody: FernIr.InlinedRequestBody;
     private typeName: string;
     private retainOriginalCasing: boolean;
     private includeSerdeLayer: boolean;
@@ -47,7 +47,7 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
         }
     }
 
-    public getPropertyKey(property: InlinedRequestBodyProperty): string {
+    public getPropertyKey(property: FernIr.InlinedRequestBodyProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return property.name.name.camelCase.unsafeName;
         } else {

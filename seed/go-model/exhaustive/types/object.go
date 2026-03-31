@@ -5,9 +5,10 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	internal "github.com/exhaustive/fern/internal"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type ObjectWithOptionalField struct {
@@ -452,3 +453,196 @@ func (d *DoubleOptional) String() string {
 }
 
 type OptionalAlias = *string
+
+// This type tests that string fields containing datetime-like values
+// are NOT reformatted by the wire test generator. The string field
+// should preserve its exact value even if it looks like a datetime.
+type ObjectWithDatetimeLikeString struct {
+	// A string field that happens to contain a datetime-like value
+	DatetimeLikeString string `json:"datetimeLikeString" url:"datetimeLikeString"`
+	// An actual datetime field for comparison
+	ActualDatetime time.Time `json:"actualDatetime" url:"actualDatetime"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithDatetimeLikeString) GetDatetimeLikeString() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatetimeLikeString
+}
+
+func (o *ObjectWithDatetimeLikeString) GetActualDatetime() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ActualDatetime
+}
+
+func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithDatetimeLikeString) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed ObjectWithDatetimeLikeString
+	var unmarshaler = struct {
+		embed
+		ActualDatetime *internal.DateTime `json:"actualDatetime"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = ObjectWithDatetimeLikeString(unmarshaler.embed)
+	o.ActualDatetime = unmarshaler.ActualDatetime.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithDatetimeLikeString) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithDatetimeLikeString
+	var marshaler = struct {
+		embed
+		ActualDatetime *internal.DateTime `json:"actualDatetime"`
+	}{
+		embed:          embed(*o),
+		ActualDatetime: internal.NewDateTime(o.ActualDatetime),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (o *ObjectWithDatetimeLikeString) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
+type ObjectWithUnknownField struct {
+	Unknown any `json:"unknown" url:"unknown"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithUnknownField) GetUnknown() any {
+	if o == nil {
+		return nil
+	}
+	return o.Unknown
+}
+
+func (o *ObjectWithUnknownField) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithUnknownField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithUnknownField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithUnknownField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithUnknownField) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown types are able to preserve their type names.
+type ObjectWithDocumentedUnknownType struct {
+	DocumentedUnknownType DocumentedUnknownType `json:"documentedUnknownType" url:"documentedUnknownType"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetDocumentedUnknownType() DocumentedUnknownType {
+	if o == nil {
+		return nil
+	}
+	return o.DocumentedUnknownType
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithDocumentedUnknownType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithDocumentedUnknownType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithDocumentedUnknownType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithDocumentedUnknownType) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown types are able to preserve their docstrings.
+type DocumentedUnknownType = any
+
+// Tests that map value types with unknown types don't get spurious | undefined.
+type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType

@@ -6,8 +6,9 @@ namespace SeedSingleUrlEnvironmentDefault;
 public class SeedSingleUrlEnvironmentDefaultApiException(
     string message,
     int statusCode,
-    object body
-) : SeedSingleUrlEnvironmentDefaultException(message)
+    object body,
+    Exception? innerException = null
+) : SeedSingleUrlEnvironmentDefaultException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

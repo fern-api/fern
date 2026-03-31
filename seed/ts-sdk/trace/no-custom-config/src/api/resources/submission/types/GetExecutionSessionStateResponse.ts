@@ -4,6 +4,6 @@ import type * as SeedTrace from "../../../index.js";
 
 export interface GetExecutionSessionStateResponse {
     states: Record<string, SeedTrace.ExecutionSessionState>;
-    numWarmingInstances?: number;
+    numWarmingInstances?: number | undefined;
     warmingSessionIds: string[];
 }

@@ -67,6 +67,16 @@ public final class ContainerClient: Sendable {
         )
     }
 
+    public func getAndReturnMapOfPrimToUndiscriminatedUnion(request: [String: MixedType], requestOptions: RequestOptions? = nil) async throws -> [String: MixedType] {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/container/map-prim-to-union",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: [String: MixedType].self
+        )
+    }
+
     public func getAndReturnOptional(request: ObjectWithRequiredField?, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField? {
         return try await httpClient.performRequest(
             method: .post,

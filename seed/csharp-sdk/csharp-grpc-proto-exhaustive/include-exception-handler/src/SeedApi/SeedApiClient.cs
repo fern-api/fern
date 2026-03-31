@@ -1,8 +1,9 @@
+using global::System.Text.Json;
 using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class SeedApiClient
+public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
@@ -10,7 +11,11 @@ public partial class SeedApiClient
     {
         try
         {
-            var defaultHeaders = new Headers(
+            clientOptions ??= new ClientOptions();
+            clientOptions.ExceptionHandler = new ExceptionHandler(
+                new SeedApiExceptionInterceptor(clientOptions)
+            );
+            var platformHeaders = new Headers(
                 new Dictionary<string, string>()
                 {
                     { "X-Fern-Language", "C#" },
@@ -19,11 +24,7 @@ public partial class SeedApiClient
                     { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
                 }
             );
-            clientOptions ??= new ClientOptions();
-            clientOptions.ExceptionHandler = new ExceptionHandler(
-                new SeedApiExceptionInterceptor()
-            );
-            foreach (var header in defaultHeaders)
+            foreach (var header in platformHeaders)
             {
                 if (!clientOptions.Headers.ContainsKey(header.Key))
                 {
@@ -31,15 +32,101 @@ public partial class SeedApiClient
                 }
             }
             _client = new RawClient(clientOptions);
-            Dataservice = new DataserviceClient(_client);
+            DataService = new DataServiceClient(_client);
         }
         catch (Exception ex)
         {
-            var interceptor = new SeedApiExceptionInterceptor();
+            var interceptor = new SeedApiExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }
     }
 
-    public DataserviceClient Dataservice { get; }
+    public IDataServiceClient DataService { get; }
+
+    private async Task<WithRawResponse<Dictionary<string, object?>>> PostFooAsyncCore(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Post,
+                            Path = "foo",
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<Dictionary<string, object?>>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedApiApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedApiApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.PostFooAsync();
+    /// </code></example>
+    public WithRawResponseTask<Dictionary<string, object?>> PostFooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, object?>>(
+            PostFooAsyncCore(options, cancellationToken)
+        );
+    }
 }

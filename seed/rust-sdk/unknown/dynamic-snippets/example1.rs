@@ -1,5 +1,4 @@
 use seed_unknown_as_any::prelude::*;
-use seed_unknown_as_any::MyObject;
 
 #[tokio::main]
 async fn main() {
@@ -13,6 +12,7 @@ async fn main() {
         .post_object(
             &MyObject {
                 unknown: serde_json::json!({"key":"value"}),
+                ..Default::default()
             },
             None,
         )

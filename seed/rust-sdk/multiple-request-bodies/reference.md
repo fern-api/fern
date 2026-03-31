@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result<UploadDocumentResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result&lt;UploadDocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -24,9 +24,7 @@ async fn main() {
     client
         .upload_json_document(
             &UploadDocumentRequest {
-                author: None,
-                tags: None,
-                title: None,
+                ..Default::default()
             },
             None,
         )
@@ -73,3 +71,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

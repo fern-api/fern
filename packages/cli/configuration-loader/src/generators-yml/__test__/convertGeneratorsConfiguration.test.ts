@@ -1,11 +1,9 @@
-/* eslint-disable jest/no-conditional-expect */
-
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
-import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
+import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration.js";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {
@@ -178,16 +176,10 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         const output = converted.groups[0]?.generators[0]?.outputMode;
-        expect(output?.type).toEqual("githubV2");
-        if (output?.type === "githubV2") {
-            const publishInfo = output.githubV2.publishInfo;
-            expect(publishInfo?.type).toEqual("maven");
-            if (publishInfo?.type === "maven") {
-                expect(publishInfo.registryUrl).toEqual(
-                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                );
-            }
-        }
+        expect.assert(output?.type === "githubV2");
+        const publishInfo = output.githubV2.publishInfo;
+        expect.assert(publishInfo?.type === "maven");
+        expect(publishInfo.registryUrl).toEqual("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/");
     });
 
     it("License Metadata", async () => {
@@ -218,10 +210,8 @@ describe("convertGeneratorsConfiguration", () => {
             context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
-        expect(output?.type).toEqual("githubV2");
-        if (output?.type === "githubV2") {
-            expect(output.githubV2.license?.type === "basic" && output.githubV2.license.id === "MIT").toEqual(true);
-        }
+        expect.assert(output?.type === "githubV2");
+        expect(output.githubV2.license?.type === "basic" && output.githubV2.license.id === "MIT").toEqual(true);
     });
 
     it("Reviewers", async () => {
@@ -260,14 +250,13 @@ describe("convertGeneratorsConfiguration", () => {
             context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
-        expect(output?.type).toEqual("githubV2");
-        if (output?.type === "githubV2" && output.githubV2.type === "pullRequest") {
-            expect(output.githubV2.reviewers != null).toBeTruthy();
-            expect(output.githubV2.reviewers?.length).toEqual(3);
+        expect.assert(output?.type === "githubV2");
+        expect.assert(output.githubV2.type === "pullRequest");
+        expect(output.githubV2.reviewers != null).toBeTruthy();
+        expect(output.githubV2.reviewers?.length).toEqual(3);
 
-            const reviewerNames = output.githubV2.reviewers?.map((reviewer) => reviewer.name);
-            expect(reviewerNames).toEqual(["fern-eng", "armando", "deep"]);
-        }
+        const reviewerNames = output.githubV2.reviewers?.map((reviewer) => reviewer.name);
+        expect(reviewerNames).toEqual(["fern-eng", "armando", "deep"]);
     });
 
     it("Output Metadata", async () => {
@@ -307,14 +296,12 @@ describe("convertGeneratorsConfiguration", () => {
             context
         });
         const output = converted.groups[0]?.generators[0]?.outputMode;
-        expect(output?.type).toEqual("githubV2");
-        if (output?.type === "githubV2") {
-            expect(
-                output.githubV2.publishInfo?.type === "pypi" &&
-                    output.githubV2.publishInfo.pypiMetadata?.documentationLink === "https://test.com" &&
-                    output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
-            ).toEqual(true);
-        }
+        expect.assert(output?.type === "githubV2");
+        expect(
+            output.githubV2.publishInfo?.type === "pypi" &&
+                output.githubV2.publishInfo.pypiMetadata?.documentationLink === "https://test.com" &&
+                output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
+        ).toEqual(true);
     });
 
     it("logs deprecation warnings for deprecated generators yml configuration", async () => {
@@ -504,14 +491,12 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify both specs inherit api-level settings
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions).toHaveLength(2);
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
-                expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions).toHaveLength(2);
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
         });
 
         it("spec settings override api-level settings", async () => {
@@ -538,11 +523,9 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify spec setting overrides api-level, but other api-level settings are preserved
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
-                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+            expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
         });
 
         it("partial overrides preserve other api-level settings", async () => {
@@ -571,12 +554,10 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify only specified setting is overridden, others preserved from api-level
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
-                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
-                expect(converted.api.definitions[0]?.settings?.coerceEnumsToLiterals).toBe(true);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+            expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            expect(converted.api.definitions[0]?.settings?.coerceEnumsToLiterals).toBe(true);
         });
 
         it("empty spec settings preserve api-level settings", async () => {
@@ -600,10 +581,8 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify empty spec settings don't erase api-level settings
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
         });
 
         it("multiple specs with different overrides", async () => {
@@ -640,22 +619,20 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify each spec has correct merged settings
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions).toHaveLength(3);
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions).toHaveLength(3);
 
-                // Spec 1: overrides title-as-schema-name
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
-                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            // Spec 1: overrides title-as-schema-name
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+            expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
 
-                // Spec 2: inherits all api-level settings
-                expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            // Spec 2: inherits all api-level settings
+            expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
 
-                // Spec 3: overrides idiomatic-request-names
-                expect(converted.api.definitions[2]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[2]?.settings?.shouldUseIdiomaticRequestNames).toBe(true);
-            }
+            // Spec 3: overrides idiomatic-request-names
+            expect(converted.api.definitions[2]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[2]?.settings?.shouldUseIdiomaticRequestNames).toBe(true);
         });
 
         it("OpenAPI-specific settings work alongside base settings", async () => {
@@ -682,12 +659,10 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify OpenAPI-specific settings merge with base settings
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[0]?.settings?.onlyIncludeReferencedSchemas).toBe(true);
-                expect(converted.api.definitions[0]?.settings?.inlinePathParameters).toBe(true);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[0]?.settings?.onlyIncludeReferencedSchemas).toBe(true);
+            expect(converted.api.definitions[0]?.settings?.inlinePathParameters).toBe(true);
         });
 
         it("AsyncAPI-specific settings work alongside base settings", async () => {
@@ -713,11 +688,9 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify AsyncAPI-specific settings merge with base settings
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
-                expect(converted.api.definitions[0]?.settings?.asyncApiMessageNaming).toBe("v2");
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+            expect(converted.api.definitions[0]?.settings?.asyncApiMessageNaming).toBe("v2");
         });
 
         it("no root settings maintains backward compatibility", async () => {
@@ -740,10 +713,8 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             // Verify existing configs without root settings still work
-            expect(converted.api?.type).toBe("singleNamespace");
-            if (converted.api?.type === "singleNamespace") {
-                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
-            }
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
         });
     });
 
@@ -868,6 +839,311 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
             expect(converted.groups[0]?.generators[1]?.name).toEqual("fernapi/fern-python-sdk");
             expect(converted.groups[0]?.generators[2]?.name).toEqual("myorg/custom-generator");
+        });
+    });
+
+    describe("apiOverride", () => {
+        it("returns undefined when no api config and no generator api override", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("uses generator-level specs override", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "custom-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("uses generator-level auth override", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        auth: "bearer"
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: undefined,
+                auth: "bearer",
+                "auth-schemes": undefined
+            });
+        });
+
+        it("returns undefined when workspace is V2 but generator has no api override", async () => {
+            const context = createMockTaskContext();
+            const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: workspaceSpecs
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("does not inherit auth or auth-schemes from V2 workspace config", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }],
+                        auth: "bearer",
+                        "auth-schemes": { my_scheme: { type: "header", header: "X-Api-Key" } }
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("generator with specs does not inherit auth from V2 workspace config", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }],
+                        auth: "bearer"
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("in same group, only generators with api block get apiOverride", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }]
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-with-override",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output1"
+                                    }
+                                },
+                                {
+                                    name: "generator-without-override",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output2"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+            expect(converted.groups[0]?.generators[1]?.apiOverride).toBeUndefined();
+        });
+
+        it("generator-level specs take priority over V2 workspace-level specs", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: workspaceSpecs
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("returns undefined when workspace api is non-V2 (string path)", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: "path/to/openapi.yml",
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
         });
     });
 });

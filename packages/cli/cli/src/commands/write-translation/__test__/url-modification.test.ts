@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLanguageSuffixToUrl } from "../url-utils";
+import { addLanguageSuffixToUrl } from "../url-utils.js";
 
 describe("addLanguageSuffixToUrl", () => {
     describe("buildwithfern.com domains", () => {

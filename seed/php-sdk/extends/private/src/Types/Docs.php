@@ -38,6 +38,7 @@ class Docs extends JsonSerializableType
     public function setDocs(string $value): self
     {
         $this->docs = $value;
+        $this->_setField('docs');
         return $this;
     }
 

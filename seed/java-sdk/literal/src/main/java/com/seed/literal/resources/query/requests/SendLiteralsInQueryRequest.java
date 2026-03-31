@@ -5,9 +5,9 @@ package com.seed.literal.resources.query.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -56,47 +56,47 @@ public final class SendLiteralsInQueryRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("prompt")
+    @JsonIgnore
     public String getPrompt() {
         return "You are a helpful assistant";
     }
 
-    @JsonProperty("optional_prompt")
+    @JsonIgnore
     public Optional<String> getOptionalPrompt() {
         return optionalPrompt;
     }
 
-    @JsonProperty("alias_prompt")
+    @JsonIgnore
     public String getAliasPrompt() {
         return aliasPrompt;
     }
 
-    @JsonProperty("alias_optional_prompt")
+    @JsonIgnore
     public Optional<String> getAliasOptionalPrompt() {
         return aliasOptionalPrompt;
     }
 
-    @JsonProperty("query")
+    @JsonIgnore
     public String getQuery() {
         return query;
     }
 
-    @JsonProperty("stream")
+    @JsonIgnore
     public Boolean getStream() {
         return false;
     }
 
-    @JsonProperty("optional_stream")
+    @JsonIgnore
     public Optional<Boolean> getOptionalStream() {
         return optionalStream;
     }
 
-    @JsonProperty("alias_stream")
+    @JsonIgnore
     public Boolean getAliasStream() {
         return aliasStream;
     }
 
-    @JsonProperty("alias_optional_stream")
+    @JsonIgnore
     public Optional<Boolean> getAliasOptionalStream() {
         return aliasOptionalStream;
     }
@@ -159,6 +159,10 @@ public final class SendLiteralsInQueryRequest {
 
     public interface _FinalStage {
         SendLiteralsInQueryRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage optionalPrompt(Optional<String> optionalPrompt);
 
@@ -294,6 +298,18 @@ public final class SendLiteralsInQueryRequest {
                     aliasStream,
                     aliasOptionalStream,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

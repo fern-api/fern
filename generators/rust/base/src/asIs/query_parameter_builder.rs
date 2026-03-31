@@ -1,5 +1,4 @@
-use chrono::{DateTime, Utc};
-use serde::Serialize;
+{{QUERY_BUILDER_CHRONO_IMPORT}}use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
 /// Provides a clean, Swift-like API for building HTTP query parameters
@@ -45,14 +44,7 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a big integer parameter (accept both required/optional)
-    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
+{{QUERY_BUILDER_BIGINT_METHOD}}
     /// Add multiple integer parameters with the same key (for allow-multiple query params)
     /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
     pub fn int_array<I, T>(mut self, key: &str, values: I) -> Self
@@ -114,32 +106,7 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a datetime parameter
-    pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
-        }
-        self
-    }
-
-    /// Add a UUID parameter (converts to string)
-    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
-        if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_string()));
-        }
-        self
-    }
-
-    /// Add a date parameter (converts NaiveDate to DateTime<Utc>)
-    pub fn date(mut self, key: &str, value: impl Into<Option<chrono::NaiveDate>>) -> Self {
-        if let Some(v) = value.into() {
-            // Convert NaiveDate to DateTime<Utc> at start of day
-            let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
-        }
-        self
-    }
-
+{{QUERY_BUILDER_DATETIME_METHODS}}{{QUERY_BUILDER_UUID_METHOD}}
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
         if let Some(v) = value {
@@ -294,4 +261,268 @@ fn tokenize_query(input: &str) -> Vec<String> {
     }
 
     tokens
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;{{QUERY_BUILDER_TEST_CHRONO_IMPORT}}
+
+    // ===========================
+    // QueryBuilder tests
+    // ===========================
+
+    #[test]
+    fn test_empty_builder_returns_none() {
+        let result = QueryBuilder::new().build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_string_param_some() {
+        let result = QueryBuilder::new()
+            .string("name", Some("alice".to_string()))
+            .build();
+        assert_eq!(result, Some(vec![("name".to_string(), "alice".to_string())]));
+    }
+
+    #[test]
+    fn test_string_param_none_skipped() {
+        let result = QueryBuilder::new()
+            .string("name", None::<String>)
+            .build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_int_param() {
+        let result = QueryBuilder::new().int("page", Some(42i64)).build();
+        assert_eq!(result, Some(vec![("page".to_string(), "42".to_string())]));
+    }
+
+    #[test]
+    fn test_int_param_none_skipped() {
+        let result = QueryBuilder::new().int("page", None::<i64>).build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_float_param() {
+        let result = QueryBuilder::new().float("score", Some(3.14f64)).build();
+        assert_eq!(
+            result,
+            Some(vec![("score".to_string(), "3.14".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_bool_param() {
+        let result = QueryBuilder::new().bool("active", Some(true)).build();
+        assert_eq!(
+            result,
+            Some(vec![("active".to_string(), "true".to_string())])
+        );
+    }
+
+{{QUERY_BUILDER_UUID_TESTS}}{{QUERY_BUILDER_DATETIME_TESTS}}
+
+    #[test]
+    fn test_string_array_multiple_entries() {
+        let result = QueryBuilder::new()
+            .string_array("tag", vec!["a".to_string(), "b".to_string(), "c".to_string()])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("tag".to_string(), "a".to_string()),
+                ("tag".to_string(), "b".to_string()),
+                ("tag".to_string(), "c".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_int_array() {
+        let result = QueryBuilder::new()
+            .int_array("ids", vec![1i64, 2, 3])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("ids".to_string(), "1".to_string()),
+                ("ids".to_string(), "2".to_string()),
+                ("ids".to_string(), "3".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_float_array() {
+        let result = QueryBuilder::new()
+            .float_array("scores", vec![1.1f64, 2.2])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("scores".to_string(), "1.1".to_string()),
+                ("scores".to_string(), "2.2".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_bool_array() {
+        let result = QueryBuilder::new()
+            .bool_array("flags", vec![true, false])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("flags".to_string(), "true".to_string()),
+                ("flags".to_string(), "false".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_serialize_strips_json_quotes() {
+        let result = QueryBuilder::new()
+            .serialize("status", Some("active"))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("status".to_string(), "active".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_serialize_none_skipped() {
+        let result = QueryBuilder::new()
+            .serialize::<String>("status", None)
+            .build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_serialize_numeric_no_quotes() {
+        let result = QueryBuilder::new()
+            .serialize("count", Some(42))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("count".to_string(), "42".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_serialize_array_skips_null() {
+        let values: Vec<Option<&str>> = vec![Some("a"), None, Some("b")];
+        let result = QueryBuilder::new()
+            .serialize_array("items", values)
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("items".to_string(), "a".to_string()),
+                ("items".to_string(), "b".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_method_chaining() {
+        let result = QueryBuilder::new()
+            .string("name", Some("alice".to_string()))
+            .int("page", Some(1i64))
+            .bool("active", Some(true))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("name".to_string(), "alice".to_string()),
+                ("page".to_string(), "1".to_string()),
+                ("active".to_string(), "true".to_string()),
+            ])
+        );
+    }
+
+{{QUERY_BUILDER_BIGINT_TESTS}}
+    // ===========================
+    // parse_structured_query tests
+    // ===========================
+
+    #[test]
+    fn test_parse_simple_key_value() {
+        let result = parse_structured_query("status:active").unwrap();
+        assert_eq!(result, vec![("status".to_string(), "active".to_string())]);
+    }
+
+    #[test]
+    fn test_parse_comma_separated_values() {
+        let result = parse_structured_query("type:sensor,camera").unwrap();
+        assert_eq!(
+            result,
+            vec![
+                ("type".to_string(), "sensor".to_string()),
+                ("type".to_string(), "camera".to_string()),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_parse_multiple_terms() {
+        let result = parse_structured_query("status:active type:sensor").unwrap();
+        assert_eq!(
+            result,
+            vec![
+                ("status".to_string(), "active".to_string()),
+                ("type".to_string(), "sensor".to_string()),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_parse_quoted_value() {
+        let result = parse_structured_query("location:\"New York\"").unwrap();
+        assert_eq!(
+            result,
+            vec![("location".to_string(), "New York".to_string())]
+        );
+    }
+
+    #[test]
+    fn test_parse_bare_word_returns_error() {
+        let result = parse_structured_query("bareword");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_structured_query_builder_fallback() {
+        // When parsing fails, structured_query falls back to simple param
+        let result = QueryBuilder::new()
+            .structured_query("q", Some("bareword".to_string()))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("q".to_string(), "bareword".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_structured_query_builder_parses() {
+        let result = QueryBuilder::new()
+            .structured_query("q", Some("status:active".to_string()))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("status".to_string(), "active".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_structured_query_none_skipped() {
+        let result = QueryBuilder::new()
+            .structured_query("q", None::<String>)
+            .build();
+        assert!(result.is_none());
+    }
 }

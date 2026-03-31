@@ -21,6 +21,6 @@ import type * as SeedExamples from "../../../index.js";
  */
 export interface Directory {
     name: string;
-    files?: SeedExamples.File_[];
-    directories?: SeedExamples.Directory[];
+    files?: SeedExamples.File_[] | undefined;
+    directories?: SeedExamples.Directory[] | undefined;
 }

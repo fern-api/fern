@@ -53,9 +53,9 @@ export class AuthClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
+            contentType: "application/x-www-form-urlencoded",
             queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            requestType: "form",
             body: {
                 ...serializers.GetTokenRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
@@ -126,9 +126,9 @@ export class AuthClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json",
+            contentType: "application/x-www-form-urlencoded",
             queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            requestType: "form",
             body: {
                 ...serializers.RefreshTokenRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",

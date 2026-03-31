@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/service.DocumentItem"
+      }
+    },
+    "query": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "documents",
+    "query"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "service.DocumentObject": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "service.DocumentItem": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/service.DocumentObject"
+        }
+      ]
+    }
+  }
+}

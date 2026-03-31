@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -16,9 +15,11 @@ async fn main() {
             &vec![
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             ],
             None,

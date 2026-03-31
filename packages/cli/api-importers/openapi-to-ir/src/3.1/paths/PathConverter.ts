@@ -2,14 +2,14 @@ import { AuthScheme } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { HttpMethods } from "../../constants/HttpMethods";
-import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";
-import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
-import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
-import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
-import { OperationConverter } from "./operations/OperationConverter";
-import { WebhookConverter } from "./operations/WebhookConverter";
+import { HttpMethods } from "../../constants/HttpMethods.js";
+import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent.js";
+import { FernPaginationExtension } from "../../extensions/x-fern-pagination.js";
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming.js";
+import { FernWebhookExtension } from "../../extensions/x-fern-webhook.js";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
+import { OperationConverter } from "./operations/OperationConverter.js";
+import { WebhookConverter } from "./operations/WebhookConverter.js";
 
 export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
@@ -71,7 +71,16 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operation,
                 context: this.context
             });
-            const streamingExtension = streamingExtensionConverter.convert();
+            let streamingExtension = streamingExtensionConverter.convert();
+
+            // If no x-fern-streaming extension is specified, check if the response has
+            // text/event-stream content type. This infers streaming based on the MIME type.
+            if (streamingExtension == null) {
+                const hasTextEventStream = this.operationHasTextEventStreamResponse(operation);
+                if (hasTextEventStream) {
+                    streamingExtension = { type: "stream", format: "sse", terminator: undefined };
+                }
+            }
 
             const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
@@ -123,6 +132,35 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         return webhookConverter.convert();
     }
 
+    /**
+     * Checks if the operation has a response where text/event-stream is the only content type.
+     * When multiple content types are present (e.g., both application/json and text/event-stream),
+     * we don't infer streaming — the user should use x-fern-streaming to explicitly configure it.
+     */
+    private operationHasTextEventStreamResponse(operation: OpenAPIV3_1.OperationObject): boolean {
+        if (operation.responses == null) {
+            return false;
+        }
+        for (const [statusCode, response] of Object.entries(operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            const contentTypes = Object.keys(resolvedResponse.content);
+            if (contentTypes.length === 1 && contentTypes[0]?.includes("text/event-stream")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private tryParseAsHttpEndpoint({
         operation,
         method,
@@ -162,6 +200,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             idempotent: isIdempotent,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,
+            pathLevelServers: this.pathItem.servers,
             streamingExtension
         });
         return operationConverter.convert();

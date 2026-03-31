@@ -1,8 +1,8 @@
 import { doesPathExist } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { FernOrganizationToken, FernToken, FernUserToken } from "../FernToken";
-import { getPathToTokenFile } from "./getPathToTokenFile";
+import { FernOrganizationToken, FernToken, FernUserToken } from "../FernToken.js";
+import { getPathToTokenFile } from "./getPathToTokenFile.js";
 
 const FERN_TOKEN_ENV_VAR = "FERN_TOKEN";
 

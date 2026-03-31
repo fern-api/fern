@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedOauthClientCredentialsReference)](https://nuget.org/packages/SeedOauthClientCredentialsReference)
+[![nuget shield](https://img.shields.io/nuget/v/Fernoauth-client-credentials-reference)](https://nuget.org/packages/Fernoauth-client-credentials-reference)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -15,6 +15,9 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -24,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedOauthClientCredentialsReference
+dotnet add package Fernoauth-client-credentials-reference
 ```
 
 ## Reference
@@ -38,7 +41,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentialsReference;
 
-var client = new SeedOauthClientCredentialsReferenceClient("CLIENT_ID", "CLIENT_SECRET");
+var client = new SeedOauthClientCredentialsReferenceClient("client_id", "client_secret");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
 );
@@ -94,6 +97,66 @@ var response = await client.Auth.GetTokenAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
+    }
+);
+```
+
+### Raw Response
+
+Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+
+```csharp
+using SeedOauthClientCredentialsReference;
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await client.Auth.GetTokenAsync(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await client.Auth.GetTokenAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Auth.GetTokenAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Auth.GetTokenAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
     }
 );
 ```

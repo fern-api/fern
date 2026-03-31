@@ -11,7 +11,7 @@ import { readdir } from "fs/promises";
 import path from "path";
 
 // import { loadAPIWorkspace } from "../../../../workspace/loader/src/loadAPIWorkspace"; // Commented out to avoid cyclic dependency
-import { convertIrToFdrApi } from "../convertIrToFdrApi";
+import { convertIrToFdrApi } from "../convertIrToFdrApi.js";
 
 // Temporarily disabled to avoid cyclic dependency with @fern-api/project-loader
 // biome-ignore lint/suspicious/noSkippedTests: Intentionally disabled due to cyclic dependency

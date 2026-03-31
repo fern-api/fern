@@ -2,13 +2,14 @@ using SeedVersion.Core;
 
 namespace SeedVersion;
 
-public partial class SeedVersionClient
+public partial class SeedVersionClient : ISeedVersionClient
 {
     private readonly RawClient _client;
 
     public SeedVersionClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedVersionClient
                 { "User-Agent", "Fernversion-no-default/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedVersionClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

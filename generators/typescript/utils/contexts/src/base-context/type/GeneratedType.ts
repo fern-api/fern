@@ -1,9 +1,9 @@
-import { BaseContext } from "../../base-context";
-import { GeneratedAliasType } from "./GeneratedAliasType";
-import { GeneratedEnumType } from "./GeneratedEnumType";
-import { GeneratedObjectType } from "./GeneratedObjectType";
-import { GeneratedUndiscriminatedUnionType } from "./GeneratedUndiscriminatedUnionType";
-import { GeneratedUnionType } from "./GeneratedUnionType";
+import { BaseContext } from "../../base-context/index.js";
+import { GeneratedAliasType } from "./GeneratedAliasType.js";
+import { GeneratedEnumType } from "./GeneratedEnumType.js";
+import { GeneratedObjectType } from "./GeneratedObjectType.js";
+import { GeneratedUndiscriminatedUnionType } from "./GeneratedUndiscriminatedUnionType.js";
+import { GeneratedUnionType } from "./GeneratedUnionType.js";
 
 export type GeneratedType<Context = BaseContext> =
     | GeneratedAliasType<Context>

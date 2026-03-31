@@ -13,6 +13,7 @@ import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.union.types.MixedType;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<List<String>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("list-of-primitives")
-                .build();
+                .addPathSegments("list-of-primitives");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -52,7 +57,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -85,11 +90,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("list-of-objects")
-                .build();
+                .addPathSegments("list-of-objects");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -98,7 +107,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -131,11 +140,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<Set<String>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("set-of-primitives")
-                .build();
+                .addPathSegments("set-of-primitives");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -144,7 +157,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -177,11 +190,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("set-of-objects")
-                .build();
+                .addPathSegments("set-of-objects");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -190,7 +207,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -223,11 +240,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<Map<String, String>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("map-prim-to-prim")
-                .build();
+                .addPathSegments("map-prim-to-prim");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -236,7 +257,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -270,11 +291,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("map-prim-to-object")
-                .build();
+                .addPathSegments("map-prim-to-object");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -283,7 +308,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -310,8 +335,63 @@ public class RawContainerClient {
         }
     }
 
+    public BestHttpResponse<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+            Map<String, MixedType> request) {
+        return getAndReturnMapOfPrimToUndiscriminatedUnion(request, null);
+    }
+
+    public BestHttpResponse<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+            Map<String, MixedType> request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("container")
+                .addPathSegments("map-prim-to-union");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, new TypeReference<Map<String, MixedType>>() {}),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
     public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
+    }
+
+    public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(RequestOptions requestOptions) {
+        return getAndReturnOptional(Optional.empty(), requestOptions);
     }
 
     public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
@@ -321,11 +401,15 @@ public class RawContainerClient {
 
     public BestHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("container")
-                .addPathSegments("opt-objects")
-                .build();
+                .addPathSegments("opt-objects");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -337,7 +421,7 @@ public class RawContainerClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

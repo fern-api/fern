@@ -6,6 +6,7 @@ import type { ContentTypeService as endpoints_ContentTypeService } from "./api/r
 import type { EnumService as endpoints_EnumService } from "./api/resources/endpoints/resources/enum/service/EnumService";
 import type { HttpMethodsService as endpoints_HttpMethodsService } from "./api/resources/endpoints/resources/httpMethods/service/HttpMethodsService";
 import type { ObjectService as endpoints_ObjectService } from "./api/resources/endpoints/resources/object/service/ObjectService";
+import type { PaginationService as endpoints_PaginationService } from "./api/resources/endpoints/resources/pagination/service/PaginationService";
 import type { ParamsService as endpoints_ParamsService } from "./api/resources/endpoints/resources/params/service/ParamsService";
 import type { PrimitiveService as endpoints_PrimitiveService } from "./api/resources/endpoints/resources/primitive/service/PrimitiveService";
 import type { PutService as endpoints_PutService } from "./api/resources/endpoints/resources/put/service/PutService";
@@ -29,6 +30,7 @@ export function register(
             enum: endpoints_EnumService;
             httpMethods: endpoints_HttpMethodsService;
             object: endpoints_ObjectService;
+            pagination: endpoints_PaginationService;
             params: endpoints_ParamsService;
             primitive: endpoints_PrimitiveService;
             put: endpoints_PutService;
@@ -42,6 +44,7 @@ export function register(
     (expressApp as any).use("/enum", services.endpoints.enum.toRouter());
     (expressApp as any).use("/http-methods", services.endpoints.httpMethods.toRouter());
     (expressApp as any).use("/object", services.endpoints.object.toRouter());
+    (expressApp as any).use("/pagination", services.endpoints.pagination.toRouter());
     (expressApp as any).use("/params", services.endpoints.params.toRouter());
     (expressApp as any).use("/primitive", services.endpoints.primitive.toRouter());
     (expressApp as any).use("", services.endpoints.put.toRouter());

@@ -2,23 +2,23 @@ import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { generateFields } from "@fern-api/ruby-model";
-import { HttpEndpoint, ObjectProperty, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
-        serviceId: ServiceId;
-        wrapper: SdkRequestWrapper;
+        serviceId: FernIr.ServiceId;
+        wrapper: FernIr.SdkRequestWrapper;
         context: SdkGeneratorContext;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
 export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private serviceId: ServiceId;
-    private wrapper: SdkRequestWrapper;
-    private endpoint: HttpEndpoint;
+    private serviceId: FernIr.ServiceId;
+    private wrapper: FernIr.SdkRequestWrapper;
+    private endpoint: FernIr.HttpEndpoint;
 
     constructor({ serviceId, wrapper, context, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -28,7 +28,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     }
 
     protected doGenerate(): RubyFile {
-        const properties: ObjectProperty[] = [];
+        const properties: FernIr.ObjectProperty[] = [];
 
         const class_ = ruby.class_({
             name: this.wrapper.wrapperName.pascalCase.safeName,

@@ -1037,6 +1037,7 @@
               }
             }
           ],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -1706,6 +1707,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -2263,6 +2265,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -2914,6 +2917,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "availability": {
@@ -3431,6 +3435,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "availability": {

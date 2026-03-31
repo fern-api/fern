@@ -12,10 +12,10 @@ import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-r
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import chalk from "chalk";
 
-import { GROUP_CLI_OPTION } from "../../constants";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-import { GenerationMode } from "./generateAPIWorkspaces";
+import { GROUP_CLI_OPTION } from "../../constants.js";
+import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
     organization,
@@ -23,6 +23,7 @@ export async function generateWorkspace({
     projectConfig,
     context,
     groupName,
+    generatorName,
     version,
     shouldLogS3Url,
     token,
@@ -34,7 +35,11 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
-    dynamicIrOnly
+    skipFernignore,
+    dynamicIrOnly,
+    noReplay,
+    retryRateLimited,
+    requireEnvVars
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -42,6 +47,7 @@ export async function generateWorkspace({
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -52,7 +58,11 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
+    noReplay: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -66,9 +76,18 @@ export async function generateWorkspace({
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
     if (groupNameOrDefault == null) {
-        return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
-        );
+        const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
+        const longestGroupName = Math.max(...groupNames.map((name) => name.length));
+        const currentArgs = process.argv.slice(2).join(" ");
+        const message =
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n` +
+            groupNames
+                .map((name) => {
+                    const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
+                    return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
+                })
+                .join("\n");
+        return context.failAndThrow(message);
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -79,19 +98,12 @@ export async function generateWorkspace({
         context
     );
 
-    const { ai } = workspace.generatorsConfiguration;
+    const { ai, replay } = workspace.generatorsConfiguration;
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
         return context.failAndThrow("Please run fern login");
     }
-
-    // Validate workspace once before running all groups
-    await validateAPIWorkspaceAndLogIssues({
-        workspace: await workspace.toFernWorkspace({ context }),
-        context,
-        logWarnings: false
-    });
 
     // Run generation for all resolved groups in parallel
     await Promise.all(
@@ -101,6 +113,19 @@ export async function generateWorkspace({
             );
             if (group == null) {
                 return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+            }
+
+            // Filter to specific generator if --generator is specified
+            if (generatorName != null) {
+                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
+                if (filteredGenerators.length === 0) {
+                    const availableGenerators = group.generators.map((gen) => gen.name);
+                    return context.failAndThrow(
+                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
+                            `Available generators: ${availableGenerators.join(", ")}`
+                    );
+                }
+                group = { ...group, generators: filteredGenerators };
             }
 
             // Apply lfs-override if specified
@@ -124,7 +149,12 @@ export async function generateWorkspace({
                     runner,
                     absolutePathToPreview,
                     inspect,
-                    ai
+                    ai,
+                    replay,
+                    noReplay,
+                    validateWorkspace: true,
+                    requireEnvVars,
+                    skipFernignore
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -140,7 +170,11 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
-                    dynamicIrOnly
+                    skipFernignore,
+                    dynamicIrOnly,
+                    validateWorkspace: true,
+                    retryRateLimited,
+                    requireEnvVars
                 });
             }
         })

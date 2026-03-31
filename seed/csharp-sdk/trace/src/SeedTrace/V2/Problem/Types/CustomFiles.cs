@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -65,7 +65,7 @@ public record CustomFiles
     public SeedTrace.V2.BasicCustomFiles AsBasic() =>
         IsBasic
             ? (SeedTrace.V2.BasicCustomFiles)Value!
-            : throw new System.Exception("CustomFiles.Type is not 'basic'");
+            : throw new global::System.Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -74,7 +74,7 @@ public record CustomFiles
     public Dictionary<Language, Files> AsCustom() =>
         IsCustom
             ? (Dictionary<Language, Files>)Value!
-            : throw new System.Exception("CustomFiles.Type is not 'custom'");
+            : throw new global::System.Exception("CustomFiles.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.BasicCustomFiles, T> onBasic,
@@ -147,12 +147,12 @@ public record CustomFiles
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CustomFiles>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CustomFiles).IsAssignableFrom(typeToConvert);
 
         public override CustomFiles Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -177,15 +177,20 @@ public record CustomFiles
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "basic" => json.Deserialize<SeedTrace.V2.BasicCustomFiles?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.BasicCustomFiles"
-                    ),
+                "basic" => jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.BasicCustomFiles?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.V2.BasicCustomFiles"),
                 "custom" => json.GetProperty("value")
                     .Deserialize<Dictionary<Language, Files>?>(options)
-                ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
+                    ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CustomFiles(discriminator, value);
@@ -209,6 +214,27 @@ public record CustomFiles
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override CustomFiles ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new CustomFiles(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            CustomFiles value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

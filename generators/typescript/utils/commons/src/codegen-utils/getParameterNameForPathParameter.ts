@@ -1,5 +1,5 @@
-import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api";
-import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName.js";
 
 /**
  * Determines the casing of the path parameter when used as a positional function parameter
@@ -9,7 +9,7 @@ export function getParameterNameForPositionalPathParameter({
     retainOriginalCasing,
     parameterNaming
 }: {
-    pathParameter: PathParameter;
+    pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 }): string {
@@ -29,7 +29,7 @@ export function getParameterNameForRootPathParameter({
     retainOriginalCasing,
     parameterNaming
 }: {
-    pathParameter: PathParameter;
+    pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 }): string {
@@ -51,7 +51,7 @@ export function getParameterNameForRootExamplePathParameter({
     retainOriginalCasing,
     parameterNaming
 }: {
-    pathParameter: ExamplePathParameter;
+    pathParameter: FernIr.ExamplePathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 }): string {
@@ -72,7 +72,7 @@ export function getParameterNameForPropertyPathParameter({
     includeSerdeLayer,
     parameterNaming
 }: {
-    pathParameter: PathParameter;
+    pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -94,7 +94,7 @@ export function getParameterNameForPropertyPathParameterName({
     includeSerdeLayer,
     parameterNaming
 }: {
-    pathParameterName: Name;
+    pathParameterName: FernIr.Name;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -113,7 +113,7 @@ function getParameterNameForPathParameterInternalName({
     includeSerdeLayer,
     parameterNaming
 }: {
-    pathParameterName: Name;
+    pathParameterName: FernIr.Name;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";

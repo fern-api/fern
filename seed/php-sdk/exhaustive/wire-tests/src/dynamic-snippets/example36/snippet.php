@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnUuid(
-    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+$client->endpoints->params->modifyWithInlinePath(
+    'param',
+    new ModifyResourceAtInlinedPath([
+        'body' => 'string',
+    ]),
 );

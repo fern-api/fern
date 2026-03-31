@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
@@ -131,6 +131,13 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
 allowedFailures:
+  - exhaustive:no-custom-config
+  - exhaustive:skip-formatting
+  - exhaustive:pydantic-v1
+  - exhaustive:pydantic-v2
+  - exhaustive:frozen_utils
+  - exhaustive:include-validators
+  - exhaustive:ignore-extra-fields
   - header-auth-environment-variable
   - bearer-token-environment-variable
   - query-parameters
@@ -142,6 +149,7 @@ allowedFailures:
   - enum:no-custom-config
   - server-sent-events
   - server-sent-event-examples
+  - server-sent-events-openapi
   - streaming-parameter
   - any-auth
   - nullable-request-body

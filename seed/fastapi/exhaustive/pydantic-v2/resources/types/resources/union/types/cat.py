@@ -7,15 +7,20 @@ import typing
 import pydantic
 import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel, universal_field_validator, universal_root_validator
+from ......core.serialization import FieldMetadata
 
 
 class Cat(UniversalBaseModel):
     name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+    likes_to_meow: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="likesToMeow"), pydantic.Field(alias="likesToMeow")
+    ]
 
     class Partial(typing.TypedDict):
         name: typing_extensions.NotRequired[str]
-        likes_to_meow: typing_extensions.NotRequired[bool]
+        likes_to_meow: typing_extensions.NotRequired[
+            typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow"), pydantic.Field(alias="likesToMeow")]
+        ]
 
     class Validators:
         """

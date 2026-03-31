@@ -26,6 +26,14 @@ inputs:
     description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
     required: false
     default: '["seed/*/.mock/*"]'
+  allow-unexpected-failures:
+    description: "Whether to allow unexpected failures during seed generation"
+    required: false
+    default: "false"
+  skip-git-diff-check:
+    description: "Whether to skip the git diff check (used by auto-update-seed where changes are expected)"
+    required: false
+    default: "false"
 
 outputs:
   start_time:
@@ -60,23 +68,16 @@ runs:
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Run seed
-      if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
         skip-scripts: ${{ inputs.skip-scripts }}
-
-    - name: Handle Seed Leftover Tests
-      if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-      uses: ./.github/actions/handle-leftover-seed-tests
-      with:
-        sdk-name: ${{ inputs.sdk-name }}
-        generator-path: ${{ inputs.generator-path }}
+        allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
 
     - name: Summarize Test Results
       if: always() && !cancelled()

@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Get users
+      operationId: getUsers
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSchema1"
+components:
+  schemas:
+    UserSchema1:
+      type: object
+      title: User
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    UserSchema2:
+      type: object
+      title: User
+      properties:
+        id:
+          type: integer
+        email:
+          type: string

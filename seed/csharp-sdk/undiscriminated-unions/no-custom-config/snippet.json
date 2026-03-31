@@ -1,0 +1,89 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_union.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_union.getMetadata"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifier_override": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.UpdateMetadataAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifier_override": "endpoint_union.call"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new Request\n    {\n        Union = new Dictionary<string, object?>()\n        {\n            {\n                \"string\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/duplicate",
+                "method": "POST",
+                "identifier_override": "endpoint_union.duplicateTypesUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.DuplicateTypesUnionAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/nested",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedUnions"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/camel-case",
+                "method": "POST",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.TestCamelCasePropertiesAsync(\n    new PaymentRequest\n    {\n        PaymentMethod = new TokenizeCard { Method = \"card\", CardNumber = \"1234567890123456\" },\n    }\n);\n"
+            }
+        }
+    ]
+}

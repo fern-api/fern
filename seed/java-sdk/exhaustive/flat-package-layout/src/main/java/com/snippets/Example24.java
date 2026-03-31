@@ -1,7 +1,9 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithQuery;
+import com.seed.exhaustive.types.types.DocumentedUnknownType;
+import com.seed.exhaustive.types.types.ObjectWithDocumentedUnknownType;
+import java.util.HashMap;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -11,7 +13,13 @@ public class Example24 {
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+                .object()
+                .getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType.builder()
+                        .documentedUnknownType(DocumentedUnknownType.of(new HashMap<String, Object>() {
+                            {
+                                put("key", "value");
+                            }
+                        }))
+                        .build());
     }
 }

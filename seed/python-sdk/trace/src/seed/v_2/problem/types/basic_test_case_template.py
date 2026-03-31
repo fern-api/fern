@@ -12,11 +12,13 @@ from .test_case_template_id import TestCaseTemplateId
 
 
 class BasicTestCaseTemplate(UniversalBaseModel):
-    template_id: typing_extensions.Annotated[TestCaseTemplateId, FieldMetadata(alias="templateId")]
+    template_id: typing_extensions.Annotated[
+        TestCaseTemplateId, FieldMetadata(alias="templateId"), pydantic.Field(alias="templateId")
+    ]
     name: str
     description: TestCaseImplementationDescription
     expected_value_parameter_id: typing_extensions.Annotated[
-        ParameterId, FieldMetadata(alias="expectedValueParameterId")
+        ParameterId, FieldMetadata(alias="expectedValueParameterId"), pydantic.Field(alias="expectedValueParameterId")
     ]
 
     if IS_PYDANTIC_V2:

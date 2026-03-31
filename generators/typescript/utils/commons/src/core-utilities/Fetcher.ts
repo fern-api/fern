@@ -1,10 +1,10 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as LoggingManifest } from "./Logging";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager.js";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as LoggingManifest } from "./Logging.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
+import { MANIFEST as UrlManifest } from "./UrlUtils.js";
 
 export interface Fetcher {
     readonly Fetcher: {
@@ -182,18 +182,18 @@ export const MANIFEST: CoreUtility.Manifest = {
         }
 
         if (streamType === "wrapper") {
-            dependencyManager.addDependency("readable-stream", "^4.5.2");
+            dependencyManager.addDependency("readable-stream", "^4.7.0");
         }
 
         if (streamType === "wrapper") {
-            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.23", {
                 type: DependencyType.DEV
             });
         }
-        dependencyManager.addDependency("webpack", "^5.97.1", {
+        dependencyManager.addDependency("webpack", "^5.105.4", {
             type: DependencyType.DEV
         });
-        dependencyManager.addDependency("ts-loader", "^9.5.1", {
+        dependencyManager.addDependency("ts-loader", "^9.5.4", {
             type: DependencyType.DEV
         });
     },

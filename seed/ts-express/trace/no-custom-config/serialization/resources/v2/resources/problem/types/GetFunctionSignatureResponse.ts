@@ -8,7 +8,7 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
     serializers.v2.GetFunctionSignatureResponse.Raw,
     SeedTrace.v2.GetFunctionSignatureResponse
 > = core.serialization.object({
-    functionByLanguage: core.serialization.record(
+    functionByLanguage: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.string().optional(),
     ),

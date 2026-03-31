@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .user import User
 
 
@@ -23,8 +25,10 @@ class NestedUser(UniversalBaseModel):
     )
     """
 
-    name: str = pydantic.Field(alias="Name")
-    nested_user: User = pydantic.Field(alias="NestedUser")
+    name: typing_extensions.Annotated[str, FieldMetadata(alias="Name"), pydantic.Field(alias="Name")]
+    nested_user: typing_extensions.Annotated[
+        User, FieldMetadata(alias="NestedUser"), pydantic.Field(alias="NestedUser")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

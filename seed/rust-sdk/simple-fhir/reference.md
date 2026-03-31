@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get_account</a>(account_id: String) -> Result<Account, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get_account</a>(account_id: String) -> Result&lt;Account, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,3 +47,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

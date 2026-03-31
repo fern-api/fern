@@ -18,7 +18,7 @@ public class Example8 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().contentType().postJsonPatchContentWithCharsetType(
+        client.endpoints().contentType().postJsonPatchContentType(
             ObjectWithOptionalField
                 .builder()
                 .string("string")

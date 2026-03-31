@@ -1,26 +1,7 @@
 import { noop, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
-    ExampleEndpointCall,
-    FileProperty,
-    FileUploadRequest,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpHeader,
-    HttpRequestBody,
-    HttpRequestBodyReference,
-    HttpService,
-    InlinedRequestBody,
-    InlinedRequestBodyProperty,
-    Name,
-    NameAndWireValue,
-    ObjectProperty,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import {
+    deduplicateExamples,
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getPropertyKey,
@@ -47,12 +28,12 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
+import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator.js";
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         wrapperName: string;
         packageId: PackageId;
         includeSerdeLayer: boolean;
@@ -63,14 +44,15 @@ export declare namespace GeneratedRequestWrapperImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
 const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
-    private service: HttpService;
-    private endpoint: HttpEndpoint;
+    private service: FernIr.HttpService;
+    private endpoint: FernIr.HttpEndpoint;
     private wrapperName: string;
     private packageId: PackageId;
     protected includeSerdeLayer: boolean;
@@ -80,6 +62,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly resolveQueryParameterNameConflicts: boolean;
 
     constructor({
         service,
@@ -92,7 +75,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        resolveQueryParameterNameConflicts
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -105,13 +89,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
+        this.resolveQueryParameterNameConflicts = resolveQueryParameterNameConflicts;
     }
 
     public shouldInlinePathParameters(context: SdkContext): boolean {
         return context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest);
     }
 
-    private getPathParamsForRequestWrapper(context: SdkContext): PathParameter[] {
+    private getPathParamsForRequestWrapper(context: SdkContext): FernIr.PathParameter[] {
         if (!this.shouldInlinePathParameters(context)) {
             return [];
         }
@@ -149,7 +134,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
-            HttpRequestBody._visit(requestBody, {
+            FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const extension of inlinedRequestBody.extends) {
                         interfaceExtends.push(
@@ -176,7 +161,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     // noop
                 },
                 _other: () => {
-                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                    throw new Error("Unknown FernIr.HttpRequestBody: " + this.endpoint.requestBody?.type);
                 }
             });
         }
@@ -196,6 +181,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
+        // When resolveQueryParameterNameConflicts is enabled, pre-compute body property names
+        // so we can detect collisions between query param wire values and body property names.
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
@@ -212,7 +203,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
-            const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            const propertyName = collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                : this.getPropertyNameOfQueryParameter(queryParameter);
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
@@ -242,7 +235,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
-            HttpRequestBody._visit(requestBody, {
+            FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
@@ -282,7 +275,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
-                        FileUploadRequestProperty._visit(property, {
+                        FernIr.FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
                                 if (!this.inlineFileProperties) {
                                     return;
@@ -300,7 +293,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 properties.push(this.getInlineProperty(fileUploadRequest, inlinedProperty, context));
                             },
                             _other: () => {
-                                throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                                throw new Error("Unknown FernIr.FileUploadRequestProperty: " + property.type);
                             }
                         });
                     }
@@ -309,7 +302,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     // noop
                 },
                 _other: () => {
-                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                    throw new Error("Unknown FernIr.HttpRequestBody: " + this.endpoint.requestBody?.type);
                 }
             });
         }
@@ -317,7 +310,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return properties;
     }
 
-    public generateExample(example: ExampleEndpointCall): GeneratedRequestWrapperExample {
+    public generateExample(example: FernIr.ExampleEndpointCall): GeneratedRequestWrapperExample {
         const exampleGenerator = new RequestWrapperExampleGenerator();
         return exampleGenerator.generateExample({
             bodyPropertyName: this.getReferencedBodyPropertyName(),
@@ -330,25 +323,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getDocs(context: SdkContext): string | undefined {
-        const examples = getExampleEndpointCalls(this.endpoint);
-        if (examples.length === 0) {
+        const exampleCalls = getExampleEndpointCalls(this.endpoint);
+        if (exampleCalls.length === 0) {
             return undefined;
         }
 
-        return examples
-            .map((example) => {
-                const generatedExample = this.generateExample(example);
-                const exampleStr =
-                    "@example\n" +
-                    getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
-                return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            })
-            .join("\n\n");
+        const allExamples = exampleCalls.map((example) => {
+            const generatedExample = this.generateExample(example);
+            const exampleStr =
+                "@example\n" +
+                getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
+            return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+        });
+        return deduplicateExamples(allExamples).join("\n\n");
     }
 
     private getInlineProperty(
-        requestBody: InlinedRequestBody | FileUploadRequest,
-        property: InlinedRequestBodyProperty,
+        requestBody: FernIr.InlinedRequestBody | FernIr.FileUploadRequest,
+        property: FernIr.InlinedRequestBodyProperty,
         context: SdkContext
     ): GeneratedRequestWrapper.Property {
         const type = this.getTypeForBodyProperty(requestBody, property, context);
@@ -363,8 +355,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getTypeForBodyProperty(
-        requestBody: InlinedRequestBody | FileUploadRequest,
-        property: InlinedRequestBodyProperty,
+        requestBody: FernIr.InlinedRequestBody | FernIr.FileUploadRequest,
+        property: FernIr.InlinedRequestBodyProperty,
         context: SdkContext
     ): TypeReferenceNode {
         const propParentTypeName = requestBody.name.pascalCase.safeName;
@@ -376,7 +368,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestBody,
         context
     }: {
-        requestBody: HttpRequestBody;
+        requestBody: FernIr.HttpRequestBody;
         context: SdkContext;
     }): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
@@ -407,7 +399,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestBody,
         context
     }: {
-        requestBody: HttpRequestBody;
+        requestBody: FernIr.HttpRequestBody;
         context: SdkContext;
     }): (string | WriterFunction | StatementStructures)[] {
         if (!this.enableInlineTypes) {
@@ -459,7 +451,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         queryParamSetter,
         queryParamItemSetter
     }: {
-        queryParameter: QueryParameter;
+        queryParameter: FernIr.QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
         context: SdkContext;
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
@@ -524,12 +516,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         const properties = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) =>
                 this.getPropertyNameOfPathParameter(pathParameter)
             ),
             ...this.getAllQueryParameters().map((queryParameter) =>
-                this.getPropertyNameOfQueryParameter(queryParameter)
+                collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                    : this.getPropertyNameOfQueryParameter(queryParameter)
             ),
             ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header))
         ];
@@ -545,6 +543,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+
         const properties: RequestWrapperNonBodyPropertyWithData[] = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) => ({
                 ...this.getPropertyNameOfPathParameter(pathParameter),
@@ -554,7 +556,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             })),
             ...this.getAllQueryParameters().map((queryParameter) => ({
-                ...this.getPropertyNameOfQueryParameter(queryParameter),
+                ...(collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
+                    : this.getPropertyNameOfQueryParameter(queryParameter)),
                 originalParameter: {
                     type: "query" as const,
                     parameter: queryParameter
@@ -583,11 +587,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         ];
     }
 
-    public getInlinedRequestBodyPropertyKey(property: InlinedRequestBodyProperty): RequestWrapperBodyProperty {
+    public getInlinedRequestBodyPropertyKey(property: FernIr.InlinedRequestBodyProperty): RequestWrapperBodyProperty {
         return this.getInlinedRequestBodyPropertyKeyFromName(property.name);
     }
 
-    public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): RequestWrapperBodyProperty {
+    public getInlinedRequestBodyPropertyKeyFromName(name: FernIr.NameAndWireValue): RequestWrapperBodyProperty {
         return {
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue,
@@ -613,7 +617,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             }
         }
         if (this.endpoint.requestBody != null) {
-            const areBodyPropertiesOptional = HttpRequestBody._visit<boolean>(this.endpoint.requestBody, {
+            const areBodyPropertiesOptional = FernIr.HttpRequestBody._visit<boolean>(this.endpoint.requestBody, {
                 reference: ({ requestBodyType }) => this.isTypeOptional(requestBodyType, context),
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
@@ -643,7 +647,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
-                        const isPropertyRequired = FileUploadRequestProperty._visit(property, {
+                        const isPropertyRequired = FernIr.FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
                                 if (!this.inlineFileProperties) {
                                     return false;
@@ -677,16 +681,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return true;
     }
 
-    private isTypeOptional(typeReference: TypeReference, context: SdkContext): boolean {
+    private isTypeOptional(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference);
         return resolvedType.type === "container" && resolvedType.container.type === "optional";
     }
 
-    public getPropertyNameOfFileParameter(fileProperty: FileProperty): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfFileParameter(fileProperty: FernIr.FileProperty): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfFileParameterFromName(fileProperty.key);
     }
 
-    public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfFileParameterFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName: getSdkParameterPropertyName({
@@ -698,11 +702,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfQueryParameter(queryParameter: FernIr.QueryParameter): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName: getSdkParameterPropertyName({
@@ -714,11 +718,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getPropertyNameOfPathParameter(pathParameter: PathParameter): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfPathParameter(pathParameter: FernIr.PathParameter): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfPathParameterFromName(pathParameter.name);
     }
 
-    public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfPathParameterFromName(name: FernIr.Name): RequestWrapperNonBodyProperty {
         return {
             safeName: name.camelCase.safeName,
             propertyName: getSdkParameterPropertyName({
@@ -730,11 +734,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getPropertyNameOfNonLiteralHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfNonLiteralHeader(header: FernIr.HttpHeader): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfNonLiteralHeaderFromName(header.name);
     }
 
-    public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfNonLiteralHeaderFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName: getSdkParameterPropertyName({
@@ -746,7 +750,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getPropertyNameOfTypeDeclarationProperty(property: ObjectProperty): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfTypeDeclarationProperty(property: FernIr.ObjectProperty): RequestWrapperNonBodyProperty {
         return {
             safeName: property.name.name.camelCase.safeName,
             propertyName:
@@ -756,22 +760,22 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getAllPathParameters(): PathParameter[] {
+    public getAllPathParameters(): FernIr.PathParameter[] {
         return this.endpoint.allPathParameters;
     }
 
-    public getAllQueryParameters(): QueryParameter[] {
+    public getAllQueryParameters(): FernIr.QueryParameter[] {
         return this.endpoint.queryParameters;
     }
 
-    public getAllFileUploadProperties(): FileProperty[] {
+    public getAllFileUploadProperties(): FernIr.FileProperty[] {
         if (this.endpoint.requestBody?.type !== "fileUpload") {
             return [];
         }
 
-        const fileProperties: FileProperty[] = [];
+        const fileProperties: FernIr.FileProperty[] = [];
         for (const property of this.endpoint.requestBody.properties) {
-            FileUploadRequestProperty._visit(property, {
+            FernIr.FileUploadRequestProperty._visit(property, {
                 file: (fileProperty) => {
                     fileProperties.push(fileProperty);
                 },
@@ -789,15 +793,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         inlinedRequestBody
     }: {
         context: SdkContext;
-        inlinedRequestBody: InlinedRequestBody;
-    }): InlinedRequestBodyProperty[] {
+        inlinedRequestBody: FernIr.InlinedRequestBody;
+    }): FernIr.InlinedRequestBodyProperty[] {
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType);
             return !(resolvedType.type === "container" && resolvedType.container.type === "literal");
         });
     }
 
-    private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {
+    private getAllNonLiteralHeaders(context: SdkContext): FernIr.HttpHeader[] {
         return [...this.service.headers, ...this.endpoint.headers].filter((header) => {
             const resolvedType = context.type.resolveTypeReference(header.valueType);
             return !(resolvedType.type === "container" && resolvedType.container.type === "literal");
@@ -821,7 +825,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody == null) {
             return false;
         }
-        return HttpRequestBody._visit(requestBody, {
+        return FernIr.HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () => false,
             reference: () => {
                 if (!this.flattenRequestParameters) {
@@ -835,7 +839,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         });
     }
 
-    private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
+    private getFileParameterType(property: FernIr.FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [];
 
         if (this.formDataSupport === "Node16") {
@@ -863,11 +867,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return ts.factory.createUnionTypeNode(types);
     }
 
-    private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
+    private maybeWrapFileArray({
+        property,
+        value
+    }: {
+        property: FernIr.FileProperty;
+        value: ts.TypeNode;
+    }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 
-    private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
+    private hasDefaultValue(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
         const hasDefaultValue = context.type.hasDefaultValue(typeReference);
         const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
             ?.useDefaultRequestParameterValues;
@@ -876,7 +886,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getFlattenedInlinedRequestBodyProperties(
-        inlinedRequestBody: InlinedRequestBody,
+        inlinedRequestBody: FernIr.InlinedRequestBody,
         context: SdkContext
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
@@ -891,7 +901,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getFlattenedReferencedRequestBodyProperties(
-        referenceToRequestBody: HttpRequestBodyReference,
+        referenceToRequestBody: FernIr.HttpRequestBodyReference,
         context: SdkContext
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
@@ -921,7 +931,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return properties;
     }
 
-    private getTypeDeclaration(requestBodyType: TypeReference.Named, context: SdkContext) {
+    private getTypeDeclaration(requestBodyType: FernIr.TypeReference.Named, context: SdkContext) {
         return context.type.getTypeDeclaration({
             typeId: requestBodyType.typeId,
             fernFilepath: requestBodyType.fernFilepath,
@@ -931,7 +941,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getFlattenedPropertiesFromTypeDeclaration(
-        typeDeclaration: TypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
         context: SdkContext,
         typeName: string
     ): GeneratedRequestWrapper.Property[] {
@@ -962,8 +972,73 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return properties;
     }
 
+    /**
+     * When resolveQueryParameterNameConflicts is enabled, computes the set of query parameter
+     * wire values that collide with body property names. Only these colliding query params
+     * will use their SDK override names instead of wire values.
+     */
+    private getCollidingQueryParamWireValues(context: SdkContext): Set<string> {
+        const bodyPropertyNames = new Set<string>();
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            FernIr.HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        const propKey = this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+                        bodyPropertyNames.add(propKey.propertyName);
+                    }
+                    for (const extension of inlinedRequestBody.extends) {
+                        const typeDeclaration = context.type.getTypeDeclaration(extension);
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                bodyPropertyNames.add(propName.propertyName);
+                            }
+                        }
+                    }
+                },
+                reference: () => {
+                    // noop — reference body types don't produce individual property names
+                },
+                fileUpload: () => {
+                    // noop
+                },
+                bytes: () => {
+                    // noop
+                },
+                _other: () => {
+                    // noop
+                }
+            });
+        }
+
+        const collidingWireValues = new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
+                collidingWireValues.add(queryParameter.name.wireValue);
+            }
+        }
+        return collidingWireValues;
+    }
+
+    /**
+     * Returns the overridden property name for a query parameter, using the SDK name
+     * (from x-fern-parameter-name) instead of the wire value. Used only when a collision
+     * with a body property is detected.
+     */
+    private getOverriddenPropertyNameOfQueryParameter(
+        queryParameter: FernIr.QueryParameter
+    ): RequestWrapperNonBodyProperty {
+        const name = queryParameter.name;
+        return {
+            safeName: name.name.camelCase.safeName,
+            propertyName: this.retainOriginalCasing ? name.name.originalName : name.name.camelCase.unsafeName
+        };
+    }
+
     private createNamespacedPropertyType(
-        property: ObjectProperty,
+        property: FernIr.ObjectProperty,
         context: SdkContext,
         typeName: string
     ): TypeReferenceNode {

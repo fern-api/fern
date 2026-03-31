@@ -5,5 +5,5 @@ import type * as SeedTrace from "../../../index";
 export interface SinglyLinkedListNodeValue {
     nodeId: SeedTrace.NodeId;
     val: number;
-    next?: SeedTrace.NodeId;
+    next?: SeedTrace.NodeId | undefined;
 }

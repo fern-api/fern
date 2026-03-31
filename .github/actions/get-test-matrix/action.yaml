@@ -34,11 +34,11 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
-    - uses: bufbuild/buf-setup-action@v1.34.0
+    - uses: bufbuild/buf-setup-action@v1.50.0
       with:
         github_token: ${{ github.token }}
 
-    - uses: actions/setup-go@v5
+    - uses: actions/setup-go@v6
       with:
         go-version: "stable"
 
@@ -59,7 +59,6 @@ runs:
       run: |
         if [[ "${{inputs.package-alphabetically}}" == "false" || \
         "${{ inputs.sdk-name }}" == "fastapi" || \
-        "${{ inputs.sdk-name }}" == "go-fiber" || \
         "${{ inputs.sdk-name }}" == "go-model" || \
         "${{ inputs.sdk-name }}" == "java-spring" || \
         "${{ inputs.sdk-name }}" == "openapi" || \

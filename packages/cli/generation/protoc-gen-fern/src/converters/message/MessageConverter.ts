@@ -3,13 +3,13 @@ import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 import * as FernIr from "@fern-api/ir-sdk";
 import { Type, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-import { getAvailability } from "../../commons/availability";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter";
-import { convertFields } from "../utils/ConvertFields";
-import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
-import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
-import { OneOfFieldConverter } from "./OneOfFieldConverter";
+import { getAvailability } from "../../commons/availability.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter.js";
+import { convertFields } from "../utils/ConvertFields.js";
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers.js";
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter.js";
+import { OneOfFieldConverter } from "./OneOfFieldConverter.js";
 
 export declare namespace MessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

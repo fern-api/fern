@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace SeedHttpHead.Core;
 
 public interface IStringEnum : IEquatable<string>

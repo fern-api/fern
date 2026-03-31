@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{Animal, Cat, Dog};
 
 #[tokio::main]
 async fn main() {
@@ -11,15 +10,7 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .union_
-        .get_and_return_union(
-            &Animal::Dog {
-                data: Dog {
-                    name: "name".to_string(),
-                    likes_to_woof: true,
-                },
-            },
-            None,
-        )
+        .primitive
+        .get_and_return_int(&1, None)
         .await;
 }

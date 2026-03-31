@@ -1,4 +1,4 @@
-import type { TypeSymbolShape } from "./symbol-registry";
+import type { TypeSymbolShape } from "./symbol-registry/index.js";
 
 export type AsIsSymbolName =
     | "JSONValue"

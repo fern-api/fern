@@ -2,13 +2,14 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-public partial class SeedObjectsWithImportsClient
+public partial class SeedObjectsWithImportsClient : ISeedObjectsWithImportsClient
 {
     private readonly RawClient _client;
 
     public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedObjectsWithImportsClient
                 { "User-Agent", "Fernoptional/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedObjectsWithImportsClient
         Optional = new OptionalClient(_client);
     }
 
-    public OptionalClient Optional { get; }
+    public IOptionalClient Optional { get; }
 }

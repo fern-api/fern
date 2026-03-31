@@ -1,8 +1,8 @@
-import { isFileInGeneric } from "../utils/generics/isFileInGeneric";
-import { isGeneric } from "../utils/generics/isGeneric";
-import { isTypeInGeneric } from "../utils/generics/isTypeInGeneric";
-import { parseGeneric } from "../utils/generics/parseGeneric";
-import { parseGenericNested } from "../utils/generics/parseGenericNested";
+import { isFileInGeneric } from "../utils/generics/isFileInGeneric.js";
+import { isGeneric } from "../utils/generics/isGeneric.js";
+import { isTypeInGeneric } from "../utils/generics/isTypeInGeneric.js";
+import { parseGeneric } from "../utils/generics/parseGeneric.js";
+import { parseGenericNested } from "../utils/generics/parseGenericNested.js";
 
 describe("parseGeneric", () => {
     it("should parse simple generic types", () => {

@@ -1,11 +1,12 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types.Enum;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Enum;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnEnumTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -35,9 +36,6 @@ public class GetAndReturnEnumTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<WeatherReport>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

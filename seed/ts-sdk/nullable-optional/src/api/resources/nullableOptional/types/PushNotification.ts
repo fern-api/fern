@@ -4,5 +4,5 @@ export interface PushNotification {
     deviceToken: string;
     title: string;
     body: string;
-    badge?: number;
+    badge?: number | undefined;
 }

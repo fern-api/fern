@@ -1,0 +1,666 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:PolicyType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PolicyType",
+                    "camelCase": {
+                        "unsafeName": "policyType",
+                        "safeName": "policyType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "policy_type",
+                        "safeName": "policy_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POLICY_TYPE",
+                        "safeName": "POLICY_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PolicyType",
+                        "safeName": "PolicyType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "HEALTH",
+                        "camelCase": {
+                            "unsafeName": "health",
+                            "safeName": "health"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "health",
+                            "safeName": "health"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HEALTH",
+                            "safeName": "HEALTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Health",
+                            "safeName": "Health"
+                        }
+                    },
+                    "wireValue": "HEALTH"
+                },
+                {
+                    "name": {
+                        "originalName": "AUTO",
+                        "camelCase": {
+                            "unsafeName": "auto",
+                            "safeName": "auto"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auto",
+                            "safeName": "auto"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTO",
+                            "safeName": "AUTO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auto",
+                            "safeName": "Auto"
+                        }
+                    },
+                    "wireValue": "AUTO"
+                },
+                {
+                    "name": {
+                        "originalName": "HOME",
+                        "camelCase": {
+                            "unsafeName": "home",
+                            "safeName": "home"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "home",
+                            "safeName": "home"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HOME",
+                            "safeName": "HOME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Home",
+                            "safeName": "Home"
+                        }
+                    },
+                    "wireValue": "HOME"
+                },
+                {
+                    "name": {
+                        "originalName": "LIFE",
+                        "camelCase": {
+                            "unsafeName": "life",
+                            "safeName": "life"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "life",
+                            "safeName": "life"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIFE",
+                            "safeName": "LIFE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Life",
+                            "safeName": "Life"
+                        }
+                    },
+                    "wireValue": "LIFE"
+                }
+            ]
+        },
+        "type_:InsurancePolicy": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "InsurancePolicy",
+                    "camelCase": {
+                        "unsafeName": "insurancePolicy",
+                        "safeName": "insurancePolicy"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "insurance_policy",
+                        "safeName": "insurance_policy"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INSURANCE_POLICY",
+                        "safeName": "INSURANCE_POLICY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "InsurancePolicy",
+                        "safeName": "InsurancePolicy"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "userId",
+                            "camelCase": {
+                                "unsafeName": "userID",
+                                "safeName": "userID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user_id",
+                                "safeName": "user_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER_ID",
+                                "safeName": "USER_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UserID",
+                                "safeName": "UserID"
+                            }
+                        },
+                        "wireValue": "userId"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "policyType",
+                            "camelCase": {
+                                "unsafeName": "policyType",
+                                "safeName": "policyType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "policy_type",
+                                "safeName": "policy_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POLICY_TYPE",
+                                "safeName": "POLICY_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PolicyType",
+                                "safeName": "PolicyType"
+                            }
+                        },
+                        "wireValue": "policyType"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:PolicyType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "isExpired",
+                            "camelCase": {
+                                "unsafeName": "isExpired",
+                                "safeName": "isExpired"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "is_expired",
+                                "safeName": "is_expired"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IS_EXPIRED",
+                                "safeName": "IS_EXPIRED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IsExpired",
+                                "safeName": "IsExpired"
+                            }
+                        },
+                        "wireValue": "isExpired"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "BOOLEAN"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "coverageAmount",
+                            "camelCase": {
+                                "unsafeName": "coverageAmount",
+                                "safeName": "coverageAmount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "coverage_amount",
+                                "safeName": "coverage_amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COVERAGE_AMOUNT",
+                                "safeName": "COVERAGE_AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CoverageAmount",
+                                "safeName": "CoverageAmount"
+                            }
+                        },
+                        "wireValue": "coverageAmount"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DOUBLE"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.getLatestInsurance": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getLatestInsurance",
+                    "camelCase": {
+                        "unsafeName": "getLatestInsurance",
+                        "safeName": "getLatestInsurance"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_latest_insurance",
+                        "safeName": "get_latest_insurance"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_LATEST_INSURANCE",
+                        "safeName": "GET_LATEST_INSURANCE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetLatestInsurance",
+                        "safeName": "GetLatestInsurance"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/api/users/{userId}/insurance"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "UserGetLatestInsuranceRequest",
+                        "camelCase": {
+                            "unsafeName": "userGetLatestInsuranceRequest",
+                            "safeName": "userGetLatestInsuranceRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user_get_latest_insurance_request",
+                            "safeName": "user_get_latest_insurance_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER_GET_LATEST_INSURANCE_REQUEST",
+                            "safeName": "USER_GET_LATEST_INSURANCE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UserGetLatestInsuranceRequest",
+                            "safeName": "UserGetLatestInsuranceRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "includeExpired",
+                                "camelCase": {
+                                    "unsafeName": "includeExpired",
+                                    "safeName": "includeExpired"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "include_expired",
+                                    "safeName": "include_expired"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INCLUDE_EXPIRED",
+                                    "safeName": "INCLUDE_EXPIRED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "IncludeExpired",
+                                    "safeName": "IncludeExpired"
+                                }
+                            },
+                            "wireValue": "includeExpired"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "policyType",
+                                "camelCase": {
+                                    "unsafeName": "policyType",
+                                    "safeName": "policyType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "policy_type",
+                                    "safeName": "policy_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POLICY_TYPE",
+                                    "safeName": "POLICY_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PolicyType",
+                                    "safeName": "PolicyType"
+                                }
+                            },
+                            "wireValue": "policyType"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:PolicyType"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.searchPolicies": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "searchPolicies",
+                    "camelCase": {
+                        "unsafeName": "searchPolicies",
+                        "safeName": "searchPolicies"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_policies",
+                        "safeName": "search_policies"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_POLICIES",
+                        "safeName": "SEARCH_POLICIES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchPolicies",
+                        "safeName": "SearchPolicies"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/api/policies/search"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SearchPoliciesRequest",
+                        "camelCase": {
+                            "unsafeName": "searchPoliciesRequest",
+                            "safeName": "searchPoliciesRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "search_policies_request",
+                            "safeName": "search_policies_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEARCH_POLICIES_REQUEST",
+                            "safeName": "SEARCH_POLICIES_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SearchPoliciesRequest",
+                            "safeName": "SearchPoliciesRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "query",
+                                "camelCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY",
+                                    "safeName": "QUERY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Query",
+                                    "safeName": "Query"
+                                }
+                            },
+                            "wireValue": "query"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "limit",
+                                "camelCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LIMIT",
+                                    "safeName": "LIMIT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Limit",
+                                    "safeName": "Limit"
+                                }
+                            },
+                            "wireValue": "limit"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.listAllPolicies": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listAllPolicies",
+                    "camelCase": {
+                        "unsafeName": "listAllPolicies",
+                        "safeName": "listAllPolicies"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_all_policies",
+                        "safeName": "list_all_policies"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_ALL_POLICIES",
+                        "safeName": "LIST_ALL_POLICIES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListAllPolicies",
+                        "safeName": "ListAllPolicies"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/api/policies"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

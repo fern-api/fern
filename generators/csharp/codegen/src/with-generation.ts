@@ -1,4 +1,4 @@
-import { type Generation } from "./context/generation-info";
+import { type Generation } from "./context/generation-info.js";
 
 /**
  * A trivial class of convenience properties that a generator class can inherit from to gain access to the portable context features.

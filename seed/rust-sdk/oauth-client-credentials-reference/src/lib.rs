@@ -6,7 +6,6 @@
 //!
 //! ```rust
 //! use seed_oauth_client_credentials_reference::prelude::*;
-//! use seed_oauth_client_credentials_reference::GetTokenRequest;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -21,6 +20,7 @@
 //!             &GetTokenRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -48,4 +48,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

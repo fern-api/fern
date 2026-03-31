@@ -2,51 +2,33 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    ErrorDeclaration,
-    ErrorId,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpMethod,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation,
-    Name,
-    OAuthScheme,
-    SdkRequestWrapper,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeId,
-    UserAgent
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
-import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants";
-import { RawClient } from "./core/RawClient";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { GuzzleClient } from "./external/GuzzleClient";
-import { PhpGeneratorAgent } from "./PhpGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants.js";
+import { RawClient } from "./core/RawClient.js";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { PsrHttpClient } from "./external/PsrHttpClient.js";
+import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
-    public guzzleClient: GuzzleClient;
+    public psrHttpClient: PsrHttpClient;
     public rawClient: RawClient;
     public generatorAgent: PhpGeneratorAgent;
     public snippetGenerator: EndpointSnippetsGenerator;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.endpointGenerator = new EndpointGenerator(this);
-        this.guzzleClient = new GuzzleClient(this);
+        this.psrHttpClient = new PsrHttpClient(this);
         this.rawClient = new RawClient(this);
         this.generatorAgent = new PhpGeneratorAgent({
             logger: this.logger,
@@ -57,7 +39,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
-    public maybeGetExampleEndpointCall(endpoint: HttpEndpoint): ExampleEndpointCall | null {
+    public maybeGetExampleEndpointCall(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
         if (endpoint.userSpecifiedExamples.length > 0) {
             const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
             if (exampleEndpointCall != null) {
@@ -68,7 +50,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return exampleEndpointCall ?? null;
     }
 
-    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
+    public shouldGenerateSubpackageClient(subpackage: FernIr.Subpackage): boolean {
         if (subpackage.service != null) {
             return true;
         }
@@ -81,7 +63,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return false;
     }
 
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+    public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
             throw new Error(`Service with id ${serviceId} not found`);
@@ -89,7 +71,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return service;
     }
 
-    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+    public getErrorDeclarationOrThrow(errorId: FernIr.ErrorId): FernIr.ErrorDeclaration {
         const error = this.ir.errors[errorId];
         if (error == null) {
             throw new Error(`Error with id ${errorId} not found`);
@@ -97,14 +79,36 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return error;
     }
 
-    public getSubpackageClassReference(subpackage: Subpackage): php.ClassReference {
+    public getSubpackageClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
         return php.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
     }
 
-    public getEndpointMethodName(endpoint: HttpEndpoint): string {
+    public getRootClientInterfaceClassName(): string {
+        return `${this.getRootClientClassName()}Interface`;
+    }
+
+    public getRootClientInterfaceClassReference(): php.ClassReference {
+        return php.classReference({
+            name: this.getRootClientInterfaceClassName(),
+            namespace: this.getRootNamespace()
+        });
+    }
+
+    public getSubpackageInterfaceClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
+        return php.classReference({
+            name: `${subpackage.name.pascalCase.unsafeName}ClientInterface`,
+            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+        });
+    }
+
+    public getSubpackageGetterName(subpackage: FernIr.Subpackage): string {
+        return `get${subpackage.name.pascalCase.safeName}`;
+    }
+
+    public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
         const unsafeName = endpoint.name.camelCase.unsafeName;
         if (RESERVED_METHOD_NAMES.includes(unsafeName)) {
@@ -113,15 +117,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return endpoint.name.camelCase.safeName;
     }
 
-    public getUnpagedEndpointMethodName(endpoint: HttpEndpoint): string {
+    public getUnpagedEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return `_${this.getEndpointMethodName(endpoint)}`;
     }
 
-    public getPagedEndpointMethodName(endpoint: HttpEndpoint): string {
+    public getPagedEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return this.getEndpointMethodName(endpoint);
     }
 
-    public getSubpackageField(subpackage: Subpackage): php.Field {
+    public getSubpackageField(subpackage: FernIr.Subpackage): php.Field {
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
             access: "public",
@@ -199,7 +203,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getUtilsClassReference("File");
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
+    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): php.ClassReference {
         return php.classReference({
             name: requestName.pascalCase.safeName,
             namespace: this.getLocationForWrappedRequest(serviceId).namespace
@@ -243,14 +247,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.customConfig.customPagerClassname;
     }
 
-    public getHttpMethod(method: HttpMethod): php.CodeBlock {
+    public getHttpMethod(method: FernIr.HttpMethod): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNode(this.getHttpMethodClassReference());
             writer.write(`::${method}`);
         });
     }
 
-    public getDefaultBaseUrlForEndpoint(endpoint: HttpEndpoint): php.CodeBlock {
+    public getDefaultBaseUrlForEndpoint(endpoint: FernIr.HttpEndpoint): php.CodeBlock {
         if (endpoint.baseUrl != null) {
             const defaultEnvironmentId = this.ir.environments?.defaultEnvironment;
             if (defaultEnvironmentId != null) {
@@ -278,7 +282,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "maxRetries";
     }
 
-    public getGuzzleClientOptionName(): string {
+    public getTimeoutOptionName(): string {
+        return "timeout";
+    }
+
+    public getHttpClientOptionName(): string {
         return "client";
     }
 
@@ -292,10 +300,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getQueryParametersOptionName(): string {
         return "queryParameters";
-    }
-
-    public getTimeoutOptionName(): string {
-        return "timeout";
     }
 
     public getClientOptionsName(): string {
@@ -314,8 +318,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         const options = [
             {
-                key: this.getGuzzleClientOptionName(),
-                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                key: this.getHttpClientOptionName(),
+                valueType: php.Type.reference(this.psrHttpClient.getClientInterfaceClassReference()),
                 optional: true
             },
             {
@@ -348,7 +352,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+    public getRequestOptionsType({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.Type {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         const options = [
             {
@@ -393,7 +397,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentAccess(name: Name): php.CodeBlock {
+    public getEnvironmentAccess(name: FernIr.Name): php.CodeBlock {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         if (isMultiUrl) {
             return php.codeblock((writer) => {
@@ -430,14 +434,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public deepSetPagination(
         objectVarToSetOn: php.AstNode,
-        setterPath: Name[],
+        setterPath: FernIr.Name[],
         valueVarToSet: php.AstNode
     ): php.AstNode {
         if (setterPath.length === 0) {
             throw new Error("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
-            const singleSetter = setterPath[0] as Name;
+            const singleSetter = setterPath[0] as FernIr.Name;
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);
                 writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));
@@ -458,11 +462,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentName(name: Name): string {
+    public getEnvironmentName(name: FernIr.Name): string {
         return name.pascalCase.safeName;
     }
 
-    public getUserAgent(): UserAgent | undefined {
+    public getUserAgent(): FernIr.UserAgent | undefined {
         if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
             return this.ir.sdkConfig.platformHeaders.userAgent;
         }
@@ -475,7 +479,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return undefined;
     }
 
-    public getTypeGetter(propertyName: Name): php.AstNode {
+    public getTypeGetter(propertyName: FernIr.Name): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertyGetterName(propertyName)}()`);
@@ -485,7 +489,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getTypeSetter(propertyName: Name, valueVarToSet: php.AstNode): php.AstNode {
+    public getTypeSetter(propertyName: FernIr.Name, valueVarToSet: php.AstNode): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertySetterName(propertyName)}`);
@@ -504,8 +508,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: Name;
-        propertyName: Name;
+        requestParameterName: FernIr.Name;
+        propertyName: FernIr.Name;
     }): string {
         const requestParameter = this.getRequestParameterVar({ requestParameterName });
         if (this.shouldGenerateGetterMethods()) {
@@ -514,7 +518,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return `${requestParameter}->${this.getPropertyName(propertyName)}`;
     }
 
-    public getRequestParameterVar({ requestParameterName }: { requestParameterName: Name }): string {
+    public getRequestParameterVar({ requestParameterName }: { requestParameterName: FernIr.Name }): string {
         return `$${this.getParameterName(requestParameterName)}`;
     }
 
@@ -522,8 +526,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         endpoint,
         wrapper
     }: {
-        endpoint: HttpEndpoint;
-        wrapper: SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
     }): boolean {
         return (
             (wrapper.onlyPathParameters ?? false) && !this.includePathParametersInWrappedRequest({ endpoint, wrapper })
@@ -534,8 +538,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         endpoint,
         wrapper
     }: {
-        endpoint: HttpEndpoint;
-        wrapper: SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
     }): boolean {
         const inlinePathParameters = this.customConfig.inlinePathParameters;
         if (inlinePathParameters == null) {
@@ -545,7 +549,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
-    public getAccessFromRootClient(fernFilepath: FernFilepath): string {
+    public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
         const clientVariableName = this.getClientVariableName();
         const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName);
         return clientAccessParts.length > 0
@@ -558,6 +562,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRawAsIsFiles(): string[] {
+        // When wire tests are enabled, we generate a custom phpunit.xml with the wire test bootstrap
+        // so we exclude the default phpunit.xml here
+        if (this.customConfig.enableWireTests) {
+            return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon];
+        }
         return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
     }
 
@@ -567,7 +576,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
-            AsIsFiles.RetryMiddleware,
+            AsIsFiles.RetryDecoratingClient,
+            AsIsFiles.HttpClientBuilder,
+            AsIsFiles.MockHttpClient,
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
@@ -632,31 +643,31 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return undefined;
     }
 
-    public getLocationForTypeId(typeId: TypeId): FileLocation {
+    public getLocationForTypeId(typeId: FernIr.TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getFileLocation(typeDeclaration.name.fernFilepath, TYPES_DIRECTORY);
     }
 
-    public getLocationForSubpackageId(subpackageId: SubpackageId): FileLocation {
+    public getLocationForSubpackageId(subpackageId: FernIr.SubpackageId): FileLocation {
         const subpackage = this.getSubpackageOrThrow(subpackageId);
         return this.getLocationForSubpackage(subpackage);
     }
 
-    public getLocationForSubpackage(subpackage: Subpackage): FileLocation {
+    public getLocationForSubpackage(subpackage: FernIr.Subpackage): FileLocation {
         return this.getFileLocation(subpackage.fernFilepath);
     }
 
-    public getLocationForServiceId(serviceId: ServiceId): FileLocation {
+    public getLocationForServiceId(serviceId: FernIr.ServiceId): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
         return this.getFileLocation(httpService.name.fernFilepath);
     }
 
-    public getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
+    public getLocationForWrappedRequest(serviceId: FernIr.ServiceId): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
         return this.getFileLocation(httpService.name.fernFilepath, REQUESTS_DIRECTORY);
     }
 
-    public getLocationForErrorId(errorId: ErrorId): FileLocation {
+    public getLocationForErrorId(errorId: FernIr.ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
         return this.getFileLocation(errorDeclaration.name.fernFilepath, EXCEPTIONS_DIRECTORY);
     }
@@ -729,7 +740,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return `${upperFirst(camelCase(this.config.organization))}`;
     }
 
-    private isMultipartEndpoint(endpoint: HttpEndpoint): boolean {
+    private isMultipartEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return endpoint.requestBody?.type === "fileUpload";
     }
 
@@ -746,7 +757,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         );
     }
 
-    public getOauth(): OAuthScheme | undefined {
+    public getOauth(): FernIr.OAuthScheme | undefined {
         if (
             this.ir.auth.schemes[0] != null &&
             this.ir.auth.schemes[0].type === "oauth" &&
@@ -757,7 +768,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return undefined;
     }
 
-    public getInferredAuth(): InferredAuthScheme | undefined {
+    public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "inferred") {
                 return scheme;

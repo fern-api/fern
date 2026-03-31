@@ -143,6 +143,10 @@ public final class SubmitRequestV2 {
     public interface _FinalStage {
         SubmitRequestV2 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage submissionFiles(List<SubmissionFileInfo> submissionFiles);
 
         _FinalStage addSubmissionFiles(SubmissionFileInfo submissionFiles);
@@ -263,6 +267,18 @@ public final class SubmitRequestV2 {
         public SubmitRequestV2 build() {
             return new SubmitRequestV2(
                     submissionId, language, submissionFiles, problemId, problemVersion, userId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

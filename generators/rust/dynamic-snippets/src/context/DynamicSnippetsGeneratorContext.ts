@@ -16,9 +16,9 @@ import {
     validateAndSanitizeCrateName
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -73,9 +73,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * Query requests are synthetic types generated for endpoints with query parameters but no body.
      */
     private preregisterQueryRequestNames(): void {
-        // Loop through all endpoints in the dynamic IR
+        // First pass: collect all query-only endpoints to detect name collisions
+        const queryEndpoints: Array<{
+            endpointId: string;
+            endpoint: FernIr.dynamic.Endpoint;
+            methodName: string;
+        }> = [];
+
         for (const [endpointId, endpoint] of Object.entries(this.ir.endpoints)) {
-            // Check if this is a query-only endpoint (has query parameters but no body)
             const request = endpoint.request;
             if (request.type !== "inlined") {
                 continue;
@@ -85,22 +90,43 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             const hasBody = request.body != null;
 
             if (hasQueryParams && !hasBody) {
-                // This is a query-only endpoint - register its query request type
                 const methodName = endpoint.declaration.name.pascalCase.safeName;
-                const baseQueryRequestName = `${methodName}QueryRequest`;
-
-                // Register the name in the type registry to handle deduplication
-                // We use a synthetic ID for query requests: "query_request:<endpointId>"
-                const syntheticTypeId = `query_request:${endpointId}`;
-                const deduplicatedName = this.registry.registerSchemaTypeTypeName(
-                    syntheticTypeId,
-                    baseQueryRequestName
-                );
-
-                // Store the mapping from endpoint declaration to deduplicated name
-                const key = this.getEndpointDeclarationKey(endpoint.declaration);
-                this.endpointDeclarationToQueryRequestName.set(key, deduplicatedName);
+                queryEndpoints.push({ endpointId, endpoint, methodName });
             }
+        }
+
+        // Build a set of method names that have collisions (same method name across different services)
+        const methodNameCounts = new Map<string, number>();
+        for (const { methodName } of queryEndpoints) {
+            methodNameCounts.set(methodName, (methodNameCounts.get(methodName) ?? 0) + 1);
+        }
+
+        // Second pass: register with full subpackage prefix when collisions exist
+        for (const { endpointId, endpoint, methodName } of queryEndpoints) {
+            const hasCollision = (methodNameCounts.get(methodName) ?? 0) > 1;
+
+            let baseQueryRequestName: string;
+            if (hasCollision) {
+                // Include full subpackage path to make it unique, matching SDK generator behavior
+                const pathParts = endpoint.declaration.fernFilepath.allParts.map(
+                    (part) => part.pascalCase.safeName
+                );
+                const subpackagePrefix = pathParts.join("");
+                baseQueryRequestName = `${subpackagePrefix}${methodName}QueryRequest`;
+            } else {
+                baseQueryRequestName = `${methodName}QueryRequest`;
+            }
+
+            // Register the name in the type registry to handle deduplication
+            const syntheticTypeId = `query_request:${endpointId}`;
+            const deduplicatedName = this.registry.registerSchemaTypeTypeName(
+                syntheticTypeId,
+                baseQueryRequestName
+            );
+
+            // Store the mapping from endpoint declaration to deduplicated name
+            const key = this.getEndpointDeclarationKey(endpoint.declaration);
+            this.endpointDeclarationToQueryRequestName.set(key, deduplicatedName);
         }
     }
 
@@ -109,18 +135,21 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * This helps us look up the typeId when we only have the declaration.
      */
     private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
-        const fernFilepath = declaration.fernFilepath.packagePath.join("/");
+        const fernFilepath = declaration.fernFilepath.packagePath
+            .map((part) => part.pascalCase.safeName)
+            .join("/");
         const name = declaration.name.pascalCase.safeName;
         return `${fernFilepath}::${name}`;
     }
 
     /**
      * Create a unique key for an endpoint declaration based on its file path and name.
-     * This helps us look up the query request name when we only have the endpoint declaration.
+     * Uses allParts to include the leaf segment, ensuring unique keys per subpackage.
      */
     private getEndpointDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
-        // Use the same format as getDeclarationKey for consistency
-        const fernFilepath = declaration.fernFilepath.packagePath.join("/");
+        const fernFilepath = declaration.fernFilepath.allParts
+            .map((part) => part.pascalCase.safeName)
+            .join("/");
         const name = declaration.name.pascalCase.safeName;
         return `${fernFilepath}::${name}`;
     }
@@ -211,6 +240,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
         let createName = this.customConfig?.crateName ?? generateDefaultCrateName(orgName, workspaceName);
         return validateAndSanitizeCrateName(createName);
+    }
+
+    /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
+     * or "utc" for DateTime<Utc> - converts everything to UTC.
+     * Both options use flexible parsing that accepts any format and assumes UTC when no timezone.
+     */
+    public getDateTimeType(): "offset" | "utc" {
+        return this.customConfig?.dateTimeType ?? "offset";
     }
 
     // Client methods
@@ -485,5 +524,70 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
         // Check if all collected properties are optional
         return this.allParametersAreOptional(allProperties);
+    }
+
+    /**
+     * Check if a dynamic IR object type will have Default derived by the model generator.
+     * Mirrors the logic in StructGenerator.canDeriveDefault():
+     * - All property types must support Default
+     * - Extended types must support Default
+     */
+    public canObjectTypeUseDefault(objectType: FernIr.dynamic.ObjectType): boolean {
+        // Check if extends exist (types with inheritance are harder to verify)
+        const extendsProperty = (objectType as { extends?: string[] }).extends;
+        if (extendsProperty != null && extendsProperty.length > 0) {
+            // Check if all base types support Default
+            for (const baseTypeId of extendsProperty) {
+                const baseType = this.ir.types[baseTypeId];
+                if (!baseType || baseType.type !== "object" || !this.canObjectTypeUseDefault(baseType)) {
+                    return false;
+                }
+            }
+        }
+        // Check if all property types support Default
+        return objectType.properties.every((prop) => this.typeSupportsDefault(prop.typeReference));
+    }
+
+    /**
+     * Check if a type reference maps to a Rust type that implements Default.
+     * Mirrors the model generator's typeSupportsDefault logic.
+     */
+    public typeSupportsDefault(typeRef: FernIr.dynamic.TypeReference, visited: Set<string> = new Set()): boolean {
+        switch (typeRef.type) {
+            case "primitive":
+                return true; // All Rust primitives implement Default
+            case "optional":
+            case "nullable":
+                return true; // Option<T> defaults to None
+            case "list":
+            case "map":
+            case "set":
+                return true; // Vec, HashMap, HashSet all implement Default
+            case "unknown":
+                return true; // serde_json::Value implements Default
+            case "literal":
+                return false;
+            case "named": {
+                const typeId = typeRef.value;
+                if (visited.has(typeId)) {
+                    return false; // Prevent infinite recursion
+                }
+                visited.add(typeId);
+                const namedType = this.ir.types[typeId];
+                if (!namedType) {
+                    return false;
+                }
+                if (namedType.type === "object") {
+                    return this.canObjectTypeUseDefault(namedType);
+                }
+                if (namedType.type === "alias") {
+                    return this.typeSupportsDefault(namedType.typeReference, visited);
+                }
+                // Enums, unions don't derive Default
+                return false;
+            }
+            default:
+                return false;
+        }
     }
 }

@@ -1,13 +1,13 @@
-import { HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { AuthProviderInstance } from "./AuthProviderInstance";
+import { AuthProviderInstance } from "./AuthProviderInstance.js";
 
 export class HeaderAuthProviderInstance implements AuthProviderInstance {
-    private readonly authScheme: HeaderAuthScheme;
+    private readonly authScheme: FernIr.HeaderAuthScheme;
 
-    constructor(authScheme: HeaderAuthScheme) {
+    constructor(authScheme: FernIr.HeaderAuthScheme) {
         this.authScheme = authScheme;
     }
 

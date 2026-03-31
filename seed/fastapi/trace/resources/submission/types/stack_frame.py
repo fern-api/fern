@@ -3,13 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 from .scope import Scope
 
 
 class StackFrame(UniversalBaseModel):
-    method_name: str = pydantic.Field(alias="methodName")
-    line_number: int = pydantic.Field(alias="lineNumber")
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName"), pydantic.Field(alias="methodName")]
+    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber"), pydantic.Field(alias="lineNumber")]
     scopes: typing.List[Scope]
 
     if IS_PYDANTIC_V2:

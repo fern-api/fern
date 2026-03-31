@@ -16,7 +16,7 @@ from .parameter_id import ParameterId
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
     type: typing.Literal["deepEquality"] = "deepEquality"
     expected_value_parameter_id: typing_extensions.Annotated[
-        ParameterId, FieldMetadata(alias="expectedValueParameterId")
+        ParameterId, FieldMetadata(alias="expectedValueParameterId"), pydantic.Field(alias="expectedValueParameterId")
     ]
 
     if IS_PYDANTIC_V2:
@@ -32,7 +32,9 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
     additional_parameters: typing_extensions.Annotated[
-        typing.List[Parameter], FieldMetadata(alias="additionalParameters")
+        typing.List[Parameter],
+        FieldMetadata(alias="additionalParameters"),
+        pydantic.Field(alias="additionalParameters"),
     ]
     code: FunctionImplementationForMultipleLanguages
 

@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
-import { EndpointMatcher } from "./endpoint-matcher";
-import { ReferenceCollector } from "./reference-collector";
-import { HttpMethod, PruneOptions, PruneResult, PruneStatistics } from "./types";
+import { EndpointMatcher } from "./endpoint-matcher.js";
+import { ReferenceCollector } from "./reference-collector.js";
+import { HttpMethod, PruneOptions, PruneResult, PruneStatistics } from "./types.js";
 
 export class OpenAPIPruner {
     private matcher: EndpointMatcher;

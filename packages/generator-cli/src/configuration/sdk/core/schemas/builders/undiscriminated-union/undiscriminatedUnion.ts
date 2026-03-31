@@ -1,28 +1,34 @@
-import { BaseSchema, MaybeValid, Schema, SchemaOptions, SchemaType, ValidationError } from "../../Schema";
-import { MaybePromise } from "../../utils/MaybePromise";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
-import { inferParsedUnidiscriminatedUnionSchema, inferRawUnidiscriminatedUnionSchema } from "./types";
+import {
+    type BaseSchema,
+    type MaybeValid,
+    type Schema,
+    type SchemaOptions,
+    SchemaType,
+    type ValidationError,
+} from "../../Schema.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
+import type { inferParsedUnidiscriminatedUnionSchema, inferRawUnidiscriminatedUnionSchema } from "./types.js";
 
 export function undiscriminatedUnion<Schemas extends [Schema<any, any>, ...Schema<any, any>[]]>(
-    schemas: Schemas
+    schemas: Schemas,
 ): Schema<inferRawUnidiscriminatedUnionSchema<Schemas>, inferParsedUnidiscriminatedUnionSchema<Schemas>> {
     const baseSchema: BaseSchema<
         inferRawUnidiscriminatedUnionSchema<Schemas>,
         inferParsedUnidiscriminatedUnionSchema<Schemas>
     > = {
-        parse: async (raw, opts) => {
+        parse: (raw, opts) => {
             return validateAndTransformUndiscriminatedUnion<inferParsedUnidiscriminatedUnionSchema<Schemas>>(
                 (schema, opts) => schema.parse(raw, opts),
                 schemas,
-                opts
+                opts,
             );
         },
-        json: async (parsed, opts) => {
+        json: (parsed, opts) => {
             return validateAndTransformUndiscriminatedUnion<inferRawUnidiscriminatedUnionSchema<Schemas>>(
                 (schema, opts) => schema.json(parsed, opts),
                 schemas,
-                opts
+                opts,
             );
         },
         getType: () => SchemaType.UNDISCRIMINATED_UNION,
@@ -34,14 +40,14 @@ export function undiscriminatedUnion<Schemas extends [Schema<any, any>, ...Schem
     };
 }
 
-async function validateAndTransformUndiscriminatedUnion<Transformed>(
-    transform: (schema: Schema<any, any>, opts: SchemaOptions) => MaybePromise<MaybeValid<Transformed>>,
+function validateAndTransformUndiscriminatedUnion<Transformed>(
+    transform: (schema: Schema<any, any>, opts: SchemaOptions) => MaybeValid<Transformed>,
     schemas: Schema<any, any>[],
-    opts: SchemaOptions | undefined
-): Promise<MaybeValid<Transformed>> {
+    opts: SchemaOptions | undefined,
+): MaybeValid<Transformed> {
     const errors: ValidationError[] = [];
     for (const [index, schema] of schemas.entries()) {
-        const transformed = await transform(schema, { ...opts, skipValidation: false });
+        const transformed = transform(schema, { ...opts, skipValidation: false });
         if (transformed.ok) {
             return transformed;
         } else {

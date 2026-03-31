@@ -1,5 +1,5 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
 
 /**
  * Represents an if-else statement in the AST.

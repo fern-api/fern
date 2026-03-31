@@ -1,7 +1,7 @@
 import { noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { NameRegistry, swift } from "@fern-api/swift-codegen";
-import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export function registerLiteralEnums({
     parentSymbol,
@@ -24,27 +24,12 @@ export function registerLiteralEnums({
         },
         discriminatedUnion: (utd) => {
             Object.values(utd.types).forEach((singleUnionType) => {
-                const variantSymbol = registry.getDiscriminatedUnionVariantSymbolOrThrow(
-                    parentSymbol,
-                    singleUnionType.discriminantValue.wireValue
-                );
                 visitDiscriminatedUnion(singleUnionType, "type")._visit({
                     noProperties: noop,
-                    samePropertiesAsObject: (declaredTypeName) => {
-                        const variantProperties = context.getPropertiesOfDiscriminatedUnionVariant(
-                            declaredTypeName.typeId
-                        );
-                        variantProperties.forEach((property) => {
-                            registerLiteralEnumsForTypeReference({
-                                parentSymbol: variantSymbol,
-                                registry,
-                                typeReference: property.typeReference
-                            });
-                        });
-                    },
+                    samePropertiesAsObject: noop,
                     singleProperty: (p) => {
                         registerLiteralEnumsForTypeReference({
-                            parentSymbol: variantSymbol,
+                            parentSymbol,
                             registry,
                             typeReference: p.typeReference
                         });

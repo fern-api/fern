@@ -17,10 +17,16 @@ export interface User {
 }
 
 export namespace User {
-    export type Request = Omit<User, "id" | "email" | "profile"> & {
+    export type Request = Omit<User, "id" | "email" | "password" | "profile"> & {
+        id: string;
+        email: string;
+        password: string;
         profile: SeedPropertyAccess.UserProfile.Request;
     };
-    export type Response = Omit<User, "password" | "profile"> & {
+    export type Response = Omit<User, "id" | "email" | "password" | "profile"> & {
+        id: string;
+        email: string;
+        password: string;
         profile: SeedPropertyAccess.UserProfile.Response;
     };
 }

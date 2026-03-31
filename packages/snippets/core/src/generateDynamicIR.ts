@@ -3,9 +3,9 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic } from "@fern-api/ir-sdk";
 import { NopSourceResolver } from "@fern-api/source-resolver";
 
-import { OpenAPISpec } from "./Spec";
-import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
-import { createTaskContext } from "./utils/createTaskContext";
+import { OpenAPISpec } from "./Spec.js";
+import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace.js";
+import { createTaskContext } from "./utils/createTaskContext.js";
 
 export function generateDynamicIR({
     spec,

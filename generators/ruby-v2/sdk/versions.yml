@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.0.0-rc77
-  createdAt: "2026-01-06"
+- version: 1.1.9
   changelogEntry:
     - type: feat
       summary: |
@@ -9,6 +8,385 @@
         Supported values: `snake_case` (default, requires underscores before numbers like `recaptcha_v_2`),
         `normalcase` (allows numbers without underscores like `recaptcha_v2`, `office365`), or `disabled`.
         This allows APIs with field names containing embedded digits to configure the appropriate style.
+  createdAt: "2026-03-31"
+  irVersion: 61
+
+- version: 1.1.8
+  changelogEntry:
+    - summary: |
+        Support multiple Basic Auth schemes with `AuthSchemesRequirement.Any`.
+        When an API defines more than one basic auth scheme (e.g.,
+        accountId/authToken and apiKey/apiKeySecret), the generated client now
+        produces conditional if/elsif blocks that check which credential pair
+        was provided and sets the Authorization header accordingly. Previously,
+        only the first basic auth scheme was used.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 61
+
+- version: 1.1.7
+  changelogEntry:
+    - summary: |
+        Add explicit `base64` gem dependency for APIs using Basic Auth.
+        The gemspec now conditionally includes `spec.add_dependency "base64"`
+        when the API definition contains a basic auth scheme, ensuring the
+        `Base64.strict_encode64` call in the generated client works on all
+        Ruby versions where `base64` is a bundled gem.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 61
+
+- version: 1.1.6
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 61
+
+- version: 1.1.5
+  changelogEntry:
+    - summary: |
+        Prevent `additional_headers` in request options from overriding
+        SDK-set headers such as Authorization, Content-Type, and SDK
+        metadata. Headers set by the SDK or the API definition are now
+        protected (case-insensitively) and silently filtered from
+        additional_headers.
+      type: fix
+    - summary: |
+        Reject HTTP URLs for non-localhost hosts. Requests to `http://`
+        URLs now raise `ArgumentError` unless the host is localhost,
+        127.0.0.1, or [::1], preventing accidental transmission of
+        authentication credentials in plaintext.
+      type: fix
+    - summary: |
+        Explicitly set `verify_mode = OpenSSL::SSL::VERIFY_PEER` on
+        HTTPS connections. This was already the Ruby default but is now
+        stated in code to satisfy security audits.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 61
+
+- version: 1.1.4
+  changelogEntry:
+    - summary: |
+        Add Basic Auth support. Previously, the generated client did not
+        accept username/password constructor parameters and did not set
+        the `Authorization: Basic <base64>` header on outgoing requests.
+        The client now accepts username/password keyword arguments and
+        wires them into the Authorization header automatically.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 61
+
+- version: 1.1.3
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 61
+- version: 1.1.2
+  changelogEntry:
+    - summary: |
+        Fix pagination query parameter key mismatch. Query parameters were initialized
+        with string keys but pagination iterator blocks used symbol keys, causing duplicate
+        parameters to be sent (e.g., `page=0&page=0`) which resulted in 400 errors.
+      type: fix
+    - summary: |
+        URI-encode path parameters before interpolation into URL paths. Resource IDs
+        containing reserved URI characters (e.g., pipes, spaces) now work correctly
+        instead of raising `URI::InvalidURIError`.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 61
+
+- version: 1.1.1
+  changelogEntry:
+    - summary: |
+        Strip zero-millisecond datetime values from WireMock stub query parameters.
+        Ruby's DateTime/Time ISO 8601 serialization omits zero fractional seconds
+        (e.g., `2024-09-08T12:00:00Z`), but mock-utils generates values with `.000Z`
+        (e.g., `2024-09-08T12:00:00.000Z`). WireMock's `equalTo` matcher is exact-match,
+        so the stubs never fired for datetime query parameters. This follows the same
+        pattern used by the Python and PHP generators.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 61
+
+- version: 1.1.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 61
+
+- version: 1.0.9
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.0.8
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.0.7
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+- version: 1.0.6
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 61
+
+- version: 1.0.5
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 61
+
+- version: 1.0.4
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of a hardcoded constant. Docker Compose
+        now uses dynamic port mapping (`0:8080`) to avoid port conflicts when running
+        multiple SDK tests in parallel. Falls back to `http://localhost:8080` if the
+        variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 61
+
+- version: 1.0.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+- version: 1.0.2
+  changelogEntry:
+    - summary: |
+        Rename `Union#member?` to `Union#type_member?` to avoid rubocop-minitest's
+        `Minitest/AssertIncludes` cop incorrectly autocorrecting `assert obj.member?(x)`
+        to `assert_includes obj, x`. The autocorrected form calls `Module#include?` which
+        raises `TypeError: wrong argument type Class (expected Module)` on union type tests.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
+- version: 1.0.1
+  changelogEntry:
+    - summary: |
+        Fix wire test generator to respect `clientModuleName` custom config instead of hardcoding `Client`.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 61
+
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        💎 The Ruby SDK generator v2 is officially stable! 🎉🥂 After 87 release candidates,
+        this ground-up rewrite ships with a modern AST-based architecture and full feature
+        parity. 🔒 Stable, production-ready, and 100% backward-compatible with the legacy
+        generator — existing configs, gem names, and modules just work. ✅
+
+        ✨ **Highlights**
+        - 🔐 Bearer, API key, OAuth 2.0 & inferred auth with automatic token refresh
+        - 🌐 Exponential-backoff retries, per-request `base_url` override, multipart uploads
+        - 📄 Discriminated & undiscriminated unions, correct non-snake_case wire serialization
+        - 📦 Cursor & offset pagination with lazy iterators, custom pager support
+        - 🏗️ YARD docs, RuboCop-clean output, CI with RubyGems OIDC publishing, wire tests
+        - ⚙️ Rich config: `moduleName`, `requirePaths`, `extraDependencies`, `enableWireTests`, and more
+        - 🌍 Multiple named environments and multi-URL environment support
+        - 🚀 RubyGems OIDC publishing and self-hosted mode with `.fernignore` support
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 61
+
+- version: 1.0.0-rc87
+  changelogEntry:
+    - summary: |
+        Add support for `useDefaultRequestParameterValues` custom config option. When enabled,
+        query parameters and headers with IR-defined default values use Ruby's `params.fetch(:key, default)`
+        idiom instead of conditional assignment, matching the behavior of other Fern generators.
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 61
+
+- version: 1.0.0-rc86
+  changelogEntry:
+    - summary: |
+        Fix RuboCop style offenses in generated dynamic snippets. Generated Ruby snippets now use
+        double-quoted strings, omit trailing semicolons, and drop empty parentheses on no-arg
+        method calls. Also normalizes CRLF line endings to LF and adds RuboCop exclusions for
+        snippet-only cops (FrozenStringLiteralComment, FirstHashElementIndentation) in the
+        generated .rubocop.yml.
+      type: fix
+    - summary: |
+        Change RuboCop Naming/VariableNumber enforced style from snake_case to normalcase in the
+        generated .rubocop.yml. This eliminates false positives on API-derived identifiers that
+        contain numbers (e.g., :recaptcha_v2, :sha256, :line1, :pkcs7) without requiring
+        underscores before digit sequences.
+      type: fix
+    - summary: |
+        Fix seed.yml Docker build command using incorrect package filter (@fern-api/fern-ruby-sdk
+        instead of @fern-api/ruby-sdk).
+      type: fix
+    - summary: |
+        Use %w[] syntax for arrays of simple strings in generated snippets, eliminating
+        Style/WordArray RuboCop offenses.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 61
+
+- version: 1.0.0-rc85
+  changelogEntry:
+    - summary: |
+        Fix detached HEAD error in publish workflow. When triggered by a tag push, the workflow
+        enters detached HEAD state, causing `rubygems/release-gem@v1` (which runs `rake release`)
+        to fail when pushing to a non-existent branch. Replaced with manual build/push steps using
+        `rubygems/configure-rubygems-credentials@v1.0.0` for OIDC auth, `bundle exec rake build`,
+        and `gem push pkg/*.gem`. Also replaced `bundler-cache: true` with explicit `bundle install`
+        for more reliable dependency installation.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc84
+  changelogEntry:
+    - summary: |
+        Fix packageName being incorrectly used for folder/module naming. The packageName from
+        publish config (e.g., output.publish.rubygems.packageName) is now only used for the
+        gemspec spec.name field, not for folder structure or Ruby module names. This fixes
+        issues where gems with special characters in their package name (e.g., "square.rb")
+        would have incorrect folder structures (lib/square_rb/ instead of lib/square/) and
+        normalized gemspec names. The folder and module naming now correctly uses only the
+        custom config moduleName option or the organization name as fallback.
+      type: fix
+    - summary: |
+        Fix organization names with digits (e.g., "auth0") being incorrectly transformed to
+        "auth_0" in folder names. The snake_case transformation now preserves letter-digit
+        sequences, so "auth0" stays "auth0" and "OAuth2" becomes "oauth2" instead of "o_auth_2".
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc83
+  changelogEntry:
+    - summary: |
+        Fix request body serialization bug where path/query/header parameters were incorrectly
+        serialized as nil values in the request body. For endpoints with inlined request bodies
+        that also have path, query, or header parameters, the wrapper type (which includes all
+        endpoint parameters) was being created with only body properties, causing non-body fields
+        to be nil and serialized as null in the JSON body. The fix uses a serialize-then-split
+        pattern: serialize ALL params through the wrapper type first, then remove non-body params
+        from the serialized result. This ensures proper type conversion while keeping non-body
+        params out of the request body.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 61
+
+- version: 1.0.0-rc82
+  changelogEntry:
+    - summary: |
+        Implement HTTP status code-based retry logic with exponential backoff. The SDK now automatically
+        retries requests that fail with retryable HTTP status codes (408, 429, 500, 502, 503, 504, 521,
+        522, 524) using exponential backoff with jitter. The retry logic respects Retry-After
+        headers when present. This addresses the feature gap where the SDK previously
+        only used Net::HTTP's network-level retries, which don't handle HTTP status codes like 429
+        (Too Many Requests). The max_retries parameter now controls application-level retries with
+        proper backoff, enabling compliance with rate-limiting requirements like Square App Marketplace.
+      type: feat
+  createdAt: "2026-01-27"
+  irVersion: 61
+
+- version: 1.0.0-rc81
+  changelogEntry:
+    - summary: |
+        Add support for self-hosted mode. When enabled, the generator can clone the user's GitHub
+        repository, generate SDK code, and commit/push changes or create a PR directly to the user's
+        repo. This feature respects .fernignore files to preserve user customizations. The generator
+        now passes ir.selfHosted to the base generator agent instead of hardcoding false.
+      type: feat
+  createdAt: "2026-01-16"
+  irVersion: 61
+
+- version: 1.0.0-rc80
+  changelogEntry:
+    - summary: |
+        Add support for clientModuleName config option to customize the root client class name.
+        When clientModuleName is set (e.g., "PinnacleBaseClient"), the generated root client
+        class will use that name instead of the default "Client". This restores functionality
+        that existed in the original Ruby SDK generator.
+      type: fix
+    - summary: |
+        Add support for packageName from publish config to set the gem name and module name.
+        The gem name (folder name) and module name now use the packageName from the RubyGems
+        publish config (e.g., output.publish.rubygems.packageName) as a fallback when the
+        custom config module option is not set. This restores functionality from the original
+        Ruby SDK generator where the gem name could be configured via the publish target.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 61
+
+- version: 1.0.0-rc79
+  changelogEntry:
+    - summary: |
+        Add support for additional_query_parameters in request options. Users can now pass
+        additional query parameters via request_options[:additional_query_parameters] which
+        will be merged with the endpoint's query parameters when making HTTP requests.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 61
+
+- version: 1.0.0-rc78
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 61
+
+- version: 1.0.0-rc77
+  createdAt: "2026-01-13"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add RETRIES, ADDITIONAL_HEADERS, and ADDITIONAL_QUERY_PARAMETERS sections to generated README.md.
+        These sections document how to configure automatic retries, add custom headers, and add custom
+        query parameters to API requests. The features were previously removed because they had Go-specific
+        descriptions; they are now restored with Ruby-specific documentation and code snippets.
   irVersion: 61
 
 - version: 1.0.0-rc76
@@ -40,6 +418,13 @@
         directly on the organization name, producing consistent module names like `Auth0`.
         Also fixes test_helper.rb require path to use the correct folder name (e.g., `auth_0`)
         instead of the module name (e.g., `auth0`), preventing LoadError when running tests.
+  irVersion: 61
+
+- version: 1.0.0-rc75
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-05"
   irVersion: 61
 
 - version: 1.0.0-rc74
@@ -726,7 +1111,7 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Introduce a revamped Ruby SDK generator with several improvements 
+        Introduce a revamped Ruby SDK generator with several improvements
         to be detailed in a larger post.
   irVersion: 39
 

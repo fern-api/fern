@@ -39,6 +39,7 @@ runs:
         collect-metrics: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
+        skip-git-diff-check: true
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
@@ -70,7 +71,7 @@ runs:
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

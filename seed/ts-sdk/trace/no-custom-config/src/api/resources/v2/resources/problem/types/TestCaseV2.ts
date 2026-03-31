@@ -6,5 +6,5 @@ export interface TestCaseV2 {
     metadata: SeedTrace.v2.TestCaseMetadata;
     implementation: SeedTrace.v2.TestCaseImplementationReference;
     arguments: Record<SeedTrace.v2.ParameterId, SeedTrace.VariableValue>;
-    expects?: SeedTrace.v2.TestCaseExpects;
+    expects?: SeedTrace.v2.TestCaseExpects | undefined;
 }

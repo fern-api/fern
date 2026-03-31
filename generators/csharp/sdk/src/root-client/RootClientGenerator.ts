@@ -3,22 +3,25 @@ import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    AuthScheme,
-    HttpHeader,
-    InferredAuthScheme,
-    Literal,
-    OAuthScheme,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
-    ServiceId,
-    Subpackage,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type AuthScheme = FernIr.AuthScheme;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type OAuthScheme = FernIr.OAuthScheme;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+const PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+type ServiceId = FernIr.ServiceId;
+type Subpackage = FernIr.Subpackage;
+type HttpHeader = FernIr.HttpHeader;
+type Literal = FernIr.Literal;
+type TypeReference = FernIr.TypeReference;
+
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -33,6 +36,11 @@ interface ConstructorParameter {
      */
     header?: HeaderInfo;
     environmentVariable?: string;
+    /**
+     * The wire value to use in examples (e.g., "client_id", "X-API-Key")
+     * Falls back to parameter name if not provided
+     */
+    exampleValue?: string;
 }
 
 interface LiteralParameter {
@@ -103,10 +111,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     public doGenerate(): CSharpFile {
+        const interfaceReference = this.csharp.classReference({
+            name: `I${this.names.classes.rootClient}`,
+            namespace: this.namespaces.root
+        });
         const class_ = this.csharp.class_({
             reference: this.Types.RootClient,
             partial: true,
-            access: this.settings.rootClientAccess
+            access: this.settings.rootClientAccess,
+            interfaceReferences: [interfaceReference]
         });
 
         class_.addField({
@@ -139,7 +152,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     access: ast.Access.Public,
                     get: true,
                     origin: subpackage,
-                    type: this.context.getSubpackageClassReference(subpackage)
+                    type: this.context.getSubpackageInterfaceReference(subpackage)
                 });
             }
         }
@@ -178,48 +191,82 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
+        const unified = this.settings.unifiedClientOptions;
         const parameters: ast.Parameter[] = [];
-        for (const param of requiredParameters) {
+
+        // In unified mode, check if any ClientOptions fields are truly required.
+        // This includes auth params (non-optional, no env var) and BaseUrl when there's no default environment.
+        // If so, ClientOptions itself must be required (non-nullable, no default).
+        const hasRequiredUnifiedFields =
+            unified &&
+            (requiredParameters.some((p) => p.environmentVariable == null) ||
+                this.context.ir.environments?.defaultEnvironment == null);
+
+        if (!unified) {
+            for (const param of requiredParameters) {
+                parameters.push(
+                    this.csharp.parameter({
+                        name: param.name,
+                        type: this.context.csharpTypeMapper.convert({
+                            reference: param.typeReference
+                        }),
+                        docs: param.docs
+                    })
+                );
+            }
+            for (const param of optionalParameters) {
+                parameters.push(
+                    this.csharp.parameter({
+                        name: param.name,
+                        type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }).asOptional(),
+                        docs: param.docs,
+                        initializer: "null"
+                    })
+                );
+            }
+        }
+
+        if (hasRequiredUnifiedFields) {
             parameters.push(
                 this.csharp.parameter({
-                    name: param.name,
-                    type: this.context.csharpTypeMapper.convert({
-                        reference: param.typeReference
-                    }),
-                    docs: param.docs
+                    name: this.members.clientOptionsParameterName,
+                    type: this.Types.ClientOptions
                 })
             );
-        }
-        for (const param of optionalParameters) {
+        } else {
             parameters.push(
                 this.csharp.parameter({
-                    name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }).asOptional(),
-                    docs: param.docs,
+                    name: this.members.clientOptionsParameterName,
+                    type: this.Types.ClientOptions.asOptional(),
                     initializer: "null"
                 })
             );
         }
 
-        parameters.push(
-            this.csharp.parameter({
-                name: this.members.clientOptionsParameterName,
-                type: this.Types.ClientOptions.asOptional(),
-                initializer: "null"
-            })
-        );
+        /**
+         * Returns the expression to access a parameter value.
+         * In unified mode, reads from clientOptions.PascalCase; otherwise uses the local variable name.
+         */
+        const paramAccess = (param: ConstructorParameter): string => {
+            if (unified) {
+                return `clientOptions.${this.toPascalCase(param.name)}`;
+            }
+            return param.name;
+        };
 
-        const headerEntries: ast.Dictionary.MapEntry[] = [];
+        // Separate auth headers from platform headers
+        const authHeaderEntries: ast.Dictionary.MapEntry[] = [];
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
-                headerEntries.push({
+                const access = paramAccess(param);
+                authHeaderEntries.push({
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
                         param.header.prefix != null
-                            ? `$"${param.header.prefix} {${param.isOptional ? `${param.name} ?? ""` : param.name}}"`
+                            ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ""` : access}}"`
                             : param.isOptional || param.type.isOptional
-                              ? `${param.name} ?? ""`
-                              : param.name
+                              ? `${access} ?? ""`
+                              : access
                     )
                 });
             }
@@ -227,7 +274,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         for (const param of literalParameters) {
             if (param.header != null) {
-                headerEntries.push({
+                authHeaderEntries.push({
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
                         param.value.type === "string"
@@ -240,31 +287,45 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         }
 
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-        headerEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.language}"`),
-            value: this.csharp.codeblock('"C#"')
-        });
-        headerEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-            value: this.csharp.codeblock(`"${this.namespaces.root}"`)
-        });
-        headerEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-            value: this.context.getCurrentVersionValueAccess()
-        });
-        if (platformHeaders.userAgent != null) {
-            headerEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+        // Platform headers (no auth)
+        const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
+        if (!this.settings.omitFernHeaders) {
+            const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+                value: this.csharp.codeblock('"C#"')
             });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+            });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+                value: this.context.getCurrentVersionValueAccess()
+            });
+            if (platformHeaders.userAgent != null) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
+                    value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                });
+            }
         }
-        const headerDictionary = this.csharp.dictionary({
+
+        const platformHeaderDictionary = this.csharp.dictionary({
             keyType: this.Primitive.string,
             valueType: this.Primitive.string,
             values: {
                 type: "entries",
-                entries: headerEntries
+                entries: platformHeaderEntries
+            }
+        });
+
+        const authHeaderDictionary = this.csharp.dictionary({
+            keyType: this.Primitive.string,
+            valueType: this.Primitive.string,
+            values: {
+                type: "entries",
+                entries: authHeaderEntries
             }
         });
 
@@ -273,9 +334,23 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             parameters,
             body: this.csharp.codeblock((writer) => {
                 const writeConstructorBody = (innerWriter: typeof writer) => {
+                    if (unified && !hasRequiredUnifiedFields) {
+                        // In unified mode, initialize clientOptions BEFORE env var fallbacks
+                        // so we can write to clientOptions.Property.
+                        // Skip when there are required fields — the parameter is already non-nullable.
+                        innerWriter.write("clientOptions ??= ");
+                        innerWriter.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.generation.Types.ClientOptions,
+                                arguments_: []
+                            })
+                        );
+                    }
+
                     for (const param of optionalParameters) {
                         if (param.environmentVariable != null) {
-                            innerWriter.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
+                            const target = paramAccess(param);
+                            innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
                             innerWriter.indent();
                             innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
                             innerWriter.writeLine(",");
@@ -286,21 +361,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             innerWriter.writeLine(");");
                         }
                     }
-                    innerWriter.write("var defaultHeaders = ");
-                    innerWriter.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.generation.Types.Headers,
-                            arguments_: [headerDictionary]
-                        })
-                    );
 
-                    innerWriter.write("clientOptions ??= ");
-                    innerWriter.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.generation.Types.ClientOptions,
-                            arguments_: []
-                        })
-                    );
+                    if (!unified) {
+                        // In non-unified mode, initialize clientOptions after env var fallbacks (existing behavior)
+                        innerWriter.write("clientOptions ??= ");
+                        innerWriter.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.generation.Types.ClientOptions,
+                                arguments_: []
+                            })
+                        );
+                    }
 
                     if (this.settings.includeExceptionHandler) {
                         innerWriter.write("clientOptions.ExceptionHandler = ");
@@ -310,17 +381,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [
                                     this.csharp.instantiateClass({
                                         classReference: this.generation.Types.CustomExceptionInterceptor,
-                                        arguments_: []
+                                        arguments_: [this.csharp.codeblock("clientOptions")]
                                     })
                                 ]
                             })
                         );
                     }
 
+                    // Add platform headers to clientOptions
+                    innerWriter.write("var platformHeaders = ");
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.Headers,
+                            arguments_: [platformHeaderDictionary]
+                        })
+                    );
+
                     for (const param of literalParameters) {
                         if (param.header != null) {
                             innerWriter.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
-                            innerWriter.write(`defaultHeaders["${param.header.name}"] = `);
+                            innerWriter.write(`platformHeaders["${param.header.name}"] = `);
                             if (param.value.type === "string") {
                                 innerWriter.write(`clientOptions.${param.name}`);
                             } else {
@@ -331,7 +411,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
+                    innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in platformHeaders"));
                     innerWriter.controlFlow(
                         "if",
                         this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)")
@@ -340,17 +420,89 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     innerWriter.endControlFlow();
                     innerWriter.endControlFlow();
 
+                    // Check if any auth scheme is basic auth
+                    const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+
+                    // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth
+                    const needsAuthHeaders =
+                        authHeaderEntries.length > 0 || this.oauth != null || this.inferred != null || hasBasicAuth;
+                    const clientOptionsVariable = needsAuthHeaders ? "clientOptionsWithAuth" : "clientOptions";
+
+                    if (needsAuthHeaders) {
+                        // Clone clientOptions for use with auth headers
+                        innerWriter.writeLine("var clientOptionsWithAuth = clientOptions.Clone();");
+
+                        // Add auth headers to the cloned clientOptions
+                        if (authHeaderEntries.length > 0) {
+                            innerWriter.write("var authHeaders = ");
+                            innerWriter.writeNodeStatement(
+                                this.csharp.instantiateClass({
+                                    classReference: this.generation.Types.Headers,
+                                    arguments_: [authHeaderDictionary]
+                                })
+                            );
+                            innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
+                            innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
+                            innerWriter.endControlFlow();
+                        }
+                    }
+
+                    // Add Basic Auth header if applicable
+                    if (hasBasicAuth) {
+                        const basicSchemes = this.context.ir.auth.schemes.filter(
+                            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                        );
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        for (let i = 0; i < basicSchemes.length; i++) {
+                            const basicScheme = basicSchemes[i];
+                            if (basicScheme == null) {
+                                continue;
+                            }
+                            const usernameName = basicScheme.username.camelCase.safeName;
+                            const passwordName = basicScheme.password.camelCase.safeName;
+                            const usernameAccess = unified
+                                ? `clientOptions.${this.toPascalCase(usernameName)}`
+                                : usernameName;
+                            const passwordAccess = unified
+                                ? `clientOptions.${this.toPascalCase(passwordName)}`
+                                : passwordName;
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                const controlFlowKeyword = i === 0 ? "if" : "else if";
+                                innerWriter.controlFlow(
+                                    controlFlowKeyword,
+                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
+                                );
+                            }
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
+                            );
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                innerWriter.endControlFlow();
+                            }
+                        }
+                    }
+
                     if (this.oauth != null) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
 
+                        // Use clientOptions (platform headers only) for OAuth token requests
                         const arguments_ = [
                             this.generation.Types.RawClient.new({
-                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                                arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
-                        innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
+                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        innerWriter.write(
+                            `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                        );
+                        for (const param of oauthAdditionalParams) {
+                            const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
+                            innerWriter.write(`${paramRef}, `);
+                        }
                         innerWriter.writeNode(
                             this.csharp.instantiateClass({
                                 classReference: authClientClassReference,
@@ -361,7 +513,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeTextStatement(")");
 
                         innerWriter.writeTextStatement(
-                            `clientOptions.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                            `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
                     }
 
@@ -372,15 +524,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                         const credentialParams = this.getInferredAuthCredentialParams();
 
+                        // Use clientOptions (platform headers only) for inferred auth token requests
                         const arguments_ = [
                             this.generation.Types.RawClient.new({
-                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                                arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
 
                         innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
                         for (const param of credentialParams) {
-                            innerWriter.write(`${param}, `);
+                            const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
+                            innerWriter.write(`${paramRef}, `);
                         }
                         innerWriter.writeNode(
                             this.csharp.instantiateClass({
@@ -402,7 +556,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             innerWriter.writeNode(
                                 this.csharp.codeblock((writer) => {
                                     writer.write(
-                                        `clientOptions.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false)).First().Value);`
+                                        `clientOptionsWithAuth.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false)).First().Value);`
                                     );
                                 })
                             );
@@ -413,21 +567,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     innerWriter.writeNodeStatement(
                         this.csharp.instantiateClass({
                             classReference: this.generation.Types.RawClient,
-                            arguments_: [this.csharp.codeblock("clientOptions")]
+                            arguments_: [this.csharp.codeblock(clientOptionsVariable)]
                         })
                     );
                     if (this.grpcClientInfo != null) {
-                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);
                         innerWriter.write(" = ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
                                 classReference: this.grpcClientInfo.classReference,
-                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
                             })
                         );
                     }
-                    const arguments_ = [this.csharp.codeblock("_client")];
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
                     for (const subpackage of this.getSubpackages()) {
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                             innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
@@ -450,7 +604,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     writer.writeNodeStatement(
                         this.csharp.instantiateClass({
                             classReference: this.generation.Types.CustomExceptionInterceptor,
-                            arguments_: []
+                            arguments_: [this.csharp.codeblock("clientOptions")]
                         })
                     );
                     writer.writeLine("interceptor.Intercept(ex);");
@@ -472,80 +626,73 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         includeEnvVarArguments?: boolean;
         asSnippet?: boolean;
     }): ast.ClassInstantiation {
-        const arguments_ = [];
-        for (const header of this.context.ir.headers) {
-            if (
-                header.valueType.type === "container" &&
-                (header.valueType.container.type === "optional" || header.valueType.container.type === "literal")
-            ) {
-                continue;
-            }
-            arguments_.push(this.csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
-        }
-        if (this.context.ir.auth.requirement) {
-            for (const scheme of this.context.ir.auth.schemes) {
-                switch (scheme.type) {
-                    case "header":
-                        if (scheme.headerEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
-                        }
-                        break;
-                    case "basic": {
-                        if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
-                        }
-                        if (scheme.passwordEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
-                        }
-                        break;
-                    }
-                    case "bearer":
-                        if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(this.csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
-                        }
-                        break;
-                    case "oauth": {
-                        if (this.context.getOauth() != null) {
-                            arguments_.push(this.csharp.codeblock('"CLIENT_ID"'));
-                            arguments_.push(this.csharp.codeblock('"CLIENT_SECRET"'));
-                        } else {
-                            arguments_.push(this.csharp.codeblock('"TOKEN"'));
-                        }
-                        break;
-                    }
-                    case "inferred": {
-                        if (this.context.getInferredAuth() != null) {
-                            const inferredScheme = this.context.getInferredAuth();
-                            if (inferredScheme) {
-                                const tokenEndpointReference = inferredScheme.tokenEndpoint.endpoint;
-                                const tokenEndpointHttpService = this.context.getHttpService(
-                                    tokenEndpointReference.serviceId
-                                );
-                                if (tokenEndpointHttpService != null) {
-                                    const tokenEndpoint = this.context.resolveEndpoint(
-                                        tokenEndpointHttpService,
-                                        tokenEndpointReference.endpointId
-                                    );
+        const arguments_: ast.CodeBlock[] = [];
 
-                                    const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
-                                    for (const credential of credentials) {
-                                        arguments_.push(this.csharp.codeblock(`"${credential.wireValue}"`));
-                                    }
-                                }
-                            }
-                        }
-                        break;
+        // Use the same parameter ordering as the constructor
+        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const allParameters = [...requiredParameters, ...optionalParameters];
+
+        if (this.settings.unifiedClientOptions) {
+            // In unified mode, auth params become named properties inside ClientOptions
+            const clientOptionsFields: Array<{ name: string; assignment: ast.CodeBlock | ast.AstNode }> = [];
+
+            for (const param of allParameters) {
+                if (param.environmentVariable != null && !includeEnvVarArguments) {
+                    continue;
+                }
+                const value = param.exampleValue ?? param.name;
+                clientOptionsFields.push({
+                    name: this.toPascalCase(param.name),
+                    assignment: this.csharp.codeblock(`"${value}"`)
+                });
+            }
+
+            // Merge fields from existing clientOptionsArgument (e.g., BaseUrl, MaxRetries)
+            if (clientOptionsArgument != null && Array.isArray(clientOptionsArgument.arguments_)) {
+                for (const arg of clientOptionsArgument.arguments_) {
+                    if ("name" in arg && "assignment" in arg) {
+                        clientOptionsFields.push({
+                            name: arg.name,
+                            assignment: arg.assignment as ast.AstNode
+                        });
                     }
                 }
             }
-        }
-        if (clientOptionsArgument != null) {
-            arguments_.push(
-                this.csharp.codeblock((writer) => {
-                    writer.write(`${this.members.clientOptionsParameterName}: `);
-                    writer.writeNode(clientOptionsArgument);
-                })
-            );
+
+            if (clientOptionsFields.length > 0) {
+                arguments_.push(
+                    this.csharp.codeblock((writer) => {
+                        writer.write(`${this.members.clientOptionsParameterName}: `);
+                        writer.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: this.Types.ClientOptions,
+                                arguments_: clientOptionsFields,
+                                multiline: true
+                            })
+                        );
+                    })
+                );
+            }
+        } else {
+            for (const param of allParameters) {
+                // Skip parameters with environment variables unless explicitly including them
+                if (param.environmentVariable != null && !includeEnvVarArguments) {
+                    continue;
+                }
+
+                // Use example values consistently in both snippets and tests for clarity
+                const value = param.exampleValue ?? param.name;
+                arguments_.push(this.csharp.codeblock(`"${value}"`));
+            }
+
+            if (clientOptionsArgument != null) {
+                arguments_.push(
+                    this.csharp.codeblock((writer) => {
+                        writer.write(`${this.members.clientOptionsParameterName}: `);
+                        writer.writeNode(clientOptionsArgument);
+                    })
+                );
+            }
         }
         return this.csharp.instantiateClass({
             classReference: asSnippet ? this.Types.RootClientForSnippets : this.Types.RootClient,
@@ -563,12 +710,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const requiredParameters: ConstructorParameter[] = [];
         const optionalParameters: ConstructorParameter[] = [];
         const literalParameters: LiteralParameter[] = [];
+        const seenParameterNames = new Set<string>();
 
         for (const scheme of this.context.ir.auth.schemes) {
-            allParameters.push(...this.getParameterFromAuthScheme(scheme));
+            for (const param of this.getParameterFromAuthScheme(scheme)) {
+                if (!seenParameterNames.has(param.name)) {
+                    allParameters.push(param);
+                    seenParameterNames.add(param.name);
+                }
+            }
         }
         for (const header of this.context.ir.headers) {
-            allParameters.push(this.getParameterForHeader(header));
+            const param = this.getParameterForHeader(header);
+            if (!seenParameterNames.has(param.name)) {
+                allParameters.push(param);
+                seenParameterNames.add(param.name);
+            }
         }
 
         for (const param of allParameters) {
@@ -610,7 +767,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.context.csharpTypeMapper.convert({
                             reference: scheme.valueType
                         }),
-                        environmentVariable: scheme.headerEnvVar
+                        environmentVariable: scheme.headerEnvVar,
+                        exampleValue: scheme.name.name.screamingSnakeCase.safeName
                     }
                 ];
             }
@@ -626,15 +784,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             name: "Authorization",
                             prefix: "Bearer"
                         },
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.tokenEnvVar
+                        environmentVariable: scheme.tokenEnvVar,
+                        exampleValue: scheme.token.screamingSnakeCase.safeName
                     }
                 ];
             }
@@ -647,29 +806,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.usernameEnvVar
+                        environmentVariable: scheme.usernameEnvVar,
+                        exampleValue: scheme.username.screamingSnakeCase.safeName
                     },
                     {
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.passwordEnvVar
+                        environmentVariable: scheme.passwordEnvVar,
+                        exampleValue: scheme.password.screamingSnakeCase.safeName
                     }
                 ];
             }
@@ -680,30 +841,33 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: "clientId",
                         docs: "The clientId to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientIdEnvVar
+                        environmentVariable: scheme.configuration.clientIdEnvVar,
+                        exampleValue: "client_id"
                     },
                     {
                         name: "clientSecret",
                         docs: "The clientSecret to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         }),
                         type: this.Primitive.string,
-                        environmentVariable: scheme.configuration.clientSecretEnvVar
-                    }
+                        environmentVariable: scheme.configuration.clientSecretEnvVar,
+                        exampleValue: "client_secret"
+                    },
+                    ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
                 ];
             } else {
                 this.context.logger.warn(
@@ -738,7 +902,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         docs: credential.docs ?? `The ${credential.camelName} for authentication.`,
                         isOptional: isOptional || credential.isOptional,
                         typeReference: credential.typeReference,
-                        type: typeRef
+                        type: typeRef,
+                        exampleValue: credential.wireValue
                     });
                 }
 
@@ -769,7 +934,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             typeReference: header.valueType,
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
-            })
+            }),
+            exampleValue: header.name.name.screamingSnakeCase.safeName
         };
     }
 
@@ -802,6 +968,62 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
     }
 
+    private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+        const params: ConstructorParameter[] = [];
+        // Include required, non-literal custom properties, matching Java's approach of
+        // skipping only literals. Keep the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
+            if (typeRef.isOptional) {
+                continue;
+            }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            params.push({
+                name,
+                docs: `The ${name} for OAuth authentication.`,
+                isOptional,
+                typeReference: customProperty.property.valueType,
+                type: typeRef,
+                exampleValue: name
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
+            if (!typeRef.isOptional) {
+                const name = scopes.property.name.name.camelCase.safeName;
+                params.push({
+                    name,
+                    docs: `The ${name} for OAuth authentication.`,
+                    isOptional,
+                    typeReference: scopes.property.valueType,
+                    type: typeRef,
+                    exampleValue: name
+                });
+            }
+        }
+        return params;
+    }
+
+    /**
+     * Gets the parameter names for additional OAuth fields (custom properties and scopes)
+     * that need to be passed to the OAuthTokenProvider constructor.
+     */
+    private getOAuthAdditionalParamNames(): string[] {
+        if (this.oauth == null) {
+            return [];
+        }
+        return this.getOAuthAdditionalConstructorParams(this.oauth, false).map((p) => p.name);
+    }
+
     private getInferredAuthCredentialParams(): string[] {
         if (this.inferred == null) {
             return [];
@@ -818,4 +1040,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
         return credentials.map((credential) => credential.camelName);
     }
+
+    private toPascalCase(name: string): string {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

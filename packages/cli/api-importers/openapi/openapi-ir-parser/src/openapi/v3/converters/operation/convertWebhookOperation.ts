@@ -1,16 +1,25 @@
-import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import {
+    MultipartFormDataWebhookPayloadWithExample,
+    NamedFullExample,
+    ObjectPropertyWithExample,
+    SchemaWithExample,
+    Source,
+    WebhookExampleCall,
+    WebhookWithExample
+} from "@fern-api/openapi-ir";
 import { createHash } from "crypto";
 
-import { getExtension } from "../../../../getExtension";
-import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { OperationContext } from "../contexts";
-import { convertParameters } from "../endpoint/convertParameters";
-import { convertRequest } from "../endpoint/convertRequest";
-import { convertResponse } from "../endpoint/convertResponse";
+import { getExtension } from "../../../../getExtension.js";
+import { convertToFullExample } from "../../../../schema/examples/convertToFullExample.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getFernWebhookSignatureExtension } from "../../extensions/getFernWebhookSignatureExtension.js";
+import { OperationContext } from "../contexts.js";
+import { convertParameters } from "../endpoint/convertParameters.js";
+import { convertRequest } from "../endpoint/convertRequest.js";
+import { convertResponse } from "../endpoint/convertResponse.js";
 
 export function convertWebhookOperation({
     context,
@@ -34,8 +43,10 @@ export function convertWebhookOperation({
         source
     });
 
-    if (operation.requestBody == null) {
-        context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Missing a request body`);
+    if (method !== "POST" && method !== "GET") {
+        context.logger.warn(
+            `Skipping webhook ${method.toUpperCase()} ${path}: Only POST and GET methods are currently supported`
+        );
         return [];
     }
 
@@ -53,9 +64,68 @@ export function convertWebhookOperation({
           })
         : undefined;
 
-    if (method !== "POST" && method !== "GET") {
-        context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
-        return [];
+    const signatureVerification = getFernWebhookSignatureExtension(document, operation);
+
+    // For GET webhooks without a request body, synthesize a payload from query parameters
+    if (operation.requestBody == null) {
+        if (convertedParameters.queryParameters.length === 0) {
+            context.logger.error(
+                `Skipping webhook ${method.toUpperCase()} ${path}: Missing a request body and no query parameters`
+            );
+            return [];
+        }
+
+        const properties: ObjectPropertyWithExample[] = convertedParameters.queryParameters.map((qp) => ({
+            key: qp.name,
+            schema: qp.schema,
+            readonly: undefined,
+            writeonly: undefined,
+            audiences: [],
+            conflict: {},
+            nameOverride: qp.parameterNameOverride,
+            generatedName: getGeneratedTypeName([...payloadBreadcrumbs, qp.name], context.options.preserveSchemaIds),
+            availability: qp.availability
+        }));
+
+        const payload: SchemaWithExample = SchemaWithExample.object({
+            description: operation.description,
+            properties,
+            nameOverride: undefined,
+            generatedName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+            title: undefined,
+            allOf: [],
+            allOfPropertyConflicts: [],
+            namespace: context.namespace,
+            groupName: undefined,
+            fullExamples: undefined,
+            additionalProperties: false,
+            availability: undefined,
+            encoding: undefined,
+            source,
+            inline: undefined,
+            minProperties: undefined,
+            maxProperties: undefined
+        });
+
+        const webhook: WebhookWithExample = {
+            summary: operation.summary,
+            audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+            sdkName: sdkMethodName,
+            namespace: context.namespace,
+            method,
+            operationId,
+            tags: context.resolveTagsToTagIds(operation.tags),
+            headers: convertedParameters.headers,
+            generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+            payload,
+            signatureVerification,
+            multipartFormData: undefined,
+            response: convertedResponse?.value,
+            description: operation.description,
+            examples: [],
+            source
+        };
+        return [webhook];
     }
 
     const resolvedRequestBody = isReferenceObject(operation.requestBody)
@@ -77,9 +147,38 @@ export function convertWebhookOperation({
         )
         .filter((request) => request != null)
         .map((request) => {
-            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
-                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+            if (
+                request == null ||
+                (request.type !== "json" && request.type !== "formUrlEncoded" && request.type !== "multipart")
+            ) {
+                context.logger.error(
+                    `Skipping webhook ${path} because non-json, non-formUrlEncoded, and non-multipart request body`
+                );
                 return undefined;
+            }
+
+            let multipartFormData: MultipartFormDataWebhookPayloadWithExample | undefined;
+            let payload: SchemaWithExample;
+
+            if (request.type === "multipart") {
+                multipartFormData = {
+                    name: request.name,
+                    properties: request.properties,
+                    description: request.description,
+                    source: request.source
+                };
+                payload = SchemaWithExample.unknown({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+                    title: undefined,
+                    description: request.description,
+                    availability: undefined,
+                    namespace: context.namespace,
+                    groupName: undefined,
+                    example: undefined
+                });
+            } else {
+                payload = request.schema;
             }
 
             const webhook: WebhookWithExample = {
@@ -92,7 +191,9 @@ export function convertWebhookOperation({
                 tags: context.resolveTagsToTagIds(operation.tags),
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-                payload: request.schema,
+                payload,
+                signatureVerification,
+                multipartFormData,
                 response: convertedResponse?.value,
                 description: operation.description,
                 examples: convertWebhookExamples(request.fullExamples),
@@ -131,9 +232,19 @@ function generateWebhookOperationId({
     method: string;
     sdkMethodName: { methodName: string } | undefined;
 }): string {
-    const base = sdkMethodName?.methodName ?? sanitizePathExpression(path);
+    // Option A: Use the webhook key name directly (clean, human-readable)
+    // with a fallback to method+hash for paths that contain special characters
+    if (sdkMethodName?.methodName != null) {
+        return sdkMethodName.methodName;
+    }
+    const sanitized = sanitizePathExpression(path);
+    if (sanitized === path.toLowerCase()) {
+        // Path is clean (no special characters were removed), use it directly
+        return path;
+    }
+    // Fallback: path had special characters, use sanitized + method + hash for uniqueness
     const hash = createHash("sha256").update(path).digest("hex").slice(0, 8);
-    return toCamelCase(`${base}_${method.toLowerCase()}_${hash}`);
+    return toCamelCase(`${sanitized}_${method.toLowerCase()}_${hash}`);
 }
 
 function sanitizePathExpression(path: string): string {

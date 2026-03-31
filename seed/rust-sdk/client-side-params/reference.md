@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_resources</a>(page: Option<i64>, per_page: Option<i64>, sort: Option<String>, order: Option<String>, include_totals: Option<bool>, fields: Option<Option<String>>, search: Option<Option<String>>) -> Result<Vec<Resource>, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_resources</a>(page: Option&lt;i64&gt;, per_page: Option&lt;i64&gt;, sort: Option&lt;String&gt;, order: Option&lt;String&gt;, include_totals: Option&lt;bool&gt;, fields: Option&lt;Option&lt;String&gt;&gt;, search: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Vec&lt;Resource&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_resource</a>(resource_id: String, include_metadata: Option<bool>, format: Option<String>) -> Result<Resource, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_resource</a>(resource_id: String, include_metadata: Option&lt;bool&gt;, format: Option&lt;String&gt;) -> Result&lt;Resource, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">search_resources</a>(request: SearchResourcesRequest, limit: Option<i64>, offset: Option<i64>) -> Result<SearchResponse, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">search_resources</a>(request: SearchResourcesRequest, limit: Option&lt;i64&gt;, offset: Option&lt;i64&gt;) -> Result&lt;SearchResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -318,7 +318,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_users</a>(page: Option<Option<i64>>, per_page: Option<Option<i64>>, include_totals: Option<Option<bool>>, sort: Option<Option<String>>, connection: Option<Option<String>>, q: Option<Option<String>>, search_engine: Option<Option<String>>, fields: Option<Option<String>>) -> Result<PaginatedUserResponse, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_users</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, include_totals: Option&lt;Option&lt;bool&gt;&gt;, sort: Option&lt;Option&lt;String&gt;&gt;, connection: Option&lt;Option&lt;String&gt;&gt;, q: Option&lt;Option&lt;String&gt;&gt;, search_engine: Option&lt;Option&lt;String&gt;&gt;, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;PaginatedUserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -366,6 +366,7 @@ async fn main() {
                 q: Some("q".to_string()),
                 search_engine: Some("search_engine".to_string()),
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -453,7 +454,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_user_by_id</a>(user_id: String, fields: Option<Option<String>>, include_fields: Option<Option<bool>>) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_user_by_id</a>(user_id: String, fields: Option&lt;Option&lt;String&gt;&gt;, include_fields: Option&lt;Option&lt;bool&gt;&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -496,6 +497,7 @@ async fn main() {
             &GetUserByIdQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -543,7 +545,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_user</a>(request: CreateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -571,7 +573,6 @@ Create a new user
 
 ```rust
 use seed_client_side_params::prelude::*;
-use seed_client_side_params::CreateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -599,6 +600,7 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 connection: "connection".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -615,7 +617,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -643,7 +645,6 @@ Update a user
 
 ```rust
 use seed_client_side_params::prelude::*;
-use seed_client_side_params::UpdateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -672,6 +673,7 @@ async fn main() {
                 )])),
                 password: Some("password".to_string()),
                 blocked: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -703,7 +705,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">delete_user</a>(user_id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">delete_user</a>(user_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -770,7 +772,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_connections</a>(strategy: Option<Option<String>>, name: Option<Option<String>>, fields: Option<Option<String>>) -> Result<Vec<Connection>, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_connections</a>(strategy: Option&lt;Option&lt;String&gt;&gt;, name: Option&lt;Option&lt;String&gt;&gt;, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Vec&lt;Connection&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -813,6 +815,7 @@ async fn main() {
                 strategy: Some("strategy".to_string()),
                 name: Some("name".to_string()),
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -860,7 +863,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_connection</a>(connection_id: String, fields: Option<Option<String>>) -> Result<Connection, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_connection</a>(connection_id: String, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Connection, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -902,6 +905,7 @@ async fn main() {
             &"connectionId".to_string(),
             &GetConnectionQueryRequest {
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -941,7 +945,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_clients</a>(fields: Option<Option<String>>, include_fields: Option<Option<bool>>, page: Option<Option<i64>>, per_page: Option<Option<i64>>, include_totals: Option<Option<bool>>, is_global: Option<Option<bool>>, is_first_party: Option<Option<bool>>, app_type: Option<Option<Vec<String>>>) -> Result<PaginatedClientResponse, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_clients</a>(fields: Option&lt;Option&lt;String&gt;&gt;, include_fields: Option&lt;Option&lt;bool&gt;&gt;, page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, include_totals: Option&lt;Option&lt;bool&gt;&gt;, is_global: Option&lt;Option&lt;bool&gt;&gt;, is_first_party: Option&lt;Option&lt;bool&gt;&gt;, app_type: Option&lt;Option&lt;Vec&lt;String&gt;&gt;&gt;) -> Result&lt;PaginatedClientResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -989,6 +993,7 @@ async fn main() {
                 is_global: Some(true),
                 is_first_party: Some(true),
                 app_type: Some(vec!["app_type".to_string(), "app_type".to_string()]),
+                ..Default::default()
             },
             None,
         )
@@ -1076,7 +1081,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_client</a>(client_id: String, fields: Option<Option<String>>, include_fields: Option<Option<bool>>) -> Result<Client, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_client</a>(client_id: String, fields: Option&lt;Option&lt;String&gt;&gt;, include_fields: Option&lt;Option&lt;bool&gt;&gt;) -> Result&lt;Client, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1119,6 +1124,7 @@ async fn main() {
             &GetClientQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -1165,3 +1171,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

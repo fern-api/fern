@@ -1,4 +1,4 @@
-import { python } from "..";
+import { python } from "../index.js";
 
 describe("Decorator", () => {
     describe("toString", () => {

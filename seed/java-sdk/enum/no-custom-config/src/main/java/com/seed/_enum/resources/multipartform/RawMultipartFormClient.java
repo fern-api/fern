@@ -3,7 +3,6 @@
  */
 package com.seed._enum.resources.multipartform;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.core.RequestOptions;
@@ -32,43 +31,34 @@ public class RawMultipartFormClient {
     }
 
     public SeedEnumHttpResponse<Void> multipartForm(MultipartFormRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("multipart")
-                .build();
+                .addPathSegments("multipart");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            multipartBodyBuilder.addFormDataPart(
-                    "color", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getColor()));
+            multipartBodyBuilder.addFormDataPart("color", request.getColor().toString());
             if (request.getMaybeColor().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "maybeColor",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeColor().get()));
+                        "maybeColor", request.getMaybeColor().get().toString());
             }
             request.getColorList().forEach(item -> {
-                try {
-                    multipartBodyBuilder.addFormDataPart(
-                            "colorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException("Failed to write value as JSON", e);
-                }
+                multipartBodyBuilder.addFormDataPart("colorList", String.valueOf(item));
             });
             if (request.getMaybeColorList().isPresent()) {
                 request.getMaybeColorList().get().forEach(item -> {
-                    try {
-                        multipartBodyBuilder.addFormDataPart(
-                                "maybeColorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException("Failed to write value as JSON", e);
-                    }
+                    multipartBodyBuilder.addFormDataPart("maybeColorList", String.valueOf(item));
                 });
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();

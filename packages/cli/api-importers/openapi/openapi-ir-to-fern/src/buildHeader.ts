@@ -2,10 +2,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Header } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildHeader({
     header,

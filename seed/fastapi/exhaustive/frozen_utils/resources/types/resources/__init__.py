@@ -11,6 +11,7 @@ from .object import (
     NestedObjectWithOptionalFieldError,
     NestedObjectWithRequiredField,
     NestedObjectWithRequiredFieldError,
+    ObjectWithDatetimeLikeString,
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithOptionalFieldError,
@@ -18,7 +19,7 @@ from .object import (
     ObjectWithRequiredFieldError,
     OptionalAlias,
 )
-from .union import Animal, Cat, Dog, ErrorWithUnionBody
+from .union import Animal, Cat, Dog, ErrorWithUnionBody, MixedType
 
 __all__ = [
     "Animal",
@@ -27,10 +28,12 @@ __all__ = [
     "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
+    "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
     "NestedObjectWithRequiredFieldError",
+    "ObjectWithDatetimeLikeString",
     "ObjectWithDocs",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",

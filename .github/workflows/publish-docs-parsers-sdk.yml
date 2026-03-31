@@ -3,12 +3,15 @@ name: Publish @fern-fern/docs-parsers-fern-definition
 on:
   workflow_dispatch:
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install

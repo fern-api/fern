@@ -68,18 +68,6 @@ public final class TestMethodNameTestGroupRequest {
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("query_param_object")
-    private Optional<PlainObject> _getQueryParamObject() {
-        return queryParamObject;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("query_param_integer")
-    private Optional<Integer> _getQueryParamInteger() {
-        return queryParamInteger;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("body")
     private Optional<PlainObject> _getBody() {
         return body;
@@ -204,6 +192,16 @@ public final class TestMethodNameTestGroupRequest {
 
         public TestMethodNameTestGroupRequest build() {
             return new TestMethodNameTestGroupRequest(queryParamObject, queryParamInteger, body, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

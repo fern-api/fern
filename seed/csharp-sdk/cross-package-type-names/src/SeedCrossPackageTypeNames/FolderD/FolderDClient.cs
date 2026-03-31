@@ -2,9 +2,9 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
-public partial class FolderDClient
+public partial class FolderDClient : IFolderDClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FolderDClient(RawClient client)
     {
@@ -12,5 +12,5 @@ public partial class FolderDClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTestTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -27,10 +27,7 @@ public class GetTestTest : BaseMockServerTest
             );
 
         var response = await Client.GetTestAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RootObject>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -52,9 +49,6 @@ public class GetTestTest : BaseMockServerTest
             );
 
         var response = await Client.GetTestAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RootObject>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

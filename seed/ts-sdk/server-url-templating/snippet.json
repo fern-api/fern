@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUsers();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUser({\n    userId: \"userId\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/auth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

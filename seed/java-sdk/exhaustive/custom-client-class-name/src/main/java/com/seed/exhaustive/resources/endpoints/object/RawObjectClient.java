@@ -4,6 +4,7 @@
 package com.seed.exhaustive.resources.endpoints.object;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.core.BestException;
 import com.seed.exhaustive.core.BestHttpResponse;
@@ -13,11 +14,15 @@ import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -37,17 +42,25 @@ public class RawObjectClient {
         return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
+    public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
     public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
 
     public BestHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-optional-field")
-                .build();
+                .addPathSegments("get-and-return-with-optional-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -56,7 +69,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -88,11 +101,15 @@ public class RawObjectClient {
 
     public BestHttpResponse<ObjectWithRequiredField> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-required-field")
-                .build();
+                .addPathSegments("get-and-return-with-required-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -101,7 +118,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -133,11 +150,15 @@ public class RawObjectClient {
 
     public BestHttpResponse<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-map-of-map")
-                .build();
+                .addPathSegments("get-and-return-with-map-of-map");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -146,7 +167,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -177,17 +198,27 @@ public class RawObjectClient {
     }
 
     public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+            RequestOptions requestOptions) {
+        return getAndReturnNestedWithOptionalField(
+                NestedObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
+    public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request) {
         return getAndReturnNestedWithOptionalField(request, null);
     }
 
     public BestHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-optional-field")
-                .build();
+                .addPathSegments("get-and-return-nested-with-optional-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -196,7 +227,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -229,12 +260,16 @@ public class RawObjectClient {
 
     public BestHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field")
-                .addPathSegment(string)
-                .build();
+                .addPathSegment(string);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -243,7 +278,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -276,11 +311,15 @@ public class RawObjectClient {
 
     public BestHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-required-field-list")
-                .build();
+                .addPathSegments("get-and-return-nested-with-required-field-list");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -289,7 +328,7 @@ public class RawObjectClient {
             throw new BestException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -305,6 +344,215 @@ public class RawObjectClient {
             if (response.isSuccessful()) {
                 return new BestHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, NestedObjectWithRequiredField.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    public BestHttpResponse<ObjectWithUnknownField> getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+        return getAndReturnWithUnknownField(request, null);
+    }
+
+    public BestHttpResponse<ObjectWithUnknownField> getAndReturnWithUnknownField(
+            ObjectWithUnknownField request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-unknown-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithUnknownField.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    public BestHttpResponse<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request) {
+        return getAndReturnWithDocumentedUnknownType(request, null);
+    }
+
+    public BestHttpResponse<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-documented-unknown-type");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDocumentedUnknownType.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    public BestHttpResponse<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+        return getAndReturnMapOfDocumentedUnknownType(request, null);
+    }
+
+    public BestHttpResponse<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
+            Map<String, Object> request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-map-of-documented-unknown-type");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, new TypeReference<Map<String, Object>>() {}),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public BestHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request) {
+        return getAndReturnWithDatetimeLikeString(request, null);
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public BestHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-datetime-like-string");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

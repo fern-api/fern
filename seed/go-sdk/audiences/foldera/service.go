@@ -66,6 +66,9 @@ func (r *Response) GetFoo() *folderb.Foo {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -111,6 +114,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value

@@ -2,7 +2,7 @@ import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader"
 import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 function getMaybeBadVersionMessage(
     generatorName: string,
@@ -31,10 +31,11 @@ export const CompatibleIrVersionsRule: Rule = {
         return {
             generatorsYml: {
                 generatorInvocation: async ({ invocation, cliVersion }) => {
-                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
-                    if (cliVersion == null) {
+                    if (cliVersion == null || cliVersion === "0.0.0") {
                         return [];
                     }
+
+                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
 
                     // Pull the CLI release to get the IR version
                     const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);

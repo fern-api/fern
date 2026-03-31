@@ -109,6 +109,10 @@ public final class Error {
     public interface _FinalStage {
         Error build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage detail(Optional<String> detail);
 
         _FinalStage detail(String detail);
@@ -185,6 +189,18 @@ public final class Error {
         @java.lang.Override
         public Error build() {
             return new Error(category, code, detail, field, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

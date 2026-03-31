@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```rust
 use seed_oauth_client_credentials_reference::prelude::*;
-use seed_oauth_client_credentials_reference::GetTokenRequest;
 
 #[tokio::main]
 async fn main() {
@@ -29,6 +28,7 @@ async fn main() {
             &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -46,7 +46,7 @@ async fn main() {
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -80,3 +80,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

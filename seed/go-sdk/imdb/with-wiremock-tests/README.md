@@ -30,14 +30,15 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+
+    testPackageName "github.com/imdb/fern"
     client "github.com/imdb/fern/client"
     option "github.com/imdb/fern/option"
-    testPackageName "github.com/imdb/fern"
-    context "context"
 )
 
 func do() {
-    client := client.NewClient(
+    client := client.NewIMDBClient(
         option.WithToken(
             "<token>",
         ),

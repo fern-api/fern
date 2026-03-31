@@ -1,12 +1,12 @@
 import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension";
-import { OperationContext } from "../contexts";
-import { convertHttpOperation } from "./convertHttpOperation";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension.js";
+import { OperationContext } from "../contexts.js";
+import { convertHttpOperation } from "./convertHttpOperation.js";
 
 export interface AsyncAndSyncEndpoints {
     async: EndpointWithExample[];

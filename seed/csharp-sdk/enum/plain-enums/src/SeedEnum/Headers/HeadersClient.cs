@@ -2,9 +2,9 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class HeadersClient
+public partial class HeadersClient : IHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HeadersClient(RawClient client)
     {
@@ -28,26 +28,20 @@ public partial class HeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "operand", request.Operand.Stringify() },
-                { "operandOrColor", JsonUtils.Serialize(request.OperandOrColor) },
-            }
-        );
-        if (request.MaybeOperand != null)
-        {
-            _headers["maybeOperand"] = request.MaybeOperand.Value.Stringify();
-        }
-        if (request.MaybeOperandOrColor != null)
-        {
-            _headers["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
-        }
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add("operand", request.Operand)
+            .Add("maybeOperand", request.MaybeOperand)
+            .Add("operandOrColor", request.OperandOrColor)
+            .Add("maybeOperandOrColor", request.MaybeOperandOrColor)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "headers",
                     Headers = _headers,
@@ -61,7 +55,9 @@ public partial class HeadersClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

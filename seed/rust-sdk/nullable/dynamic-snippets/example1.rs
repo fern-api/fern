@@ -1,5 +1,4 @@
 use seed_nullable::prelude::*;
-use seed_nullable::{Metadata, Status};
 
 #[tokio::main]
 async fn main() {
@@ -15,21 +14,17 @@ async fn main() {
                 username: "username".to_string(),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 metadata: Some(Metadata {
-                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                     avatar: Some("avatar".to_string()),
-                    activated: Some(Some(true)),
+                    activated: Some(true),
                     status: Status::Active,
                     values: Some(HashMap::from([(
                         "values".to_string(),
-                        Some(Some("values".to_string())),
+                        Some("values".to_string()),
                     )])),
                 }),
-                avatar: Some(Some("avatar".to_string())),
+                avatar: Some("avatar".to_string()),
             },
             None,
         )

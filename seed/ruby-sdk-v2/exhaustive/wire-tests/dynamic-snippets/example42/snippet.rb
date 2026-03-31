@@ -1,8 +1,8 @@
 require "seed"
 
-client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.urls.with_ending_slash();
+client.endpoints.primitive.get_and_return_bool(request: true)

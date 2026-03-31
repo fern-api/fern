@@ -1,7 +1,7 @@
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
+using global::System.Net;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
+using global::System.Text.Json;
 using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
@@ -32,7 +32,7 @@ internal class NdJsonContent : HttpContent, IIsRetryableContent
         _content = content ?? throw new ArgumentNullException(nameof(content));
 
         // Create options with WriteIndented explicitly set to false
-        if (options != null)
+        if (options is not null)
         {
             _options = new JsonSerializerOptions(options) { WriteIndented = false };
         }
@@ -121,7 +121,7 @@ internal class NdJsonContent : HttpContent, IIsRetryableContent
         }
     }
 
-    private async Task WriteJsonObjectToStream(
+    private async global::System.Threading.Tasks.Task WriteJsonObjectToStream(
         Stream stream,
         object item,
         CancellationToken cancellationToken

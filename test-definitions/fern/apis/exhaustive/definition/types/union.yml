@@ -15,6 +15,14 @@ types:
       name: string
       likesToMeow: boolean
 
+  MixedType:
+    discriminated: false
+    union:
+      - double
+      - boolean
+      - string
+      - list<string>
+
 errors:
   ErrorWithUnionBody:
     status-code: 400

@@ -3,8 +3,12 @@ namespace SeedHeaderToken;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedHeaderTokenApiException(string message, int statusCode, object body)
-    : SeedHeaderTokenException(message)
+public class SeedHeaderTokenApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedHeaderTokenException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

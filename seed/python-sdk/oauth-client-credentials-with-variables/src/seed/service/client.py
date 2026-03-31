@@ -38,10 +38,8 @@ class ServiceClient:
         from seed import SeedOauthClientCredentialsWithVariables
 
         client = SeedOauthClientCredentialsWithVariables(
+            base_url="YOUR_BASE_URL",
             root_variable="YOUR_ROOT_VARIABLE",
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
         client.service.post()
         """
@@ -82,10 +80,8 @@ class AsyncServiceClient:
         from seed import AsyncSeedOauthClientCredentialsWithVariables
 
         client = AsyncSeedOauthClientCredentialsWithVariables(
+            base_url="YOUR_BASE_URL",
             root_variable="YOUR_ROOT_VARIABLE",
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

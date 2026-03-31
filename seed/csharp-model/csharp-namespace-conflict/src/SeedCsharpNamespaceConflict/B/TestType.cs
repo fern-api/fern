@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedCsharpNamespaceConflict;
 using SeedCsharpNamespaceConflict.Core;
 
@@ -13,7 +13,7 @@ public record TestType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("a")]
-    public required A.Aa.A A { get; set; }
+    public required SeedCsharpNamespaceConflict.A.Aa.A A { get; set; }
 
     [JsonPropertyName("b")]
     public required SeedCsharpNamespaceConflict.A.Aa.B B { get; set; }

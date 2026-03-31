@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->simple()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client->service->downloadFile()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;downloadFile() -> string</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->downloadFile();
+$client->service->downloadFile(): string;
 ```
 </dd>
 </dl>
@@ -49,3 +49,4 @@ $client->service->downloadFile();
 </dd>
 </dl>
 </details>
+

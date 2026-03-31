@@ -1,4 +1,4 @@
-using System.Text;
+using global::System.Text;
 
 namespace SeedSimpleApi.Core;
 

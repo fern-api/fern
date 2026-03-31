@@ -1,11 +1,11 @@
 using NUnit.Framework;
-using OneOf;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UploadJsonDocumentTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -62,15 +62,7 @@ public class UploadJsonDocumentTest : BaseMockServerTest
                 Title = "title",
             }
         );
-        Assert.That(
-            response.Value,
-            Is.EqualTo(
-                    JsonUtils
-                        .Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(mockResponse)
-                        .Value
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -110,14 +102,6 @@ public class UploadJsonDocumentTest : BaseMockServerTest
             );
 
         var response = await Client.UploadJsonDocumentAsync(new UploadDocumentRequest());
-        Assert.That(
-            response.Value,
-            Is.EqualTo(
-                    JsonUtils
-                        .Deserialize<OneOf<DocumentMetadata, DocumentUploadResult>>(mockResponse)
-                        .Value
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

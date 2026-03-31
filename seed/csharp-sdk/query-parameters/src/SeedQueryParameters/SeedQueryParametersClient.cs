@@ -2,13 +2,14 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
-public partial class SeedQueryParametersClient
+public partial class SeedQueryParametersClient : ISeedQueryParametersClient
 {
     private readonly RawClient _client;
 
     public SeedQueryParametersClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedQueryParametersClient
                 { "User-Agent", "Fernquery-parameters/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedQueryParametersClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

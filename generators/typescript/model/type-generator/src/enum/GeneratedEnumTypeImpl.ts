@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import {
@@ -14,17 +14,17 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export declare namespace GeneratedEnumTypeImpl {
-    export interface Init<Context> extends AbstractGeneratedType.Init<EnumTypeDeclaration, Context> {
+    export interface Init<Context> extends AbstractGeneratedType.Init<FernIr.EnumTypeDeclaration, Context> {
         includeEnumUtils: boolean;
         enableForwardCompatibleEnums: boolean;
     }
 }
 
 export class GeneratedEnumTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<EnumTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
     private static readonly VISITOR_INTERFACE_NAME = "Visitor";
@@ -33,6 +33,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     private static readonly VISIT_PROPERTTY_NAME = "_visit";
     private static readonly VISIT_VALUE_PARAMETER_NAME = "value";
     private static readonly VISITOR_PARAMETER_NAME = "visitor";
+    private static readonly VALUES_SUFFIX = "Values";
 
     public readonly type = "enum";
     private includeEnumUtils: boolean;
@@ -44,12 +45,15 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         this.enableForwardCompatibleEnums = enableForwardCompatibleEnums;
     }
 
+    private getValuesConstName(): string {
+        return `${this.typeName}${GeneratedEnumTypeImpl.VALUES_SUFFIX}`;
+    }
+
     private generateEnumType(context: Context): TypeAliasDeclarationStructure {
-        const typeofConst = this.includeEnumUtils
-            ? `Omit<typeof ${this.typeName}, "${GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME}">`
-            : `typeof ${this.typeName}`;
+        // When visitor is enabled, reference the Values const to avoid circular reference
+        const typeofConst = this.includeEnumUtils ? `typeof ${this.getValuesConstName()}` : `typeof ${this.typeName}`;
         const baseType = `${typeofConst}[keyof ${typeofConst}]`;
-        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
+        const shouldWidenType = this.enableForwardCompatibleEnums;
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
@@ -69,7 +73,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
         );
 
-        const shouldWidenType = !this.includeSerdeLayer && this.enableForwardCompatibleEnums;
+        const shouldWidenType = this.enableForwardCompatibleEnums;
         const unionMembers = shouldWidenType
             ? [...enumLiteralTypes, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)]
             : enumLiteralTypes;
@@ -84,14 +88,20 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const statements: (string | WriterFunction | StatementStructures)[] = [
-            this.generateConst(context),
-            this.generateEnumType(context)
-        ];
+        const statements: (string | WriterFunction | StatementStructures)[] = [];
 
         if (this.includeEnumUtils) {
+            // When visitor is enabled, generate an intermediate Values const,
+            // then the type alias, then the const with visitor to avoid circular reference
+            statements.push(this.generateValuesConst(context));
+            statements.push(this.generateEnumType(context));
+            statements.push(this.generateConstWithVisitor(context));
             statements.push(this.generateModule());
+        } else {
+            statements.push(this.generateConst(context));
+            statements.push(this.generateEnumType(context));
         }
+
         return statements;
     }
 
@@ -100,6 +110,204 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             return "";
         }
         return getTextOfTsNode(ts.factory.createJSDocComment(docs)) + "\n";
+    }
+
+    private getEnumValueProperties(): ts.PropertyAssignment[] {
+        return this.shape.values.map((value) =>
+            ts.factory.createPropertyAssignment(
+                ts.factory.createIdentifier(this.printDocs(value.docs) + getPropertyKey(this.getEnumValueName(value))),
+                ts.factory.createStringLiteral(value.name.wireValue)
+            )
+        );
+    }
+
+    private generateValuesConst(context: Context): VariableStatementStructure {
+        const docs = this.getDocs({ context });
+        return {
+            kind: StructureKind.VariableStatement,
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: false,
+            declarations: [
+                {
+                    name: this.getValuesConstName(),
+                    initializer: getTextOfTsNode(
+                        ts.factory.createAsExpression(
+                            ts.factory.createObjectLiteralExpression(this.getEnumValueProperties(), true),
+                            ts.factory.createTypeReferenceNode("const")
+                        )
+                    )
+                }
+            ],
+            docs: docs ? [docs] : undefined
+        };
+    }
+
+    private generateConstWithVisitor(context: Context): VariableStatementStructure {
+        const visitProperty = ts.factory.createPropertyAssignment(
+            GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME,
+            ts.factory.createArrowFunction(
+                undefined,
+                [
+                    ts.factory.createTypeParameterDeclaration(
+                        undefined,
+                        GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                        undefined,
+                        undefined
+                    )
+                ],
+                [
+                    ts.factory.createParameterDeclaration(
+                        undefined,
+                        undefined,
+                        GeneratedEnumTypeImpl.VISIT_VALUE_PARAMETER_NAME,
+                        undefined,
+                        ts.factory.createTypeReferenceNode(this.typeName, undefined)
+                    ),
+                    ts.factory.createParameterDeclaration(
+                        undefined,
+                        undefined,
+                        GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME,
+                        undefined,
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(this.typeName),
+                                GeneratedEnumTypeImpl.VISITOR_INTERFACE_NAME
+                            ),
+                            [
+                                ts.factory.createTypeReferenceNode(
+                                    GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                                    undefined
+                                )
+                            ]
+                        )
+                    )
+                ],
+                ts.factory.createTypeReferenceNode(GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER, undefined),
+                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createSwitchStatement(
+                            ts.factory.createIdentifier(GeneratedEnumTypeImpl.VISIT_VALUE_PARAMETER_NAME),
+                            ts.factory.createCaseBlock([
+                                ...this.shape.values.map((enumValue) =>
+                                    ts.factory.createCaseClause(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(this.typeName),
+                                            this.getEnumValueName(enumValue)
+                                        ),
+                                        [
+                                            ts.factory.createReturnStatement(
+                                                ts.factory.createCallExpression(
+                                                    ts.factory.createPropertyAccessExpression(
+                                                        ts.factory.createIdentifier(
+                                                            GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME
+                                                        ),
+                                                        this.getEnumValueVisitPropertyName(enumValue)
+                                                    ),
+                                                    undefined,
+                                                    []
+                                                )
+                                            )
+                                        ]
+                                    )
+                                ),
+                                ts.factory.createDefaultClause([
+                                    ts.factory.createReturnStatement(
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME
+                                                ),
+                                                GeneratedEnumTypeImpl.OTHER_VISITOR_METHOD_NAME
+                                            ),
+                                            undefined,
+                                            []
+                                        )
+                                    )
+                                ])
+                            ])
+                        )
+                    ],
+                    true
+                )
+            )
+        );
+
+        // Build the explicit type annotation for isolatedDeclarations compatibility:
+        // typeof ValuesConst & { _visit: <R>(value: EnumName, visitor: EnumName.Visitor<R>) => R }
+        const visitMethodType = ts.factory.createFunctionTypeNode(
+            [
+                ts.factory.createTypeParameterDeclaration(
+                    undefined,
+                    GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                    undefined,
+                    undefined
+                )
+            ],
+            [
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    GeneratedEnumTypeImpl.VISIT_VALUE_PARAMETER_NAME,
+                    undefined,
+                    ts.factory.createTypeReferenceNode(this.typeName, undefined)
+                ),
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME,
+                    undefined,
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(
+                            ts.factory.createIdentifier(this.typeName),
+                            GeneratedEnumTypeImpl.VISITOR_INTERFACE_NAME
+                        ),
+                        [
+                            ts.factory.createTypeReferenceNode(
+                                GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                                undefined
+                            )
+                        ]
+                    )
+                )
+            ],
+            ts.factory.createTypeReferenceNode(GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER, undefined)
+        );
+
+        const constTypeAnnotation = ts.factory.createIntersectionTypeNode([
+            ts.factory.createTypeQueryNode(ts.factory.createIdentifier(this.getValuesConstName())),
+            ts.factory.createTypeLiteralNode([
+                ts.factory.createPropertySignature(
+                    undefined,
+                    GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME,
+                    undefined,
+                    visitMethodType
+                )
+            ])
+        ]);
+
+        return {
+            kind: StructureKind.VariableStatement,
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: true,
+            declarations: [
+                {
+                    name: this.typeName,
+                    type: getTextOfTsNode(constTypeAnnotation),
+                    initializer: getTextOfTsNode(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createSpreadAssignment(
+                                    ts.factory.createIdentifier(this.getValuesConstName())
+                                ),
+                                visitProperty
+                            ],
+                            true
+                        )
+                    )
+                }
+            ]
+        };
     }
 
     private generateConst(context: Context): VariableStatementStructure {
@@ -271,7 +479,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return enumModule;
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "enum") {
             throw new Error("Example is not for an enum");
         }
@@ -297,11 +505,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         }
     }
 
-    private getEnumValueName(enumValue: EnumValue): string {
+    private getEnumValueName(enumValue: FernIr.EnumValue): string {
         return enumValue.name.name.pascalCase.unsafeName;
     }
 
-    private getEnumValueVisitPropertyName(enumValue: EnumValue): string {
+    private getEnumValueVisitPropertyName(enumValue: FernIr.EnumValue): string {
         return enumValue.name.name.camelCase.unsafeName;
     }
 }

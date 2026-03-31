@@ -4,6 +4,7 @@ import typing
 
 import httpx
 from .http_client import AsyncHttpClient, HttpClient
+from .logging import LogConfig, Logger
 
 
 class BaseClientWrapper:
@@ -14,18 +15,24 @@ class BaseClientWrapper:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         version: typing.Optional[str] = None,
     ):
         self._api_key = api_key
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
+        self._logging = logging
         self._version = version
 
     def get_headers(self) -> typing.Dict[str, str]:
+        import platform
+
         headers: typing.Dict[str, str] = {
             "User-Agent": "fern_bearer-token-environment-variable/0.0.1",
             "X-Fern-Language": "Python",
+            "X-Fern-Runtime": f"python/{platform.python_version()}",
+            "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "fern_bearer-token-environment-variable",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
@@ -58,15 +65,19 @@ class SyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         version: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, version=version)
+        super().__init__(
+            api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, logging=logging, version=version
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            logging_config=self._logging,
         )
 
 
@@ -78,11 +89,14 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         version: typing.Optional[str] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, version=version)
+        super().__init__(
+            api_key=api_key, headers=headers, base_url=base_url, timeout=timeout, logging=logging, version=version
+        )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
@@ -90,6 +104,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
             async_base_headers=self.async_get_headers,
+            logging_config=self._logging,
         )
 
     async def async_get_headers(self) -> typing.Dict[str, str]:

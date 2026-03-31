@@ -12,24 +12,24 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../getExtension";
-import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions";
-import { ParseOpenAPIOptions } from "../../options";
-import { convertAvailability } from "../../schema/convertAvailability";
-import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
-import { convertUndiscriminatedOneOf, UndiscriminatedOneOfSuffix } from "../../schema/convertUndiscriminatedOneOf";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
-import { FernAsyncAPIExtension } from "../fernExtensions";
-import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
-import { ParseAsyncAPIOptions } from "../options";
-import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ServerContext } from "../sharedTypes";
-import { constructServerUrl, transformToValidPath } from "../sharedUtils";
-import { AsyncAPIV2 } from "../v2";
-import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
+import { getExtension } from "../../getExtension.js";
+import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions.js";
+import { ParseOpenAPIOptions } from "../../options.js";
+import { convertAvailability } from "../../schema/convertAvailability.js";
+import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas.js";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfSuffix } from "../../schema/convertUndiscriminatedOneOf.js";
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { getSchemas } from "../../utils/getSchemas.js";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
+import { FernAsyncAPIExtension } from "../fernExtensions.js";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples.js";
+import { ParseAsyncAPIOptions } from "../options.js";
+import { AsyncAPIIntermediateRepresentation } from "../parse.js";
+import { ServerContext } from "../sharedTypes.js";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils.js";
+import { AsyncAPIV2 } from "../v2/index.js";
+import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext.js";
 
 export function parseAsyncAPIV2({
     context,
@@ -56,9 +56,9 @@ export function parseAsyncAPIV2({
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        const serverNameOverride = getExtension<string>(server, FernAsyncAPIExtension.FERN_SERVER_NAME);
         servers[serverId] = {
-            // Always preserve server names from AsyncAPI spec
-            name: serverId,
+            name: serverNameOverride ?? serverId,
             url: constructServerUrl(server.protocol, server.url)
         };
     }
@@ -125,12 +125,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         headers.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -174,12 +178,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         queryParameters.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -314,7 +322,10 @@ export function parseAsyncAPIV2({
                     origin: "client",
                     name: "publish",
                     body: convertSchemaWithExampleToSchema(publishSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName:
+                        channel.publish != null
+                            ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             if (subscribeSchema != null) {
@@ -322,7 +333,10 @@ export function parseAsyncAPIV2({
                     origin: "server",
                     name: "subscribe",
                     body: convertSchemaWithExampleToSchema(subscribeSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName:
+                        channel.subscribe != null
+                            ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             parsedChannels[channelPath] = {
@@ -359,6 +373,7 @@ export function parseAsyncAPIV2({
                         name: server.name as string
                     })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName: getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME),
                 path,
                 description: channel.description,
                 examples,

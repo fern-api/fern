@@ -2,10 +2,10 @@ import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { FernIr, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-import { getAvailability } from "../../commons/availability";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { EnumConverter } from "./EnumConverter";
-import { MessageConverter } from "./MessageConverter";
+import { getAvailability } from "../../commons/availability.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { EnumConverter } from "./EnumConverter.js";
+import { MessageConverter } from "./MessageConverter.js";
 
 export declare namespace EnumOrMessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

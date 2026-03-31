@@ -1,15 +1,15 @@
 import { AbstractGeneratorCli, File } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { readFile } from "fs/promises";
-import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
+import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext.js";
 
 export abstract class AbstractRustGeneratorCli<
     CustomConfig extends BaseRustCustomConfigSchema,
     RustGeneratorContext extends AbstractRustGeneratorContext<CustomConfig>
-> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, RustGeneratorContext> {
-    protected async parseIntermediateRepresentation(irFilepath: string): Promise<IntermediateRepresentation> {
+> extends AbstractGeneratorCli<CustomConfig, FernIr.IntermediateRepresentation, RustGeneratorContext> {
+    protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
         // Read and parse the IR file manually to add preprocessing
         const irContent = await readFile(irFilepath, "utf-8");
         const irJson = JSON.parse(irContent);

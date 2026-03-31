@@ -5,6 +5,7 @@ package types
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/exhaustive/fern/internal"
 )
 
@@ -31,6 +32,11 @@ type ObjectWithDocs struct {
 	// - ///: Comment marker
 	// - /**: Block comment start
 	// - ** /: Block comment end
+	//
+	// XMLDoc (C#) (Example of actual XML tags):
+	// See <a href="https://example.com/docs">the docs</a> for more info.
+	// Use <code>getValue()</code> to retrieve the value.
+	// Note: when count < 10 or count > 100, special handling applies.
 	//
 	// Javadoc (Java):
 	// - @: Used for Javadoc tags

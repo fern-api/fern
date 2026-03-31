@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_property_access::prelude::*;
-use seed_property_access::{User, UserProfile, UserProfileVerification};
 
 #[tokio::main]
 async fn main() {
@@ -61,9 +60,12 @@ async fn main() {
                     name: "name".to_string(),
                     verification: UserProfileVerification {
                         verified: "verified".to_string(),
+                        ..Default::default()
                     },
                     ssn: "ssn".to_string(),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )

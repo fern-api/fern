@@ -1,7 +1,7 @@
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",
@@ -27,18 +27,24 @@ export const NoNonComponentRefsRule: Rule = {
                                     );
 
                                     // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                    const isOpenApiV2 =
+                                    // Check both YAML format (swagger: "2.0") and JSON format ("swagger": "2.0")
+                                    const isOpenApiV2Yaml =
                                         contents.includes("swagger:") &&
                                         (contents.includes('swagger: "2.0"') ||
                                             contents.includes("swagger: '2.0'") ||
                                             contents.includes("swagger: 2.0"));
+                                    const isOpenApiV2Json =
+                                        contents.includes('"swagger":') &&
+                                        (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
 
-                                    if (isOpenApiV2) {
+                                    if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                         continue; // Skip v2 files
                                     }
 
                                     // Skip AsyncAPI files - they have different reference patterns than OpenAPI
-                                    const isAsyncAPI = contents.includes("asyncapi:");
+                                    // Check for both YAML format (asyncapi:) and JSON format ("asyncapi":)
+                                    const isAsyncAPI =
+                                        contents.includes("asyncapi:") || contents.includes('"asyncapi":');
                                     if (isAsyncAPI) {
                                         continue; // Skip AsyncAPI files
                                     }

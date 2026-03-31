@@ -38,6 +38,7 @@ class Square extends JsonSerializableType
     public function setLength(float $value): self
     {
         $this->length = $value;
+        $this->_setField('length');
         return $this;
     }
 

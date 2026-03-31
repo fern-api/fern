@@ -46,6 +46,7 @@ class StartingAfterPaging extends JsonSerializableType
     public function setPerPage(int $value): self
     {
         $this->perPage = $value;
+        $this->_setField('perPage');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class StartingAfterPaging extends JsonSerializableType
     public function setStartingAfter(?string $value = null): self
     {
         $this->startingAfter = $value;
+        $this->_setField('startingAfter');
         return $this;
     }
 

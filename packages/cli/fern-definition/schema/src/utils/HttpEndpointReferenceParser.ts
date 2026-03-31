@@ -2,6 +2,7 @@ export declare namespace HttpEndpointReferenceParser {
     interface Parsed {
         path: string;
         method: Method;
+        namespace: string | undefined;
     }
 
     type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
@@ -18,11 +19,11 @@ export declare namespace HttpEndpointReferenceParser {
 }
 
 /**
- * Parses an HTTP endpoint reference like `POST /users/get`
+ * Parses an HTTP endpoint reference like `POST /users/get` or `namespace::POST /users/get`
  */
 export class HttpEndpointReferenceParser {
     //eslint-disable-next-line
-    private REFERENCE_REGEX = /^(GET|POST|PUT|DELETE|PATCH|HEAD)\s(\/\S*)$/;
+    private REFERENCE_REGEX = /^(?:(\w+)::)?(GET|POST|PUT|DELETE|PATCH|HEAD)\s(\/\S*)$/;
 
     public validate(reference: string): HttpEndpointReferenceParser.ValidationResult {
         const validFormat = this.REFERENCE_REGEX.test(reference);
@@ -38,12 +39,13 @@ export class HttpEndpointReferenceParser {
             return undefined;
         }
         const match = reference.match(this.REFERENCE_REGEX);
-        if (match == null || match[1] == null || match[2] == null) {
+        if (match == null || match[2] == null || match[3] == null) {
             return undefined;
         }
         return {
-            method: match[1] as HttpEndpointReferenceParser.Method,
-            path: match[2]
+            namespace: match[1], // undefined if no namespace prefix
+            method: match[2] as HttpEndpointReferenceParser.Method,
+            path: match[3]
         };
     }
 }

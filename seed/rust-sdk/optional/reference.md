@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_body</a>(request: Option<std::collections::HashMap<String, serde_json::Value>>) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_body</a>(request: Option&lt;std::collections::HashMap&lt;String, serde_json::Value&gt;&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_typed_body</a>(request: Option<SendOptionalBodyRequest>) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_typed_body</a>(request: Option&lt;SendOptionalBodyRequest&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,6 @@ async fn main() {
 
 ```rust
 use seed_objects_with_imports::prelude::*;
-use seed_objects_with_imports::SendOptionalBodyRequest;
 
 #[tokio::main]
 async fn main() {
@@ -70,6 +69,7 @@ async fn main() {
         .send_optional_typed_body(
             &Some(SendOptionalBodyRequest {
                 message: "message".to_string(),
+                ..Default::default()
             }),
             None,
         )
@@ -86,7 +86,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_nullable_with_all_optional_properties</a>(action_id: String, id: String, request: Option<Option<DeployParams>>) -> Result<DeployResponse, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_nullable_with_all_optional_properties</a>(action_id: String, id: String, request: Option&lt;Option&lt;DeployParams&gt;&gt;) -> Result&lt;DeployResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -115,7 +115,6 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```rust
 use seed_objects_with_imports::prelude::*;
-use seed_objects_with_imports::DeployParams;
 
 #[tokio::main]
 async fn main() {
@@ -128,9 +127,10 @@ async fn main() {
         .send_optional_nullable_with_all_optional_properties(
             &"actionId".to_string(),
             &"id".to_string(),
-            &Some(Some(DeployParams {
+            &Some(DeployParams {
                 update_draft: Some(true),
-            })),
+                ..Default::default()
+            }),
             None,
         )
         .await;
@@ -168,3 +168,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

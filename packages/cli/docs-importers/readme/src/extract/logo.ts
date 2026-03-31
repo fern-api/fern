@@ -1,8 +1,8 @@
 import type { Element, Root as HastRoot } from "hast";
 import { visit } from "unist-util-visit";
 
-import { downloadImage } from "../utils/files/images";
-import { htmlToHast } from "../utils/hast";
+import { downloadImage } from "../utils/files/images.js";
+import { htmlToHast } from "../utils/hast.js";
 
 function getLogoNodes(root: HastRoot): Array<Element> | undefined {
     const logoElements: Array<Element> = [];

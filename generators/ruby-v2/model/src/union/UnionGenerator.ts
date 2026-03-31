@@ -3,9 +3,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 // import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
@@ -17,15 +16,15 @@ interface UnionMember {
 }
 
 export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: ruby.ClassReference;
     private readonly discriminantPropertyName: string;
     private readonly unionMembers: UnionMember[];
 
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UnionTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UnionTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.post();
+client.service.post
 ```
 </dd>
 </dl>
@@ -47,3 +47,4 @@ client.service.post();
 </dd>
 </dl>
 </details>
+

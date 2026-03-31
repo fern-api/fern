@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import AddErrorDiscriminationConfig from "./add-error-discrimination-config";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import AddErrorDiscriminationConfig from "./add-error-discrimination-config/index.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.248",

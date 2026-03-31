@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->get()</code></summary>
+<details><summary><code>$client-&gt;get()</code></summary>
 <dl>
 <dd>
 
@@ -23,3 +23,4 @@ $client->get();
 </dd>
 </dl>
 </details>
+

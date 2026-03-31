@@ -4,9 +4,9 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class ContentTypeClient
+public partial class ContentTypeClient : IContentTypeClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ContentTypeClient(RawClient client)
     {
@@ -39,14 +39,20 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/bar",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json-patch+json",
                     Options = options,
                 },
@@ -58,7 +64,9 @@ public partial class ContentTypeClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -93,14 +101,20 @@ public partial class ContentTypeClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/baz",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json-patch+json; charset=utf-8",
                     Options = options,
                 },
@@ -112,7 +126,9 @@ public partial class ContentTypeClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

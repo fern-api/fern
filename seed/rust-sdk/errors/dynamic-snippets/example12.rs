@@ -1,5 +1,4 @@
 use seed_errors::prelude::*;
-use seed_errors::FooRequest;
 
 #[tokio::main]
 async fn main() {
@@ -13,6 +12,7 @@ async fn main() {
         .foo_with_examples(
             &FooRequest {
                 bar: "hello".to_string(),
+                ..Default::default()
             },
             None,
         )

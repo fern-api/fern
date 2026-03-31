@@ -1,5 +1,4 @@
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {
@@ -14,7 +13,8 @@ async fn main() {
             &FilterByRoleQueryRequest {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
-                secondary_role: Some(Some(UserRole::Admin)),
+                secondary_role: Some(UserRole::Admin),
+                ..Default::default()
             },
             None,
         )

@@ -205,10 +205,13 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
-    def annotated(type: TypeHint, annotation: Expression) -> TypeHint:
+    def annotated(type: TypeHint, annotation: Expression, *additional_annotations: Expression) -> TypeHint:
+        type_parameters = [TypeParameter(type), TypeParameter(annotation)]
+        for additional_annotation in additional_annotations:
+            type_parameters.append(TypeParameter(additional_annotation))
         return TypeHint(
             type=get_reference_to_typing_extensions_import("Annotated"),
-            type_parameters=[TypeParameter(type), TypeParameter(annotation)],
+            type_parameters=type_parameters,
         )
 
     @staticmethod

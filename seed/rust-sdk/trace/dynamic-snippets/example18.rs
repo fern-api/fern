@@ -1,5 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::{PlaylistId, ProblemId, UpdatePlaylistRequest};
 
 #[tokio::main]
 async fn main() {
@@ -20,6 +19,7 @@ async fn main() {
                     ProblemId("problems".to_string()),
                     ProblemId("problems".to_string()),
                 ],
+                ..Default::default()
             }),
             None,
         )

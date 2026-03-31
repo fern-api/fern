@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../getExtension";
+import { getExtension } from "../../getExtension.js";
 
 // The standard webhooks syntax introduced in OpenAPI v3.1.0.
 // It can be parsed just like paths.

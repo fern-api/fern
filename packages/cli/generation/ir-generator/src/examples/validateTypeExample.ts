@@ -1,15 +1,15 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { ExampleViolation } from "./exampleViolation";
-import { validateAliasExample } from "./validateAliasExample";
-import { validateEnumExample } from "./validateEnumExample";
-import { validateObjectExample } from "./validateObjectExample";
-import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample";
-import { validateUnionExample } from "./validateUnionExample";
+import { FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { ExampleViolation } from "./exampleViolation.js";
+import { validateAliasExample } from "./validateAliasExample.js";
+import { validateEnumExample } from "./validateEnumExample.js";
+import { validateObjectExample } from "./validateObjectExample.js";
+import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample.js";
+import { validateUnionExample } from "./validateUnionExample.js";
 
 export function validateTypeExample({
     typeName,

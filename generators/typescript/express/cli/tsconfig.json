@@ -1,27 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    {
-      "path": "../../../../packages/cli/logger"
-    },
-    {
-      "path": "../generator"
-    },
-    {
-      "path": "../../utils/contexts"
-    },
-    {
-      "path": "../../utils/commons"
-    },
-    {
-      "path": "../../utils/abstract-generator-cli"
-    }
-  ]
+  "exclude": ["./src/**/__test__/**/generated"]
 }

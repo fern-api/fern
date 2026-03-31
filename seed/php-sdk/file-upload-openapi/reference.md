@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>$client->fileUploadExample->uploadFile($request) -> string</code></summary>
+<details><summary><code>$client-&gt;fileUploadExample-&gt;uploadFile($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -29,6 +29,7 @@ Upload a file to the database
 ```php
 $client->fileUploadExample->uploadFile(
     new UploadFileRequest([
+        'file' => File::createFromString("example_file", "example_file"),
         'name' => 'name',
     ]),
 );
@@ -42,3 +43,4 @@ $client->fileUploadExample->uploadFile(
 </dd>
 </dl>
 </details>
+

@@ -7,11 +7,11 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { validateProductConfigFileSchema } from "./validateProductConfig";
-import { validateVersionConfigFileSchema } from "./validateVersionConfig";
-import { visitFilepath } from "./visitFilepath";
-import { visitNavigationAst } from "./visitNavigationAst";
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
+import { validateProductConfigFileSchema } from "./validateProductConfig.js";
+import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
+import { visitFilepath } from "./visitFilepath.js";
+import { visitNavigationAst } from "./visitNavigationAst.js";
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -43,6 +43,16 @@ export async function visitDocsConfigFileYamlAst({
         analytics: noop,
         aiChat: noop,
         aiSearch: noop,
+        aiExamples: async (aiExamples) => {
+            // Handle nested structure (new format)
+            if (aiExamples != null && typeof aiExamples === "object") {
+                await visitObjectAsync(aiExamples, {
+                    enabled: noop,
+                    style: noop
+                });
+            }
+            // If it's a boolean, it's the old format which is handled by noop
+        },
         pageActions: noop,
         announcement: noop,
         backgroundImage: async (background) => {
@@ -115,7 +125,31 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["favicon"]
             });
         },
+        footer: async (footer) => {
+            if (footer == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: footer,
+                visitor,
+                nodePath: ["footer"],
+                willBeUploaded: false
+            });
+        },
         footerLinks: noop,
+        header: async (header) => {
+            if (header == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: header,
+                visitor,
+                nodePath: ["header"],
+                willBeUploaded: false
+            });
+        },
         integrations: noop,
         js: async (js) => {
             if (js == null) {
@@ -222,6 +256,7 @@ export async function visitDocsConfigFileYamlAst({
                 })
             );
         },
+        check: noop,
         redirects: noop,
         tabs: noop,
         title: noop,
@@ -307,7 +342,8 @@ export async function visitDocsConfigFileYamlAst({
         },
         roles: noop,
         languages: noop,
-        theme: noop
+        theme: noop,
+        libraries: noop
     });
 }
 

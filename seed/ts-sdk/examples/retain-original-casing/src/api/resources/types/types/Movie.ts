@@ -43,14 +43,14 @@ import type * as SeedExamples from "../../../index.js";
  */
 export interface Movie {
     id: SeedExamples.MovieId;
-    prequel?: SeedExamples.MovieId;
+    prequel?: SeedExamples.MovieId | undefined;
     title: string;
     from: string;
     /** The rating scale is one to five stars */
     rating: number;
     type: "movie";
     tag: SeedExamples.commons.Tag;
-    book?: string;
+    book?: string | undefined;
     metadata: Record<string, unknown>;
     revenue: number;
 }

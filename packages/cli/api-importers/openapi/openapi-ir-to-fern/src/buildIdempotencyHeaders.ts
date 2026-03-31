@@ -1,11 +1,11 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildHeader } from "./buildHeader";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+import { buildHeader } from "./buildHeader.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): void {
     for (const header of context.ir.idempotencyHeaders ?? []) {

@@ -11,7 +11,7 @@ import {
     GIT_DEPTH_VALUE,
     GITHUB_BASE_URL,
     GITHUB_BRANCH_URL_REGEX
-} from "./constants";
+} from "./constants.js";
 
 export async function copyGithubOutputToOutputDirectory(
     repository: string,

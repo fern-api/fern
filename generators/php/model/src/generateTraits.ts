@@ -1,5 +1,5 @@
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { TraitGenerator } from "./trait/TraitGenerator";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { TraitGenerator } from "./trait/TraitGenerator.js";
 
 export function generateTraits(context: ModelGeneratorContext): void {
     const extendedTypeIdsFromTypes = Object.values(context.ir.types).flatMap((typeDeclaration) =>

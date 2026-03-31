@@ -27,9 +27,9 @@ import {
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
-import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi";
-import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi.js";
+import { convertObject } from "./convertObject.js";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 
 export function convertServices({
     ir,
@@ -342,8 +342,20 @@ function convertRequestBody({
                 }
             };
         },
-        bytes: () => {
-            throw new Error("bytes is not supported");
+        bytes: (bytesRequest) => {
+            const contentType = bytesRequest.contentType ?? "application/octet-stream";
+            return {
+                required: !bytesRequest.isOptional,
+                description: bytesRequest.docs ?? undefined,
+                content: {
+                    [contentType]: {
+                        schema: {
+                            type: "string",
+                            format: "binary"
+                        }
+                    }
+                }
+            };
         },
         _other: () => {
             throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
@@ -396,6 +408,57 @@ function convertResponse({
             description: httpResponse.body.value.docs ?? "",
             content: {
                 "application/json": convertedResponse
+            }
+        };
+    } else if (httpResponse?.body?.type === "fileDownload" || httpResponse?.body?.type === "bytes") {
+        responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
+            description: httpResponse.body.docs ?? "",
+            content: {
+                "application/octet-stream": {
+                    schema: {
+                        type: "string",
+                        format: "binary"
+                    }
+                }
+            }
+        };
+    } else if (httpResponse?.body?.type === "text") {
+        responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
+            description: httpResponse.body.docs ?? "",
+            content: {
+                "text/plain": {
+                    schema: {
+                        type: "string"
+                    }
+                }
+            }
+        };
+    } else if (httpResponse?.body?.type === "streaming") {
+        const streamingValue = httpResponse.body.value;
+        let streamingContentType: string;
+        switch (streamingValue.type) {
+            case "sse":
+                streamingContentType = "text/event-stream";
+                break;
+            case "json":
+                streamingContentType = "application/jsonl";
+                break;
+            case "text":
+                streamingContentType = "text/plain";
+                break;
+            default:
+                streamingContentType = "application/octet-stream";
+                break;
+        }
+        responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
+            description: streamingValue.docs ?? "",
+            content: {
+                [streamingContentType]: {
+                    schema: {
+                        type: "string",
+                        format: "binary"
+                    }
+                }
             }
         };
     } else {
