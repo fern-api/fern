@@ -338,7 +338,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 parameters: [
                     {
                         name: GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME,
-                        type: "ArrayBufferLike | Blob | ArrayBufferView"
+                        type: "ArrayBuffer | Blob | ArrayBufferView"
                     }
                 ],
                 returnType: "void",
@@ -507,7 +507,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             parameters: [
                 {
                     name: "payload",
-                    type: "ArrayBufferLike | Blob | ArrayBufferView"
+                    type: "ArrayBuffer | Blob | ArrayBufferView"
                 }
             ],
             statements: [`this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.send(payload);`],

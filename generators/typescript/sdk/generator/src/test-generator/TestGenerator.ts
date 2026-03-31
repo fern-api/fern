@@ -256,12 +256,16 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                this.dependencyManager.addDependency("vitest", "^4.1.1", {
                     type: DependencyType.DEV
                 });
                 break;
         }
         if (this.generateWireTests) {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
             this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
@@ -465,7 +469,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+        .${endpoint.method.toLowerCase()}("${getMockUrlForExample(endpoint, example)}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
                 return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
@@ -531,7 +535,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+        .${endpoint.method.toLowerCase()}("${getMockUrlForExample(endpoint, example)}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
                 return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
@@ -1155,10 +1159,11 @@ describe("${serviceName}", () => {
                 // If nested, isCursorMissing is forced to true below to skip getNextPage().
                 if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
                     const wireKey = getWireValue(nextProperty.property.name);
+                    const paginationMockUrl = getMockUrlForExample(endpoint, example);
                     const nextValueCode =
                         pagination.type === "uri"
-                            ? code`\`\${server.baseUrl}${example.url}\``
-                            : code`${literalOf(example.url)}`;
+                            ? code`\`\${server.baseUrl}${paginationMockUrl}\``
+                            : code`${literalOf(paginationMockUrl)}`;
                     uriPathNextOverride = { wireKey, nextValueCode };
                 }
             }
@@ -1418,6 +1423,12 @@ describe("${serviceName}", () => {
             testName += ` (${exampleIndex + 1})`;
         }
 
+        // Reconstruct the mock URL from the endpoint path template using the same encoding
+        // as the SDK's encodePathParam to ensure the mock handler URL matches the actual request URL.
+        // The IR's example.url uses JSON.stringify for non-primitive path params while the SDK's
+        // encodePathParam uses String(), causing a mismatch (e.g., "%7B%22key%22..." vs "%5Bobject%20Object%5D").
+        const mockUrl = getMockUrlForExample(endpoint, example);
+
         return code`
     test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
@@ -1427,7 +1438,7 @@ describe("${serviceName}", () => {
         ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
-            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .${endpoint.method.toLowerCase()}("${mockUrl}")${example.serviceHeaders
                 .filter((h) => h.value.jsonExample != null)
                 .map((h) => {
                     return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
@@ -1545,17 +1556,24 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.type === "union" &&
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
-                discriminantField = getWireValue(typeDeclaration.shape.discriminant);
+                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
+                discriminantField = context.includeSerdeLayer
+                    ? context.case.camelUnsafe(typeDeclaration.shape.discriminant)
+                    : getWireValue(typeDeclaration.shape.discriminant);
             }
         }
 
-        const createRawJsonExample = this.createRawJsonExample.bind(this);
         const eventCodes = sseEvents.map((event) => {
+            // Build the deserialized (camelCase) representation of the event data
+            const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
             if (discriminantField != null) {
-                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
-                return code`${literalOf(merged)}`;
+                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
+                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
             }
-            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+            return code`${getTextOfTsNode(deserializedData)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
     }
@@ -2339,4 +2357,39 @@ function isPaginationCursorMissingInExample({
 
     // If the leaf is explicitly undefined or null, treat it as "missing"
     return cursor === undefined || cursor === null;
+}
+
+/**
+ * Reconstructs the mock URL for a test example using encoding that matches the SDK's
+ * `encodePathParam` behavior. The IR's `example.url` uses `JSON.stringify` for non-primitive
+ * path parameter values, but the SDK's `encodePathParam` uses `String()` for objects,
+ * which produces different encoding (e.g., `[object Object]` vs `{"key":"value"}`).
+ * This ensures the mock server URL matches the actual request URL sent by the SDK.
+ */
+function getMockUrlForExample(endpoint: FernIr.HttpEndpoint, example: FernIr.ExampleEndpointCall): string {
+    const pathParameters: Record<string, string> = {};
+    [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
+        (examplePathParameter) => {
+            const value = examplePathParameter.value.jsonExample;
+            // Match the SDK's encodePathParam behavior: use String() for non-primitive values
+            // instead of JSON.stringify, so the mock URL matches the actual request URL.
+            let stringValue: string;
+            if (value === null) {
+                stringValue = "null";
+            } else if (value === undefined) {
+                stringValue = "undefined";
+            } else if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+                stringValue = String(value);
+            } else {
+                stringValue = String(value);
+            }
+            pathParameters[examplePathParameter.name.originalName] = stringValue;
+        }
+    );
+    const url =
+        endpoint.fullPath.head +
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
+    return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

@@ -12,7 +12,7 @@ pub struct TestCaseTemplate2 {
 
 impl TestCaseTemplate2 {
     pub fn builder() -> TestCaseTemplate2Builder {
-        TestCaseTemplate2Builder::default()
+        <TestCaseTemplate2Builder as Default>::default()
     }
 }
 

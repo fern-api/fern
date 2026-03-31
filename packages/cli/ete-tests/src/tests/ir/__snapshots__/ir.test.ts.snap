@@ -32838,7 +32838,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": "x-webhook-timestamp",
@@ -32889,7 +32890,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": "x-webhook-timestamp",

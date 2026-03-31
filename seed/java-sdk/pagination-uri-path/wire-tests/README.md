@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:pagination-uri-path'
+  implementation 'com.fern:pagination-uri-path:0.0.1'
 }
 ```
 

@@ -103,6 +103,39 @@ export class MockEndpointGenerator extends WithGeneration {
                         writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
+                // Add auth header matching for endpoints that require authentication.
+                // Skip auth header matching when endpoint has per-endpoint security because
+                // the C# client configures all auth schemes globally and header overwriting
+                // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
+                if (endpoint.auth && !this.hasEndpointSecurity(endpoint)) {
+                    for (const scheme of this.context.ir.auth.schemes) {
+                        switch (scheme.type) {
+                            case "basic": {
+                                // Compute exact expected header value from the known test credentials
+                                const username = scheme.username.screamingSnakeCase.safeName;
+                                const password = scheme.password.screamingSnakeCase.safeName;
+                                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                                writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
+                                break;
+                            }
+                            case "bearer": {
+                                const tokenValue = scheme.token.screamingSnakeCase.safeName;
+                                writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
+                                break;
+                            }
+                            case "header": {
+                                const headerName = scheme.name?.wireValue;
+                                const headerValue = scheme.name?.name?.screamingSnakeCase?.safeName;
+                                if (headerName && headerValue) {
+                                    const prefix = scheme.prefix;
+                                    const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
+                                    writer.write(`.WithHeader("${headerName}", "${fullValue}")`);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
                 if (requestContentType) {
                     writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
                 }
@@ -174,6 +207,13 @@ export class MockEndpointGenerator extends WithGeneration {
             case "unknown":
                 return undefined;
         }
+    }
+
+    /**
+     * Returns true if the endpoint has per-endpoint security defined.
+     */
+    private hasEndpointSecurity(endpoint: HttpEndpoint): boolean {
+        return endpoint.security != null && endpoint.security.length > 0;
     }
 
     /**
@@ -473,7 +513,11 @@ export class MockEndpointGenerator extends WithGeneration {
             type: "named";
             typeName: { typeId: TypeId };
             shape:
-                | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+                | {
+                      type: "object";
+                      properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                      extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                  }
                 | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
                 | { type: "enum"; value: { wireValue: string } }
                 | { type: "alias"; value: ExampleTypeReference }
@@ -486,7 +530,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         switch (innerShape.type) {
             case "object":
-                return this.filterObjectExample(typeId, innerShape.properties, options);
+                return this.filterObjectExample(typeId, innerShape.properties, options, innerShape.extraProperties);
 
             case "alias":
                 return this.filterExampleTypeReference(innerShape.value, options);
@@ -514,7 +558,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private filterObjectExample(
         typeId: TypeId,
         properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>,
-        options: { filterWriteOnly?: boolean } = {}
+        options: { filterWriteOnly?: boolean } = {},
+        extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
@@ -538,6 +583,14 @@ export class MockEndpointGenerator extends WithGeneration {
             }
             result[prop.name.wireValue] = filteredValue;
         }
+
+        // Include extra properties (AdditionalProperties) inline — they serialize via [JsonExtensionData]
+        if (extraProperties != null) {
+            for (const extraProp of extraProperties) {
+                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value, options);
+            }
+        }
+
         return result;
     }
 

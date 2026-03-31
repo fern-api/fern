@@ -13,7 +13,7 @@ pub struct NestedObjectWithLiterals {
 
 impl NestedObjectWithLiterals {
     pub fn builder() -> NestedObjectWithLiteralsBuilder {
-        NestedObjectWithLiteralsBuilder::default()
+        <NestedObjectWithLiteralsBuilder as Default>::default()
     }
 }
 

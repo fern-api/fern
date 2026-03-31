@@ -32,8 +32,8 @@ export class ClientConfigGenerator {
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
-        if (this.hasEnvironments()) {
-            const environmentEnumName = this.getEnvironmentEnumName();
+        if (this.context.hasEnvironments()) {
+            const environmentEnumName = this.context.getEnvironmentEnumName();
             imports.push(new UseStatement({ path: "crate", items: [environmentEnumName] }));
         }
 
@@ -99,6 +99,17 @@ export class ClientConfigGenerator {
             })
         ];
 
+        if (this.context.hasMultipleBaseUrls()) {
+            const environmentEnumName = this.context.getEnvironmentEnumName();
+            fields.push(
+                rust.field({
+                    name: "environment",
+                    type: rust.Type.option(rust.Type.reference(rust.reference({ name: environmentEnumName }))),
+                    visibility: PUBLIC
+                })
+            );
+        }
+
         return rust.struct({
             name: "ClientConfig",
             visibility: PUBLIC,
@@ -109,7 +120,7 @@ export class ClientConfigGenerator {
 
     private generateDefaultImpl() {
         const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
-        const environmentEnumName = this.getEnvironmentEnumName();
+        const environmentEnumName = this.context.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 
         // Platform headers for Fern SDK identification
@@ -125,7 +136,7 @@ export class ClientConfigGenerator {
                     {
                         name: "base_url",
                         value:
-                            this.hasEnvironments() && hasDefaultEnvironment
+                            this.context.hasEnvironments() && hasDefaultEnvironment
                                 ? Expression.methodCall({
                                       target: Expression.methodCall({
                                           target: Expression.functionCall(`${environmentEnumName}::default`, []),
@@ -182,7 +193,19 @@ export class ClientConfigGenerator {
                     {
                         name: "user_agent",
                         value: Expression.toString(Expression.stringLiteral(userAgent))
-                    }
+                    },
+                    ...(this.context.hasMultipleBaseUrls()
+                        ? [
+                              {
+                                  name: "environment",
+                                  value: Expression.raw(
+                                      hasDefaultEnvironment
+                                          ? `Some(${environmentEnumName}::default())`
+                                          : "None"
+                                  )
+                              }
+                          ]
+                        : [])
                 ])
             )
         });
@@ -194,12 +217,4 @@ export class ClientConfigGenerator {
         });
     }
 
-    private hasEnvironments(): boolean {
-        return this.context.ir.environments?.environments != null;
-    }
-
-    private getEnvironmentEnumName(): string {
-        const customConfig = this.context.customConfig;
-        return customConfig.environmentEnumName || "Environment";
-    }
 }

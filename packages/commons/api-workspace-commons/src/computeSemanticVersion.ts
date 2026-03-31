@@ -687,6 +687,12 @@ export async function getLatestVersionFromRubyGems(
  * always uses the public proxy. For private modules, the GitHub tags fallback
  * with GITHUB_TOKEN is used instead.
  *
+ * Go modules with major version >= 2 use a version suffix in the module path
+ * (e.g., "github.com/owner/repo/v2"). When the provided module path does not
+ * already contain a major version suffix, this function probes /v2 through /v10
+ * in parallel to discover the highest published major version and returns the
+ * latest version from that major version line.
+ *
  * @param modulePath - The Go module path (e.g., "github.com/owner/repo")
  * @param _registryInfo - Registry info (not used for Go, but kept for interface consistency)
  * @returns The latest version string (without "v" prefix), or undefined if not found
@@ -696,6 +702,57 @@ export async function getLatestVersionFromGoProxy(
     modulePath: string,
     _registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
+    try {
+        // If the module path already contains a major version suffix (e.g., /v2, /v3),
+        // query it directly without probing for other major versions.
+        if (/\/v\d+$/.test(modulePath)) {
+            return await fetchGoProxyVersion(modulePath);
+        }
+
+        // Query the base path and probe higher major versions in parallel.
+        // Go modules with major version >= 2 require a /vN suffix in the module path,
+        // and the Go proxy treats them as entirely separate modules. For example,
+        // "github.com/cohere-ai/cohere-go" (v0.x) and
+        // "github.com/cohere-ai/cohere-go/v2" (v2.x) are different modules.
+        const MAX_MAJOR_VERSION_PROBE = 10;
+        const probes: Promise<{ version: string | undefined; major: number }>[] = [];
+
+        // Probe the base path (covers v0.x and v1.x)
+        probes.push(fetchGoProxyVersion(modulePath).then((version) => ({ version, major: 0 })));
+
+        // Probe /v2 through /v10
+        for (let major = 2; major <= MAX_MAJOR_VERSION_PROBE; major++) {
+            probes.push(fetchGoProxyVersion(`${modulePath}/v${major}`).then((version) => ({ version, major })));
+        }
+
+        const results = await Promise.all(probes);
+
+        // Find the result with the highest semver version
+        let bestVersion: string | undefined;
+        for (const result of results) {
+            if (result.version == null) {
+                continue;
+            }
+            if (bestVersion == null || semver.gt(result.version, bestVersion)) {
+                bestVersion = result.version;
+            }
+        }
+
+        return bestVersion;
+    } catch (error) {
+        // Network error or unexpected failure
+        return undefined;
+    }
+}
+
+/**
+ * Queries the Go module proxy for the latest version of a specific module path.
+ *
+ * @internal Exported for testing
+ * @param modulePath - The exact Go module path to query (e.g., "github.com/owner/repo/v2")
+ * @returns The latest version string (without "v" prefix), or undefined if not found
+ */
+async function fetchGoProxyVersion(modulePath: string): Promise<string | undefined> {
     try {
         // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
         // e.g., "github.com/Azure/sdk" -> "github.com/!azure/sdk"

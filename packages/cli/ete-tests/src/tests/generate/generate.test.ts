@@ -9,7 +9,7 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe("fern generate", () => {
     it.concurrent("default api (fern init)", async ({ signal }) => {
-        const pathOfDirectory = await init();
+        const pathOfDirectory = await init({ signal });
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,

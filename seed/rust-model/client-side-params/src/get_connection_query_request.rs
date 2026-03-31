@@ -10,7 +10,7 @@ pub struct GetConnectionQueryRequest {
 
 impl GetConnectionQueryRequest {
     pub fn builder() -> GetConnectionQueryRequestBuilder {
-        GetConnectionQueryRequestBuilder::default()
+        <GetConnectionQueryRequestBuilder as Default>::default()
     }
 }
 

@@ -20,7 +20,11 @@ import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { type ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
-import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
+import {
+    OpenAPI3_1Converter,
+    OpenAPIConverterContext3_1,
+    resolveOAuthEndpointReferences
+} from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
@@ -293,10 +297,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         const authOverrides =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
-        if (authOverrides) {
-            context.logger.trace("Using auth overrides from generators configuration");
-        }
-
         const environmentOverrides =
             this.generatorsConfiguration?.api?.environments != null
                 ? { ...this.generatorsConfiguration?.api }
@@ -479,6 +479,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (mergedIr === undefined) {
             throw new Error("Failed to generate intermediate representation");
         }
+
+        // Resolve OAuth endpoint references after all specs have been merged,
+        // because the token endpoint may be in a different spec than the auth scheme.
+        if (authOverrides != null) {
+            mergedIr = resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides });
+        }
+
         return mergedIr;
     }
 

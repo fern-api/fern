@@ -31,7 +31,7 @@ runs:
 
     # Save for at least a week to help track slowdowns if/when they show up
     - name: Upload Metrics File
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ steps.create-metrics.outputs.file_name }}
         path: ${{ steps.create-metrics.outputs.file_name }}

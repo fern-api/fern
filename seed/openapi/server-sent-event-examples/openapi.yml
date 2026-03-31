@@ -77,6 +77,43 @@ paths:
               Bad request:
                 value:
                   query: ''
+  /stream-events-context-protocol:
+    post:
+      operationId: completions_streamEventsContextProtocol
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Bad request context protocol:
+                  value: bad request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: query
+              required:
+                - query
+            examples:
+              Stream events context protocol:
+                value:
+                  query: query
+              Bad request context protocol:
+                value:
+                  query: ''
 components:
   schemas:
     StreamedCompletion:
@@ -98,6 +135,17 @@ components:
           type: string
       required:
         - content
+    EventEvent:
+      title: EventEvent
+      type: object
+      properties:
+        event:
+          type: string
+        name:
+          type: string
+      required:
+        - event
+        - name
     ErrorEvent:
       title: ErrorEvent
       type: object
@@ -109,6 +157,42 @@ components:
           nullable: true
       required:
         - error
+    StreamEventContextProtocol:
+      title: StreamEventContextProtocol
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - completion
+            - $ref: '#/components/schemas/CompletionEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - error
+            - $ref: '#/components/schemas/ErrorEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - event
+            - $ref: '#/components/schemas/EventEvent'
+          required:
+            - event
     StreamEvent:
       title: StreamEvent
       oneOf:

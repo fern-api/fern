@@ -8,7 +8,7 @@ pub struct NoAudiencePayload {
 
 impl NoAudiencePayload {
     pub fn builder() -> NoAudiencePayloadBuilder {
-        NoAudiencePayloadBuilder::default()
+        <NoAudiencePayloadBuilder as Default>::default()
     }
 }
 

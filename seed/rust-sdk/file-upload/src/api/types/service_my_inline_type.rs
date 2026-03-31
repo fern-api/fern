@@ -8,7 +8,7 @@ pub struct MyInlineType {
 
 impl MyInlineType {
     pub fn builder() -> MyInlineTypeBuilder {
-        MyInlineTypeBuilder::default()
+        <MyInlineTypeBuilder as Default>::default()
     }
 }
 

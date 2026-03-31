@@ -48,6 +48,7 @@ function createDefaultInit(overrides?: Partial<GeneratedRequestWrapperImpl.Init>
         flattenRequestParameters: false,
         parameterNaming: "default",
         caseConverter,
+        resolveQueryParameterNameConflicts: false,
         ...overrides
     };
 }

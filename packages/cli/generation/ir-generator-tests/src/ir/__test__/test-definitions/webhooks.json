@@ -457,7 +457,8 @@
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": "x-webhook-timestamp",
@@ -615,7 +616,8 @@
                             "TIMESTAMP",
                             "BODY"
                         ],
-                        "delimiter": "."
+                        "delimiter": ".",
+                        "bodySort": null
                     },
                     "timestamp": {
                         "headerName": "x-webhook-timestamp",

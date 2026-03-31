@@ -19,7 +19,7 @@ pub struct Address2 {
 
 impl Address2 {
     pub fn builder() -> Address2Builder {
-        Address2Builder::default()
+        <Address2Builder as Default>::default()
     }
 }
 

@@ -75,6 +75,7 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment,
     runner,
     whiteLabel,
+    publishToRegistry,
     ir,
     ai,
     autoVersioningCache,
@@ -103,6 +104,7 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
     whiteLabel?: boolean;
+    publishToRegistry?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
     autoVersioningCache?: AutoVersioningCache;
@@ -210,6 +212,7 @@ export async function writeFilesToDiskAndRunGenerator({
         generateOauthClients,
         generatePaginatedClients,
         whiteLabel,
+        publishToRegistry,
         paths
     });
 

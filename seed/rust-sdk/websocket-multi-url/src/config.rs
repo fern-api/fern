@@ -15,6 +15,7 @@ pub struct ClientConfig {
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
+    pub environment: Option<Environment>,
 }
 impl Default for ClientConfig {
     fn default() -> Self {
@@ -37,6 +38,7 @@ impl Default for ClientConfig {
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
             user_agent: "WebsocketMultiUrl Rust SDK".to_string(),
+            environment: Some(Environment::default()),
         }
     }
 }

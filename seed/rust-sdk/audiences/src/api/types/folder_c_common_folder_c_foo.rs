@@ -8,7 +8,7 @@ pub struct FolderCFoo {
 
 impl FolderCFoo {
     pub fn builder() -> FolderCFooBuilder {
-        FolderCFooBuilder::default()
+        <FolderCFooBuilder as Default>::default()
     }
 }
 

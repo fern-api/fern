@@ -1,1 +1,85 @@
-{"mappings":[{"id":"07afdcff-a307-475a-b81a-89ebf2b474b2","name":"stream - default","request":{"urlPathTemplate":"/stream","method":"POST"},"response":{"status":200,"body":"event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n","headers":{"Content-Type":"text/event-stream"}},"uuid":"07afdcff-a307-475a-b81a-89ebf2b474b2","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}},{"id":"d0acface-0fd3-4ca6-8c2f-81036e0eeb38","name":"streamEvents - default","request":{"urlPathTemplate":"/stream-events","method":"POST"},"response":{"status":200,"body":"event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n","headers":{"Content-Type":"text/event-stream"}},"uuid":"d0acface-0fd3-4ca6-8c2f-81036e0eeb38","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}},{"id":"bf2e5c87-d1df-438e-8dba-b6a50ad7d46c","name":"streamEventsContextProtocol - default","request":{"urlPathTemplate":"/stream-events-context-protocol","method":"POST"},"response":{"status":200,"body":"event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n","headers":{"Content-Type":"text/event-stream"}},"uuid":"bf2e5c87-d1df-438e-8dba-b6a50ad7d46c","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}}],"meta":{"total":3}}
+{
+  "mappings": [
+    {
+      "id": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "name": "stream - default",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "d0acface-0fd3-4ca6-8c2f-81036e0eeb38",
+      "name": "streamEvents - default",
+      "request": {
+        "urlPathTemplate": "/stream-events",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "d0acface-0fd3-4ca6-8c2f-81036e0eeb38",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "bf2e5c87-d1df-438e-8dba-b6a50ad7d46c",
+      "name": "streamEventsContextProtocol - default",
+      "request": {
+        "urlPathTemplate": "/stream-events-context-protocol",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "bf2e5c87-d1df-438e-8dba-b6a50ad7d46c",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 3
+  }
+}

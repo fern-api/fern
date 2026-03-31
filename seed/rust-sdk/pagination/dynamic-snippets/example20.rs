@@ -10,8 +10,14 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_mixed_type_cursor_pagination(
-            &UsersListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
+        .list_with_body_offset_pagination(
+            &ListUsersBodyOffsetPaginationRequest {
+                pagination: Some(WithPage {
+                    page: Some(1),
+                    ..Default::default()
+                }),
+                ..Default::default()
+            },
             None,
         )
         .await;

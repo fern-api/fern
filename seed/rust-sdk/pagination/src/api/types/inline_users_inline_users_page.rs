@@ -15,7 +15,7 @@ pub struct Page {
 
 impl Page {
     pub fn builder() -> PageBuilder {
-        PageBuilder::default()
+        <PageBuilder as Default>::default()
     }
 }
 

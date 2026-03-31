@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .foo import Foo
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
+    from .type_with_optional_map import TypeWithOptionalMap
     from .union import BarUnion, FooUnion, Union
     from .union_with_base_properties import (
         FooUnionWithBaseProperties,
@@ -124,6 +125,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "String2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "StringUnionWithBaseProperties": ".union_with_base_properties",
     "StringUnionWithPrimitive": ".union_with_primitive",
+    "TypeWithOptionalMap": ".type_with_optional_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithDiscriminant": ".union_with_discriminant",
@@ -216,6 +218,7 @@ __all__ = [
     "String2UnionWithDuplicatePrimitive",
     "StringUnionWithBaseProperties",
     "StringUnionWithPrimitive",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",

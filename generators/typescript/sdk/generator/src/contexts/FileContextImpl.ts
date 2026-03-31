@@ -149,6 +149,7 @@ export declare namespace FileContextImpl {
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -380,7 +381,8 @@ export class FileContextImpl implements FileContext {
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
             parameterNaming: this.initParams.parameterNaming,
-            caseConverter: this.case
+            caseConverter: this.case,
+            resolveQueryParameterNameConflicts: this.initParams.resolveQueryParameterNameConflicts
         }));
     }
 

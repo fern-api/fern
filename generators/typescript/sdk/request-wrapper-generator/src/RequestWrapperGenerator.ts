@@ -21,6 +21,7 @@ export declare namespace RequestWrapperGenerator {
             flattenRequestParameters: boolean;
             parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
             caseConverter: CaseConverter;
+            resolveQueryParameterNameConflicts: boolean;
         }
     }
 }
@@ -39,7 +40,8 @@ export class RequestWrapperGenerator {
         formDataSupport,
         flattenRequestParameters,
         parameterNaming,
-        caseConverter
+        caseConverter,
+        resolveQueryParameterNameConflicts
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -54,7 +56,8 @@ export class RequestWrapperGenerator {
             formDataSupport,
             flattenRequestParameters,
             parameterNaming,
-            caseConverter
+            caseConverter,
+            resolveQueryParameterNameConflicts
         });
     }
 }

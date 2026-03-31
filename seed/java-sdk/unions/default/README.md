@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:unions'
+  implementation 'com.fern:unions:0.0.1'
 }
 ```
 

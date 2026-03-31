@@ -1,1 +1,59 @@
-{"mappings":[{"id":"07afdcff-a307-475a-b81a-89ebf2b474b2","name":"stream - default","request":{"urlPathTemplate":"/stream","method":"POST"},"response":{"status":200,"body":"event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n","headers":{"Content-Type":"text/event-stream"}},"uuid":"07afdcff-a307-475a-b81a-89ebf2b474b2","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}},{"id":"3cab3f22-4084-44cf-bb9c-eb0141d7c518","name":"streamWithoutTerminator - default","request":{"urlPathTemplate":"/stream-no-terminator","method":"POST"},"response":{"status":200,"body":"event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n","headers":{"Content-Type":"text/event-stream"}},"uuid":"3cab3f22-4084-44cf-bb9c-eb0141d7c518","persistent":true,"priority":3,"metadata":{"mocklab":{"created":{"at":"2020-01-01T00:00:00.000Z","via":"SYSTEM"}}}}],"meta":{"total":2}}
+{
+  "mappings": [
+    {
+      "id": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "name": "stream - default",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "3cab3f22-4084-44cf-bb9c-eb0141d7c518",
+      "name": "streamWithoutTerminator - default",
+      "request": {
+        "urlPathTemplate": "/stream-no-terminator",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "3cab3f22-4084-44cf-bb9c-eb0141d7c518",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}

@@ -11,7 +11,7 @@ pub struct RootObject {
 
 impl RootObject {
     pub fn builder() -> RootObjectBuilder {
-        RootObjectBuilder::default()
+        <RootObjectBuilder as Default>::default()
     }
 }
 

@@ -420,9 +420,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     innerWriter.endControlFlow();
                     innerWriter.endControlFlow();
 
-                    // Only clone clientOptions if we have auth headers or OAuth/inferred auth
+                    // Check if any auth scheme is basic auth
+                    const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+
+                    // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth
                     const needsAuthHeaders =
-                        authHeaderEntries.length > 0 || this.oauth != null || this.inferred != null;
+                        authHeaderEntries.length > 0 || this.oauth != null || this.inferred != null || hasBasicAuth;
                     const clientOptionsVariable = needsAuthHeaders ? "clientOptionsWithAuth" : "clientOptions";
 
                     if (needsAuthHeaders) {
@@ -441,6 +444,41 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
                             innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
                             innerWriter.endControlFlow();
+                        }
+                    }
+
+                    // Add Basic Auth header if applicable
+                    if (hasBasicAuth) {
+                        const basicSchemes = this.context.ir.auth.schemes.filter(
+                            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                        );
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        for (let i = 0; i < basicSchemes.length; i++) {
+                            const basicScheme = basicSchemes[i];
+                            if (basicScheme == null) {
+                                continue;
+                            }
+                            const usernameName = basicScheme.username.camelCase.safeName;
+                            const passwordName = basicScheme.password.camelCase.safeName;
+                            const usernameAccess = unified
+                                ? `clientOptions.${this.toPascalCase(usernameName)}`
+                                : usernameName;
+                            const passwordAccess = unified
+                                ? `clientOptions.${this.toPascalCase(passwordName)}`
+                                : passwordName;
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                const controlFlowKeyword = i === 0 ? "if" : "else if";
+                                innerWriter.controlFlow(
+                                    controlFlowKeyword,
+                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
+                                );
+                            }
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
+                            );
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                innerWriter.endControlFlow();
+                            }
                         }
                     }
 

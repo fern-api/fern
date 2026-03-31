@@ -36,7 +36,7 @@ pub struct BigEntity {
 
 impl BigEntity {
     pub fn builder() -> BigEntityBuilder {
-        BigEntityBuilder::default()
+        <BigEntityBuilder as Default>::default()
     }
 }
 

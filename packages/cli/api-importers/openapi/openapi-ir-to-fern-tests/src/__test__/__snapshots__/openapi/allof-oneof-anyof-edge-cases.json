@@ -293,8 +293,10 @@
           "Pet": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "petType",
+            "discriminant": {
+              "context": "data",
+              "value": "petType",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -500,14 +502,15 @@ types:
     source:
       openapi: ../openapi.yml
   Pet:
-    discriminant: petType
+    discriminant:
+      value: petType
+      context: data
     base-properties: {}
     union:
       dog: Dog
       cat: Cat
     source:
       openapi: ../openapi.yml
-    context: data
   ResponseData:
     properties:
       success: optional<boolean>

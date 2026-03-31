@@ -10,7 +10,7 @@ pub struct SinglyLinkedListValue {
 
 impl SinglyLinkedListValue {
     pub fn builder() -> SinglyLinkedListValueBuilder {
-        SinglyLinkedListValueBuilder::default()
+        <SinglyLinkedListValueBuilder as Default>::default()
     }
 }
 

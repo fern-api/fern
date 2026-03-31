@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
     Webhook,
+    WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
     WebhookSignatureAlgorithm,
@@ -358,8 +359,23 @@ function convertPayloadFormat(
     }
     return {
         components: payloadFormat.components.map(convertPayloadComponent),
-        delimiter: payloadFormat.delimiter
+        delimiter: payloadFormat.delimiter,
+        "body-sort": convertBodySort(payloadFormat.bodySort)
     };
+}
+
+function convertBodySort(
+    bodySort: WebhookPayloadBodySort | undefined
+): RawSchemas.WebhookPayloadBodySortSchema | undefined {
+    if (bodySort == null) {
+        return undefined;
+    }
+    switch (bodySort) {
+        case "alphabetical":
+            return "alphabetical";
+        default:
+            return undefined;
+    }
 }
 
 function convertPayloadComponent(component: WebhookPayloadComponent): RawSchemas.WebhookPayloadComponentSchema {

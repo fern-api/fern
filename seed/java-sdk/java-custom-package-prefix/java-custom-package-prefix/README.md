@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-custom-package-prefix'
+  implementation 'com.fern:java-custom-package-prefix:0.0.1'
 }
 ```
 

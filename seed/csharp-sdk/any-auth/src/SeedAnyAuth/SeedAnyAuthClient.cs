@@ -69,6 +69,11 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
         {
             clientOptionsWithAuth.Headers[header.Key] = header.Value;
         }
+        if (username != null && password != null)
+        {
+            clientOptionsWithAuth.Headers["Authorization"] =
+                $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
+        }
         var inferredAuthProvider = new InferredAuthTokenProvider(
             clientId,
             clientSecret,

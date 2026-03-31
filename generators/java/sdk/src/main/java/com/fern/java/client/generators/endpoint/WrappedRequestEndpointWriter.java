@@ -24,6 +24,7 @@ import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.ResolvedTypeReference;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
@@ -346,6 +347,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             requestParameterName + "." + jsonProperty.getterProperty().name + "()"
                                     + (isOptional ? ".get()" : ""));
                 } else {
+                    // Determine if this type needs JSON serialization or can use simple string conversion.
+                    // Simple types (strings, primitives, enums) should NOT be JSON-serialized in multipart
+                    // form data because writeValueAsString() wraps strings in quotes.
+                    boolean needsJsonSerialization = ((JsonFileUploadProperty) fileUploadProperty)
+                            .rawProperty()
+                            .getValueType()
+                            .visit(new TypeReferenceNeedsJsonSerialization(clientGeneratorContext));
+
                     CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
                     String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
                             + (isOptional ? ".get()" : "");
@@ -363,23 +372,48 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         writeValueParameter = "item";
                         dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
                         dataPartBuilder.indent();
-                        dataPartBuilder.beginControlFlow("try");
+                        if (needsJsonSerialization) {
+                            dataPartBuilder.beginControlFlow("try");
+                        }
                     }
 
-                    dataPartBuilder.add(
-                            "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
-                            variables.getMultipartBodyPropertiesName(),
-                            jsonProperty.wireKey().get(),
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            writeValueParameter);
+                    if (needsJsonSerialization) {
+                        dataPartBuilder.add(
+                                "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
+                                variables.getMultipartBodyPropertiesName(),
+                                jsonProperty.wireKey().get(),
+                                generatedObjectMapper.getClassName(),
+                                generatedObjectMapper.jsonMapperStaticField().name,
+                                writeValueParameter);
+                    } else if (isCollection) {
+                        // For collection items of simple types, use String.valueOf()
+                        dataPartBuilder.add(
+                                "$L.addFormDataPart($S, $T.valueOf($L));\n",
+                                variables.getMultipartBodyPropertiesName(),
+                                jsonProperty.wireKey().get(),
+                                String.class,
+                                writeValueParameter);
+                    } else {
+                        // For non-collection simple types, use PoetTypeNameStringifier
+                        TypeName rawTypeName = jsonProperty.poetTypeName();
+                        if (isOptional) {
+                            rawTypeName = ((ParameterizedTypeName) rawTypeName).typeArguments.get(0);
+                        }
+                        dataPartBuilder.add(
+                                "$L.addFormDataPart($S, $L)",
+                                variables.getMultipartBodyPropertiesName(),
+                                jsonProperty.wireKey().get(),
+                                PoetTypeNameStringifier.stringify(writeValueParameter, rawTypeName));
+                    }
 
                     if (isCollection) {
-                        dataPartBuilder.endControlFlow();
-                        dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
-                        dataPartBuilder.add(
-                                "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
-                        dataPartBuilder.endControlFlow();
+                        if (needsJsonSerialization) {
+                            dataPartBuilder.endControlFlow();
+                            dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
+                            dataPartBuilder.add(
+                                    "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
+                            dataPartBuilder.endControlFlow();
+                        }
                         dataPartBuilder.unindent();
                         dataPartBuilder.add("})");
                     }
@@ -505,6 +539,108 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    /**
+     * Determines whether a type needs JSON serialization (writeValueAsString) for multipart form data, or can use
+     * simple string conversion. Returns true for complex types (objects, unions, maps, unknown) that need JSON
+     * serialization. Returns false for simple types (primitives, enums) that can be converted to strings directly. For
+     * collections, checks the element type.
+     */
+    private static final class TypeReferenceNeedsJsonSerialization
+            implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> context;
+
+        private TypeReferenceNeedsJsonSerialization(AbstractGeneratorContext<?, ?> context) {
+            this.context = context;
+        }
+
+        @Override
+        public Boolean visitContainer(ContainerType containerType) {
+            return containerType.visit(this);
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType namedType) {
+            TypeDeclaration declaration = Optional.ofNullable(
+                            context.getTypeDeclarations().get(namedType.getTypeId()))
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Received type id " + namedType.getTypeId() + " with no corresponding type declaration."));
+            if (declaration.getShape().getEnum().isPresent()) {
+                return false; // Enums can use toString()
+            }
+            if (declaration.getShape().getAlias().isPresent()) {
+                ResolvedTypeReference resolved =
+                        declaration.getShape().getAlias().get().getResolvedType();
+                if (resolved.isPrimitive()) {
+                    return false;
+                }
+                if (resolved.isContainer()) {
+                    return resolved.getContainer().get().visit(this);
+                }
+                if (resolved.isNamed()) {
+                    // Resolve the named type from the alias by looking up its declaration
+                    TypeDeclaration namedDeclaration = Optional.ofNullable(context.getTypeDeclarations()
+                                    .get(resolved.getNamed().get().getName().getTypeId()))
+                            .orElse(null);
+                    if (namedDeclaration != null
+                            && namedDeclaration.getShape().getEnum().isPresent()) {
+                        return false;
+                    }
+                    // Non-enum named types need JSON
+                }
+                return true;
+            }
+            return true; // Objects, unions, undiscriminated unions need JSON
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitiveType) {
+            return false; // All primitives can be stringified
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return true; // Unknown types need JSON
+        }
+
+        @Override
+        public Boolean visitLiteral(Literal literal) {
+            return false; // Literals are simple values
+        }
+
+        // ContainerType visitor methods:
+
+        @Override
+        public Boolean visitList(TypeReference typeReference) {
+            return typeReference.visit(this); // Check element type
+        }
+
+        @Override
+        public Boolean visitMap(MapType mapType) {
+            return true; // Maps always need JSON
+        }
+
+        @Override
+        public Boolean visitNullable(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitOptional(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitSet(TypeReference typeReference) {
+            return typeReference.visit(this); // Check element type
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object o) {
+            return true;
+        }
     }
 
     private static final class TypeReferenceIsCollection

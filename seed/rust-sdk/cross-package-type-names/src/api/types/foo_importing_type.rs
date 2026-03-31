@@ -8,7 +8,7 @@ pub struct ImportingType {
 
 impl ImportingType {
     pub fn builder() -> ImportingTypeBuilder {
-        ImportingTypeBuilder::default()
+        <ImportingTypeBuilder as Default>::default()
     }
 }
 

@@ -26,6 +26,7 @@ export declare namespace RequestWrapperContextImpl {
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
+        resolveQueryParameterNameConflicts: boolean;
     }
 }
 
@@ -45,6 +46,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
+    private readonly resolveQueryParameterNameConflicts: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -61,7 +63,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         formDataSupport,
         flattenRequestParameters,
         parameterNaming,
-        caseConverter
+        caseConverter,
+        resolveQueryParameterNameConflicts
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -78,6 +81,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
+        this.resolveQueryParameterNameConflicts = resolveQueryParameterNameConflicts;
     }
 
     public shouldInlinePathParameters(sdkRequest: FernIr.SdkRequest | undefined | null): boolean {
@@ -131,7 +135,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
             parameterNaming: this.parameterNaming,
-            caseConverter: this.caseConverter
+            caseConverter: this.caseConverter,
+            resolveQueryParameterNameConflicts: this.resolveQueryParameterNameConflicts
         });
     }
 
