@@ -252,4 +252,29 @@ impl ParamsClient {
             )
             .await
     }
+
+    /// GET with path param that can throw errors
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_with_path_and_errors(
+        &self,
+        param: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("/params/path/{}", param),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
 }

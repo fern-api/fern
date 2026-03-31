@@ -147,8 +147,9 @@ export abstract class AbstractRustGeneratorContext<
         if (hasWebSocket) {
             this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
             this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
+            this.dependencyManager.add("rand", { version: "0.9", optional: true });
 
-            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding"]);
+            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding", "rand"]);
             autoDetectedDefaults.push("websocket");
         }
 
@@ -547,11 +548,14 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     public hasWebSocketChannels(): boolean {
-        return this.cachedFeature("hasWebSocketChannels", () => (
-            this.customConfig.enableWebsockets &&
-            this.ir.websocketChannels != null &&
-            Object.keys(this.ir.websocketChannels).length > 0
-        ));
+        return this.cachedFeature("hasWebSocketChannels", () => {
+            const websocketsEnabled = this.customConfig.enableWebsockets || this.customConfig.generateWebSocketClients === true;
+            return (
+                websocketsEnabled &&
+                this.ir.websocketChannels != null &&
+                Object.keys(this.ir.websocketChannels).length > 0
+            );
+        });
     }
 
     public hasStreamingEndpoints(): boolean {

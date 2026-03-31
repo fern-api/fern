@@ -1841,7 +1841,7 @@ public partial class UsersClient : IUsersClient
     ///     new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
     ///     {
     ///         Page = 1,
-    ///         Limit = 1,
+    ///         Limit = 3,
     ///         Order = SeedPagination.Order.Asc,
     ///     }
     /// );

@@ -455,7 +455,7 @@ class UsersClient:
         )
         response = client.users.list_with_offset_pagination_has_next_page(
             page=1,
-            limit=1,
+            limit=3,
             order="asc",
         )
         for item in response:
@@ -1204,7 +1204,7 @@ class AsyncUsersClient:
         async def main() -> None:
             response = await client.users.list_with_offset_pagination_has_next_page(
                 page=1,
-                limit=1,
+                limit=3,
                 order="asc",
             )
             async for item in response:

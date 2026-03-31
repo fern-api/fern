@@ -220,6 +220,27 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetWithPathAndErrors(): void {
+        $testId = 'endpoints.params.get_with_path_and_errors.0';
+        $this->client->endpoints->params->getWithPath(
+            'param',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.params.get_with_path_and_errors.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/params/path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     protected function setUp(): void {
         parent::setUp();
         $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';

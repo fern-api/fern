@@ -2574,6 +2574,78 @@ client.endpoints.params.upload_with_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.get_with_path(
+    param="param",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...) -> str</code></summary>
 <dl>
