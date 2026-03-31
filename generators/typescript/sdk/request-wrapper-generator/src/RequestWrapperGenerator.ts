@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
@@ -19,6 +20,7 @@ export declare namespace RequestWrapperGenerator {
             formDataSupport: "Node16" | "Node18";
             flattenRequestParameters: boolean;
             parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+            caseConverter: CaseConverter;
         }
     }
 }
@@ -36,7 +38,8 @@ export class RequestWrapperGenerator {
         shouldInlinePathParameters,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -50,7 +53,8 @@ export class RequestWrapperGenerator {
             shouldInlinePathParameters,
             formDataSupport,
             flattenRequestParameters,
-            parameterNaming
+            parameterNaming,
+            caseConverter
         });
     }
 }

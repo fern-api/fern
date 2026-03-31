@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
@@ -49,10 +50,10 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
     ): GeneratedSdkInlinedRequestBodySchema {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.sdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
             packageId,
@@ -67,10 +68,10 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
     public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.Name): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.sdkInlinedRequestBodySchemaDeclarationReferencer.getReferenceToInlinedRequestBody({
             name: { packageId, endpoint },

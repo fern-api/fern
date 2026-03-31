@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     createNameAndWireValue,
@@ -223,7 +224,8 @@ function createObjectGenerator(opts: {
         noOptionalProperties: opts.noOptionalProperties ?? false,
         retainOriginalCasing: opts.retainOriginalCasing ?? false,
         enableInlineTypes: opts.enableInlineTypes ?? false,
-        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false
+        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
+        caseConverter
     });
 }
 

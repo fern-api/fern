@@ -2932,6 +2932,9 @@ importers:
 
   generators/typescript/express/generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
@@ -3036,6 +3039,9 @@ importers:
 
   generators/typescript/model/type-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
         version: 65.3.0
@@ -3147,6 +3153,9 @@ importers:
 
   generators/typescript/model/type-schema-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
         version: 65.3.0
@@ -3187,6 +3196,9 @@ importers:
 
   generators/typescript/model/union-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
@@ -3218,6 +3230,9 @@ importers:
 
   generators/typescript/model/union-schema-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
         version: 65.3.0
@@ -3261,6 +3276,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
@@ -3294,6 +3312,9 @@ importers:
 
   generators/typescript/sdk/client-class-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
@@ -3343,6 +3364,9 @@ importers:
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
         version: 65.3.0
@@ -3383,6 +3407,9 @@ importers:
 
   generators/typescript/sdk/environments-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
         version: 65.3.0
@@ -3557,6 +3584,9 @@ importers:
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
@@ -3594,6 +3624,9 @@ importers:
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
@@ -3754,6 +3787,9 @@ importers:
 
   generators/typescript/sdk/test-utils:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../packages/commons/casings-generator
@@ -3915,6 +3951,9 @@ importers:
 
   generators/typescript/utils/commons:
     dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../../base
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils

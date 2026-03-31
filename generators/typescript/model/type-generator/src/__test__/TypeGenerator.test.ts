@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
@@ -41,6 +42,12 @@ function createBaseArgs(shape: FernIr.Type): TypeGenerator.generateType.Args<Bas
     };
 }
 
+const testCaseConverter = new CaseConverter({
+    generationLanguage: "typescript",
+    keywords: undefined,
+    smartCasing: false
+});
+
 function createDefaultGenerator(): TypeGenerator {
     return new TypeGenerator({
         useBrandedStringAliases: false,
@@ -51,7 +58,8 @@ function createDefaultGenerator(): TypeGenerator {
         noOptionalProperties: false,
         retainOriginalCasing: false,
         enableInlineTypes: false,
-        generateReadWriteOnlyTypes: false
+        generateReadWriteOnlyTypes: false,
+        caseConverter: testCaseConverter
     });
 }
 
@@ -159,7 +167,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "UserId",
@@ -182,7 +191,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "UniqueId",
@@ -205,7 +215,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "BirthDate",
@@ -228,7 +239,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "EncodedData",
@@ -251,7 +263,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "BigNum",
@@ -274,7 +287,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "Count",
@@ -297,7 +311,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "Price",
@@ -320,7 +335,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const result = generator.generateAlias({
                 typeName: "IsActive",
@@ -343,7 +359,8 @@ describe("TypeGenerator", () => {
                 noOptionalProperties: false,
                 retainOriginalCasing: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const namedType = createDeclaredTypeName("User");
             const result = generator.generateAlias({

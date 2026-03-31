@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
@@ -24,6 +25,7 @@ export declare namespace RequestWrapperContextImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        caseConverter: CaseConverter;
     }
 }
 
@@ -42,6 +44,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         requestWrapperGenerator,
@@ -57,7 +60,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -73,6 +77,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
+        this.caseConverter = caseConverter;
     }
 
     public shouldInlinePathParameters(sdkRequest: FernIr.SdkRequest | undefined | null): boolean {
@@ -102,10 +107,10 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     public getGeneratedRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): GeneratedRequestWrapper {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.requestWrapperGenerator.generateRequestWrapper({
             service: serviceDeclaration,
@@ -122,17 +127,18 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
-            parameterNaming: this.parameterNaming
+            parameterNaming: this.parameterNaming,
+            caseConverter: this.caseConverter
         });
     }
 
     public getReferenceToRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): ts.TypeNode {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
             name: { packageId, endpoint },

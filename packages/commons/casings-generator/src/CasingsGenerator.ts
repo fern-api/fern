@@ -40,13 +40,13 @@ export interface FullCasingsGenerator {
     ): FullNameAndWireValue;
 }
 
-export type FullNameAndWireValue = Omit<NameAndWireValue, "name"> & {
+type FullNameAndWireValue = Omit<NameAndWireValue, "name"> & {
     name: Name;
 };
 
 const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
-type CasingsConfig = {
+type CasingsGeneratorConfig = {
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
@@ -55,7 +55,7 @@ type CasingsConfig = {
 function computeName(
     inputName: string,
     opts: { preserveUnderscores?: boolean; casingOverrides?: RawSchemas.CasingOverridesSchema },
-    config: CasingsConfig
+    config: CasingsGeneratorConfig
 ): Name {
     const { generationLanguage, keywords, smartCasing } = config;
     const name = preprocessName(inputName);
@@ -150,8 +150,8 @@ export function constructCasingsGenerator({
     generationLanguage,
     keywords,
     smartCasing
-}: CasingsConfig): CasingsGenerator {
-    const config: CasingsConfig = { generationLanguage, keywords, smartCasing };
+}: CasingsGeneratorConfig): CasingsGenerator {
+    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing };
     return {
         generateName: (inputName, opts): NameOrString => {
             // Only compute full Name when casing overrides require it; otherwise compress to string.
@@ -179,8 +179,8 @@ export function constructFullCasingsGenerator({
     generationLanguage,
     keywords,
     smartCasing
-}: CasingsConfig): FullCasingsGenerator {
-    const config: CasingsConfig = { generationLanguage, keywords, smartCasing };
+}: CasingsGeneratorConfig): FullCasingsGenerator {
+    const config: CasingsGeneratorConfig = { generationLanguage, keywords, smartCasing };
     return {
         generateName: (inputName: string | Name | NameAndWireValue, opts?: { preserveUnderscores?: boolean }): Name => {
             if (typeof inputName === "string") {

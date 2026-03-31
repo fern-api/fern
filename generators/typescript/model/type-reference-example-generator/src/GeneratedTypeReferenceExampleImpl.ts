@@ -1,6 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { createNumericLiteralSafe, GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
+import {
+    createNumericLiteralSafe,
+    GetReferenceOpts,
+    getOriginalName,
+    isExpressionUndefined
+} from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -265,7 +270,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     case "enum": {
                         const generatedType = context.type.getGeneratedType(typeName);
                         if (generatedType.type !== "enum") {
-                            throw new Error("Type is not an enum: " + typeName.name.originalName);
+                            throw new Error("Type is not an enum: " + getOriginalName(typeName.name));
                         }
                         return ts.factory.createComputedPropertyName(
                             generatedType.buildExample(example, context, opts)

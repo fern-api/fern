@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -8,29 +9,32 @@ export declare namespace AbstractRawSingleUnionType {
     export interface Init {
         discriminant: FernIr.NameAndWireValue;
         discriminantValue: FernIr.NameAndWireValue;
+        caseConverter: CaseConverter;
     }
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
     private discriminant: FernIr.NameAndWireValue;
     private discriminantValueWithAllCasings: FernIr.NameAndWireValue;
+    protected caseConverter: CaseConverter;
 
-    constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
+    constructor({ discriminant, discriminantValue, caseConverter }: AbstractRawSingleUnionType.Init) {
         this.discriminant = discriminant;
         this.discriminantValueWithAllCasings = discriminantValue;
+        this.caseConverter = caseConverter;
     }
 
     public get discriminantValue(): string {
-        return this.discriminantValueWithAllCasings.wireValue;
+        return getWireValue(this.discriminantValueWithAllCasings);
     }
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: sanitizeIdentifier(this.discriminantValueWithAllCasings.name.pascalCase.unsafeName),
+            name: sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.discriminantValueWithAllCasings)),
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
-                    name: getPropertyKey(this.discriminant.wireValue),
+                    name: getPropertyKey(getWireValue(this.discriminant)),
                     type: `"${this.discriminantValue}"`
                 },
                 ...this.getNonDiscriminantPropertiesForInterface(context)

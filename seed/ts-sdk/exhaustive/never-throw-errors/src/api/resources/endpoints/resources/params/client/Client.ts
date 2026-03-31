@@ -173,10 +173,10 @@ export class ParamsClient {
         request: SeedExhaustive.endpoints.GetWithQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
-        const { query, number: number_ } = request;
+        const { query, number } = request;
         const _queryParams: Record<string, unknown> = {
             query,
-            number: number_,
+            number,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -248,10 +248,10 @@ export class ParamsClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>>
     > {
-        const { query, number: number_ } = request;
+        const { query, number } = request;
         const _queryParams: Record<string, unknown> = {
             query,
-            number: number_,
+            number,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

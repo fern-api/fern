@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, getOriginalName, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -49,10 +49,10 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
     ): GeneratedExpressEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.expressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
             packageId,
@@ -68,10 +68,10 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.expressEndpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
             name: { packageId, endpoint },

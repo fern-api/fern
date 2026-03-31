@@ -29,6 +29,7 @@
     "depcheck": "knip --config ../../../../knip.json --no-config-hints"
   },
   "dependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "catalog:"

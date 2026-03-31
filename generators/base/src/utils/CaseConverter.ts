@@ -17,8 +17,9 @@ export type NameInput = NameOrString | NameAndWireValueOrString;
  * - `Name`: full object with all casing variants pre-computed
  * - `NameAndWireValue`: wireValue + name, where name may itself be a string or full Name
  *
- * This class replaces direct property access patterns like `name.camelCase.safeName`
- * with method calls like `caseConverter.camelCaseSafe(name)`.
+ * Accessed as `ctx.case` in generator contexts:
+ *   ctx.case.camelSafe(name)
+ *   ctx.case.snakeSafe(name)
  */
 export class CaseConverter {
     private readonly casingsGenerator: FullCasingsGenerator;
@@ -31,15 +32,18 @@ export class CaseConverter {
         this.casingsGenerator = constructFullCasingsGenerator(opts);
     }
 
+    /**
+     * Creates a CaseConverter for a known generation language.
+     * Keywords are derived automatically from the language's reserved word list.
+     * Use `smartCasing: true` for initialisms (e.g. HTTP → HTTP), `false` for standard casing.
+     */
+    static fromLanguage(language: generatorsYml.GenerationLanguage, smartCasing: boolean): CaseConverter {
+        return new CaseConverter({ generationLanguage: language, keywords: undefined, smartCasing });
+    }
+
     // --- Name resolution ---
 
-    /**
-     * Resolves any NameInput to a full Name object.
-     * - string: generates Name via casings generator
-     * - Name: returns as-is
-     * - NameAndWireValue: extracts and resolves the inner name
-     */
-    resolveName(input: NameInput): Name {
+    resolve(input: NameInput): Name {
         return this.casingsGenerator.generateName(input);
     }
 
@@ -51,89 +55,87 @@ export class CaseConverter {
         return this.casingsGenerator.generateNameAndWireValue(input);
     }
 
-    // --- Original name ---
+    // --- camel ---
 
-    originalName(input: NameInput): string {
-        if (typeof input === "string") {
-            return input;
-        }
-        if (isNameAndWireValue(input)) {
-            return this.originalNameFromNameOrString(input.name);
-        }
-        return input.originalName;
+    camel(input: NameInput): SafeAndUnsafeString {
+        return this.resolve(input).camelCase;
     }
 
-    originalNameFromNameOrString(nameOrString: NameOrString): string {
-        if (typeof nameOrString === "string") {
-            return nameOrString;
-        }
-        return nameOrString.originalName;
+    camelSafe(input: NameInput): string {
+        return this.camel(input).safeName;
     }
 
-    // --- Wire value ---
-
-    wireValue(input: NameAndWireValueOrString): string {
-        if (typeof input === "string") {
-            return input;
-        }
-        return input.wireValue;
+    camelUnsafe(input: NameInput): string {
+        return this.camel(input).unsafeName;
     }
 
-    // --- camelCase ---
+    // --- pascal ---
 
-    camelCase(input: NameInput): SafeAndUnsafeString {
-        return this.resolveName(input).camelCase;
+    pascal(input: NameInput): SafeAndUnsafeString {
+        return this.resolve(input).pascalCase;
     }
 
-    camelCaseSafe(input: NameInput): string {
-        return this.camelCase(input).safeName;
+    pascalSafe(input: NameInput): string {
+        return this.pascal(input).safeName;
     }
 
-    camelCaseUnsafe(input: NameInput): string {
-        return this.camelCase(input).unsafeName;
+    pascalUnsafe(input: NameInput): string {
+        return this.pascal(input).unsafeName;
     }
 
-    // --- PascalCase ---
+    // --- snake ---
 
-    pascalCase(input: NameInput): SafeAndUnsafeString {
-        return this.resolveName(input).pascalCase;
+    snake(input: NameInput): SafeAndUnsafeString {
+        return this.resolve(input).snakeCase;
     }
 
-    pascalCaseSafe(input: NameInput): string {
-        return this.pascalCase(input).safeName;
+    snakeSafe(input: NameInput): string {
+        return this.snake(input).safeName;
     }
 
-    pascalCaseUnsafe(input: NameInput): string {
-        return this.pascalCase(input).unsafeName;
+    snakeUnsafe(input: NameInput): string {
+        return this.snake(input).unsafeName;
     }
 
-    // --- snake_case ---
+    // --- screamingSnake ---
 
-    snakeCase(input: NameInput): SafeAndUnsafeString {
-        return this.resolveName(input).snakeCase;
+    screamingSnake(input: NameInput): SafeAndUnsafeString {
+        return this.resolve(input).screamingSnakeCase;
     }
 
-    snakeCaseSafe(input: NameInput): string {
-        return this.snakeCase(input).safeName;
+    screamingSnakeSafe(input: NameInput): string {
+        return this.screamingSnake(input).safeName;
     }
 
-    snakeCaseUnsafe(input: NameInput): string {
-        return this.snakeCase(input).unsafeName;
+    screamingSnakeUnsafe(input: NameInput): string {
+        return this.screamingSnake(input).unsafeName;
     }
+}
 
-    // --- SCREAMING_SNAKE_CASE ---
-
-    screamingSnakeCase(input: NameInput): SafeAndUnsafeString {
-        return this.resolveName(input).screamingSnakeCase;
+/**
+ * Standalone helper to safely extract the wire value from a NameAndWireValueOrString.
+ * Handles both compressed string form (V66+ IR) and full NameAndWireValue object form.
+ */
+export function getWireValue(input: NameAndWireValueOrString): string {
+    if (typeof input === "string") {
+        return input;
     }
+    return input.wireValue;
+}
 
-    screamingSnakeCaseSafe(input: NameInput): string {
-        return this.screamingSnakeCase(input).safeName;
+/**
+ * Standalone helper to safely extract the original name from any name-like input.
+ * Handles all forms: compressed string (V66+ IR), full Name, and NameAndWireValue
+ * (where the inner .name may itself be a string or full Name).
+ */
+export function getOriginalName(input: NameInput): string {
+    if (typeof input === "string") {
+        return input;
     }
-
-    screamingSnakeCaseUnsafe(input: NameInput): string {
-        return this.screamingSnakeCase(input).unsafeName;
+    if (isNameAndWireValue(input)) {
+        return getOriginalName(input.name);
     }
+    return input.originalName;
 }
 
 /**

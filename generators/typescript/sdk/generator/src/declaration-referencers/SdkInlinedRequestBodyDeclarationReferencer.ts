@@ -10,6 +10,8 @@ export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
         packageId: PackageId;
         endpoint: FernIr.HttpEndpoint;
     }
+
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
 }
 
 const REQUESTS_DIRECTORY_NAME = "requests";
@@ -45,7 +47,7 @@ export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClien
         if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
             throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined");
         }
-        return name.endpoint.requestBody.name.pascalCase.unsafeName;
+        return this.caseConverter.pascalUnsafe(name.endpoint.requestBody.name);
     }
 
     public getReferenceToInlinedRequestBody(

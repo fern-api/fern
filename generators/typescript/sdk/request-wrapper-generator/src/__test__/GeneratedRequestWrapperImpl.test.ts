@@ -2,6 +2,7 @@ import assert from "node:assert";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     createDeclaredTypeName,
     createHttpEndpoint,
     createHttpHeader,
@@ -46,12 +47,13 @@ function createDefaultInit(overrides?: Partial<GeneratedRequestWrapperImpl.Init>
         formDataSupport: "Node18",
         flattenRequestParameters: false,
         parameterNaming: "default",
+        caseConverter,
         ...overrides
     };
 }
 
 /**
- * Creates a mock SdkContext that satisfies all property accesses used by GeneratedRequestWrapperImpl.
+ * Creates a mock FileContext that satisfies all property accesses used by GeneratedRequestWrapperImpl.
  * Uses a real ts-morph SourceFile for interface/module generation.
  */
 function createMockContext(opts?: {
@@ -174,8 +176,9 @@ function createMockContext(opts?: {
             }
         },
         enableInlineTypes: opts?.enableInlineTypes ?? false,
-        namespaceExport: opts?.namespaceExport ?? "TestNamespace"
-        // biome-ignore lint/suspicious/noExplicitAny: minimal SdkContext mock for request wrapper tests
+        namespaceExport: opts?.namespaceExport ?? "TestNamespace",
+        case: caseConverter
+        // biome-ignore lint/suspicious/noExplicitAny: minimal FileContext mock for request wrapper tests
     } as any;
 
     // Allow overriding getTypeDeclaration for tests that need type declarations with properties

@@ -1,7 +1,10 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer.js";
+import {
+    AbstractExpressServiceDeclarationReferencer,
+    AbstractSdkClientClassDeclarationReferencer
+} from "./AbstractExpressServiceDeclarationReferencer.js";
 import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export declare namespace EndpointDeclarationReferencer {
@@ -9,6 +12,7 @@ export declare namespace EndpointDeclarationReferencer {
         packageId: PackageId;
         endpoint: FernIr.HttpEndpoint;
     }
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
 }
 export class EndpointDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<EndpointDeclarationReferencer.Name> {
     public getExportedFilepath(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
@@ -28,7 +32,7 @@ export class EndpointDeclarationReferencer extends AbstractExpressServiceDeclara
     }
 
     private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name): string {
-        return endpoint.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(endpoint.name);
     }
 
     public getReferenceToEndpointExport(

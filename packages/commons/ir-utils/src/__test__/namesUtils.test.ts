@@ -1,13 +1,10 @@
 import { Name, NameAndWireValue } from "@fern-api/ir-sdk";
 import {
     ensureNameAndWireValue,
-    getCamelCaseSafe,
     getCamelCaseUnsafe,
     getNameFromWireValue,
     getOriginalName,
-    getPascalCaseSafe,
     getPascalCaseUnsafe,
-    getSnakeCaseSafe,
     getSnakeCaseUnsafe,
     getWireValue
 } from "../utils/namesUtils.js";
@@ -149,39 +146,6 @@ describe("namesUtils", () => {
         it("computes PascalCase from a string using casings generator", () => {
             const result = getPascalCaseUnsafe("my_field");
             expect(result).toBe("MyField");
-        });
-    });
-
-    describe("getPascalCaseSafe", () => {
-        it("returns pre-computed pascalCase safe from a Name object", () => {
-            expect(getPascalCaseSafe(makeName("myField"))).toBe("myFieldPascal");
-        });
-
-        it("computes PascalCase safe from a string", () => {
-            const result = getPascalCaseSafe("my_field");
-            expect(result).toBe("MyField");
-        });
-    });
-
-    describe("getSnakeCaseSafe", () => {
-        it("returns pre-computed snakeCase safe from a Name object", () => {
-            expect(getSnakeCaseSafe(makeName("myField"))).toBe("myField_snake");
-        });
-
-        it("computes snake_case safe from a string", () => {
-            const result = getSnakeCaseSafe("MyField");
-            expect(result).toBe("my_field");
-        });
-    });
-
-    describe("getCamelCaseSafe", () => {
-        it("returns pre-computed camelCase safe from a Name object", () => {
-            expect(getCamelCaseSafe(makeName("myField"))).toBe("myFieldCamel");
-        });
-
-        it("computes camelCase safe from a string", () => {
-            const result = getCamelCaseSafe("my_field");
-            expect(result).toBe("myField");
         });
     });
 

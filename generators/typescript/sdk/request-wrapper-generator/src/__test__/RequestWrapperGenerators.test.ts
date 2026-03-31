@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createHttpService,
@@ -51,7 +52,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            caseConverter
         });
         expect(result).toBeDefined();
     });
@@ -70,7 +72,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            caseConverter
         });
         expect(result).toBeDefined();
     });
@@ -89,7 +92,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node16",
             flattenRequestParameters: false,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            caseConverter
         });
         expect(result).toBeDefined();
     });
@@ -108,7 +112,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: true,
-            parameterNaming: "default"
+            parameterNaming: "default",
+            caseConverter
         });
         expect(result).toBeDefined();
     });
@@ -127,7 +132,8 @@ describe("RequestWrapperGenerator", () => {
             shouldInlinePathParameters: false,
             formDataSupport: "Node18",
             flattenRequestParameters: false,
-            parameterNaming: "wireValue"
+            parameterNaming: "wireValue",
+            caseConverter
         });
         expect(result).toBeDefined();
     });

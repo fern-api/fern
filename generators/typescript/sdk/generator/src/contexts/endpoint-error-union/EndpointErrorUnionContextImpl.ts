@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
@@ -48,10 +49,10 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
     ): GeneratedEndpointErrorUnion {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
             packageId,
@@ -66,10 +67,10 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.endpointErrorUnionDeclarationReferencer.getReferenceToEndpointExport({
             name: { packageId, endpoint },

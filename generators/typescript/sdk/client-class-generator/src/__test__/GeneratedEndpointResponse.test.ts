@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createHttpEndpoint, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { caseConverter, createHttpEndpoint, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 import { GeneratedNonThrowingEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse.js";
@@ -69,7 +69,7 @@ function createResponseError(name: string): FernIr.ResponseError {
     };
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(): any {
     return {
         includeSerdeLayer: true,
@@ -299,7 +299,8 @@ function createMockContext(): any {
         },
         importsManager: {},
         exportsManager: {},
-        sourceFile: {}
+        sourceFile: {},
+        case: caseConverter
     };
 }
 

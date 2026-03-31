@@ -10,6 +10,8 @@ export declare namespace WebsocketTypeSchemaDeclarationReferencer {
         packageId: PackageId;
         channel: FernIr.WebSocketChannel;
     }
+
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
 }
 
 const SOCKET_DIRECTORY_NAME = "socket";
@@ -42,7 +44,7 @@ export class WebsocketTypeSchemaDeclarationReferencer extends AbstractSdkClientC
     }
 
     public getExportedName(name: WebsocketTypeSchemaDeclarationReferencer.Name): string {
-        return `${name.channel.name.pascalCase.unsafeName}SocketResponse`;
+        return `${this.caseConverter.pascalUnsafe(name.channel.name)}SocketResponse`;
     }
 
     public getReferenceToWebsocketResponseType(

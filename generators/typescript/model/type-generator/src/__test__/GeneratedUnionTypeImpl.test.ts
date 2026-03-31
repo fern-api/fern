@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     createNameAndWireValue,
@@ -256,7 +257,8 @@ function createUnionGenerator(opts: {
         generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
         includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false,
         includeOtherInUnionTypes: opts.includeOtherInUnionTypes ?? false,
-        inline: opts.inline ?? false
+        inline: opts.inline ?? false,
+        caseConverter
     });
 }
 

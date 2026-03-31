@@ -53,11 +53,11 @@ export function getNameFromWireValue(nameAndWireValue: NameAndWireValueOrString)
 }
 
 /**
- * Ensure a NameAndWireValueOrString is a full NameAndWireValue object with a fully inflated Name.
- * If the value is a string, creates a NameAndWireValue with wireValue = name = the string (compressed form).
- * If the value is a NameAndWireValue whose name is still a string (compressed V66 form), the name
- * field is left as-is — callers that need a fully inflated Name should use CaseConverter or the
- * V66→V65 migration to inflate it. This function only ensures structural NameAndWireValue shape.
+ * Coerce a NameAndWireValueOrString into a NameAndWireValue struct.
+ * If the value is a string, creates { wireValue: s, name: s } (both fields are the same compressed string).
+ * If the value is already a NameAndWireValue, returns it as-is.
+ * Note: the returned .name may still be a string (NameOrString), not a full Name object.
+ * Callers that need fully inflated casing variants should use CaseConverter or the V66→V65 migration.
  */
 export function ensureNameAndWireValue(nameAndWireValue: NameAndWireValueOrString): NameAndWireValue {
     if (typeof nameAndWireValue === "string") {
@@ -81,15 +81,10 @@ export function getSnakeCaseUnsafe(input: NameInput): string {
     return name.snakeCase.unsafeName;
 }
 
-// Lazy-initialized default casings generator for fallback casing computation.
-// Used only when a NameOrString is a plain string (compressed V66 form) and we need to compute casings.
-//
-// NOTE: This generator has no language or keyword context, so the *safe* variants (e.g. snakeCaseSafe,
-// camelCaseSafe) will NOT apply language-specific reserved-keyword escaping. These helpers are safe to
-// call for *unsafe* casing variants, or in contexts where the compressed string form is only seen by
-// generators that receive fully-inflated V65 IR (i.e. all non-TS generators via the V66→V65 migration).
-// TypeScript generators that consume V66 IR natively should always receive full Name objects from the
-// CasingsGenerator and will not reach the string branch here.
+// Lazy-initialized language-agnostic casings generator.
+// Used only for the *Unsafe helpers, which are called from CLI-internal code (docs resolver, OpenAPI export)
+// that operates on language-agnostic IR. Generators should use CaseConverter from @fern-api/base-generator
+// instead, constructed with their own language and keywords, to get language-safe casing.
 let _defaultCasingsGenerator: ReturnType<typeof constructFullCasingsGenerator> | undefined;
 function getDefaultCasingsGenerator(): ReturnType<typeof constructFullCasingsGenerator> {
     if (_defaultCasingsGenerator == null) {
@@ -130,40 +125,4 @@ export function getPascalCaseUnsafe(input: NameInput): string {
         return getDefaultCasingsGenerator().generateName(name).pascalCase.unsafeName;
     }
     return name.pascalCase.unsafeName;
-}
-
-/**
- * Get the PascalCase safe name from any name-like input.
- * Same as getPascalCaseUnsafe but returns the safe (keyword-escaped) variant.
- */
-export function getPascalCaseSafe(input: NameInput): string {
-    const name = extractNameOrString(input);
-    if (typeof name === "string") {
-        return getDefaultCasingsGenerator().generateName(name).pascalCase.safeName;
-    }
-    return name.pascalCase.safeName;
-}
-
-/**
- * Get the snakeCase safe name from any name-like input.
- * Same as getSnakeCaseUnsafe but returns the safe (keyword-escaped) variant.
- */
-export function getSnakeCaseSafe(input: NameInput): string {
-    const name = extractNameOrString(input);
-    if (typeof name === "string") {
-        return getDefaultCasingsGenerator().generateName(name).snakeCase.safeName;
-    }
-    return name.snakeCase.safeName;
-}
-
-/**
- * Get the camelCase safe name from any name-like input.
- * Same as getCamelCaseUnsafe but returns the safe (keyword-escaped) variant.
- */
-export function getCamelCaseSafe(input: NameInput): string {
-    const name = extractNameOrString(input);
-    if (typeof name === "string") {
-        return getDefaultCasingsGenerator().generateName(name).camelCase.safeName;
-    }
-    return name.camelCase.safeName;
 }

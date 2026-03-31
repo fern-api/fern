@@ -1,5 +1,5 @@
 import { Name, NameAndWireValue } from "@fern-api/ir-sdk";
-import { CaseConverter } from "../utils/CaseConverter.js";
+import { CaseConverter, getOriginalName, getWireValue } from "../utils/CaseConverter.js";
 
 function makeName(originalName: string): Name {
     return {
@@ -25,123 +25,121 @@ describe("CaseConverter", () => {
         smartCasing: true
     });
 
-    describe("originalName", () => {
+    describe("getOriginalName", () => {
         it("returns string directly", () => {
-            expect(caseConverter.originalName("myField")).toBe("myField");
+            expect(getOriginalName("myField")).toBe("myField");
         });
 
         it("returns originalName from Name object", () => {
-            expect(caseConverter.originalName(makeName("myField"))).toBe("myField");
+            expect(getOriginalName(makeName("myField"))).toBe("myField");
         });
 
         it("returns originalName from NameAndWireValue object", () => {
-            expect(caseConverter.originalName(makeNameAndWireValue("myField", "my_field"))).toBe("myField");
+            expect(getOriginalName(makeNameAndWireValue("myField", "my_field"))).toBe("myField");
+        });
+
+        it("returns string directly for NameOrString", () => {
+            expect(getOriginalName("myField")).toBe("myField");
+        });
+
+        it("returns originalName from Name for NameOrString", () => {
+            expect(getOriginalName(makeName("myField"))).toBe("myField");
         });
     });
 
-    describe("originalNameFromNameOrString", () => {
-        it("returns string directly", () => {
-            expect(caseConverter.originalNameFromNameOrString("myField")).toBe("myField");
-        });
-
-        it("returns originalName from Name object", () => {
-            expect(caseConverter.originalNameFromNameOrString(makeName("myField"))).toBe("myField");
-        });
-    });
-
-    describe("wireValue", () => {
+    describe("getWireValue", () => {
         it("returns string directly for string input", () => {
-            expect(caseConverter.wireValue("myField")).toBe("myField");
+            expect(getWireValue("myField")).toBe("myField");
         });
 
         it("returns wireValue from NameAndWireValue object", () => {
-            expect(caseConverter.wireValue(makeNameAndWireValue("myField", "my_field"))).toBe("my_field");
+            expect(getWireValue(makeNameAndWireValue("myField", "my_field"))).toBe("my_field");
         });
     });
 
     describe("camelCase", () => {
         it("computes camelCase from a string", () => {
-            const result = caseConverter.camelCaseUnsafe("my_field");
+            const result = caseConverter.camelUnsafe("my_field");
             expect(result).toBe("myField");
         });
 
         it("returns pre-computed camelCase from Name object", () => {
-            expect(caseConverter.camelCaseUnsafe(makeName("test"))).toBe("testCamelUnsafe");
+            expect(caseConverter.camelUnsafe(makeName("test"))).toBe("testCamelUnsafe");
         });
 
         it("returns pre-computed camelCase safe from Name object", () => {
-            expect(caseConverter.camelCaseSafe(makeName("test"))).toBe("testCamel");
+            expect(caseConverter.camelSafe(makeName("test"))).toBe("testCamel");
         });
 
         it("computes camelCase safe from a string", () => {
-            const result = caseConverter.camelCaseSafe("my_field");
+            const result = caseConverter.camelSafe("my_field");
             expect(result).toBe("myField");
         });
     });
 
     describe("pascalCase", () => {
         it("computes PascalCase from a string", () => {
-            const result = caseConverter.pascalCaseUnsafe("my_field");
+            const result = caseConverter.pascalUnsafe("my_field");
             expect(result).toBe("MyField");
         });
 
         it("returns pre-computed pascalCase from Name object", () => {
-            expect(caseConverter.pascalCaseUnsafe(makeName("test"))).toBe("testPascalUnsafe");
+            expect(caseConverter.pascalUnsafe(makeName("test"))).toBe("testPascalUnsafe");
         });
 
         it("returns pre-computed pascalCase safe from Name object", () => {
-            expect(caseConverter.pascalCaseSafe(makeName("test"))).toBe("testPascal");
+            expect(caseConverter.pascalSafe(makeName("test"))).toBe("testPascal");
         });
 
         it("computes PascalCase safe from a string", () => {
-            const result = caseConverter.pascalCaseSafe("my_field");
+            const result = caseConverter.pascalSafe("my_field");
             expect(result).toBe("MyField");
         });
     });
 
     describe("snakeCase", () => {
         it("computes snake_case from a string", () => {
-            const result = caseConverter.snakeCaseUnsafe("myField");
+            const result = caseConverter.snakeUnsafe("myField");
             expect(result).toBe("my_field");
         });
 
         it("returns pre-computed snakeCase from Name object", () => {
-            expect(caseConverter.snakeCaseUnsafe(makeName("test"))).toBe("test_snake_unsafe");
+            expect(caseConverter.snakeUnsafe(makeName("test"))).toBe("test_snake_unsafe");
         });
 
         it("returns pre-computed snakeCase safe from Name object", () => {
-            expect(caseConverter.snakeCaseSafe(makeName("test"))).toBe("test_snake");
+            expect(caseConverter.snakeSafe(makeName("test"))).toBe("test_snake");
         });
 
         it("computes snake_case safe from a string", () => {
-            const result = caseConverter.snakeCaseSafe("myField");
+            const result = caseConverter.snakeSafe("myField");
             expect(result).toBe("my_field");
         });
     });
 
     describe("screamingSnakeCase", () => {
         it("computes SCREAMING_SNAKE_CASE from a string", () => {
-            const result = caseConverter.screamingSnakeCaseUnsafe("myField");
+            const result = caseConverter.screamingSnakeUnsafe("myField");
             expect(result).toBe("MY_FIELD");
         });
 
         it("returns pre-computed screamingSnakeCase from Name object", () => {
-            expect(caseConverter.screamingSnakeCaseUnsafe(makeName("test"))).toBe("test_SCREAMING_UNSAFE");
+            expect(caseConverter.screamingSnakeUnsafe(makeName("test"))).toBe("test_SCREAMING_UNSAFE");
         });
 
         it("returns pre-computed screamingSnakeCase safe from Name object", () => {
-            expect(caseConverter.screamingSnakeCaseSafe(makeName("test"))).toBe("test_SCREAMING");
+            expect(caseConverter.screamingSnakeSafe(makeName("test"))).toBe("test_SCREAMING");
         });
 
         it("computes SCREAMING_SNAKE_CASE safe from a string", () => {
-            const result = caseConverter.screamingSnakeCaseSafe("myField");
+            const result = caseConverter.screamingSnakeSafe("myField");
             expect(result).toBe("MY_FIELD");
         });
     });
 
     describe("resolveName", () => {
         it("generates full Name from a string", () => {
-            const resolved = caseConverter.resolveName("myField");
+            const resolved = caseConverter.resolve("myField");
             expect(resolved.originalName).toBe("myField");
             expect(resolved.camelCase).toBeDefined();
             expect(resolved.pascalCase).toBeDefined();
@@ -151,13 +149,13 @@ describe("CaseConverter", () => {
 
         it("returns Name as-is when given a Name object", () => {
             const name = makeName("myField");
-            const resolved = caseConverter.resolveName(name);
+            const resolved = caseConverter.resolve(name);
             expect(resolved.originalName).toBe("myField");
         });
 
         it("extracts and resolves inner name from NameAndWireValue", () => {
             const nameAndWireValue = makeNameAndWireValue("myField", "my_field");
-            const resolved = caseConverter.resolveName(nameAndWireValue);
+            const resolved = caseConverter.resolve(nameAndWireValue);
             expect(resolved.originalName).toBe("myField");
         });
     });
@@ -193,8 +191,8 @@ describe("CaseConverter", () => {
     describe("NameAndWireValue with string name (compressed form)", () => {
         it("handles NameAndWireValue where name is a string", () => {
             const compressed = { wireValue: "my_field", name: "myField" };
-            expect(caseConverter.originalName(compressed)).toBe("myField");
-            expect(caseConverter.wireValue(compressed)).toBe("my_field");
+            expect(getOriginalName(compressed)).toBe("myField");
+            expect(getWireValue(compressed)).toBe("my_field");
         });
     });
 
@@ -206,7 +204,7 @@ describe("CaseConverter", () => {
                 smartCasing: true
             });
             // Should work without errors
-            const result = tsConverter.pascalCaseUnsafe("myField");
+            const result = tsConverter.pascalUnsafe("myField");
             expect(result).toBe("MyField");
         });
 
@@ -216,25 +214,25 @@ describe("CaseConverter", () => {
                 keywords: undefined,
                 smartCasing: false
             });
-            const result = converter.pascalCaseUnsafe("myField");
+            const result = converter.pascalUnsafe("myField");
             expect(typeof result).toBe("string");
         });
     });
 
     describe("multi-word strings", () => {
         it("handles snake_case input", () => {
-            expect(caseConverter.pascalCaseUnsafe("user_name")).toBe("UserName");
-            expect(caseConverter.camelCaseUnsafe("user_name")).toBe("userName");
+            expect(caseConverter.pascalUnsafe("user_name")).toBe("UserName");
+            expect(caseConverter.camelUnsafe("user_name")).toBe("userName");
         });
 
         it("handles PascalCase input", () => {
-            expect(caseConverter.snakeCaseUnsafe("UserName")).toBe("user_name");
-            expect(caseConverter.camelCaseUnsafe("UserName")).toBe("userName");
+            expect(caseConverter.snakeUnsafe("UserName")).toBe("user_name");
+            expect(caseConverter.camelUnsafe("UserName")).toBe("userName");
         });
 
         it("handles camelCase input", () => {
-            expect(caseConverter.pascalCaseUnsafe("userName")).toBe("UserName");
-            expect(caseConverter.snakeCaseUnsafe("userName")).toBe("user_name");
+            expect(caseConverter.pascalUnsafe("userName")).toBe("UserName");
+            expect(caseConverter.snakeUnsafe("userName")).toBe("user_name");
         });
     });
 });

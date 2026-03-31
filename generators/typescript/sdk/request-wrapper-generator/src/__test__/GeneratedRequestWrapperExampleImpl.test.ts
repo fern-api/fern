@@ -1,7 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { casingsGenerator, createDeclaredTypeName, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { FileContext } from "@fern-typescript/contexts";
+import {
+    caseConverter,
+    casingsGenerator,
+    createDeclaredTypeName,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -53,7 +58,7 @@ function literalShape(value: string): FernIr.ExampleTypeReferenceShape {
 }
 
 /**
- * Creates a mock SdkContext for GeneratedRequestWrapperExampleImpl.build().
+ * Creates a mock FileContext for GeneratedRequestWrapperExampleImpl.build().
  * Covers all context.* accesses in the source:
  * - context.requestWrapper.getGeneratedRequestWrapper
  * - context.inlineFileProperties
@@ -71,7 +76,7 @@ function createMockContext(opts?: {
         getPropertyKey?: (args: { propertyWireKey: string }) => string;
     };
     getPropertyKeyError?: boolean;
-}): SdkContext {
+}): FileContext {
     const mockGeneratedRequestWrapper = {
         getPropertyNameOfFileParameter: (fileProperty: FernIr.FileProperty) => ({
             propertyName: fileProperty.key.name.camelCase.unsafeName
@@ -172,8 +177,9 @@ function createMockContext(opts?: {
             debug: () => {
                 // noop for tests
             }
-        }
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal SdkContext interface
+        },
+        case: caseConverter
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal FileContext interface
     } as any;
 }
 

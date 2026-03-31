@@ -4,7 +4,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { readFileSync } from "fs";
 import { template } from "lodash-es";
 import { join } from "path";
@@ -40,7 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly CUSTOM_FETCH_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCH";
     private static readonly CUSTOM_FETCHER_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_FETCHER";
 
-    private readonly context: SdkContext;
+    private readonly context: FileContext;
     private readonly isPaginationEnabled: boolean;
     private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
@@ -60,7 +60,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         allowCustomFetcher,
         generateSubpackageExports
     }: {
-        context: SdkContext;
+        context: FileContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         allowCustomFetcher: boolean;
@@ -212,7 +212,7 @@ try {
             // this section altogether.
             return undefined;
         }
-        const requestTypeName = `${this.context.namespaceExport}.${endpointWithRequest.requestWrapper.wrapperName.pascalCase.unsafeName}`;
+        const requestTypeName = `${this.context.namespaceExport}.${this.context.case.pascalUnsafe(endpointWithRequest.requestWrapper.wrapperName)}`;
         return [
             this.writeCode(
                 code`
@@ -239,13 +239,15 @@ const request: ${requestTypeName} = {
             return undefined;
         }
 
-        const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
-        const subpackageName = firstSubpackageWithClient.name.camelCase.safeName;
+        const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map((name) =>
+            this.context.case.camelSafe(name)
+        );
+        const subpackageName = this.context.case.camelSafe(firstSubpackageWithClient.name);
         if (pathSegments.length === 0 || pathSegments[pathSegments.length - 1] !== subpackageName) {
             pathSegments.push(subpackageName);
         }
         const importPath = pathSegments.join("/");
-        const clientName = `${firstSubpackageWithClient.name.pascalCase.unsafeName}Client`;
+        const clientName = `${this.context.case.pascalUnsafe(firstSubpackageWithClient.name)}Client`;
 
         return [
             this.writeCode(
@@ -698,14 +700,14 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.unsafeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.context.case.camelUnsafe(part));
         return clientAccessParts.length > 0
             ? `${this.clientVariableName}.${clientAccessParts.join(".")}`
             : this.clientVariableName;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.camelCase.unsafeName;
+        return this.context.case.camelUnsafe(endpoint.name);
     }
 
     private writeCode(code: Code): string {

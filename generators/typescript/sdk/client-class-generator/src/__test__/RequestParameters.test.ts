@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createHttpService,
@@ -25,7 +26,7 @@ const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefin
 // Mock context
 // ──────────────────────────────────────────────────────────────────────────────
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: boolean }): any {
     return {
         includeSerdeLayer: true,
@@ -86,7 +87,8 @@ function createMockContext(opts?: { useDefaultValues?: boolean; useBigInt?: bool
             shouldInlinePathParameters: () => false,
             getReferenceToRequestWrapper: () => ts.factory.createTypeReferenceNode("TestRequest"),
             getGeneratedRequestWrapper: () => createMockGeneratedRequestWrapper()
-        }
+        },
+        case: caseConverter
     };
 }
 
@@ -169,7 +171,8 @@ describe("RequestBodyParameter", () => {
                 contentType: undefined,
                 docs: undefined,
                 v2Examples: undefined
-            }
+            },
+            caseConverter
         });
     }
 
@@ -338,7 +341,8 @@ describe("FileUploadRequestParameter", () => {
                 pathParameters: opts?.pathParameters,
                 allPathParameters: opts?.pathParameters
             }),
-            sdkRequest
+            sdkRequest,
+            caseConverter
         });
     }
 
@@ -475,7 +479,8 @@ describe("RequestWrapperParameter", () => {
                 queryParameters: opts?.queryParameters,
                 requestBody: opts?.requestBody
             }),
-            sdkRequest
+            sdkRequest,
+            caseConverter
         });
     }
 
