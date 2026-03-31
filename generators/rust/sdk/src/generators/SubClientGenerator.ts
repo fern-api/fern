@@ -5,6 +5,7 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 interface EndpointParameter {
@@ -28,9 +29,11 @@ export class SubClientGenerator {
     private readonly subpackage: FernIr.Subpackage;
     private readonly service?: FernIr.HttpService;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
 
     constructor(context: SdkGeneratorContext, subpackage: FernIr.Subpackage) {
         this.context = context;
+        this.environmentGenerator = new EnvironmentGenerator({ context: this.context });
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -852,6 +855,21 @@ export class SubClientGenerator {
         return methods;
     }
 
+    /**
+     * Returns the URL method name for an endpoint's base URL, or undefined
+     * if no multi-URL resolution is needed (single-URL env or no baseUrl on endpoint).
+     */
+    private getEndpointUrlMethodName(endpoint: FernIr.HttpEndpoint): string | undefined {
+        if (!this.context.hasMultipleBaseUrls()) {
+            return undefined;
+        }
+        const baseUrlId = endpoint.baseUrl ?? undefined;
+        if (!baseUrlId) {
+            return undefined;
+        }
+        return this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+    }
+
     private generateHttpMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
@@ -918,13 +936,31 @@ export class SubClientGenerator {
             }
         }
 
+        // Determine if this endpoint needs multi-URL resolution.
+        // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
+        const urlMethodName = this.getEndpointUrlMethodName(endpoint);
+        const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        let body: string;
+
+        if (urlMethodName && supportsBaseUrlOverride) {
+            // Multi-URL: resolve base URL at call time from environment
+            const baseUrlResolution =
+                `let base_url = self.http_client.config().environment.as_ref()\n` +
+                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            base_url,${executeArgs}
+        ).await`;
+        } else {
+            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+        ).await`;
+        }
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`,
+            body,
             docs: endpoint.docs
                 ? rust.docComment({
                       summary: endpoint.docs,

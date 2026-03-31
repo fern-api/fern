@@ -130,7 +130,10 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
     return {
         ir,
         getClientName: () => "TestClient",
-        customConfig: {}
+        customConfig: {},
+        hasEnvironments: () => ir.environments?.environments != null,
+        hasMultipleBaseUrls: () => ir.environments?.environments?.type === "multipleBaseUrls",
+        getEnvironmentEnumName: () => "Environment"
     } as SdkGeneratorContext;
 }
 

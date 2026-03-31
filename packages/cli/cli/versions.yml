@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.3
+  changelogEntry:
+    - summary: |
+        Improve MDX validation error formatting in `fern docs md check`.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.50.2
   changelogEntry:
     - summary: |
