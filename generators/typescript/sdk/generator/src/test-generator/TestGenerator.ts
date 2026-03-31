@@ -1088,7 +1088,7 @@ describe("${serviceName}", () => {
 
     private buildExampleTest({
         endpoint,
-        example,
+        example: rawExample,
         exampleIndex,
         hasMultipleExamples,
         serviceGenerator,
@@ -1105,6 +1105,11 @@ describe("${serviceName}", () => {
         importStatement: Reference;
         baseOptions: Record<string, Code>;
     }): Code | undefined {
+        // Sanitize path parameter examples: replace non-primitive values (objects/arrays)
+        // with the parameter's original name string. This prevents [object Object] in URLs
+        // when the IR contains object-typed path params (e.g. from `unknown` types).
+        const example = sanitizeExamplePathParameters({ endpoint, example: rawExample });
+
         const options: Record<string, Code> = { ...baseOptions };
         const generatedEndpoint = serviceGenerator.getEndpoint({
             endpointId: endpoint.id,
@@ -2266,6 +2271,85 @@ function isPaginationResultsPathMissingInExample({
  * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
  * since there won't be a cursor to indicate a next page.
  */
+/**
+ * Sanitizes an example's path parameter values so that non-primitive values
+ * (objects, arrays, null) are replaced with the parameter's original name string.
+ *
+ * The IR may contain object-typed path param examples (e.g. `{ key: "value" }` for
+ * `unknown`-typed params). The SDK's `encodePathParam` converts these via `String()`,
+ * producing `[object Object]`, while the IR's URL uses `JSON.stringify`, producing
+ * `{"key":"value"}`. This mismatch causes MSW mock URLs to never match.
+ *
+ * By coercing to strings here, both the mock URL and the generated client call use
+ * the same scalar value.
+ */
+function sanitizeExamplePathParameters({
+    endpoint,
+    example
+}: {
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+}): FernIr.ExampleEndpointCall {
+    let needsSanitization = false;
+    const allPathParams = [
+        ...example.rootPathParameters,
+        ...example.servicePathParameters,
+        ...example.endpointPathParameters
+    ];
+    for (const param of allPathParams) {
+        const json = param.value.jsonExample;
+        if (typeof json !== "string" && typeof json !== "number" && typeof json !== "boolean") {
+            needsSanitization = true;
+            break;
+        }
+    }
+    if (!needsSanitization) {
+        return example;
+    }
+
+    const coerce = (param: FernIr.ExamplePathParameter): FernIr.ExamplePathParameter => {
+        const json = param.value.jsonExample;
+        if (typeof json === "string" || typeof json === "number" || typeof json === "boolean") {
+            return param;
+        }
+        const fallback = param.name.originalName;
+        return {
+            ...param,
+            value: {
+                ...param.value,
+                jsonExample: fallback,
+                shape: FernIr.ExampleTypeReferenceShape.primitive(
+                    FernIr.ExamplePrimitive.string({ original: fallback })
+                )
+            }
+        };
+    };
+
+    const sanitized: FernIr.ExampleEndpointCall = {
+        ...example,
+        rootPathParameters: example.rootPathParameters.map(coerce),
+        servicePathParameters: example.servicePathParameters.map(coerce),
+        endpointPathParameters: example.endpointPathParameters.map(coerce)
+    };
+
+    // Rebuild the URL from the sanitized path parameters
+    const pathParameters: Record<string, string> = {};
+    [...sanitized.rootPathParameters, ...sanitized.servicePathParameters, ...sanitized.endpointPathParameters].forEach(
+        (p) => {
+            const value = p.value.jsonExample;
+            pathParameters[p.name.originalName] = typeof value === "string" ? value : String(value);
+        }
+    );
+    const url =
+        endpoint.fullPath.head +
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
+    sanitized.url = url.startsWith("/") || url === "" ? url : `/${url}`;
+
+    return sanitized;
+}
+
 function isPaginationCursorMissingInExample({
     example,
     endpoint
