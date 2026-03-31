@@ -114,18 +114,39 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
 
     private MethodSpec buildGetAuthHeaders(
             ClassName endpointMetadataClassName, FieldSpec usernameSupplierField, FieldSpec passwordSupplierField) {
-        return MethodSpec.methodBuilder("getAuthHeaders")
+        boolean eitherOmitted = basicAuthScheme.getUsernameOmit().orElse(false)
+                || basicAuthScheme.getPasswordOmit().orElse(false);
+
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
-                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
-                .addStatement("String username = $N.get()", usernameSupplierField)
-                .addStatement("String password = $N.get()", passwordSupplierField)
-                .beginControlFlow("if (username == null || password == null)")
-                .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
-                .endControlFlow()
-                .addStatement("String credentials = username + \":\" + password")
-                .addStatement(
+                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class));
+
+        if (eitherOmitted) {
+            builder.addStatement(
+                            "String username = $N != null ? $N.get() : null",
+                            usernameSupplierField,
+                            usernameSupplierField)
+                    .addStatement(
+                            "String password = $N != null ? $N.get() : null",
+                            passwordSupplierField,
+                            passwordSupplierField)
+                    .beginControlFlow("if (username == null && password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow()
+                    .addStatement(
+                            "String credentials = (username != null ? username : \"\") + \":\" + (password != null ? password : \"\")");
+        } else {
+            builder.addStatement("String username = $N.get()", usernameSupplierField)
+                    .addStatement("String password = $N.get()", passwordSupplierField)
+                    .beginControlFlow("if (username == null || password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow()
+                    .addStatement("String credentials = username + \":\" + password");
+        }
+
+        return builder.addStatement(
                         "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
                         Base64.class,
                         StandardCharsets.class)
@@ -136,6 +157,10 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String usernameEnvVar, String passwordEnvVar) {
+        boolean eitherOmitted = basicAuthScheme.getUsernameOmit().orElse(false)
+                || basicAuthScheme.getPasswordOmit().orElse(false);
+        String combiner = eitherOmitted ? ") || (" : ") && (";
+
         ParameterizedTypeName stringSupplierType =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
@@ -151,7 +176,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         if (usernameEnvVar != null) {
             condition.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
         }
-        condition.append(") && (passwordSupplier != null");
+        condition.append(combiner).append("passwordSupplier != null");
         if (passwordEnvVar != null) {
             condition.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
         }
