@@ -1,0 +1,3 @@
+rootProject.name = 'optional-header-with-default'
+
+include 'sample-app'
