@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Make dashboard the default launch option for the "Edit this page" button.
+        Previously the default was `github`, which required users to configure
+        `launch: dashboard` explicitly.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 4.50.5
   changelogEntry:
     - summary: |
