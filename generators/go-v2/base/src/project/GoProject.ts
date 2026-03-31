@@ -173,7 +173,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             getPackageName: () => this.context.getRootPackageName(),
             getImportPath: () => this.getRootImportPath(),
             templateVariables: {
-                DefaultRetryAttempts: String(this.context.customConfig.maxRetries ?? 2)
+                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 2) + 1)
             }
         });
     }

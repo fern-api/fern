@@ -254,7 +254,7 @@ export class CoreUtilitiesManager {
                     `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
                 );
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
-            } catch {
+            } catch (_error) {
                 // File may not exist if fetcher utility doesn't include requestWithRetries
             }
         }
