@@ -190,6 +190,46 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a request with a raw bytes body (application/octet-stream).
+    pub async fn execute_bytes_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<Vec<u8>>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request
+                .header("Content-Type", "application/octet-stream")
+                .body(body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+
     async fn apply_auth_headers(
         &self,
         request: &mut Request,
@@ -204,7 +244,11 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            let header_value = key.to_string();
+            headers.insert(
+                "api_key",
+                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token - priority: request options > OAuth > config

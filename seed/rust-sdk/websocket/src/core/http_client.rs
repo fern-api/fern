@@ -202,7 +202,8 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            let header_value = key.to_string();
+            headers.insert("api_key", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
         }
 
         // Apply bearer token - priority: request options > OAuth > config

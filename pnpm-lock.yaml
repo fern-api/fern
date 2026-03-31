@@ -2149,8 +2149,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^65.5.0
+        version: 65.5.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23
@@ -2251,8 +2251,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^65.5.0
+        version: 65.5.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
@@ -2309,8 +2309,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^65.5.0
+        version: 65.5.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
@@ -9718,6 +9718,10 @@ packages:
     resolution: {integrity: sha512-Yfm2kWoEI5kJ3PhBXbR+akeiFcQP1Yunnxl5HYYG3R/YWubsMPejGh5W6iHjjylB8fxReOBwSJnk7FGtuZY3WA==}
     engines: {node: '>=18.0.0'}
 
+  '@fern-fern/ir-sdk@65.5.0':
+    resolution: {integrity: sha512-qp8fMvdN82T0qYMpiwDtv1hFjvjjmqmBWOX4+iG270bqKcQ5pQiTKFJLdSldf5XwUbRy+fa7CdzX9MKKd6VBXQ==}
+    engines: {node: '>=18.0.0'}
+
   '@fern-fern/ir-v53-sdk@1.0.1':
     resolution: {integrity: sha512-SVNbkGBVgE/PkgurqqdFEYkmYBGNZzD2Qh8wF9nApp1NH2Wipte5zbzngl78snGTk/e9DN6+mYHfgQPzv6Pi4w==}
     engines: {node: '>=18.0.0'}
@@ -16722,6 +16726,8 @@ snapshots:
   '@fern-fern/ir-sdk@65.3.0': {}
 
   '@fern-fern/ir-sdk@65.4.0': {}
+
+  '@fern-fern/ir-sdk@65.5.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 

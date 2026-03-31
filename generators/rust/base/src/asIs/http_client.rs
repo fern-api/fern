@@ -188,7 +188,7 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
-{{MULTIPART_METHOD}}    async fn apply_auth_headers(
+{{MULTIPART_METHOD}}{{BYTES_METHOD}}    async fn apply_auth_headers(
         &self,
         request: &mut Request,
         options: &Option<RequestOptions>,
@@ -202,7 +202,8 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("{{API_KEY_HEADER}}", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            let header_value = {{API_KEY_VALUE_EXPR}};
+            headers.insert("{{API_KEY_HEADER}}", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
         }
 
         // Apply bearer token - priority: request options > OAuth > config
