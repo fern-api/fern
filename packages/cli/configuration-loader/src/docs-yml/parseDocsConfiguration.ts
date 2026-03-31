@@ -83,6 +83,8 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
+        llms,
+
         pageActions,
 
         experimental
@@ -230,6 +232,14 @@ export async function parseDocsConfiguration({
         js,
 
         aiChatConfig: aiSearch ?? aiChat,
+
+        llmsConfig:
+            llms != null
+                ? {
+                      pageDirectivePrepend: llms["page-directive-prepend"],
+                      pageDirectiveAppend: llms["page-directive-append"]
+                  }
+                : undefined,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
