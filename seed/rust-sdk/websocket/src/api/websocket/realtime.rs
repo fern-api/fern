@@ -1,6 +1,6 @@
 use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions};
-use tokio::sync::{mpsc};
-use crate::prelude::{*};
+use tokio::sync::mpsc;
+use crate::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,7 +18,6 @@ pub enum RealtimeServerMessage {
 pub struct RealtimeConnectOptions {
     pub model: Option<String>,
     pub temperature: Option<String>,
-    #[serde(rename = "language-code")]
     pub language_code: Option<String>,
 }
 pub struct RealtimeClient {

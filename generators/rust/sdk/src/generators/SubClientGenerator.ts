@@ -1549,7 +1549,7 @@ export class SubClientGenerator {
         // For bytes+query endpoints, the body is a separate "body" parameter
         const bodyParam = params.find((param) => param.name === "body");
         if (bodyParam && this.isBytesEndpoint(endpoint)) {
-            return "Some(serde_json::to_value(body).unwrap_or_default())";
+            return "Some(serde_json::to_value(body).map_err(ApiError::Serialization)?)";
         }
 
         const requestBodyParam = params.find((param) => param.name === "request");

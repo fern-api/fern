@@ -617,13 +617,9 @@ ${authSetup}        ${clientName}::connect(${forwardArgs.join(", ")}).await
     ): string {
         const fields = channel.queryParameters.map((qp) => {
             const fieldName = qp.name.name.snakeCase.safeName;
-            const wireValue = qp.name.wireValue;
             const isOptional = this.isOptionalType(qp.valueType);
             const fieldType = isOptional ? "Option<String>" : "String";
-            const renameAttr = fieldName !== wireValue
-                ? `    #[serde(rename = "${wireValue}")]\n`
-                : "";
-            return `${renameAttr}    pub ${fieldName}: ${fieldType},`;
+            return `    pub ${fieldName}: ${fieldType},`;
         });
 
         return `#[derive(Debug, Clone, Default)]
