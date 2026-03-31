@@ -109,7 +109,9 @@ export async function generateDocsWorkspace({
     if (hasFdrOriginOverride) {
         const fernToken = await getToken();
         if (!fernToken) {
-            cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable or run `fern login`.");
+            cliContext.failAndThrow(
+                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`."
+            );
             return;
         }
         token = fernToken;
