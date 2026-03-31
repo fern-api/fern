@@ -1,0 +1,32 @@
+openapi: 3.0.1
+info:
+  title: java-with-property-conflict
+  version: ''
+paths: {}
+components:
+  schemas:
+    ConfigurableProp:
+      title: ConfigurableProp
+      type: object
+      description: >-
+        A type with both 'label' and 'withLabel' properties that triggers
+        Jackson conflict
+      properties:
+        name:
+          type: string
+          description: The name of the prop
+        label:
+          type: string
+          nullable: true
+          description: The display label
+        withLabel:
+          type: boolean
+          nullable: true
+          description: If true, requires label-value format
+        description:
+          type: string
+          nullable: true
+          description: A description of the prop
+      required:
+        - name
+  securitySchemes: {}

@@ -1,0 +1,31 @@
+openapi: 3.0.1
+info:
+  title: single-url-environment-default
+  version: ''
+paths:
+  /dummy:
+    get:
+      operationId: dummy_getDummy
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - BearerAuth: []
+components:
+  schemas: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://production.com/api
+    description: Production
+  - url: https://staging.com/api
+    description: Staging

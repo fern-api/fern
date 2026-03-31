@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: folders
+  version: ''
+paths:
+  /:
+    post:
+      operationId: foo
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /a/b:
+    post:
+      operationId: a_b_foo
+      tags:
+        - AB
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /a/c:
+    post:
+      operationId: a_c_foo
+      tags:
+        - AC
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /folder:
+    post:
+      operationId: folder_foo
+      tags:
+        - Folder
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /service:
+    get:
+      operationId: folder_service_endpoint
+      tags:
+        - FolderService
+      parameters: []
+      responses:
+        '204':
+          description: ''
+    post:
+      operationId: folder_service_unknownRequest
+      tags:
+        - FolderService
+      parameters: []
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+components:
+  schemas:
+    adFoo:
+      title: adFoo
+      type: string
+  securitySchemes: {}
