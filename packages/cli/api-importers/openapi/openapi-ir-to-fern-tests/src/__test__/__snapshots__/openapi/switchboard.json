@@ -2226,13 +2226,11 @@ service:
                 "name": "SessionsListRequest",
                 "query-parameters": {
                   "limit": {
-                    "default": 0,
                     "docs": "limit for pagination",
                     "explode": false,
                     "type": "optional<long>",
                   },
                   "offset": {
-                    "default": -1,
                     "docs": "offset for pagination",
                     "explode": false,
                     "type": "optional<long>",
@@ -2530,12 +2528,10 @@ service:
             docs: status of the session to get
           offset:
             type: optional<long>
-            default: -1
             explode: false
             docs: offset for pagination
           limit:
             type: optional<long>
-            default: 0
             explode: false
             docs: limit for pagination
       response:

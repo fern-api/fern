@@ -2531,10 +2531,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "local": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "local": "optional<boolean>",
                   "region": "optional<root.Region>",
                 },
               },
@@ -2577,10 +2574,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "local": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "local": "optional<boolean>",
                   "region": "optional<root.Region>",
                 },
               },
@@ -2636,10 +2630,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "local": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "local": "optional<boolean>",
                   "region": "optional<root.Region>",
                 },
               },
@@ -2676,9 +2667,7 @@ service:
           appId: root.AppId
         query-parameters:
           region: optional<root.Region>
-          local:
-            type: optional<boolean>
-            default: false
+          local: optional<boolean>
       response:
         docs: Ok
         type: root.RoomId
@@ -2707,9 +2696,7 @@ service:
           appId: root.AppId
         query-parameters:
           region: optional<root.Region>
-          local:
-            type: optional<boolean>
-            default: false
+          local: optional<boolean>
       response:
         docs: Ok
         type: root.RoomId
@@ -2737,9 +2724,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          local:
-            type: optional<boolean>
-            default: false
+          local: optional<boolean>
           region: optional<root.Region>
       response:
         docs: Ok
@@ -3597,10 +3582,7 @@ types:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "follow": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "follow": "optional<boolean>",
                   "region": "optional<root.Region>",
                   "tailLines": "optional<root.TailLines>",
                 },
@@ -3634,10 +3616,7 @@ types:
                   "deploymentId": "root.DeploymentId",
                 },
                 "query-parameters": {
-                  "follow": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "follow": "optional<boolean>",
                   "tailLines": "optional<root.TailLines>",
                 },
               },
@@ -3670,10 +3649,7 @@ types:
                   "processId": "root.ProcessId",
                 },
                 "query-parameters": {
-                  "follow": {
-                    "default": false,
-                    "type": "optional<boolean>",
-                  },
+                  "follow": "optional<boolean>",
                   "tailLines": "optional<root.TailLines>",
                 },
               },
@@ -3710,9 +3686,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          follow:
-            type: optional<boolean>
-            default: false
+          follow: optional<boolean>
           tailLines: optional<root.TailLines>
           region: optional<root.Region>
       response:
@@ -3734,9 +3708,7 @@ service:
           appId: root.AppId
           processId: root.ProcessId
         query-parameters:
-          follow:
-            type: optional<boolean>
-            default: false
+          follow: optional<boolean>
           tailLines: optional<root.TailLines>
       response:
         docs: Ok
@@ -3757,9 +3729,7 @@ service:
           appId: root.AppId
           deploymentId: root.DeploymentId
         query-parameters:
-          follow:
-            type: optional<boolean>
-            default: false
+          follow: optional<boolean>
           tailLines: optional<root.TailLines>
       response:
         docs: Ok
@@ -3844,10 +3814,7 @@ service:
                     "type": "optional<root.MetricName>",
                   },
                   "start": "optional<integer>",
-                  "step": {
-                    "default": 60,
-                    "type": "optional<integer>",
-                  },
+                  "step": "optional<integer>",
                 },
               },
               "response": {
@@ -3889,9 +3856,7 @@ service:
             allow-multiple: true
           end: optional<integer>
           start: optional<integer>
-          step:
-            type: optional<integer>
-            default: 60
+          step: optional<integer>
       response:
         docs: Ok
         type: root.MetricsResponse
