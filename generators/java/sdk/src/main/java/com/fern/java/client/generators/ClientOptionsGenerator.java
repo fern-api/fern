@@ -652,7 +652,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("new $T<>()", HashMap.class)
                         .build())
                 .addField(FieldSpec.builder(TypeName.INT, MAX_RETRIES_FIELD.name, Modifier.PRIVATE)
-                        .initializer("2")
+                        .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
@@ -1231,5 +1231,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .getCustomConfig()
                 .defaultTimeoutInSeconds()
                 .orElse(60);
+    }
+
+    private int getDefaultMaxRetries() {
+        return clientGeneratorContext
+                .getCustomConfig()
+                .maxRetries()
+                .orElse(2);
     }
 }

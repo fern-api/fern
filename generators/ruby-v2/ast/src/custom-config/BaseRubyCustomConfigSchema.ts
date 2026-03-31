@@ -19,7 +19,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     requirePaths: z.optional(z.array(z.string())),
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
-    omitFernHeaders: z.boolean().optional()
+    omitFernHeaders: z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;
