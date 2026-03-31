@@ -24,6 +24,7 @@ export class RootClientGenerator {
         urlMethodName: string;
     }>;
     private readonly rootServiceGenerator: SubClientGenerator | null;
+    private readonly httpFieldNames: Set<string>;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -34,6 +35,8 @@ export class RootClientGenerator {
             packageOrSubpackage: this.package,
             sdkGeneratorContext: context
         });
+
+        this.httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
         // Gather WebSocket connector info
         const wsGen = new WebSocketChannelGenerator(context);
@@ -225,8 +228,7 @@ export class RootClientGenerator {
         }
 
         // Import WebSocket connector types from the websocket module
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
-        const uniqueWsConnectors = this.getUniqueWsConnectors(httpFieldNames);
+        const uniqueWsConnectors = this.getUniqueWsConnectors();
         if (uniqueWsConnectors.length > 0) {
             imports.push(
                 new UseStatement({
@@ -256,9 +258,6 @@ export class RootClientGenerator {
     }
 
     private generateFields(subpackages: FernIr.Subpackage[]): rust.Client.Field[] {
-        // Collect HTTP sub-client field names to avoid collisions with WS connectors
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
-
         // Add http_client field if root package has endpoints
         const httpClientField: rust.Client.Field[] = this.rootServiceGenerator
             ? [
@@ -282,7 +281,7 @@ export class RootClientGenerator {
                 type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
                 visibility: "pub" as const
             })),
-            ...this.getUniqueWsConnectors(httpFieldNames).map(({ fieldName, connectorName }) => ({
+            ...this.getUniqueWsConnectors().map(({ fieldName, connectorName }) => ({
                 name: fieldName,
                 type: rust.Type.reference(rust.reference({ name: connectorName })).toString(),
                 visibility: "pub" as const
@@ -303,8 +302,8 @@ export class RootClientGenerator {
     /**
      * Returns WebSocket connectors that don't collide with existing HTTP sub-client field names.
      */
-    private getUniqueWsConnectors(httpFieldNames: Set<string>): typeof this.wsConnectors {
-        return this.wsConnectors.filter((c) => !httpFieldNames.has(c.fieldName));
+    private getUniqueWsConnectors(): typeof this.wsConnectors {
+        return this.wsConnectors.filter((c) => !this.httpFieldNames.has(c.fieldName));
     }
 
     /**
@@ -320,7 +319,6 @@ export class RootClientGenerator {
 
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {
         const allInits: string[] = [];
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
         // HttpClient initialization for root-level endpoints
         if (this.rootServiceGenerator) {
@@ -352,7 +350,7 @@ export class RootClientGenerator {
         // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
         // Always pass the token so the connector can auto-inject the Authorization header,
         // matching the TypeScript SDK experience where auth "just works".
-        for (const { fieldName, connectorName, urlMethodName } of this.getUniqueWsConnectors(httpFieldNames)) {
+        for (const { fieldName, connectorName, urlMethodName } of this.getUniqueWsConnectors()) {
             if (isMultiUrl && urlMethodName !== DEFAULT_URL_METHOD) {
                 allInits.push(
                     `${fieldName}: ${connectorName}::new(\n` +

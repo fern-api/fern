@@ -185,9 +185,7 @@ export class WebSocketChannelGenerator {
                 reExports.push(`pub use ${names.moduleName}::${this.getConnectOptionsName(names.enumPrefix)};`);
             }
 
-            const serverMessages = channel.messages.filter((m) => m.origin === "server");
-            const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
-            const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
+            const { jsonServerMessages, hasBinaryServerMessages } = this.getServerMessageInfo(channel);
 
             // Export ServerMessage enum if channel has JSON server messages
             if (jsonServerMessages.length > 0) {
@@ -221,9 +219,7 @@ export class WebSocketChannelGenerator {
         const { clientName, moduleName, enumPrefix } = names;
 
         const clientMessages = channel.messages.filter((m) => m.origin === "client");
-        const serverMessages = channel.messages.filter((m) => m.origin === "server");
-        const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
-        const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
+        const { jsonServerMessages, hasBinaryServerMessages } = this.getServerMessageInfo(channel);
         const hasQueryParams = channel.queryParameters.length > 0;
 
         const rawDeclarations: string[] = [];
@@ -377,11 +373,6 @@ ${methods.join("\n\n")}
 }`;
     }
 
-    /**
-     * Builds the shared connect parameter list from a WebSocket channel's IR definition.
-     * Used by both generateConnectMethod() and generateConnectorStruct() to ensure
-     * parameter signatures stay in sync.
-     */
     /**
      * Returns true if the channel does not already have an explicit Authorization
      * header in its IR definition.  When true, the connector will automatically
@@ -612,9 +603,17 @@ ${queryAssignment}
         // Build the forward args for the underlying client::connect() call.
         // Insert the auto-constructed Bearer token where the authorization param goes.
         const forwardArgs: string[] = ["&self.base_url"];
+        const authParam = allClientParams.find((p) => p.name === AUTH_PARAM_NAME);
         for (const p of allClientParams) {
             if (p.name === AUTH_PARAM_NAME) {
-                forwardArgs.push("auth_header.as_deref()");
+                // Implicit auth uses Option<&str>, explicit header uses &str.
+                // For explicit headers, unwrap with a default empty string so the
+                // connector always compiles against the client's &str parameter.
+                if (authParam?.type === "Option<&str>") {
+                    forwardArgs.push("auth_header.as_deref()");
+                } else {
+                    forwardArgs.push(`auth_header.as_deref().unwrap_or_default()`);
+                }
             } else {
                 forwardArgs.push(p.name);
             }
@@ -634,8 +633,6 @@ ${queryAssignment}
             ? `        let auth_header = self.token.as_ref()
             .map(|t| format!("Bearer {}", t));\n`
             : "";
-
-        // When forwarding to the underlying client, pass auth as Option<&str>
 
         return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
 /// Provides access to the WebSocket channel through the root client.
@@ -663,6 +660,20 @@ ${authSetup}        ${clientName}::${connectMethodName}(${forwardArgs.join(", ")
             }
         }
         return path;
+    }
+
+    /**
+     * Partitions a channel's server messages into JSON and binary categories.
+     */
+    private getServerMessageInfo(channel: FernIr.WebSocketChannel): {
+        serverMessages: FernIr.WebSocketMessage[];
+        jsonServerMessages: FernIr.WebSocketMessage[];
+        hasBinaryServerMessages: boolean;
+    } {
+        const serverMessages = channel.messages.filter((m) => m.origin === "server");
+        const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
+        const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
+        return { serverMessages, jsonServerMessages, hasBinaryServerMessages };
     }
 
     /**
