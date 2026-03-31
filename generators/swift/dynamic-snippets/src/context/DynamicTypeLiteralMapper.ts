@@ -34,8 +34,8 @@ export class DynamicTypeLiteralMapper {
                     return swift.Expression.enumCaseShorthand(
                         LiteralEnum.generateEnumCaseLabel(typeReference.value.value)
                     );
-                } else if (typeReference.value.type === "boolean") {
-                    return swift.Expression.nop();
+                    } else if (typeReference.value.type === "boolean") {
+                        return swift.Expression.boolLiteral(typeReference.value.value);
                 } else {
                     assertNever(typeReference.value);
                     break;
