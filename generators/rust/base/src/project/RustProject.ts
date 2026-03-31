@@ -229,6 +229,56 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{MULTIPART_METHOD\}\}/g, "");
         }
 
+        // Conditionally include bytes request method in http_client
+        if (this.context.hasBytesEndpoints()) {
+            content = content.replace(
+                /\{\{BYTES_METHOD\}\}/g,
+                `    /// Execute a request with a raw bytes body (application/octet-stream).
+    pub async fn execute_bytes_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<Vec<u8>>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request
+                .header("Content-Type", "application/octet-stream")
+                .body(body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+
+`
+            );
+        } else {
+            content = content.replace(/\{\{BYTES_METHOD\}\}/g, "");
+        }
+
         // Conditionally include SSE method in http_client
         if (this.context.hasStreamingEndpoints()) {
             content = content.replace(
@@ -568,6 +618,18 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         // Replace API key header name from IR auth schemes
         content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
+
+        // Replace API key value expression (with or without prefix)
+        const apiKeyPrefix = this.context.getApiKeyPrefix();
+        if (apiKeyPrefix) {
+            const escapedPrefix = apiKeyPrefix.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+            content = content.replace(
+                /\{\{API_KEY_VALUE_EXPR\}\}/g,
+                `format!("${escapedPrefix} {}", key)`
+            );
+        } else {
+            content = content.replace(/\{\{API_KEY_VALUE_EXPR\}\}/g, "key.to_string()");
+        }
 
         return content;
     }

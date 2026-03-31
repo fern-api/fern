@@ -507,8 +507,9 @@ export class RootClientGenerator {
             return null;
         }
 
-        // Check if this subpackage has subclients (nested structure)
-        const subClientSubpackages = this.context.getSubpackagesOrThrow(targetSubpackage);
+        // Check if this subpackage has subclients (nested structure), excluding websocket-only ones
+        const subClientSubpackages = this.context.getSubpackagesOrThrow(targetSubpackage)
+            .filter(([, sp]) => !this.context.isWebSocketOnlySubpackage(sp));
         const hasSubClients = subClientSubpackages.length > 0;
 
         if (!hasSubClients) {
@@ -544,7 +545,7 @@ export class RootClientGenerator {
         currentPath: string,
         subpackage: FernIr.Subpackage
     ): RustFile {
-        // Generate submodule declarations and re-exports
+        // Generate submodule declarations and re-exports (websocket-only subpackages already excluded)
         const subModuleDeclarations: string[] = [];
         subClientSubpackages.forEach(([, subClientSubpackage]) => {
             // Use the actual directory name, not the full filename

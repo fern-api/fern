@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dry_run": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "dry_run"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
