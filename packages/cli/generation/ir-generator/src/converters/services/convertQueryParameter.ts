@@ -47,6 +47,10 @@ function convertDefaultToLiteral(defaultValue: unknown): Literal | undefined {
     if (typeof defaultValue === "boolean") {
         return Literal.boolean(defaultValue);
     }
+    // biome-ignore lint/suspicious/noConsole: intentional warning for unsupported x-fern-default value types
+    console.warn(
+        `Unsupported x-fern-default value type '${typeof defaultValue}': only string and boolean are supported.`
+    );
     return undefined;
 }
 
