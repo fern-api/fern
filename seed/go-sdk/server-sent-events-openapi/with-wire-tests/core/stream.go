@@ -40,9 +40,8 @@ const (
 )
 
 const (
-	defaultMaxReconnectAttempts = 10
-	minReconnectDelay           = 500 * time.Millisecond
-	maxReconnectDelay           = 30 * time.Second
+	minReconnectDelay = 500 * time.Millisecond
+	maxReconnectDelay = 30 * time.Second
 )
 
 // ReconnectError is returned when all reconnection attempts are exhausted.
@@ -270,8 +269,14 @@ func (s *Stream[T]) Close() error {
 	if s.reconnectFn != nil {
 		s.mu.Lock()
 		s.closed = true
+		stopFunc := s.stopFunc
+		closer := s.closer
 		s.mu.Unlock()
 		s.cancel()
+		if stopFunc != nil {
+			stopFunc()
+		}
+		return closer.Close()
 	}
 	if s.stopFunc != nil {
 		s.stopFunc()
@@ -424,15 +429,16 @@ func (s *Stream[T]) recvReconnect(readFn func() (T, []byte, error)) (T, []byte, 
 }
 
 func (s *Stream[T]) reconnect() error {
-	// Stop the old context watcher and close the old body.
-	if s.stopFunc != nil {
-		s.stopFunc()
-	}
-	_ = s.closer.Close()
-
 	s.mu.Lock()
+	stopFunc := s.stopFunc
+	closer := s.closer
 	lastEventID := s.lastEventID
 	s.mu.Unlock()
+
+	if stopFunc != nil {
+		stopFunc()
+	}
+	_ = closer.Close()
 
 	var lastErr error
 	for {
@@ -461,10 +467,11 @@ func (s *Stream[T]) reconnect() error {
 			continue
 		}
 
-		// Swap in the new stream's internals.
+		s.mu.Lock()
 		s.reader = newStream.reader
 		s.closer = newStream.closer
 		s.stopFunc = newStream.stopFunc
+		s.mu.Unlock()
 		return nil
 	}
 }
@@ -502,7 +509,7 @@ func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
 		delay = maxReconnectDelay
 	}
 
-	// Apply ±10% symmetric jitter.
+	// Apply jitter uniformly in [-10%, +10%) of delay.
 	jitterRange := int64(delay) / 5
 	if jitterRange <= 0 {
 		return delay
@@ -811,36 +818,38 @@ func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 	if bytes.HasPrefix(line, sseCommentPrefix) {
 		return
 	}
-	if value, ok := s.tryParseField(line, sseDataPrefix, sseDataPrefixNoSpace); ok {
+
+	// Per the SSE spec, if a line contains no colon, the entire line is
+	// the field name and the value is the empty string.
+	field, value := line, []byte{}
+	if i := bytes.IndexByte(line, ':'); i >= 0 {
+		field = line[:i]
+		value = line[i+1:]
+		// Strip a single leading space from the value, per spec.
+		if len(value) > 0 && value[0] == ' ' {
+			value = value[1:]
+		}
+	}
+
+	switch string(field) {
+	case "data":
 		if len(event.Data) > 0 {
 			event.Data = append(event.Data, sseDataJoin...)
 		}
 		event.Data = append(event.Data, value...)
-	} else if value, ok := s.tryParseField(line, sseIdPrefix, sseIdPrefixNoSpace); ok {
-		if !bytes.Contains(value, []byte{0}) {
+	case "id":
+		if !bytes.Contains(value, sseNullByte) {
 			event.hasID = true
 			event.ID = string(value)
 		}
-	} else if value, ok := s.tryParseField(line, sseEventPrefix, sseEventPrefixNoSpace); ok {
+	case "event":
 		event.Event = string(value)
-	} else if value, ok := s.tryParseField(line, sseRetryPrefix, sseRetryPrefixNoSpace); ok {
+	case "retry":
 		if n, err := strconv.Atoi(string(bytes.TrimSpace(value))); err == nil && n >= 0 {
 			event.Retry = n
 			s.lastRetry = time.Duration(n) * time.Millisecond
 		}
 	}
-}
-
-// tryParseField attempts to parse an SSE field by trying multiple prefix patterns in order.
-// This handles APIs that don't strictly follow the SSE specification by omitting the space after the colon.
-// It tries each prefix in the order provided and returns the value after the first matching prefix.
-func (s *SseStreamReader) tryParseField(line []byte, prefixes ...[]byte) ([]byte, bool) {
-	for _, prefix := range prefixes {
-		if bytes.HasPrefix(line, prefix) {
-			return line[len(prefix):], true
-		}
-	}
-	return nil, false
 }
 
 func (event *SseEvent) size() int {
@@ -943,14 +952,5 @@ type SseEvent struct {
 
 var (
 	sseCommentPrefix = []byte(":")
-	sseIdPrefix      = []byte("id: ")
-	sseDataPrefix    = []byte("data: ")
-	sseEventPrefix   = []byte("event: ")
-	sseRetryPrefix   = []byte("retry: ")
-
-	// Lenient prefixes without space for APIs that don't strictly follow SSE specification
-	sseIdPrefixNoSpace    = []byte("id:")
-	sseDataPrefixNoSpace  = []byte("data:")
-	sseEventPrefixNoSpace = []byte("event:")
-	sseRetryPrefixNoSpace = []byte("retry:")
+	sseNullByte      = []byte{0}
 )
