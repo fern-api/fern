@@ -12,7 +12,7 @@ export class ClientGeneratorContext {
     private readonly packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public readonly subClients: { fieldName: string; clientName: string }[];
+    public readonly subClients: { fieldName: string; clientName: string; serviceId: string | undefined }[];
     public readonly httpClient: { fieldName: string; clientName: string };
 
     public constructor({ packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
@@ -22,7 +22,7 @@ export class ClientGeneratorContext {
         this.httpClient = this.getHttpClient();
     }
 
-    private getSubClients(): { fieldName: string; clientName: string }[] {
+    private getSubClients(): { fieldName: string; clientName: string; serviceId: string | undefined }[] {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .filter(([, subpackage]) => subpackage.service != null || subpackage.hasEndpointsInTree)
@@ -31,7 +31,8 @@ export class ClientGeneratorContext {
                 const fieldName = subpackage.name.snakeCase.safeName;
                 return {
                     fieldName,
-                    clientName
+                    clientName,
+                    serviceId: subpackage.service ?? undefined
                 };
             });
     }
