@@ -199,7 +199,7 @@ export abstract class AbstractRustGeneratorContext<
         return result;
     }
 
-    private computeIrUsesType(typeName: string): boolean {
+    private computeIrUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -1270,22 +1270,7 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
-        if (this.ir.auth?.schemes) {
-            for (const scheme of this.ir.auth.schemes) {
-                const result = FernIr.AuthScheme._visit(scheme, {
-                    header: (header) => header.name.wireValue,
-                    bearer: () => undefined,
-                    basic: () => undefined,
-                    oauth: () => undefined,
-                    inferred: () => undefined,
-                    _other: () => undefined
-                });
-                if (result) {
-                    return result;
-                }
-            }
-        }
-        return "api_key";
+        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
     }
 
     /**
@@ -1293,17 +1278,21 @@ export abstract class AbstractRustGeneratorContext<
      * Returns undefined if no prefix is configured.
      */
     public getApiKeyPrefix(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.prefix);
+    }
+
+    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
                 const result = FernIr.AuthScheme._visit(scheme, {
-                    header: (header) => header.prefix,
+                    header: (header) => selector(header),
                     bearer: () => undefined,
                     basic: () => undefined,
                     oauth: () => undefined,
                     inferred: () => undefined,
                     _other: () => undefined
                 });
-                if (result) {
+                if (result !== undefined) {
                     return result;
                 }
             }
