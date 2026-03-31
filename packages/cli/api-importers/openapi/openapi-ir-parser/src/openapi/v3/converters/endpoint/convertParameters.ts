@@ -154,7 +154,8 @@ export function convertParameters({
             !isReferenceObject(resolvedParameter.schema) &&
             resolvedParameter.schema.type === "string" &&
             resolvedParameter.schema.default != null &&
-            typeof resolvedParameter.schema.default === "string"
+            typeof resolvedParameter.schema.default === "string" &&
+            resolvedParameter.schema.default.length > 0
         ) {
             schema = SchemaWithExample.literal({
                 nameOverride: undefined,

@@ -20,7 +20,7 @@ paths:
         - name: X-Required-Version
           in: header
           required: true
-          description: Required API version header with a default value. Should become a literal in generated SDKs.
+          description: Required API version header with a default value. With coerce-header-defaults-to-literals disabled, this remains a plain string.
           schema:
             type: string
             default: "2024-01-01"
