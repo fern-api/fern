@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.52.2
+  changelogEntry:
+    - summary: |
+        Log which group is being used when `fern generate` falls back to the
+        `default-group` configured in `generators.yml`, so it is clear which
+        group is running even when `--group` is not explicitly passed.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 4.52.1
   changelogEntry:
     - summary: |
