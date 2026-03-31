@@ -243,10 +243,10 @@ impl ParamsClient {
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithRequiredField, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
                 None,
                 options,
             )

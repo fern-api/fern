@@ -8,8 +8,8 @@ pub struct CreateUsernameRequest {
     pub password: String,
     #[serde(default)]
     pub name: String,
-    #[serde(default)]
     #[serde(skip_serializing)]
+    #[serde(default)]
     pub tags: Vec<String>,
 }
 

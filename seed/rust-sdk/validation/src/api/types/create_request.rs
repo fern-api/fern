@@ -3,6 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CreateRequest {
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub decimal: f64,
     #[serde(default)]
     pub even: i64,
