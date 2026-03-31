@@ -122,21 +122,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         }
                         const usernameName = basicAuthScheme.username.snakeCase.safeName;
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
+                        // usernameOmit/passwordOmit may exist in newer IR versions
+                        const scheme = basicAuthScheme as unknown as Record<string, unknown>;
+                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
+                        const conditionOp = eitherOmitted ? "||" : "&&";
+                        const usernameExpr = eitherOmitted ? `${usernameName} || ""` : usernameName;
+                        const passwordExpr = eitherOmitted ? `${passwordName} || ""` : passwordName;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
-                                writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
+                                writer.writeLine(`if !${usernameName}.nil? ${conditionOp} !${passwordName}.nil?`);
                             } else {
-                                writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
+                                writer.writeLine(`elsif !${usernameName}.nil? ${conditionOp} !${passwordName}.nil?`);
                             }
                             writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
                             );
                             if (i === basicAuthSchemes.length - 1) {
                                 writer.writeLine(`end`);
                             }
                         } else {
                             writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
                             );
                         }
                     }
