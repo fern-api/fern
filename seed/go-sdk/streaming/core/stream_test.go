@@ -815,6 +815,92 @@ func TestStream_RecvEventWithTerminator(t *testing.T) {
 	assert.Equal(t, io.EOF, err)
 }
 
+func TestSseStreamReader_InjectDiscriminator(t *testing.T) {
+	makeReader := func(field string) *SseStreamReader {
+		opts := &streamOptions{eventDiscriminator: field}
+		quoted := `"` + field + `"`
+		return &SseStreamReader{
+			options:                  opts,
+			discriminatorQuotedField: []byte(quoted),
+			discriminatorKeyCheck:    []byte(quoted + ":"),
+			discriminatorKeyCheckSp:  []byte(quoted + " :"),
+		}
+	}
+
+	tests := []struct {
+		desc     string
+		field    string
+		data     string
+		event    string
+		expected string
+	}{
+		{
+			desc:     "injects into simple object",
+			field:    "type",
+			data:     `{"content":"hello"}`,
+			event:    "completion",
+			expected: `{"type":"completion","content":"hello"}`,
+		},
+		{
+			desc:     "injects into empty object",
+			field:    "type",
+			data:     `{}`,
+			event:    "completion",
+			expected: `{"type":"completion"}`,
+		},
+		{
+			desc:     "skips when top-level key exists",
+			field:    "type",
+			data:     `{"type":"already","content":"hello"}`,
+			event:    "completion",
+			expected: `{"type":"already","content":"hello"}`,
+		},
+		{
+			desc:     "does NOT skip when key only exists in nested object",
+			field:    "type",
+			data:     `{"offset":"abc","event":{"type":"user.created","source":"auth0"}}`,
+			event:    "user.created",
+			expected: `{"type":"user.created","offset":"abc","event":{"type":"user.created","source":"auth0"}}`,
+		},
+		{
+			desc:     "does NOT skip when key only exists in nested array element",
+			field:    "type",
+			data:     `{"items":[{"type":"inner"}]}`,
+			event:    "outer",
+			expected: `{"type":"outer","items":[{"type":"inner"}]}`,
+		},
+		{
+			desc:     "skips when top-level key exists alongside nested key",
+			field:    "type",
+			data:     `{"type":"top","nested":{"type":"inner"}}`,
+			event:    "completion",
+			expected: `{"type":"top","nested":{"type":"inner"}}`,
+		},
+		{
+			desc:     "handles key with spaces before colon",
+			field:    "type",
+			data:     `{"type" :"already","content":"hello"}`,
+			event:    "completion",
+			expected: `{"type" :"already","content":"hello"}`,
+		},
+		{
+			desc:     "does not match key substring in string value",
+			field:    "type",
+			data:     `{"message":"the \"type\": field is important"}`,
+			event:    "completion",
+			expected: `{"type":"completion","message":"the \"type\": field is important"}`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			reader := makeReader(tt.field)
+			result := reader.injectDiscriminator([]byte(tt.data), tt.event)
+			assert.Equal(t, tt.expected, string(result))
+		})
+	}
+}
+
 // Helper function to create int pointer
 func intPtr(i int) *int {
 	return &i

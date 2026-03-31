@@ -359,6 +359,88 @@ public partial class ParamsClient : IParamsClient
         }
     }
 
+    private async Task<WithRawResponse<string>> GetWithPathAndErrorsAsyncCore(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/params/path/{0}",
+                        ValueConvert.ToPathParameterString(param)
+                    ),
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestBody(
+                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                        );
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <summary>
     /// GET with path param
     /// </summary>
@@ -668,6 +750,23 @@ public partial class ParamsClient : IParamsClient
     {
         return new WithRawResponseTask<ObjectWithRequiredField>(
             UploadWithPathAsyncCore(param, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// GET with path param that can throw errors
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Params.GetWithPathAndErrorsAsync("param");
+    /// </code></example>
+    public WithRawResponseTask<string> GetWithPathAndErrorsAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            GetWithPathAndErrorsAsyncCore(param, options, cancellationToken)
         );
     }
 }

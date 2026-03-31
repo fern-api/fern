@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.51.0
+- version: 4.52.0
   changelogEntry:
     - summary: |
         Add `x-fern-default` OpenAPI extension for path, header, and query parameters.
@@ -8,6 +8,16 @@
         Generators can read this field to emit optional parameters that
         automatically send the default value when the caller omits them.
         Supports string and boolean literal values.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Make dashboard the default launch option for the "Edit this page" button.
+        Previously the default was `github`, which required users to configure
+        `launch: dashboard` explicitly.
       type: feat
   createdAt: "2026-03-31"
   irVersion: 65

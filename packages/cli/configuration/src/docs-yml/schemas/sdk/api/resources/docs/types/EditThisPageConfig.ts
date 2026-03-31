@@ -4,6 +4,6 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface EditThisPageConfig {
     github?: FernDocsConfig.GithubEditThisPageConfig;
-    /** The launch method for "Edit this page" button. Defaults to github. */
+    /** The launch method for "Edit this page" button. Defaults to dashboard. */
     launch?: FernDocsConfig.EditThisPageLaunch;
 }
