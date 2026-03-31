@@ -158,14 +158,9 @@ export class RequestGenerator {
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
-
-        // Query param fields must not be serialized into the JSON body —
-        // they are sent as query string parameters by the SDK client.
-        if (this.queryParamFieldNames.has(fieldName)) {
-            fieldAttributes.push(Attribute.serde.skipSerializing());
-        }
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const fieldAttributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         // Add field documentation if available
         let docs = undefined;

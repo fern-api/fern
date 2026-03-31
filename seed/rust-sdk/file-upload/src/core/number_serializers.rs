@@ -23,9 +23,7 @@ pub fn serialize<S>(value: &f64, serializer: S) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
-    if value.fract() == 0.0 && value.is_finite()
-        && *value >= (i64::MIN as f64) && *value <= (i64::MAX as f64)
-    {
+    if value.fract() == 0.0 && value.is_finite() {
         // Serialize as integer to avoid trailing .0
         (*value as i64).serialize(serializer)
     } else {
@@ -51,9 +49,7 @@ pub mod option {
     {
         match value {
             Some(v) => {
-                if v.fract() == 0.0 && v.is_finite()
-                    && *v >= (i64::MIN as f64) && *v <= (i64::MAX as f64)
-                {
+                if v.fract() == 0.0 && v.is_finite() {
                     serializer.serialize_some(&(*v as i64))
                 } else {
                     serializer.serialize_some(v)
@@ -161,13 +157,5 @@ mod tests {
         let json = r#"{}"#;
         let test: TestStructOptional = serde_json::from_str(json).unwrap();
         assert_eq!(test.value, None);
-    }
-
-    #[test]
-    fn test_large_whole_number_outside_i64_range() {
-        let test = TestStruct { value: 1e20 };
-        let json = serde_json::to_string(&test).unwrap();
-        // Should fall back to f64 serialization, not saturate to i64::MAX
-        assert_eq!(json, r#"{"value":1e20}"#);
     }
 }

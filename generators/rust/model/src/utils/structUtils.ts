@@ -219,7 +219,8 @@ export function generateFieldType(
 
 export function generateFieldAttributes(
     property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty,
-    context?: ModelGeneratorContext
+    context?: ModelGeneratorContext,
+    options?: { skipSerialization?: boolean }
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
@@ -228,9 +229,12 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.rename(property.name.wireValue));
     }
 
-    // Add skip_serializing_if for optional fields to omit null values
+    // If the field is entirely skipped during serialization (e.g. query params sent
+    // separately from the request body), use skip_serializing instead of skip_serializing_if.
     const isOptional = isOptionalType(property.valueType);
-    if (isOptional) {
+    if (options?.skipSerialization) {
+        attributes.push(Attribute.serde.skipSerializing());
+    } else if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }
 

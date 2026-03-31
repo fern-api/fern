@@ -248,13 +248,8 @@ export class FileUploadRequestGenerator {
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
         const fieldType = generateFieldType(property, this.context);
-        const attributes = generateFieldAttributes(property, this.context);
-
-        // Query param fields must not be serialized into the multipart body —
-        // they are sent as URL query string parameters by the SDK client.
-        if (this.queryParamFieldNames.has(fieldName)) {
-            attributes.push(Attribute.serde.skipSerializing());
-        }
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const attributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         return rust.field({
             name: fieldName,
