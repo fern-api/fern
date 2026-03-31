@@ -112,7 +112,8 @@ export function parseAsyncAPIV2({
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
                     source,
-                    explode: undefined
+                    explode: undefined,
+                    clientDefault: undefined
                 });
             }
         }

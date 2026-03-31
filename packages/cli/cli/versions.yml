@@ -2,7 +2,7 @@
 - version: 4.51.0
   changelogEntry:
     - summary: |
-        Add `x-fern-default` OpenAPI extension for header and query parameters.
+        Add `x-fern-default` OpenAPI extension for path, header, and query parameters.
         When present on a parameter, the value is carried through the OpenAPI IR
         and Fern definition into the IR `clientDefault` field (a `Literal`). 
         Generators can read this field to emit optional parameters that

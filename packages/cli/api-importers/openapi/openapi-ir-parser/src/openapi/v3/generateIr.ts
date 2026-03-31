@@ -320,7 +320,8 @@ export function generateIr({
                     parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
-                    source: pathParameter.source
+                    source: pathParameter.source,
+                    clientDefault: pathParameter.clientDefault
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
