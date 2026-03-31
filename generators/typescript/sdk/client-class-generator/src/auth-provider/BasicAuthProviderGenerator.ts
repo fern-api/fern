@@ -91,23 +91,23 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
-        const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv;
-        const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv;
+        const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv || this.authScheme.usernameOmit === true;
+        const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv || this.authScheme.passwordOmit === true;
 
-        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's an env var fallback or omit flag, use Supplier<T> | undefined because the supplier itself can be undefined
         // When there's no env var fallback, use Supplier<T> directly.
         const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(stringType);
 
-        // For env var fallback: prop?: Supplier<T> | undefined
-        const usernamePropertyType = hasUsernameEnv
+        // For env var fallback or omit: prop?: Supplier<T> | undefined
+        const usernamePropertyType = hasUsernameEnv || this.authScheme.usernameOmit === true
             ? ts.factory.createUnionTypeNode([
                   supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
             : supplierType;
 
-        const passwordPropertyType = hasPasswordEnv
+        const passwordPropertyType = hasPasswordEnv || this.authScheme.passwordOmit === true
             ? ts.factory.createUnionTypeNode([
                   supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
