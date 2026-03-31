@@ -153,7 +153,6 @@ export async function collectFilesFromDocsConfig({
         });
     }
 
-    /* context7 verification file */
     if (parsedDocsConfig.context7File != null) {
         filepaths.add(parsedDocsConfig.context7File);
     }
