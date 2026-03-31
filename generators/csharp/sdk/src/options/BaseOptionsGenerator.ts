@@ -80,7 +80,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         { optional, includeInitializer }: OptionArgs
     ) {
         const type = this.Primitive.integer;
-        const maxRetries = this.settings.maxRetries() ?? 2;
+        const maxRetries = this.settings.maxRetries ?? 2;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxRetries"),
             access: ast.Access.Public,
