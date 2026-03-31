@@ -1,7 +1,6 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { readFile, rm } from "fs/promises";
-import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PersistedTypescriptProject } from "../PersistedTypescriptProject.js";
@@ -107,8 +106,12 @@ describe("PersistedTypescriptProject", () => {
             expect(mockExecutable).not.toHaveBeenCalled();
         });
 
-        it("logs error when command throws", async () => {
-            const mockExecutable = vi.fn().mockRejectedValue(new Error("biome crashed"));
+        it("logs error and writes output to log file when command throws", async () => {
+            const error = Object.assign(new Error("biome crashed"), {
+                stdout: "partial format output",
+                stderr: "error: syntax error in file.ts"
+            });
+            const mockExecutable = vi.fn().mockRejectedValue(error);
             mockedCreateLoggingExecutable.mockReturnValue(mockExecutable);
 
             const { logger, lines } = collectLogs();
@@ -117,6 +120,11 @@ describe("PersistedTypescriptProject", () => {
             await project.format(logger);
 
             expect(lines.some((l) => l.includes("Failed to format the generated project"))).toBe(true);
+
+            // Verify tool output is still captured to the log file on failure
+            const logContent = await readFile("/tmp/fern-format.log", "utf-8");
+            expect(logContent).toContain("partial format output");
+            expect(logContent).toContain("error: syntax error in file.ts");
         });
     });
 

@@ -228,6 +228,13 @@ export class PersistedTypescriptProject {
             });
             logger.debug(`[TIMING] format took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const err = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: err.stdout ?? "",
+                stderr: err.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -254,6 +261,13 @@ export class PersistedTypescriptProject {
             });
             logger.debug(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const err = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: err.stdout ?? "",
+                stderr: err.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
