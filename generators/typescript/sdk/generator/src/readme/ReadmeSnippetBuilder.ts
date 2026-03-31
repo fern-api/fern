@@ -606,10 +606,11 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
             if (defaultEnv != null) {
-                return defaultEnv.name.pascalCase.unsafeName;
+                return this.context.case.pascalUnsafe(defaultEnv.name);
             }
         }
-        return envs[0]?.name.pascalCase.unsafeName;
+        const firstEnv = envs[0];
+        return firstEnv != null ? this.context.case.pascalUnsafe(firstEnv.name) : undefined;
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {

@@ -2383,7 +2383,7 @@ function getMockUrlForExample(endpoint: FernIr.HttpEndpoint, example: FernIr.Exa
             } else {
                 stringValue = String(value);
             }
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
+            pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
         }
     );
     const url =

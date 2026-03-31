@@ -22720,25 +22720,7 @@
                 },
                 {
                     "id": "endpoint_endpoints/params.getWithPathAndErrors",
-                    "name": {
-                        "originalName": "getWithPathAndErrors",
-                        "camelCase": {
-                            "unsafeName": "getWithPathAndErrors",
-                            "safeName": "getWithPathAndErrors"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_with_path_and_errors",
-                            "safeName": "get_with_path_and_errors"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_WITH_PATH_AND_ERRORS",
-                            "safeName": "GET_WITH_PATH_AND_ERRORS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetWithPathAndErrors",
-                            "safeName": "GetWithPathAndErrors"
-                        }
-                    },
+                    "name": "getWithPathAndErrors",
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -22771,25 +22753,7 @@
                     },
                     "pathParameters": [
                         {
-                            "name": {
-                                "originalName": "param",
-                                "camelCase": {
-                                    "unsafeName": "param",
-                                    "safeName": "param"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "param",
-                                    "safeName": "param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PARAM",
-                                    "safeName": "PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Param",
-                                    "safeName": "Param"
-                                }
-                            },
+                            "name": "param",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -22813,25 +22777,7 @@
                     ],
                     "allPathParameters": [
                         {
-                            "name": {
-                                "originalName": "param",
-                                "camelCase": {
-                                    "unsafeName": "param",
-                                    "safeName": "param"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "param",
-                                    "safeName": "param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PARAM",
-                                    "safeName": "PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Param",
-                                    "safeName": "Param"
-                                }
-                            },
+                            "name": "param",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -22886,67 +22832,13 @@
                     "errors": [
                         {
                             "error": {
-                                "name": {
-                                    "originalName": "BadRequestBody",
-                                    "camelCase": {
-                                        "unsafeName": "badRequestBody",
-                                        "safeName": "badRequestBody"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "bad_request_body",
-                                        "safeName": "bad_request_body"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "BAD_REQUEST_BODY",
-                                        "safeName": "BAD_REQUEST_BODY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "BadRequestBody",
-                                        "safeName": "BadRequestBody"
-                                    }
-                                },
+                                "name": "BadRequestBody",
                                 "fernFilepath": {
                                     "allParts": [
-                                        {
-                                            "originalName": "general-errors",
-                                            "camelCase": {
-                                                "unsafeName": "generalErrors",
-                                                "safeName": "generalErrors"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "general_errors",
-                                                "safeName": "general_errors"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "GENERAL_ERRORS",
-                                                "safeName": "GENERAL_ERRORS"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "GeneralErrors",
-                                                "safeName": "GeneralErrors"
-                                            }
-                                        }
+                                        "general-errors"
                                     ],
                                     "packagePath": [],
-                                    "file": {
-                                        "originalName": "general-errors",
-                                        "camelCase": {
-                                            "unsafeName": "generalErrors",
-                                            "safeName": "generalErrors"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "general_errors",
-                                            "safeName": "general_errors"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "GENERAL_ERRORS",
-                                            "safeName": "GENERAL_ERRORS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "GeneralErrors",
-                                            "safeName": "GeneralErrors"
-                                        }
-                                    }
+                                    "file": "general-errors"
                                 },
                                 "errorId": "error_general-errors:BadRequestBody"
                             },
@@ -22957,31 +22849,13 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8f1fbc60",
+                                "id": "4e00b283",
                                 "url": "/params/path/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "param",
-                                            "camelCase": {
-                                                "unsafeName": "param",
-                                                "safeName": "param"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "param",
-                                                "safeName": "param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "PARAM",
-                                                "safeName": "PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Param",
-                                                "safeName": "Param"
-                                            }
-                                        },
+                                        "name": "param",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -23024,31 +22898,13 @@
                         },
                         {
                             "example": {
-                                "id": "48d94d86",
+                                "id": "a563fcf1",
                                 "url": "/params/path/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "param",
-                                            "camelCase": {
-                                                "unsafeName": "param",
-                                                "safeName": "param"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "param",
-                                                "safeName": "param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "PARAM",
-                                                "safeName": "PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Param",
-                                                "safeName": "Param"
-                                            }
-                                        },
+                                        "name": "param",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -23077,90 +22933,15 @@
                                                 "type": "object",
                                                 "properties": [
                                                     {
-                                                        "name": {
-                                                            "name": {
-                                                                "originalName": "message",
-                                                                "camelCase": {
-                                                                    "unsafeName": "message",
-                                                                    "safeName": "message"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "message",
-                                                                    "safeName": "message"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "MESSAGE",
-                                                                    "safeName": "MESSAGE"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Message",
-                                                                    "safeName": "Message"
-                                                                }
-                                                            },
-                                                            "wireValue": "message"
-                                                        },
+                                                        "name": "message",
                                                         "originalTypeDeclaration": {
-                                                            "name": {
-                                                                "originalName": "BadObjectRequestInfo",
-                                                                "camelCase": {
-                                                                    "unsafeName": "badObjectRequestInfo",
-                                                                    "safeName": "badObjectRequestInfo"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "bad_object_request_info",
-                                                                    "safeName": "bad_object_request_info"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "BAD_OBJECT_REQUEST_INFO",
-                                                                    "safeName": "BAD_OBJECT_REQUEST_INFO"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "BadObjectRequestInfo",
-                                                                    "safeName": "BadObjectRequestInfo"
-                                                                }
-                                                            },
+                                                            "name": "BadObjectRequestInfo",
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    {
-                                                                        "originalName": "general-errors",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "generalErrors",
-                                                                            "safeName": "generalErrors"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "general_errors",
-                                                                            "safeName": "general_errors"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "GENERAL_ERRORS",
-                                                                            "safeName": "GENERAL_ERRORS"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "GeneralErrors",
-                                                                            "safeName": "GeneralErrors"
-                                                                        }
-                                                                    }
+                                                                    "general-errors"
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": {
-                                                                    "originalName": "general-errors",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "generalErrors",
-                                                                        "safeName": "generalErrors"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "general_errors",
-                                                                        "safeName": "general_errors"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "GENERAL_ERRORS",
-                                                                        "safeName": "GENERAL_ERRORS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "GeneralErrors",
-                                                                        "safeName": "GeneralErrors"
-                                                                    }
-                                                                }
+                                                                "file": "general-errors"
                                                             },
                                                             "displayName": null,
                                                             "typeId": "type_general-errors:BadObjectRequestInfo"
@@ -23183,67 +22964,13 @@
                                                 "extraProperties": null
                                             },
                                             "typeName": {
-                                                "name": {
-                                                    "originalName": "BadObjectRequestInfo",
-                                                    "camelCase": {
-                                                        "unsafeName": "badObjectRequestInfo",
-                                                        "safeName": "badObjectRequestInfo"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "bad_object_request_info",
-                                                        "safeName": "bad_object_request_info"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "BAD_OBJECT_REQUEST_INFO",
-                                                        "safeName": "BAD_OBJECT_REQUEST_INFO"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "BadObjectRequestInfo",
-                                                        "safeName": "BadObjectRequestInfo"
-                                                    }
-                                                },
+                                                "name": "BadObjectRequestInfo",
                                                 "fernFilepath": {
                                                     "allParts": [
-                                                        {
-                                                            "originalName": "general-errors",
-                                                            "camelCase": {
-                                                                "unsafeName": "generalErrors",
-                                                                "safeName": "generalErrors"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "general_errors",
-                                                                "safeName": "general_errors"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "GENERAL_ERRORS",
-                                                                "safeName": "GENERAL_ERRORS"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "GeneralErrors",
-                                                                "safeName": "GeneralErrors"
-                                                            }
-                                                        }
+                                                        "general-errors"
                                                     ],
                                                     "packagePath": [],
-                                                    "file": {
-                                                        "originalName": "general-errors",
-                                                        "camelCase": {
-                                                            "unsafeName": "generalErrors",
-                                                            "safeName": "generalErrors"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "general_errors",
-                                                            "safeName": "general_errors"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "GENERAL_ERRORS",
-                                                            "safeName": "GENERAL_ERRORS"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "GeneralErrors",
-                                                            "safeName": "GeneralErrors"
-                                                        }
-                                                    }
+                                                    "file": "general-errors"
                                                 },
                                                 "displayName": null,
                                                 "typeId": "type_general-errors:BadObjectRequestInfo"
@@ -23254,67 +22981,13 @@
                                         }
                                     },
                                     "error": {
-                                        "name": {
-                                            "originalName": "BadRequestBody",
-                                            "camelCase": {
-                                                "unsafeName": "badRequestBody",
-                                                "safeName": "badRequestBody"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "bad_request_body",
-                                                "safeName": "bad_request_body"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "BAD_REQUEST_BODY",
-                                                "safeName": "BAD_REQUEST_BODY"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "BadRequestBody",
-                                                "safeName": "BadRequestBody"
-                                            }
-                                        },
+                                        "name": "BadRequestBody",
                                         "fernFilepath": {
                                             "allParts": [
-                                                {
-                                                    "originalName": "general-errors",
-                                                    "camelCase": {
-                                                        "unsafeName": "generalErrors",
-                                                        "safeName": "generalErrors"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "general_errors",
-                                                        "safeName": "general_errors"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "GENERAL_ERRORS",
-                                                        "safeName": "GENERAL_ERRORS"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "GeneralErrors",
-                                                        "safeName": "GeneralErrors"
-                                                    }
-                                                }
+                                                "general-errors"
                                             ],
                                             "packagePath": [],
-                                            "file": {
-                                                "originalName": "general-errors",
-                                                "camelCase": {
-                                                    "unsafeName": "generalErrors",
-                                                    "safeName": "generalErrors"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "general_errors",
-                                                    "safeName": "general_errors"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "GENERAL_ERRORS",
-                                                    "safeName": "GENERAL_ERRORS"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "GeneralErrors",
-                                                    "safeName": "GeneralErrors"
-                                                }
-                                            }
+                                            "file": "general-errors"
                                         },
                                         "errorId": "error_general-errors:BadRequestBody"
                                     }

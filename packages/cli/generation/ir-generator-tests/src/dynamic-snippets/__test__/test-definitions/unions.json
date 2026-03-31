@@ -9965,6 +9965,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "key",
                         "name": {
                             "originalName": "key",
                             "camelCase": {
@@ -9983,8 +9984,7 @@
                                 "unsafeName": "Key",
                                 "safeName": "Key"
                             }
-                        },
-                        "wireValue": "key"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -9995,6 +9995,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "columnValues",
                         "name": {
                             "originalName": "columnValues",
                             "camelCase": {
@@ -10013,8 +10014,7 @@
                                 "unsafeName": "ColumnValues",
                                 "safeName": "ColumnValues"
                             }
-                        },
-                        "wireValue": "columnValues"
+                        }
                     },
                     "typeReference": {
                         "type": "map",

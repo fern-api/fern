@@ -209,7 +209,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
-            const propertyName = collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+            const propertyName = collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                 ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
                 : this.getPropertyNameOfQueryParameter(queryParameter);
             properties.push({
@@ -531,7 +531,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 this.getPropertyNameOfPathParameter(pathParameter)
             ),
             ...this.getAllQueryParameters().map((queryParameter) =>
-                collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                     ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
                     : this.getPropertyNameOfQueryParameter(queryParameter)
             ),
@@ -562,7 +562,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             })),
             ...this.getAllQueryParameters().map((queryParameter) => ({
-                ...(collidingQueryParamWireValues.has(queryParameter.name.wireValue)
+                ...(collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                     ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
                     : this.getPropertyNameOfQueryParameter(queryParameter)),
                 originalParameter: {
@@ -1058,7 +1058,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
             if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
-                collidingWireValues.add(queryParameter.name.wireValue);
+                collidingWireValues.add(getWireValue(queryParameter.name));
             }
         }
         return collidingWireValues;
@@ -1078,5 +1078,4 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             propertyName: this.retainOriginalCasing ? getOriginalName(name) : this.case.camelUnsafe(name)
         };
     }
-
 }

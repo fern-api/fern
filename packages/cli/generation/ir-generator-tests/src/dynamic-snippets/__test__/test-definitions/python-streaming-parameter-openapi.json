@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "prompt",
                         "name": {
                             "originalName": "prompt",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                             }
-                        },
-                        "wireValue": "prompt"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -62,6 +62,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "stream",
                         "name": {
                             "originalName": "stream",
                             "camelCase": {
@@ -80,8 +81,7 @@
                                 "unsafeName": "Stream",
                                 "safeName": "Stream"
                             }
-                        },
-                        "wireValue": "stream"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",

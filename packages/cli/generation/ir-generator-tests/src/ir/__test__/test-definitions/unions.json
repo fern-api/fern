@@ -6211,67 +6211,13 @@
         "type_types:TypeWithOptionalMap": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "TypeWithOptionalMap",
-                    "camelCase": {
-                        "unsafeName": "typeWithOptionalMap",
-                        "safeName": "typeWithOptionalMap"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "type_with_optional_map",
-                        "safeName": "type_with_optional_map"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TYPE_WITH_OPTIONAL_MAP",
-                        "safeName": "TYPE_WITH_OPTIONAL_MAP"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "TypeWithOptionalMap",
-                        "safeName": "TypeWithOptionalMap"
-                    }
-                },
+                "name": "TypeWithOptionalMap",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "types",
-                            "camelCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TYPES",
-                                "safeName": "TYPES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Types",
-                                "safeName": "Types"
-                            }
-                        }
+                        "types"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "types",
-                        "camelCase": {
-                            "unsafeName": "types",
-                            "safeName": "types"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "types",
-                            "safeName": "types"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TYPES",
-                            "safeName": "TYPES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Types",
-                            "safeName": "Types"
-                        }
-                    }
+                    "file": "types"
                 },
                 "displayName": null,
                 "typeId": "type_types:TypeWithOptionalMap"
@@ -6281,28 +6227,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "key",
-                                "camelCase": {
-                                    "unsafeName": "key",
-                                    "safeName": "key"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "key",
-                                    "safeName": "key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "KEY",
-                                    "safeName": "KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Key",
-                                    "safeName": "Key"
-                                }
-                            },
-                            "wireValue": "key"
-                        },
+                        "name": "key",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -6323,28 +6248,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "columnValues",
-                                "camelCase": {
-                                    "unsafeName": "columnValues",
-                                    "safeName": "columnValues"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "column_values",
-                                    "safeName": "column_values"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "COLUMN_VALUES",
-                                    "safeName": "COLUMN_VALUES"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ColumnValues",
-                                    "safeName": "ColumnValues"
-                                }
-                            },
-                            "wireValue": "columnValues"
-                        },
+                        "name": "columnValues",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -19038,6 +18942,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "key",
                             "name": {
                                 "originalName": "key",
                                 "camelCase": {
@@ -19056,8 +18961,7 @@
                                     "unsafeName": "Key",
                                     "safeName": "Key"
                                 }
-                            },
-                            "wireValue": "key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -19068,6 +18972,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "columnValues",
                             "name": {
                                 "originalName": "columnValues",
                                 "camelCase": {
@@ -19086,8 +18991,7 @@
                                     "unsafeName": "ColumnValues",
                                     "safeName": "ColumnValues"
                                 }
-                            },
-                            "wireValue": "columnValues"
+                            }
                         },
                         "typeReference": {
                             "type": "map",

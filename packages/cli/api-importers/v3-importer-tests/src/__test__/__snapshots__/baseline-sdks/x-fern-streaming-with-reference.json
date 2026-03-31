@@ -11,25 +11,7 @@
   "types": {
     "type_:CreateCompletionRequest": {
       "name": {
-        "name": {
-          "originalName": "CreateCompletionRequest",
-          "camelCase": {
-            "unsafeName": "createCompletionRequest",
-            "safeName": "createCompletionRequest"
-          },
-          "snakeCase": {
-            "unsafeName": "create_completion_request",
-            "safeName": "create_completion_request"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CREATE_COMPLETION_REQUEST",
-            "safeName": "CREATE_COMPLETION_REQUEST"
-          },
-          "pascalCase": {
-            "unsafeName": "CreateCompletionRequest",
-            "safeName": "CreateCompletionRequest"
-          }
-        },
+        "name": "CreateCompletionRequest",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -40,28 +22,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "stream",
-                "camelCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "snakeCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STREAM",
-                  "safeName": "STREAM"
-                },
-                "pascalCase": {
-                  "unsafeName": "Stream",
-                  "safeName": "Stream"
-                }
-              },
-              "wireValue": "stream"
-            },
+            "name": "stream",
             "valueType": {
               "container": {
                 "optional": {
@@ -83,28 +44,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "prompt",
-                "camelCase": {
-                  "unsafeName": "prompt",
-                  "safeName": "prompt"
-                },
-                "snakeCase": {
-                  "unsafeName": "prompt",
-                  "safeName": "prompt"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PROMPT",
-                  "safeName": "PROMPT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Prompt",
-                  "safeName": "Prompt"
-                }
-              },
-              "wireValue": "prompt"
-            },
+            "name": "prompt",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -495,6 +435,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -513,8 +454,7 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              },
-              "wireValue": "stream"
+              }
             },
             "typeReference": {
               "value": {
@@ -526,6 +466,7 @@
           },
           {
             "name": {
+              "wireValue": "prompt",
               "name": {
                 "originalName": "prompt",
                 "camelCase": {
@@ -544,8 +485,7 @@
                   "unsafeName": "Prompt",
                   "safeName": "Prompt"
                 }
-              },
-              "wireValue": "prompt"
+              }
             },
             "typeReference": {
               "value": "STRING",
