@@ -13,6 +13,7 @@ async fn test_endpoints_put_add_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.put.add(&"id".to_string(), None).await;

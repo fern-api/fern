@@ -150,7 +150,19 @@ export async function visitDocsConfigFileYamlAst({
                 willBeUploaded: false
             });
         },
-        integrations: noop,
+        integrations: async (integrations) => {
+            if (integrations?.context7 == null) {
+                return;
+            }
+
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: integrations.context7,
+                visitor,
+                nodePath: ["integrations", "context7"],
+                willBeUploaded: true
+            });
+        },
         js: async (js) => {
             if (js == null) {
                 return;

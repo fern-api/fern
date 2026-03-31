@@ -3,6 +3,42 @@ import pydantic
 import pytest
 
 
+def test_max_retries_default() -> None:
+    """Default value of default_max_retries is 2."""
+    config = SDKCustomConfig.parse_obj({})
+    assert config.default_max_retries == 2
+
+
+def test_max_retries_camel_case_alias() -> None:
+    """maxRetries (camelCase) is accepted and mapped to default_max_retries."""
+    config = SDKCustomConfig.parse_obj({"maxRetries": 5})
+    assert config.default_max_retries == 5
+
+
+def test_max_retries_snake_case() -> None:
+    """default_max_retries (snake_case) is also accepted directly."""
+    config = SDKCustomConfig.parse_obj({"default_max_retries": 3})
+    assert config.default_max_retries == 3
+
+
+def test_max_retries_zero_disables_retries() -> None:
+    """Setting maxRetries to 0 disables retries."""
+    config = SDKCustomConfig.parse_obj({"maxRetries": 0})
+    assert config.default_max_retries == 0
+
+
+def test_max_retries_rejects_negative() -> None:
+    """Negative values for maxRetries are rejected."""
+    with pytest.raises(pydantic.ValidationError):
+        SDKCustomConfig.parse_obj({"maxRetries": -1})
+
+
+def test_max_retries_camel_case_ignored_when_snake_case_present() -> None:
+    """When default_max_retries is already present, maxRetries is not mapped (extra=forbid rejects it)."""
+    with pytest.raises(pydantic.ValidationError):
+        SDKCustomConfig.parse_obj({"maxRetries": 5, "default_max_retries": 3})
+
+
 def test_parse_obj_override() -> None:
     top_level_payload = {
         "use_typeddict_requests": True,
