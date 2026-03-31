@@ -28,10 +28,6 @@ async function preloadOpenAPIDocuments({
     const loadedDocuments = new Map<string, OpenAPI.Document>();
 
     for (const spec of specs) {
-        if (spec.type !== "openapi") {
-            continue;
-        }
-
         const contents = (await readFile(spec.absoluteFilepath)).toString();
         const isOpenAPI = contents.includes("openapi") || contents.includes("swagger");
         const isAsyncAPI = contents.includes("asyncapi:");
