@@ -154,7 +154,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}`
         }
           publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "$@"
+            npx -y npm@latest publish${useOidc ? " --provenance" : ""} "$@"
           }
           if [[ \${GITHUB_REF} == *alpha* ]]; then
             publish --access ${access} --tag alpha
