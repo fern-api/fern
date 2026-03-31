@@ -129,6 +129,12 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
+    const context7FilePromise = parseContext7File({
+        rawPath: rawDocsConfiguration.integrations?.context7,
+        absoluteFilepathToDocsConfig,
+        context
+    });
+
     const [navigation, pages, typography, css, js, metadata, context7File] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
@@ -136,11 +142,7 @@ export async function parseDocsConfiguration({
         cssPromise,
         jsPromise,
         metadataPromise,
-        parseContext7File({
-            rawPath: rawDocsConfiguration.integrations?.context7,
-            absoluteFilepathToDocsConfig,
-            context
-        })
+        context7FilePromise
     ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
