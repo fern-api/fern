@@ -21,6 +21,7 @@ export class RootClientGenerator {
         clientName: string;
         moduleName: string;
         channel: FernIr.WebSocketChannel;
+        urlMethodName: string;
     }>;
     private readonly rootServiceGenerator: SubClientGenerator | null;
 
@@ -351,8 +352,17 @@ export class RootClientGenerator {
         // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
         // Always pass the token so the connector can auto-inject the Authorization header,
         // matching the TypeScript SDK experience where auth "just works".
-        for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
-            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
+        for (const { fieldName, connectorName, urlMethodName } of this.getUniqueWsConnectors(httpFieldNames)) {
+            if (isMultiUrl && urlMethodName !== DEFAULT_URL_METHOD) {
+                allInits.push(
+                    `${fieldName}: ${connectorName}::new(\n` +
+                        `                ${this.resolveUrlExpression(urlMethodName, "config")},\n` +
+                        `                config.token.clone()\n` +
+                        `            )`
+                );
+            } else {
+                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
+            }
         }
 
         const initStr = allInits.join(",\n            ");

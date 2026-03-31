@@ -1,12 +1,18 @@
 use crate::prelude::*;
-use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions};
+use crate::{ApiError, QueryBuilder, WebSocketClient, WebSocketMessage, WebSocketOptions};
 use serde::{Deserialize, Serialize};
 use tokio::sync::mpsc;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct RealtimeNoAuthConnectOptions {
+    pub model: Option<String>,
+}
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RealtimeNoAuthServerMessage {
     NoAuthReceiveEvent(NoAuthReceiveEvent),
+    /// Unknown or new server message type not yet supported by this SDK version.
+    Unknown(serde_json::Value),
 }
 pub struct RealtimeNoAuthClient {
     ws: WebSocketClient,
@@ -16,20 +22,21 @@ impl RealtimeNoAuthClient {
     pub async fn connect(
         url: &str,
         session_id: &str,
-        authorization: &str,
-        model: Option<&str>,
+        authorization: Option<&str>,
+        options: &RealtimeNoAuthConnectOptions,
     ) -> Result<Self, ApiError> {
         let full_url = format!("{}/realtime-no-auth/{session_id}", url);
-        let mut options = WebSocketOptions::default();
-        options
-            .headers
-            .insert("Authorization".to_string(), authorization.to_string());
-        if let Some(v) = model {
-            options
-                .query_params
-                .push(("model".to_string(), v.to_string()));
+        let mut ws_options = WebSocketOptions::default();
+        if let Some(auth) = authorization {
+            ws_options
+                .headers
+                .insert("Authorization".to_string(), auth.to_string());
         }
-        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
+        ws_options.query_params = QueryBuilder::new()
+            .string("model", options.model.clone())
+            .build()
+            .unwrap_or_default();
+        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
         Ok(Self { ws, incoming_rx })
     }
 
@@ -46,8 +53,14 @@ impl RealtimeNoAuthClient {
                             .map_err(ApiError::Serialization),
                     );
                 }
-                Some(Ok(WebSocketMessage::Binary(_))) => {
-                    continue;
+                Some(Ok(WebSocketMessage::Binary(data))) => {
+                    return Some(Err(ApiError::WebSocketError(format!(
+                        "Received unexpected binary frame ({} bytes) on a JSON-only channel",
+                        data.len()
+                    ))));
+                }
+                Some(Ok(WebSocketMessage::Close(_))) => {
+                    return None;
                 }
                 Some(Err(e)) => return Some(Err(e)),
                 None => return None,
@@ -74,13 +87,10 @@ impl RealtimeNoAuthConnector {
     pub async fn connect(
         &self,
         session_id: &str,
-        model: Option<&str>,
+        options: &RealtimeNoAuthConnectOptions,
     ) -> Result<RealtimeNoAuthClient, ApiError> {
-        let auth_header = self
-            .token
-            .as_ref()
-            .map(|t| format!("Bearer {}", t))
-            .unwrap_or_default();
-        RealtimeNoAuthClient::connect(&self.base_url, session_id, &auth_header, model).await
+        let auth_header = self.token.as_ref().map(|t| format!("Bearer {}", t));
+        RealtimeNoAuthClient::connect(&self.base_url, session_id, auth_header.as_deref(), options)
+            .await
     }
 }
