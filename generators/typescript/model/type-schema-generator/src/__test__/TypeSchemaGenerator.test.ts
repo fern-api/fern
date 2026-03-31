@@ -269,7 +269,11 @@ describe("TypeSchemaGenerator", () => {
             noOptionalProperties: false
         });
 
-        const shape = FernIr.Type.enum({ values: [createEnumValue("Active")], default: undefined, forwardCompatible: undefined });
+        const shape = FernIr.Type.enum({
+            values: [createEnumValue("Active")],
+            default: undefined,
+            forwardCompatible: undefined
+        });
         const schema = generator.generateTypeSchema({
             typeName: "Status",
             shape,
