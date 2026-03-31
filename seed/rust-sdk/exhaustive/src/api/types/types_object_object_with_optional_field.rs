@@ -10,6 +10,8 @@ pub struct ObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub long: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub double: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bool: Option<bool>,

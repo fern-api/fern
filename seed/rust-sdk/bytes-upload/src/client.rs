@@ -1,11 +1,28 @@
-use crate::api::resources::ServiceClient;
+use crate::api::resources::BytesUploadClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
+
+/*
+Things to know:
+
+`impl Into<String>` is a generic parameter constraint in Rust that means "accept any type that can be converted into a String."
+It's essentially Rust's way of saying "I'll take a string in any form you give it to me."
+
+Types that implement Into<String>:
+
+// All of these work:
+builder.api_key("hello")           // &str
+builder.api_key("hello".to_string()) // String
+builder.api_key(format!("key_{}", id)) // String from format!
+builder.api_key(my_string_variable)    // String variable
+*/
+
 /// Builder for creating API clients with custom configuration
 pub struct ApiClientBuilder {
     config: ClientConfig,
 }
+
 impl Default for ApiClientBuilder {
     fn default() -> Self {
         Self {
@@ -13,6 +30,7 @@ impl Default for ApiClientBuilder {
         }
     }
 }
+
 impl ApiClientBuilder {
     /// Create a new builder with the specified base URL
     pub fn new(base_url: impl Into<String>) -> Self {
@@ -99,10 +117,11 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<ServiceClient, ApiError> {
-        ServiceClient::new(self.config)
+    pub fn build(self) -> Result<BytesUploadClient, ApiError> {
+        BytesUploadClient::new(self.config)
     }
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
