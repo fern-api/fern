@@ -6,6 +6,35 @@ import { AbstractConverter, AbstractConverterContext, APIError } from "../index.
 const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
 
 /**
+ * Type guard: returns true if the schema is an inline SchemaObject (not a $ref).
+ */
+function isInlineSchema(
+    schema: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+): schema is OpenAPIV3_1.SchemaObject {
+    return typeof schema === "object" && schema !== null && !("$ref" in schema);
+}
+
+/**
+ * Returns true if the schema explicitly allows null values via:
+ * - OpenAPI 3.0 `nullable: true`
+ * - OpenAPI 3.1 `anyOf` containing `{type: "null"}`
+ * - OpenAPI 3.1 `oneOf` containing `{type: "null"}`
+ */
+function schemaAllowsNull(schema: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject): boolean {
+    if (!isInlineSchema(schema)) {
+        return false;
+    }
+    // OpenAPI 3.0 compat: `nullable` was removed from the 3.1 type definitions but still appears in real specs
+    if ("nullable" in schema && schema.nullable === true) {
+        return true;
+    }
+    const hasNullVariant = (
+        variants: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject)[] | undefined
+    ): boolean => Array.isArray(variants) && variants.some((s) => isInlineSchema(s) && s.type === "null");
+    return hasNullVariant(schema.anyOf) || hasNullVariant(schema.oneOf);
+}
+
+/**
  * Checks if a schema is "simple" (primitive-like, no nested structure).
  * Simple schemas are those that don't have properties, items, or nested unions.
  */
@@ -799,10 +828,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     }
                 };
             }
+            const propertyAllowsNull = schemaAllowsNull(property);
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
-                (!("nullable" in property) && exampleObj[key] == null) ||
-                ("nullable" in property && property.nullable === true && exampleObj[key] === undefined);
+                (!propertyAllowsNull && exampleObj[key] == null) ||
+                (propertyAllowsNull && exampleObj[key] === undefined);
             const propertyIsOptional = !resolvedSchema.required?.includes(key);
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
@@ -1075,7 +1105,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
         }
 
-        const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
+        const containerExample =
+            this.example !== undefined ? this.example : this.maybeResolveSchemaExample(resolvedSchema);
 
         // For simple unions (all members are primitives/literals/enums) without a provided example,
         // prefer const/literal variants over primitive types that would fall back to generic examples
@@ -1152,7 +1183,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const schemaToUse =
                 unionType === "oneOf" ? { ...resolvedSchema, ...subSchema, oneOf: undefined } : subSchema;
 
-            const variantExample = containerExample ?? this.maybeResolveSchemaExample(schemaToUse);
+            const variantExample =
+                containerExample !== undefined ? containerExample : this.maybeResolveSchemaExample(schemaToUse);
 
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `${unionType}[${index}]`],
