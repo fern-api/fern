@@ -462,7 +462,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${getMockUrlForExample(endpoint, example)}")${example.serviceHeaders
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
                 return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
@@ -528,7 +528,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${getMockUrlForExample(endpoint, example)}")${example.serviceHeaders
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
                 return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
@@ -1148,7 +1148,7 @@ describe("${serviceName}", () => {
                 // If nested, isCursorMissing is forced to true below to skip getNextPage().
                 if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
                     const wireKey = nextProperty.property.name.wireValue;
-                    const paginationMockUrl = getMockUrlForExample(endpoint, example);
+                    const paginationMockUrl = example.url;
                     const nextValueCode =
                         pagination.type === "uri"
                             ? code`\`\${server.baseUrl}${paginationMockUrl}\``
@@ -1410,11 +1410,7 @@ describe("${serviceName}", () => {
             testName += ` (${exampleIndex + 1})`;
         }
 
-        // Reconstruct the mock URL from the endpoint path template using the same encoding
-        // as the SDK's encodePathParam to ensure the mock handler URL matches the actual request URL.
-        // The IR's example.url uses JSON.stringify for non-primitive path params while the SDK's
-        // encodePathParam uses String(), causing a mismatch (e.g., "%7B%22key%22..." vs "%5Bobject%20Object%5D").
-        const mockUrl = getMockUrlForExample(endpoint, example);
+        const mockUrl = example.url;
 
         return code`
     test("${testName}", async () => {
@@ -2344,39 +2340,4 @@ function isPaginationCursorMissingInExample({
     }
 
     return false;
-}
-
-/**
- * Reconstructs the mock URL for a test example using encoding that matches the SDK's
- * `encodePathParam` behavior. The IR's `example.url` uses `JSON.stringify` for non-primitive
- * path parameter values, but the SDK's `encodePathParam` uses `String()` for objects,
- * which produces different encoding (e.g., `[object Object]` vs `{"key":"value"}`).
- * This ensures the mock server URL matches the actual request URL sent by the SDK.
- */
-function getMockUrlForExample(endpoint: FernIr.HttpEndpoint, example: FernIr.ExampleEndpointCall): string {
-    const pathParameters: Record<string, string> = {};
-    [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
-        (examplePathParameter) => {
-            const value = examplePathParameter.value.jsonExample;
-            // Match the SDK's encodePathParam behavior: use String() for non-primitive values
-            // instead of JSON.stringify, so the mock URL matches the actual request URL.
-            let stringValue: string;
-            if (value === null) {
-                stringValue = "null";
-            } else if (value === undefined) {
-                stringValue = "undefined";
-            } else if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-                stringValue = String(value);
-            } else {
-                stringValue = String(value);
-            }
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
-        }
-    );
-    const url =
-        endpoint.fullPath.head +
-        endpoint.fullPath.parts
-            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
-            .join("");
-    return url.startsWith("/") || url === "" ? url : `/${url}`;
 }
