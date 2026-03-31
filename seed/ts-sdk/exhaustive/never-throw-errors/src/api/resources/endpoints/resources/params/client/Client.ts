@@ -668,4 +668,85 @@ export class ParamsClient {
             rawResponse: _response.rawResponse,
         };
     }
+
+    /**
+     * GET with path param that can throw errors
+     *
+     * @param {string} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithPathAndErrors("param")
+     */
+    public getWithPathAndErrors(
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPathAndErrors.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithPathAndErrors(param, requestOptions));
+    }
+
+    private async __getWithPathAndErrors(
+        param: string,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPathAndErrors.Error>>
+    > {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/params/path/${core.url.encodePathParam(param)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as string,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    return {
+                        data: {
+                            ok: false,
+                            error: SeedExhaustive.endpoints.params.getWithPathAndErrors.Error.badRequestBody(
+                                _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                            ),
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
+                    };
+            }
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.params.getWithPathAndErrors.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
 }
