@@ -1,10 +1,10 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    type FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
+import type { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { type BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
@@ -80,7 +80,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getImportPath(fernFilepath: FernIr.dynamic.FernFilepath): string {
-        const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase());
+        const parts = fernFilepath.packagePath.map((path) => path.camelCase.safeName.toLowerCase());
         return [this.rootImportPath, ...parts].join("/");
     }
 
