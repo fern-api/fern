@@ -308,7 +308,8 @@ export function generateIr({
                     parameterNameOverride: queryParameter.parameterNameOverride,
                     explode: queryParameter.explode,
                     availability: queryParameter.availability,
-                    source: queryParameter.source
+                    source: queryParameter.source,
+                    clientDefault: queryParameter.clientDefault
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -330,7 +331,8 @@ export function generateIr({
                     parameterNameOverride: header.parameterNameOverride,
                     env: header.env,
                     availability: header.availability,
-                    source: header.source
+                    source: header.source,
+                    clientDefault: header.clientDefault
                 };
             }),
             examples,
