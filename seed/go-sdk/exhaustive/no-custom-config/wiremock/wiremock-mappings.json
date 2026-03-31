@@ -1003,6 +1003,37 @@
       }
     },
     {
+      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+      "name": "getWithPathAndErrors - default",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
       "name": "getAndReturnString - default",
       "request": {
@@ -1534,6 +1565,6 @@
     }
   ],
   "meta": {
-    "total": 55
+    "total": 56
   }
 }

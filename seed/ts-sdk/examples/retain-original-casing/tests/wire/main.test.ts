@@ -12,7 +12,7 @@ describe("SeedExamplesClient", () => {
 
         server
             .mockEndpoint()
-            .post("/")
+            .post("")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

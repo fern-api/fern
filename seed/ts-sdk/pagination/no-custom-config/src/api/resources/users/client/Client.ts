@@ -626,7 +626,14 @@ export class UsersClient {
      * @example
      *     await client.users.listWithOffsetPaginationHasNextPage({
      *         page: 1,
-     *         limit: 1,
+     *         limit: 3,
+     *         order: "asc"
+     *     })
+     *
+     * @example
+     *     await client.users.listWithOffsetPaginationHasNextPage({
+     *         page: 1,
+     *         limit: 10,
      *         order: "asc"
      *     })
      */

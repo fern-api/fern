@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
+import java.util.UUID;
 
 public class Example47 {
     public static void main(String[] args) {
@@ -11,11 +11,6 @@ public class Example47 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().put().add(
-            PutRequest
-                .builder()
-                .id("id")
-                .build()
-        );
+        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
     }
 }

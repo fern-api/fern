@@ -1148,10 +1148,11 @@ describe("${serviceName}", () => {
                 // If nested, isCursorMissing is forced to true below to skip getNextPage().
                 if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
                     const wireKey = nextProperty.property.name.wireValue;
+                    const paginationMockUrl = example.url;
                     const nextValueCode =
                         pagination.type === "uri"
-                            ? code`\`\${server.baseUrl}${example.url}\``
-                            : code`${literalOf(example.url)}`;
+                            ? code`\`\${server.baseUrl}${paginationMockUrl}\``
+                            : code`${literalOf(paginationMockUrl)}`;
                     uriPathNextOverride = { wireKey, nextValueCode };
                 }
             }
@@ -1409,6 +1410,8 @@ describe("${serviceName}", () => {
             testName += ` (${exampleIndex + 1})`;
         }
 
+        const mockUrl = example.url;
+
         return code`
     test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
@@ -1418,7 +1421,7 @@ describe("${serviceName}", () => {
         ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
-            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .${endpoint.method.toLowerCase()}("${mockUrl}")${example.serviceHeaders
                 .filter((h) => h.value.jsonExample != null)
                 .map((h) => {
                     return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
@@ -2325,5 +2328,16 @@ function isPaginationCursorMissingInExample({
     }
 
     // If the leaf is explicitly undefined or null, treat it as "missing"
-    return cursor === undefined || cursor === null;
+    if (cursor === undefined || cursor === null) {
+        return true;
+    }
+
+    // For offset pagination, if the hasNextPage property is explicitly false,
+    // treat it as "missing" so we don't generate hasNextPage().toBe(true) assertions
+    // that would contradict the mock data
+    if (pagination.type === "offset" && cursor === false) {
+        return true;
+    }
+
+    return false;
 }
