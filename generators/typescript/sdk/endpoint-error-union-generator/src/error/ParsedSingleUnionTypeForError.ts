@@ -138,7 +138,7 @@ function getSingleUnionTypeGenerator({
 
     const propertyName = FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         property: ({ contentProperty }) =>
-            retainOriginalCasing ? getOriginalName(contentProperty.name) : caseConverter.camelUnsafe(contentProperty),
+            retainOriginalCasing ? getWireValue(contentProperty) : caseConverter.camelUnsafe(contentProperty),
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
             throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);

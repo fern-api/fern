@@ -10,7 +10,7 @@ import { RawSingleUnionType } from "./RawSingleUnionType.js";
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
         shape: FernIr.UnionTypeDeclaration | undefined;
-        discriminant: FernIr.NameAndWireValue;
+        discriminant: FernIr.NameAndWireValueOrString;
         singleUnionTypes: RawSingleUnionType<Context>[];
         baseProperties?: FernIr.ObjectProperty[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
@@ -25,7 +25,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private static readonly VALUE_PARAMETER_NAME = "value";
     private static readonly BASE_SCHEMA_NAME = "_Base";
 
-    private readonly discriminant: FernIr.NameAndWireValue;
+    private readonly discriminant: FernIr.NameAndWireValueOrString;
     private readonly singleUnionTypes: RawSingleUnionType<Context>[];
     private readonly baseProperties: FernIr.ObjectProperty[];
     private readonly getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;

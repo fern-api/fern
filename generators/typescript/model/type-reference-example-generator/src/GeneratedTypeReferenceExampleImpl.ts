@@ -79,6 +79,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             ]);
                         }
                     },
+                    datetimeRfc2822: (datetimeExample) => {
+                        if (!context.includeSerdeLayer && datetimeExample.raw != null) {
+                            return ts.factory.createStringLiteral(datetimeExample.raw);
+                        } else {
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                                ts.factory.createStringLiteral(datetimeExample.datetime.toISOString())
+                            ]);
+                        }
+                    },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
@@ -186,6 +195,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return `"${primitiveExample.uuid}"`;
             case "datetime":
                 return `"${primitiveExample.datetime.toISOString()}"`;
+            case "datetimeRfc2822":
+                return primitiveExample.raw != null
+                    ? `"${primitiveExample.raw}"`
+                    : `"${primitiveExample.datetime.toISOString()}"`;
             case "date":
                 return `"${primitiveExample.date}"`;
             case "uint":
@@ -241,6 +254,9 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: () => {
                         throw new Error("Cannot convert datetime to property name");
+                    },
+                    datetimeRfc2822: () => {
+                        throw new Error("Cannot convert datetimeRfc2822 to property name");
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {

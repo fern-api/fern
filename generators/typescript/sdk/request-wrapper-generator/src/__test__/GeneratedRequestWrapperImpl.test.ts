@@ -105,7 +105,7 @@ function createMockContext(opts?: {
                 };
             },
             getReferenceToNamedType: (namedType: FernIr.DeclaredTypeName) => ({
-                getTypeNode: () => ts.factory.createTypeReferenceNode(namedType.name.pascalCase.safeName)
+                getTypeNode: () => ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(namedType.name))
             }),
             getReferenceToInlinePropertyType: (
                 typeRef: FernIr.TypeReference,

@@ -9,7 +9,7 @@ export declare namespace GeneratedRequestWrapperExampleImpl {
         bodyPropertyName: string;
         example: FernIr.ExampleEndpointCall;
         packageId: PackageId;
-        endpointName: FernIr.Name;
+        endpointName: FernIr.NameOrString;
         requestBody: FernIr.HttpRequestBody | undefined;
         flattenRequestParameters: boolean;
     }
@@ -21,7 +21,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private bodyPropertyName: string;
     private example: FernIr.ExampleEndpointCall;
     private packageId: PackageId;
-    private endpointName: FernIr.Name;
+    private endpointName: FernIr.NameOrString;
     private requestBody: FernIr.HttpRequestBody | undefined;
     private flattenRequestParameters: boolean;
 

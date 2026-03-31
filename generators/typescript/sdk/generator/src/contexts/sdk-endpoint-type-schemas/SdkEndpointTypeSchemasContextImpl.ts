@@ -46,7 +46,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
 
     public getGeneratedEndpointTypeSchemas(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedSdkEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -64,7 +64,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
 
     public getReferenceToEndpointTypeSchemaExport(
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

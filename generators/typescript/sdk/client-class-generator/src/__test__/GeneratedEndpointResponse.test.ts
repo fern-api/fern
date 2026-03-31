@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getOriginalName, getTextOfTsNode } from "@fern-typescript/commons";
 import { caseConverter, createHttpEndpoint, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
@@ -101,7 +101,7 @@ function createMockContext(): any {
                 ts.factory.createPropertyAccessChain(
                     ts.factory.createIdentifier(variable),
                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    property.property.name.name.camelCase.unsafeName
+                    caseConverter.camelUnsafe(property.property.name)
                 ),
             generateGetterForRequestProperty: ({
                 property,
@@ -113,10 +113,10 @@ function createMockContext(): any {
                 ts.factory.createPropertyAccessChain(
                     ts.factory.createIdentifier(variable),
                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    property.property.name.name.camelCase.unsafeName
+                    caseConverter.camelUnsafe(property.property.name)
                 ),
             generateSetterForRequestPropertyAsString: ({ property }: { property: FernIr.RequestProperty }) =>
-                ts.factory.createStringLiteral(property.property.name.name.camelCase.unsafeName),
+                ts.factory.createStringLiteral(caseConverter.camelUnsafe(property.property.name)),
             getTypeDeclaration: () => ({
                 shape: FernIr.Type.object({
                     properties: [],
@@ -205,11 +205,11 @@ function createMockContext(): any {
         },
         sdkError: {
             getReferenceToError: (errorName: FernIr.DeclaredErrorName) => ({
-                getExpression: () => ts.factory.createIdentifier(`${errorName.name.pascalCase.unsafeName}Error`)
+                getExpression: () => ts.factory.createIdentifier(`${caseConverter.pascalSafe(errorName.name)}Error`)
             }),
             getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => ({
                 discriminantValue: {
-                    wireValue: errorName.name.originalName
+                    wireValue: getOriginalName(errorName.name)
                 }
             }),
             getGeneratedSdkError: () => ({
@@ -308,7 +308,7 @@ function createMockContext(): any {
 function createMockErrorResolver(errors?: Record<string, { statusCode: number }>): any {
     return {
         getErrorDeclarationFromName: (errorName: FernIr.DeclaredErrorName) => {
-            const key = errorName.name.originalName;
+            const key = getOriginalName(errorName.name);
             return errors?.[key] ?? { statusCode: 400 };
         }
     };

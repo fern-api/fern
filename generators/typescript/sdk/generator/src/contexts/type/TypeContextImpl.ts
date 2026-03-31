@@ -591,13 +591,13 @@ export class TypeContextImpl implements TypeContext {
         return ts.factory.createIdentifier(this.generateSetterForRequestPropertyAsString({ variable, property }));
     }
 
-    private getPropertyName({ name }: { name: FernIr.Name }): string {
+    private getPropertyName({ name }: { name: FernIr.NameOrString }): string {
         return this.retainOriginalCasing || !this.includeSerdeLayer
             ? getOriginalName(name)
             : this.caseConverter.camelSafe(name);
     }
 
-    private getNameFromWireValue({ name }: { name: FernIr.NameAndWireValue }): string {
+    private getNameFromWireValue({ name }: { name: FernIr.NameAndWireValueOrString }): string {
         return this.retainOriginalCasing || !this.includeSerdeLayer
             ? getWireValue(name)
             : this.caseConverter.camelSafe(name);

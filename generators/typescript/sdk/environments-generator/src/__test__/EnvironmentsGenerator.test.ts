@@ -140,7 +140,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         const sourceFile = project.createSourceFile("environments.ts");
 
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = { sourceFile } as any;
+        const mockContext = { sourceFile, case: caseConverter } as any;
 
         impl.writeToFile(mockContext);
 
@@ -290,7 +290,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
         const sourceFile = project.createSourceFile("environments.ts");
 
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = { sourceFile } as any;
+        const mockContext = { sourceFile, case: caseConverter } as any;
 
         impl.writeToFile(mockContext);
 

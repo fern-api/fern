@@ -108,7 +108,7 @@ export function getParameterNameForPropertyPathParameterName({
     parameterNaming,
     caseConverter
 }: {
-    pathParameterName: FernIr.Name;
+    pathParameterName: FernIr.NameOrString;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -130,7 +130,7 @@ function getParameterNameForPathParameterInternalName({
     parameterNaming,
     caseConverter
 }: {
-    pathParameterName: FernIr.Name;
+    pathParameterName: FernIr.NameOrString;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";

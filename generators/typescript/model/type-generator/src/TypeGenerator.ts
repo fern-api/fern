@@ -314,6 +314,7 @@ function isTypeStringLike(type: FernIr.TypeReference): boolean {
         boolean: () => false,
         long: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         uuid: () => true,
         date: () => true,
         base64: () => true,

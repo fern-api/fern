@@ -7,15 +7,15 @@ import { RawSingleUnionType } from "./RawSingleUnionType.js";
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {
-        discriminant: FernIr.NameAndWireValue;
-        discriminantValue: FernIr.NameAndWireValue;
+        discriminant: FernIr.NameAndWireValueOrString;
+        discriminantValue: FernIr.NameAndWireValueOrString;
         caseConverter: CaseConverter;
     }
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private discriminant: FernIr.NameAndWireValue;
-    private discriminantValueWithAllCasings: FernIr.NameAndWireValue;
+    private discriminant: FernIr.NameAndWireValueOrString;
+    private discriminantValueWithAllCasings: FernIr.NameAndWireValueOrString;
     protected caseConverter: CaseConverter;
 
     constructor({ discriminant, discriminantValue, caseConverter }: AbstractRawSingleUnionType.Init) {

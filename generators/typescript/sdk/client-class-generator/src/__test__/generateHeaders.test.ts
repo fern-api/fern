@@ -616,7 +616,7 @@ describe("generateHeaders", () => {
     it("generates header without stringify for named enum type", () => {
         const mockContext = createMockContext();
         mockContext.type.getTypeDeclaration = () => ({
-            shape: FernIr.Type.enum({ values: [], default: undefined })
+            shape: FernIr.Type.enum({ values: [], default: undefined, forwardCompatible: undefined })
         });
 
         const namedEnumHeader = createHttpHeader(

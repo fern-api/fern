@@ -144,7 +144,8 @@ export function createMockEnvironmentsContext() {
             getReferenceToEnvironmentsEnum: () => ({
                 getExpression: () => ts.factory.createIdentifier("MyEnvironment")
             })
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

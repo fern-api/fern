@@ -27,7 +27,7 @@ export function getExportedDirectoriesForFernFilepath({
 }
 
 function getExportedDirectoriesForFernFilepathPart(
-    fernFilepathPart: FernIr.Name,
+    fernFilepathPart: FernIr.NameOrString,
     { subExports }: { subExports?: Record<string, ExportDeclaration> } = {},
     caseConverter: CaseConverter
 ): ExportedDirectory[] {

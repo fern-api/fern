@@ -13,7 +13,7 @@ export function getSdkParameterPropertyName({
     parameterNaming,
     caseConverter
 }: {
-    name: FernIr.NameAndWireValue | FernIr.Name;
+    name: FernIr.NameAndWireValueOrString | FernIr.NameOrString;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -41,6 +41,8 @@ export function getSdkParameterPropertyName({
     }
 }
 
-function isNameAndWireValue(name: FernIr.NameAndWireValue | FernIr.Name): name is FernIr.NameAndWireValue {
+function isNameAndWireValue(
+    name: FernIr.NameAndWireValueOrString | FernIr.NameOrString
+): name is FernIr.NameAndWireValue {
     return typeof name === "object" && "wireValue" in name;
 }

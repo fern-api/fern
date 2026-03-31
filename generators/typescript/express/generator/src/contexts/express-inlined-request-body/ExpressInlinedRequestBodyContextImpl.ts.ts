@@ -52,7 +52,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
 
     public getGeneratedInlinedRequestBody(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedExpressInlinedRequestBody {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -75,7 +75,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         });
     }
 
-    public getReferenceToInlinedRequestBodyType(packageId: PackageId, endpointName: FernIr.Name): Reference {
+    public getReferenceToInlinedRequestBodyType(packageId: PackageId, endpointName: FernIr.NameOrString): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)

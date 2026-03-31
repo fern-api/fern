@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { getOriginalName, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import {
     caseConverter,
     casingsGenerator,
@@ -96,7 +96,10 @@ function createMockFileContext() {
         sdkError: {
             getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => ({
                 name: errorName,
-                discriminantValue: createNameAndWireValue(errorName.name.originalName, errorName.name.originalName),
+                discriminantValue: createNameAndWireValue(
+                    getOriginalName(errorName.name),
+                    getOriginalName(errorName.name)
+                ),
                 type: undefined,
                 statusCode: 400
             })

@@ -271,20 +271,20 @@ function createMockGeneratedRequestWrapper() {
         getAllPathParameters: () => [] as FernIr.PathParameter[],
         getReferencedBodyPropertyName: () => "body",
         getPropertyNameOfQueryParameter: (qp: FernIr.QueryParameter) => ({
-            propertyName: qp.name.name.camelCase.unsafeName,
-            safeName: qp.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(qp.name),
+            safeName: caseConverter.camelUnsafe(qp.name)
         }),
         getPropertyNameOfPathParameter: (pp: FernIr.PathParameter) => ({
-            propertyName: pp.name.camelCase.unsafeName,
-            safeName: pp.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(pp.name),
+            safeName: caseConverter.camelUnsafe(pp.name)
         }),
         getPropertyNameOfNonLiteralHeader: (h: FernIr.HttpHeader) => ({
-            propertyName: h.name.name.camelCase.unsafeName,
-            safeName: h.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(h.name),
+            safeName: caseConverter.camelUnsafe(h.name)
         }),
         getInlinedRequestBodyPropertyKey: (p: FernIr.InlinedRequestBodyProperty) => ({
-            propertyName: p.name.name.camelCase.unsafeName,
-            safeName: p.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(p.name),
+            safeName: caseConverter.camelUnsafe(p.name)
         }),
         generateExample: () => undefined,
         withQueryParameter: ({

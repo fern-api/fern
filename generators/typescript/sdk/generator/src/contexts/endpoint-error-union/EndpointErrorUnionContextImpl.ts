@@ -45,7 +45,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
 
     public getGeneratedEndpointErrorUnion(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedEndpointErrorUnion {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -62,7 +62,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
 
     public getReferenceToEndpointTypeExport(
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

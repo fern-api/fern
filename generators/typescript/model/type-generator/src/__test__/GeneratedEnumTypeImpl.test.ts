@@ -66,7 +66,7 @@ function createEnumGenerator(opts: {
 }): GeneratedEnumTypeImpl<any> {
     return new GeneratedEnumTypeImpl({
         typeName: opts.typeName,
-        shape: { values: opts.values, default: undefined },
+        shape: { values: opts.values, default: undefined, forwardCompatible: undefined },
         examples: opts.examples ?? [],
         docs: opts.docs,
         fernFilepath: createFernFilepath(),

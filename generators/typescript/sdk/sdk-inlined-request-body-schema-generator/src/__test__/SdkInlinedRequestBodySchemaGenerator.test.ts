@@ -80,7 +80,7 @@ function createMockFileContext() {
             getGeneratedRequestWrapper: () => ({
                 getNonBodyKeys: () => [],
                 getInlinedRequestBodyPropertyKey: (prop: FernIr.InlinedRequestBodyProperty) => ({
-                    propertyName: prop.name.name.camelCase.unsafeName
+                    propertyName: caseConverter.camelUnsafe(prop.name)
                 })
             })
         },
@@ -421,7 +421,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
             context.requestWrapper.getGeneratedRequestWrapper = () => ({
                 getNonBodyKeys: () => [{ propertyName: "queryParam" }, { propertyName: "headerParam" }],
                 getInlinedRequestBodyPropertyKey: (prop: FernIr.InlinedRequestBodyProperty) => ({
-                    propertyName: prop.name.name.camelCase.unsafeName
+                    propertyName: caseConverter.camelUnsafe(prop.name)
                 })
             });
 

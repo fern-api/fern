@@ -472,7 +472,7 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 generateReadWriteOnlyTypes: false,
                 caseConverter: testCaseConverter
             });
-            expect(parsed.getBuilderName()).toBe(singleUnionType.discriminantValue.name.camelCase.unsafeName);
+            expect(parsed.getBuilderName()).toBe(testCaseConverter.camelUnsafe(singleUnionType.discriminantValue));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
@@ -528,7 +528,7 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 generateReadWriteOnlyTypes: false,
                 caseConverter: testCaseConverter
             });
-            expect(parsed.getVisitorKey()).toBe(singleUnionType.discriminantValue.name.camelCase.unsafeName);
+            expect(parsed.getVisitorKey()).toBe(testCaseConverter.camelUnsafe(singleUnionType.discriminantValue));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
@@ -559,7 +559,7 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 caseConverter: testCaseConverter
             });
-            expect(key).toBe(singleProperty.name.name.camelCase.unsafeName);
+            expect(key).toBe(testCaseConverter.camelUnsafe(singleProperty.name));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {

@@ -29,16 +29,16 @@ export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
     getNonBodyKeys: (context: FileContext) => RequestWrapperNonBodyProperty[];
     getNonBodyKeysWithData: (context: FileContext) => RequestWrapperNonBodyPropertyWithData[];
     getInlinedRequestBodyPropertyKey: (property: FernIr.InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
-    getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValue) => RequestWrapperBodyProperty;
+    getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperBodyProperty;
     shouldInlinePathParameters: (context: FileContext) => boolean;
     getPropertyNameOfFileParameter: (fileProperty: FernIr.FileProperty) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfFileParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfFileParameterFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameter: (queryParameter: FernIr.QueryParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfPathParameter: (pathParameter: FernIr.PathParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfPathParameterFromName: (name: FernIr.Name) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameterFromName: (name: FernIr.NameOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: FernIr.HttpHeader) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;

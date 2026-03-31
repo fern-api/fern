@@ -28,7 +28,7 @@ function createMockContext(opts?: { useSerializerPrefix?: boolean }) {
 const defaultGetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) =>
     ts.factory.createPropertyAccessExpression(
         ts.factory.createIdentifier("request"),
-        ts.factory.createIdentifier(pathParameter.name.camelCase.unsafeName)
+        ts.factory.createIdentifier(caseConverter.camelUnsafe(pathParameter.name))
     );
 
 describe("buildUrl", () => {

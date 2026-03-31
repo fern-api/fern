@@ -109,7 +109,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         });
     }
 
-    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValue): string {
+    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValueOrString): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return this.caseConverter.camelUnsafe(propertyName);
         } else {

@@ -749,7 +749,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValue): {
+    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValueOrString): {
         safeName: string;
         propertyName: string;
     } {

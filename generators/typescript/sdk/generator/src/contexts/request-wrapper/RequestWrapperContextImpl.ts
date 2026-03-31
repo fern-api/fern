@@ -104,7 +104,10 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         return false;
     }
 
-    public getGeneratedRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): GeneratedRequestWrapper {
+    public getGeneratedRequestWrapper(
+        packageId: PackageId,
+        endpointName: FernIr.NameOrString
+    ): GeneratedRequestWrapper {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
@@ -132,7 +135,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         });
     }
 
-    public getReferenceToRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): ts.TypeNode {
+    public getReferenceToRequestWrapper(packageId: PackageId, endpointName: FernIr.NameOrString): ts.TypeNode {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)

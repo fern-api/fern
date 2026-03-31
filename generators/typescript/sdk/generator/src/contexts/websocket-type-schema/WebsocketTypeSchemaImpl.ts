@@ -60,7 +60,7 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         });
     }
 
-    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: FernIr.Name): Reference {
+    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: FernIr.NameOrString): Reference {
         const channel = this.packageResolver.getWebSocketChannelDeclaration(packageId);
         if (channel == null) {
             throw new Error(`Channel ${getOriginalName(channelName)} does not exist`);

@@ -46,7 +46,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
 
     public getGeneratedInlinedRequestBodySchema(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedSdkInlinedRequestBodySchema {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -65,7 +65,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
         });
     }
 
-    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.Name): Reference {
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.NameOrString): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)

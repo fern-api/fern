@@ -45,7 +45,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
 
     public getGeneratedEndpointTypeSchemas(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedExpressEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -63,7 +63,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
 
     public getReferenceToEndpointTypeSchemaExport(
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

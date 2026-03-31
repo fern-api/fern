@@ -91,7 +91,8 @@ describe("TypeGenerator", () => {
                         availability: undefined
                     }
                 ],
-                default: undefined
+                default: undefined,
+                forwardCompatible: undefined
             });
             const result = generator.generateType(createBaseArgs(shape));
             expect(result.type).toBe("enum");

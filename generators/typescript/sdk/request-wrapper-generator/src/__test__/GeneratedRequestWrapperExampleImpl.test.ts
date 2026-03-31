@@ -79,20 +79,20 @@ function createMockContext(opts?: {
 }): FileContext {
     const mockGeneratedRequestWrapper = {
         getPropertyNameOfFileParameter: (fileProperty: FernIr.FileProperty) => ({
-            propertyName: fileProperty.key.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(fileProperty.key)
         }),
-        getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValue) => ({
-            propertyName: name.name.camelCase.unsafeName
+        getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValueOrString) => ({
+            propertyName: caseConverter.camelUnsafe(name)
         }),
         shouldInlinePathParameters: () => opts?.shouldInlinePathParameters ?? false,
-        getPropertyNameOfPathParameterFromName: (name: FernIr.Name) => ({
-            propertyName: name.camelCase.unsafeName
+        getPropertyNameOfPathParameterFromName: (name: FernIr.NameOrString) => ({
+            propertyName: caseConverter.camelUnsafe(name)
         }),
-        getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValue) => ({
-            propertyName: name.name.camelCase.unsafeName
+        getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValueOrString) => ({
+            propertyName: caseConverter.camelUnsafe(name)
         }),
-        getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValue) => ({
-            propertyName: name.name.camelCase.unsafeName
+        getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => ({
+            propertyName: caseConverter.camelUnsafe(name)
         })
     };
 

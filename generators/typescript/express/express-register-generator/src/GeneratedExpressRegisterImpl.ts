@@ -130,7 +130,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         return subpackage.fernFilepath.file != null ? context.case.camelUnsafe(subpackage.fernFilepath.file) : "_root";
     }
 
-    private getPackagePathKey(part: FernIr.Name, context: ExpressContext): string {
+    private getPackagePathKey(part: FernIr.NameOrString, context: ExpressContext): string {
         return context.case.camelUnsafe(part);
     }
 

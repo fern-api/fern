@@ -276,7 +276,11 @@ describe("TypeSchemaGenerator", () => {
             caseConverter
         });
 
-        const shape = FernIr.Type.enum({ values: [createEnumValue("Active")], default: undefined });
+        const shape = FernIr.Type.enum({
+            values: [createEnumValue("Active")],
+            default: undefined,
+            forwardCompatible: undefined
+        });
         const schema = generator.generateTypeSchema({
             typeName: "Status",
             shape,
@@ -446,7 +450,7 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
     function createEnumSchema(opts: { typeName: string; values: FernIr.EnumValue[]; noOptionalProperties?: boolean }) {
         return new GeneratedEnumTypeSchemaImpl({
             typeName: opts.typeName,
-            shape: { values: opts.values, default: undefined },
+            shape: { values: opts.values, default: undefined, forwardCompatible: undefined },
             getGeneratedType: createMockGeneratedEnumType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
@@ -523,10 +527,7 @@ describe("GeneratedObjectTypeSchemaImpl", () => {
             getGeneratedType: () =>
                 createMockGeneratedObjectType({
                     propertyKeys: Object.fromEntries(
-                        (opts.properties ?? []).map((p) => [
-                            getWireValue(p.name),
-                            caseConverter.camelUnsafe(p.name.name)
-                        ])
+                        (opts.properties ?? []).map((p) => [getWireValue(p.name), caseConverter.camelUnsafe(p.name)])
                     )
                 }),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),

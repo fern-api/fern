@@ -112,7 +112,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         }
     }
 
-    protected getDiscriminant(): FernIr.NameAndWireValue {
+    protected getDiscriminant(): FernIr.NameAndWireValueOrString {
         return this.union.discriminant;
     }
 

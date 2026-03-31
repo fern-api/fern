@@ -1822,6 +1822,7 @@ describe("${serviceName}", () => {
                         return code`${literalOf(value)}`;
                     },
                     datetime: (value) => code`${literalOf(value.raw)}`,
+                    datetimeRfc2822: (value) => code`${literalOf(value.raw)}`,
                     date: (value) => code`${literalOf(value)}`,
                     uuid: (value) => code`${literalOf(value)}`,
                     _other: () => code`${literalOf(jsonExample)}`
@@ -1884,6 +1885,7 @@ describe("${serviceName}", () => {
                             string: (value) => code`${literalOf(value.original)}`,
                             date: (value) => code`${literalOf(value)}`,
                             datetime: (value) => code`${literalOf(value.raw)}`,
+                            datetimeRfc2822: (value) => code`${literalOf(value.raw)}`,
                             uuid: (value) => code`${literalOf(value)}`,
                             base64: (value) => code`${literalOf(value)}`,
                             bigInteger: (value) => {
@@ -2188,7 +2190,7 @@ function getParameterNameForVariable({
     retainOriginalCasing,
     caseConverter
 }: {
-    variableName: FernIr.Name;
+    variableName: FernIr.NameOrString;
     retainOriginalCasing: boolean;
     caseConverter: CaseConverter;
 }): string {

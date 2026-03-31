@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { FileContext, GeneratedEndpointErrorUnion, GeneratedUnion } from "@fern-typescript/contexts";
@@ -106,7 +106,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     }): string {
         return FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: ({ discriminant }) =>
-                retainOriginalCasing ? getOriginalName(discriminant.name) : caseConverter.camelUnsafe(discriminant),
+                retainOriginalCasing ? getWireValue(discriminant) : caseConverter.camelUnsafe(discriminant),
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
             _other: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);

@@ -90,7 +90,7 @@ function createMockBaseContext(opts?: {
             },
             getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => {
                 const overrideName = namedTypeMap.get(typeName.typeId);
-                const refName = overrideName ?? typeName.name.pascalCase.safeName;
+                const refName = overrideName ?? caseConverter.pascalSafe(typeName.name);
                 return {
                     getTypeNode: () => ts.factory.createTypeReferenceNode(refName),
                     getExpression: () => ts.factory.createIdentifier(refName),

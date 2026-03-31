@@ -573,7 +573,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.getInlinedRequestBodyPropertyKeyFromName(property.name);
     }
 
-    public getInlinedRequestBodyPropertyKeyFromName(name: FernIr.NameAndWireValue): RequestWrapperBodyProperty {
+    public getInlinedRequestBodyPropertyKeyFromName(name: FernIr.NameAndWireValueOrString): RequestWrapperBodyProperty {
         const cc = this.case;
         return {
             propertyName:
@@ -673,7 +673,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.getPropertyNameOfFileParameterFromName(fileProperty.key);
     }
 
-    public getPropertyNameOfFileParameterFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfFileParameterFromName(
+        name: FernIr.NameAndWireValueOrString
+    ): RequestWrapperNonBodyProperty {
         return {
             safeName: this.case.camelUnsafe(name),
             propertyName: getSdkParameterPropertyName({
@@ -690,7 +692,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfQueryParameterFromName(
+        name: FernIr.NameAndWireValueOrString
+    ): RequestWrapperNonBodyProperty {
         return {
             safeName: this.case.camelUnsafe(name),
             propertyName: getSdkParameterPropertyName({
@@ -707,7 +711,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.getPropertyNameOfPathParameterFromName(pathParameter.name);
     }
 
-    public getPropertyNameOfPathParameterFromName(name: FernIr.Name): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfPathParameterFromName(name: FernIr.NameOrString): RequestWrapperNonBodyProperty {
         return {
             safeName: this.case.camelUnsafe(name),
             propertyName: getSdkParameterPropertyName({
@@ -724,7 +728,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.getPropertyNameOfNonLiteralHeaderFromName(header.name);
     }
 
-    public getPropertyNameOfNonLiteralHeaderFromName(name: FernIr.NameAndWireValue): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfNonLiteralHeaderFromName(
+        name: FernIr.NameAndWireValueOrString
+    ): RequestWrapperNonBodyProperty {
         return {
             safeName: this.case.camelUnsafe(name),
             propertyName: getSdkParameterPropertyName({
