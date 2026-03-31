@@ -19,12 +19,6 @@ paths:
           schema:
             type: string
           x-fern-default: "2024-02-08"
-        - name: X-Enable-Audit
-          in: header
-          required: false
-          schema:
-            type: boolean
-          x-fern-default: true
         - name: limit
           in: query
           required: false

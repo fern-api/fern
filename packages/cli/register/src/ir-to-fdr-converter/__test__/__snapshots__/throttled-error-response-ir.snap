@@ -89,6 +89,7 @@
       "headers": [
         {
           "availability": undefined,
+          "clientDefault": undefined,
           "docs": "Number of seconds to wait before the next request.",
           "env": undefined,
           "name": {

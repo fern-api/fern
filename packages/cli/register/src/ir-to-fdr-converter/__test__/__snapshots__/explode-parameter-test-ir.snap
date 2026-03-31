@@ -153,6 +153,7 @@
         {
           "allPathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The item ID",
               "explode": true,
               "location": "ENDPOINT",
@@ -256,6 +257,7 @@
           },
           "pathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The item ID",
               "explode": true,
               "location": "ENDPOINT",
@@ -531,6 +533,7 @@
             {
               "allowMultiple": true,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Filter by tags (form style, explode=true is default, should be omitted)",
               "explode": undefined,
               "name": {
@@ -601,6 +604,7 @@
             {
               "allowMultiple": false,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Filter by categories (form style, explode=false is non-default, should be preserved)",
               "explode": false,
               "name": {
@@ -671,6 +675,7 @@
             {
               "allowMultiple": false,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Filter by IDs (pipeDelimited style, explode=false is default, should be omitted)",
               "explode": undefined,
               "name": {
@@ -741,6 +746,7 @@
             {
               "allowMultiple": true,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Filter by names (spaceDelimited style, explode=true is non-default, should be preserved)",
               "explode": true,
               "name": {
@@ -811,6 +817,7 @@
             {
               "allowMultiple": false,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Limit results (no explode specified, should be omitted)",
               "explode": undefined,
               "name": {
@@ -1069,6 +1076,7 @@
         {
           "allPathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The item ID (simple style, explode=false is default)",
               "explode": undefined,
               "location": "ENDPOINT",
@@ -1172,6 +1180,7 @@
           },
           "pathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The item ID (simple style, explode=false is default)",
               "explode": undefined,
               "location": "ENDPOINT",
