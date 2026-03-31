@@ -14,17 +14,17 @@ pub struct BulkUpdateTasksRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
     #[serde(rename = "assigned_to")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing)]
     pub filter_assigned_to: Option<String>,
     #[serde(rename = "is_complete")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing)]
     pub filter_is_complete: Option<String>,
     #[serde(rename = "date")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing)]
     pub filter_date: Option<String>,
     /// Comma-separated list of fields to include in the response.
     #[serde(rename = "_fields")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(skip_serializing)]
     pub fields: Option<String>,
 }
 
