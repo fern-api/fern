@@ -8,17 +8,32 @@ import { readFileSync } from "fs";
 import grayMatter from "gray-matter";
 import path from "path";
 
+interface ContextLine {
+    lineNumber: number;
+    content: string;
+    isErrorLine: boolean;
+}
+
+function calculateVisualColumn(text: string, charIndex: number, tabWidth = 4): number {
+    let visualColumn = 0;
+    for (let i = 0; i < Math.min(charIndex, text.length); i++) {
+        visualColumn += text[i] === "\t" ? tabWidth : 1;
+    }
+    return visualColumn;
+}
+
 class MdxValidationError {
     constructor(
         public readonly filepath: AbsoluteFilePath,
         public readonly message: string,
         public readonly line?: number,
-        public readonly column?: number
+        public readonly column?: number,
+        public readonly contextLines?: ContextLine[]
     ) {}
 
     toString(): string {
         const relativePath = path.relative(process.cwd(), this.filepath);
-        let formatted = chalk.red(`\n  ${relativePath}`);
+        let formatted = chalk.red(` ${relativePath}`);
 
         if (this.line != null) {
             formatted += chalk.yellow(`:${this.line}`);
@@ -27,7 +42,33 @@ class MdxValidationError {
             }
         }
 
-        formatted += chalk.gray(`\n    ${this.message}`);
+        formatted += chalk.gray(`\n  ${this.message}`);
+
+        if (this.contextLines && this.contextLines.length > 0) {
+            formatted += "\n";
+
+            // Find the max line number to calculate padding
+            const maxLineNum = Math.max(...this.contextLines.map((ctx) => ctx.lineNumber));
+            const lineNumWidth = String(maxLineNum).length;
+
+            for (const ctx of this.contextLines) {
+                const lineNumStr = String(ctx.lineNumber).padStart(lineNumWidth, " ");
+                const displayContent = ctx.content.replace(/\t/g, "    ");
+
+                if (ctx.isErrorLine) {
+                    formatted += `\n  ${chalk.cyan(lineNumStr)} | ${displayContent}`;
+
+                    if (this.column != null && this.column > 0) {
+                        const visualColumn = calculateVisualColumn(ctx.content, this.column - 1);
+                        const caretPadding = " ".repeat(lineNumWidth + 3 + visualColumn);
+                        formatted += chalk.red(`\n  ${caretPadding}^`);
+                    }
+                } else {
+                    // Context line - dim it
+                    formatted += `\n  ${chalk.gray(lineNumStr + " | " + displayContent)}`;
+                }
+            }
+        }
 
         return formatted;
     }
@@ -92,7 +133,24 @@ export async function validateMdxFiles({
                 }
             }
 
-            errors.push(new MdxValidationError(filepath, message, line, column));
+            // Extract context lines if we have a line number
+            let contextLines: ContextLine[] | undefined;
+            if (line != null) {
+                const allLines = content.split("\n");
+                const contextStart = Math.max(0, line - 3); // 2 lines before
+                const contextEnd = Math.min(allLines.length, line); // up to and including error line
+
+                contextLines = [];
+                for (let i = contextStart; i < contextEnd; i++) {
+                    contextLines.push({
+                        lineNumber: i + 1,
+                        content: allLines[i] ?? "",
+                        isErrorLine: i + 1 === line
+                    });
+                }
+            }
+
+            errors.push(new MdxValidationError(filepath, message, line, column, contextLines));
         }
     }
 
@@ -116,6 +174,4 @@ export function logMdxValidationResults({
     for (const error of errors) {
         context.logger.error(error.toString());
     }
-
-    context.logger.error("");
 }

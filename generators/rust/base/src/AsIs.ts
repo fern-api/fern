@@ -23,10 +23,6 @@ interface AsIsFileSpec {
  */
 const AsIsFileSpecs = {
     // Core infrastructure templates
-    ApiClientBuilder: {
-        relativePathToDir: "src",
-        filename: "client.rs"
-    },
     Prelude: {
         relativePathToDir: "src",
         filename: "prelude.rs"
