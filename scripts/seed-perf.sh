@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 # Seed performance profiler — runs seed test with --profile and Docker stats monitoring
-# Usage: scripts/seed-perf.sh <generator> [--parallel N] [--with-scripts] [--interval N]
+# Usage: scripts/seed-perf.sh <generator> [--fixture name ...] [--parallel N] [--with-scripts] [--interval N] [--sample N]
+#
+# Examples:
+#   scripts/seed-perf.sh ts-sdk                                  # all fixtures
+#   scripts/seed-perf.sh ts-sdk --fixture exhaustive basic-auth  # just 2 fixtures
+#   scripts/seed-perf.sh ts-sdk --sample 10                      # random 10 fixtures
+#   scripts/seed-perf.sh ts-sdk --parallel 8 --sample 5          # 5 fixtures, 8 parallel
 
-GENERATOR="${1:?Usage: $0 <generator> [--parallel N] [--with-scripts] [--interval N]}"
+GENERATOR="${1:?Usage: $0 <generator> [--fixture name ...] [--parallel N] [--sample N] [--with-scripts] [--interval N]}"
 shift
 
-PARALLEL=32
+PARALLEL=16
 SKIP_SCRIPTS="--skip-scripts"
 LOG_LEVEL="info"
 SAMPLE_INTERVAL=5
+FIXTURES=()
+SAMPLE_COUNT=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -18,9 +26,42 @@ while [[ $# -gt 0 ]]; do
         --with-scripts) SKIP_SCRIPTS=""; shift ;;
         --log-level) LOG_LEVEL="$2"; shift 2 ;;
         --interval) SAMPLE_INTERVAL="$2"; shift 2 ;;
+        --sample) SAMPLE_COUNT="$2"; shift 2 ;;
+        --fixture)
+            shift
+            while [[ $# -gt 0 && ! "$1" =~ ^-- ]]; do
+                FIXTURES+=("$1")
+                shift
+            done
+            ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
 done
+
+# If --sample N was given, pick N random unique fixture names from the full list
+if [[ "$SAMPLE_COUNT" -gt 0 && ${#FIXTURES[@]} -eq 0 ]]; then
+    SAMPLED=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures \
+        --generator "$GENERATOR" --groups 1 2>/dev/null \
+        | python3 -c "
+import json, sys, random
+d = json.load(sys.stdin)
+# Extract unique fixture names (before the colon)
+names = set()
+for f in d[0].get('fixtures', []):
+    name = f.split(':')[0] if ':' in f else f
+    names.add(name)
+names = sorted(names)
+n = min(int(sys.argv[1]), len(names))
+sample = random.sample(names, n)
+for s in sample:
+    print(s)
+" "$SAMPLE_COUNT" 2>/dev/null || true)
+    if [[ -n "$SAMPLED" ]]; then
+        mapfile -t FIXTURES <<< "$SAMPLED"
+        echo "Sampled ${#FIXTURES[@]} fixtures: ${FIXTURES[*]}"
+        echo ""
+    fi
+fi
 
 REPORT_DIR="/tmp/seed-perf-$$"
 mkdir -p "$REPORT_DIR"
@@ -28,6 +69,14 @@ SEED_LOG="$REPORT_DIR/seed.log"
 PROFILE_LOG="$REPORT_DIR/profile.jsonl"
 STATS_LOG="$REPORT_DIR/stats.csv"
 SUMMARY="$REPORT_DIR/summary.txt"
+
+# Build fixture args for seed CLI
+FIXTURE_ARGS=""
+if [[ ${#FIXTURES[@]} -gt 0 ]]; then
+    for f in "${FIXTURES[@]}"; do
+        FIXTURE_ARGS="$FIXTURE_ARGS --fixture $f"
+    done
+fi
 
 echo "==========================================="
 echo " Seed Performance Profiler"
@@ -37,14 +86,23 @@ echo " Parallel:        $PARALLEL"
 echo " Skip scripts:    $([[ -n "$SKIP_SCRIPTS" ]] && echo yes || echo no)"
 echo " Sample interval: ${SAMPLE_INTERVAL}s"
 echo " Report dir:      $REPORT_DIR"
+if [[ ${#FIXTURES[@]} -gt 0 ]]; then
+echo " Fixtures:        ${FIXTURES[*]} (${#FIXTURES[@]} selected)"
+else
+echo " Fixtures:        all"
+fi
 echo "==========================================="
 echo ""
 
 # Get fixture count
-FIXTURE_COUNT=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures \
-    --generator "$GENERATOR" --groups 1 2>/dev/null \
-    | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d[0].get('fixtures',[])))" 2>/dev/null || echo "?")
-echo "Total test cases: $FIXTURE_COUNT"
+if [[ ${#FIXTURES[@]} -gt 0 ]]; then
+    FIXTURE_COUNT="${#FIXTURES[@]}"
+else
+    FIXTURE_COUNT=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures \
+        --generator "$GENERATOR" --groups 1 2>/dev/null \
+        | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d[0].get('fixtures',[])))" 2>/dev/null || echo "?")
+fi
+echo "Total fixtures: $FIXTURE_COUNT"
 echo ""
 
 # Docker image name from seed.yml
@@ -104,58 +162,94 @@ monitor_docker_stats() {
     done
 }
 
-# --- Profile file tailer for live progress (background) ---
+# --- Profile monitor (background) — single python3 process, no tail -f ---
 monitor_profile() {
-    local completed=0 in_flight_phases=""
-    local -A active_phases  # phase -> count of in-flight
-
     # Wait for profile file to exist
     while [[ ! -f "$PROFILE_LOG" ]]; do sleep 1; done
 
-    tail -f "$PROFILE_LOG" 2>/dev/null | while IFS= read -r line; do
-        local event phase
-        event=$(echo "$line" | python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('event',''))" 2>/dev/null || continue)
-        phase=$(echo "$line" | python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('phase',''))" 2>/dev/null || continue)
+    python3 -u -c "
+import json, sys, time, subprocess, os
 
-        if [[ "$event" == "start" ]]; then
-            active_phases[$phase]=$(( ${active_phases[$phase]:-0} + 1 ))
-        elif [[ "$event" == "end" ]]; then
-            local current=${active_phases[$phase]:-0}
-            if (( current > 0 )); then
-                active_phases[$phase]=$(( current - 1 ))
-            fi
-            if [[ "$phase" == "total" ]]; then
-                completed=$((completed + 1))
-            fi
-        fi
+profile_path = os.environ['PROFILE_LOG']
+stats_path = os.environ['STATS_LOG']
+fixture_count = os.environ['FIXTURE_COUNT']
 
-        # Build in-flight summary
-        in_flight_phases=""
-        local total_in_flight=0
-        for p in "${!active_phases[@]}"; do
-            local c=${active_phases[$p]}
-            if (( c > 0 )); then
-                total_in_flight=$((total_in_flight + c))
-                if [[ -n "$in_flight_phases" ]]; then
-                    in_flight_phases="$in_flight_phases, $p: $c"
-                else
-                    in_flight_phases="$p: $c"
-                fi
-            fi
-        done
+active = {}
+completed = 0
+last_pos = 0
 
-        # Read latest docker stats line
-        local mem_gib containers
-        containers=$(tail -1 "$STATS_LOG" 2>/dev/null | awk -F, 'NR==1 && NF>1 {print $2}' || echo "?")
-        mem_gib=$(tail -1 "$STATS_LOG" 2>/dev/null | awk -F, 'NR==1 && NF>1 {printf "%.1f", $3/1024}' || echo "?")
-        local docker_limit
-        docker_limit=$(docker info --format '{{.MemTotal}}' 2>/dev/null | awk '{printf "%.0f", $1/1073741824}' || echo '?')
+try:
+    docker_limit = subprocess.check_output(
+        ['docker', 'info', '--format', '{{.MemTotal}}'],
+        stderr=subprocess.DEVNULL, text=True
+    ).strip()
+    docker_limit = f'{int(docker_limit) / 1073741824:.0f}'
+except Exception:
+    docker_limit = '?'
 
-        printf "\r  [done: %3d/%s] containers: %s | mem: %s/%s GiB | in-flight: %d (%s)          " \
-            "$completed" "$FIXTURE_COUNT" \
-            "$containers" "$mem_gib" "$docker_limit" \
-            "$total_in_flight" "$in_flight_phases" 2>/dev/null
-    done
+phase_order = ['workspace_load', 'lock_wait', 'ir_generation', 'ir_migration',
+               'write_to_disk', 'copy_in', 'exec', 'copy_out', 'total']
+
+while True:
+    try:
+        with open(profile_path, 'r') as f:
+            f.seek(last_pos)
+            new_lines = f.readlines()
+            last_pos = f.tell()
+    except Exception:
+        time.sleep(0.5)
+        continue
+
+    for line in new_lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            e = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        event = e.get('event', '')
+        phase = e.get('phase', '')
+        if event == 'start':
+            active[phase] = active.get(phase, 0) + 1
+        elif event == 'end':
+            active[phase] = max(0, active.get(phase, 0) - 1)
+            if phase == 'total':
+                completed += 1
+
+    mem_gib = '?'
+    containers = '?'
+    try:
+        with open(stats_path, 'r') as sf:
+            lines = sf.readlines()
+            if len(lines) > 1:
+                parts = lines[-1].strip().split(',')
+                if len(parts) > 2:
+                    containers = parts[1]
+                    mem_gib = f'{float(parts[2]) / 1024:.1f}'
+    except Exception:
+        pass
+
+    in_flight = []
+    total_in_flight = 0
+    for p in phase_order:
+        c = active.get(p, 0)
+        if c > 0:
+            total_in_flight += c
+            in_flight.append(f'{p}: {c}')
+    for p, c in active.items():
+        if c > 0 and p not in phase_order:
+            total_in_flight += c
+            in_flight.append(f'{p}: {c}')
+
+    summary = ', '.join(in_flight) if in_flight else 'idle'
+    sys.stderr.write(
+        f'\r  [done: {completed:3d}/{fixture_count}] containers: {containers} | '
+        f'mem: {mem_gib}/{docker_limit} GiB | in-flight: {total_in_flight} ({summary})          '
+    )
+    sys.stderr.flush()
+    time.sleep(0.5)
+"
 }
 
 # --- Run seed test ---
@@ -164,19 +258,44 @@ echo ""
 
 START_TIME=$SECONDS
 
+export PROFILE_LOG STATS_LOG FIXTURE_COUNT
+
 monitor_docker_stats &
 DOCKER_MONITOR_PID=$!
 
 monitor_profile &
 PROFILE_MONITOR_PID=$!
 
+SEED_PID=""
+INTERRUPTED=0
+
 cleanup() {
+    # Prevent re-entrancy
+    trap - EXIT INT TERM
+    echo ""
+    echo "Cleaning up..."
+    # Kill all child processes of this script
+    pkill -P $$ 2>/dev/null || true
+    # Also kill seed and its children specifically
+    if [[ -n "$SEED_PID" ]] && kill -0 "$SEED_PID" 2>/dev/null; then
+        # Kill the entire process tree rooted at seed
+        pkill -P "$SEED_PID" 2>/dev/null || true
+        kill "$SEED_PID" 2>/dev/null || true
+    fi
     kill "$DOCKER_MONITOR_PID" 2>/dev/null || true
     kill "$PROFILE_MONITOR_PID" 2>/dev/null || true
-    wait "$DOCKER_MONITOR_PID" 2>/dev/null || true
-    wait "$PROFILE_MONITOR_PID" 2>/dev/null || true
-    echo ""
+    # Brief wait for processes to die
+    sleep 1
+    echo "Done. Partial results in: $REPORT_DIR"
 }
+
+handle_interrupt() {
+    INTERRUPTED=1
+    cleanup
+    exit 130
+}
+
+trap handle_interrupt INT TERM
 trap cleanup EXIT
 
 pnpm seed test \
@@ -185,8 +304,12 @@ pnpm seed test \
     --log-level "$LOG_LEVEL" \
     --profile "$PROFILE_LOG" \
     $SKIP_SCRIPTS \
-    > "$SEED_LOG" 2>&1
+    $FIXTURE_ARGS \
+    > "$SEED_LOG" 2>&1 &
+SEED_PID=$!
+wait "$SEED_PID" || true
 EXIT_CODE=$?
+SEED_PID=""
 
 END_TIME=$SECONDS
 ELAPSED=$((END_TIME - START_TIME))
@@ -194,9 +317,12 @@ ELAPSED=$((END_TIME - START_TIME))
 # Kill monitors
 kill "$DOCKER_MONITOR_PID" 2>/dev/null || true
 kill "$PROFILE_MONITOR_PID" 2>/dev/null || true
-wait "$DOCKER_MONITOR_PID" 2>/dev/null || true
-wait "$PROFILE_MONITOR_PID" 2>/dev/null || true
-trap - EXIT
+sleep 1
+trap - EXIT INT TERM
+
+if [[ "$INTERRUPTED" -eq 1 ]]; then
+    exit 130
+fi
 echo ""
 echo ""
 
