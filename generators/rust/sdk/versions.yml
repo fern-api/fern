@@ -1,5 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.29.0
+  changelogEntry:
+    - summary: |
+        Add per-endpoint URL resolution for multi-URL environments. Each endpoint
+        now resolves its base URL at call time from the environment object, matching
+        the Python and Java SDK approach.
+      type: feat
+    - summary: |
+        Generate `ApiClientBuilder` from code instead of a static template, enabling
+        environment-aware builder methods for multi-URL APIs.
+      type: feat
+    - summary: |
+        Add per-base-URL getter methods on the `Environment` enum (e.g.,
+        `api_url()`, `agent_url()`) for multi-URL environments.
+      type: feat
+    - summary: |
+        Add `Option<Environment>` field to `ClientConfig` for multi-URL environments
+        to support per-endpoint URL resolution.
+      type: feat
+    - summary: |
+        Add `base_url()`, `config()`, `execute_request_with_base_url()`, and
+        `execute_stream_request_with_base_url()` accessors to `HttpClient` for
+        multi-URL endpoint resolution.
+      type: feat
+    - summary: |
+        Remove construction-time URL override from `RootClientGenerator`; all
+        sub-clients now receive `config.clone()` uniformly.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 0.28.0
   changelogEntry:
     - summary: |
