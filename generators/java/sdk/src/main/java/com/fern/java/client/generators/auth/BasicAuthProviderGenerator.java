@@ -121,10 +121,10 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
                 .addStatement("String username = $N.get()", usernameSupplierField)
                 .addStatement("String password = $N.get()", passwordSupplierField)
-                .beginControlFlow("if (username == null || password == null)")
+                .beginControlFlow("if (username == null && password == null)")
                 .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                 .endControlFlow()
-                .addStatement("String credentials = username + \":\" + password")
+                .addStatement("String credentials = (username != null ? username : \"\") + \":\" + (password != null ? password : \"\")")
                 .addStatement(
                         "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
                         Base64.class,
@@ -151,7 +151,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         if (usernameEnvVar != null) {
             condition.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
         }
-        condition.append(") && (passwordSupplier != null");
+        condition.append(") || (passwordSupplier != null");
         if (passwordEnvVar != null) {
             condition.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
         }

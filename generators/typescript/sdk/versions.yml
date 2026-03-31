@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.7
+  changelogEntry:
+    - summary: |
+        Support optional username and password in basic auth. The SDK now accepts
+        username-only, password-only, or both credentials. Missing fields are treated
+        as empty strings (e.g., username-only encodes `username:`, password-only
+        encodes `:password`). When neither is provided, the Authorization header is
+        omitted entirely.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 3.60.6
   changelogEntry:
     - summary: |

@@ -124,19 +124,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
-                                writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
+                                writer.writeLine(`if !${usernameName}.nil? || !${passwordName}.nil?`);
                             } else {
-                                writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
+                                writer.writeLine(`elsif !${usernameName}.nil? || !${passwordName}.nil?`);
                             }
                             writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName} || ""}:#{${passwordName} || ""}")}"`
                             );
                             if (i === basicAuthSchemes.length - 1) {
                                 writer.writeLine(`end`);
                             }
                         } else {
                             writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName} || ""}:#{${passwordName} || ""}")}"`
                             );
                         }
                     }

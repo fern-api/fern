@@ -253,7 +253,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
         const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
 
-        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) && (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) || (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -319,15 +319,11 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 : passwordSupplierGetCode;
 
         if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if credentials are missing
+            // When neverThrowErrors is true, return empty headers if neither credential is provided
             return `
         const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            return { headers: {} };
-        }
-
         const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
+        if (${usernameVar} == null && ${passwordVar} == null) {
             return { headers: {} };
         }
 
@@ -343,23 +339,17 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         };
         `;
         } else {
-            // When neverThrowErrors is false, throw an error if credentials are missing
+            // When neverThrowErrors is false, throw an error only if neither credential is provided
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
 
             return `
         const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
-            });
-        }
-
         const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
+        if (${usernameVar} == null && ${passwordVar} == null) {
             throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 

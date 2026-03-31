@@ -528,15 +528,15 @@ class ClientWrapperGenerator:
                     password_var = names.get_password_constructor_parameter_name(basic_auth_scheme)
                     writer.write_line(f"{username_var} = self.{names.get_username_getter_name(basic_auth_scheme)}()")
                     writer.write_line(f"{password_var} = self.{names.get_password_getter_name(basic_auth_scheme)}()")
-                    writer.write_line(f"if {username_var} is not None and {password_var} is not None:")
+                    writer.write_line(f"if {username_var} is not None or {password_var} is not None:")
                     with writer.indent():
                         writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
                         writer.write_node(
                             AST.ClassInstantiation(
                                 class_=httpx.HttpX.BASIC_AUTH,
                                 args=[
-                                    AST.Expression(f"{username_var}"),
-                                    AST.Expression(f"{password_var}"),
+                                    AST.Expression(f'{username_var} or ""'),
+                                    AST.Expression(f'{password_var} or ""'),
                                 ],
                             )
                         )
@@ -548,8 +548,8 @@ class ClientWrapperGenerator:
                         AST.ClassInstantiation(
                             class_=httpx.HttpX.BASIC_AUTH,
                             args=[
-                                AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}()"),
-                                AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}()"),
+                                AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}() or \"\""),
+                                AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}() or \"\""),
                             ],
                         )
                     )

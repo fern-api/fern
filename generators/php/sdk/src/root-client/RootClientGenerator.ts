@@ -360,11 +360,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             const controlFlowKeyword = i === 0 ? "if" : "else if";
                             writer.controlFlow(
                                 controlFlowKeyword,
-                                php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                                php.codeblock(`$${usernameName} !== null || $${passwordName} !== null`)
                             );
                         }
                         writer.writeLine(
-                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
+                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode(($${usernameName} ?? "") . ":" . ($${passwordName} ?? ""));`
                         );
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             writer.endControlFlow();

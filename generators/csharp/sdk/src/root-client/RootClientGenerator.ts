@@ -470,11 +470,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 const controlFlowKeyword = i === 0 ? "if" : "else if";
                                 innerWriter.controlFlow(
                                     controlFlowKeyword,
-                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
+                                    this.csharp.codeblock(`${usernameAccess} != null || ${passwordAccess} != null`)
                                 );
                             }
                             innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess} ?? ""}:{${passwordAccess} ?? ""}"))}"`
                             );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
