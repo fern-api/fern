@@ -489,10 +489,7 @@ func isIOError(err error) bool {
 		return false
 	}
 	var jsonTypeErr *json.UnmarshalTypeError
-	if errors.As(err, &jsonTypeErr) {
-		return false
-	}
-	return true
+	return !errors.As(err, &jsonTypeErr)
 }
 
 func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
