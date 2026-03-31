@@ -523,36 +523,63 @@ class ClientWrapperGenerator:
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
             if basic_auth_scheme is not None:
+                either_omitted = (
+                    getattr(basic_auth_scheme, "username_omit", None) is True
+                    or getattr(basic_auth_scheme, "password_omit", None) is True
+                )
                 if not self._context.ir.sdk_config.is_auth_mandatory:
                     username_var = names.get_username_constructor_parameter_name(basic_auth_scheme)
                     password_var = names.get_password_constructor_parameter_name(basic_auth_scheme)
                     writer.write_line(f"{username_var} = self.{names.get_username_getter_name(basic_auth_scheme)}()")
                     writer.write_line(f"{password_var} = self.{names.get_password_getter_name(basic_auth_scheme)}()")
-                    writer.write_line(f"if {username_var} is not None and {password_var} is not None:")
+                    condition_op = "or" if either_omitted else "and"
+                    writer.write_line(f"if {username_var} is not None {condition_op} {password_var} is not None:")
                     with writer.indent():
                         writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
-                                args=[
-                                    AST.Expression(f"{username_var}"),
-                                    AST.Expression(f"{password_var}"),
-                                ],
+                        if either_omitted:
+                            writer.write_node(
+                                AST.ClassInstantiation(
+                                    class_=httpx.HttpX.BASIC_AUTH,
+                                    args=[
+                                        AST.Expression(f'{username_var} or ""'),
+                                        AST.Expression(f'{password_var} or ""'),
+                                    ],
+                                )
                             )
-                        )
+                        else:
+                            writer.write_node(
+                                AST.ClassInstantiation(
+                                    class_=httpx.HttpX.BASIC_AUTH,
+                                    args=[
+                                        AST.Expression(f"{username_var}"),
+                                        AST.Expression(f"{password_var}"),
+                                    ],
+                                )
+                            )
                         writer.write("._auth_header")
                         writer.write_newline_if_last_line_not()
                 else:
                     writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                    writer.write_node(
-                        AST.ClassInstantiation(
-                            class_=httpx.HttpX.BASIC_AUTH,
-                            args=[
-                                AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}()"),
-                                AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}()"),
-                            ],
+                    if either_omitted:
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=httpx.HttpX.BASIC_AUTH,
+                                args=[
+                                    AST.Expression(f'self.{names.get_username_getter_name(basic_auth_scheme)}() or ""'),
+                                    AST.Expression(f'self.{names.get_password_getter_name(basic_auth_scheme)}() or ""'),
+                                ],
+                            )
                         )
-                    )
+                    else:
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=httpx.HttpX.BASIC_AUTH,
+                                args=[
+                                    AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}()"),
+                                    AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}()"),
+                                ],
+                            )
+                        )
                     writer.write("._auth_header")
                     writer.write_newline_if_last_line_not()
             for param in constructor_parameters:
