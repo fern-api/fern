@@ -9,7 +9,7 @@
         fallback now only promotes auto-generated tag description pages, not
         user-defined section summaries.
       type: fix
-  createdAt: "2026-03-30"
+  createdAt: "2026-03-31"
   irVersion: 65
 
 - version: 4.53.0
