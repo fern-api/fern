@@ -1331,32 +1331,34 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
-        if (this.ir.auth?.schemes) {
-            for (const scheme of this.ir.auth.schemes) {
-                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
-                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
-                    return schemeAsUnion.name.wireValue;
-                }
-            }
-        }
-        return "api_key";
+        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
     }
 
     /**
-     * Get the API key value prefix from the IR auth schemes.
-     * Returns the prefix (e.g., "Token") with a trailing space if defined, or empty string.
-     * This allows the generated code to format the header value as "{prefix} {key}".
+     * Get the API key prefix from the IR auth schemes (e.g., "Token", "Bearer").
+     * Returns undefined if no prefix is configured.
      */
-    public getApiKeyPrefix(): string {
+    public getApiKeyPrefix(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.prefix);
+    }
+
+    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const schemeAsUnion = scheme as { type?: string; prefix?: string };
-                if (schemeAsUnion.type === "header" && schemeAsUnion.prefix) {
-                    return `${schemeAsUnion.prefix} `;
+                const result = FernIr.AuthScheme._visit(scheme, {
+                    header: (header) => selector(header),
+                    bearer: () => undefined,
+                    basic: () => undefined,
+                    oauth: () => undefined,
+                    inferred: () => undefined,
+                    _other: () => undefined
+                });
+                if (result !== undefined) {
+                    return result;
                 }
             }
         }
-        return "";
+        return undefined;
     }
 
     /**
