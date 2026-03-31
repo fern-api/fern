@@ -13,5 +13,5 @@ pub use oauth_token_provider::OAuthTokenProvider;
 pub use request_options::RequestOptions;
 pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};
 #[cfg(feature = "websocket")]
-pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};
+pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};
 pub use utils::join_url;

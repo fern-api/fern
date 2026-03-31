@@ -580,7 +580,8 @@ export const CheckConfig = z.object({
 // ===== Integrations =====
 
 export const IntegrationsConfig = z.object({
-    intercom: z.string().optional()
+    intercom: z.string().optional(),
+    context7: z.string().optional()
 });
 
 // ===== Experimental =====
