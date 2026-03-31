@@ -712,13 +712,12 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime parameter - use FixedOffset or Utc based on config
                         requiredTypes.add("DateTime");
-                        if (this.context.getDateTimeType() === "utc") {
-                            requiredTypes.add("Utc");
-                        } else {
-                            requiredTypes.add("FixedOffset");
-                        }
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
+                    },
+                    dateTimeRfc2822: () => {
+                        requiredTypes.add("DateTime");
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
                     },
                     base64: () => {
                         // String is built-in
@@ -826,6 +825,7 @@ export class SubClientGenerator {
                     bigInteger: () => false,
                     date: () => false,
                     dateTime: () => false,
+                    dateTimeRfc2822: () => false,
                     base64: () => false,
                     uuid: () => false,
                     _other: () => false
@@ -873,6 +873,8 @@ export class SubClientGenerator {
         let typeParameter = "";
         let executeArgs = "";
 
+        const isBytesRequest = this.isBytesEndpoint(endpoint);
+
         if (isFileUpload) {
             // Use multipart request for file uploads
             executeMethod = "execute_multipart_request";
@@ -881,6 +883,15 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${multipartBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+        } else if (isBytesRequest) {
+            // Use bytes request for octet-stream endpoints
+            executeMethod = "execute_bytes_request";
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            Some(request.to_vec()),
             ${this.buildQueryParameters(endpoint)},
             options,`;
         } else {
@@ -1147,6 +1158,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1237,6 +1249,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1452,6 +1465,12 @@ export class SubClientGenerator {
                     }
                 },
                 custom: () => {
+                    /* no-op */
+                },
+                uri: () => {
+                    /* no-op */
+                },
+                path: () => {
                     /* no-op */
                 },
                 _other: () => {
@@ -1674,6 +1693,7 @@ export class SubClientGenerator {
                             bigInteger: () => false,
                             date: () => false,
                             dateTime: () => false,
+                            dateTimeRfc2822: () => false,
                             base64: () => true,
                             uuid: () => false,
                             _other: () => false
@@ -1764,6 +1784,7 @@ export class SubClientGenerator {
                     bigInteger: () => true, // BigInt is large, pass by reference
                     date: () => true,
                     dateTime: () => true,
+                    dateTimeRfc2822: () => true,
                     base64: () => true, // Base64 strings are typically large
                     uuid: () => true,
                     _other: () => true
@@ -1888,6 +1909,8 @@ export class SubClientGenerator {
             offset: (offset) =>
                 this.generateOffsetPaginationLogic(endpoint, httpMethod, pathExpression, requestBody, offset),
             custom: (_custom) => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            uri: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            path: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             _other: () => {
                 throw new Error("Unknown pagination type");
             }
@@ -2123,6 +2146,8 @@ export class SubClientGenerator {
             cursor: (cursor) => this.generateGenericCursorExtraction(cursor),
             offset: (offset) => this.generateGenericOffsetExtraction(offset, isOffsetPagination),
             custom: () => this.generateGenericCustomExtraction(),
+            uri: () => this.generateGenericCustomExtraction(),
+            path: () => this.generateGenericCustomExtraction(),
             _other: () => this.generateGenericCustomExtraction()
         });
     }

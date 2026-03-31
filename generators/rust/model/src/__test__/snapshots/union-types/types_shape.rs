@@ -13,8 +13,10 @@ pub enum Shape {
         #[non_exhaustive]
         Rectangle {
             #[serde(default)]
+            #[serde(with = "crate::core::number_serializers")]
             width: f64,
             #[serde(default)]
+            #[serde(with = "crate::core::number_serializers")]
             height: f64,
         },
 

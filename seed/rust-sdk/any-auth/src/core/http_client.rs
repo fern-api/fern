@@ -202,7 +202,7 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            let header_value = format!("{}", key);
+            let header_value = key.to_string();
             headers.insert(
                 "X-API-Key",
                 header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
