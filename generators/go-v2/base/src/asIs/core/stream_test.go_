@@ -1288,3 +1288,36 @@ func TestStream_RecvEventMetadataAfterReconnect(t *testing.T) {
 	assert.Equal(t, "e2", event2.ID)
 	assert.Equal(t, 5000, event2.Retry)
 }
+
+func TestStream_BareFieldNamesWithoutColon(t *testing.T) {
+	// Per the SSE spec, a line with no colon is treated as a field name
+	// with an empty string value.
+	ctx := context.Background()
+
+	// Bare "id" sets last event ID to empty string.
+	// Bare "event" sets event type to empty string.
+	// "data: ..." provides the payload.
+	body := "id: original\ndata: {\"content\":\"a\",\"done\":false}\n\nid\nevent\ndata: {\"content\":\"b\",\"done\":true}\n\n"
+	resp := &http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(strings.NewReader(body)),
+		Header:     http.Header{"Content-Type": []string{"text/event-stream"}},
+	}
+	stream := NewStream[TestMessage](ctx, resp,
+		WithFormat(StreamFormatSSE),
+		WithPrefix(""),
+	)
+	defer stream.Close()
+
+	event1, err := stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "a", event1.Data.Content)
+	assert.Equal(t, "original", stream.LastEventID())
+
+	// Bare "id" resets last event ID to empty string per spec.
+	event2, err := stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "b", event2.Data.Content)
+	assert.Equal(t, "", event2.Event, "bare 'event' sets type to empty string")
+	assert.Equal(t, "", stream.LastEventID(), "bare 'id' resets last event ID to empty")
+}
