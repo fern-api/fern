@@ -6,5 +6,12 @@ export interface HttpHeader extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     env: string | undefined;
+    /**
+     * A client-side default value for this header. When present, the header
+     * is optional in the generated SDK and this literal value is sent when
+     * the caller does not provide one. Populated from the `x-fern-default`
+     * OpenAPI extension.
+     */
+    clientDefault: FernIr.Literal | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
 }
