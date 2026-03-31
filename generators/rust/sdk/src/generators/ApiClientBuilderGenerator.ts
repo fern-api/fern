@@ -1,42 +1,101 @@
-use crate::api::resources::WebsocketMultiUrlClient;
-use crate::Environment;
-use crate::{ApiError, ClientConfig};
-use std::collections::HashMap;
-use std::time::Duration;
-/// Builder for creating API clients with custom configuration
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RustFile } from "@fern-api/rust-base";
+import { rust } from "@fern-api/rust-codegen";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+export class ApiClientBuilderGenerator {
+    private readonly context: SdkGeneratorContext;
+    private readonly clientName: string;
+    private readonly environmentEnumName: string;
+
+    constructor(context: SdkGeneratorContext) {
+        this.context = context;
+        this.clientName = context.getApiClientBuilderClientName();
+        this.environmentEnumName = context.getEnvironmentEnumName();
+    }
+
+    public generate(): RustFile {
+        const lines: string[] = [];
+
+        lines.push(this.generateImports());
+        lines.push(this.generateStruct());
+        lines.push(this.generateDefaultImpl());
+        lines.push(this.generateImplBlock());
+        lines.push(this.generateTests());
+
+        const module = rust.module({
+            rawDeclarations: lines
+        });
+
+        return new RustFile({
+            filename: "client.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: module.toString()
+        });
+    }
+
+    private generateImports(): string {
+        const imports = [
+            `use crate::api::resources::${this.clientName};`,
+            "use crate::{ApiError, ClientConfig};",
+            "use std::collections::HashMap;",
+            "use std::time::Duration;"
+        ];
+        if (this.context.hasEnvironments()) {
+            imports.push(`use crate::${this.environmentEnumName};`);
+        }
+        return imports.join("\n");
+    }
+
+    private generateStruct(): string {
+        return `/// Builder for creating API clients with custom configuration
 pub struct ApiClientBuilder {
     config: ClientConfig,
-}
-impl Default for ApiClientBuilder {
+}`;
+    }
+
+    private generateDefaultImpl(): string {
+        return `impl Default for ApiClientBuilder {
     fn default() -> Self {
         Self {
             config: ClientConfig::default(),
         }
     }
-}
-impl ApiClientBuilder {
-    /// Create a new builder with the specified base URL
-    ///
-    /// This disables environment-based URL resolution. Use `environment()` instead
-    /// to configure per-service URL resolution for multi-URL environments.
+}`;
+    }
+
+    private generateImplBlock(): string {
+        const methods: string[] = [];
+        const isMultiUrl = this.context.hasMultipleBaseUrls();
+
+        // new(base_url) — for multi-URL, clears environment to None
+        const newDocExtra = isMultiUrl
+            ? `\n    ///\n    /// This disables environment-based URL resolution. Use \`environment()\` instead\n    /// to configure per-service URL resolution for multi-URL environments.`
+            : "";
+        const clearEnvironment = isMultiUrl ? "\n        config.environment = None;" : "";
+        methods.push(`    /// Create a new builder with the specified base URL${newDocExtra}
     pub fn new(base_url: impl Into<String>) -> Self {
         let mut config = ClientConfig::default();
-        config.base_url = base_url.into();
-        config.environment = None;
+        config.base_url = base_url.into();${clearEnvironment}
         Self { config }
-    }
+    }`);
 
-    /// Set the environment, updating the base URL
-    ///
-    /// In multi-URL environments, this enables per-service URL resolution.
-    /// Each service will use its designated URL from the environment.
-    pub fn environment(mut self, environment: Environment) -> Self {
-        self.config.base_url = environment.url().to_string();
-        self.config.environment = Some(environment);
+        // environment() setter — only when environments exist
+        if (this.context.hasEnvironments()) {
+            const envDocExtra = isMultiUrl
+                ? `\n    ///\n    /// In multi-URL environments, this enables per-service URL resolution.\n    /// Each service will use its designated URL from the environment.`
+                : "";
+            const setEnvironment = isMultiUrl ? "\n        self.config.environment = Some(environment);" : "";
+            methods.push(`    /// Set the environment, updating the base URL${envDocExtra}
+    pub fn environment(mut self, environment: ${this.environmentEnumName}) -> Self {
+        self.config.base_url = environment.url().to_string();${setEnvironment}
         self
-    }
+    }`);
+        }
 
-    /// Set the API key for authentication
+        // Standard setter methods
+        methods.push(`    /// Set the API key for authentication
     pub fn api_key(mut self, key: impl Into<String>) -> Self {
         self.config.api_key = Some(key.into());
         self
@@ -114,23 +173,28 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<WebsocketMultiUrlClient, ApiError> {
-        WebsocketMultiUrlClient::new(self.config)
-    }
-}
-#[cfg(test)]
-mod tests {
-    use super::*;
+    pub fn build(self) -> Result<${this.clientName}, ApiError> {
+        ${this.clientName}::new(self.config)
+    }`);
 
+        return `impl ApiClientBuilder {\n${methods.join("\n\n")}\n}`;
+    }
+
+    private generateTests(): string {
+        const environmentTest = this.context.hasEnvironments()
+            ? `
     #[test]
     fn test_environment() {
-        let builder = ApiClientBuilder::default().environment(Environment::default());
-        assert_eq!(
-            builder.config.base_url,
-            Environment::default().url().to_string()
-        );
+        let builder = ApiClientBuilder::default().environment(${this.environmentEnumName}::default());
+        assert_eq!(builder.config.base_url, ${this.environmentEnumName}::default().url().to_string());
     }
+`
+            : "";
 
+        return `#[cfg(test)]
+mod tests {
+    use super::*;
+${environmentTest}
     #[test]
     fn test_new_sets_base_url() {
         let builder = ApiClientBuilder::new("https://api.example.com");
@@ -175,16 +239,16 @@ mod tests {
 
     #[test]
     fn test_oauth_credentials() {
-        let builder =
-            ApiClientBuilder::new("https://api.example.com").oauth_credentials("cid", "secret");
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .oauth_credentials("cid", "secret");
         assert_eq!(builder.config.client_id, Some("cid".to_string()));
         assert_eq!(builder.config.client_secret, Some("secret".to_string()));
     }
 
     #[test]
     fn test_timeout() {
-        let builder =
-            ApiClientBuilder::new("https://api.example.com").timeout(Duration::from_secs(120));
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .timeout(Duration::from_secs(120));
         assert_eq!(builder.config.timeout, Duration::from_secs(120));
     }
 
@@ -196,8 +260,8 @@ mod tests {
 
     #[test]
     fn test_custom_header() {
-        let builder =
-            ApiClientBuilder::new("https://api.example.com").custom_header("X-Custom", "value");
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .custom_header("X-Custom", "value");
         assert_eq!(
             builder.config.custom_headers.get("X-Custom"),
             Some(&"value".to_string())
@@ -209,7 +273,8 @@ mod tests {
         let mut headers = HashMap::new();
         headers.insert("X-One".to_string(), "1".to_string());
         headers.insert("X-Two".to_string(), "2".to_string());
-        let builder = ApiClientBuilder::new("https://api.example.com").custom_headers(headers);
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .custom_headers(headers);
         assert_eq!(
             builder.config.custom_headers.get("X-One"),
             Some(&"1".to_string())
@@ -222,7 +287,8 @@ mod tests {
 
     #[test]
     fn test_user_agent() {
-        let builder = ApiClientBuilder::new("https://api.example.com").user_agent("my-sdk/1.0");
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .user_agent("my-sdk/1.0");
         assert_eq!(builder.config.user_agent, "my-sdk/1.0");
     }
 
@@ -251,5 +317,7 @@ mod tests {
     fn test_build_succeeds() {
         let result = ApiClientBuilder::new("https://api.example.com").build();
         assert!(result.is_ok());
+    }
+}`;
     }
 }
