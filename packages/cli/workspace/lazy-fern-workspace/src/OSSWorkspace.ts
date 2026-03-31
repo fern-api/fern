@@ -15,6 +15,7 @@ import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
@@ -28,7 +29,6 @@ import {
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
