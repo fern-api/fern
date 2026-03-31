@@ -18,8 +18,15 @@ impl S3Client {
         request: &GetPresignedUrlRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
+        let base_url = self
+            .http_client
+            .config()
+            .environment
+            .as_ref()
+            .map_or(self.http_client.base_url(), |env| env.s_3_url());
         self.http_client
-            .execute_request(
+            .execute_request_with_base_url(
+                base_url,
                 Method::POST,
                 "/s3/presigned-url",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

@@ -81,10 +81,10 @@ module Seed
                }
               return type.coerce(value, strict: strict)
             else
-              value
+              value # rubocop:disable Lint/Void
             end
           else
-            value
+            value # rubocop:disable Lint/Void
           end
 
           raise Errors::TypeError, "cannot coerce value of type `#{value.class}` to `#{target}`" if strict

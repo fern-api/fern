@@ -19,10 +19,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 "upload-content",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
                 None,
                 options,
             )
@@ -37,12 +37,12 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 "upload-content-with-query-params",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
                 QueryBuilder::new()
-                    .string("model", model.clone())
+                    .string("model", model.to_string())
                     .string("language", language.clone())
                     .build(),
                 options,

@@ -21,6 +21,7 @@ import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerator.js";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
 import { RootClientGenerator } from "./generators/RootClientGenerator.js";
 import { SubClientGenerator } from "./generators/SubClientGenerator.js";
@@ -251,6 +252,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating client configuration files...");
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
+        const apiClientBuilderGenerator = new ApiClientBuilderGenerator(context);
+        files.push(apiClientBuilderGenerator.generate());
 
         // Client.rs and nested mod.rs files
         context.logger.debug(`Generating root client: ${context.getClientName()}...`);
@@ -320,6 +323,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const hasDateTime = context.usesDateTime();
         const hasBase64 = context.usesBase64();
         const hasBigInteger = context.usesBigInteger();
+        const hasFloatingPoint = context.usesFloatingPoint();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -345,6 +349,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         if (hasBigInteger) {
             lines.push("pub mod bigint_string;");
+        }
+        if (hasFloatingPoint) {
+            lines.push("pub mod number_serializers;");
         }
         lines.push("");
         lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
