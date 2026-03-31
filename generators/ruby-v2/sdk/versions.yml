@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.1.9
+- version: 1.1.10
   changelogEntry:
     - summary: |
         Add explicit `return` in `Boolean.coerce` for `TrueClass`/`FalseClass`
@@ -10,6 +10,16 @@
   createdAt: "2026-03-31"
   irVersion: 61
 
+- version: 1.1.9
+  changelogEntry:
+    - type: chore
+      summary: |
+        Add `rubocopVariableNumberStyle` config option to control RuboCop Naming/VariableNumber style.
+        Supported values: `snake_case` (default, requires underscores before numbers like `recaptcha_v_2`),
+        `normalcase` (allows numbers without underscores like `recaptcha_v2`, `office365`), or `disabled`.
+        This allows APIs with field names containing embedded digits to configure the appropriate style.
+  createdAt: "2026-03-31"
+  irVersion: 61
 - version: 1.1.8
   changelogEntry:
     - summary: |
