@@ -91,28 +91,30 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
-        const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv;
-        const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv;
+        const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv || this.authScheme.usernameOmit === true;
+        const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv || this.authScheme.passwordOmit === true;
 
-        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's an env var fallback or omit flag, use Supplier<T> | undefined because the supplier itself can be undefined
         // When there's no env var fallback, use Supplier<T> directly.
         const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(stringType);
 
-        // For env var fallback: prop?: Supplier<T> | undefined
-        const usernamePropertyType = hasUsernameEnv
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
+        // For env var fallback or omit: prop?: Supplier<T> | undefined
+        const usernamePropertyType =
+            hasUsernameEnv || this.authScheme.usernameOmit === true
+                ? ts.factory.createUnionTypeNode([
+                      supplierType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : supplierType;
 
-        const passwordPropertyType = hasPasswordEnv
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
+        const passwordPropertyType =
+            hasPasswordEnv || this.authScheme.passwordOmit === true
+                ? ts.factory.createUnionTypeNode([
+                      supplierType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : supplierType;
 
         return [
             {
@@ -249,11 +251,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
 
         const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
         const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
 
-        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) && (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+        // When either field is omitted, use || so providing just one credential is enough
+        const combiner = usernameOmit || passwordOmit ? "||" : "&&";
+        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) ${combiner} (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -318,9 +324,34 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
                 : passwordSupplierGetCode;
 
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
+        const eitherOmitted = usernameOmit || passwordOmit;
+
         if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if credentials are missing
-            return `
+            if (eitherOmitted) {
+                // When a field is omitted, return empty headers if neither credential is provided
+                return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${usernameVar} == null && ${passwordVar} == null) {
+            return { headers: {} };
+        }
+
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
+        return {
+            headers: authHeader != null ? { Authorization: authHeader } : {},
+        };
+        `;
+            } else {
+                // Default: return empty headers if credentials are missing
+                return `
         const ${usernameVar} = ${usernameEnvFallback};
         if (${usernameVar} == null) {
             return { headers: {} };
@@ -342,13 +373,37 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+            }
         } else {
-            // When neverThrowErrors is false, throw an error if credentials are missing
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
 
-            return `
+            if (eitherOmitted) {
+                // When a field is omitted, throw only if neither credential is provided
+                return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${usernameVar} == null && ${passwordVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
+            });
+        }
+
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
+        return {
+            headers: authHeader != null ? { Authorization: authHeader } : {},
+        };
+        `;
+            } else {
+                // Default: throw if either credential is missing
+                return `
         const ${usernameVar} = ${usernameEnvFallback};
         if (${usernameVar} == null) {
             throw new ${errorConstructor}({
@@ -374,6 +429,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+            }
         }
     }
 
