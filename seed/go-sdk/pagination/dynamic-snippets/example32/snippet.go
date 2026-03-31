@@ -3,8 +3,9 @@ package example
 import (
     context "context"
 
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
+    fern "github.com/pagination/fern"
+    client "github.com/pagination/fern/client"
+    option "github.com/pagination/fern/option"
 )
 
 func do() {
@@ -16,8 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := int64(1000000)
-    client.Endpoints.Primitive.GetAndReturnLong(
+    request := &fern.ListUsersOptionalDataRequest{
+        Page: fern.Int(
+            1,
+        ),
+    }
+    client.Users.ListWithOptionalData(
         context.TODO(),
         request,
     )

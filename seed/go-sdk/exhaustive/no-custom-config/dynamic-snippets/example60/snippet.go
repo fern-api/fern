@@ -16,9 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    request := int64(1000000)
-    client.Endpoints.Primitive.GetAndReturnLong(
+    client.NoReqBody.PostWithNoRequestBody(
         context.TODO(),
-        request,
     )
 }

@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,8 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := []byte("SGVsbG8gd29ybGQh")
-    client.Endpoints.Primitive.GetAndReturnBase64(
+    request := fern.MustParseDate(
+        "2023-01-15",
+    )
+    client.Endpoints.Primitive.GetAndReturnDate(
         context.TODO(),
         request,
     )
