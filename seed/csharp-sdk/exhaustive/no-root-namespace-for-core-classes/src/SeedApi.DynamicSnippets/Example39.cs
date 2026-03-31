@@ -13,8 +13,8 @@ public class Example39
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnIntAsync(
-            1
+        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
+            "param"
         );
     }
 

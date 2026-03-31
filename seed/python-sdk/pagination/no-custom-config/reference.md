@@ -1543,7 +1543,7 @@ client = SeedPagination(
 
 client.users.list_with_offset_step_pagination(
     page=1,
-    limit=1,
+    limit=3,
     order="asc",
 )
 

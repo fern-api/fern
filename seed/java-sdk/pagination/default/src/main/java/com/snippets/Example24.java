@@ -1,8 +1,8 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
-import java.util.UUID;
+import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
+import com.seed.pagination.resources.users.types.Order;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -12,8 +12,10 @@ public class Example24 {
                 .build();
 
         client.users()
-                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
-                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
+                        .page(1)
+                        .limit(1)
+                        .order(Order.ASC)
                         .build());
     }
 }
