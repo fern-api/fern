@@ -605,12 +605,21 @@ export function convertSchemaObject(
         // primitive types
         if (schema.type === "boolean") {
             const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
-            if (literalValue != null) {
+            // Also detect boolean literals from single-value enum (e.g. enum: [true])
+            const enumLiteralValue =
+                literalValue == null &&
+                schema.enum != null &&
+                schema.enum.length === 1 &&
+                typeof schema.enum[0] === "boolean"
+                    ? (schema.enum[0] as boolean)
+                    : undefined;
+            const resolvedLiteral = literalValue ?? enumLiteralValue;
+            if (resolvedLiteral != null) {
                 return wrapLiteral({
                     nameOverride,
                     generatedName,
                     title,
-                    literal: LiteralSchemaValue.boolean(literalValue),
+                    literal: LiteralSchemaValue.boolean(resolvedLiteral),
                     wrapAsOptional,
                     wrapAsNullable,
                     description,

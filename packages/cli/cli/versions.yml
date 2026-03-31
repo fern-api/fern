@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer not converting boolean enums with a single value
+        (`type: boolean, enum: [true]` or `enum: [false]`) into literal types.
+        Previously these were treated as plain `boolean`; now they correctly
+        produce `literal<true>` or `literal<false>` in the IR, resulting in
+        literal types in generated SDKs (e.g. `true` in TypeScript,
+        `typing.Literal[True]` in Python).
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 4.50.2
   changelogEntry:
     - summary: |
