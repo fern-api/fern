@@ -1,4 +1,4 @@
-import { defineConfig, mergeConfig, defaultConfig } from "@fern-api/configs/vitest/base.mjs";
+import { defaultConfig, defineConfig, mergeConfig } from "@fern-api/configs/vitest/base.mjs";
 
 export default defineConfig(
     mergeConfig(defaultConfig, {
