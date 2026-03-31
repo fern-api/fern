@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.10
+  changelogEntry:
+    - summary: |
+        Fix double-dot in generated Java package names when the organization or
+        API name produces empty tokens after splitting on non-alphanumeric
+        characters. For example, a Maven coordinate of `com.kikoff:andromeda`
+        previously generated imports like `import com.kikoff..KikoffClient;`.
+        Empty tokens are now filtered out so the package name is correct.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 4.0.9
   changelogEntry:
     - summary: |

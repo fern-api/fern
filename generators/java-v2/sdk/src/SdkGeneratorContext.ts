@@ -311,7 +311,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     private splitOnNonAlphaNumericChar(value: string): string[] {
-        return value.split(/[^a-zA-Z0-9]/);
+        return value.split(/[^a-zA-Z0-9]/).filter((s) => s.length > 0);
     }
 
     private getBaseNamePrefix(): string {

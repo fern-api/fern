@@ -429,7 +429,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private splitOnNonAlphaNumericChar(value: string): string[] {
-        return value.split(/[^a-zA-Z0-9]/);
+        return value.split(/[^a-zA-Z0-9]/).filter((s) => s.length > 0);
     }
 
     private convertKebabCaseToUpperCamelCase(kebab: string): string {

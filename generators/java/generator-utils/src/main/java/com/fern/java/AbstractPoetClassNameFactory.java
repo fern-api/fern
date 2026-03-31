@@ -118,7 +118,9 @@ public abstract class AbstractPoetClassNameFactory {
     }
 
     public static List<String> splitOnNonAlphaNumericChar(String value) {
-        return Arrays.asList(value.split("[^a-zA-Z0-9]"));
+        return Arrays.stream(value.split("[^a-zA-Z0-9]"))
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
     }
 
     public static List<String> getPackagePrefixWithOrgAndApiName(IntermediateRepresentation ir, String organization) {
