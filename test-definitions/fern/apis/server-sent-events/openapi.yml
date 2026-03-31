@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: server-sent-events
+  version: ''
+paths:
+  /stream:
+    post:
+      operationId: completions_stream
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              required:
+                - query
+  /stream-no-terminator:
+    post:
+      operationId: completions_streamWithoutTerminator
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                format: binary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              required:
+                - query
+components:
+  schemas:
+    StreamedCompletion:
+      title: StreamedCompletion
+      type: object
+      properties:
+        delta:
+          type: string
+        tokens:
+          type: integer
+          nullable: true
+      required:
+        - delta
+  securitySchemes: {}

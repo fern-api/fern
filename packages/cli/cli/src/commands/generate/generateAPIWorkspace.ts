@@ -75,6 +75,11 @@ export async function generateWorkspace({
     }
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+    if (groupName == null && groupNameOrDefault != null) {
+        context.logger.info(
+            chalk.dim(`Using default group '${groupNameOrDefault}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
+        );
+    }
     if (groupNameOrDefault == null) {
         const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
         const longestGroupName = Math.max(...groupNames.map((name) => name.length));

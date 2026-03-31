@@ -1,0 +1,36 @@
+openapi: 3.0.1
+info:
+  title: bytes-download
+  version: ''
+paths:
+  /snippet:
+    post:
+      operationId: service_simple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /download-content/{id}:
+    get:
+      operationId: service_download
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas: {}
+  securitySchemes: {}
