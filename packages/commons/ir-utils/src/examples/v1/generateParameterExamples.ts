@@ -54,7 +54,7 @@ export function generatePathParameterExamples(
         // string value so the URL is well-formed.
         const json = generatedExample.example.jsonExample;
         if (typeof json !== "string" && typeof json !== "number" && typeof json !== "boolean") {
-            const fallback = p.name.originalName;
+            const fallback = getOriginalName(p.name);
             result.push({
                 name: p.name,
                 value: {
