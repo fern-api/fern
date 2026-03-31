@@ -41,10 +41,10 @@ impl ApiClient {
         options: Option<RequestOptions>,
     ) -> Result<UploadDocumentResponse, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 "documents/upload",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
                 None,
                 options,
             )
