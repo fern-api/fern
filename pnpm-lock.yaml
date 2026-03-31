@@ -7461,6 +7461,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../loader
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       strip-ansi:
         specifier: 'catalog:'
         version: 7.2.0
