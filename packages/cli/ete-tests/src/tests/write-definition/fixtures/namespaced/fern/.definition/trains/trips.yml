@@ -79,7 +79,6 @@ service:
         name: GetTripsRequest
         query-parameters:
           bicycles:
-            default: false
             docs: Only return trips where bicycles are known to be allowed
             type: optional<boolean>
           date:
@@ -93,7 +92,6 @@ service:
             validation:
               format: uuid
           dogs:
-            default: false
             docs: Only return trips where dogs are known to be allowed
             type: optional<boolean>
           origin:
