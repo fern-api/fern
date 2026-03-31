@@ -41,9 +41,9 @@ export class PackageClient {
         request: SeedNurseryApi.TestRequest,
         requestOptions?: PackageClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { for } = request;
+        const { for: for_ } = request;
         const _queryParams: Record<string, unknown> = {
-            for
+            for: for_,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

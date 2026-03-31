@@ -701,7 +701,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         name: FernIr.NameAndWireValueOrString
     ): RequestWrapperNonBodyProperty {
         return {
-            safeName: this.case.camelUnsafe(name),
+            safeName: this.case.camelSafe(name),
             propertyName: getSdkParameterPropertyName({
                 name,
                 includeSerdeLayer: this.includeSerdeLayer,
@@ -720,7 +720,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         name: FernIr.NameAndWireValueOrString
     ): RequestWrapperNonBodyProperty {
         return {
-            safeName: this.case.camelUnsafe(name),
+            safeName: this.case.camelSafe(name),
             propertyName: getSdkParameterPropertyName({
                 name,
                 includeSerdeLayer: this.includeSerdeLayer,
@@ -737,7 +737,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getPropertyNameOfPathParameterFromName(name: FernIr.NameOrString): RequestWrapperNonBodyProperty {
         return {
-            safeName: this.case.camelUnsafe(name),
+            safeName: this.case.camelSafe(name),
             propertyName: getSdkParameterPropertyName({
                 name,
                 includeSerdeLayer: this.includeSerdeLayer,
@@ -756,7 +756,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         name: FernIr.NameAndWireValueOrString
     ): RequestWrapperNonBodyProperty {
         return {
-            safeName: this.case.camelUnsafe(name),
+            safeName: this.case.camelSafe(name),
             propertyName: getSdkParameterPropertyName({
                 name,
                 includeSerdeLayer: this.includeSerdeLayer,
@@ -770,7 +770,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfTypeDeclarationProperty(property: FernIr.ObjectProperty): RequestWrapperNonBodyProperty {
         const cc = this.case;
         return {
-            safeName: cc.camelUnsafe(property.name),
+            safeName: cc.camelSafe(property.name),
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing
                     ? cc.camelUnsafe(property.name)
