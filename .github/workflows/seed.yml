@@ -986,7 +986,7 @@ jobs:
           # Extract baseline timestamp for the report footer
           BASELINE_TS=""
           if [ -f benchmark-baseline-results/_metadata.json ]; then
-            BASELINE_TS=$(cat benchmark-baseline-results/_metadata.json | jq -r '.timestamp // empty')
+            BASELINE_TS=$(cat benchmark-baseline-results/_metadata.json | jq -r '.latest_timestamp // .timestamp // empty')
           fi
           export BASELINE_TIMESTAMP="$BASELINE_TS"
 
