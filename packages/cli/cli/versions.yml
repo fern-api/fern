@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.50.5
+  changelogEntry:
+    - summary: |
+        Fix example validation rejecting valid `null` values in `anyOf`/`oneOf`
+        schemas. The `ExampleConverter` now correctly preserves explicit `null`
+        examples (e.g. `anyOf: [{type: "string"}, {type: "null"}]` with
+        `"query": null`) instead of treating them as missing or undefined. This
+        affected both union conversion (nullish coalescing dropped null) and
+        object property validation (null was treated as omitted when the schema
+        allowed it via anyOf/oneOf).
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 4.50.4
   changelogEntry:
     - summary: |
