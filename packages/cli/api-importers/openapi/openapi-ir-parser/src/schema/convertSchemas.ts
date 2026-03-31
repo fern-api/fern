@@ -608,6 +608,7 @@ export function convertSchemaObject(
             // Also detect boolean literals from single-value enum (e.g. enum: [true])
             const enumLiteralValue =
                 literalValue == null &&
+                !blockConstCoercionToLiteral &&
                 schema.enum != null &&
                 schema.enum.length === 1 &&
                 typeof schema.enum[0] === "boolean"
