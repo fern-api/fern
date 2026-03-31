@@ -249,11 +249,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
 
         const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
         const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
 
-        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) || (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+        // When either field is omitted, use || so providing just one credential is enough
+        const combiner = usernameOmit || passwordOmit ? "||" : "&&";
+        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) ${combiner} (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -318,9 +322,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
                 : passwordSupplierGetCode;
 
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
+        const eitherOmitted = usernameOmit || passwordOmit;
+
         if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if neither credential is provided
-            return `
+            if (eitherOmitted) {
+                // When a field is omitted, return empty headers if neither credential is provided
+                return `
         const ${usernameVar} = ${usernameEnvFallback};
         const ${passwordVar} = ${passwordEnvFallback};
         if (${usernameVar} == null && ${passwordVar} == null) {
@@ -338,13 +347,39 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+            } else {
+                // Default: return empty headers if credentials are missing
+                return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        if (${usernameVar} == null) {
+            return { headers: {} };
+        }
+
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${passwordVar} == null) {
+            return { headers: {} };
+        }
+
+        return {
+            headers: {
+                Authorization: ${getTextOfTsNode(
+                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                        ts.factory.createIdentifier(usernameVar),
+                        ts.factory.createIdentifier(passwordVar)
+                    )
+                )},
+            },
+        };
+        `;
+            }
         } else {
-            // When neverThrowErrors is false, throw an error only if neither credential is provided
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
 
-            return `
+            if (eitherOmitted) {
+                // When a field is omitted, throw only if neither credential is provided
+                return `
         const ${usernameVar} = ${usernameEnvFallback};
         const ${passwordVar} = ${passwordEnvFallback};
         if (${usernameVar} == null && ${passwordVar} == null) {
@@ -364,6 +399,35 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+            } else {
+                // Default: throw if either credential is missing
+                return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        if (${usernameVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+            });
+        }
+
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${passwordVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+            });
+        }
+
+        return {
+            headers: {
+                Authorization: ${getTextOfTsNode(
+                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                        ts.factory.createIdentifier(usernameVar),
+                        ts.factory.createIdentifier(passwordVar)
+                    )
+                )},
+            },
+        };
+        `;
+            }
         }
     }
 
