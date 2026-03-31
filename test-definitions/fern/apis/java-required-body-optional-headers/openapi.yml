@@ -1,0 +1,251 @@
+openapi: 3.0.1
+info:
+  title: java-required-body-optional-headers
+  version: ''
+paths:
+  /api/users:
+    post:
+      description: Create a new user. Has required body and optional header.
+      operationId: createUser
+      tags:
+        - ''
+      parameters:
+        - name: X-Correlation-Id
+          in: header
+          description: Optional correlation ID for request tracing
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+    get:
+      description: Get all users with optional filtering.
+      operationId: getUsers
+      tags:
+        - ''
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of users to return
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /api/users/{userId}:
+    put:
+      description: Update an existing user. Has required body and optional query param.
+      operationId: updateUser
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: dryRun
+          in: query
+          description: If true, validate the update without persisting
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+  /api/users/with-options:
+    post:
+      description: Create a user with optional header and query param.
+      operationId: createUserWithOptions
+      tags:
+        - ''
+      parameters:
+        - name: validate
+          in: query
+          description: Whether to validate the request
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: X-Request-Id
+          in: header
+          description: Optional request ID
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+  /api/users/required-header:
+    post:
+      description: Create a user with required header.
+      operationId: createUserWithRequiredHeader
+      tags:
+        - ''
+      parameters:
+        - name: X-Api-Key
+          in: header
+          description: Required API key header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+  /api/users/required-query:
+    post:
+      description: Create a user with required query param.
+      operationId: createUserWithRequiredQuery
+      tags:
+        - ''
+      parameters:
+        - name: tenantId
+          in: query
+          description: Required tenant ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+  /api/users/inlined:
+    post:
+      description: Create a user with inlined body and optional header.
+      operationId: createUserInlined
+      tags:
+        - ''
+      parameters:
+        - name: X-Trace-Id
+          in: header
+          description: Optional trace ID for request tracing
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+                  nullable: true
+                  description: User's age
+              required:
+                - name
+                - email
+components:
+  schemas:
+    UserData:
+      title: UserData
+      type: object
+      description: User data for creation/update
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+          nullable: true
+          description: User's age
+      required:
+        - name
+        - email
+    User:
+      title: User
+      type: object
+      description: User entity
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+          nullable: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - email
+        - createdAt
+  securitySchemes: {}
