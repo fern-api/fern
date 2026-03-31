@@ -68,17 +68,15 @@ func (o *OutboundCallConversationsRequest) MarshalJSON() ([]byte, error) {
 
 var (
 	outboundCallConversationsResponseFieldConversationId = big.NewInt(1 << 0)
-	outboundCallConversationsResponseFieldDryRun         = big.NewInt(1 << 1)
 )
 
 type OutboundCallConversationsResponse struct {
 	// Always null when dry_run is true.
 	ConversationId any `json:"conversation_id,omitempty" url:"conversation_id,omitempty"`
-	// Always true for this response.
-	DryRun bool `json:"dry_run" url:"dry_run"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	dryRun         bool
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -91,11 +89,8 @@ func (o *OutboundCallConversationsResponse) GetConversationId() any {
 	return o.ConversationId
 }
 
-func (o *OutboundCallConversationsResponse) GetDryRun() bool {
-	if o == nil {
-		return false
-	}
-	return o.DryRun
+func (o *OutboundCallConversationsResponse) DryRun() bool {
+	return o.dryRun
 }
 
 func (o *OutboundCallConversationsResponse) GetExtraProperties() map[string]interface{} {
@@ -119,21 +114,23 @@ func (o *OutboundCallConversationsResponse) SetConversationId(conversationId any
 	o.require(outboundCallConversationsResponseFieldConversationId)
 }
 
-// SetDryRun sets the DryRun field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OutboundCallConversationsResponse) SetDryRun(dryRun bool) {
-	o.DryRun = dryRun
-	o.require(outboundCallConversationsResponseFieldDryRun)
-}
-
 func (o *OutboundCallConversationsResponse) UnmarshalJSON(data []byte) error {
-	type unmarshaler OutboundCallConversationsResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed OutboundCallConversationsResponse
+	var unmarshaler = struct {
+		embed
+		DryRun bool `json:"dry_run"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*o = OutboundCallConversationsResponse(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	*o = OutboundCallConversationsResponse(unmarshaler.embed)
+	if unmarshaler.DryRun != true {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", o, true, unmarshaler.DryRun)
+	}
+	o.dryRun = unmarshaler.DryRun
+	extraProperties, err := internal.ExtractExtraProperties(data, *o, "dry_run")
 	if err != nil {
 		return err
 	}
@@ -146,8 +143,10 @@ func (o *OutboundCallConversationsResponse) MarshalJSON() ([]byte, error) {
 	type embed OutboundCallConversationsResponse
 	var marshaler = struct {
 		embed
+		DryRun bool `json:"dry_run"`
 	}{
-		embed: embed(*o),
+		embed:  embed(*o),
+		DryRun: true,
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
 	return json.Marshal(explicitMarshaler)

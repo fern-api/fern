@@ -24,7 +24,10 @@ import Streaming
             name: Optional("name")
         )
         let response = try await client.dummy.generate(
-            request: .init(numEvents: 5),
+            request: .init(
+                stream: false,
+                numEvents: 5
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -51,7 +54,10 @@ import Streaming
             name: Optional("name")
         )
         let response = try await client.dummy.generate(
-            request: .init(numEvents: 1),
+            request: .init(
+                stream: false,
+                numEvents: 1
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
