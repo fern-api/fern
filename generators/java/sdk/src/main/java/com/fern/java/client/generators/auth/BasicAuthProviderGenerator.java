@@ -124,8 +124,14 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .returns(ParameterizedTypeName.get(Map.class, String.class, String.class));
 
         if (eitherOmitted) {
-            builder.addStatement("String username = $N != null ? $N.get() : null", usernameSupplierField, usernameSupplierField)
-                    .addStatement("String password = $N != null ? $N.get() : null", passwordSupplierField, passwordSupplierField)
+            builder.addStatement(
+                            "String username = $N != null ? $N.get() : null",
+                            usernameSupplierField,
+                            usernameSupplierField)
+                    .addStatement(
+                            "String password = $N != null ? $N.get() : null",
+                            passwordSupplierField,
+                            passwordSupplierField)
                     .beginControlFlow("if (username == null && password == null)")
                     .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                     .endControlFlow()
@@ -140,8 +146,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                     .addStatement("String credentials = username + \":\" + password");
         }
 
-        return builder
-                .addStatement(
+        return builder.addStatement(
                         "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
                         Base64.class,
                         StandardCharsets.class)

@@ -565,8 +565,8 @@ class ClientWrapperGenerator:
                             AST.ClassInstantiation(
                                 class_=httpx.HttpX.BASIC_AUTH,
                                 args=[
-                                    AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}() or \"\""),
-                                    AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}() or \"\""),
+                                    AST.Expression(f'self.{names.get_username_getter_name(basic_auth_scheme)}() or ""'),
+                                    AST.Expression(f'self.{names.get_password_getter_name(basic_auth_scheme)}() or ""'),
                                 ],
                             )
                         )
