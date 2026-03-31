@@ -10,11 +10,9 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_offset_pagination_has_next_page(
-            &UsersListWithOffsetPaginationHasNextPageQueryRequest {
+        .list_with_optional_data(
+            &ListWithOptionalDataQueryRequest {
                 page: Some(1),
-                limit: Some(1),
-                order: Some(Order::Asc),
                 ..Default::default()
             },
             None,
