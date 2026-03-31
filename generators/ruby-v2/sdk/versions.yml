@@ -2,7 +2,7 @@
 
 - version: 1.1.9
   changelogEntry:
-    - type: feat
+    - type: chore
       summary: |
         Add `rubocopVariableNumberStyle` config option to control RuboCop Naming/VariableNumber style.
         Supported values: `snake_case` (default, requires underscores before numbers like `recaptcha_v_2`),
