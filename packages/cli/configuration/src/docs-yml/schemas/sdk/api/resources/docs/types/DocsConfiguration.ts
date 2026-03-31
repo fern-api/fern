@@ -77,4 +77,6 @@ export interface DocsConfiguration {
      * The component must have a default export.
      */
     footer?: string;
+    /** Configuration for LLM-related features such as llms.txt generation. */
+    llm?: FernDocsConfig.LlmConfig;
 }

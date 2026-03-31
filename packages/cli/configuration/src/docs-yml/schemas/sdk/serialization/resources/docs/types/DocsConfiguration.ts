@@ -20,6 +20,7 @@ import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
 import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
+import { LlmConfig } from "./LlmConfig.js";
 import { LibraryConfiguration } from "./LibraryConfiguration.js";
 import { LibraryName } from "./LibraryName.js";
 import { LogoConfiguration } from "./LogoConfiguration.js";
@@ -77,6 +78,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     js: JsConfig.optional(),
     header: core.serialization.string().optional(),
     footer: core.serialization.string().optional(),
+    llm: LlmConfig.optional(),
 });
 
 export declare namespace DocsConfiguration {
@@ -117,5 +119,6 @@ export declare namespace DocsConfiguration {
         js?: JsConfig.Raw | null;
         header?: string | null;
         footer?: string | null;
+        llm?: LlmConfig.Raw | null;
     }
 }

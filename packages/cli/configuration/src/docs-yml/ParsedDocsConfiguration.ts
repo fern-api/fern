@@ -91,6 +91,9 @@ export interface ParsedDocsConfiguration {
     /* custom components */
     header: AbsoluteFilePath | undefined;
     footer: AbsoluteFilePath | undefined;
+
+    /* llm configuration */
+    llmConfig: { useSubtitle: boolean } | undefined;
 }
 
 export interface AbsoluteJsFileConfig {

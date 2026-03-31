@@ -923,6 +923,13 @@ export const ProductFileConfig = z.object({
     navigation: NavigationConfig
 });
 
+// ===== LLM Configuration =====
+
+export const LlmConfig = z.object({
+    "use-subtitle": z.boolean().optional()
+});
+export type LlmConfig = z.infer<typeof LlmConfig>;
+
 // ===== Main DocsConfiguration =====
 
 export const DocsConfiguration = z.object({
@@ -961,5 +968,6 @@ export const DocsConfiguration = z.object({
     css: CssConfig.optional(),
     js: JsConfig.optional(),
     header: z.string().optional(),
-    footer: z.string().optional()
+    footer: z.string().optional(),
+    llm: LlmConfig.optional()
 });

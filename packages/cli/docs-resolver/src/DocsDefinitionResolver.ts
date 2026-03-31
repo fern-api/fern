@@ -876,8 +876,12 @@ export class DocsDefinitionResolver {
             backgroundImage: undefined,
             // custom components - the compiled JS will be stored in jsFiles and referenced by relative path
             header: this.parsedDocsConfig.header ? this.toRelativeFilepath(this.parsedDocsConfig.header) : undefined,
-            footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
-        };
+            footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined,
+            // llm config - cast needed until fdr-sdk is updated with the llm field
+            ...(this.parsedDocsConfig.llmConfig != null
+                ? { llm: { useSubtitle: this.parsedDocsConfig.llmConfig.useSubtitle } }
+                : {})
+        } as DocsV1Write.DocsConfig;
         return config;
     }
 

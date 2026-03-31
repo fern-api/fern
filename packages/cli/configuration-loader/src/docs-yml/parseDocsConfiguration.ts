@@ -85,7 +85,9 @@ export async function parseDocsConfiguration({
 
         pageActions,
 
-        experimental
+        experimental,
+
+        llm
     } = rawDocsConfiguration;
 
     const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
@@ -237,7 +239,10 @@ export async function parseDocsConfiguration({
         header: resolveFilepath(rawDocsConfiguration.header, absoluteFilepathToDocsConfig),
         footer: resolveFilepath(rawDocsConfiguration.footer, absoluteFilepathToDocsConfig),
 
-        experimental
+        experimental,
+
+        /* llm configuration */
+        llmConfig: llm?.useSubtitle != null ? { useSubtitle: llm.useSubtitle } : undefined
     };
 }
 
