@@ -509,7 +509,7 @@ func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
 		delay = maxReconnectDelay
 	}
 
-	// Apply ±10% symmetric jitter.
+	// Apply jitter uniformly in [-10%, +10%) of delay.
 	jitterRange := int64(delay) / 5
 	if jitterRange <= 0 {
 		return delay
@@ -838,7 +838,7 @@ func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 		}
 		event.Data = append(event.Data, value...)
 	case "id":
-		if !bytes.Contains(value, []byte{0}) {
+		if !bytes.Contains(value, sseNullByte) {
 			event.hasID = true
 			event.ID = string(value)
 		}
@@ -953,4 +953,5 @@ type SseEvent struct {
 
 var (
 	sseCommentPrefix = []byte(":")
+	sseNullByte      = []byte{0}
 )
