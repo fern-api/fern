@@ -466,16 +466,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
+                            const eitherOmitted =
+                                basicScheme.usernameOmit === true || basicScheme.passwordOmit === true;
+                            const condition = eitherOmitted
+                                ? `${usernameAccess} != null || ${passwordAccess} != null`
+                                : `${usernameAccess} != null && ${passwordAccess} != null`;
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 const controlFlowKeyword = i === 0 ? "if" : "else if";
-                                innerWriter.controlFlow(
-                                    controlFlowKeyword,
-                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
+                                innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
+                            }
+                            if (eitherOmitted) {
+                                innerWriter.writeTextStatement(
+                                    `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess} ?? ""}:{${passwordAccess} ?? ""}"))}"`
+                                );
+                            } else {
+                                innerWriter.writeTextStatement(
+                                    `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
                                 );
                             }
-                            innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
-                            );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
                             }
