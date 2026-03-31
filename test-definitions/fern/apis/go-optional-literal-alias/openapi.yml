@@ -1,0 +1,53 @@
+openapi: 3.0.1
+info:
+  title: go-optional-literal-alias
+  version: ''
+paths:
+  /search:
+    post:
+      operationId: search
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+components:
+  schemas:
+    SortField:
+      title: SortField
+      type: string
+      const: DEFAULT
+      description: A sort field that only allows the value "DEFAULT"
+    SearchRequest:
+      title: SearchRequest
+      type: object
+      properties:
+        sortField:
+          $ref: '#/components/schemas/SortField'
+          nullable: true
+          description: The sort field to use
+        query:
+          type: string
+          description: The search query
+      required:
+        - query
+    SearchResponse:
+      title: SearchResponse
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+        - result
+  securitySchemes: {}

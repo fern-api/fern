@@ -1,0 +1,132 @@
+openapi: 3.0.1
+info:
+  title: object
+  version: ''
+paths: {}
+components:
+  schemas:
+    Type:
+      title: Type
+      type: object
+      description: Exercises all of the built-in types.
+      properties:
+        one:
+          type: integer
+        two:
+          type: number
+          format: double
+        three:
+          type: string
+        four:
+          type: boolean
+        five:
+          type: integer
+          format: int64
+        six:
+          type: string
+          format: date-time
+        seven:
+          type: string
+          format: date
+        eight:
+          type: string
+          format: uuid
+        nine:
+          type: string
+          format: byte
+        ten:
+          type: array
+          items:
+            type: integer
+        eleven:
+          type: array
+          items:
+            type: number
+            format: double
+        twelve:
+          type: object
+          additionalProperties:
+            type: boolean
+        thirteen:
+          type: integer
+          format: int64
+          nullable: true
+        fourteen: {}
+        fifteen:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+        sixteen:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: integer
+        seventeen:
+          type: array
+          items:
+            type: string
+            format: uuid
+            nullable: true
+        eighteen:
+          type: string
+          const: eighteen
+        nineteen:
+          $ref: '#/components/schemas/Name'
+        twenty:
+          type: integer
+          format: int64
+        twentyone:
+          type: integer
+          format: int64
+        twentytwo:
+          type: number
+          format: float
+        twentythree:
+          type: integer
+          format: bigint
+        twentyfour:
+          type: string
+          format: date-time
+          nullable: true
+        twentyfive:
+          type: string
+          format: date
+          nullable: true
+      required:
+        - one
+        - two
+        - three
+        - four
+        - five
+        - six
+        - seven
+        - eight
+        - nine
+        - ten
+        - eleven
+        - twelve
+        - fourteen
+        - fifteen
+        - sixteen
+        - seventeen
+        - eighteen
+        - nineteen
+        - twenty
+        - twentyone
+        - twentytwo
+        - twentythree
+    Name:
+      title: Name
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+        - id
+        - value
+  securitySchemes: {}

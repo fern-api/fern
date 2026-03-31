@@ -1,0 +1,76 @@
+openapi: 3.0.1
+info:
+  title: streaming
+  version: ''
+paths:
+  /generate-stream:
+    post:
+      operationId: dummy_generate-stream
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/jsonl:
+              schema:
+                type: string
+                format: binary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stream:
+                  type: boolean
+                  const: true
+                num_events:
+                  type: integer
+              required:
+                - stream
+                - num_events
+  /generate:
+    post:
+      operationId: dummy_generate
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stream:
+                  type: boolean
+                  const: false
+                num_events:
+                  type: integer
+              required:
+                - stream
+                - num_events
+components:
+  schemas:
+    StreamResponse:
+      title: StreamResponse
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          nullable: true
+      required:
+        - id
+  securitySchemes: {}

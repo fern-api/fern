@@ -1,0 +1,55 @@
+openapi: 3.0.1
+info:
+  title: csharp-namespace-conflict
+  version: ''
+paths:
+  /hello:
+    get:
+      operationId: tasktest_hello
+      tags:
+        - Tasktest
+      parameters: []
+      responses:
+        '204':
+          description: ''
+components:
+  schemas:
+    aaaA:
+      title: aaaA
+      type: object
+      properties: {}
+    aaaB:
+      title: aaaB
+      type: object
+      properties: {}
+    aaaSubTestType:
+      title: aaaSubTestType
+      type: object
+      properties:
+        a:
+          $ref: '#/components/schemas/aaaA'
+        b:
+          $ref: '#/components/schemas/aaaB'
+      required:
+        - a
+        - b
+    bTestType:
+      title: bTestType
+      type: object
+      properties:
+        a:
+          $ref: '#/components/schemas/aaaA'
+        b:
+          $ref: '#/components/schemas/aaaB'
+      required:
+        - a
+        - b
+    Task:
+      title: Task
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+  securitySchemes: {}

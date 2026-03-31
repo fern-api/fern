@@ -1,0 +1,1731 @@
+openapi: 3.0.1
+info:
+  title: go-deterministic-ordering
+  version: ''
+paths:
+  /container/list-of-primitives:
+    post:
+      operationId: endpoints_container_getAndReturnListOfPrimitives
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+  /container/list-of-objects:
+    post:
+      operationId: endpoints_container_getAndReturnListOfObjects
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+  /container/set-of-primitives:
+    post:
+      operationId: endpoints_container_getAndReturnSetOfPrimitives
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+  /container/set-of-objects:
+    post:
+      operationId: endpoints_container_getAndReturnSetOfObjects
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+  /container/map-prim-to-prim:
+    post:
+      operationId: endpoints_container_getAndReturnMapPrimToPrim
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+  /container/map-prim-to-object:
+    post:
+      operationId: endpoints_container_getAndReturnMapOfPrimToObject
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+  /container/map-prim-to-union:
+    post:
+      operationId: endpoints_container_getAndReturnMapOfPrimToUndiscriminatedUnion
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/typesMixedType'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/typesMixedType'
+  /container/opt-objects:
+    post:
+      operationId: endpoints_container_getAndReturnOptional
+      tags:
+        - EndpointsContainer
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                nullable: true
+      security: *ref_0
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithRequiredField'
+              nullable: true
+  /foo/bar:
+    post:
+      operationId: endpoints_contentType_postJsonPatchContentType
+      tags:
+        - EndpointsContentType
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithOptionalField'
+  /foo/baz:
+    post:
+      operationId: endpoints_contentType_postJsonPatchContentWithCharsetType
+      tags:
+        - EndpointsContentType
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithOptionalField'
+  /duplicate-names-a:
+    post:
+      description: Create endpoint for service A
+      operationId: endpoints_duplicateNamesA_create
+      tags:
+        - EndpointsDuplicateNamesA
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                value:
+                  type: integer
+              required:
+                - name
+                - value
+    get:
+      description: List endpoint for service A
+      operationId: endpoints_duplicateNamesA_list
+      tags:
+        - EndpointsDuplicateNamesA
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /duplicate-names-a/{id}:
+    get:
+      description: Get endpoint for service A
+      operationId: endpoints_duplicateNamesA_get
+      tags:
+        - EndpointsDuplicateNamesA
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /duplicate-names-b:
+    post:
+      description: Create endpoint for service B
+      operationId: endpoints_duplicateNamesB_create
+      tags:
+        - EndpointsDuplicateNamesB
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                count:
+                  type: integer
+              required:
+                - description
+                - count
+    get:
+      description: List endpoint for service B
+      operationId: endpoints_duplicateNamesB_list
+      tags:
+        - EndpointsDuplicateNamesB
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /duplicate-names-b/{id}:
+    get:
+      description: Get endpoint for service B
+      operationId: endpoints_duplicateNamesB_get
+      tags:
+        - EndpointsDuplicateNamesB
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: expand
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /duplicate-names-c:
+    post:
+      description: Create endpoint for service C
+      operationId: endpoints_duplicateNamesC_create
+      tags:
+        - EndpointsDuplicateNamesC
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                priority:
+                  type: integer
+              required:
+                - label
+                - priority
+    get:
+      description: List endpoint for service C
+      operationId: endpoints_duplicateNamesC_list
+      tags:
+        - EndpointsDuplicateNamesC
+      parameters:
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: count
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /duplicate-names-c/{id}:
+    get:
+      description: Get endpoint for service C
+      operationId: endpoints_duplicateNamesC_get
+      tags:
+        - EndpointsDuplicateNamesC
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: verbose
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /enum:
+    post:
+      operationId: endpoints_enum_getAndReturnEnum
+      tags:
+        - EndpointsEnum
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesWeatherReport'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesWeatherReport'
+  /http-methods/{id}:
+    get:
+      operationId: endpoints_httpMethods_testGet
+      tags:
+        - EndpointsHttpMethods
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+    put:
+      operationId: endpoints_httpMethods_testPut
+      tags:
+        - EndpointsHttpMethods
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithRequiredField'
+    patch:
+      operationId: endpoints_httpMethods_testPatch
+      tags:
+        - EndpointsHttpMethods
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithOptionalField'
+    delete:
+      operationId: endpoints_httpMethods_testDelete
+      tags:
+        - EndpointsHttpMethods
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security: *ref_0
+  /http-methods:
+    post:
+      operationId: endpoints_httpMethods_testPost
+      tags:
+        - EndpointsHttpMethods
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithRequiredField'
+  /object/get-and-return-with-optional-field:
+    post:
+      operationId: endpoints_object_getAndReturnWithOptionalField
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithOptionalField'
+  /object/get-and-return-with-required-field:
+    post:
+      operationId: endpoints_object_getAndReturnWithRequiredField
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithRequiredField'
+  /object/get-and-return-with-map-of-map:
+    post:
+      operationId: endpoints_object_getAndReturnWithMapOfMap
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithMapOfMap'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithMapOfMap'
+  /object/get-and-return-nested-with-optional-field:
+    post:
+      operationId: endpoints_object_getAndReturnNestedWithOptionalField
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
+  /object/get-and-return-nested-with-required-field/{string}:
+    post:
+      operationId: endpoints_object_getAndReturnNestedWithRequiredField
+      tags:
+        - EndpointsObject
+      parameters:
+        - name: string
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+  /object/get-and-return-nested-with-required-field-list:
+    post:
+      operationId: endpoints_object_getAndReturnNestedWithRequiredFieldAsList
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+  /object/get-and-return-with-unknown-field:
+    post:
+      operationId: endpoints_object_getAndReturnWithUnknownField
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithUnknownField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithUnknownField'
+  /object/get-and-return-with-datetime-like-string:
+    post:
+      description: >-
+        Tests that string fields containing datetime-like values are NOT
+        reformatted.
+
+        The datetimeLikeString field should preserve its exact value
+        "2023-08-31T14:15:22Z"
+
+        without being converted to "2023-08-31T14:15:22.000Z".
+      operationId: endpoints_object_getAndReturnWithDatetimeLikeString
+      tags:
+        - EndpointsObject
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+  /pagination:
+    get:
+      description: List items with cursor pagination
+      operationId: endpoints_pagination_listItems
+      tags:
+        - EndpointsPagination
+      parameters:
+        - name: cursor
+          in: query
+          description: The cursor for pagination
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: limit
+          in: query
+          description: Maximum number of items to return
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpointsPaginatedResponse'
+      security: *ref_0
+  /params/path/{param}:
+    get:
+      description: GET with path param
+      operationId: endpoints_params_getWithPath
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+    put:
+      description: PUT to update with path param
+      operationId: endpoints_params_modifyWithPath
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+    post:
+      description: POST bytes with path param returning object
+      operationId: endpoints_params_uploadWithPath
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithRequiredField'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+  /params/inline-path/{param}:
+    get:
+      description: GET with path param
+      operationId: endpoints_params_getWithInlinePath
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+    put:
+      description: PUT to update with path param
+      operationId: endpoints_params_modifyWithInlinePath
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /params:
+    get:
+      description: GET with query param
+      operationId: endpoints_params_getWithQuery
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /params/allow-multiple-query:
+    get:
+      description: GET with multiple of same query param
+      operationId: endpoints_params_getWithAllowMultipleQuery
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: number
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /params/path-query/{param}:
+    get:
+      description: GET with path and query params
+      operationId: endpoints_params_getWithPathAndQuery
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /params/inline-path-query/{param}:
+    get:
+      description: GET with path and query params
+      operationId: endpoints_params_getWithInlinePathAndQuery
+      tags:
+        - EndpointsParams
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /primitive/string:
+    post:
+      operationId: endpoints_primitive_getAndReturnString
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /primitive/integer:
+    post:
+      operationId: endpoints_primitive_getAndReturnInt
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: integer
+  /primitive/long:
+    post:
+      operationId: endpoints_primitive_getAndReturnLong
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+  /primitive/double:
+    post:
+      operationId: endpoints_primitive_getAndReturnDouble
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: number
+              format: double
+  /primitive/boolean:
+    post:
+      operationId: endpoints_primitive_getAndReturnBool
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: boolean
+  /primitive/datetime:
+    post:
+      operationId: endpoints_primitive_getAndReturnDatetime
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date-time
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              format: date-time
+  /primitive/date:
+    post:
+      operationId: endpoints_primitive_getAndReturnDate
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              format: date
+  /primitive/uuid:
+    post:
+      operationId: endpoints_primitive_getAndReturnUUID
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              format: uuid
+  /primitive/base64:
+    post:
+      operationId: endpoints_primitive_getAndReturnBase64
+      tags:
+        - EndpointsPrimitive
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              format: byte
+  /{id}:
+    put:
+      operationId: endpoints_put_add
+      tags:
+        - EndpointsPut
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/endpointsPutResponse'
+      summary: Put
+      security: *ref_0
+  /union:
+    post:
+      operationId: endpoints_union_getAndReturnUnion
+      tags:
+        - EndpointsUnion
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesAnimal'
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/typesAnimal'
+  /urls/MixedCase:
+    get:
+      operationId: endpoints_urls_withMixedCase
+      tags:
+        - EndpointsUrls
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /urls/no-ending-slash:
+    get:
+      operationId: endpoints_urls_noEndingSlash
+      tags:
+        - EndpointsUrls
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /urls/with-ending-slash/:
+    get:
+      operationId: endpoints_urls_withEndingSlash
+      tags:
+        - EndpointsUrls
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /urls/with_underscores:
+    get:
+      operationId: endpoints_urls_withUnderscores
+      tags:
+        - EndpointsUrls
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /req-bodies/object:
+    post:
+      description: POST with custom object in request body, response is an object
+      operationId: inlinedRequests_postWithObjectBodyandResponse
+      tags:
+        - InlinedRequests
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadObjectRequestInfo'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                string:
+                  type: string
+                integer:
+                  type: integer
+                NestedObject:
+                  $ref: '#/components/schemas/typesObjectWithOptionalField'
+              required:
+                - string
+                - integer
+                - NestedObject
+  /no-auth:
+    post:
+      description: POST request with no auth
+      operationId: noAuth_postWithNoAuth
+      tags:
+        - NoAuth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadObjectRequestInfo'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+  /no-req-body:
+    get:
+      operationId: noReqBody_getWithNoRequestBody
+      tags:
+        - NoReqBody
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/typesObjectWithOptionalField'
+      security: *ref_0
+    post:
+      operationId: noReqBody_postWithNoRequestBody
+      tags:
+        - NoReqBody
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /test-headers/custom-header:
+    post:
+      operationId: reqWithHeaders_getWithCustomHeader
+      tags:
+        - ReqWithHeaders
+      parameters:
+        - name: X-TEST-ENDPOINT-HEADER
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+components:
+  schemas:
+    endpointsPaginatedResponse:
+      title: endpointsPaginatedResponse
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/typesObjectWithRequiredField'
+        next:
+          type: string
+          nullable: true
+      required:
+        - items
+    endpointsError:
+      title: endpointsError
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/endpointsErrorCategory'
+        code:
+          $ref: '#/components/schemas/endpointsErrorCode'
+        detail:
+          type: string
+          nullable: true
+        field:
+          type: string
+          nullable: true
+      required:
+        - category
+        - code
+    endpointsErrorCategory:
+      title: endpointsErrorCategory
+      type: string
+      enum:
+        - API_ERROR
+        - AUTHENTICATION_ERROR
+        - INVALID_REQUEST_ERROR
+    endpointsErrorCode:
+      title: endpointsErrorCode
+      type: string
+      enum:
+        - INTERNAL_SERVER_ERROR
+        - UNAUTHORIZED
+        - FORBIDDEN
+        - BAD_REQUEST
+        - CONFLICT
+        - GONE
+        - UNPROCESSABLE_ENTITY
+        - NOT_IMPLEMENTED
+        - BAD_GATEWAY
+        - SERVICE_UNAVAILABLE
+        - Unknown
+    endpointsPutResponse:
+      title: endpointsPutResponse
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/endpointsError'
+          nullable: true
+    BadObjectRequestInfo:
+      title: BadObjectRequestInfo
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    typesObjectWithDocs:
+      title: typesObjectWithDocs
+      type: object
+      properties:
+        string:
+          type: string
+          description: |-
+            Characters that could lead to broken generated SDKs:
+
+            Markdown Escapes:
+            - \_: Escaped underscore (e.g., FOO\_BAR)
+            - \*: Escaped asterisk
+
+            JSDoc (JavaScript/TypeScript):
+            - @: Used for JSDoc tags
+            - {: }: Used for type definitions
+            - <: >: HTML tags
+            - *: Can interfere with comment blocks
+            - /**: JSDoc comment start
+            - ** /: JSDoc comment end
+            - &: HTML entities
+
+            XMLDoc (C#):
+            - <: >: XML tags
+            - &: ': ": <: >: XML special characters
+            - {: }: Used for interpolated strings
+            - ///: Comment marker
+            - /**: Block comment start
+            - ** /: Block comment end
+
+            XMLDoc (C#) (Example of actual XML tags):
+            See <a href="https://example.com/docs">the docs</a> for more info.
+            Use <code>getValue()</code> to retrieve the value.
+            Note: when count < 10 or count > 100, special handling applies.
+
+            Javadoc (Java):
+            - @: Used for Javadoc tags
+            - <: >: HTML tags
+            - &: HTML entities
+            - *: Can interfere with comment blocks
+            - /**: Javadoc comment start
+            - ** /: Javadoc comment end
+
+            Doxygen (C++):
+            - \: Used for Doxygen commands
+            - @: Alternative command prefix
+            - <: >: XML/HTML tags
+            - &: HTML entities
+            - /**: C-style comment start
+            - ** /: C-style comment end
+
+            RDoc (Ruby):
+            - :: Used in symbol notation
+            - =: Section markers
+            - #: Comment marker
+            - =begin: Block comment start
+            - =end: Block comment end
+            - @: Instance variable prefix
+            - $: Global variable prefix
+            - %: String literal delimiter
+            - #{: String interpolation start
+            - }: String interpolation end
+
+            PHPDoc (PHP):
+            - @: Used for PHPDoc tags
+            - {: }: Used for type definitions
+            - $: Variable prefix
+            - /**: PHPDoc comment start
+            - ** /: PHPDoc comment end
+            - *: Can interfere with comment blocks
+            - &: HTML entities
+      required:
+        - string
+    typesWeatherReport:
+      title: typesWeatherReport
+      type: string
+      enum:
+        - SUNNY
+        - CLOUDY
+        - RAINING
+        - SNOWING
+    typesObjectWithOptionalField:
+      title: typesObjectWithOptionalField
+      type: object
+      properties:
+        string:
+          type: string
+          nullable: true
+          description: >-
+            This is a rather long descriptor of this single field in a more
+            complex type. If you ask me I think this is a pretty good
+            description for this field all things considered.
+        integer:
+          type: integer
+          nullable: true
+        long:
+          type: integer
+          format: int64
+          nullable: true
+        double:
+          type: number
+          format: double
+          nullable: true
+        bool:
+          type: boolean
+          nullable: true
+        datetime:
+          type: string
+          format: date-time
+          nullable: true
+        date:
+          type: string
+          format: date
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          nullable: true
+        base64:
+          type: string
+          format: byte
+          nullable: true
+        list:
+          type: array
+          items:
+            type: string
+          nullable: true
+        set:
+          type: array
+          items:
+            type: string
+          nullable: true
+        map:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        bigint:
+          type: integer
+          format: bigint
+          nullable: true
+    typesObjectWithRequiredField:
+      title: typesObjectWithRequiredField
+      type: object
+      properties:
+        string:
+          type: string
+      required:
+        - string
+    typesObjectWithMapOfMap:
+      title: typesObjectWithMapOfMap
+      type: object
+      properties:
+        map:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: string
+      required:
+        - map
+    typesNestedObjectWithOptionalField:
+      title: typesNestedObjectWithOptionalField
+      type: object
+      properties:
+        string:
+          type: string
+          nullable: true
+        NestedObject:
+          $ref: '#/components/schemas/typesObjectWithOptionalField'
+          nullable: true
+    typesNestedObjectWithRequiredField:
+      title: typesNestedObjectWithRequiredField
+      type: object
+      properties:
+        string:
+          type: string
+        NestedObject:
+          $ref: '#/components/schemas/typesObjectWithOptionalField'
+      required:
+        - string
+        - NestedObject
+    typesDoubleOptional:
+      title: typesDoubleOptional
+      type: object
+      properties:
+        optionalAlias:
+          $ref: '#/components/schemas/typesOptionalAlias'
+          nullable: true
+    typesOptionalAlias:
+      title: typesOptionalAlias
+      type: string
+      nullable: true
+    typesObjectWithDatetimeLikeString:
+      title: typesObjectWithDatetimeLikeString
+      type: object
+      description: |-
+        This type tests that string fields containing datetime-like values
+        are NOT reformatted by the wire test generator. The string field
+        should preserve its exact value even if it looks like a datetime.
+      properties:
+        datetimeLikeString:
+          type: string
+          description: A string field that happens to contain a datetime-like value
+        actualDatetime:
+          type: string
+          format: date-time
+          description: An actual datetime field for comparison
+      required:
+        - datetimeLikeString
+        - actualDatetime
+    typesObjectWithUnknownField:
+      title: typesObjectWithUnknownField
+      type: object
+      description: |-
+        Tests that unknown/any values containing backslashes in map keys
+        are properly escaped in Go string literals.
+      properties:
+        unknown: {}
+      required:
+        - unknown
+    typesAnimal:
+      title: typesAnimal
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                animal:
+                  type: string
+                  enum:
+                    - dog
+            - $ref: '#/components/schemas/typesDog'
+          required:
+            - animal
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                animal:
+                  type: string
+                  enum:
+                    - cat
+            - $ref: '#/components/schemas/typesCat'
+          required:
+            - animal
+    typesDog:
+      title: typesDog
+      type: object
+      properties:
+        name:
+          type: string
+        likesToWoof:
+          type: boolean
+      required:
+        - name
+        - likesToWoof
+    typesCat:
+      title: typesCat
+      type: object
+      properties:
+        name:
+          type: string
+        likesToMeow:
+          type: boolean
+      required:
+        - name
+        - likesToMeow
+    typesMixedType:
+      title: typesMixedType
+      oneOf:
+        - type: number
+          format: double
+        - type: boolean
+        - type: string
+        - type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
