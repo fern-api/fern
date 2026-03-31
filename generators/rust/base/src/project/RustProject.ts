@@ -622,9 +622,10 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         // Replace API key value expression (with or without prefix)
         const apiKeyPrefix = this.context.getApiKeyPrefix();
         if (apiKeyPrefix) {
+            const escapedPrefix = apiKeyPrefix.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
             content = content.replace(
                 /\{\{API_KEY_VALUE_EXPR\}\}/g,
-                `format!("${apiKeyPrefix} {}", key)`
+                `format!("${escapedPrefix} {}", key)`
             );
         } else {
             content = content.replace(/\{\{API_KEY_VALUE_EXPR\}\}/g, "key.to_string()");

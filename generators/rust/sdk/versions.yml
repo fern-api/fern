@@ -1,5 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.28.0
+  changelogEntry:
+    - summary: |
+        Add `number_serializers` module that serializes whole-number `f64` values
+        without trailing `.0` (e.g., `24000.0` serializes as `24000`). Some APIs
+        reject the decimal representation for integer-valued numbers. Includes
+        range validation to prevent incorrect values for numbers outside `i64` range.
+      type: feat
+    - summary: |
+        Add `execute_bytes_request` HTTP client method for endpoints with
+        `application/octet-stream` request bodies, sending raw bytes instead of
+        JSON-encoding them.
+      type: feat
+    - summary: |
+        Support API key prefix from IR auth schemes. When a prefix like `Token`
+        or `Bearer` is configured, the generated HTTP client prepends it to the
+        API key header value.
+      type: feat
+    - summary: |
+        Refactor query parameters on file-upload and inlined request bodies to be
+        sent as URL query strings instead of being serialized into the request body.
+        Query param fields are now marked with `#[serde(skip_serializing)]`.
+      type: fix
+    - summary: |
+        Fix redundant `#[serde(skip_serializing_if = "Option::is_none")]` and
+        `#[serde(skip_serializing)]` on optional query param fields. Only
+        `skip_serializing` is now emitted.
+      type: fix
+    - summary: |
+        Conditionally include `number_serializers.rs` only when the IR uses
+        float/double types, consistent with other serializer modules.
+      type: chore
+    - summary: |
+        Replace unsafe type cast on auth schemes with proper
+        `FernIr.AuthScheme._visit()` pattern matching.
+      type: chore
+    - summary: |
+        Upgrade IR SDK from v61 to v65.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 0.27.2
   changelogEntry:
     - summary: |
