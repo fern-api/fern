@@ -635,14 +635,16 @@ describe("appendPropertyToFormData", () => {
                 "MyEnum",
                 FernIr.Type.enum({
                     values: [],
-                    default: undefined
+                    default: undefined,
+                    forwardCompatible: undefined
                 })
             );
             const property = createBodyProperty("status", enumType);
             const context = createMockContextWithDeclarations({
                 type_MyEnum: FernIr.Type.enum({
                     values: [],
-                    default: undefined
+                    default: undefined,
+                    forwardCompatible: undefined
                 })
             });
             const stmt = appendPropertyToFormData({

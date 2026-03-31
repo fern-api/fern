@@ -93,7 +93,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -111,7 +112,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -129,7 +131,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -154,7 +157,8 @@ describe("WebhooksHelperGenerator", () => {
                 },
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -180,7 +184,8 @@ describe("WebhooksHelperGenerator", () => {
                 },
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -205,7 +210,8 @@ describe("WebhooksHelperGenerator", () => {
                 },
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -230,7 +236,8 @@ describe("WebhooksHelperGenerator", () => {
                 },
                 payloadFormat: {
                     components: ["MESSAGE_ID", "TIMESTAMP", "BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -251,7 +258,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["NOTIFICATION_URL", "BODY"],
-                    delimiter: "|"
+                    delimiter: "|",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -272,7 +280,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -292,7 +301,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -312,7 +322,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification, "MyWebhookVerifier");
@@ -514,7 +525,8 @@ describe("WebhooksHelperGenerator", () => {
                 timestamp: undefined,
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
@@ -538,7 +550,8 @@ describe("WebhooksHelperGenerator", () => {
                 },
                 payloadFormat: {
                     components: ["BODY"],
-                    delimiter: "."
+                    delimiter: ".",
+                    bodySort: undefined
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);

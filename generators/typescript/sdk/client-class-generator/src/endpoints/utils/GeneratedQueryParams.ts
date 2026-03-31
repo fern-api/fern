@@ -395,6 +395,7 @@ function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boole
             return false;
         case "DATE":
         case "DATE_TIME":
+        case "DATE_TIME_RFC_2822":
             return true;
     }
 }

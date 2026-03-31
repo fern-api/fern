@@ -425,6 +425,7 @@ function typeNeedsStringify(type: FernIr.TypeReference, context: SdkContext): bo
                     return false;
                 case "DATE":
                 case "DATE_TIME":
+                case "DATE_TIME_RFC_2822":
                     return true;
             }
         },

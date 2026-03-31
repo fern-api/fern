@@ -675,6 +675,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         uint64: () => undefined,
                         date: () => undefined,
                         dateTime: () => undefined,
+                        dateTimeRfc2822: () => undefined,
                         uuid: () => undefined,
                         base64: () => undefined,
                         float: () => undefined,

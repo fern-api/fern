@@ -291,6 +291,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 float: () => undefined,
                 date: () => undefined,
                 dateTime: () => undefined,
+                dateTimeRfc2822: () => undefined,
                 uuid: () => undefined,
                 base64: () => undefined,
                 _other: () => undefined
