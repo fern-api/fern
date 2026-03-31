@@ -292,8 +292,10 @@ export class WebSocketChannelGenerator {
     }
 
     /**
-     * Generates the server message enum containing only JSON (non-binary) server messages.
-     * Binary messages are handled separately via the Event enum.
+     * Generates the server message enum with a custom Deserialize impl that uses
+     * round-trip scoring to pick the best-matching variant. This avoids the
+     * `#[serde(untagged)]` pitfall where `#[serde(default)]` on struct fields
+     * causes every variant to match, silently returning the first one.
      */
     private generateServerMessageEnum(
         enumPrefix: string,
@@ -316,12 +318,63 @@ export class WebSocketChannelGenerator {
             })
             .join("\n");
 
-        return `#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+        // Generate try blocks for the custom Deserialize impl.
+        // Each block tries to deserialize as a variant type, then scores it by
+        // counting how many of the variant's serialized keys appear in the original JSON.
+        const tryBlocks = jsonServerMessages
+            .map((msg) => {
+                const variantName = this.getMessageVariantName(msg);
+                const bodyType = this.getMessageBodyType(msg);
+                if (!bodyType) {
+                    return "";
+                }
+                return `        if let Ok(v) = serde_json::from_value::<${bodyType}>(value.clone()) {
+            if let Ok(re) = serde_json::to_value(&v) {
+                let score = re.as_object()
+                    .map(|o| o.keys().filter(|k| original_keys.contains(k.as_str())).count())
+                    .unwrap_or(0);
+                if score > best_score {
+                    best_score = score;
+                    best_variant = Some(Self::${variantName}(v));
+                }
+            }
+        }`;
+            })
+            .filter(Boolean)
+            .join("\n\n");
+
+        return `#[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ${enumName} {
 ${variants}
     /// Unknown or new server message type not yet supported by this SDK version.
     Unknown(serde_json::Value),
+}
+
+impl<'de> Deserialize<'de> for ${enumName} {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+
+        let original_keys: std::collections::BTreeSet<String> = value
+            .as_object()
+            .map(|o| o.keys().cloned().collect())
+            .unwrap_or_default();
+
+        if original_keys.is_empty() {
+            return Ok(Self::Unknown(value));
+        }
+
+        let mut best_variant: Option<Self> = None;
+        let mut best_score: usize = 0;
+
+${tryBlocks}
+
+        let _ = best_score;
+        Ok(best_variant.unwrap_or(Self::Unknown(value)))
+    }
 }`;
     }
 
@@ -378,11 +431,12 @@ ${methods.join("\n\n")}
      * header in its IR definition.  When true, the connector will automatically
      * inject a Bearer token from the stored ClientConfig token.
      */
+    private isAuthorizationHeader(header: FernIr.HttpHeader): boolean {
+        return header.name.wireValue.toLowerCase() === AUTH_PARAM_NAME;
+    }
+
     private needsImplicitAuth(channel: FernIr.WebSocketChannel): boolean {
-        const hasExplicitAuth = channel.headers.some(
-            (h) => h.name.wireValue.toLowerCase() === "authorization"
-        );
-        return !hasExplicitAuth;
+        return !channel.headers.some((h) => this.isAuthorizationHeader(h));
     }
 
     /**
@@ -418,7 +472,13 @@ ${methods.join("\n\n")}
             if (this.isWebSocketProtocolHeader(header)) {
                 continue;
             }
-            params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
+            // Authorization headers use Option<&str> so that connectors can
+            // skip the header entirely when no token is configured, rather
+            // than sending an empty `Authorization: ""` header.
+            params.push({
+                name: header.name.name.snakeCase.safeName,
+                type: this.isAuthorizationHeader(header) ? "Option<&str>" : "&str"
+            });
         }
 
         return params;
@@ -466,7 +526,14 @@ ${methods.join("\n\n")}
             }
             const paramName = header.name.name.snakeCase.safeName;
             const wireValue = header.name.wireValue;
-            headerLines.push(`        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
+            const isAuthHeader = this.isAuthorizationHeader(header);
+            if (isAuthHeader) {
+                headerLines.push(`        if let Some(auth) = ${paramName} {`);
+                headerLines.push(`            ws_options.headers.insert("${wireValue}".to_string(), auth.to_string());`);
+                headerLines.push(`        }`);
+            } else {
+                headerLines.push(`        ws_options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`);
+            }
         }
         const headerInserts = headerLines.join("\n");
 
@@ -547,22 +614,18 @@ ${queryAssignment}
         }
 
         return `    pub async fn recv(&mut self) -> Option<Result<${enumName}, ApiError>> {
-        loop {
-            match self.incoming_rx.recv().await {
-                Some(Ok(WebSocketMessage::Text(raw))) => {
-                    return Some(serde_json::from_str::<${enumName}>(&raw).map_err(ApiError::Serialization));
-                }
-                Some(Ok(WebSocketMessage::Binary(data))) => {
-                    return Some(Err(ApiError::WebSocketError(
-                        format!("Received unexpected binary frame ({} bytes) on a JSON-only channel", data.len())
-                    )));
-                }
-                Some(Ok(WebSocketMessage::Close(_))) => {
-                    return None;
-                }
-                Some(Err(e)) => return Some(Err(e)),
-                None => return None,
+        match self.incoming_rx.recv().await {
+            Some(Ok(WebSocketMessage::Text(raw))) => {
+                Some(serde_json::from_str::<${enumName}>(&raw).map_err(ApiError::Serialization))
             }
+            Some(Ok(WebSocketMessage::Binary(data))) => {
+                Some(Err(ApiError::WebSocketError(
+                    format!("Received unexpected binary frame ({} bytes) on a JSON-only channel", data.len())
+                )))
+            }
+            Some(Ok(WebSocketMessage::Close(_))) => None,
+            Some(Err(e)) => Some(Err(e)),
+            None => None,
         }
     }`;
     }
@@ -603,17 +666,9 @@ ${queryAssignment}
         // Build the forward args for the underlying client::connect() call.
         // Insert the auto-constructed Bearer token where the authorization param goes.
         const forwardArgs: string[] = ["&self.base_url"];
-        const authParam = allClientParams.find((p) => p.name === AUTH_PARAM_NAME);
         for (const p of allClientParams) {
             if (p.name === AUTH_PARAM_NAME) {
-                // Implicit auth uses Option<&str>, explicit header uses &str.
-                // For explicit headers, unwrap with a default empty string so the
-                // connector always compiles against the client's &str parameter.
-                if (authParam?.type === "Option<&str>") {
-                    forwardArgs.push("auth_header.as_deref()");
-                } else {
-                    forwardArgs.push(`auth_header.as_deref().unwrap_or_default()`);
-                }
+                forwardArgs.push("auth_header.as_deref()");
             } else {
                 forwardArgs.push(p.name);
             }
@@ -625,14 +680,22 @@ ${queryAssignment}
         // Check if there is any authorization param to auto-inject
         const hasAuthParam = allClientParams.some((p) => p.name === AUTH_PARAM_NAME);
 
-        const structFields = `    base_url: String,\n    token: Option<String>,`;
-        const newParams = `base_url: String, token: Option<String>`;
-        const newBody = `Self { base_url, token }`;
+        const structFields = `    base_url: String,\n    auth_header: Option<String>,`;
+        const newParams = `base_url: String, auth_header: Option<String>`;
+        const newBody = `Self { base_url, auth_header }`;
 
-        const authSetup = hasAuthParam
-            ? `        let auth_header = self.token.as_ref()
-            .map(|t| format!("Bearer {}", t));\n`
+        // For auth forwarding, the connector stores the pre-computed Authorization
+        // header value (e.g., "Token my-key" or "Bearer my-token") and passes it
+        // through to the underlying client's connect() call.
+        const authForward = hasAuthParam
+            ? "self.auth_header.as_deref()"
             : "";
+
+        // Replace the auth_header.as_deref() placeholder in forwardArgs with
+        // the direct field reference (no local variable needed).
+        const finalForwardArgs = forwardArgs.map((arg) =>
+            arg === "auth_header.as_deref()" ? authForward : arg
+        );
 
         return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
 /// Provides access to the WebSocket channel through the root client.
@@ -646,7 +709,7 @@ impl ${connectorName} {
     }
 
     pub async fn ${connectMethodName}(${params.join(", ")}) -> Result<${clientName}, ApiError> {
-${authSetup}        ${clientName}::${connectMethodName}(${forwardArgs.join(", ")}).await
+        ${clientName}::${connectMethodName}(${finalForwardArgs.join(", ")}).await
     }
 }`;
     }

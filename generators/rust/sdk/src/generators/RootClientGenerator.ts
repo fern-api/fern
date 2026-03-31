@@ -348,18 +348,26 @@ export class RootClientGenerator {
         }
 
         // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
-        // Always pass the token so the connector can auto-inject the Authorization header,
-        // matching the TypeScript SDK experience where auth "just works".
+        // Compute the Authorization header value from api_key (with IR prefix) or token
+        // (Bearer), matching the HTTP client's auth priority: api_key > token.
+        const apiKeyPrefix = this.context.getApiKeyPrefix();
+        const apiKeyValueExpr = apiKeyPrefix
+            ? `format!("${apiKeyPrefix} {}", k)`
+            : "k.to_string()";
+        const wsAuthExpr =
+            `config.api_key.as_ref().map(|k| ${apiKeyValueExpr})` +
+            `.or_else(|| config.token.as_ref().map(|t| format!("Bearer {}", t)))`;
+
         for (const { fieldName, connectorName, urlMethodName } of this.getUniqueWsConnectors()) {
             if (isMultiUrl && urlMethodName !== DEFAULT_URL_METHOD) {
                 allInits.push(
                     `${fieldName}: ${connectorName}::new(\n` +
                         `                ${this.resolveUrlExpression(urlMethodName, "config")},\n` +
-                        `                config.token.clone()\n` +
+                        `                ${wsAuthExpr}\n` +
                         `            )`
                 );
             } else {
-                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
+                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), ${wsAuthExpr})`);
             }
         }
 

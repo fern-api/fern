@@ -7,12 +7,53 @@ use tokio::sync::mpsc;
 pub struct RealtimeNoAuthConnectOptions {
     pub model: Option<String>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum RealtimeNoAuthServerMessage {
     NoAuthReceiveEvent(NoAuthReceiveEvent),
     /// Unknown or new server message type not yet supported by this SDK version.
     Unknown(serde_json::Value),
+}
+
+impl<'de> Deserialize<'de> for RealtimeNoAuthServerMessage {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+
+        let original_keys: std::collections::BTreeSet<String> = value
+            .as_object()
+            .map(|o| o.keys().cloned().collect())
+            .unwrap_or_default();
+
+        if original_keys.is_empty() {
+            return Ok(Self::Unknown(value));
+        }
+
+        let mut best_variant: Option<Self> = None;
+        let mut best_score: usize = 0;
+
+        if let Ok(v) = serde_json::from_value::<NoAuthReceiveEvent>(value.clone()) {
+            if let Ok(re) = serde_json::to_value(&v) {
+                let score = re
+                    .as_object()
+                    .map(|o| {
+                        o.keys()
+                            .filter(|k| original_keys.contains(k.as_str()))
+                            .count()
+                    })
+                    .unwrap_or(0);
+                if score > best_score {
+                    best_score = score;
+                    best_variant = Some(Self::NoAuthReceiveEvent(v));
+                }
+            }
+        }
+
+        let _ = best_score;
+        Ok(best_variant.unwrap_or(Self::Unknown(value)))
+    }
 }
 pub struct RealtimeNoAuthClient {
     ws: WebSocketClient,
@@ -45,26 +86,20 @@ impl RealtimeNoAuthClient {
     }
 
     pub async fn recv(&mut self) -> Option<Result<RealtimeNoAuthServerMessage, ApiError>> {
-        loop {
-            match self.incoming_rx.recv().await {
-                Some(Ok(WebSocketMessage::Text(raw))) => {
-                    return Some(
-                        serde_json::from_str::<RealtimeNoAuthServerMessage>(&raw)
-                            .map_err(ApiError::Serialization),
-                    );
-                }
-                Some(Ok(WebSocketMessage::Binary(data))) => {
-                    return Some(Err(ApiError::WebSocketError(format!(
-                        "Received unexpected binary frame ({} bytes) on a JSON-only channel",
-                        data.len()
-                    ))));
-                }
-                Some(Ok(WebSocketMessage::Close(_))) => {
-                    return None;
-                }
-                Some(Err(e)) => return Some(Err(e)),
-                None => return None,
+        match self.incoming_rx.recv().await {
+            Some(Ok(WebSocketMessage::Text(raw))) => Some(
+                serde_json::from_str::<RealtimeNoAuthServerMessage>(&raw)
+                    .map_err(ApiError::Serialization),
+            ),
+            Some(Ok(WebSocketMessage::Binary(data))) => {
+                Some(Err(ApiError::WebSocketError(format!(
+                    "Received unexpected binary frame ({} bytes) on a JSON-only channel",
+                    data.len()
+                ))))
             }
+            Some(Ok(WebSocketMessage::Close(_))) => None,
+            Some(Err(e)) => Some(Err(e)),
+            None => None,
         }
     }
 
@@ -76,12 +111,15 @@ impl RealtimeNoAuthClient {
 /// Provides access to the WebSocket channel through the root client.
 pub struct RealtimeNoAuthConnector {
     base_url: String,
-    token: Option<String>,
+    auth_header: Option<String>,
 }
 
 impl RealtimeNoAuthConnector {
-    pub fn new(base_url: String, token: Option<String>) -> Self {
-        Self { base_url, token }
+    pub fn new(base_url: String, auth_header: Option<String>) -> Self {
+        Self {
+            base_url,
+            auth_header,
+        }
     }
 
     pub async fn connect(
@@ -89,8 +127,12 @@ impl RealtimeNoAuthConnector {
         session_id: &str,
         options: &RealtimeNoAuthConnectOptions,
     ) -> Result<RealtimeNoAuthClient, ApiError> {
-        let auth_header = self.token.as_ref().map(|t| format!("Bearer {}", t));
-        RealtimeNoAuthClient::connect(&self.base_url, session_id, auth_header.as_deref(), options)
-            .await
+        RealtimeNoAuthClient::connect(
+            &self.base_url,
+            session_id,
+            self.auth_header.as_deref(),
+            options,
+        )
+        .await
     }
 }

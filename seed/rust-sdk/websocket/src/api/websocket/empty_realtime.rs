@@ -29,17 +29,15 @@ impl EmptyRealtimeClient {
 /// Provides access to the WebSocket channel through the root client.
 pub struct EmptyRealtimeConnector {
     base_url: String,
-    token: Option<String>,
+    auth_header: Option<String>,
 }
 
 impl EmptyRealtimeConnector {
-    pub fn new(base_url: String, token: Option<String>) -> Self {
-        Self { base_url, token }
+    pub fn new(base_url: String, auth_header: Option<String>) -> Self {
+        Self { base_url, auth_header }
     }
 
     pub async fn connect(&self) -> Result<EmptyRealtimeClient, ApiError> {
-        let auth_header = self.token.as_ref()
-            .map(|t| format!("Bearer {}", t));
-        EmptyRealtimeClient::connect(&self.base_url, auth_header.as_deref()).await
+        EmptyRealtimeClient::connect(&self.base_url, self.auth_header.as_deref()).await
     }
 }

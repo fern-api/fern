@@ -172,6 +172,6 @@ mod tests {
         let test = TestStruct { value: 1e20 };
         let json = serde_json::to_string(&test).unwrap();
         // Should fall back to f64 serialization, not saturate to i64::MAX
-        assert_eq!(json, r#"{"value":1e20}"#);
+        assert_eq!(json, r#"{"value":1e+20}"#);
     }
 }

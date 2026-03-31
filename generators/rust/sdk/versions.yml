@@ -63,6 +63,42 @@
         version segments to suffix position (e.g., `/v1/agent/converse` →
         `AgentConverseV1Client`).
       type: chore
+    - summary: |
+        Replace `#[serde(untagged)]` derive on `ServerMessage` enums with a custom
+        `Deserialize` impl that uses round-trip scoring. Fixes silent mismatches
+        where `#[serde(default)]` on struct fields caused every variant to match,
+        always returning the first.
+      type: fix
+    - summary: |
+        Introduce `ReconnectContext` struct to group reconnection state, replacing
+        8 separate `Arc`-wrapped parameters in `read_loop` and `try_reconnect`.
+      type: chore
+    - summary: |
+        Fix `try_reconnect` to retry with exponential backoff up to
+        `max_reconnect_attempts`, instead of giving up after a single failed attempt.
+      type: fix
+    - summary: |
+        Fix `flush_queues` to preserve messages on send failure by cloning before
+        sending and pushing back to the front of the queue on error.
+      type: fix
+    - summary: |
+        Remove dead `parse_websocket_message` function and unused
+        `serde::de::DeserializeOwned` import from WebSocket client infrastructure.
+      type: chore
+    - summary: |
+        Fix wire test generator to set `config.environment = None` for multi-URL
+        APIs so requests route to the WireMock server instead of real API endpoints.
+      type: fix
+    - summary: |
+        Fix `number_serializers` unit test assertion to use `1e+20` matching Rust's
+        serde_json exponent formatting.
+      type: fix
+    - summary: |
+        Fix WebSocket connectors to support `api_key` auth in addition to bearer
+        token. The connector now receives a pre-computed Authorization header value
+        from the root client, using the IR's api key prefix (e.g., `Token`) with
+        `api_key` taking priority over `token`, matching the HTTP client's behavior.
+      type: fix
   createdAt: "2026-03-31"
   irVersion: 65
 

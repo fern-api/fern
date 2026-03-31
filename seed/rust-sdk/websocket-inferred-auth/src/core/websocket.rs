@@ -4,7 +4,7 @@ use futures::{
     SinkExt, StreamExt,
 };
 use rand::Rng;
-use serde::{de::DeserializeOwned, Serialize};
+use serde::Serialize;
 use std::{
     collections::{HashMap, VecDeque},
     sync::Arc,
@@ -79,6 +79,19 @@ impl Default for WebSocketOptions {
     }
 }
 
+/// Shared reconnection state passed between `read_loop` and `try_reconnect`,
+/// grouping the Arc-wrapped fields that both functions need.
+struct ReconnectContext {
+    sink: Arc<Mutex<Option<WsSink>>>,
+    state: Arc<Mutex<WebSocketState>>,
+    close_notify: Arc<Notify>,
+    incoming_tx: mpsc::UnboundedSender<Result<WebSocketMessage, ApiError>>,
+    url: String,
+    options: WebSocketOptions,
+    text_queue: Arc<Mutex<VecDeque<String>>>,
+    binary_queue: Arc<Mutex<VecDeque<Vec<u8>>>>,
+}
+
 pub struct WebSocketClient {
     url: String,
     options: WebSocketOptions,
@@ -117,26 +130,19 @@ impl WebSocketClient {
             binary_queue: Arc::new(Mutex::new(VecDeque::new())),
         };
 
-        let state = client.state.clone();
-        let close_notify = client.close_notify.clone();
-        let url_clone = client.url.clone();
-        let options_clone = client.options.clone();
-        let text_queue = client.text_queue.clone();
-        let binary_queue = client.binary_queue.clone();
+        let ctx = ReconnectContext {
+            sink,
+            state: client.state.clone(),
+            close_notify: client.close_notify.clone(),
+            incoming_tx,
+            url: client.url.clone(),
+            options: client.options.clone(),
+            text_queue: client.text_queue.clone(),
+            binary_queue: client.binary_queue.clone(),
+        };
 
         tokio::spawn(async move {
-            Self::read_loop(
-                read,
-                sink,
-                state,
-                close_notify,
-                incoming_tx,
-                url_clone,
-                options_clone,
-                text_queue,
-                binary_queue,
-            )
-            .await;
+            Self::read_loop(read, ctx).await;
         });
 
         Ok((client, incoming_rx))
@@ -330,115 +336,109 @@ impl WebSocketClient {
 
     /// Flush queued messages after a successful reconnect.
     ///
-    /// Must be called while holding the sink lock (the caller in `read_loop`
-    /// obtains the lock via `open_connection`). This ensures no concurrent
-    /// `send_raw`/`send_binary` can interleave with the queued messages.
-    async fn flush_queues(
-        sink: &Arc<Mutex<Option<WsSink>>>,
-        text_queue: &Arc<Mutex<VecDeque<String>>>,
-        binary_queue: &Arc<Mutex<VecDeque<Vec<u8>>>>,
-    ) {
-        let mut sink_guard = sink.lock().await;
+    /// On send failure, the failed message is pushed back to the front of the
+    /// queue so it can be retried on the next reconnect. Remaining queued
+    /// messages are preserved.
+    async fn flush_queues(ctx: &ReconnectContext) {
+        let mut sink_guard = ctx.sink.lock().await;
         let s = match sink_guard.as_mut() {
             Some(s) => s,
             None => return,
         };
         {
-            let mut queue = text_queue.lock().await;
+            let mut queue = ctx.text_queue.lock().await;
             while let Some(message) = queue.pop_front() {
-                if s.send(Message::Text(message)).await.is_err() {
-                    break;
+                if s.send(Message::Text(message.clone())).await.is_err() {
+                    queue.push_front(message);
+                    return;
                 }
             }
         }
         {
-            let mut queue = binary_queue.lock().await;
+            let mut queue = ctx.binary_queue.lock().await;
             while let Some(message) = queue.pop_front() {
-                if s.send(Message::Binary(message)).await.is_err() {
-                    break;
+                if s.send(Message::Binary(message.clone())).await.is_err() {
+                    queue.push_front(message);
+                    return;
                 }
             }
         }
     }
 
-    /// Attempt to reconnect after a disconnection. Returns the new read stream
-    /// on success, or an error if reconnection should be abandoned.
+    /// Attempt to reconnect after a disconnection, retrying with exponential
+    /// backoff up to `max_reconnect_attempts` times. Returns Ok(()) with the
+    /// new read stream on success, or Err if all attempts are exhausted.
     async fn try_reconnect(
         read: &mut WsSource,
         reconnect_attempts: &mut u32,
         last_connected_at: &mut Option<tokio::time::Instant>,
-        url: &str,
-        options: &WebSocketOptions,
-        sink: &Arc<Mutex<Option<WsSink>>>,
-        state: &Arc<Mutex<WebSocketState>>,
-        text_queue: &Arc<Mutex<VecDeque<String>>>,
-        binary_queue: &Arc<Mutex<VecDeque<Vec<u8>>>>,
+        ctx: &ReconnectContext,
     ) -> Result<(), ApiError> {
-        if !options.reconnect || *reconnect_attempts >= options.max_reconnect_attempts {
-            let mut s = state.lock().await;
+        if !ctx.options.reconnect {
+            let mut s = ctx.state.lock().await;
             *s = WebSocketState::Closed;
-            return Err(ApiError::WebSocketError(
-                "Max reconnect attempts reached".to_string(),
-            ));
+            return Err(ApiError::WebSocketError("Reconnect disabled".to_string()));
         }
 
-        *reconnect_attempts += 1;
-        {
-            let mut s = state.lock().await;
-            *s = WebSocketState::Connecting;
-        }
+        let mut last_error = None;
+        let full_url = Self::build_ws_url(&ctx.url, &ctx.options.query_params);
 
-        let delay = Self::get_reconnect_delay(options, *reconnect_attempts);
-        tokio::time::sleep(delay).await;
-
-        let full_url = Self::build_ws_url(url, &options.query_params);
-        match Self::open_connection(&full_url, options, sink).await {
-            Ok(new_read) => {
-                *read = new_read;
-                *last_connected_at = Some(tokio::time::Instant::now());
-                let mut s = state.lock().await;
-                *s = WebSocketState::Open;
-                Self::flush_queues(sink, text_queue, binary_queue).await;
-                Ok(())
-            }
-            Err(e) => {
-                let mut s = state.lock().await;
+        loop {
+            if *reconnect_attempts >= ctx.options.max_reconnect_attempts {
+                let mut s = ctx.state.lock().await;
                 *s = WebSocketState::Closed;
-                Err(e)
+                return Err(last_error.unwrap_or_else(|| {
+                    ApiError::WebSocketError("Max reconnect attempts reached".to_string())
+                }));
+            }
+
+            *reconnect_attempts += 1;
+            {
+                let mut s = ctx.state.lock().await;
+                *s = WebSocketState::Connecting;
+            }
+
+            let delay = Self::get_reconnect_delay(&ctx.options, *reconnect_attempts);
+            tokio::time::sleep(delay).await;
+
+            match Self::open_connection(&full_url, &ctx.options, &ctx.sink).await {
+                Ok(new_read) => {
+                    *read = new_read;
+                    *last_connected_at = Some(tokio::time::Instant::now());
+                    let mut s = ctx.state.lock().await;
+                    *s = WebSocketState::Open;
+                    drop(s);
+                    Self::flush_queues(ctx).await;
+                    return Ok(());
+                }
+                Err(e) => {
+                    last_error = Some(e);
+                    continue;
+                }
             }
         }
     }
 
-    async fn read_loop(
-        mut read: WsSource,
-        sink: Arc<Mutex<Option<WsSink>>>,
-        state: Arc<Mutex<WebSocketState>>,
-        close_notify: Arc<Notify>,
-        incoming_tx: mpsc::UnboundedSender<Result<WebSocketMessage, ApiError>>,
-        url: String,
-        options: WebSocketOptions,
-        text_queue: Arc<Mutex<VecDeque<String>>>,
-        binary_queue: Arc<Mutex<VecDeque<Vec<u8>>>>,
-    ) {
+    async fn read_loop(mut read: WsSource, ctx: ReconnectContext) {
         let mut reconnect_attempts: u32 = 0;
         let mut last_connected_at: Option<tokio::time::Instant> = None;
 
         loop {
             tokio::select! {
-                _ = close_notify.notified() => {
+                _ = ctx.close_notify.notified() => {
                     break;
                 }
                 msg = read.next() => {
                     match msg {
                         Some(Ok(Message::Text(text))) => {
                             Self::maybe_reset_reconnect_attempts(&last_connected_at, &mut reconnect_attempts);
-                            if incoming_tx.send(Ok(WebSocketMessage::Text(text))).is_err() {
+                            if ctx.incoming_tx.send(Ok(WebSocketMessage::Text(text))).is_err() {
                                 break;
                             }
                         }
                         Some(Ok(Message::Binary(data))) => {
                             Self::maybe_reset_reconnect_attempts(&last_connected_at, &mut reconnect_attempts);
-                            if incoming_tx.send(Ok(WebSocketMessage::Binary(data))).is_err() {
+                            if ctx.incoming_tx.send(Ok(WebSocketMessage::Binary(data))).is_err() {
                                 break;
                             }
                         }
@@ -447,10 +447,10 @@ impl WebSocketClient {
                                 code: frame.as_ref().map(|f| f.code.into()),
                                 reason: frame.as_ref().map(|f| f.reason.to_string()).filter(|r| !r.is_empty()),
                             };
-                            let _ = incoming_tx.send(Ok(WebSocketMessage::Close(info)));
-                            let mut s = state.lock().await;
+                            let _ = ctx.incoming_tx.send(Ok(WebSocketMessage::Close(info)));
+                            let mut s = ctx.state.lock().await;
                             *s = WebSocketState::Closed;
-                            close_notify.notify_waiters();
+                            ctx.close_notify.notify_waiters();
                             break;
                         }
                         Some(Ok(Message::Ping(_))) | Some(Ok(Message::Pong(_))) | Some(Ok(Message::Frame(_))) => {
@@ -459,12 +459,11 @@ impl WebSocketClient {
                         Some(Err(e)) => {
                             let error_msg = format!("Read error: {}", e);
                             match Self::try_reconnect(
-                                &mut read, &mut reconnect_attempts, &mut last_connected_at,
-                                &url, &options, &sink, &state, &text_queue, &binary_queue,
+                                &mut read, &mut reconnect_attempts, &mut last_connected_at, &ctx,
                             ).await {
                                 Ok(()) => continue,
                                 Err(_) => {
-                                    let _ = incoming_tx.send(Err(ApiError::WebSocketError(error_msg)));
+                                    let _ = ctx.incoming_tx.send(Err(ApiError::WebSocketError(error_msg)));
                                     break;
                                 }
                             }
@@ -472,12 +471,11 @@ impl WebSocketClient {
                         None => {
                             // Stream ended unexpectedly
                             match Self::try_reconnect(
-                                &mut read, &mut reconnect_attempts, &mut last_connected_at,
-                                &url, &options, &sink, &state, &text_queue, &binary_queue,
+                                &mut read, &mut reconnect_attempts, &mut last_connected_at, &ctx,
                             ).await {
                                 Ok(()) => continue,
                                 Err(reconnect_err) => {
-                                    let _ = incoming_tx.send(Err(reconnect_err));
+                                    let _ = ctx.incoming_tx.send(Err(reconnect_err));
                                     break;
                                 }
                             }
@@ -487,8 +485,4 @@ impl WebSocketClient {
             }
         }
     }
-}
-
-pub fn parse_websocket_message<T: DeserializeOwned>(raw: &str) -> Result<T, ApiError> {
-    serde_json::from_str(raw).map_err(ApiError::Serialization)
 }
