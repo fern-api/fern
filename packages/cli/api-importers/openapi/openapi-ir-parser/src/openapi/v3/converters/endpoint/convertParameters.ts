@@ -184,8 +184,7 @@ export function convertParameters({
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push({
                 ...convertedParameter,
-                explode: getExplodeForQueryParameter(resolvedParameter),
-                clientDefault
+                explode: getExplodeForQueryParameter(resolvedParameter)
             });
         } else if (resolvedParameter.in === "path") {
             convertedParameters.pathParameters.push({
