@@ -44,8 +44,6 @@ export function buildQueryParameter({
 
     if (queryParameter.clientDefault != null) {
         queryParameterSchema.default = queryParameter.clientDefault;
-    } else if (queryParameterDefault != null) {
-        queryParameterSchema.default = queryParameterDefault;
     }
 
     if (typeReference.allowMultiple) {
