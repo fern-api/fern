@@ -28,7 +28,7 @@ class RetryDecoratingClient implements ClientInterface
      */
     public function __construct(
         ClientInterface $client,
-        int $maxRetries = <%= typeof defaultMaxRetries !== 'undefined' ? defaultMaxRetries : 2 %>,
+        int $maxRetries = <%= defaultMaxRetries %>,
         int $baseDelay = 1000,
         ?callable $sleepFunction = null,
     ) {

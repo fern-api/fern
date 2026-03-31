@@ -641,12 +641,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             };
         }
         if (filename === AsIsFiles.HttpClientBuilder || filename === AsIsFiles.RetryDecoratingClient) {
-            const maxRetries = this.customConfig.maxRetries;
-            if (maxRetries != null) {
-                return {
-                    defaultMaxRetries: String(maxRetries)
-                };
-            }
+            return {
+                defaultMaxRetries: String(this.customConfig.maxRetries ?? 2)
+            };
         }
         return undefined;
     }
