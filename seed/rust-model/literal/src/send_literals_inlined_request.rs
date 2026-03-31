@@ -8,6 +8,8 @@ pub struct SendLiteralsInlinedRequest {
     #[serde(default)]
     pub query: String,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub temperature: Option<f64>,
     pub stream: bool,
     #[serde(rename = "aliasedContext")]

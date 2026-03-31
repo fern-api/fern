@@ -170,4 +170,102 @@ describe("preloadOpenAPIDocuments", () => {
         const sortByMessage = (a: { message: string }, b: { message: string }) => a.message.localeCompare(b.message);
         expect(combinedViolations.sort(sortByMessage)).toEqual(individualViolations.sort(sortByMessage));
     }, 30_000);
+
+    it("should apply overlays to preloaded documents", async () => {
+        const context = createMockTaskContext();
+        const result = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("with-overlays")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: undefined
+        });
+
+        if (!result.didSucceed) {
+            throw new Error("API workspace failed to load");
+        }
+        if (!(result.workspace instanceof OSSWorkspace)) {
+            throw new Error("Expected an OSS workspace");
+        }
+
+        let capturedDocs: Map<string, OpenAPI.Document> | undefined;
+
+        const inspectRule: Rule = {
+            name: "inspect-overlay-rule",
+            run: async ({ loadedDocuments }: RuleContext) => {
+                capturedDocs = loadedDocuments;
+                return [];
+            }
+        };
+
+        await runRulesOnOSSWorkspace({
+            workspace: result.workspace as OSSWorkspace,
+            context,
+            rules: [inspectRule]
+        });
+
+        expect(capturedDocs).toBeDefined();
+        expect(capturedDocs?.size).toBe(1);
+
+        // Verify the overlay was applied: the overlay adds a description to info and User schema
+        for (const doc of capturedDocs?.values() ?? []) {
+            // biome-ignore lint/suspicious/noExplicitAny: test assertion on dynamic OpenAPI doc
+            const apiDoc = doc as any;
+            expect(apiDoc.info.description).toBe("API for managing users");
+            expect(apiDoc.components.schemas.User.description).toBe("A user in the system");
+        }
+    }, 30_000);
+
+    it("should share overlay-applied documents across multiple rules", async () => {
+        const context = createMockTaskContext();
+        const result = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("with-overlays")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: undefined
+        });
+
+        if (!result.didSucceed) {
+            throw new Error("API workspace failed to load");
+        }
+        if (!(result.workspace instanceof OSSWorkspace)) {
+            throw new Error("Expected an OSS workspace");
+        }
+
+        const capturedDocs: Array<Map<string, OpenAPI.Document>> = [];
+
+        const captureRule: Rule = {
+            name: "capture-rule",
+            run: async ({ loadedDocuments }: RuleContext) => {
+                capturedDocs.push(loadedDocuments);
+                return [];
+            }
+        };
+
+        // Run 3 rules that all need the overlaid document
+        await runRulesOnOSSWorkspace({
+            workspace: result.workspace as OSSWorkspace,
+            context,
+            rules: [captureRule, captureRule, captureRule]
+        });
+
+        // All 3 rules should get the exact same map (same reference)
+        expect(capturedDocs).toHaveLength(3);
+        expect(capturedDocs[0]).toBe(capturedDocs[1]);
+        expect(capturedDocs[1]).toBe(capturedDocs[2]);
+
+        // And the overlay should be applied in the shared document
+        for (const doc of capturedDocs[0]?.values() ?? []) {
+            // biome-ignore lint/suspicious/noExplicitAny: test assertion on dynamic OpenAPI doc
+            const apiDoc = doc as any;
+            expect(apiDoc.info.description).toBe("API for managing users");
+        }
+    }, 30_000);
 });

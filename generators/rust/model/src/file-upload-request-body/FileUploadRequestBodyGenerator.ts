@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 import { FileUploadRequestGenerator } from "./FileUploadRequestGenerator.js";
 
 export class FileUploadRequestBodyGenerator {
@@ -48,7 +49,7 @@ export class FileUploadRequestBodyGenerator {
             const uniqueRequestName = this.context.getFileUploadRequestTypeName(endpoint.id);
 
             // Extract all properties and separate files from body properties
-            const { allProperties, fileProperties, bodyProperties } = this.extractProperties(
+            const { allProperties, fileProperties, bodyProperties, queryParamFieldNames } = this.extractProperties(
                 requestBody.properties,
                 endpoint.queryParameters
             );
@@ -60,7 +61,8 @@ export class FileUploadRequestBodyGenerator {
                 fileProperties,
                 bodyProperties,
                 docsContent: undefined,
-                context: this.context
+                context: this.context,
+                queryParamFieldNames
             });
 
             // Generate the file content
@@ -86,6 +88,7 @@ export class FileUploadRequestBodyGenerator {
         allProperties: FernIr.InlinedRequestBodyProperty[];
         fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
         bodyProperties: FernIr.InlinedRequestBodyProperty[];
+        queryParamFieldNames: Set<string>;
     } {
         const allProperties: FernIr.InlinedRequestBodyProperty[] = [];
         const fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }> = [];
@@ -166,33 +169,15 @@ export class FileUploadRequestBodyGenerator {
             });
         }
 
-        // Add query parameters as properties for mixed endpoints
+        // Add query parameters to struct fields but NOT to bodyProperties —
+        // query params are sent as URL query string parameters, not multipart form fields.
+        let queryParamFieldNames = new Set<string>();
         if (queryParameters && queryParameters.length > 0) {
-            const queryProps = this.convertQueryParametersToProperties(queryParameters);
-            allProperties.push(...queryProps);
-            bodyProperties.push(...queryProps);
+            const result = convertQueryParametersToProperties(queryParameters, this.context);
+            allProperties.push(...result.properties);
+            queryParamFieldNames = result.fieldNames;
         }
 
-        return { allProperties, fileProperties, bodyProperties };
-    }
-
-    // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.InlinedRequestBodyProperty[] {
-        return queryParams.map((queryParam) => {
-            // For allow-multiple query params, wrap the type in a list using proper IR constructors
-            let valueType = queryParam.valueType;
-            if (queryParam.allowMultiple) {
-                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
-            }
-
-            return {
-                name: queryParam.name,
-                valueType,
-                docs: queryParam.docs,
-                availability: queryParam.availability,
-                propertyAccess: undefined,
-                v2Examples: undefined
-            };
-        });
+        return { allProperties, fileProperties, bodyProperties, queryParamFieldNames };
     }
 }

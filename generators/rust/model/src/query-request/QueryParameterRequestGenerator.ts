@@ -4,6 +4,7 @@ import { RustFile } from "@fern-api/rust-base";
 
 import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 
 export class QueryParameterRequestGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
@@ -35,10 +36,9 @@ export class QueryParameterRequestGenerator {
 
     private generateQueryRequestFile(endpoint: FernIr.HttpEndpoint, serviceId: string): RustFile | null {
         try {
-            const baseRequestTypeName = this.context.getQueryRequestTypeName(endpoint, serviceId);
             // Get the unique type name (may have suffix if there's a collision)
             const uniqueRequestTypeName = this.context.getQueryRequestUniqueTypeName(endpoint.id);
-            const properties = this.convertQueryParametersToProperties(endpoint.queryParameters);
+            const { properties } = convertQueryParametersToProperties(endpoint.queryParameters, this.context);
 
             const objectGenerator = new RequestGenerator({
                 name: uniqueRequestTypeName,
@@ -56,31 +56,10 @@ export class QueryParameterRequestGenerator {
                 fileContents: objectGenerator.generateFileContents()
             });
         } catch (error) {
-            // Log error but don't fail the entire generation
             this.context.logger?.warn(
                 `Failed to generate query request file for endpoint ${endpoint.name.originalName}: ${error}`
             );
             return null;
         }
-    }
-
-    // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.ObjectProperty[] {
-        return queryParams.map((queryParam) => {
-            // For allow-multiple query params, wrap the type in a list using proper IR constructors
-            let valueType = queryParam.valueType;
-            if (queryParam.allowMultiple) {
-                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
-            }
-
-            return {
-                name: queryParam.name,
-                valueType,
-                docs: queryParam.docs,
-                availability: queryParam.availability,
-                propertyAccess: undefined,
-                v2Examples: undefined
-            };
-        });
     }
 }

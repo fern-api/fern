@@ -19,6 +19,8 @@ export abstract class AbstractRustGeneratorContext<
     public readonly project: RustProject;
     public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
+    private readonly irUsesTypeCache = new Map<string, boolean>();
+    private readonly featureCache = new Map<string, boolean>();
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -173,10 +175,31 @@ export abstract class AbstractRustGeneratorContext<
         }
     }
 
+    private cachedFeature(key: string, compute: () => boolean): boolean {
+        const cached = this.featureCache.get(key);
+        if (cached !== undefined) {
+            return cached;
+        }
+        const result = compute();
+        this.featureCache.set(key, result);
+        return result;
+    }
+
     /**
      * Check if IR uses a specific primitive type
      */
     private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
+        const cached = this.irUsesTypeCache.get(typeName);
+        if (cached !== undefined) {
+            return cached;
+        }
+
+        const result = this.computeIrUsesType(typeName);
+        this.irUsesTypeCache.set(typeName, result);
+        return result;
+    }
+
+    private computeIrUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -388,16 +411,25 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR uses floating point types (float or double)
+     */
+    public usesFloatingPoint(): boolean {
+        return this.irUsesType("FLOAT") || this.irUsesType("DOUBLE");
+    }
+
+    /**
      * Check if IR uses floating point types (float or double) in sets,
      * which requires ordered-float for Hash/Ord implementations.
      */
     public usesOrderedFloat(): boolean {
-        for (const typeDecl of Object.values(this.ir.types)) {
-            if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
-                return true;
+        return this.cachedFeature("usesOrderedFloat", () => {
+            for (const typeDecl of Object.values(this.ir.types)) {
+                if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
+                    return true;
+                }
             }
-        }
-        return false;
+            return false;
+        });
     }
 
     /**
@@ -496,25 +528,36 @@ export abstract class AbstractRustGeneratorContext<
      * Check if IR has any file upload endpoints
      */
     public hasFileUploadEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+        return this.cachedFeature("hasFileUploadEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+            )
         );
     }
 
     /**
-     * Check if IR has any streaming endpoints
+     * Check if IR has any bytes (octet-stream) request body endpoints
      */
-    public hasWebSocketChannels(): boolean {
-        return (
-            this.customConfig.enableWebsockets &&
-            this.ir.websocketChannels != null &&
-            Object.keys(this.ir.websocketChannels).length > 0
+    public hasBytesEndpoints(): boolean {
+        return this.cachedFeature("hasBytesEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes")
+            )
         );
     }
 
+    public hasWebSocketChannels(): boolean {
+        return this.cachedFeature("hasWebSocketChannels", () => (
+            this.customConfig.enableWebsockets &&
+            this.ir.websocketChannels != null &&
+            Object.keys(this.ir.websocketChannels).length > 0
+        ));
+    }
+
     public hasStreamingEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => {
+        return this.cachedFeature("hasStreamingEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
                 if (!endpoint.response?.body) {
                     return false;
                 }
@@ -528,6 +571,7 @@ export abstract class AbstractRustGeneratorContext<
                     _other: () => false
                 });
             })
+            )
         );
     }
 
@@ -1226,15 +1270,34 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
+        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
+    }
+
+    /**
+     * Get the API key prefix from the IR auth schemes (e.g., "Token", "Bearer").
+     * Returns undefined if no prefix is configured.
+     */
+    public getApiKeyPrefix(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.prefix);
+    }
+
+    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
-                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
-                    return schemeAsUnion.name.wireValue;
+                const result = FernIr.AuthScheme._visit(scheme, {
+                    header: (header) => selector(header),
+                    bearer: () => undefined,
+                    basic: () => undefined,
+                    oauth: () => undefined,
+                    inferred: () => undefined,
+                    _other: () => undefined
+                });
+                if (result !== undefined) {
+                    return result;
                 }
             }
         }
-        return "api_key";
+        return undefined;
     }
 
     /**

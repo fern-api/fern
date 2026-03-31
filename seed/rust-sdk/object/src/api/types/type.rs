@@ -6,6 +6,7 @@ pub struct Type {
     #[serde(default)]
     pub one: i64,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub two: f64,
     #[serde(default)]
     pub three: String,
@@ -46,6 +47,7 @@ pub struct Type {
     #[serde(default)]
     pub twentyone: i64,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub twentytwo: f64,
     #[serde(default)]
     #[serde(with = "crate::core::bigint_string")]

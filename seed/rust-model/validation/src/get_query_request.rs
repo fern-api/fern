@@ -4,6 +4,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct GetQueryRequest {
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub decimal: f64,
     #[serde(default)]
     pub even: i64,

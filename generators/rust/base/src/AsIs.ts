@@ -23,10 +23,6 @@ interface AsIsFileSpec {
  */
 const AsIsFileSpecs = {
     // Core infrastructure templates
-    ApiClientBuilder: {
-        relativePathToDir: "src",
-        filename: "client.rs"
-    },
     Prelude: {
         relativePathToDir: "src",
         filename: "prelude.rs"
@@ -70,6 +66,10 @@ const AsIsFileSpecs = {
     BigIntString: {
         relativePathToDir: "src/core",
         filename: "bigint_string.rs"
+    },
+    NumberSerializers: {
+        relativePathToDir: "src/core",
+        filename: "number_serializers.rs"
     },
     OAuthTokenProvider: {
         relativePathToDir: "src/core",

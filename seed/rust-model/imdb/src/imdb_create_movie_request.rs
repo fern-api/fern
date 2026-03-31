@@ -5,6 +5,7 @@ pub struct CreateMovieRequest {
     #[serde(default)]
     pub title: String,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub rating: f64,
 }
 
