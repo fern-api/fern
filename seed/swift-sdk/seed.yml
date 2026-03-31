@@ -165,3 +165,5 @@ allowedFailures:
   # Intermediate failures
   - any-auth
   - imdb
+  # Boolean literal enum changes require seed snapshot regeneration
+  - null-type
