@@ -8031,8 +8031,8 @@ importers:
   packages/commons/mock-utils:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: ^65.5.0
-        version: 65.5.0
+        specifier: ^61.7.0
+        version: 61.7.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
