@@ -19,6 +19,8 @@ LOG_LEVEL="info"
 SAMPLE_INTERVAL=5
 FIXTURES=()
 SAMPLE_COUNT=0
+OUTPUT_FOLDER=""
+SEQUENTIAL=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -27,6 +29,8 @@ while [[ $# -gt 0 ]]; do
         --log-level) LOG_LEVEL="$2"; shift 2 ;;
         --interval) SAMPLE_INTERVAL="$2"; shift 2 ;;
         --sample) SAMPLE_COUNT="$2"; shift 2 ;;
+        --outputFolder) OUTPUT_FOLDER="$2"; shift 2 ;;
+        --sequential) SEQUENTIAL=1; shift ;;
         --fixture)
             shift
             while [[ $# -gt 0 && ! "$1" =~ ^-- ]]; do
@@ -77,12 +81,19 @@ if [[ ${#FIXTURES[@]} -gt 0 ]]; then
         FIXTURE_ARGS="$FIXTURE_ARGS --fixture $f"
     done
 fi
+if [[ -n "$OUTPUT_FOLDER" ]]; then
+    FIXTURE_ARGS="$FIXTURE_ARGS --outputFolder $OUTPUT_FOLDER"
+fi
 
 echo "==========================================="
 echo " Seed Performance Profiler"
 echo "==========================================="
 echo " Generator:       $GENERATOR"
+if [[ "$SEQUENTIAL" -eq 1 ]]; then
+echo " Mode:            sequential (one test case at a time)"
+else
 echo " Parallel:        $PARALLEL"
+fi
 echo " Skip scripts:    $([[ -n "$SKIP_SCRIPTS" ]] && echo yes || echo no)"
 echo " Sample interval: ${SAMPLE_INTERVAL}s"
 echo " Report dir:      $REPORT_DIR"
@@ -298,18 +309,89 @@ handle_interrupt() {
 trap handle_interrupt INT TERM
 trap cleanup EXIT
 
-pnpm seed test \
-    --generator "$GENERATOR" \
-    --parallel "$PARALLEL" \
-    --log-level "$LOG_LEVEL" \
-    --profile "$PROFILE_LOG" \
-    $SKIP_SCRIPTS \
-    $FIXTURE_ARGS \
-    > "$SEED_LOG" 2>&1 &
-SEED_PID=$!
-wait "$SEED_PID" || true
-EXIT_CODE=$?
-SEED_PID=""
+if [[ "$SEQUENTIAL" -eq 1 ]]; then
+    # Enumerate test cases using list-test-fixtures, filtered to selected fixtures
+    TEST_CASES=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures \
+        --generator "$GENERATOR" --groups 1 2>/dev/null \
+        | python3 -c "
+import json, sys
+fixtures_filter = set('${FIXTURES[*]}'.split()) if '${FIXTURES[*]}' else set()
+d = json.load(sys.stdin)
+for f in d[0].get('fixtures', []):
+    name = f.split(':')[0] if ':' in f else f
+    if fixtures_filter and name not in fixtures_filter:
+        continue
+    print(f)
+" 2>/dev/null || true)
+
+    CASE_COUNT=$(echo "$TEST_CASES" | grep -c . || echo 0)
+    echo "  Running $CASE_COUNT test cases sequentially..."
+    echo ""
+
+    # Create dir for per-case profile files
+    SEQ_PROFILE_DIR="$REPORT_DIR/seq-profiles"
+    mkdir -p "$SEQ_PROFILE_DIR"
+
+    # Clear the merged profile file
+    > "$PROFILE_LOG"
+
+    EXIT_CODE=0
+    CASE_NUM=0
+    while IFS= read -r tc; do
+        [[ -z "$tc" ]] && continue
+        CASE_NUM=$((CASE_NUM + 1))
+
+        if [[ "$tc" == *:* ]]; then
+            TC_FIXTURE="${tc%%:*}"
+            TC_OUTPUT="${tc#*:}"
+            TC_ARGS="--fixture $TC_FIXTURE --outputFolder $TC_OUTPUT"
+        else
+            TC_FIXTURE="$tc"
+            TC_OUTPUT=""
+            TC_ARGS="--fixture $TC_FIXTURE"
+        fi
+
+        # Each invocation gets its own profile file
+        TC_PROFILE="$SEQ_PROFILE_DIR/profile-${CASE_NUM}.jsonl"
+
+        echo "  [$CASE_NUM/$CASE_COUNT] $tc"
+        pnpm seed test \
+            --generator "$GENERATOR" \
+            --parallel 1 \
+            --log-level "$LOG_LEVEL" \
+            --profile "$TC_PROFILE" \
+            $SKIP_SCRIPTS \
+            $TC_ARGS \
+            >> "$SEED_LOG" 2>&1 &
+        SEED_PID=$!
+        wait "$SEED_PID" || true
+        local_exit=$?
+        SEED_PID=""
+
+        # Append this case's profile to the merged file
+        if [[ -f "$TC_PROFILE" ]]; then
+            cat "$TC_PROFILE" >> "$PROFILE_LOG"
+        fi
+
+        if [[ $local_exit -ne 0 ]]; then
+            EXIT_CODE=$local_exit
+            echo "    FAILED (exit $local_exit)"
+        fi
+    done <<< "$TEST_CASES"
+else
+    pnpm seed test \
+        --generator "$GENERATOR" \
+        --parallel "$PARALLEL" \
+        --log-level "$LOG_LEVEL" \
+        --profile "$PROFILE_LOG" \
+        $SKIP_SCRIPTS \
+        $FIXTURE_ARGS \
+        > "$SEED_LOG" 2>&1 &
+    SEED_PID=$!
+    wait "$SEED_PID" || true
+    EXIT_CODE=$?
+    SEED_PID=""
+fi
 
 END_TIME=$SECONDS
 ELAPSED=$((END_TIME - START_TIME))
