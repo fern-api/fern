@@ -320,6 +320,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const hasDateTime = context.usesDateTime();
         const hasBase64 = context.usesBase64();
         const hasBigInteger = context.usesBigInteger();
+        const hasFloatingPoint = context.usesFloatingPoint();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -345,6 +346,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         if (hasBigInteger) {
             lines.push("pub mod bigint_string;");
+        }
+        if (hasFloatingPoint) {
+            lines.push("pub mod number_serializers;");
         }
         lines.push("");
         lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
