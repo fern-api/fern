@@ -144,5 +144,5 @@ export function getOriginalName(input: NameInput): string {
  * Name has { originalName: string, camelCase: ..., ... }
  */
 function isNameAndWireValue(value: Name | NameAndWireValue): value is NameAndWireValue {
-    return "wireValue" in value;
+    return "wireValue" in value && !("originalName" in value);
 }

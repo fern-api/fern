@@ -10,7 +10,7 @@ import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString } from "
 export type NameInput = NameOrString | NameAndWireValueOrString;
 
 function isNameAndWireValue(value: Name | NameAndWireValue): value is NameAndWireValue {
-    return "wireValue" in value;
+    return "wireValue" in value && !("originalName" in value);
 }
 
 function extractNameOrString(input: NameInput): NameOrString {

@@ -744,4 +744,159 @@ describe("migrateFromV66ToV65", () => {
             expect(v65IR.variables[0]?.name.camelCase).toBeDefined();
         });
     });
+
+    describe("dynamic IR inflation", () => {
+        // Helper to build a dynamic Name object (the dynamic IR does not use compressed
+        // NameOrString — its FernFilepath and Declaration fields use full Name objects).
+        const makeDynamicName = (originalName: string): IrVersions.V66.dynamic.Name => ({
+            originalName,
+            camelCase: { safeName: originalName, unsafeName: originalName },
+            pascalCase: { safeName: originalName, unsafeName: originalName },
+            snakeCase: { safeName: originalName, unsafeName: originalName },
+            screamingSnakeCase: { safeName: originalName.toUpperCase(), unsafeName: originalName.toUpperCase() }
+        });
+
+        const makeDynamicNameAndWireValue = (wireValue: string): IrVersions.V66.dynamic.NameAndWireValue => ({
+            wireValue,
+            name: makeDynamicName(wireValue)
+        });
+
+        it("passes through dynamic IR object type with full Name objects intact", () => {
+            const dynamicIr: IrVersions.V66.dynamic.DynamicIntermediateRepresentation = {
+                version: "1.0.0",
+                types: {
+                    type_User: IrVersions.V66.dynamic.NamedType.object({
+                        declaration: {
+                            fernFilepath: {
+                                allParts: [makeDynamicName("user")],
+                                packagePath: [makeDynamicName("user")],
+                                file: makeDynamicName("User")
+                            },
+                            name: makeDynamicName("User")
+                        },
+                        properties: [
+                            {
+                                name: makeDynamicNameAndWireValue("userId"),
+                                typeReference: IrVersions.V66.dynamic.TypeReference.primitive("STRING"),
+                                propertyAccess: undefined,
+                                variable: undefined
+                            }
+                        ],
+                        extends: [],
+                        additionalProperties: false
+                    })
+                },
+                endpoints: {
+                    endpoint_getUser: {
+                        auth: undefined,
+                        declaration: {
+                            fernFilepath: {
+                                allParts: [makeDynamicName("user")],
+                                packagePath: [makeDynamicName("user")],
+                                file: undefined
+                            },
+                            name: makeDynamicName("getUser")
+                        },
+                        location: { method: "GET", path: "/users/{userId}" },
+                        request: IrVersions.V66.dynamic.Request.inlined({
+                            declaration: {
+                                fernFilepath: {
+                                    allParts: [makeDynamicName("user")],
+                                    packagePath: [makeDynamicName("user")],
+                                    file: undefined
+                                },
+                                name: makeDynamicName("GetUserRequest")
+                            },
+                            pathParameters: [
+                                {
+                                    name: makeDynamicNameAndWireValue("userId"),
+                                    typeReference: IrVersions.V66.dynamic.TypeReference.primitive("STRING"),
+                                    propertyAccess: undefined,
+                                    variable: undefined
+                                }
+                            ],
+                            queryParameters: undefined,
+                            headers: undefined,
+                            body: undefined,
+                            metadata: undefined
+                        }),
+                        response: IrVersions.V66.dynamic.Response.json(),
+                        examples: undefined
+                    }
+                },
+                environments: undefined,
+                headers: undefined,
+                pathParameters: undefined,
+                variables: undefined,
+                generatorConfig: undefined
+            };
+
+            const v66IR = createMinimalV66IR({ dynamic: dynamicIr });
+            const v65IR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
+
+            expect(v65IR.dynamic).toBeDefined();
+
+            // Verify type declaration name passes through correctly
+            const userType = v65IR.dynamic?.types["type_User"];
+            expect(userType).toBeDefined();
+            if (userType?.type === "object") {
+                expect(userType.declaration.name.originalName).toBe("User");
+                expect(userType.declaration.name.camelCase).toBeDefined();
+                expect(userType.declaration.fernFilepath.allParts[0]?.originalName).toBe("user");
+
+                // Verify property NameAndWireValue passes through
+                const prop = userType.properties[0];
+                expect(prop?.name.wireValue).toBe("userId");
+                expect(prop?.name.name.originalName).toBe("userId");
+                expect(prop?.name.name.camelCase).toBeDefined();
+            }
+
+            // Verify endpoint declaration name passes through
+            const endpoint = v65IR.dynamic?.endpoints["endpoint_getUser"];
+            expect(endpoint).toBeDefined();
+            expect(endpoint?.declaration.name.originalName).toBe("getUser");
+            expect(endpoint?.declaration.name.camelCase).toBeDefined();
+
+            // Verify path parameter NameAndWireValue passes through
+            if (endpoint?.request.type === "inlined" && endpoint.request.pathParameters != null) {
+                const pathParam = endpoint.request.pathParameters[0];
+                expect(pathParam?.name.wireValue).toBe("userId");
+                expect(pathParam?.name.name.originalName).toBe("userId");
+                expect(pathParam?.name.name.camelCase).toBeDefined();
+            }
+        });
+
+        it("passes through dynamic IR enum type with full NameAndWireValue objects", () => {
+            const dynamicIr: IrVersions.V66.dynamic.DynamicIntermediateRepresentation = {
+                version: "1.0.0",
+                types: {
+                    type_Status: IrVersions.V66.dynamic.NamedType.enum({
+                        declaration: {
+                            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                            name: makeDynamicName("Status")
+                        },
+                        values: [makeDynamicNameAndWireValue("ACTIVE"), makeDynamicNameAndWireValue("INACTIVE")]
+                    })
+                },
+                endpoints: {},
+                environments: undefined,
+                headers: undefined,
+                pathParameters: undefined,
+                variables: undefined,
+                generatorConfig: undefined
+            };
+
+            const v66IR = createMinimalV66IR({ dynamic: dynamicIr });
+            const v65IR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
+
+            const statusType = v65IR.dynamic?.types["type_Status"];
+            expect(statusType?.type).toBe("enum");
+            if (statusType?.type === "enum") {
+                expect(statusType.values[0]?.wireValue).toBe("ACTIVE");
+                expect(statusType.values[0]?.name.originalName).toBe("ACTIVE");
+                expect(statusType.values[0]?.name.camelCase).toBeDefined();
+                expect(statusType.values[1]?.wireValue).toBe("INACTIVE");
+            }
+        });
+    });
 });
