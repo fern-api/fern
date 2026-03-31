@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.11
+  changelogEntry:
+    - summary: |
+        Change default `rubocopVariableNumberStyle` from `snake_case` to `normalcase`,
+        so field names with embedded digits (e.g., `recaptcha_v2`, `office365`) no longer
+        trigger RuboCop warnings by default.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 61
+
 - version: 1.1.10
   changelogEntry:
     - summary: |

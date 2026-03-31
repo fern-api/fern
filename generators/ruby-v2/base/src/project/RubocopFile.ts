@@ -16,7 +16,7 @@ export class RubocopFile {
     }
 
     private getVariableNumberConfig(): string {
-        const style = this.context.customConfig.rubocopVariableNumberStyle ?? "snake_case";
+        const style = this.context.customConfig.rubocopVariableNumberStyle ?? "normalcase";
 
         if (style === "disabled") {
             return `Naming/VariableNumber:
