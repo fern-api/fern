@@ -716,7 +716,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(MethodSpec.methodBuilder(MAX_RETRIES_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
-                        .addJavadoc("Override the maximum number of retries. Defaults to 2 retries.")
+                        .addJavadoc("Override the maximum number of retries. Defaults to " + getDefaultMaxRetries() + " retries.")
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
