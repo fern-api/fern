@@ -1327,34 +1327,15 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
-        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
-    }
-
-    /**
-     * Get the API key prefix from the IR auth schemes (e.g., "Token", "Bearer").
-     * Returns undefined if no prefix is configured.
-     */
-    public getApiKeyPrefix(): string | undefined {
-        return this.getFirstHeaderAuthValue((header) => header.prefix);
-    }
-
-    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const result = FernIr.AuthScheme._visit(scheme, {
-                    header: (header) => selector(header),
-                    bearer: () => undefined,
-                    basic: () => undefined,
-                    oauth: () => undefined,
-                    inferred: () => undefined,
-                    _other: () => undefined
-                });
-                if (result !== undefined) {
-                    return result;
+                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
+                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
+                    return schemeAsUnion.name.wireValue;
                 }
             }
         }
-        return undefined;
+        return "api_key";
     }
 
     /**
