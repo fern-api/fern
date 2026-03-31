@@ -1,0 +1,1653 @@
+openapi: 3.0.1
+info:
+  title: java-many-properties
+  version: ''
+paths: {}
+components:
+  schemas:
+    LargeObject:
+      title: LargeObject
+      type: object
+      properties:
+        property0:
+          type: string
+          nullable: true
+        property1:
+          type: string
+          nullable: true
+        property2:
+          type: string
+          nullable: true
+        property3:
+          type: string
+          nullable: true
+        property4:
+          type: string
+          nullable: true
+        property5:
+          type: string
+          nullable: true
+        property6:
+          type: string
+          nullable: true
+        property7:
+          type: string
+          nullable: true
+        property8:
+          type: string
+          nullable: true
+        property9:
+          type: string
+          nullable: true
+        property10:
+          type: string
+          nullable: true
+        property11:
+          type: string
+          nullable: true
+        property12:
+          type: string
+          nullable: true
+        property13:
+          type: string
+          nullable: true
+        property14:
+          type: string
+          nullable: true
+        property15:
+          type: string
+          nullable: true
+        property16:
+          type: string
+          nullable: true
+        property17:
+          type: string
+          nullable: true
+        property18:
+          type: string
+          nullable: true
+        property19:
+          type: string
+          nullable: true
+        property20:
+          type: string
+          nullable: true
+        property21:
+          type: string
+          nullable: true
+        property22:
+          type: string
+          nullable: true
+        property23:
+          type: string
+          nullable: true
+        property24:
+          type: string
+          nullable: true
+        property25:
+          type: string
+          nullable: true
+        property26:
+          type: string
+          nullable: true
+        property27:
+          type: string
+          nullable: true
+        property28:
+          type: string
+          nullable: true
+        property29:
+          type: string
+          nullable: true
+        property30:
+          type: string
+          nullable: true
+        property31:
+          type: string
+          nullable: true
+        property32:
+          type: string
+          nullable: true
+        property33:
+          type: string
+          nullable: true
+        property34:
+          type: string
+          nullable: true
+        property35:
+          type: string
+          nullable: true
+        property36:
+          type: string
+          nullable: true
+        property37:
+          type: string
+          nullable: true
+        property38:
+          type: string
+          nullable: true
+        property39:
+          type: string
+          nullable: true
+        property40:
+          type: string
+          nullable: true
+        property41:
+          type: string
+          nullable: true
+        property42:
+          type: string
+          nullable: true
+        property43:
+          type: string
+          nullable: true
+        property44:
+          type: string
+          nullable: true
+        property45:
+          type: string
+          nullable: true
+        property46:
+          type: string
+          nullable: true
+        property47:
+          type: string
+          nullable: true
+        property48:
+          type: string
+          nullable: true
+        property49:
+          type: string
+          nullable: true
+        property50:
+          type: string
+          nullable: true
+        property51:
+          type: string
+          nullable: true
+        property52:
+          type: string
+          nullable: true
+        property53:
+          type: string
+          nullable: true
+        property54:
+          type: string
+          nullable: true
+        property55:
+          type: string
+          nullable: true
+        property56:
+          type: string
+          nullable: true
+        property57:
+          type: string
+          nullable: true
+        property58:
+          type: string
+          nullable: true
+        property59:
+          type: string
+          nullable: true
+        property60:
+          type: string
+          nullable: true
+        property61:
+          type: string
+          nullable: true
+        property62:
+          type: string
+          nullable: true
+        property63:
+          type: string
+          nullable: true
+        property64:
+          type: string
+          nullable: true
+        property65:
+          type: string
+          nullable: true
+        property66:
+          type: string
+          nullable: true
+        property67:
+          type: string
+          nullable: true
+        property68:
+          type: string
+          nullable: true
+        property69:
+          type: string
+          nullable: true
+        property70:
+          type: string
+          nullable: true
+        property71:
+          type: string
+          nullable: true
+        property72:
+          type: string
+          nullable: true
+        property73:
+          type: string
+          nullable: true
+        property74:
+          type: string
+          nullable: true
+        property75:
+          type: string
+          nullable: true
+        property76:
+          type: string
+          nullable: true
+        property77:
+          type: string
+          nullable: true
+        property78:
+          type: string
+          nullable: true
+        property79:
+          type: string
+          nullable: true
+        property80:
+          type: string
+          nullable: true
+        property81:
+          type: string
+          nullable: true
+        property82:
+          type: string
+          nullable: true
+        property83:
+          type: string
+          nullable: true
+        property84:
+          type: string
+          nullable: true
+        property85:
+          type: string
+          nullable: true
+        property86:
+          type: string
+          nullable: true
+        property87:
+          type: string
+          nullable: true
+        property88:
+          type: string
+          nullable: true
+        property89:
+          type: string
+          nullable: true
+        property90:
+          type: string
+          nullable: true
+        property91:
+          type: string
+          nullable: true
+        property92:
+          type: string
+          nullable: true
+        property93:
+          type: string
+          nullable: true
+        property94:
+          type: string
+          nullable: true
+        property95:
+          type: string
+          nullable: true
+        property96:
+          type: string
+          nullable: true
+        property97:
+          type: string
+          nullable: true
+        property98:
+          type: string
+          nullable: true
+        property99:
+          type: string
+          nullable: true
+        property100:
+          type: string
+          nullable: true
+        property101:
+          type: string
+          nullable: true
+        property102:
+          type: string
+          nullable: true
+        property103:
+          type: string
+          nullable: true
+        property104:
+          type: string
+          nullable: true
+        property105:
+          type: string
+          nullable: true
+        property106:
+          type: string
+          nullable: true
+        property107:
+          type: string
+          nullable: true
+        property108:
+          type: string
+          nullable: true
+        property109:
+          type: string
+          nullable: true
+        property110:
+          type: string
+          nullable: true
+        property111:
+          type: string
+          nullable: true
+        property112:
+          type: string
+          nullable: true
+        property113:
+          type: string
+          nullable: true
+        property114:
+          type: string
+          nullable: true
+        property115:
+          type: string
+          nullable: true
+        property116:
+          type: string
+          nullable: true
+        property117:
+          type: string
+          nullable: true
+        property118:
+          type: string
+          nullable: true
+        property119:
+          type: string
+          nullable: true
+        property120:
+          type: string
+          nullable: true
+        property121:
+          type: string
+          nullable: true
+        property122:
+          type: string
+          nullable: true
+        property123:
+          type: string
+          nullable: true
+        property124:
+          type: string
+          nullable: true
+        property125:
+          type: string
+          nullable: true
+        property126:
+          type: string
+          nullable: true
+        property127:
+          type: string
+          nullable: true
+        property128:
+          type: string
+          nullable: true
+        property129:
+          type: string
+          nullable: true
+        property130:
+          type: string
+          nullable: true
+        property131:
+          type: string
+          nullable: true
+        property132:
+          type: string
+          nullable: true
+        property133:
+          type: string
+          nullable: true
+        property134:
+          type: string
+          nullable: true
+        property135:
+          type: string
+          nullable: true
+        property136:
+          type: string
+          nullable: true
+        property137:
+          type: string
+          nullable: true
+        property138:
+          type: string
+          nullable: true
+        property139:
+          type: string
+          nullable: true
+        property140:
+          type: string
+          nullable: true
+        property141:
+          type: string
+          nullable: true
+        property142:
+          type: string
+          nullable: true
+        property143:
+          type: string
+          nullable: true
+        property144:
+          type: string
+          nullable: true
+        property145:
+          type: string
+          nullable: true
+        property146:
+          type: string
+          nullable: true
+        property147:
+          type: string
+          nullable: true
+        property148:
+          type: string
+          nullable: true
+        property149:
+          type: string
+          nullable: true
+        property150:
+          type: string
+          nullable: true
+        property151:
+          type: string
+          nullable: true
+        property152:
+          type: string
+          nullable: true
+        property153:
+          type: string
+          nullable: true
+        property154:
+          type: string
+          nullable: true
+        property155:
+          type: string
+          nullable: true
+        property156:
+          type: string
+          nullable: true
+        property157:
+          type: string
+          nullable: true
+        property158:
+          type: string
+          nullable: true
+        property159:
+          type: string
+          nullable: true
+        property160:
+          type: string
+          nullable: true
+        property161:
+          type: string
+          nullable: true
+        property162:
+          type: string
+          nullable: true
+        property163:
+          type: string
+          nullable: true
+        property164:
+          type: string
+          nullable: true
+        property165:
+          type: string
+          nullable: true
+        property166:
+          type: string
+          nullable: true
+        property167:
+          type: string
+          nullable: true
+        property168:
+          type: string
+          nullable: true
+        property169:
+          type: string
+          nullable: true
+        property170:
+          type: string
+          nullable: true
+        property171:
+          type: string
+          nullable: true
+        property172:
+          type: string
+          nullable: true
+        property173:
+          type: string
+          nullable: true
+        property174:
+          type: string
+          nullable: true
+        property175:
+          type: string
+          nullable: true
+        property176:
+          type: string
+          nullable: true
+        property177:
+          type: string
+          nullable: true
+        property178:
+          type: string
+          nullable: true
+        property179:
+          type: string
+          nullable: true
+        property180:
+          type: string
+          nullable: true
+        property181:
+          type: string
+          nullable: true
+        property182:
+          type: string
+          nullable: true
+        property183:
+          type: string
+          nullable: true
+        property184:
+          type: string
+          nullable: true
+        property185:
+          type: string
+          nullable: true
+        property186:
+          type: string
+          nullable: true
+        property187:
+          type: string
+          nullable: true
+        property188:
+          type: string
+          nullable: true
+        property189:
+          type: string
+          nullable: true
+        property190:
+          type: string
+          nullable: true
+        property191:
+          type: string
+          nullable: true
+        property192:
+          type: string
+          nullable: true
+        property193:
+          type: string
+          nullable: true
+        property194:
+          type: string
+          nullable: true
+        property195:
+          type: string
+          nullable: true
+        property196:
+          type: string
+          nullable: true
+        property197:
+          type: string
+          nullable: true
+        property198:
+          type: string
+          nullable: true
+        property199:
+          type: string
+          nullable: true
+        property200:
+          type: string
+          nullable: true
+        property201:
+          type: string
+          nullable: true
+        property202:
+          type: string
+          nullable: true
+        property203:
+          type: string
+          nullable: true
+        property204:
+          type: string
+          nullable: true
+        property205:
+          type: string
+          nullable: true
+        property206:
+          type: string
+          nullable: true
+        property207:
+          type: string
+          nullable: true
+        property208:
+          type: string
+          nullable: true
+        property209:
+          type: string
+          nullable: true
+        property210:
+          type: string
+          nullable: true
+        property211:
+          type: string
+          nullable: true
+        property212:
+          type: string
+          nullable: true
+        property213:
+          type: string
+          nullable: true
+        property214:
+          type: string
+          nullable: true
+        property215:
+          type: string
+          nullable: true
+        property216:
+          type: string
+          nullable: true
+        property217:
+          type: string
+          nullable: true
+        property218:
+          type: string
+          nullable: true
+        property219:
+          type: string
+          nullable: true
+        property220:
+          type: string
+          nullable: true
+        property221:
+          type: string
+          nullable: true
+        property222:
+          type: string
+          nullable: true
+        property223:
+          type: string
+          nullable: true
+        property224:
+          type: string
+          nullable: true
+        property225:
+          type: string
+          nullable: true
+        property226:
+          type: string
+          nullable: true
+        property227:
+          type: string
+          nullable: true
+        property228:
+          type: string
+          nullable: true
+        property229:
+          type: string
+          nullable: true
+        property230:
+          type: string
+          nullable: true
+        property231:
+          type: string
+          nullable: true
+        property232:
+          type: string
+          nullable: true
+        property233:
+          type: string
+          nullable: true
+        property234:
+          type: string
+          nullable: true
+        property235:
+          type: string
+          nullable: true
+        property236:
+          type: string
+          nullable: true
+        property237:
+          type: string
+          nullable: true
+        property238:
+          type: string
+          nullable: true
+        property239:
+          type: string
+          nullable: true
+        property240:
+          type: string
+          nullable: true
+        property241:
+          type: string
+          nullable: true
+        property242:
+          type: string
+          nullable: true
+        property243:
+          type: string
+          nullable: true
+        property244:
+          type: string
+          nullable: true
+        property245:
+          type: string
+          nullable: true
+        property246:
+          type: string
+          nullable: true
+        property247:
+          type: string
+          nullable: true
+        property248:
+          type: string
+          nullable: true
+        property249:
+          type: string
+          nullable: true
+        property250:
+          type: string
+          nullable: true
+        property251:
+          type: string
+          nullable: true
+        property252:
+          type: string
+          nullable: true
+        property253:
+          type: string
+          nullable: true
+        property254:
+          type: string
+          nullable: true
+        property255:
+          type: string
+          nullable: true
+        property256:
+          type: string
+          nullable: true
+        property257:
+          type: string
+          nullable: true
+        property258:
+          type: string
+          nullable: true
+        property259:
+          type: string
+          nullable: true
+        property260:
+          type: string
+          nullable: true
+        property261:
+          type: string
+          nullable: true
+        property262:
+          type: string
+          nullable: true
+        property263:
+          type: string
+          nullable: true
+        property264:
+          type: string
+          nullable: true
+        property265:
+          type: string
+          nullable: true
+        property266:
+          type: string
+          nullable: true
+        property267:
+          type: string
+          nullable: true
+        property268:
+          type: string
+          nullable: true
+        property269:
+          type: string
+          nullable: true
+        property270:
+          type: string
+          nullable: true
+        property271:
+          type: string
+          nullable: true
+        property272:
+          type: string
+          nullable: true
+        property273:
+          type: string
+          nullable: true
+        property274:
+          type: string
+          nullable: true
+        property275:
+          type: string
+          nullable: true
+        property276:
+          type: string
+          nullable: true
+        property277:
+          type: string
+          nullable: true
+        property278:
+          type: string
+          nullable: true
+        property279:
+          type: string
+          nullable: true
+        property280:
+          type: string
+          nullable: true
+        property281:
+          type: string
+          nullable: true
+        property282:
+          type: string
+          nullable: true
+        property283:
+          type: string
+          nullable: true
+        property284:
+          type: string
+          nullable: true
+        property285:
+          type: string
+          nullable: true
+        property286:
+          type: string
+          nullable: true
+        property287:
+          type: string
+          nullable: true
+        property288:
+          type: string
+          nullable: true
+        property289:
+          type: string
+          nullable: true
+        property290:
+          type: string
+          nullable: true
+        property291:
+          type: string
+          nullable: true
+        property292:
+          type: string
+          nullable: true
+        property293:
+          type: string
+          nullable: true
+        property294:
+          type: string
+          nullable: true
+        property295:
+          type: string
+          nullable: true
+        property296:
+          type: string
+          nullable: true
+        property297:
+          type: string
+          nullable: true
+        property298:
+          type: string
+          nullable: true
+        property299:
+          type: string
+          nullable: true
+    LargeObjectWithLongsAndDoubles:
+      title: LargeObjectWithLongsAndDoubles
+      type: object
+      description: |-
+        Object with long and double fields to test precise JVM slot counting.
+        Each long/double field consumes 2 JVM parameter slots instead of 1.
+      properties:
+        longField0:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField1:
+          type: number
+          format: double
+          nullable: true
+        stringField2:
+          type: string
+          nullable: true
+        longField3:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField4:
+          type: number
+          format: double
+          nullable: true
+        stringField5:
+          type: string
+          nullable: true
+        longField6:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField7:
+          type: number
+          format: double
+          nullable: true
+        stringField8:
+          type: string
+          nullable: true
+        longField9:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField10:
+          type: number
+          format: double
+          nullable: true
+        stringField11:
+          type: string
+          nullable: true
+        longField12:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField13:
+          type: number
+          format: double
+          nullable: true
+        stringField14:
+          type: string
+          nullable: true
+        longField15:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField16:
+          type: number
+          format: double
+          nullable: true
+        stringField17:
+          type: string
+          nullable: true
+        longField18:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField19:
+          type: number
+          format: double
+          nullable: true
+        stringField20:
+          type: string
+          nullable: true
+        longField21:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField22:
+          type: number
+          format: double
+          nullable: true
+        stringField23:
+          type: string
+          nullable: true
+        longField24:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField25:
+          type: number
+          format: double
+          nullable: true
+        stringField26:
+          type: string
+          nullable: true
+        longField27:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField28:
+          type: number
+          format: double
+          nullable: true
+        stringField29:
+          type: string
+          nullable: true
+        longField30:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField31:
+          type: number
+          format: double
+          nullable: true
+        stringField32:
+          type: string
+          nullable: true
+        longField33:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField34:
+          type: number
+          format: double
+          nullable: true
+        stringField35:
+          type: string
+          nullable: true
+        longField36:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField37:
+          type: number
+          format: double
+          nullable: true
+        stringField38:
+          type: string
+          nullable: true
+        longField39:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField40:
+          type: number
+          format: double
+          nullable: true
+        stringField41:
+          type: string
+          nullable: true
+        longField42:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField43:
+          type: number
+          format: double
+          nullable: true
+        stringField44:
+          type: string
+          nullable: true
+        longField45:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField46:
+          type: number
+          format: double
+          nullable: true
+        stringField47:
+          type: string
+          nullable: true
+        longField48:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField49:
+          type: number
+          format: double
+          nullable: true
+        stringField50:
+          type: string
+          nullable: true
+        longField51:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField52:
+          type: number
+          format: double
+          nullable: true
+        stringField53:
+          type: string
+          nullable: true
+        longField54:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField55:
+          type: number
+          format: double
+          nullable: true
+        stringField56:
+          type: string
+          nullable: true
+        longField57:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField58:
+          type: number
+          format: double
+          nullable: true
+        stringField59:
+          type: string
+          nullable: true
+        longField60:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField61:
+          type: number
+          format: double
+          nullable: true
+        stringField62:
+          type: string
+          nullable: true
+        longField63:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField64:
+          type: number
+          format: double
+          nullable: true
+        stringField65:
+          type: string
+          nullable: true
+        longField66:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField67:
+          type: number
+          format: double
+          nullable: true
+        stringField68:
+          type: string
+          nullable: true
+        longField69:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField70:
+          type: number
+          format: double
+          nullable: true
+        stringField71:
+          type: string
+          nullable: true
+        longField72:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField73:
+          type: number
+          format: double
+          nullable: true
+        stringField74:
+          type: string
+          nullable: true
+        longField75:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField76:
+          type: number
+          format: double
+          nullable: true
+        stringField77:
+          type: string
+          nullable: true
+        longField78:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField79:
+          type: number
+          format: double
+          nullable: true
+        stringField80:
+          type: string
+          nullable: true
+        longField81:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField82:
+          type: number
+          format: double
+          nullable: true
+        stringField83:
+          type: string
+          nullable: true
+        longField84:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField85:
+          type: number
+          format: double
+          nullable: true
+        stringField86:
+          type: string
+          nullable: true
+        longField87:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField88:
+          type: number
+          format: double
+          nullable: true
+        stringField89:
+          type: string
+          nullable: true
+        longField90:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField91:
+          type: number
+          format: double
+          nullable: true
+        stringField92:
+          type: string
+          nullable: true
+        longField93:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField94:
+          type: number
+          format: double
+          nullable: true
+        stringField95:
+          type: string
+          nullable: true
+        longField96:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField97:
+          type: number
+          format: double
+          nullable: true
+        stringField98:
+          type: string
+          nullable: true
+        longField99:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField100:
+          type: number
+          format: double
+          nullable: true
+        stringField101:
+          type: string
+          nullable: true
+        longField102:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField103:
+          type: number
+          format: double
+          nullable: true
+        stringField104:
+          type: string
+          nullable: true
+        longField105:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField106:
+          type: number
+          format: double
+          nullable: true
+        stringField107:
+          type: string
+          nullable: true
+        longField108:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField109:
+          type: number
+          format: double
+          nullable: true
+        stringField110:
+          type: string
+          nullable: true
+        longField111:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField112:
+          type: number
+          format: double
+          nullable: true
+        stringField113:
+          type: string
+          nullable: true
+        longField114:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField115:
+          type: number
+          format: double
+          nullable: true
+        stringField116:
+          type: string
+          nullable: true
+        longField117:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField118:
+          type: number
+          format: double
+          nullable: true
+        stringField119:
+          type: string
+          nullable: true
+        longField120:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField121:
+          type: number
+          format: double
+          nullable: true
+        stringField122:
+          type: string
+          nullable: true
+        longField123:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField124:
+          type: number
+          format: double
+          nullable: true
+        stringField125:
+          type: string
+          nullable: true
+        longField126:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField127:
+          type: number
+          format: double
+          nullable: true
+        stringField128:
+          type: string
+          nullable: true
+        longField129:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField130:
+          type: number
+          format: double
+          nullable: true
+        stringField131:
+          type: string
+          nullable: true
+        longField132:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField133:
+          type: number
+          format: double
+          nullable: true
+        stringField134:
+          type: string
+          nullable: true
+        longField135:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField136:
+          type: number
+          format: double
+          nullable: true
+        stringField137:
+          type: string
+          nullable: true
+        longField138:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField139:
+          type: number
+          format: double
+          nullable: true
+        stringField140:
+          type: string
+          nullable: true
+        longField141:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField142:
+          type: number
+          format: double
+          nullable: true
+        stringField143:
+          type: string
+          nullable: true
+        longField144:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField145:
+          type: number
+          format: double
+          nullable: true
+        stringField146:
+          type: string
+          nullable: true
+        longField147:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField148:
+          type: number
+          format: double
+          nullable: true
+        stringField149:
+          type: string
+          nullable: true
+        longField150:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField151:
+          type: number
+          format: double
+          nullable: true
+        stringField152:
+          type: string
+          nullable: true
+        longField153:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField154:
+          type: number
+          format: double
+          nullable: true
+        stringField155:
+          type: string
+          nullable: true
+        longField156:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField157:
+          type: number
+          format: double
+          nullable: true
+        stringField158:
+          type: string
+          nullable: true
+        longField159:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField160:
+          type: number
+          format: double
+          nullable: true
+        stringField161:
+          type: string
+          nullable: true
+        longField162:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField163:
+          type: number
+          format: double
+          nullable: true
+        stringField164:
+          type: string
+          nullable: true
+        longField165:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField166:
+          type: number
+          format: double
+          nullable: true
+        stringField167:
+          type: string
+          nullable: true
+        longField168:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField169:
+          type: number
+          format: double
+          nullable: true
+        stringField170:
+          type: string
+          nullable: true
+        longField171:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField172:
+          type: number
+          format: double
+          nullable: true
+        stringField173:
+          type: string
+          nullable: true
+        longField174:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField175:
+          type: number
+          format: double
+          nullable: true
+        stringField176:
+          type: string
+          nullable: true
+        longField177:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField178:
+          type: number
+          format: double
+          nullable: true
+        stringField179:
+          type: string
+          nullable: true
+        longField180:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField181:
+          type: number
+          format: double
+          nullable: true
+        stringField182:
+          type: string
+          nullable: true
+        longField183:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField184:
+          type: number
+          format: double
+          nullable: true
+        stringField185:
+          type: string
+          nullable: true
+        longField186:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField187:
+          type: number
+          format: double
+          nullable: true
+        stringField188:
+          type: string
+          nullable: true
+        longField189:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField190:
+          type: number
+          format: double
+          nullable: true
+        stringField191:
+          type: string
+          nullable: true
+        longField192:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField193:
+          type: number
+          format: double
+          nullable: true
+        stringField194:
+          type: string
+          nullable: true
+        longField195:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField196:
+          type: number
+          format: double
+          nullable: true
+        stringField197:
+          type: string
+          nullable: true
+        longField198:
+          type: integer
+          format: int64
+          nullable: true
+        doubleField199:
+          type: number
+          format: double
+          nullable: true
+  securitySchemes: {}

@@ -1,0 +1,32 @@
+openapi: 3.0.1
+info:
+  title: java-single-property-endpoint
+  version: ''
+paths:
+  /{id}:
+    get:
+      operationId: singleProperty_doThing
+      tags:
+        - SingleProperty
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: include-remote-data
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas: {}
+  securitySchemes: {}
