@@ -143,9 +143,9 @@ test_empty_results() {
   assert_contains "$OUTPUT" "</details>" "Has closing details tag"
 }
 
-# Test 8: Baseline timestamp shown when BASELINE_TIMESTAMP is set
+# Test 8: Baseline timestamp shown when BASELINE_TIMESTAMP is set (legacy flat format)
 test_baseline_timestamp() {
-  echo "Test: Baseline timestamp shown in header"
+  echo "Test: Baseline timestamp shown in header (legacy flat)"
   setup_dirs
   echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
   echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/ts-sdk.jsonl"
@@ -155,6 +155,95 @@ test_baseline_timestamp() {
   assert_contains "$OUTPUT" "cached" "Shows cached baseline label"
   assert_contains "$OUTPUT" "2026-03-30T04:00:00Z" "Shows baseline timestamp"
   assert_contains "$OUTPUT" "benchmark-baseline" "Shows link to refresh workflow"
+}
+
+# Test 10: Median baseline from history (odd number of runs)
+test_history_median_odd() {
+  echo "Test: Median from 3 history runs (odd)"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  # Create 3 history entries: 170, 180, 190 -> median = 180
+  mkdir -p "$MAIN_DIR/history/2026-03-28_1"
+  mkdir -p "$MAIN_DIR/history/2026-03-29_2"
+  mkdir -p "$MAIN_DIR/history/2026-03-30_3"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":190,"exit_code":0}' > "$MAIN_DIR/history/2026-03-28_1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":170,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_2/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_3/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "180s (n=3)" "Shows median with run count"
+  assert_contains "$OUTPUT" "+20s (+11.1%)" "Shows correct delta against median"
+  assert_contains "$OUTPUT" "median of 3 nightly run(s)" "Header shows history count"
+}
+
+# Test 11: Median baseline from history (even number of runs)
+test_history_median_even() {
+  echo "Test: Median from 4 history runs (even)"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  # Create 4 history entries: 170, 180, 190, 200 -> median = (180+190)/2 = 185
+  mkdir -p "$MAIN_DIR/history/2026-03-27_1"
+  mkdir -p "$MAIN_DIR/history/2026-03-28_2"
+  mkdir -p "$MAIN_DIR/history/2026-03-29_3"
+  mkdir -p "$MAIN_DIR/history/2026-03-30_4"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$MAIN_DIR/history/2026-03-27_1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":170,"exit_code":0}' > "$MAIN_DIR/history/2026-03-28_2/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":190,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_3/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_4/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "185s (n=4)" "Shows median of even count with run count"
+  assert_contains "$OUTPUT" "+15s (+8.1%)" "Shows correct delta against even median"
+}
+
+# Test 12: History with single run falls back gracefully (no n= suffix)
+test_history_single_run() {
+  echo "Test: History with single run shows no n= suffix"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  mkdir -p "$MAIN_DIR/history/2026-03-30_1"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_1/ts-sdk.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | 180s | 200s |" "Shows single-run without n= suffix"
+  assert_not_contains "$OUTPUT" "n=" "No n= for single history run"
+}
+
+# Test 13: Empty history directory shows N/A
+test_history_empty() {
+  echo "Test: Empty history directory shows N/A"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+  mkdir -p "$MAIN_DIR/history"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | N/A | 200s | N/A |" "Shows N/A for empty history"
+}
+
+# Test 14: History with partial generator coverage
+test_history_partial_coverage() {
+  echo "Test: History with partial generator coverage"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+  echo '{"generator":"go-sdk","spec":"square","duration_seconds":150,"exit_code":0}' > "$PR_DIR/go-sdk.jsonl"
+
+  # Only ts-sdk has history, go-sdk does not
+  mkdir -p "$MAIN_DIR/history/2026-03-29_1"
+  mkdir -p "$MAIN_DIR/history/2026-03-30_2"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":180,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":190,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_2/ts-sdk.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | 185s (n=2)" "ts-sdk has median from history"
+  assert_contains "$OUTPUT" "| go-sdk | square | N/A | 150s | N/A |" "go-sdk shows N/A (no history)"
 }
 
 # Test 9: No baseline timestamp when BASELINE_TIMESTAMP is unset
@@ -181,6 +270,11 @@ test_multiple_generators
 test_empty_results
 test_baseline_timestamp
 test_no_baseline_timestamp
+test_history_median_odd
+test_history_median_even
+test_history_single_run
+test_history_empty
+test_history_partial_coverage
 
 echo ""
 echo "=== Results: ${PASS} passed, ${FAIL} failed ==="

@@ -4,16 +4,79 @@
 #
 # Each directory contains .jsonl files with one JSON object per line:
 #   {"generator":"ts-sdk","spec":"square","duration_seconds":45}
+#
+# The main-results-dir may contain either:
+#   - Flat .jsonl files (single baseline, legacy format)
+#   - A history/ subdirectory with dated run folders, each containing .jsonl files.
+#     When history exists, the median of all historical runs is used as the baseline.
 
 set -euo pipefail
 
 PR_DIR="${1:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir>}"
 MAIN_DIR="${2:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir>}"
 
+# Compute median of a list of numbers (one per line on stdin)
+compute_median() {
+  sort -n | awk '{a[NR]=$1} END {
+    if (NR==0) { print "N/A"; exit }
+    if (NR%2==1) { print a[(NR+1)/2] }
+    else { printf "%.0f\n", (a[NR/2] + a[NR/2+1]) / 2 }
+  }'
+}
+
+# Look up baseline duration for a given generator+spec.
+# If history/ exists, computes median across all historical runs.
+# Otherwise falls back to flat .jsonl lookup (legacy/single-run format).
+# Sets: BASELINE_VAL, BASELINE_RUNS
+lookup_baseline() {
+  local generator="$1"
+  local spec="$2"
+  BASELINE_VAL="N/A"
+  BASELINE_RUNS=0
+
+  if [ -d "${MAIN_DIR}/history" ]; then
+    local durations=()
+    for run_dir in "${MAIN_DIR}/history"/*/; do
+      [ -d "$run_dir" ] || continue
+      local hist_file="${run_dir}/${generator}.jsonl"
+      [ -f "$hist_file" ] || continue
+      local dur
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$hist_file" 2>/dev/null || true)
+      if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
+        durations+=("$dur")
+      fi
+    done
+
+    BASELINE_RUNS=${#durations[@]}
+    if [ "$BASELINE_RUNS" -gt 0 ]; then
+      BASELINE_VAL=$(printf '%s\n' "${durations[@]}" | compute_median)
+    fi
+  else
+    local main_file="${MAIN_DIR}/${generator}.jsonl"
+    if [ -f "$main_file" ]; then
+      local main_line
+      main_line=$(jq -c --arg spec "$spec" 'select(.spec == $spec)' "$main_file" 2>/dev/null || true)
+      if [ -n "$main_line" ]; then
+        local val
+        val=$(echo "$main_line" | jq -r '.duration_seconds')
+        if [ "$val" != "0" ] && [ "$val" != "N/A" ]; then
+          BASELINE_VAL="$val"
+          BASELINE_RUNS=1
+        fi
+      fi
+    fi
+  fi
+}
+
 echo "## SDK Generation Benchmark Results"
 echo ""
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
-  echo "Comparing PR branch against cached \`main\` baseline (generated ${BASELINE_TIMESTAMP})."
+  if [ -d "${MAIN_DIR}/history" ]; then
+    HISTORY_COUNT=$(ls -d "${MAIN_DIR}/history"/*/ 2>/dev/null | wc -l)
+    echo "Comparing PR branch against **median of ${HISTORY_COUNT} nightly run(s)** on \`main\` (latest: ${BASELINE_TIMESTAMP})."
+  else
+    echo "Comparing PR branch against cached \`main\` baseline (generated ${BASELINE_TIMESTAMP})."
+  fi
 else
   echo "Comparing PR branch against \`main\` baseline."
 fi
@@ -21,8 +84,8 @@ echo ""
 echo "<details>"
 echo "<summary>Full benchmark table (click to expand)</summary>"
 echo ""
-echo "| Generator | Spec | main | PR | Delta |"
-echo "|-----------|------|------|----|-------|"
+echo "| Generator | Spec | main (median) | PR | Delta |"
+echo "|-----------|------|---------------|-----|-------|"
 
 # Collect all results from the PR directory
 for PR_FILE in "${PR_DIR}"/*.jsonl; do
@@ -34,28 +97,27 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     PR_DURATION=$(echo "$LINE" | jq -r '.duration_seconds')
     PR_EXIT=$(echo "$LINE" | jq -r '.exit_code // 0')
 
-    # Look up corresponding main result
-    MAIN_FILE="${MAIN_DIR}/${GENERATOR}.jsonl"
-    MAIN_DURATION="N/A"
+    # Look up baseline (median if history exists, single value otherwise)
+    lookup_baseline "$GENERATOR" "$SPEC"
     DELTA="N/A"
 
-    if [ -f "$MAIN_FILE" ]; then
-      MAIN_LINE=$(jq -c --arg spec "$SPEC" 'select(.spec == $spec)' "$MAIN_FILE" 2>/dev/null || true)
-      if [ -n "$MAIN_LINE" ]; then
-        MAIN_DURATION=$(echo "$MAIN_LINE" | jq -r '.duration_seconds')
-        if [ "$MAIN_DURATION" != "0" ] && [ "$MAIN_DURATION" != "N/A" ]; then
-          DIFF=$(( PR_DURATION - MAIN_DURATION ))
-          if [ "$MAIN_DURATION" -gt 0 ]; then
-            PCT=$(awk "BEGIN {printf \"%.1f\", ($DIFF / $MAIN_DURATION) * 100}")
-            if [ "$DIFF" -ge 0 ]; then
-              DELTA="+${DIFF}s (+${PCT}%)"
-            else
-              DELTA="${DIFF}s (${PCT}%)"
-            fi
-          fi
-          MAIN_DURATION="${MAIN_DURATION}s"
+    if [ "$BASELINE_VAL" != "N/A" ] && [ "$BASELINE_VAL" != "0" ]; then
+      DIFF=$(( PR_DURATION - BASELINE_VAL ))
+      if [ "$BASELINE_VAL" -gt 0 ]; then
+        PCT=$(awk "BEGIN {printf \"%.1f\", ($DIFF / $BASELINE_VAL) * 100}")
+        if [ "$DIFF" -ge 0 ]; then
+          DELTA="+${DIFF}s (+${PCT}%)"
+        else
+          DELTA="${DIFF}s (${PCT}%)"
         fi
       fi
+      if [ "$BASELINE_RUNS" -gt 1 ]; then
+        MAIN_DISPLAY="${BASELINE_VAL}s (n=${BASELINE_RUNS})"
+      else
+        MAIN_DISPLAY="${BASELINE_VAL}s"
+      fi
+    else
+      MAIN_DISPLAY="N/A"
     fi
 
     # Check if this spec was skipped (fetch failure)
@@ -70,7 +132,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       PR_DISPLAY="${PR_DURATION}s ⚠️"
     fi
 
-    echo "| ${GENERATOR} | ${SPEC} | ${MAIN_DURATION} | ${PR_DISPLAY} | ${DELTA} |"
+    echo "| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
   done < "$PR_FILE"
 done
 
@@ -80,5 +142,5 @@ echo ""
 echo "_Timings include Docker startup, IR parsing, generation, and build scripts. Variance of ±10% is normal._"
 echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
-  echo "_Baseline from nightly run on \`main\` at ${BASELINE_TIMESTAMP}. Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
+  echo "_Baseline from nightly runs on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
 fi
