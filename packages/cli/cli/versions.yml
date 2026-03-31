@@ -12,6 +12,17 @@
   createdAt: "2026-03-31"
   irVersion: 65
 
+- version: 4.53.1
+  changelogEntry:
+    - summary: |
+        Fix auto-generated path parameter examples producing object values
+        (e.g. `{ key: "value" }`) for `unknown`-typed path parameters.
+        `generatePathParameterExamples` now coerces non-primitive values to
+        a string fallback derived from the parameter name, preventing
+        `[object Object]` from appearing in generated wire test URLs.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
 - version: 4.53.0
   changelogEntry:
     - summary: |
@@ -31,7 +42,6 @@
       type: chore
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 4.52.1
   changelogEntry:
     - summary: |
