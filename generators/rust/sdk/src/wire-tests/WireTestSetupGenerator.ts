@@ -30,6 +30,8 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error mock-utils uses ir-sdk v61 while this package uses v65;
+        // the IR is structurally compatible (v65 is a superset) so this is safe.
         return new WireMock().convertToWireMock(ir);
     }
 

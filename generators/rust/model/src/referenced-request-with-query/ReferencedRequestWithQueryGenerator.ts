@@ -4,6 +4,7 @@ import { RustFile } from "@fern-api/rust-base";
 
 import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 
 export class ReferencedRequestWithQueryGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
@@ -39,7 +40,8 @@ export class ReferencedRequestWithQueryGenerator {
             const referencedBody = endpoint.requestBody as FernIr.HttpRequestBody.Reference;
 
             // Create properties: query parameters + body field
-            const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
+            const { properties: queryProperties, fieldNames: queryParamFieldNames } =
+                convertQueryParametersToProperties(endpoint.queryParameters, this.context);
             const bodyProperty: FernIr.ObjectProperty = {
                 name: {
                     name: {
@@ -65,7 +67,8 @@ export class ReferencedRequestWithQueryGenerator {
                 properties,
                 extendedProperties: [],
                 docsContent: `Request for ${endpoint.name.originalName} (body + query parameters)`,
-                context: this.context
+                context: this.context,
+                queryParamFieldNames
             });
 
             const filename = this.context.getFilenameForReferencedRequestWithQuery(endpoint.id);
@@ -76,31 +79,10 @@ export class ReferencedRequestWithQueryGenerator {
                 fileContents: objectGenerator.generateFileContents()
             });
         } catch (error) {
-            // Log error but don't fail the entire generation
             this.context.logger?.warn(
                 `Failed to generate referenced request with query file for endpoint ${endpoint.name.originalName}: ${error}`
             );
             return null;
         }
-    }
-
-    // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.ObjectProperty[] {
-        return queryParams.map((queryParam) => {
-            // For allow-multiple query params, wrap the type in a list using proper IR constructors
-            let valueType = queryParam.valueType;
-            if (queryParam.allowMultiple) {
-                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
-            }
-
-            return {
-                name: queryParam.name,
-                valueType,
-                docs: queryParam.docs,
-                availability: queryParam.availability,
-                propertyAccess: undefined,
-                v2Examples: undefined
-            };
-        });
     }
 }

@@ -472,6 +472,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_path_and_errors(\n    param=\"param\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.get_with_path_and_errors(\n        param=\"param\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/primitive/string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"

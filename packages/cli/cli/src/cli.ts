@@ -1966,7 +1966,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
 
             if (hasErrors) {
-                cliContext.failAndThrow("MDX validation failed");
+                cliContext.failWithoutThrowing();
             }
         }
     );

@@ -853,7 +853,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            editThisPageLaunch: (this.editThisPage?.launch ?? "github") as DocsV1Write.EditThisPageLaunch,
+            editThisPageLaunch: (this.editThisPage?.launch ?? "dashboard") as DocsV1Write.EditThisPageLaunch,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -2268,7 +2268,7 @@ function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
 ): { url: string | undefined; launch: string } {
-    const launch = editThisPage?.launch ?? "github";
+    const launch = editThisPage?.launch ?? "dashboard";
 
     if (editThisPage?.github == null) {
         return { url: undefined, launch };

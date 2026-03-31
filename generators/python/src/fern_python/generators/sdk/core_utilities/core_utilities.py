@@ -47,6 +47,7 @@ class CoreUtilities:
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
         self._datetime_milliseconds = custom_config.datetime_milliseconds
+        self._default_max_retries = custom_config.default_max_retries
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -697,6 +698,8 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
+        if self._default_max_retries != 2:
+            func_args.append(("base_max_retries", AST.Expression(str(self._default_max_retries))))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
         if logging_config is not None:

@@ -113,7 +113,10 @@ function isInlinable(
         case undefined:
             return false;
         default:
-            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            if ((resolvedSchema as OpenAPIV3.SchemaObject).type === ("null" as unknown)) {
+                return true;
+            }
+            // TODO(thomas): Handle type array that is not a SchemaObject and return to the promised land of assertNever
             // return assertNever(resolvedSchema);
             context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
             return false;
@@ -1353,6 +1356,46 @@ export function convertSchemaObject(
                 minProperties: schema.minProperties,
                 maxProperties: schema.maxProperties
             });
+        }
+
+        // handle null type (OpenAPI 3.1)
+        // `type: "null"` means the value is always null.
+        // Represent as nullable wrapping an unknown inner type.
+        if ((schema.type as string) === "null") {
+            let result: SchemaWithExample = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description: undefined,
+                    availability: undefined,
+                    namespace,
+                    groupName,
+                    example: undefined
+                })
+            });
+            if (wrapAsOptional) {
+                result = SchemaWithExample.optional({
+                    availability,
+                    namespace,
+                    groupName,
+                    description,
+                    generatedName,
+                    inline: undefined,
+                    nameOverride,
+                    title,
+                    value: result
+                });
+            }
+            return result;
         }
 
         // handle vanilla object

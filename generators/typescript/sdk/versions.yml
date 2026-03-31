@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.7
+  changelogEntry:
+    - summary: |
+        Fix auto-generated error test examples producing object path parameter values
+        (e.g. `{ key: "value" }`) instead of strings. Path parameters are always scalar
+        URL segments, so `generatePathParameterExamples` now coerces non-primitive values
+        to a string fallback derived from the parameter name. This prevents `[object Object]`
+        from appearing in generated wire test URLs and removes the `getMockUrlForExample`
+        workaround added in 3.60.5.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 3.60.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generator asserting `hasNextPage().toBe(true)` for offset-paginated
+        endpoints when the example response has `has_more: false` (or equivalent
+        `hasNextPage` property set to `false`). The generator now checks the actual value
+        of the has-next-page property in the mock response and skips the `hasNextPage()`
+        and `getNextPage()` assertions when the example indicates there is no next page,
+        matching the SDK's runtime behavior.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 3.60.5
+  changelogEntry:
+    - summary: |
+        Fix wire test mock URL encoding mismatch for path parameters with non-primitive
+        example values. The IR's `example.url` uses `JSON.stringify` for object path
+        parameter values (e.g. `%7B%22key%22%3A%22value%22%7D`), but the SDK's
+        `encodePathParam` uses `String()` (producing `%5Bobject%20Object%5D`). The test
+        generator now reconstructs mock URLs using the same encoding as `encodePathParam`,
+        ensuring MSW intercepts requests correctly in auto-generated error test cases.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 3.60.4
+  changelogEntry:
+    - summary: |
+        Redirect biome/lint/formatter output to a separate log file (`/tmp/fern-*.log`)
+        inside the Docker container instead of piping to the main generation log.
+        This reduces noise in the primary output while still preserving the tool
+        output for debugging.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 3.60.3
   changelogEntry:
     - summary: |

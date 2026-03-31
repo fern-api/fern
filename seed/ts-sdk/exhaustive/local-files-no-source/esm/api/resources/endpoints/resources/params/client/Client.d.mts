@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ParamsClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -129,4 +129,17 @@ export declare class ParamsClient {
      */
     uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
     private __uploadWithPath;
+    /**
+     * GET with path param that can throw errors
+     *
+     * @param {string} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedExhaustive.BadRequestBody}
+     *
+     * @example
+     *     await client.endpoints.params.getWithPathAndErrors("param")
+     */
+    getWithPathAndErrors(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    private __getWithPathAndErrors;
 }
