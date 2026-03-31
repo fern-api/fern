@@ -747,6 +747,13 @@ export class DocsDefinitionResolver {
     }
 
     private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
+        const integrations =
+            this.parsedDocsConfig.integrations != null || this.parsedDocsConfig.context7File != null
+                ? ({
+                      ...this.parsedDocsConfig.integrations,
+                      context7: this.getFileId(this.parsedDocsConfig.context7File)
+                  } as DocsV1Write.DocsConfig["integrations"])
+                : undefined;
         const config: DocsV1Write.DocsConfig = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
@@ -805,7 +812,7 @@ export class DocsDefinitionResolver {
             js: this.convertJavascriptConfiguration(),
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
-            integrations: this.parsedDocsConfig.integrations,
+            integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,
                 value: DocsV1Write.Url(footerLink.value)

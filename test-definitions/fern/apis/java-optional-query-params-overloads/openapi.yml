@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: java-optional-query-params-overloads
+  version: ''
+paths:
+  /api/users/{userId}/insurance:
+    get:
+      description: Get latest insurance for a user. All query params are optional.
+      operationId: getLatestInsurance
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: includeExpired
+          in: query
+          description: Include expired insurance policies
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: policyType
+          in: query
+          description: Filter by policy type
+          required: false
+          schema:
+            $ref: '#/components/schemas/PolicyType'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsurancePolicy'
+  /api/policies/search:
+    get:
+      description: Search policies with required query params
+      operationId: searchPolicies
+      tags:
+        - ''
+      parameters:
+        - name: query
+          in: query
+          description: Required search query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Optional limit
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InsurancePolicy'
+  /api/policies:
+    get:
+      description: List all policies
+      operationId: listAllPolicies
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InsurancePolicy'
+components:
+  schemas:
+    PolicyType:
+      title: PolicyType
+      type: string
+      enum:
+        - HEALTH
+        - AUTO
+        - HOME
+        - LIFE
+      description: Type of insurance policy
+    InsurancePolicy:
+      title: InsurancePolicy
+      type: object
+      description: Insurance policy details
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        policyType:
+          $ref: '#/components/schemas/PolicyType'
+        isExpired:
+          type: boolean
+        coverageAmount:
+          type: number
+          format: double
+      required:
+        - id
+        - userId
+        - policyType
+        - isExpired
+        - coverageAmount
+  securitySchemes: {}
