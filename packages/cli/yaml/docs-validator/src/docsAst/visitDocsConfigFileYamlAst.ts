@@ -343,7 +343,8 @@ export async function visitDocsConfigFileYamlAst({
         roles: noop,
         languages: noop,
         theme: noop,
-        libraries: noop
+        libraries: noop,
+        llm: noop
     });
 }
 
