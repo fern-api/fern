@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.50.6
+- version: 4.52.2
   changelogEntry:
     - summary: |
         Fall back to reading `auth` and `auth-schemes` from the spec's overrides
@@ -7,6 +7,38 @@
         configuration to live exclusively in the overrides file alongside other
         OpenAPI overrides, without needing to duplicate it in `generators.yml`.
       type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.52.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer not converting boolean enums with a single value
+        (`type: boolean, enum: [true]` or `enum: [false]`) into literal types.
+        Previously these were treated as plain `boolean`; now they correctly
+        produce `literal<true>` or `literal<false>` in the IR, resulting in
+        literal types in generated SDKs (e.g. `true` in TypeScript,
+        `typing.Literal[True]` in Python).
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.52.0
+  changelogEntry:
+    - summary: |
+        Add `integrations.context7` to `docs.yml` so Fern can upload and publish a customer-provided
+        `context7.json` verification file for docs sites.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Make dashboard the default launch option for the "Edit this page" button.
+        Previously the default was `github`, which required users to configure
+        `launch: dashboard` explicitly.
+      type: feat
   createdAt: "2026-03-31"
   irVersion: 65
 
@@ -23,7 +55,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 4.50.4
   changelogEntry:
     - summary: |
@@ -36,7 +67,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 4.50.3
   changelogEntry:
     - summary: |
@@ -44,7 +74,6 @@
       type: fix
   createdAt: "2026-03-30"
   irVersion: 65
-
 - version: 4.50.2
   changelogEntry:
     - summary: |
