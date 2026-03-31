@@ -66,6 +66,10 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         if (!this.usesDateTime()) {
             files = files.filter((file) => file.filename !== "flexible_datetime.rs");
         }
+        // Only include number_serializers.rs when floating point types are used
+        if (!this.usesFloatingPoint()) {
+            files = files.filter((file) => file.filename !== "number_serializers.rs");
+        }
         return files;
     }
 

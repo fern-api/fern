@@ -71,6 +71,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "bigint_string.rs"
     },
+    NumberSerializers: {
+        relativePathToDir: "src/core",
+        filename: "number_serializers.rs"
+    },
     OAuthTokenProvider: {
         relativePathToDir: "src/core",
         filename: "oauth_token_provider.rs"
