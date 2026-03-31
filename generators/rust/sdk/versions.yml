@@ -1,5 +1,107 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.30.0
+  changelogEntry:
+    - summary: |
+        Overhaul WebSocket reconnection: exponential backoff with jitter, auto-reset
+        of retry counter after 5s of stable connection, and message queuing during
+        reconnect (text and binary messages are buffered and flushed after reconnection
+        instead of erroring).
+      type: feat
+    - summary: |
+        Add `DisconnectInfo` struct to `WebSocketMessage::Close`, exposing the close
+        code and reason string from the server. `recv()` now returns `None` on close
+        frames to signal end-of-stream.
+      type: feat
+    - summary: |
+        Generate typed `ConnectOptions` structs for WebSocket channels with query
+        parameters, replacing positional `&str` arguments with a `#[derive(Default)]`
+        struct that supports `..Default::default()` ergonomics. Uses `QueryBuilder`
+        under the hood, matching the HTTP endpoint pattern.
+      type: feat
+      added:
+        - |
+          This is a breaking change for any code that previously passed query
+          parameters as positional arguments to `connect()`.
+    - summary: |
+        Support custom connect and message method names from the IR
+        (`channel.connectMethodName`, `msg.methodName`), falling back to `connect`
+        and `send_{name}` respectively.
+      type: feat
+    - summary: |
+        Add `generateWebSocketClients` config alias alongside `enableWebsockets`,
+        matching the TypeScript/Python/Java generator config key.
+      type: feat
+    - summary: |
+        Route each WebSocket connector through the correct environment URL method
+        in multi-URL APIs (e.g., Deepgram's `wss://agent.deepgram.com` vs
+        `wss://api.deepgram.com`).
+      type: feat
+    - summary: |
+        Add `Unknown(serde_json::Value)` catch-all variant to generated
+        `ServerMessage` enums for forward compatibility with new server message types.
+      type: feat
+    - summary: |
+        Graceful WebSocket close: sends Close frame and waits up to 5s for the
+        server's response, with double-close guard.
+      type: feat
+    - summary: |
+        Change implicit auth parameter from required `&str` to `Option<&str>`,
+        conditionally injecting the Authorization header only when a token is provided.
+      type: fix
+    - summary: |
+        Fix connector auth forwarding for APIs with explicit Authorization headers
+        (e.g., Deepgram) — the connector now correctly unwraps the `Option` to match
+        the client's `&str` parameter type.
+      type: fix
+    - summary: |
+        Fix `recv()` on JSON-only channels to return an error with frame size on
+        unexpected binary frames instead of silently skipping them.
+      type: fix
+    - summary: |
+        Derive channel names from the channel path instead of the channel ID, moving
+        version segments to suffix position (e.g., `/v1/agent/converse` →
+        `AgentConverseV1Client`).
+      type: chore
+    - summary: |
+        Replace `#[serde(untagged)]` derive on `ServerMessage` enums with a custom
+        `Deserialize` impl that uses round-trip scoring. Fixes silent mismatches
+        where `#[serde(default)]` on struct fields caused every variant to match,
+        always returning the first.
+      type: fix
+    - summary: |
+        Introduce `ReconnectContext` struct to group reconnection state, replacing
+        8 separate `Arc`-wrapped parameters in `read_loop` and `try_reconnect`.
+      type: chore
+    - summary: |
+        Fix `try_reconnect` to retry with exponential backoff up to
+        `max_reconnect_attempts`, instead of giving up after a single failed attempt.
+      type: fix
+    - summary: |
+        Fix `flush_queues` to preserve messages on send failure by cloning before
+        sending and pushing back to the front of the queue on error.
+      type: fix
+    - summary: |
+        Remove dead `parse_websocket_message` function and unused
+        `serde::de::DeserializeOwned` import from WebSocket client infrastructure.
+      type: chore
+    - summary: |
+        Fix wire test generator to set `config.environment = None` for multi-URL
+        APIs so requests route to the WireMock server instead of real API endpoints.
+      type: fix
+    - summary: |
+        Fix `number_serializers` unit test assertion to use `1e+20` matching Rust's
+        serde_json exponent formatting.
+      type: fix
+    - summary: |
+        Fix WebSocket connectors to support `api_key` auth in addition to bearer
+        token. The connector now receives a pre-computed Authorization header value
+        from the root client, using the IR's api key prefix (e.g., `Token`) with
+        `api_key` taking priority over `token`, matching the HTTP client's behavior.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 0.29.0
   changelogEntry:
     - summary: |
