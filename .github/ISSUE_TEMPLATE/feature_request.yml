@@ -6,7 +6,7 @@ body:
   - type: dropdown
     id: product
     attributes:
-      label: "Which Fern component?"
+      label: "Component"
       options:
         - "CLI"
         - "SDKs"
@@ -19,7 +19,7 @@ body:
   - type: dropdown
     id: priority
     attributes:
-      label: "How important is this?"
+      label: "Priority"
       options:
         - "P0 - Critical (Blocking work)"
         - "P1 - High (Strongly needed)"
@@ -31,7 +31,7 @@ body:
   - type: dropdown
     id: sdk-language
     attributes:
-      label: "Which SDK language(s)?"
+      label: "SDK Language(s)"
       description: "Only if you selected 'SDKs' above. Skip this field otherwise."
       multiple: true
       options:
@@ -50,8 +50,8 @@ body:
   - type: textarea
     id: proposed-feature
     attributes:
-      label: "What's the feature?"
-      description: "Clearly describe the functionality and how it is useful."
+      label: "Feature Description"
+      description: "Clearly describe the functionality and how it is useful. Component, priority, and language are captured by the fields above — no need to repeat them."
       placeholder: |
         Example:
         - **Feature**: Auto-retry for failed SDK requests.

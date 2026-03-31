@@ -15,6 +15,7 @@ async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -68,6 +69,7 @@ async fn test_endpoints_object_get_and_return_with_required_field_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -105,6 +107,7 @@ async fn test_endpoints_object_get_and_return_with_map_of_map_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -145,6 +148,7 @@ async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wi
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -202,6 +206,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wi
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -260,6 +265,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -351,6 +357,7 @@ async fn test_endpoints_object_get_and_return_with_unknown_field_with_wiremock()
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -388,6 +395,7 @@ async fn test_endpoints_object_get_and_return_with_documented_unknown_type_with_
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -425,6 +433,7 @@ async fn test_endpoints_object_get_and_return_map_of_documented_unknown_type_wit
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -462,6 +471,7 @@ async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wir
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

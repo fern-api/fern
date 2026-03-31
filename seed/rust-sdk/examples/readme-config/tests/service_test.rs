@@ -13,6 +13,7 @@ async fn test_service_get_movie_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -38,6 +39,7 @@ async fn test_service_create_movie_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -87,6 +89,7 @@ async fn test_service_get_metadata_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -126,6 +129,7 @@ async fn test_service_create_big_entity_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -384,6 +388,7 @@ async fn test_service_refresh_token_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client.service.refresh_token(&None, None).await;

@@ -26,9 +26,26 @@
               "openapi": "../openapi.yml",
             },
           },
+          "CreateCompletionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "prompt": "string",
+              "stream": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
+  CreateCompletionRequest:
+    properties:
+      stream: optional<boolean>
+      prompt: string
+    source:
+      openapi: ../openapi.yml
   Completion:
     properties:
       text: optional<string>

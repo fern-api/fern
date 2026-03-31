@@ -9,6 +9,6 @@ public class Example52 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().urls().withUnderscores();
+        client.endpoints().urls().noEndingSlash();
     }
 }

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.6
+  changelogEntry:
+    - summary: |
+        Support multiple Basic Auth schemes with `AuthSchemesRequirement.Any`.
+        When an API defines more than one basic auth scheme (e.g.,
+        accountId/authToken and apiKey/apiKeySecret), the generated client now
+        produces conditional if/else if blocks that check which credential pair
+        was provided and sets the Authorization header accordingly. Previously,
+        only the first basic auth scheme was used.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 62
+
 - version: 2.2.5
   changelogEntry:
     - summary: |

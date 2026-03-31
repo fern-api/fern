@@ -35,7 +35,7 @@ describe("fern generator upgrade", () => {
             { cwd: directory, signal }
         );
 
-        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
     }, 60_000);
 
     it.concurrent("fern generator upgrade with filters", async ({ signal }) => {
@@ -74,7 +74,7 @@ describe("fern generator upgrade", () => {
             { cwd: directory, signal }
         );
 
-        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
     }, 60_000);
 
     it("fern generator help commands", async ({ signal }) => {
@@ -223,7 +223,7 @@ describe("fern generator upgrade", () => {
             { cwd: directory, signal }
         );
 
-        expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("2.0.0");
 
         const outputFileJava = join(directory, RelativeFilePath.of("version-autorelease-java.txt"));
         await runFernCli(
@@ -273,7 +273,7 @@ describe("fern generator upgrade", () => {
             { cwd: directory, signal }
         );
 
-        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
     }, 60_000);
 
     it.concurrent("fern generator upgrade shows major version message", async ({ signal }) => {

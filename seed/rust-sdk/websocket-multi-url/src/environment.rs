@@ -22,6 +22,20 @@ impl Environment {
             Self::Staging(urls) => &urls.rest,
         }
     }
+
+    pub fn rest_url(&self) -> &str {
+        match self {
+            Self::Production(urls) => &urls.rest,
+            Self::Staging(urls) => &urls.rest,
+        }
+    }
+
+    pub fn wss_url(&self) -> &str {
+        match self {
+            Self::Production(urls) => &urls.wss,
+            Self::Staging(urls) => &urls.wss,
+        }
+    }
 }
 impl Default for Environment {
     fn default() -> Self {
