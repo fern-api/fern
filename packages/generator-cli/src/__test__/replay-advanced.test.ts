@@ -44,6 +44,7 @@ async function setupRepoWithGeneration(): Promise<SetupResult> {
     gitExec(["init"], repoPath);
     gitExec(["config", "user.name", "Test User"], repoPath);
     gitExec(["config", "user.email", "test@example.com"], repoPath);
+    gitExec(["config", "commit.gpgsign", "false"], repoPath);
 
     // Initial commit
     writeFileSync(join(repoPath, "README.md"), "# SDK\n");
@@ -147,6 +148,7 @@ describe("error resilience", { tags: ["slow", "flaky"] }, () => {
             gitExec(["init"], repoPath);
             gitExec(["config", "user.name", "Test User"], repoPath);
             gitExec(["config", "user.email", "test@example.com"], repoPath);
+            gitExec(["config", "commit.gpgsign", "false"], repoPath);
 
             writeFileSync(join(repoPath, "README.md"), "# SDK\n");
             gitExec(["add", "."], repoPath);
@@ -177,6 +179,7 @@ describe("error resilience", { tags: ["slow", "flaky"] }, () => {
             gitExec(["init"], repoPath);
             gitExec(["config", "user.name", "Test User"], repoPath);
             gitExec(["config", "user.email", "test@example.com"], repoPath);
+            gitExec(["config", "commit.gpgsign", "false"], repoPath);
 
             writeFileSync(join(repoPath, "README.md"), "# SDK\n");
             gitExec(["add", "."], repoPath);
@@ -271,6 +274,7 @@ describe("ReplayStep integration", { tags: ["slow", "flaky"] }, () => {
             gitExec(["init"], freshRepo);
             gitExec(["config", "user.name", "Test User"], freshRepo);
             gitExec(["config", "user.email", "test@example.com"], freshRepo);
+            gitExec(["config", "commit.gpgsign", "false"], freshRepo);
             writeFileSync(join(freshRepo, "README.md"), "# Fresh\n");
             gitExec(["add", "."], freshRepo);
             gitExec(["commit", "-m", "initial commit"], freshRepo);
