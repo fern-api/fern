@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.5
+  changelogEntry:
+    - summary: |
+        Fix wire test mock URL encoding mismatch for path parameters with non-primitive
+        example values. The IR's `example.url` uses `JSON.stringify` for object path
+        parameter values (e.g. `%7B%22key%22%3A%22value%22%7D`), but the SDK's
+        `encodePathParam` uses `String()` (producing `%5Bobject%20Object%5D`). The test
+        generator now reconstructs mock URLs using the same encoding as `encodePathParam`,
+        ensuring MSW intercepts requests correctly in auto-generated error test cases.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 3.60.4
   changelogEntry:
     - summary: |

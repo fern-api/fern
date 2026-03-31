@@ -12,6 +12,18 @@
   createdAt: "2026-03-31"
   irVersion: 65
 
+- version: 4.50.4
+  changelogEntry:
+    - summary: |
+        Cache loaded OpenAPI documents across OSS validation rules to avoid
+        redundant parsing and overlay application. Previously each of the
+        4 validator rules independently called `loadOpenAPI()`, causing the
+        overlay log message to appear multiple times. Documents are now
+        pre-loaded once and shared. Also demotes the overlay temp-file log
+        from `info` to `debug`.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
 - version: 4.50.3
   changelogEntry:
     - summary: |
