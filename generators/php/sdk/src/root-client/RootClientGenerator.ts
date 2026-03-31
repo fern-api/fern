@@ -356,16 +356,25 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         }
                         const usernameName = this.context.getParameterName(basicAuthScheme.username);
                         const passwordName = this.context.getParameterName(basicAuthScheme.password);
+                        // usernameOmit/passwordOmit may exist in newer IR versions
+                        const scheme = basicAuthScheme as unknown as Record<string, unknown>;
+                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             const controlFlowKeyword = i === 0 ? "if" : "else if";
-                            writer.controlFlow(
-                                controlFlowKeyword,
-                                php.codeblock(`$${usernameName} !== null && $${passwordName} !== null`)
+                            const condition = eitherOmitted
+                                ? `$${usernameName} !== null || $${passwordName} !== null`
+                                : `$${usernameName} !== null && $${passwordName} !== null`;
+                            writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
+                        }
+                        if (eitherOmitted) {
+                            writer.writeLine(
+                                `$defaultHeaders['Authorization'] = "Basic " . base64_encode(($${usernameName} ?? "") . ":" . ($${passwordName} ?? ""));`
+                            );
+                        } else {
+                            writer.writeLine(
+                                `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
                             );
                         }
-                        writer.writeLine(
-                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
-                        );
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             writer.endControlFlow();
                         }
