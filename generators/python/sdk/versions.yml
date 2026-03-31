@@ -3,7 +3,7 @@
 - version: 5.2.0
   changelogEntry:
     - summary: |
-        Add `default_max_retries` custom config option. When set in `generators.yml`,
+        Add `maxRetries` custom config option. When set in `generators.yml`,
         the generated SDK uses the specified value as the default retry count instead of
         the hardcoded default of 2. Set to 0 to disable retries by default, which is
         useful for APIs with non-idempotent endpoints. SDK users can still override this

@@ -156,13 +156,6 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
-        http_client_replacements = (
-            {
-                'request_options.get("max_retries", 2) if request_options is not None else 2': f'request_options.get("max_retries", {self._default_max_retries}) if request_options is not None else {self._default_max_retries}',
-            }
-            if self._default_max_retries != 2
-            else None
-        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -171,7 +164,6 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
-            string_replacements=http_client_replacements,
         )
 
         self._copy_file_to_project(
@@ -706,6 +698,8 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
+        if self._default_max_retries != 2:
+            func_args.append(("base_max_retries", AST.Expression(str(self._default_max_retries))))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
         if logging_config is not None:

@@ -190,6 +190,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
             if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
+            if "maxRetries" in obj and "default_max_retries" not in obj:
+                obj["default_max_retries"] = obj.pop("maxRetries")
 
         obj = super().parse_obj(obj)
 
