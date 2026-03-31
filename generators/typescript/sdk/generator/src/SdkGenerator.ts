@@ -281,8 +281,8 @@ export class SdkGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.caseConverter = new CaseConverter({
             generationLanguage: "typescript",
-            keywords: undefined,
-            smartCasing: false
+            keywords: intermediateRepresentation.casingsConfig?.keywords,
+            smartCasing: intermediateRepresentation.casingsConfig?.smartCasing ?? true
         });
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set

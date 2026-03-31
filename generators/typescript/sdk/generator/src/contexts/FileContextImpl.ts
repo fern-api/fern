@@ -235,8 +235,11 @@ export class FileContextImpl implements FileContext {
         this.fernConstants = init.fernConstants;
         this.baseClient = init.baseClientContext;
         this.version = init.version;
-        // TODO: read ir.casingsConfig.smartCasing when this generator migrates to V66+ IR
-        this.case = new CaseConverter({ generationLanguage: "typescript", keywords: undefined, smartCasing: false });
+        this.case = new CaseConverter({
+            generationLanguage: "typescript",
+            keywords: init.ir.casingsConfig?.keywords,
+            smartCasing: init.ir.casingsConfig?.smartCasing ?? true
+        });
     }
 
     // Lazy getters for utilities

@@ -127,8 +127,8 @@ export class ExpressGenerator {
         this.config = config;
         this.caseConverter = new CaseConverter({
             generationLanguage: "typescript",
-            keywords: undefined,
-            smartCasing: false
+            keywords: intermediateRepresentation.casingsConfig?.keywords,
+            smartCasing: intermediateRepresentation.casingsConfig?.smartCasing ?? true
         });
 
         this.defaultSrcDirectory = "src";

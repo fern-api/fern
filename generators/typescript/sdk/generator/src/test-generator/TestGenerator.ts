@@ -98,8 +98,8 @@ export class TestGenerator {
         this.parameterNaming = parameterNaming;
         this.caseConverter = new CaseConverter({
             generationLanguage: "typescript",
-            keywords: undefined,
-            smartCasing: false
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
         });
     }
 
@@ -2336,7 +2336,7 @@ function sanitizeExamplePathParameters({
         if (typeof json === "string" || typeof json === "number" || typeof json === "boolean") {
             return param;
         }
-        const fallback = param.name.originalName;
+        const fallback = getOriginalName(param.name);
         return {
             ...param,
             value: {
@@ -2361,7 +2361,7 @@ function sanitizeExamplePathParameters({
     [...sanitized.rootPathParameters, ...sanitized.servicePathParameters, ...sanitized.endpointPathParameters].forEach(
         (p) => {
             const value = p.value.jsonExample;
-            pathParameters[p.name.originalName] = typeof value === "string" ? value : String(value);
+            pathParameters[getOriginalName(p.name)] = typeof value === "string" ? value : String(value);
         }
     );
     const url =
