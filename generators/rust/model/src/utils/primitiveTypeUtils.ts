@@ -22,6 +22,7 @@ export function isDateTimeType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -45,6 +46,7 @@ export function isDateType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -68,6 +70,7 @@ export function isDateTimeOnlyType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -91,6 +94,7 @@ export function isUuidType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => true,
         _other: () => false
@@ -114,6 +118,7 @@ export function isBase64Type(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => true,
         uuid: () => false,
         _other: () => false
@@ -137,6 +142,7 @@ export function isBigIntType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => true,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -160,6 +166,7 @@ export function isChronoType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -324,6 +331,7 @@ export function isStringType(typeReference: FernIr.TypeReference): boolean {
                 bigInteger: () => false,
                 date: () => false,
                 dateTime: () => false,
+                dateTimeRfc2822: () => false,
                 base64: () => false,
                 uuid: () => false,
                 _other: () => false
@@ -351,6 +359,7 @@ export function primitiveSupportsPartialEq(primitive: FernIr.PrimitiveTypeV1): b
         bigInteger: () => true,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => true,
         uuid: () => true,
         _other: () => true // Be more permissive for PartialEq
@@ -373,6 +382,7 @@ export function primitiveSupportsHashAndEq(primitive: FernIr.PrimitiveTypeV1): b
         bigInteger: () => true,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => true,
         uuid: () => true,
         _other: () => false
@@ -395,6 +405,7 @@ export function isFloatingPointType(typeReference: FernIr.TypeReference): boolea
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false

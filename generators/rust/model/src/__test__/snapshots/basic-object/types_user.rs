@@ -13,6 +13,7 @@ pub struct User {
     #[serde(default)]
     pub is_active: bool,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub balance: f64,
     #[serde(default)]
     pub tags: Vec<String>,

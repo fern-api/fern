@@ -1,28 +1,12 @@
-use crate::api::resources::SimpleApiClient;
+use crate::api::resources::UserClient;
+use crate::Environment;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
-
-/*
-Things to know:
-
-`impl Into<String>` is a generic parameter constraint in Rust that means "accept any type that can be converted into a String."
-It's essentially Rust's way of saying "I'll take a string in any form you give it to me."
-
-Types that implement Into<String>:
-
-// All of these work:
-builder.api_key("hello")           // &str
-builder.api_key("hello".to_string()) // String
-builder.api_key(format!("key_{}", id)) // String from format!
-builder.api_key(my_string_variable)    // String variable
-*/
-
 /// Builder for creating API clients with custom configuration
 pub struct ApiClientBuilder {
     config: ClientConfig,
 }
-
 impl Default for ApiClientBuilder {
     fn default() -> Self {
         Self {
@@ -30,13 +14,18 @@ impl Default for ApiClientBuilder {
         }
     }
 }
-
 impl ApiClientBuilder {
     /// Create a new builder with the specified base URL
     pub fn new(base_url: impl Into<String>) -> Self {
         let mut config = ClientConfig::default();
         config.base_url = base_url.into();
         Self { config }
+    }
+
+    /// Set the environment, updating the base URL
+    pub fn environment(mut self, environment: Environment) -> Self {
+        self.config.base_url = environment.url().to_string();
+        self
     }
 
     /// Set the API key for authentication
@@ -117,14 +106,22 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<SimpleApiClient, ApiError> {
-        SimpleApiClient::new(self.config)
+    pub fn build(self) -> Result<UserClient, ApiError> {
+        UserClient::new(self.config)
     }
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_environment() {
+        let builder = ApiClientBuilder::default().environment(Environment::default());
+        assert_eq!(
+            builder.config.base_url,
+            Environment::default().url().to_string()
+        );
+    }
 
     #[test]
     fn test_new_sets_base_url() {

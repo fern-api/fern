@@ -19,7 +19,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     requirePaths: z.optional(z.array(z.string())),
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
-    omitFernHeaders: z.boolean().optional()
+    omitFernHeaders: z.boolean().optional(),
+    // RuboCop Naming/VariableNumber style for field names with numbers
+    // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
+    // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
+    // - "disabled": disables the cop entirely
+    rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;
