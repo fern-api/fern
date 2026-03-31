@@ -118,12 +118,14 @@ export async function runWithCustomFixture({
             return;
         }
 
+        const groupAudiences = generatorGroup.group.audiences;
         const runFixtureConfig: FixtureConfigurations = {
             ...customFixtureConfig,
             customConfig: {
                 ...(customFixtureConfig?.customConfig as Record<string, unknown>),
                 ...(generatorGroup.invocation.config as Record<string, unknown>)
             },
+            audiences: groupAudiences.type === "select" ? groupAudiences.audiences : undefined,
             readmeConfig: apiWorkspace.generatorsConfiguration?.rawConfiguration.readme,
             outputFolder: ""
         };
