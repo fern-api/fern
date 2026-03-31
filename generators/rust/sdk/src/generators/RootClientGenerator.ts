@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 
+import { DEFAULT_URL_METHOD, EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { SubClientGenerator } from "./SubClientGenerator.js";
@@ -13,6 +14,7 @@ export class RootClientGenerator {
     private readonly package: FernIr.Package;
     private readonly projectName: string;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
     private readonly wsConnectors: Array<{
         connectorName: string;
         fieldName: string;
@@ -26,6 +28,7 @@ export class RootClientGenerator {
         this.context = context;
         this.package = context.ir.rootPackage;
         this.projectName = context.ir.apiName.pascalCase.safeName;
+        this.environmentGenerator = new EnvironmentGenerator({ context });
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: this.package,
             sdkGeneratorContext: context
@@ -287,10 +290,31 @@ export class RootClientGenerator {
     }
 
     /**
+     * Looks up the EnvironmentBaseUrlId for a service by checking its first endpoint's baseUrl.
+     * Returns undefined if the service has no endpoints or no baseUrl.
+     */
+    private getServiceBaseUrlId(serviceId: string): string | undefined {
+        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const firstEndpoint = service.endpoints[0];
+        return firstEndpoint?.baseUrl ?? undefined;
+    }
+
+    /**
      * Returns WebSocket connectors that don't collide with existing HTTP sub-client field names.
      */
     private getUniqueWsConnectors(httpFieldNames: Set<string>): typeof this.wsConnectors {
         return this.wsConnectors.filter((c) => !httpFieldNames.has(c.fieldName));
+    }
+
+    /**
+     * Generates the Rust expression to resolve a URL from the environment,
+     * falling back to config.base_url when environment is None.
+     */
+    private resolveUrlExpression(urlMethod: string, configVar: string): string {
+        return (
+            `${configVar}.environment.as_ref()\n` +
+            `                    .map_or_else(|| ${configVar}.base_url.clone(), |env| env.${urlMethod}().to_string())`
+        );
     }
 
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {
@@ -303,7 +327,24 @@ export class RootClientGenerator {
         }
 
         // HTTP sub-client initializations
-        for (const { fieldName, clientName } of this.clientGeneratorContext.subClients) {
+        const isMultiUrl = this.context.hasMultipleBaseUrls();
+        for (const { fieldName, clientName, serviceId } of this.clientGeneratorContext.subClients) {
+            if (isMultiUrl && serviceId != null) {
+                const baseUrlId = this.getServiceBaseUrlId(serviceId);
+                if (baseUrlId != null) {
+                    const urlMethod = this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+                    if (urlMethod !== DEFAULT_URL_METHOD) {
+                        allInits.push(
+                            `${fieldName}: {\n` +
+                                `                let mut cfg = config.clone();\n` +
+                                `                cfg.base_url = ${this.resolveUrlExpression(urlMethod, "cfg")};\n` +
+                                `                ${clientName}::new(cfg)?\n` +
+                                `            }`
+                        );
+                        continue;
+                    }
+                }
+            }
             allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
         }
 
