@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.9
+  changelogEntry:
+    - summary: |
+        Add explicit `return` in `Boolean.coerce` for `TrueClass`/`FalseClass`
+        branch and suppress RuboCop `Lint/Void` warnings on bare `value`
+        expressions in the utils coerce fallback paths.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 61
+
 - version: 1.1.8
   changelogEntry:
     - summary: |
