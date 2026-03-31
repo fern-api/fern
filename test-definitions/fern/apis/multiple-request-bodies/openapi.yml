@@ -1,0 +1,102 @@
+openapi: 3.0.1
+info:
+  title: Sample API
+  version: ''
+paths:
+  /documents/upload/json:
+    post:
+      operationId: uploadJsonDocument
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentResponse'
+      summary: Upload document metadata (JSON) or document file
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  nullable: true
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  nullable: true
+                title:
+                  type: string
+                  nullable: true
+  /documents/upload/pdf:
+    post:
+      operationId: uploadPdfDocument
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentResponse'
+      summary: Upload document metadata (JSON) or document file
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+components:
+  schemas:
+    DocumentMetadata:
+      title: DocumentMetadata
+      type: object
+      properties:
+        author:
+          type: string
+          nullable: true
+        id:
+          type: integer
+          nullable: true
+        tags:
+          type: array
+          items: {}
+          nullable: true
+        title:
+          type: string
+          nullable: true
+    DocumentUploadResult:
+      title: DocumentUploadResult
+      type: object
+      properties:
+        fileId:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+    UploadDocumentResponse:
+      title: UploadDocumentResponse
+      oneOf:
+        - $ref: '#/components/schemas/DocumentMetadata'
+        - $ref: '#/components/schemas/DocumentUploadResult'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.example.com/v1
+    description: Default

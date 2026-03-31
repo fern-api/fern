@@ -1,0 +1,37 @@
+openapi: 3.0.1
+info:
+  title: java-output-directory
+  version: ''
+paths:
+  /users/{userId}:
+    get:
+      operationId: service_getUser
+      tags:
+        - Service
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+  securitySchemes: {}

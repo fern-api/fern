@@ -1,0 +1,8 @@
+openapi: 3.0.1
+info:
+  title: python-mypy-exclude
+  version: ''
+paths: {}
+components:
+  schemas: {}
+  securitySchemes: {}

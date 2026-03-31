@@ -1,0 +1,170 @@
+openapi: 3.0.1
+info:
+  title: python-positional-single-property
+  version: ''
+  description: |-
+    Test definition for positional single-property constructors in Python SDK.
+    This tests the ability to use positional arguments for types with a single
+    required field (ignoring discriminator/literal type fields with defaults).
+paths:
+  /create:
+    post:
+      operationId: create
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  $ref: '#/components/schemas/BondSingleLeg'
+                taker:
+                  $ref: '#/components/schemas/TakerParty'
+              required:
+                - instrument
+                - taker
+components:
+  schemas:
+    Isin:
+      title: Isin
+      type: object
+      properties:
+        isin:
+          type: string
+      required:
+        - isin
+    IsinWithDiscriminator:
+      title: IsinWithDiscriminator
+      type: object
+      properties:
+        isin:
+          type: string
+        type:
+          type: string
+          const: ISIN
+      required:
+        - isin
+        - type
+    Quantity:
+      title: Quantity
+      type: object
+      properties:
+        quantity:
+          type: number
+          format: double
+        type:
+          type: string
+          const: QUANTITY
+      required:
+        - quantity
+        - type
+    TwoFields:
+      title: TwoFields
+      type: object
+      properties:
+        field1:
+          type: string
+        field2:
+          type: integer
+      required:
+        - field1
+        - field2
+    OneRequiredOneOptional:
+      title: OneRequiredOneOptional
+      type: object
+      properties:
+        required_field:
+          type: string
+        optional_field:
+          type: string
+          nullable: true
+      required:
+        - required_field
+    MultipleDiscriminators:
+      title: MultipleDiscriminators
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          const: TYPE_A
+        version:
+          type: string
+          const: v1
+      required:
+        - value
+        - type
+        - version
+    Trader:
+      title: Trader
+      type: object
+      properties:
+        uuid_:
+          type: integer
+      required:
+        - uuid_
+    TakerParty:
+      title: TakerParty
+      type: object
+      properties:
+        trader:
+          $ref: '#/components/schemas/Trader'
+      required:
+        - trader
+    BondSingleLeg:
+      title: BondSingleLeg
+      type: object
+      properties:
+        identifier:
+          $ref: '#/components/schemas/Isin'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+      required:
+        - identifier
+        - quantity
+    Identifier:
+      title: Identifier
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                identifier_type:
+                  type: string
+                  enum:
+                    - isin
+            - $ref: '#/components/schemas/Isin'
+          required:
+            - identifier_type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                identifier_type:
+                  type: string
+                  enum:
+                    - cusip
+            - $ref: '#/components/schemas/Cusip'
+          required:
+            - identifier_type
+    Cusip:
+      title: Cusip
+      type: object
+      properties:
+        cusip:
+          type: string
+      required:
+        - cusip
+  securitySchemes: {}

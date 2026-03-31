@@ -7,6 +7,6 @@ client = Seed::Client.new(
 
 client.users.list_with_offset_pagination_has_next_page(
   page: 1,
-  limit: 1,
+  limit: 3,
   order: "asc"
 )

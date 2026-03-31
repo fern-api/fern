@@ -193,3 +193,20 @@ func (c *Client) UploadWithPath(
 	}
 	return response.Body, nil
 }
+
+// GET with path param that can throw errors
+func (c *Client) GetWithPathAndErrors(
+	ctx context.Context,
+	param string,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetWithPathAndErrors(
+		ctx,
+		param,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}

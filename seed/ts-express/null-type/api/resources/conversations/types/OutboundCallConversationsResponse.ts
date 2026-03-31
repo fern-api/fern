@@ -4,5 +4,5 @@ export interface OutboundCallConversationsResponse {
     /** Always null when dry_run is true. */
     conversationId: unknown | null;
     /** Always true for this response. */
-    dryRun: boolean;
+    dryRun: true;
 }

@@ -9,12 +9,12 @@ export const OutboundCallConversationsResponse: core.serialization.ObjectSchema<
     SeedApi.OutboundCallConversationsResponse
 > = core.serialization.object({
     conversationId: core.serialization.property("conversation_id", core.serialization.unknown().nullable()),
-    dryRun: core.serialization.property("dry_run", core.serialization.boolean()),
+    dryRun: core.serialization.property("dry_run", core.serialization.booleanLiteral(true)),
 });
 
 export declare namespace OutboundCallConversationsResponse {
     export interface Raw {
         conversation_id?: unknown | null;
-        dry_run: boolean;
+        dry_run: true;
     }
 }

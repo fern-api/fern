@@ -1,0 +1,53 @@
+openapi: 3.0.1
+info:
+  title: bytes-upload
+  version: ''
+paths:
+  /upload-content:
+    post:
+      operationId: service_upload
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+  /upload-content-with-query-params:
+    post:
+      operationId: service_uploadWithQueryParams
+      tags:
+        - Service
+      parameters:
+        - name: model
+          in: query
+          description: The model to use for processing
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: The language of the content
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+components:
+  schemas: {}
+  securitySchemes: {}

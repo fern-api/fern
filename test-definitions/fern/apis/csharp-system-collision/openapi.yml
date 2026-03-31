@@ -1,0 +1,96 @@
+openapi: 3.0.1
+info:
+  title: csharp-system-collision
+  version: ''
+paths:
+  /users:
+    post:
+      operationId: createUser
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+  /users/create-task:
+    post:
+      operationId: createTask
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+  /users/empty:
+    post:
+      operationId: emptyResponse
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+components:
+  schemas:
+    Task:
+      title: Task
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - name
+        - user
+    User:
+      title: User
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          const: USA
+      required:
+        - line1
+        - city
+        - state
+        - zip
+        - country
+  securitySchemes: {}

@@ -17,6 +17,7 @@ function initRepo(repoPath: string): void {
     gitExec(["init"], repoPath);
     gitExec(["config", "user.name", "Test User"], repoPath);
     gitExec(["config", "user.email", "test@example.com"], repoPath);
+    gitExec(["config", "commit.gpgsign", "false"], repoPath);
 }
 
 function commitAsUser(repoPath: string, message: string): string {
