@@ -45,7 +45,7 @@ Layout/LineLength:
   Enabled: false
 
 Naming/VariableNumber:
-  EnforcedStyle: normalcase
+  EnforcedStyle: snake_case
 
 Style/Documentation:
   Enabled: false
