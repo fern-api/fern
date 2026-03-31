@@ -21,6 +21,9 @@ import {
 } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
+/** The default URL getter method name, used for single-URL environments or the primary URL */
+export const DEFAULT_URL_METHOD = "url";
+
 export declare namespace EnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
@@ -32,6 +35,30 @@ export class EnvironmentGenerator {
 
     constructor({ context }: EnvironmentGenerator.Args) {
         this.context = context;
+    }
+
+    /**
+     * Returns the name of the URL getter method for a specific base URL ID in a multi-URL
+     * environment. For example, if the base URL ID maps to "wss", returns "wss_url".
+     * Returns "url" as fallback for single-URL environments or if the ID is not found.
+     */
+    public getUrlMethodNameForBaseUrlId(baseUrlId: string | undefined): string {
+        const environmentsConfig = this.context.ir.environments;
+        if (!environmentsConfig?.environments || !baseUrlId) {
+            return DEFAULT_URL_METHOD;
+        }
+
+        return environmentsConfig.environments._visit({
+            singleBaseUrl: () => DEFAULT_URL_METHOD,
+            multipleBaseUrls: (config) => {
+                const baseUrl = config.baseUrls.find((b) => b.id === baseUrlId);
+                if (baseUrl) {
+                    return `${baseUrl.name.snakeCase.safeName}_url`;
+                }
+                return DEFAULT_URL_METHOD;
+            },
+            _other: () => DEFAULT_URL_METHOD
+        });
     }
 
     public generate(): RustFile | null {
@@ -220,11 +247,45 @@ export class EnvironmentGenerator {
 
     private createMultiUrlImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): ImplBlock {
         const getUrlMethod = this.createMultiUrlGetUrlMethod(config);
+        const perUrlMethods = this.createPerBaseUrlGetterMethods(config);
         const environmentEnumName = this.getEnvironmentEnumName();
 
         return rust.implBlock({
             targetType: Type.reference(new Reference({ name: environmentEnumName })),
-            methods: [getUrlMethod]
+            methods: [getUrlMethod, ...perUrlMethods]
+        });
+    }
+
+    /**
+     * Creates a getter method for each base URL in a multi-URL environment.
+     * For example, if there are "rest" and "wss" base URLs, this generates
+     * `rest_url(&self) -> &str` and `wss_url(&self) -> &str`.
+     */
+    private createPerBaseUrlGetterMethods(config: FernIr.MultipleBaseUrlsEnvironments): Method[] {
+        return config.baseUrls.map((baseUrl) => {
+            const fieldName = baseUrl.name.snakeCase.safeName;
+            const matchArms = config.environments.map((env) => {
+                const pattern = Pattern.raw(`Self::${env.name.pascalCase.safeName}(urls)`);
+                const expression = Expression.reference(`&urls.${fieldName}`);
+                return MatchArm.withExpression(pattern, expression);
+            });
+
+            const matchStatement = Statement.matchEnhanced(Expression.self(), matchArms);
+
+            return rust.method({
+                name: `${fieldName}_url`,
+                visibility: PUBLIC,
+                parameters: [
+                    {
+                        name: "self",
+                        parameterType: Type.str(),
+                        isSelf: true,
+                        isRef: true
+                    }
+                ],
+                returnType: Type.reference(new Reference({ name: "&str" })),
+                body: CodeBlock.fromStatements([matchStatement])
+            });
         });
     }
 
@@ -292,7 +353,6 @@ export class EnvironmentGenerator {
     }
 
     private getEnvironmentEnumName(): string {
-        const customConfig = this.context.customConfig;
-        return customConfig.environmentEnumName || "Environment";
+        return this.context.getEnvironmentEnumName();
     }
 }

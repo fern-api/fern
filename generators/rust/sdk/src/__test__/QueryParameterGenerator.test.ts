@@ -92,6 +92,7 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
         requestBody: undefined,
         sdkRequest: undefined,
         response: undefined,
+        responseHeaders: undefined,
         errors: [],
         auth: false,
         idempotent: false,
@@ -107,7 +108,8 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
         transport: undefined,
         source: undefined,
         security: undefined,
-        retries: undefined
+        retries: undefined,
+        apiPlayground: undefined
     } as FernIr.HttpEndpoint;
 }
 
@@ -152,6 +154,7 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
                 .toLowerCase()
                 .replace(/^_/, "");
         },
+        hasMultipleBaseUrls: () => false,
         escapeRustKeyword: (name: string) => {
             // Simple implementation for testing - just returns the name as-is
             // In production, this would escape Rust keywords with r# prefix

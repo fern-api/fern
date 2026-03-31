@@ -6,6 +6,7 @@ pub struct OrderCompletedPayload {
     #[serde(default)]
     pub order_id: String,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub total: f64,
     #[serde(default)]
     pub currency: String,
