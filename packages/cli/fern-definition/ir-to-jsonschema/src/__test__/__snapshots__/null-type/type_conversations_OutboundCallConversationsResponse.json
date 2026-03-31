@@ -19,7 +19,7 @@
       ]
     },
     "dry_run": {
-      "type": "boolean"
+      "const": true
     }
   },
   "required": [
