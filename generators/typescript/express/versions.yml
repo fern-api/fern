@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.19.14
+  changelogEntry:
+    - summary: |
+        Redirect biome/lint/formatter output to a separate log file (`/tmp/fern-*.log`)
+        inside the Docker container instead of piping to the main generation log.
+        This reduces noise in the primary output while still preserving the tool
+        output for debugging.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-03-31"
+
 - version: 0.19.13
   changelogEntry:
     - summary: |

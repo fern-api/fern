@@ -40,12 +40,25 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         }
     }
 
+    public hasEnvironments(): boolean {
+        return this.ir.environments?.environments != null;
+    }
+
+    public hasMultipleBaseUrls(): boolean {
+        return this.ir.environments?.environments?.type === "multipleBaseUrls";
+    }
+
+    public getEnvironmentEnumName(): string {
+        return this.customConfig.environmentEnumName || "Environment";
+    }
+
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         let files = Object.values(AsIsFiles);
         // Exclude core/mod.rs — it's generated dynamically to only declare modules for files that exist.
         // The static asIs mod.rs always declares mod sse_stream and mod websocket, which breaks
         // cargo fmt when those files are conditionally excluded (cargo fmt doesn't evaluate #[cfg]).
         files = files.filter((file) => file !== AsIsFiles.CoreMod);
+        files = files.filter((file) => file.filename !== "client.rs");
         // Only include sse_stream.rs when there are streaming endpoints
         if (!this.hasStreamingEndpoints()) {
             files = files.filter((file) => file.filename !== "sse_stream.rs");
@@ -62,13 +75,13 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         if (!this.usesBase64()) {
             files = files.filter((file) => file.filename !== "base64_bytes.rs");
         }
-        // Only include flexible_datetime.rs when datetime/date types are used
-        if (!this.usesDateTime()) {
-            files = files.filter((file) => file.filename !== "flexible_datetime.rs");
-        }
         // Only include number_serializers.rs when floating point types are used
         if (!this.usesFloatingPoint()) {
             files = files.filter((file) => file.filename !== "number_serializers.rs");
+        }
+        // Only include flexible_datetime.rs when datetime/date types are used
+        if (!this.usesDateTime()) {
+            files = files.filter((file) => file.filename !== "flexible_datetime.rs");
         }
         return files;
     }
