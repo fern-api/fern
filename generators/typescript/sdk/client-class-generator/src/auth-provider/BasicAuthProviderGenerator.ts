@@ -100,19 +100,21 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(stringType);
 
         // For env var fallback or omit: prop?: Supplier<T> | undefined
-        const usernamePropertyType = hasUsernameEnv || this.authScheme.usernameOmit === true
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
+        const usernamePropertyType =
+            hasUsernameEnv || this.authScheme.usernameOmit === true
+                ? ts.factory.createUnionTypeNode([
+                      supplierType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : supplierType;
 
-        const passwordPropertyType = hasPasswordEnv || this.authScheme.passwordOmit === true
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
+        const passwordPropertyType =
+            hasPasswordEnv || this.authScheme.passwordOmit === true
+                ? ts.factory.createUnionTypeNode([
+                      supplierType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : supplierType;
 
         return [
             {
