@@ -17,6 +17,8 @@ export declare namespace RequestGenerator {
         extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from JSON serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -27,12 +29,15 @@ export class RequestGenerator {
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, properties, extendedProperties, docsContent, context }: RequestGenerator.Args) {
+    private readonly queryParamFieldNames: Set<string>;
+
+    public constructor({ name, properties, extendedProperties, docsContent, context, queryParamFieldNames }: RequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generate(): rust.Struct {
@@ -155,6 +160,12 @@ export class RequestGenerator {
         const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+
+        // Query param fields must not be serialized into the JSON body —
+        // they are sent as query string parameters by the SDK client.
+        if (this.queryParamFieldNames.has(fieldName)) {
+            fieldAttributes.push(Attribute.serde.skipSerializing());
+        }
 
         // Add field documentation if available
         let docs = undefined;

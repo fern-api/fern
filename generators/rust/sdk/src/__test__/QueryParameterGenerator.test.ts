@@ -92,6 +92,7 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
         requestBody: undefined,
         sdkRequest: undefined,
         response: undefined,
+        responseHeaders: undefined,
         errors: [],
         auth: false,
         idempotent: false,
@@ -107,7 +108,8 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
         transport: undefined,
         source: undefined,
         security: undefined,
-        retries: undefined
+        retries: undefined,
+        apiPlayground: undefined
     } as FernIr.HttpEndpoint;
 }
 

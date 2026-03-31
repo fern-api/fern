@@ -131,6 +131,7 @@ function hasBigIntInType(typeRef: FernIr.TypeReference): boolean {
             bigInteger: () => true,
             date: () => false,
             dateTime: () => false,
+            dateTimeRfc2822: () => false,
             base64: () => false,
             uuid: () => false,
             _other: () => false
@@ -279,6 +280,16 @@ export function generateFieldAttributes(
                 attributes.push(Attribute.serde.with("crate::core::bigint_string"));
             }
         }
+
+        // Add number_serializers serde attribute for f64 fields to strip trailing .0 from whole numbers
+        if (isFloatingPointType(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with("crate::core::number_serializers::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::number_serializers"));
+            }
+        }
     }
 
     return attributes;
@@ -368,4 +379,32 @@ export function writeStructUseStatements(
 
     // Add serde imports LAST
     writer.writeLine("use serde::{Deserialize, Serialize};");
+}
+
+/**
+ * Convert query parameters to object properties for inclusion in request structs.
+ * Returns both the properties and the set of field names (after keyword escaping)
+ * so callers can mark them with #[serde(skip_serializing)].
+ */
+export function convertQueryParametersToProperties(
+    queryParams: FernIr.QueryParameter[],
+    context: { escapeRustKeyword: (name: string) => string }
+): { properties: FernIr.ObjectProperty[]; fieldNames: Set<string> } {
+    const fieldNames = new Set<string>();
+    const properties = queryParams.map((queryParam) => {
+        let valueType = queryParam.valueType;
+        if (queryParam.allowMultiple) {
+            valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
+        }
+        fieldNames.add(context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName));
+        return {
+            name: queryParam.name,
+            valueType,
+            docs: queryParam.docs,
+            availability: queryParam.availability,
+            propertyAccess: undefined,
+            v2Examples: undefined
+        };
+    });
+    return { properties, fieldNames };
 }

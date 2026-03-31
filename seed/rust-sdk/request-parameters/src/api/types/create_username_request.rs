@@ -9,6 +9,7 @@ pub struct CreateUsernameRequest {
     #[serde(default)]
     pub name: String,
     #[serde(default)]
+    #[serde(skip_serializing)]
     pub tags: Vec<String>,
 }
 

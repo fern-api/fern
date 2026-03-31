@@ -28,6 +28,8 @@ export declare namespace FileUploadRequestGenerator {
         bodyProperties: FernIr.InlinedRequestBodyProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -45,6 +47,7 @@ export class FileUploadRequestGenerator {
     private readonly bodyProperties: FernIr.InlinedRequestBodyProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly queryParamFieldNames: Set<string>;
 
     public constructor({
         name,
@@ -52,7 +55,8 @@ export class FileUploadRequestGenerator {
         fileProperties,
         bodyProperties,
         docsContent,
-        context
+        context,
+        queryParamFieldNames
     }: FileUploadRequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
@@ -60,6 +64,7 @@ export class FileUploadRequestGenerator {
         this.bodyProperties = bodyProperties;
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generateFileContents(): string {
@@ -244,6 +249,12 @@ export class FileUploadRequestGenerator {
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
         const fieldType = generateFieldType(property, this.context);
         const attributes = generateFieldAttributes(property, this.context);
+
+        // Query param fields must not be serialized into the multipart body —
+        // they are sent as URL query string parameters by the SDK client.
+        if (this.queryParamFieldNames.has(fieldName)) {
+            attributes.push(Attribute.serde.skipSerializing());
+        }
 
         return rust.field({
             name: fieldName,
