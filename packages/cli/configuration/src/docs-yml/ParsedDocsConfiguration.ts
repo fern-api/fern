@@ -86,7 +86,7 @@ export interface ParsedDocsConfiguration {
 
     aiChatConfig: AiChatConfig | undefined;
 
-    llmsConfig: LlmsConfig | undefined;
+    llms: LlmsConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 
