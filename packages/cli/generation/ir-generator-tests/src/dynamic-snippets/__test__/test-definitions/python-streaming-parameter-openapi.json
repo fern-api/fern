@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "prompt",
                         "name": {
                             "originalName": "prompt",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Prompt",
                                 "safeName": "Prompt"
                             }
-                        },
-                        "wireValue": "prompt"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -62,6 +62,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "stream",
                         "name": {
                             "originalName": "stream",
                             "camelCase": {
@@ -80,8 +81,7 @@
                                 "unsafeName": "Stream",
                                 "safeName": "Stream"
                             }
-                        },
-                        "wireValue": "stream"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -128,6 +128,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -146,8 +147,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -161,6 +161,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "finish_reason",
                         "name": {
                             "originalName": "finish_reason",
                             "camelCase": {
@@ -179,8 +180,7 @@
                                 "unsafeName": "FinishReason",
                                 "safeName": "FinishReason"
                             }
-                        },
-                        "wireValue": "finish_reason"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -227,6 +227,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "delta",
                         "name": {
                             "originalName": "delta",
                             "camelCase": {
@@ -245,8 +246,7 @@
                                 "unsafeName": "Delta",
                                 "safeName": "Delta"
                             }
-                        },
-                        "wireValue": "delta"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -260,6 +260,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tokens",
                         "name": {
                             "originalName": "tokens",
                             "camelCase": {
@@ -278,8 +279,7 @@
                                 "unsafeName": "Tokens",
                                 "safeName": "Tokens"
                             }
-                        },
-                        "wireValue": "tokens"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -366,6 +366,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "prompt",
                                 "name": {
                                     "originalName": "prompt",
                                     "camelCase": {
@@ -384,8 +385,7 @@
                                         "unsafeName": "Prompt",
                                         "safeName": "Prompt"
                                     }
-                                },
-                                "wireValue": "prompt"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -396,6 +396,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "stream",
                                 "name": {
                                     "originalName": "stream",
                                     "camelCase": {
@@ -414,8 +415,7 @@
                                         "unsafeName": "Stream",
                                         "safeName": "Stream"
                                     }
-                                },
-                                "wireValue": "stream"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -507,6 +507,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "prompt",
                                 "name": {
                                     "originalName": "prompt",
                                     "camelCase": {
@@ -525,8 +526,7 @@
                                         "unsafeName": "Prompt",
                                         "safeName": "Prompt"
                                     }
-                                },
-                                "wireValue": "prompt"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -537,6 +537,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "stream",
                                 "name": {
                                     "originalName": "stream",
                                     "camelCase": {
@@ -555,8 +556,7 @@
                                         "unsafeName": "Stream",
                                         "safeName": "Stream"
                                     }
-                                },
-                                "wireValue": "stream"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",

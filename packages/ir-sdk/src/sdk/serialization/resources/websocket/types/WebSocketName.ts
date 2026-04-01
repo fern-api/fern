@@ -3,10 +3,11 @@
 import type * as FernIr from "../../../../api/index.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
-export const WebSocketName: core.serialization.ObjectSchema<serializers.WebSocketName.Raw, FernIr.WebSocketName> = Name;
+export const WebSocketName: core.serialization.Schema<serializers.WebSocketName.Raw, FernIr.WebSocketName> =
+    NameOrString;
 
 export declare namespace WebSocketName {
-    export type Raw = Name.Raw;
+    export type Raw = NameOrString.Raw;
 }

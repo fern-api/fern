@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface BearerAuthScheme extends FernIr.BaseAuthScheme {
-    token: FernIr.Name;
+    token: FernIr.NameOrString;
     /** The environment variable the SDK should use to read the token. */
     tokenEnvVar: FernIr.EnvironmentVariable | undefined;
 }

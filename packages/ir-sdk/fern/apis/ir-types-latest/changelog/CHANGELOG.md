@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   When present, the parameter/header is optional in the generated SDK and the literal value is sent
   when the caller does not provide one. Populated from the `x-fern-default` OpenAPI extension.
 
+## [v65.6.0] - 2026-03-10
+
 ## [v65.5.0] - 2026-03-10
 - Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
   (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: simple-api
-  version: ''
+  version: ""
 paths:
   /users/{id}:
     get:
@@ -15,12 +15,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       security:
         - BearerAuth: []
 components:

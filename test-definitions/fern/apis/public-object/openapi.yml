@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: public-object
-  version: ''
+  version: ""
 paths:
   /helloworld.txt:
     get:
@@ -10,8 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/octet-stream:
               schema:

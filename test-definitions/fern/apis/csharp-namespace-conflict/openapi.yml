@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: csharp-namespace-conflict
-  version: ''
+  version: ""
 paths:
   /hello:
     get:
@@ -10,8 +10,8 @@ paths:
         - Tasktest
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas:
     aaaA:
@@ -27,9 +27,9 @@ components:
       type: object
       properties:
         a:
-          $ref: '#/components/schemas/aaaA'
+          $ref: "#/components/schemas/aaaA"
         b:
-          $ref: '#/components/schemas/aaaB'
+          $ref: "#/components/schemas/aaaB"
       required:
         - a
         - b
@@ -38,9 +38,9 @@ components:
       type: object
       properties:
         a:
-          $ref: '#/components/schemas/aaaA'
+          $ref: "#/components/schemas/aaaA"
         b:
-          $ref: '#/components/schemas/aaaB'
+          $ref: "#/components/schemas/aaaB"
       required:
         - a
         - b

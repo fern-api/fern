@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "bar",
                         "name": {
                             "originalName": "bar",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Bar",
                                 "safeName": "Bar"
                             }
-                        },
-                        "wireValue": "bar"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -65,6 +65,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "nullable_bar",
                         "name": {
                             "originalName": "nullable_bar",
                             "camelCase": {
@@ -83,8 +84,7 @@
                                 "unsafeName": "NullableBar",
                                 "safeName": "NullableBar"
                             }
-                        },
-                        "wireValue": "nullable_bar"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -101,6 +101,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "nullable_required_bar",
                         "name": {
                             "originalName": "nullable_required_bar",
                             "camelCase": {
@@ -119,8 +120,7 @@
                                 "unsafeName": "NullableRequiredBar",
                                 "safeName": "NullableRequiredBar"
                             }
-                        },
-                        "wireValue": "nullable_required_bar"
+                        }
                     },
                     "typeReference": {
                         "type": "nullable",
@@ -134,6 +134,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "required_bar",
                         "name": {
                             "originalName": "required_bar",
                             "camelCase": {
@@ -152,8 +153,7 @@
                                 "unsafeName": "RequiredBar",
                                 "safeName": "RequiredBar"
                             }
-                        },
-                        "wireValue": "required_bar"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -233,6 +233,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "optional_baz",
                             "name": {
                                 "originalName": "optional_baz",
                                 "camelCase": {
@@ -251,8 +252,7 @@
                                     "unsafeName": "OptionalBaz",
                                     "safeName": "OptionalBaz"
                                 }
-                            },
-                            "wireValue": "optional_baz"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -266,6 +266,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "optional_nullable_baz",
                             "name": {
                                 "originalName": "optional_nullable_baz",
                                 "camelCase": {
@@ -284,8 +285,7 @@
                                     "unsafeName": "OptionalNullableBaz",
                                     "safeName": "OptionalNullableBaz"
                                 }
-                            },
-                            "wireValue": "optional_nullable_baz"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -302,6 +302,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "required_baz",
                             "name": {
                                 "originalName": "required_baz",
                                 "camelCase": {
@@ -320,8 +321,7 @@
                                     "unsafeName": "RequiredBaz",
                                     "safeName": "RequiredBaz"
                                 }
-                            },
-                            "wireValue": "required_baz"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -332,6 +332,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "required_nullable_baz",
                             "name": {
                                 "originalName": "required_nullable_baz",
                                 "camelCase": {
@@ -350,8 +351,7 @@
                                     "unsafeName": "RequiredNullableBaz",
                                     "safeName": "RequiredNullableBaz"
                                 }
-                            },
-                            "wireValue": "required_nullable_baz"
+                            }
                         },
                         "typeReference": {
                             "type": "nullable",
@@ -472,6 +472,7 @@
                 "headers": [
                     {
                         "name": {
+                            "wireValue": "X-Idempotency-Key",
                             "name": {
                                 "originalName": "X-Idempotency-Key",
                                 "camelCase": {
@@ -490,8 +491,7 @@
                                     "unsafeName": "XIdempotencyKey",
                                     "safeName": "XIdempotencyKey"
                                 }
-                            },
-                            "wireValue": "X-Idempotency-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -506,6 +506,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "nullable_text",
                                 "name": {
                                     "originalName": "nullable_text",
                                     "camelCase": {
@@ -524,8 +525,7 @@
                                         "unsafeName": "NullableText",
                                         "safeName": "NullableText"
                                     }
-                                },
-                                "wireValue": "nullable_text"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -542,6 +542,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "nullable_number",
                                 "name": {
                                     "originalName": "nullable_number",
                                     "camelCase": {
@@ -560,8 +561,7 @@
                                         "unsafeName": "NullableNumber",
                                         "safeName": "NullableNumber"
                                     }
-                                },
-                                "wireValue": "nullable_number"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -578,6 +578,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "non_nullable_text",
                                 "name": {
                                     "originalName": "non_nullable_text",
                                     "camelCase": {
@@ -596,8 +597,7 @@
                                         "unsafeName": "NonNullableText",
                                         "safeName": "NonNullableText"
                                     }
-                                },
-                                "wireValue": "non_nullable_text"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",

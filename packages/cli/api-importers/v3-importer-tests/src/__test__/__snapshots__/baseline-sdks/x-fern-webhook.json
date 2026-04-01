@@ -2,28 +2,7 @@
   "selfHosted": false,
   "apiVersion": {
     "header": {
-      "name": {
-        "name": {
-          "originalName": "X-API-Version",
-          "camelCase": {
-            "unsafeName": "xAPIVersion",
-            "safeName": "xAPIVersion"
-          },
-          "snakeCase": {
-            "unsafeName": "x_api_version",
-            "safeName": "x_api_version"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "X_API_VERSION",
-            "safeName": "X_API_VERSION"
-          },
-          "pascalCase": {
-            "unsafeName": "XAPIVersion",
-            "safeName": "XAPIVersion"
-          }
-        },
-        "wireValue": "X-API-Version"
-      },
+      "name": "X-API-Version",
       "valueType": {
         "primitive": {
           "v1": "STRING",
@@ -40,150 +19,30 @@
     },
     "value": {
       "default": {
-        "name": {
-          "name": {
-            "originalName": "2.0.0",
-            "camelCase": {
-              "unsafeName": "200",
-              "safeName": "200"
-            },
-            "snakeCase": {
-              "unsafeName": "200",
-              "safeName": "200"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "200",
-              "safeName": "200"
-            },
-            "pascalCase": {
-              "unsafeName": "200",
-              "safeName": "200"
-            }
-          },
-          "wireValue": "2.0.0"
-        }
+        "name": "2.0.0"
       },
       "values": [
         {
-          "name": {
-            "name": {
-              "originalName": "1.0.0",
-              "camelCase": {
-                "unsafeName": "100",
-                "safeName": "100"
-              },
-              "snakeCase": {
-                "unsafeName": "100",
-                "safeName": "100"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "100",
-                "safeName": "100"
-              },
-              "pascalCase": {
-                "unsafeName": "100",
-                "safeName": "100"
-              }
-            },
-            "wireValue": "1.0.0"
-          }
+          "name": "1.0.0"
         },
         {
-          "name": {
-            "name": {
-              "originalName": "2.0.0",
-              "camelCase": {
-                "unsafeName": "200",
-                "safeName": "200"
-              },
-              "snakeCase": {
-                "unsafeName": "200",
-                "safeName": "200"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "200",
-                "safeName": "200"
-              },
-              "pascalCase": {
-                "unsafeName": "200",
-                "safeName": "200"
-              }
-            },
-            "wireValue": "2.0.0"
-          }
+          "name": "2.0.0"
         },
         {
-          "name": {
-            "name": {
-              "originalName": "Latest",
-              "camelCase": {
-                "unsafeName": "latest",
-                "safeName": "latest"
-              },
-              "snakeCase": {
-                "unsafeName": "latest",
-                "safeName": "latest"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LATEST",
-                "safeName": "LATEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Latest",
-                "safeName": "Latest"
-              }
-            },
-            "wireValue": "Latest"
-          }
+          "name": "Latest"
         }
       ]
     },
     "type": "header"
   },
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-webhook`.",
   "auth": {
     "requirement": "ALL",
     "schemes": [
       {
         "key": "api_key",
-        "token": {
-          "originalName": "token",
-          "camelCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "snakeCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TOKEN",
-            "safeName": "TOKEN"
-          },
-          "pascalCase": {
-            "unsafeName": "Token",
-            "safeName": "Token"
-          }
-        },
+        "token": "token",
         "type": "bearer"
       }
     ]
@@ -191,26 +50,8 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "apiKey",
-          "camelCase": {
-            "unsafeName": "apiKey",
-            "safeName": "apiKey"
-          },
-          "snakeCase": {
-            "unsafeName": "api_key",
-            "safeName": "api_key"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "API_KEY",
-            "safeName": "API_KEY"
-          },
-          "pascalCase": {
-            "unsafeName": "APIKey",
-            "safeName": "APIKey"
-          }
-        },
-        "wireValue": "X-API-Key"
+        "wireValue": "X-API-Key",
+        "name": "apiKey"
       },
       "valueType": {
         "primitive": {
@@ -231,67 +72,13 @@
   "types": {
     "type_status:UpdateInlinedStatusPayload": {
       "name": {
-        "name": {
-          "originalName": "UpdateInlinedStatusPayload",
-          "camelCase": {
-            "unsafeName": "updateInlinedStatusPayload",
-            "safeName": "updateInlinedStatusPayload"
-          },
-          "snakeCase": {
-            "unsafeName": "update_inlined_status_payload",
-            "safeName": "update_inlined_status_payload"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
-            "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
-          },
-          "pascalCase": {
-            "unsafeName": "UpdateInlinedStatusPayload",
-            "safeName": "UpdateInlinedStatusPayload"
-          }
-        },
+        "name": "UpdateInlinedStatusPayload",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "status",
-              "camelCase": {
-                "unsafeName": "status",
-                "safeName": "status"
-              },
-              "snakeCase": {
-                "unsafeName": "status",
-                "safeName": "status"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "STATUS",
-                "safeName": "STATUS"
-              },
-              "pascalCase": {
-                "unsafeName": "Status",
-                "safeName": "Status"
-              }
-            }
+            "status"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "status",
-            "camelCase": {
-              "unsafeName": "status",
-              "safeName": "status"
-            },
-            "snakeCase": {
-              "unsafeName": "status",
-              "safeName": "status"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "STATUS",
-              "safeName": "STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "Status",
-              "safeName": "Status"
-            }
-          }
+          "file": "status"
         },
         "typeId": "type_status:UpdateInlinedStatusPayload"
       },
@@ -299,28 +86,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "stream-inlined",
-                "camelCase": {
-                  "unsafeName": "streamInlined",
-                  "safeName": "streamInlined"
-                },
-                "snakeCase": {
-                  "unsafeName": "stream_inlined",
-                  "safeName": "stream_inlined"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STREAM_INLINED",
-                  "safeName": "STREAM_INLINED"
-                },
-                "pascalCase": {
-                  "unsafeName": "StreamInlined",
-                  "safeName": "StreamInlined"
-                }
-              },
-              "wireValue": "stream-inlined"
-            },
+            "name": "stream-inlined",
             "valueType": {
               "container": {
                 "optional": {
@@ -342,28 +108,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "message-inlined",
-                "camelCase": {
-                  "unsafeName": "messageInlined",
-                  "safeName": "messageInlined"
-                },
-                "snakeCase": {
-                  "unsafeName": "message_inlined",
-                  "safeName": "message_inlined"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE_INLINED",
-                  "safeName": "MESSAGE_INLINED"
-                },
-                "pascalCase": {
-                  "unsafeName": "MessageInlined",
-                  "safeName": "MessageInlined"
-                }
-              },
-              "wireValue": "message-inlined"
-            },
+            "name": "message-inlined",
             "valueType": {
               "container": {
                 "optional": {
@@ -398,25 +143,7 @@
     },
     "type_:Update": {
       "name": {
-        "name": {
-          "originalName": "Update",
-          "camelCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "snakeCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPDATE",
-            "safeName": "UPDATE"
-          },
-          "pascalCase": {
-            "unsafeName": "Update",
-            "safeName": "Update"
-          }
-        },
+        "name": "Update",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -427,28 +154,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "stream",
-                "camelCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "snakeCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STREAM",
-                  "safeName": "STREAM"
-                },
-                "pascalCase": {
-                  "unsafeName": "Stream",
-                  "safeName": "Stream"
-                }
-              },
-              "wireValue": "stream"
-            },
+            "name": "stream",
             "valueType": {
               "container": {
                 "optional": {
@@ -470,28 +176,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
-              "wireValue": "message"
-            },
+            "name": "message",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -522,28 +207,7 @@
   "errors": {},
   "services": {},
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -562,47 +226,11 @@
       {
         "id": "webhooks_status.update",
         "method": "POST",
-        "name": {
-          "originalName": "update",
-          "camelCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "snakeCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPDATE",
-            "safeName": "UPDATE"
-          },
-          "pascalCase": {
-            "unsafeName": "Update",
-            "safeName": "Update"
-          }
-        },
+        "name": "update",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Update",
-              "camelCase": {
-                "unsafeName": "update",
-                "safeName": "update"
-              },
-              "snakeCase": {
-                "unsafeName": "update",
-                "safeName": "update"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPDATE",
-                "safeName": "UPDATE"
-              },
-              "pascalCase": {
-                "unsafeName": "Update",
-                "safeName": "Update"
-              }
-            },
+            "name": "Update",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -622,51 +250,12 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Update",
-                    "camelCase": {
-                      "unsafeName": "update",
-                      "safeName": "update"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "update",
-                      "safeName": "update"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPDATE",
-                      "safeName": "UPDATE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Update",
-                      "safeName": "Update"
-                    }
-                  }
+                  "name": "Update"
                 },
                 "shape": {
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "message",
-                          "camelCase": {
-                            "unsafeName": "message",
-                            "safeName": "message"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "message",
-                            "safeName": "message"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "MESSAGE",
-                            "safeName": "MESSAGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Message",
-                            "safeName": "Message"
-                          }
-                        },
-                        "wireValue": "message"
-                      },
+                      "name": "message",
                       "value": {
                         "shape": {
                           "primitive": {
@@ -685,25 +274,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Update",
-                          "camelCase": {
-                            "unsafeName": "update",
-                            "safeName": "update"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "update",
-                            "safeName": "update"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "UPDATE",
-                            "safeName": "UPDATE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Update",
-                            "safeName": "Update"
-                          }
-                        }
+                        "name": "Update"
                       }
                     }
                   ],
@@ -721,89 +292,17 @@
       {
         "id": "webhooks_status.updateInlined",
         "method": "POST",
-        "name": {
-          "originalName": "updateInlined",
-          "camelCase": {
-            "unsafeName": "updateInlined",
-            "safeName": "updateInlined"
-          },
-          "snakeCase": {
-            "unsafeName": "update_inlined",
-            "safeName": "update_inlined"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPDATE_INLINED",
-            "safeName": "UPDATE_INLINED"
-          },
-          "pascalCase": {
-            "unsafeName": "UpdateInlined",
-            "safeName": "UpdateInlined"
-          }
-        },
+        "name": "updateInlined",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "UpdateInlinedStatusPayload",
-              "camelCase": {
-                "unsafeName": "updateInlinedStatusPayload",
-                "safeName": "updateInlinedStatusPayload"
-              },
-              "snakeCase": {
-                "unsafeName": "update_inlined_status_payload",
-                "safeName": "update_inlined_status_payload"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
-                "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
-              },
-              "pascalCase": {
-                "unsafeName": "UpdateInlinedStatusPayload",
-                "safeName": "UpdateInlinedStatusPayload"
-              }
-            },
+            "name": "UpdateInlinedStatusPayload",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "status",
-                  "camelCase": {
-                    "unsafeName": "status",
-                    "safeName": "status"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "status",
-                    "safeName": "status"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "STATUS",
-                    "safeName": "STATUS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Status",
-                    "safeName": "Status"
-                  }
-                }
+                "status"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              }
+              "file": "status"
             },
             "typeId": "type_status:UpdateInlinedStatusPayload",
             "type": "named"
@@ -818,66 +317,12 @@
                   "typeId": "type_status:UpdateInlinedStatusPayload",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "status",
-                        "camelCase": {
-                          "unsafeName": "status",
-                          "safeName": "status"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "status",
-                          "safeName": "status"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "STATUS",
-                          "safeName": "STATUS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Status",
-                          "safeName": "Status"
-                        }
-                      }
+                      "status"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "status",
-                      "camelCase": {
-                        "unsafeName": "status",
-                        "safeName": "status"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "status",
-                        "safeName": "status"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "STATUS",
-                        "safeName": "STATUS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Status",
-                        "safeName": "Status"
-                      }
-                    }
+                    "file": "status"
                   },
-                  "name": {
-                    "originalName": "UpdateInlinedStatusPayload",
-                    "camelCase": {
-                      "unsafeName": "updateInlinedStatusPayload",
-                      "safeName": "updateInlinedStatusPayload"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "update_inlined_status_payload",
-                      "safeName": "update_inlined_status_payload"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
-                      "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UpdateInlinedStatusPayload",
-                      "safeName": "UpdateInlinedStatusPayload"
-                    }
-                  }
+                  "name": "UpdateInlinedStatusPayload"
                 },
                 "shape": {
                   "properties": [],
@@ -895,47 +340,11 @@
       {
         "id": "webhooks_status2.update",
         "method": "POST",
-        "name": {
-          "originalName": "update",
-          "camelCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "snakeCase": {
-            "unsafeName": "update",
-            "safeName": "update"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPDATE",
-            "safeName": "UPDATE"
-          },
-          "pascalCase": {
-            "unsafeName": "Update",
-            "safeName": "Update"
-          }
-        },
+        "name": "update",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Update",
-              "camelCase": {
-                "unsafeName": "update",
-                "safeName": "update"
-              },
-              "snakeCase": {
-                "unsafeName": "update",
-                "safeName": "update"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPDATE",
-                "safeName": "UPDATE"
-              },
-              "pascalCase": {
-                "unsafeName": "Update",
-                "safeName": "Update"
-              }
-            },
+            "name": "Update",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -955,51 +364,12 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Update",
-                    "camelCase": {
-                      "unsafeName": "update",
-                      "safeName": "update"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "update",
-                      "safeName": "update"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPDATE",
-                      "safeName": "UPDATE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Update",
-                      "safeName": "Update"
-                    }
-                  }
+                  "name": "Update"
                 },
                 "shape": {
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "message",
-                          "camelCase": {
-                            "unsafeName": "message",
-                            "safeName": "message"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "message",
-                            "safeName": "message"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "MESSAGE",
-                            "safeName": "MESSAGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Message",
-                            "safeName": "Message"
-                          }
-                        },
-                        "wireValue": "message"
-                      },
+                      "name": "message",
                       "value": {
                         "shape": {
                           "primitive": {
@@ -1018,25 +388,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Update",
-                          "camelCase": {
-                            "unsafeName": "update",
-                            "safeName": "update"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "update",
-                            "safeName": "update"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "UPDATE",
-                            "safeName": "UPDATE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Update",
-                            "safeName": "Update"
-                          }
-                        }
+                        "name": "Update"
                       }
                     }
                   ],
@@ -1125,6 +477,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream-inlined",
               "name": {
                 "originalName": "stream-inlined",
                 "camelCase": {
@@ -1143,8 +496,7 @@
                   "unsafeName": "StreamInlined",
                   "safeName": "StreamInlined"
                 }
-              },
-              "wireValue": "stream-inlined"
+              }
             },
             "typeReference": {
               "value": {
@@ -1156,6 +508,7 @@
           },
           {
             "name": {
+              "wireValue": "message-inlined",
               "name": {
                 "originalName": "message-inlined",
                 "camelCase": {
@@ -1174,8 +527,7 @@
                   "unsafeName": "MessageInlined",
                   "safeName": "MessageInlined"
                 }
-              },
-              "wireValue": "message-inlined"
+              }
             },
             "typeReference": {
               "value": {
@@ -1218,6 +570,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "stream",
               "name": {
                 "originalName": "stream",
                 "camelCase": {
@@ -1236,8 +589,7 @@
                   "unsafeName": "Stream",
                   "safeName": "Stream"
                 }
-              },
-              "wireValue": "stream"
+              }
             },
             "typeReference": {
               "value": {
@@ -1249,6 +601,7 @@
           },
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -1267,8 +620,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -1283,6 +635,7 @@
     "headers": [
       {
         "name": {
+          "wireValue": "X-API-Key",
           "name": {
             "originalName": "apiKey",
             "camelCase": {
@@ -1301,8 +654,7 @@
               "unsafeName": "APIKey",
               "safeName": "APIKey"
             }
-          },
-          "wireValue": "X-API-Key"
+          }
         },
         "typeReference": {
           "value": "STRING",
@@ -1314,70 +666,19 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_status": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "status",
-            "camelCase": {
-              "unsafeName": "status",
-              "safeName": "status"
-            },
-            "snakeCase": {
-              "unsafeName": "status",
-              "safeName": "status"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "STATUS",
-              "safeName": "STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "Status",
-              "safeName": "Status"
-            }
-          }
+          "status"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "status",
-          "camelCase": {
-            "unsafeName": "status",
-            "safeName": "status"
-          },
-          "snakeCase": {
-            "unsafeName": "status",
-            "safeName": "status"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "STATUS",
-            "safeName": "STATUS"
-          },
-          "pascalCase": {
-            "unsafeName": "Status",
-            "safeName": "Status"
-          }
-        }
+        "file": "status"
       },
-      "name": {
-        "originalName": "status",
-        "camelCase": {
-          "unsafeName": "status",
-          "safeName": "status"
-        },
-        "snakeCase": {
-          "unsafeName": "status",
-          "safeName": "status"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "STATUS",
-          "safeName": "STATUS"
-        },
-        "pascalCase": {
-          "unsafeName": "Status",
-          "safeName": "Status"
-        }
-      },
+      "name": "status",
       "types": [
         "type_status:UpdateInlinedStatusPayload"
       ],
@@ -1389,66 +690,12 @@
     "subpackage_status2": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "status2",
-            "camelCase": {
-              "unsafeName": "status2",
-              "safeName": "status2"
-            },
-            "snakeCase": {
-              "unsafeName": "status2",
-              "safeName": "status2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "STATUS2",
-              "safeName": "STATUS2"
-            },
-            "pascalCase": {
-              "unsafeName": "Status2",
-              "safeName": "Status2"
-            }
-          }
+          "status2"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "status2",
-          "camelCase": {
-            "unsafeName": "status2",
-            "safeName": "status2"
-          },
-          "snakeCase": {
-            "unsafeName": "status2",
-            "safeName": "status2"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "STATUS2",
-            "safeName": "STATUS2"
-          },
-          "pascalCase": {
-            "unsafeName": "Status2",
-            "safeName": "Status2"
-          }
-        }
+        "file": "status2"
       },
-      "name": {
-        "originalName": "status2",
-        "camelCase": {
-          "unsafeName": "status2",
-          "safeName": "status2"
-        },
-        "snakeCase": {
-          "unsafeName": "status2",
-          "safeName": "status2"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "STATUS2",
-          "safeName": "STATUS2"
-        },
-        "pascalCase": {
-          "unsafeName": "Status2",
-          "safeName": "Status2"
-        }
-      },
+      "name": "status2",
       "types": [],
       "errors": [],
       "subpackages": [],

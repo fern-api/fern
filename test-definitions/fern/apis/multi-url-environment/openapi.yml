@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: multi-url-environment
-  version: ''
+  version: ""
 paths:
   /ec2/boot:
     post:
@@ -10,8 +10,8 @@ paths:
         - Ec2
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       servers:
         - url: https://ec2.aws.com
         - url: https://staging.ec2.aws.com
@@ -35,8 +35,8 @@ paths:
         - S3
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:

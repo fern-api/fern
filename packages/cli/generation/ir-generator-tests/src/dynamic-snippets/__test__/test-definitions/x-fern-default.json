@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -71,6 +71,7 @@
     "headers": [
         {
             "name": {
+                "wireValue": "X-API-Version",
                 "name": {
                     "originalName": "apiVersion",
                     "camelCase": {
@@ -89,8 +90,7 @@
                         "unsafeName": "APIVersion",
                         "safeName": "APIVersion"
                     }
-                },
-                "wireValue": "X-API-Version"
+                }
             },
             "typeReference": {
                 "type": "optional",
@@ -199,6 +199,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -217,8 +218,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

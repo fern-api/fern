@@ -1,6 +1,7 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { createNumericLiteralSafe, GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedRequestWrapper, RequestWrapperNonBodyProperty } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
@@ -14,7 +15,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {};
 
-    protected getParameterType(context: SdkContext): {
+    protected getParameterType(context: FileContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;
@@ -27,12 +28,12 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         };
     }
 
-    public getType(context: SdkContext): ts.TypeNode {
+    public getType(context: FileContext): ts.TypeNode {
         return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name);
     }
 
     public getInitialStatements(
-        context: SdkContext,
+        context: FileContext,
         { variablesInScope }: { variablesInScope: string[] }
     ): ts.Statement[] {
         this.nonBodyKeyAliases = {};
@@ -118,7 +119,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         ];
     }
 
-    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
@@ -137,7 +138,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         example,
         opts
     }: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
@@ -145,13 +146,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return requestWrapperExample?.build(context, opts);
     }
 
-    public getAllQueryParameters(context: SdkContext): FernIr.QueryParameter[] {
+    public getAllQueryParameters(context: FileContext): FernIr.QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
     public withQueryParameter(
         queryParameter: FernIr.QueryParameter,
-        context: SdkContext,
+        context: FileContext,
         queryParamSetter: (value: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
@@ -167,13 +168,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         });
     }
 
-    public isOptional({ context }: { context: SdkContext }): boolean {
+    public isOptional({ context }: { context: FileContext }): boolean {
         return this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
     }
 
-    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToPathParameter(pathParameterKey: string, context: FileContext): ts.Expression {
         const pathParameter = this.endpoint.allPathParameters.find(
-            (pathParam) => pathParam.name.originalName === pathParameterKey
+            (pathParam) => getOriginalName(pathParam.name) === pathParameterKey
         );
         if (pathParameter == null) {
             throw new Error("Path parameter does not exist: " + pathParameterKey);
@@ -184,9 +185,9 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
-            (queryParam) => queryParam.name.wireValue === queryParameterKey
+            (queryParam) => getWireValue(queryParam.name) === queryParameterKey
         );
         if (queryParameter == null) {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
@@ -197,7 +198,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: FileContext): ts.Expression {
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(
                 this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header)
@@ -205,7 +206,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    private getGeneratedRequestWrapper(context: SdkContext): GeneratedRequestWrapper {
+    private getGeneratedRequestWrapper(context: FileContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 
@@ -224,7 +225,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return alias;
     }
 
-    private extractDefaultValue(typeReference: FernIr.TypeReference, context: SdkContext): ts.Expression | undefined {
+    private extractDefaultValue(typeReference: FernIr.TypeReference, context: FileContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference);
 
         if (resolvedType.type === "container") {
@@ -291,6 +292,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 float: () => undefined,
                 date: () => undefined,
                 dateTime: () => undefined,
+                dateTimeRfc2822: () => undefined,
                 uuid: () => undefined,
                 base64: () => undefined,
                 _other: () => undefined

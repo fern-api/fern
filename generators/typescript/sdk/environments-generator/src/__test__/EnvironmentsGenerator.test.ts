@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { casingsGenerator, createMockEnvironmentsContext } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator, createMockEnvironmentsContext } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -140,7 +140,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         const sourceFile = project.createSourceFile("environments.ts");
 
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = { sourceFile } as any;
+        const mockContext = { sourceFile, case: caseConverter } as any;
 
         impl.writeToFile(mockContext);
 
@@ -193,6 +193,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("hasDefaultEnvironment returns true when default is set", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: "env-prod",
@@ -203,6 +204,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("hasDefaultEnvironment returns false when no default", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: undefined,
@@ -213,6 +215,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("getReferenceToDefaultEnvironment generates correct property access", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: "env-prod",
@@ -226,6 +229,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("getReferenceToEnvironmentUrl generates property access for baseUrl", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: undefined,
@@ -241,6 +245,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("getReferenceToEnvironmentUrl throws when baseUrlId is undefined", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: undefined,
@@ -257,6 +262,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("getReferenceToEnvironmentUrl throws when baseUrlId is not found", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: undefined,
@@ -273,6 +279,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
 
     it("writeToFile generates interface, environment const, and type alias", () => {
         const impl = new GeneratedMultipleUrlsEnvironmentsImpl({
+            caseConverter,
             environmentEnumName: "MyEnvironment",
             environmentUrlsTypeName: "MyEnvironmentUrls",
             defaultEnvironmentId: "env-prod",
@@ -283,7 +290,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
         const sourceFile = project.createSourceFile("environments.ts");
 
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = { sourceFile } as any;
+        const mockContext = { sourceFile, case: caseConverter } as any;
 
         impl.writeToFile(mockContext);
 

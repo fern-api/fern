@@ -37,5 +37,5 @@ export interface UserDefinedProtobufType {
      * However, its repeated here just in case the naming convention differs, which
      * is most relevant for APIs that specify `smart-casing`.
      */
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
 }

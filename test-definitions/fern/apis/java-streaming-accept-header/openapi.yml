@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-streaming-accept-header
-  version: ''
+  version: ""
 paths:
   /generate-stream:
     post:
@@ -10,19 +10,19 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/jsonl:
               schema:
                 type: string
                 format: binary
-        '400':
-          description: ''
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       requestBody:
         required: true
         content:
@@ -41,18 +41,18 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StreamResponse'
-        '400':
-          description: ''
+                $ref: "#/components/schemas/StreamResponse"
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       requestBody:
         required: true
         content:

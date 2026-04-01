@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "CreateCompletionRequest",
-          "camelCase": {
-            "unsafeName": "createCompletionRequest",
-            "safeName": "createCompletionRequest"
-          },
-          "snakeCase": {
-            "unsafeName": "create_completion_request",
-            "safeName": "create_completion_request"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CREATE_COMPLETION_REQUEST",
-            "safeName": "CREATE_COMPLETION_REQUEST"
-          },
-          "pascalCase": {
-            "unsafeName": "CreateCompletionRequest",
-            "safeName": "CreateCompletionRequest"
-          }
-        }
+        "name": "CreateCompletionRequest"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "stream",
-                "camelCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "snakeCase": {
-                  "unsafeName": "stream",
-                  "safeName": "stream"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STREAM",
-                  "safeName": "STREAM"
-                },
-                "pascalCase": {
-                  "unsafeName": "Stream",
-                  "safeName": "Stream"
-                }
-              },
-              "wireValue": "stream"
-            },
+            "name": "stream",
             "valueType": {
               "container": {
                 "optional": {
@@ -80,28 +41,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "prompt",
-                "camelCase": {
-                  "unsafeName": "prompt",
-                  "safeName": "prompt"
-                },
-                "snakeCase": {
-                  "unsafeName": "prompt",
-                  "safeName": "prompt"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PROMPT",
-                  "safeName": "PROMPT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Prompt",
-                  "safeName": "Prompt"
-                }
-              },
-              "wireValue": "prompt"
-            },
+            "name": "prompt",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -145,51 +85,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Completion",
-          "camelCase": {
-            "unsafeName": "completion",
-            "safeName": "completion"
-          },
-          "snakeCase": {
-            "unsafeName": "completion",
-            "safeName": "completion"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "COMPLETION",
-            "safeName": "COMPLETION"
-          },
-          "pascalCase": {
-            "unsafeName": "Completion",
-            "safeName": "Completion"
-          }
-        }
+        "name": "Completion"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "text",
-                "camelCase": {
-                  "unsafeName": "text",
-                  "safeName": "text"
-                },
-                "snakeCase": {
-                  "unsafeName": "text",
-                  "safeName": "text"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TEXT",
-                  "safeName": "TEXT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Text",
-                  "safeName": "Text"
-                }
-              },
-              "wireValue": "text"
-            },
+            "name": "text",
             "valueType": {
               "container": {
                 "optional": {
@@ -237,51 +138,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "CompletionChunk",
-          "camelCase": {
-            "unsafeName": "completionChunk",
-            "safeName": "completionChunk"
-          },
-          "snakeCase": {
-            "unsafeName": "completion_chunk",
-            "safeName": "completion_chunk"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "COMPLETION_CHUNK",
-            "safeName": "COMPLETION_CHUNK"
-          },
-          "pascalCase": {
-            "unsafeName": "CompletionChunk",
-            "safeName": "CompletionChunk"
-          }
-        }
+        "name": "CompletionChunk"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "text",
-                "camelCase": {
-                  "unsafeName": "text",
-                  "safeName": "text"
-                },
-                "snakeCase": {
-                  "unsafeName": "text",
-                  "safeName": "text"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TEXT",
-                  "safeName": "TEXT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Text",
-                  "safeName": "Text"
-                }
-              },
-              "wireValue": "text"
-            },
+            "name": "text",
             "valueType": {
               "container": {
                 "optional": {
@@ -328,46 +190,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "chatCompletions",
-              "camelCase": {
-                "unsafeName": "chatCompletions",
-                "safeName": "chatCompletions"
-              },
-              "snakeCase": {
-                "unsafeName": "chat_completions",
-                "safeName": "chat_completions"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS",
-                "safeName": "CHAT_COMPLETIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "ChatCompletions",
-                "safeName": "ChatCompletions"
-              }
-            }
+            "chatCompletions"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "chatCompletions",
-            "camelCase": {
-              "unsafeName": "chatCompletions",
-              "safeName": "chatCompletions"
-            },
-            "snakeCase": {
-              "unsafeName": "chat_completions",
-              "safeName": "chat_completions"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CHAT_COMPLETIONS",
-              "safeName": "CHAT_COMPLETIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "ChatCompletions",
-              "safeName": "ChatCompletions"
-            }
-          }
+          "file": "chatCompletions"
         }
       },
       "basePath": {
@@ -393,7 +219,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "63b90668",
+                "id": "55d026ad",
                 "url": "/completions/chat",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -408,28 +234,7 @@
                   },
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "stream",
-                          "camelCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "STREAM",
-                            "safeName": "STREAM"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Stream",
-                            "safeName": "Stream"
-                          }
-                        },
-                        "wireValue": "stream"
-                      },
+                      "name": "stream",
                       "value": {
                         "jsonExample": true,
                         "shape": {
@@ -445,28 +250,7 @@
                       }
                     },
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "prompt",
-                          "camelCase": {
-                            "unsafeName": "prompt",
-                            "safeName": "prompt"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "prompt",
-                            "safeName": "prompt"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PROMPT",
-                            "safeName": "PROMPT"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Prompt",
-                            "safeName": "Prompt"
-                          }
-                        },
-                        "wireValue": "prompt"
-                      },
+                      "name": "prompt",
                       "value": {
                         "jsonExample": "prompt",
                         "shape": {
@@ -494,53 +278,14 @@
                           "shape": {
                             "properties": [
                               {
-                                "name": {
-                                  "name": {
-                                    "originalName": "text",
-                                    "camelCase": {
-                                      "unsafeName": "text",
-                                      "safeName": "text"
-                                    },
-                                    "snakeCase": {
-                                      "unsafeName": "text",
-                                      "safeName": "text"
-                                    },
-                                    "screamingSnakeCase": {
-                                      "unsafeName": "TEXT",
-                                      "safeName": "TEXT"
-                                    },
-                                    "pascalCase": {
-                                      "unsafeName": "Text",
-                                      "safeName": "Text"
-                                    }
-                                  },
-                                  "wireValue": "text"
-                                },
+                                "name": "text",
                                 "originalTypeDeclaration": {
                                   "typeId": "CompletionChunk",
                                   "fernFilepath": {
                                     "allParts": [],
                                     "packagePath": []
                                   },
-                                  "name": {
-                                    "originalName": "CompletionChunk",
-                                    "camelCase": {
-                                      "unsafeName": "completionChunk",
-                                      "safeName": "completionChunk"
-                                    },
-                                    "snakeCase": {
-                                      "unsafeName": "completion_chunk",
-                                      "safeName": "completion_chunk"
-                                    },
-                                    "screamingSnakeCase": {
-                                      "unsafeName": "COMPLETION_CHUNK",
-                                      "safeName": "COMPLETION_CHUNK"
-                                    },
-                                    "pascalCase": {
-                                      "unsafeName": "CompletionChunk",
-                                      "safeName": "CompletionChunk"
-                                    }
-                                  }
+                                  "name": "CompletionChunk"
                                 },
                                 "value": {
                                   "jsonExample": "text",
@@ -583,25 +328,7 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": {
-                              "originalName": "CompletionChunk",
-                              "camelCase": {
-                                "unsafeName": "completionChunk",
-                                "safeName": "completionChunk"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "completion_chunk",
-                                "safeName": "completion_chunk"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "COMPLETION_CHUNK",
-                                "safeName": "COMPLETION_CHUNK"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "CompletionChunk",
-                                "safeName": "CompletionChunk"
-                              }
-                            }
+                            "name": "CompletionChunk"
                           },
                           "type": "named"
                         }
@@ -625,72 +352,15 @@
           },
           "audiences": [],
           "id": "endpoint_chatCompletions.create_stream",
-          "name": {
-            "originalName": "create_stream",
-            "camelCase": {
-              "unsafeName": "createStream",
-              "safeName": "createStream"
-            },
-            "snakeCase": {
-              "unsafeName": "create_stream",
-              "safeName": "create_stream"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_STREAM",
-              "safeName": "CREATE_STREAM"
-            },
-            "pascalCase": {
-              "unsafeName": "CreateStream",
-              "safeName": "CreateStream"
-            }
-          },
+          "name": "create_stream",
           "requestBody": {
             "contentType": "application/json",
-            "name": {
-              "originalName": "chatCompletions_create_Request_streaming",
-              "camelCase": {
-                "unsafeName": "chatCompletionsCreateRequestStreaming",
-                "safeName": "chatCompletionsCreateRequestStreaming"
-              },
-              "snakeCase": {
-                "unsafeName": "chat_completions_create_request_streaming",
-                "safeName": "chat_completions_create_request_streaming"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST_STREAMING",
-                "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST_STREAMING"
-              },
-              "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateRequestStreaming",
-                "safeName": "ChatCompletionsCreateRequestStreaming"
-              }
-            },
+            "name": "chatCompletions_create_Request_streaming",
             "extendedProperties": [],
             "extends": [],
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "originalName": "stream",
-                    "camelCase": {
-                      "unsafeName": "stream",
-                      "safeName": "stream"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "stream",
-                      "safeName": "stream"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "STREAM",
-                      "safeName": "STREAM"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Stream",
-                      "safeName": "Stream"
-                    }
-                  },
-                  "wireValue": "stream"
-                },
+                "name": "stream",
                 "valueType": {
                   "container": {
                     "literal": {
@@ -709,28 +379,7 @@
                 }
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "prompt",
-                    "camelCase": {
-                      "unsafeName": "prompt",
-                      "safeName": "prompt"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "prompt",
-                      "safeName": "prompt"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PROMPT",
-                      "safeName": "PROMPT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Prompt",
-                      "safeName": "Prompt"
-                    }
-                  },
-                  "wireValue": "prompt"
-                },
+                "name": "prompt",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -771,25 +420,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "CompletionChunk",
-                    "camelCase": {
-                      "unsafeName": "completionChunk",
-                      "safeName": "completionChunk"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "completion_chunk",
-                      "safeName": "completion_chunk"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COMPLETION_CHUNK",
-                      "safeName": "COMPLETION_CHUNK"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "CompletionChunk",
-                      "safeName": "CompletionChunk"
-                    }
-                  },
+                  "name": "CompletionChunk",
                   "typeId": "CompletionChunk",
                   "inline": false,
                   "type": "named"
@@ -835,25 +466,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "CompletionChunk",
-                        "camelCase": {
-                          "unsafeName": "completionChunk",
-                          "safeName": "completionChunk"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "completion_chunk",
-                          "safeName": "completion_chunk"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "COMPLETION_CHUNK",
-                          "safeName": "COMPLETION_CHUNK"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "CompletionChunk",
-                          "safeName": "CompletionChunk"
-                        }
-                      },
+                      "name": "CompletionChunk",
                       "typeId": "CompletionChunk",
                       "inline": false,
                       "type": "named"
@@ -882,7 +495,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "163279d1",
+                "id": "7747fe76",
                 "url": "/completions/chat",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -897,28 +510,7 @@
                   },
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "stream",
-                          "camelCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "STREAM",
-                            "safeName": "STREAM"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Stream",
-                            "safeName": "Stream"
-                          }
-                        },
-                        "wireValue": "stream"
-                      },
+                      "name": "stream",
                       "value": {
                         "jsonExample": false,
                         "shape": {
@@ -934,28 +526,7 @@
                       }
                     },
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "prompt",
-                          "camelCase": {
-                            "unsafeName": "prompt",
-                            "safeName": "prompt"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "prompt",
-                            "safeName": "prompt"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PROMPT",
-                            "safeName": "PROMPT"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Prompt",
-                            "safeName": "Prompt"
-                          }
-                        },
-                        "wireValue": "prompt"
-                      },
+                      "name": "prompt",
                       "value": {
                         "jsonExample": "prompt",
                         "shape": {
@@ -982,53 +553,14 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "text",
-                                  "camelCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "TEXT",
-                                    "safeName": "TEXT"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Text",
-                                    "safeName": "Text"
-                                  }
-                                },
-                                "wireValue": "text"
-                              },
+                              "name": "text",
                               "originalTypeDeclaration": {
                                 "typeId": "Completion",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "Completion",
-                                  "camelCase": {
-                                    "unsafeName": "completion",
-                                    "safeName": "completion"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "completion",
-                                    "safeName": "completion"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "COMPLETION",
-                                    "safeName": "COMPLETION"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Completion",
-                                    "safeName": "Completion"
-                                  }
-                                }
+                                "name": "Completion"
                               },
                               "value": {
                                 "jsonExample": "text",
@@ -1071,25 +603,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "Completion",
-                            "camelCase": {
-                              "unsafeName": "completion",
-                              "safeName": "completion"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "completion",
-                              "safeName": "completion"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "COMPLETION",
-                              "safeName": "COMPLETION"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Completion",
-                              "safeName": "Completion"
-                            }
-                          }
+                          "name": "Completion"
                         },
                         "type": "named"
                       }
@@ -1112,72 +626,15 @@
           },
           "audiences": [],
           "id": "endpoint_chatCompletions.create",
-          "name": {
-            "originalName": "create",
-            "camelCase": {
-              "unsafeName": "create",
-              "safeName": "create"
-            },
-            "snakeCase": {
-              "unsafeName": "create",
-              "safeName": "create"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE",
-              "safeName": "CREATE"
-            },
-            "pascalCase": {
-              "unsafeName": "Create",
-              "safeName": "Create"
-            }
-          },
+          "name": "create",
           "requestBody": {
             "contentType": "application/json",
-            "name": {
-              "originalName": "chatCompletions_create_Request",
-              "camelCase": {
-                "unsafeName": "chatCompletionsCreateRequest",
-                "safeName": "chatCompletionsCreateRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "chat_completions_create_request",
-                "safeName": "chat_completions_create_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST",
-                "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateRequest",
-                "safeName": "ChatCompletionsCreateRequest"
-              }
-            },
+            "name": "chatCompletions_create_Request",
             "extendedProperties": [],
             "extends": [],
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "originalName": "stream",
-                    "camelCase": {
-                      "unsafeName": "stream",
-                      "safeName": "stream"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "stream",
-                      "safeName": "stream"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "STREAM",
-                      "safeName": "STREAM"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Stream",
-                      "safeName": "Stream"
-                    }
-                  },
-                  "wireValue": "stream"
-                },
+                "name": "stream",
                 "valueType": {
                   "container": {
                     "literal": {
@@ -1196,28 +653,7 @@
                 }
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "prompt",
-                    "camelCase": {
-                      "unsafeName": "prompt",
-                      "safeName": "prompt"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "prompt",
-                      "safeName": "prompt"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PROMPT",
-                      "safeName": "PROMPT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Prompt",
-                      "safeName": "Prompt"
-                    }
-                  },
-                  "wireValue": "prompt"
-                },
+                "name": "prompt",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -1252,51 +688,12 @@
             "requestBodies": [
               {
                 "contentType": "application/json",
-                "name": {
-                  "originalName": "chatCompletions_create_Request",
-                  "camelCase": {
-                    "unsafeName": "chatCompletionsCreateRequest",
-                    "safeName": "chatCompletionsCreateRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "chat_completions_create_request",
-                    "safeName": "chat_completions_create_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST",
-                    "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ChatCompletionsCreateRequest",
-                    "safeName": "ChatCompletionsCreateRequest"
-                  }
-                },
+                "name": "chatCompletions_create_Request",
                 "extendedProperties": [],
                 "extends": [],
                 "properties": [
                   {
-                    "name": {
-                      "name": {
-                        "originalName": "stream",
-                        "camelCase": {
-                          "unsafeName": "stream",
-                          "safeName": "stream"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "stream",
-                          "safeName": "stream"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "STREAM",
-                          "safeName": "STREAM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Stream",
-                          "safeName": "Stream"
-                        }
-                      },
-                      "wireValue": "stream"
-                    },
+                    "name": "stream",
                     "valueType": {
                       "container": {
                         "literal": {
@@ -1315,28 +712,7 @@
                     }
                   },
                   {
-                    "name": {
-                      "name": {
-                        "originalName": "prompt",
-                        "camelCase": {
-                          "unsafeName": "prompt",
-                          "safeName": "prompt"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "prompt",
-                          "safeName": "prompt"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PROMPT",
-                          "safeName": "PROMPT"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Prompt",
-                          "safeName": "Prompt"
-                        }
-                      },
-                      "wireValue": "prompt"
-                    },
+                    "name": "prompt",
                     "valueType": {
                       "primitive": {
                         "v1": "STRING",
@@ -1378,25 +754,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Completion",
-                    "camelCase": {
-                      "unsafeName": "completion",
-                      "safeName": "completion"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "completion",
-                      "safeName": "completion"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COMPLETION",
-                      "safeName": "COMPLETION"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Completion",
-                      "safeName": "Completion"
-                    }
-                  },
+                  "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
                   "type": "named"
@@ -1442,25 +800,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Completion",
-                        "camelCase": {
-                          "unsafeName": "completion",
-                          "safeName": "completion"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "completion",
-                          "safeName": "completion"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "COMPLETION",
-                          "safeName": "COMPLETION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Completion",
-                          "safeName": "Completion"
-                        }
-                      },
+                      "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
                       "type": "named"
@@ -1509,67 +849,13 @@
   },
   "subpackages": {
     "subpackage_chatCompletions": {
-      "name": {
-        "originalName": "chatCompletions",
-        "camelCase": {
-          "unsafeName": "chatCompletions",
-          "safeName": "chatCompletions"
-        },
-        "snakeCase": {
-          "unsafeName": "chat_completions",
-          "safeName": "chat_completions"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "CHAT_COMPLETIONS",
-          "safeName": "CHAT_COMPLETIONS"
-        },
-        "pascalCase": {
-          "unsafeName": "ChatCompletions",
-          "safeName": "ChatCompletions"
-        }
-      },
+      "name": "chatCompletions",
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "chatCompletions",
-            "camelCase": {
-              "unsafeName": "chatCompletions",
-              "safeName": "chatCompletions"
-            },
-            "snakeCase": {
-              "unsafeName": "chat_completions",
-              "safeName": "chat_completions"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CHAT_COMPLETIONS",
-              "safeName": "CHAT_COMPLETIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "ChatCompletions",
-              "safeName": "ChatCompletions"
-            }
-          }
+          "chatCompletions"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "chatCompletions",
-          "camelCase": {
-            "unsafeName": "chatCompletions",
-            "safeName": "chatCompletions"
-          },
-          "snakeCase": {
-            "unsafeName": "chat_completions",
-            "safeName": "chat_completions"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CHAT_COMPLETIONS",
-            "safeName": "CHAT_COMPLETIONS"
-          },
-          "pascalCase": {
-            "unsafeName": "ChatCompletions",
-            "safeName": "ChatCompletions"
-          }
-        }
+        "file": "chatCompletions"
       },
       "service": "service_chatCompletions",
       "types": [],
@@ -1589,47 +875,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
-    "camelCase": {
-      "unsafeName": "testExtensionXFernAudiencesAlongsideXFernStreaming",
-      "safeName": "testExtensionXFernAudiencesAlongsideXFernStreaming"
-    },
-    "snakeCase": {
-      "unsafeName": "test_extension_x_fern_audiences_alongside_x_fern_streaming",
-      "safeName": "test_extension_x_fern_audiences_alongside_x_fern_streaming"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TEST_EXTENSION_X_FERN_AUDIENCES_ALONGSIDE_X_FERN_STREAMING",
-      "safeName": "TEST_EXTENSION_X_FERN_AUDIENCES_ALONGSIDE_X_FERN_STREAMING"
-    },
-    "pascalCase": {
-      "unsafeName": "TestExtensionXFernAudiencesAlongsideXFernStreaming",
-      "safeName": "TestExtensionXFernAudiencesAlongsideXFernStreaming"
-    }
-  },
+  "apiName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

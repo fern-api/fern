@@ -1,18 +1,18 @@
 openapi: 3.0.1
 info:
   title: alias-extends
-  version: ''
+  version: ""
   description: A Test Definition for extending an alias
 paths:
   /extends/extended-inline-request-body:
     post:
       operationId: extendedInlineRequestBody
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -25,12 +25,12 @@ paths:
               required:
                 - child
               allOf:
-                - $ref: '#/components/schemas/AliasType'
+                - $ref: "#/components/schemas/AliasType"
 components:
   schemas:
     AliasType:
       title: AliasType
-      $ref: '#/components/schemas/Parent'
+      $ref: "#/components/schemas/Parent"
     Parent:
       title: Parent
       type: object
@@ -48,5 +48,5 @@ components:
       required:
         - child
       allOf:
-        - $ref: '#/components/schemas/Parent'
+        - $ref: "#/components/schemas/Parent"
   securitySchemes: {}
