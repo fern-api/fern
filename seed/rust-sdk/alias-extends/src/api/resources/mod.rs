@@ -34,4 +34,30 @@ impl AliasExtendsClient {
             )
             .await
     }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn extended_inline_request_body_with_raw_response(
+        &self,
+        request: &InlinedChildRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/extends/extended-inline-request-body",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
 }

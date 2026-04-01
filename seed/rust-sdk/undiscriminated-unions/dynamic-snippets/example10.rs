@@ -1,4 +1,4 @@
-use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,17 +7,11 @@ async fn main() {
         ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client
-        .union_
-        .test_camel_case_properties(
-            &PaymentRequest {
-                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
-                    method: "method".to_string(),
-                    card_number: "cardNumber".to_string(),
-                    ..Default::default()
-                }),
-            },
-            None,
-        )
-        .await;
+    client.union_.test_camel_case_properties(&PaymentRequest {
+        payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+            method: "method".to_string(),
+            card_number: "cardNumber".to_string(),
+            ..Default::default()
+        })
+    }, None).await;
 }

@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,9 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .get_token(
-            &TokenRequest {
-                client_id: "client_id".to_string(),
-                client_secret: "client_secret".to_string(),
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
+    client.get_token(&TokenRequest {
+        client_id: "client_id".to_string(),
+        client_secret: "client_secret".to_string(),
+        ..Default::default()
+    }, None).await;
 }

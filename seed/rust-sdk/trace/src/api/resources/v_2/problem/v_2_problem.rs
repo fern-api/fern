@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ProblemClient2 {
@@ -37,6 +37,33 @@ impl ProblemClient2 {
             .await
     }
 
+    /// Returns lightweight versions of all problems
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_lightweight_problems_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Vec<LightweightProblemInfoV2>>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                "/problems-v2/lightweight-problem-info",
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Returns latest versions of all problems
     ///
     /// # Arguments
@@ -52,6 +79,33 @@ impl ProblemClient2 {
     ) -> Result<Vec<ProblemInfoV2>, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                "/problems-v2/problem-info",
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns latest versions of all problems
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_problems_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Vec<ProblemInfoV2>>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 "/problems-v2/problem-info",
                 None,
@@ -86,6 +140,34 @@ impl ProblemClient2 {
             .await
     }
 
+    /// Returns latest version of a problem
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_latest_problem_with_raw_response(
+        &self,
+        problem_id: &ProblemId,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ProblemInfoV2>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                &format!("/problems-v2/problem-info/{}", problem_id.0),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Returns requested version of a problem
     ///
     /// # Arguments
@@ -103,6 +185,38 @@ impl ProblemClient2 {
     ) -> Result<ProblemInfoV2, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!(
+                    "/problems-v2/problem-info/{}/version/{}",
+                    problem_id.0, problem_version
+                ),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns requested version of a problem
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_problem_version_with_raw_response(
+        &self,
+        problem_id: &ProblemId,
+        problem_version: i64,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ProblemInfoV2>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!(
                     "/problems-v2/problem-info/{}/version/{}",

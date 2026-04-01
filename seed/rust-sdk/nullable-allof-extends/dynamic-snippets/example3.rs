@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,17 +7,12 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .create_test(
-            &RootObject {
-                normal_object_fields: NormalObject {
-                    normal_field: Some("normalField".to_string()),
-                    ..Default::default()
-                },
-                nullable_field: Some("nullableField".to_string()),
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
+    client.create_test(&RootObject {
+        normal_object_fields: NormalObject {
+            normal_field: Some("normalField".to_string()),
+            ..Default::default()
+        },
+        nullable_field: Some("nullableField".to_string()),
+        ..Default::default()
+    }, None).await;
 }

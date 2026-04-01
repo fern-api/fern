@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct UserClient {
@@ -20,6 +20,32 @@ impl UserClient {
     ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("/users/{}", user_id.0),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_user_with_raw_response(
+        &self,
+        user_id: &UserId,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<User>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("/users/{}", user_id.0),
                 None,

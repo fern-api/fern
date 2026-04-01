@@ -1,4 +1,4 @@
-use seed_objects_with_imports::prelude::*;
+use seed_objects_with_imports::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
-    client
-        .optional
-        .send_optional_typed_body(
-            &Some(SendOptionalBodyRequest {
-                message: "message".to_string(),
-                ..Default::default()
-            }),
-            None,
-        )
-        .await;
+    client.optional.send_optional_typed_body(&Some(SendOptionalBodyRequest {
+        message: "message".to_string(),
+        ..Default::default()
+    }), None).await;
 }

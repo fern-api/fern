@@ -1,4 +1,4 @@
-use seed_validation::prelude::*;
+use seed_validation::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,15 +7,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ValidationClient::new(config).expect("Failed to build client");
-    client
-        .create(
-            &CreateRequest {
-                decimal: 2.2,
-                even: 100,
-                name: "fern".to_string(),
-                shape: Shape::Square,
-            },
-            None,
-        )
-        .await;
+    client.create(&CreateRequest {
+        decimal: 2.2,
+        even: 100,
+        name: "fern".to_string(),
+        shape: Shape::Square
+    }, None).await;
 }

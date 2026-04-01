@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_examples::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,9 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client
-        .health
-        .service
-        .check(&"id-3tey93i".to_string(), None)
-        .await;
+    client.health.service.check(&"id-3tey93i".to_string(), None).await;
 }

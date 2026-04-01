@@ -1,4 +1,4 @@
-use seed_unions::prelude::*;
+use seed_unions::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,7 @@ async fn main() {
         ..Default::default()
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
-    client
-        .types
-        .update(&UnionWithTime::Value { value: 1 }, None)
-        .await;
+    client.types.update(&UnionWithTime::Value {
+        value: 1
+    }, None).await;
 }

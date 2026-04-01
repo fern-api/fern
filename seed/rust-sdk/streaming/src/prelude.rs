@@ -5,7 +5,7 @@
 
 // Client and configuration
 pub use crate::config::ClientConfig;
-pub use crate::core::{HttpClient, RequestOptions};
+pub use crate::core::{HttpClient, RawResponse, RequestOptions, WithRawResponse};
 pub use crate::error::{ApiError, BuildError};
 
 // Main client and resource clients

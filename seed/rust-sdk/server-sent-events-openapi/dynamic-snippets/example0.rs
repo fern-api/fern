@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,12 +7,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .stream_protocol_no_collision(
-            &StreamRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
+    client.stream_protocol_no_collision(&StreamRequest {
+        ..Default::default()
+    }, None).await;
 }

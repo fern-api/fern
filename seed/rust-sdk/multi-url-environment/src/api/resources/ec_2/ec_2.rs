@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct Ec2Client {
@@ -26,6 +26,39 @@ impl Ec2Client {
             .map_or(self.http_client.base_url(), |env| env.ec_2_url());
         self.http_client
             .execute_request_with_base_url(
+                base_url,
+                Method::POST,
+                "/ec2/boot",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn boot_instance_with_raw_response(
+        &self,
+        request: &BootInstanceRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        let base_url = self
+            .http_client
+            .config()
+            .environment
+            .as_ref()
+            .map_or(self.http_client.base_url(), |env| env.ec_2_url());
+        self.http_client
+            .execute_request_with_raw_response_and_base_url(
                 base_url,
                 Method::POST,
                 "/ec2/boot",

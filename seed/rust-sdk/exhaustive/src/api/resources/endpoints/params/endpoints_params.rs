@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ParamsClient {
@@ -40,6 +40,34 @@ impl ParamsClient {
 
     /// GET with path param
     ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_path_with_raw_response(
+        &self,
+        param: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<String>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                &format!("/params/path/{}", param),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// GET with path param
+    ///
     /// # Arguments
     ///
     /// * `options` - Additional request options such as headers, timeout, etc.
@@ -54,6 +82,34 @@ impl ParamsClient {
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("/params/path/{}", param),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// GET with path param
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_inline_path_with_raw_response(
+        &self,
+        param: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<String>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("/params/path/{}", param),
                 None,
@@ -91,6 +147,37 @@ impl ParamsClient {
             .await
     }
 
+    /// GET with query param
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_query_with_raw_response(
+        &self,
+        request: &GetWithQueryQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                "/params",
+                None,
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .int("number", request.number.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     /// GET with multiple of same query param
     ///
     /// # Arguments
@@ -107,6 +194,37 @@ impl ParamsClient {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                "/params",
+                None,
+                QueryBuilder::new()
+                    .string_array("query", request.query.clone())
+                    .int_array("number", request.number.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// GET with multiple of same query param
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_allow_multiple_query_with_raw_response(
+        &self,
+        request: &GetWithAllowMultipleQueryQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 "/params",
                 None,
@@ -149,6 +267,37 @@ impl ParamsClient {
 
     /// GET with path and query params
     ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_path_and_query_with_raw_response(
+        &self,
+        param: &str,
+        request: &GetWithPathAndQueryQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                &format!("/params/path-query/{}", param),
+                None,
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// GET with path and query params
+    ///
     /// # Arguments
     ///
     /// * `options` - Additional request options such as headers, timeout, etc.
@@ -164,6 +313,37 @@ impl ParamsClient {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("/params/path-query/{}", param),
+                None,
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// GET with path and query params
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_inline_path_and_query_with_raw_response(
+        &self,
+        param: &str,
+        request: &GetWithInlinePathAndQueryQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("/params/path-query/{}", param),
                 None,
@@ -203,6 +383,35 @@ impl ParamsClient {
 
     /// PUT to update with path param
     ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn modify_with_path_with_raw_response(
+        &self,
+        param: &str,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<String>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::PUT,
+                &format!("/params/path/{}", param),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// PUT to update with path param
+    ///
     /// # Arguments
     ///
     /// * `options` - Additional request options such as headers, timeout, etc.
@@ -218,6 +427,35 @@ impl ParamsClient {
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
+                Method::PUT,
+                &format!("/params/path/{}", param),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// PUT to update with path param
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn modify_with_inline_path_with_raw_response(
+        &self,
+        param: &str,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<String>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::PUT,
                 &format!("/params/path/{}", param),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -269,6 +507,34 @@ impl ParamsClient {
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("/params/path/{}", param),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// GET with path param that can throw errors
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_path_and_errors_with_raw_response(
+        &self,
+        param: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<String>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("/params/path/{}", param),
                 None,

@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -188,6 +188,25 @@ impl ServiceClient {
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn simple_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(Method::POST, "/snippet", None, None, options)
             .await
     }
 

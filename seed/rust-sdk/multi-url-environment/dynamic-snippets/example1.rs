@@ -1,4 +1,4 @@
-use seed_multi_url_environment::prelude::*;
+use seed_multi_url_environment::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,13 +8,7 @@ async fn main() {
         ..Default::default()
     };
     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
-    client
-        .s_3
-        .get_presigned_url(
-            &GetPresignedUrlRequest {
-                s_3_key: "s3Key".to_string(),
-            },
-            None,
-        )
-        .await;
+    client.s_3.get_presigned_url(&GetPresignedUrlRequest {
+        s_3_key: "s3Key".to_string()
+    }, None).await;
 }

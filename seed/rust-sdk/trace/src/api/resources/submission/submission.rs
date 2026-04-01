@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct SubmissionClient {
@@ -38,6 +38,34 @@ impl SubmissionClient {
             .await
     }
 
+    /// Returns sessionId and execution server URL for session. Spins up server.
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn create_execution_session_with_raw_response(
+        &self,
+        language: &Language,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ExecutionSessionResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                &format!("/sessions/create-session/{}", language),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Returns execution server URL for session. Returns empty if session isn't registered.
     ///
     /// # Arguments
@@ -54,6 +82,34 @@ impl SubmissionClient {
     ) -> Result<Option<ExecutionSessionResponse>, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("/sessions/{}", session_id),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns execution server URL for session. Returns empty if session isn't registered.
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_execution_session_with_raw_response(
+        &self,
+        session_id: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Option<ExecutionSessionResponse>>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("/sessions/{}", session_id),
                 None,
@@ -88,12 +144,65 @@ impl SubmissionClient {
             .await
     }
 
+    /// Stops execution session.
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn stop_execution_session_with_raw_response(
+        &self,
+        session_id: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::DELETE,
+                &format!("/sessions/stop/{}", session_id),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_execution_sessions_state(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<GetExecutionSessionStateResponse, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                "/sessions/execution-sessions-state",
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_execution_sessions_state_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<GetExecutionSessionStateResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 "/sessions/execution-sessions-state",
                 None,

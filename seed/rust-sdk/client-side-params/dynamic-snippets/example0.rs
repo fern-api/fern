@@ -1,4 +1,4 @@
-use seed_client_side_params::prelude::*;
+use seed_client_side_params::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,19 +8,13 @@ async fn main() {
         ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .list_resources(
-            &ListResourcesQueryRequest {
-                page: 1,
-                per_page: 1,
-                sort: "created_at".to_string(),
-                order: "desc".to_string(),
-                include_totals: true,
-                fields: Some("fields".to_string()),
-                search: Some("search".to_string()),
-            },
-            None,
-        )
-        .await;
+    client.service.list_resources(&ListResourcesQueryRequest {
+        page: 1,
+        per_page: 1,
+        sort: "created_at".to_string(),
+        order: "desc".to_string(),
+        include_totals: true,
+        fields: Some("fields".to_string()),
+        search: Some("search".to_string())
+    }, None).await;
 }

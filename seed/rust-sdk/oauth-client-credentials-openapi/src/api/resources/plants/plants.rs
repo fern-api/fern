@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct PlantsClient {
@@ -19,6 +19,25 @@ impl PlantsClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn list_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Vec<Plant>>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(Method::GET, "plants", None, None, options)
+            .await
+    }
+
     pub async fn get(
         &self,
         plant_id: &str,
@@ -26,6 +45,32 @@ impl PlantsClient {
     ) -> Result<Plant, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                &format!("plants/{}", plant_id),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_raw_response(
+        &self,
+        plant_id: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Plant>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 &format!("plants/{}", plant_id),
                 None,

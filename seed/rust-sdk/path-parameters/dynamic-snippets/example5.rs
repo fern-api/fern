@@ -1,4 +1,4 @@
-use seed_path_parameters::prelude::*;
+use seed_path_parameters::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,17 +7,9 @@ async fn main() {
         ..Default::default()
     };
     let client = PathParametersClient::new(config).expect("Failed to build client");
-    client
-        .user
-        .update_user(
-            &"tenant_id".to_string(),
-            &"user_id".to_string(),
-            &User {
-                name: "name".to_string(),
-                tags: vec!["tags".to_string(), "tags".to_string()],
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
+    client.user.update_user(&"tenant_id".to_string(), &"user_id".to_string(), &User {
+        name: "name".to_string(),
+        tags: vec!["tags".to_string(), "tags".to_string()],
+        ..Default::default()
+    }, None).await;
 }

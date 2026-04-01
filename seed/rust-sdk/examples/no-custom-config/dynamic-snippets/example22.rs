@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_examples::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,14 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .refresh_token(
-            &Some(RefreshTokenRequest {
-                ttl: 1,
-                ..Default::default()
-            }),
-            None,
-        )
-        .await;
+    client.service.refresh_token(&Some(RefreshTokenRequest {
+        ttl: 1,
+        ..Default::default()
+    }), None).await;
 }

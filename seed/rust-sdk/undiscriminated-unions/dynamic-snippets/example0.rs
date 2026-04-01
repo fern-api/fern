@@ -1,4 +1,4 @@
-use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client
-        .union_
-        .get(&MyUnion::String("string".to_string()), None)
-        .await;
+    client.union_.get(&MyUnion::String("string".to_string()), None).await;
 }

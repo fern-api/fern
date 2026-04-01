@@ -1,4 +1,4 @@
-use seed_idempotency_headers::prelude::*;
+use seed_idempotency_headers::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,14 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
-    client
-        .payment
-        .create(
-            &CreatePaymentRequest {
-                amount: 1,
-                currency: Currency::Usd,
-            },
-            None,
-        )
-        .await;
+    client.payment.create(&CreatePaymentRequest {
+        amount: 1,
+        currency: Currency::Usd
+    }, None).await;
 }

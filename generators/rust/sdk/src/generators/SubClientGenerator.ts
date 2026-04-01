@@ -226,6 +226,11 @@ export class SubClientGenerator {
             crateItems.push("RequestOptions");
         }
 
+        // Add WithRawResponse if any endpoint supports _with_raw_response methods
+        if (this.hasWithRawResponseEndpoints()) {
+            crateItems.push("WithRawResponse");
+        }
+
         // Add ByteStream if we have binary endpoints (file downloads)
         if (hasBinaryEndpoints) {
             crateItems.push("ByteStream");
@@ -530,6 +535,11 @@ export class SubClientGenerator {
     private hasJsonStreamingEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.getResponseStreamType(endpoint) === "json");
+    }
+
+    private hasWithRawResponseEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => this.supportsWithRawResponse(endpoint));
     }
 
     private analyzeRequiredImports(): ImportAnalysis {
@@ -850,6 +860,9 @@ export class SubClientGenerator {
 
         for (const endpoint of endpoints) {
             methods.push(this.generateHttpMethod(endpoint));
+            if (this.supportsWithRawResponse(endpoint)) {
+                methods.push(this.generateHttpMethodWithRawResponse(endpoint));
+            }
         }
 
         return methods;
@@ -868,6 +881,93 @@ export class SubClientGenerator {
             return undefined;
         }
         return this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+    }
+
+    /**
+     * Returns true if this endpoint should get a `_with_raw_response` variant.
+     * Only standard JSON-response endpoints that use `execute_request` qualify.
+     * File uploads, bytes, binary downloads, SSE, and base64 primitive responses are excluded.
+     */
+    private supportsWithRawResponse(endpoint: FernIr.HttpEndpoint): boolean {
+        if (this.isFileUploadEndpoint(endpoint)) {
+            return false;
+        }
+        if (this.isBytesEndpoint(endpoint)) {
+            return false;
+        }
+        const responseType = this.getResponseStreamType(endpoint);
+        if (responseType === "binary" || responseType === "sse") {
+            return false;
+        }
+        if (this.isBase64PrimitiveResponse(endpoint)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Generate a `_with_raw_response` variant of an endpoint method.
+     * Returns `WithRawResponse<T>` instead of `T`, providing access to HTTP status and headers.
+     */
+    private generateHttpMethodWithRawResponse(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
+        const params = this.extractParametersFromEndpoint(endpoint);
+        const parameters = this.buildMethodParameters(params, endpoint);
+        const httpMethod = this.getHttpMethod(endpoint);
+        const pathExpression = this.getPathExpression(endpoint);
+        const requestBody = this.getRequestBody(endpoint, params);
+
+        const innerReturnType = this.getReturnType(endpoint);
+        const returnType = rust.Type.result(
+            rust.Type.reference(rust.reference({ name: `WithRawResponse<${innerReturnType.toString()}>` })),
+            rust.Type.reference(rust.reference({ name: "ApiError" }))
+        );
+
+        const responseType = this.getResponseStreamType(endpoint);
+        let typeParameter = "";
+        const executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+
+        if (responseType === "json") {
+            const innerType = this.getInnerResponseType(endpoint);
+            typeParameter = `::<${innerType}>`;
+        }
+
+        const urlMethodName = this.getEndpointUrlMethodName(endpoint);
+        let body: string;
+
+        if (urlMethodName) {
+            const baseUrlResolution =
+                `let base_url = self.http_client.config().environment.as_ref()\n` +
+                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            body = `${baseUrlResolution}        self.http_client.execute_request_with_raw_response_and_base_url${typeParameter}(
+            base_url,${executeArgs}
+        ).await`;
+        } else {
+            body = `self.http_client.execute_request_with_raw_response${typeParameter}(${executeArgs}
+        ).await`;
+        }
+
+        const endpointName = endpoint.name.snakeCase.safeName;
+        const docsText = endpoint.docs
+            ? `${endpoint.docs}\n\nThis method returns a \`WithRawResponse<T>\` that includes both the parsed\nresponse data and the raw HTTP response metadata (status code and headers).`
+            : `Returns a \`WithRawResponse<T>\` that includes both the parsed\nresponse data and the raw HTTP response metadata (status code and headers).`;
+
+        return {
+            name: `${endpointName}_with_raw_response`,
+            parameters,
+            returnType: returnType.toString(),
+            isAsync: true,
+            body,
+            docs: rust.docComment({
+                summary: docsText,
+                parameters: this.extractParameterDocs(params, endpoint),
+                returns: "The parsed response wrapped with raw HTTP metadata"
+            })
+        };
     }
 
     private generateHttpMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {

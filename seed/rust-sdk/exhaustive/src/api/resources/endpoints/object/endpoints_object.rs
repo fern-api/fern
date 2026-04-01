@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ObjectClient {
@@ -29,6 +29,32 @@ impl ObjectClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_optional_field_with_raw_response(
+        &self,
+        request: &ObjectWithOptionalField,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithOptionalField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/object/get-and-return-with-optional-field",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_and_return_with_required_field(
         &self,
         request: &ObjectWithRequiredField,
@@ -36,6 +62,32 @@ impl ObjectClient {
     ) -> Result<ObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-required-field",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_required_field_with_raw_response(
+        &self,
+        request: &ObjectWithRequiredField,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithRequiredField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/object/get-and-return-with-required-field",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -61,6 +113,32 @@ impl ObjectClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_map_of_map_with_raw_response(
+        &self,
+        request: &ObjectWithMapOfMap,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithMapOfMap>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/object/get-and-return-with-map-of-map",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_and_return_nested_with_optional_field(
         &self,
         request: &NestedObjectWithOptionalField,
@@ -68,6 +146,32 @@ impl ObjectClient {
     ) -> Result<NestedObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/object/get-and-return-nested-with-optional-field",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_nested_with_optional_field_with_raw_response(
+        &self,
+        request: &NestedObjectWithOptionalField,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<NestedObjectWithOptionalField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/object/get-and-return-nested-with-optional-field",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -97,6 +201,36 @@ impl ObjectClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_nested_with_required_field_with_raw_response(
+        &self,
+        string: &str,
+        request: &NestedObjectWithRequiredField,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<NestedObjectWithRequiredField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                &format!(
+                    "/object/get-and-return-nested-with-required-field/{}",
+                    string
+                ),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_and_return_nested_with_required_field_as_list(
         &self,
         request: &Vec<NestedObjectWithRequiredField>,
@@ -104,6 +238,32 @@ impl ObjectClient {
     ) -> Result<NestedObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/object/get-and-return-nested-with-required-field-list",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_nested_with_required_field_as_list_with_raw_response(
+        &self,
+        request: &Vec<NestedObjectWithRequiredField>,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<NestedObjectWithRequiredField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/object/get-and-return-nested-with-required-field-list",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -129,6 +289,32 @@ impl ObjectClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_unknown_field_with_raw_response(
+        &self,
+        request: &ObjectWithUnknownField,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithUnknownField>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/object/get-and-return-with-unknown-field",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_and_return_with_documented_unknown_type(
         &self,
         request: &ObjectWithDocumentedUnknownType,
@@ -145,6 +331,32 @@ impl ObjectClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_documented_unknown_type_with_raw_response(
+        &self,
+        request: &ObjectWithDocumentedUnknownType,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithDocumentedUnknownType>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/object/get-and-return-with-documented-unknown-type",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_and_return_map_of_documented_unknown_type(
         &self,
         request: &MapOfDocumentedUnknownType,
@@ -152,6 +364,32 @@ impl ObjectClient {
     ) -> Result<MapOfDocumentedUnknownType, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/object/get-and-return-map-of-documented-unknown-type",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_map_of_documented_unknown_type_with_raw_response(
+        &self,
+        request: &MapOfDocumentedUnknownType,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<MapOfDocumentedUnknownType>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/object/get-and-return-map-of-documented-unknown-type",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -179,6 +417,36 @@ impl ObjectClient {
     ) -> Result<ObjectWithDatetimeLikeString, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-datetime-like-string",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Tests that string fields containing datetime-like values are NOT reformatted.
+    /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+    /// without being converted to "2023-08-31T14:15:22.000Z".
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_and_return_with_datetime_like_string_with_raw_response(
+        &self,
+        request: &ObjectWithDatetimeLikeString,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ObjectWithDatetimeLikeString>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/object/get-and-return-with-datetime-like-string",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

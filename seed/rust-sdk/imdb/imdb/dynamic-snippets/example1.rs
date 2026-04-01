@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .imdb
-        .get_movie(&MovieId("movieId".to_string()), None)
-        .await;
+    client.imdb.get_movie(&MovieId("movieId".to_string()), None).await;
 }

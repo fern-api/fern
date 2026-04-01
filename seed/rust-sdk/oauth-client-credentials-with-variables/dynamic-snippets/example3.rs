@@ -1,4 +1,4 @@
-use seed_oauth_client_credentials_with_variables::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -6,7 +6,6 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client =
-        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
+    let client = OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
     client.nested.api.get_something(None).await;
 }

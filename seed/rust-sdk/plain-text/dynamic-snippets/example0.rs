@@ -1,4 +1,4 @@
-use seed_plain_text::prelude::*;
+use seed_plain_text::prelude::{*};
 
 #[tokio::main]
 async fn main() {

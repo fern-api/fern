@@ -1,4 +1,4 @@
-use custom_simple_sdk::prelude::*;
+use custom_simple_sdk::prelude::{*};
 
 #[tokio::main]
 async fn main() {

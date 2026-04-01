@@ -35,6 +35,32 @@ impl ValidationClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn create_with_raw_response(
+        &self,
+        request: &CreateRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Type>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/create",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get(
         &self,
         request: &GetQueryRequest,
@@ -42,6 +68,36 @@ impl ValidationClient {
     ) -> Result<Type, ApiError> {
         self.http_client
             .execute_request(
+                Method::GET,
+                "",
+                None,
+                QueryBuilder::new()
+                    .float("decimal", request.decimal.clone())
+                    .int("even", request.even.clone())
+                    .string("name", request.name.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_with_raw_response(
+        &self,
+        request: &GetQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Type>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::GET,
                 "",
                 None,

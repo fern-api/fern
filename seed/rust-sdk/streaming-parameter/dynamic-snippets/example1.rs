@@ -1,4 +1,4 @@
-use seed_streaming::prelude::*;
+use seed_streaming::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,8 @@ async fn main() {
         ..Default::default()
     };
     let client = StreamingClient::new(config).expect("Failed to build client");
-    client
-        .dummy
-        .generate(
-            &GenerateRequest {
-                stream: true,
-                num_events: 1,
-            },
-            None,
-        )
-        .await;
+    client.dummy.generate(&GenerateRequest {
+        stream: true,
+        num_events: 1
+    }, None).await;
 }

@@ -1,4 +1,4 @@
-use seed_header_token::prelude::*;
+use seed_header_token::prelude::{*};
 
 #[tokio::main]
 async fn main() {

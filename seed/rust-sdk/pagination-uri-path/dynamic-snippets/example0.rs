@@ -1,4 +1,4 @@
-use seed_pagination_uri_path::prelude::*;
+use seed_pagination_uri_path::prelude::{*};
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_file_upload::prelude::*;
+use seed_file_upload::prelude::{*};
 
 #[tokio::main]
 async fn main() {

@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ServiceClient4 {
@@ -29,6 +29,32 @@ impl ServiceClient4 {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_movie_with_raw_response(
+        &self,
+        movie_id: &MovieId,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Movie>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                &format!("/movie/{}", movie_id.0),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn create_movie(
         &self,
         request: &Movie,
@@ -36,6 +62,32 @@ impl ServiceClient4 {
     ) -> Result<MovieId, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/movie",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn create_movie_with_raw_response(
+        &self,
+        request: &Movie,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<MovieId>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -64,6 +116,35 @@ impl ServiceClient4 {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_metadata_with_raw_response(
+        &self,
+        request: &GetMetadataQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Metadata2>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                "/metadata",
+                None,
+                QueryBuilder::new()
+                    .bool("shallow", request.shallow.clone())
+                    .string_array("tag", request.tag.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     pub async fn create_big_entity(
         &self,
         request: &BigEntity,
@@ -80,6 +161,32 @@ impl ServiceClient4 {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn create_big_entity_with_raw_response(
+        &self,
+        request: &BigEntity,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<Response>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "/big-entity",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn refresh_token(
         &self,
         request: &Option<RefreshTokenRequest>,
@@ -87,6 +194,32 @@ impl ServiceClient4 {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "/refresh-token",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn refresh_token_with_raw_response(
+        &self,
+        request: &Option<RefreshTokenRequest>,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "/refresh-token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

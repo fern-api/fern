@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct UsersClient {
@@ -22,12 +22,50 @@ impl UsersClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn list_with_uri_pagination_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ListUsersUriPaginationResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(Method::GET, "/users/uri", None, None, options)
+            .await
+    }
+
     pub async fn list_with_path_pagination(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersPathPaginationResponse, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/users/path", None, None, options)
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn list_with_path_pagination_with_raw_response(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<ListUsersPathPaginationResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(Method::GET, "/users/path", None, None, options)
             .await
     }
 }

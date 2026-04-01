@@ -1,4 +1,4 @@
-use seed_inferred_auth_implicit_api_key::prelude::*;
+use seed_inferred_auth_implicit_api_key::prelude::{*};
 
 #[tokio::main]
 async fn main() {

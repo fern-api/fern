@@ -35,6 +35,32 @@ impl ApiClient {
             .await
     }
 
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn submit_form_data_with_raw_response(
+        &self,
+        request: &PostSubmitRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<PostSubmitResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::POST,
+                "submit",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_token(
         &self,
         request: &TokenRequest,
@@ -42,6 +68,32 @@ impl ApiClient {
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
             .execute_request(
+                Method::POST,
+                "token",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn get_token_with_raw_response(
+        &self,
+        request: &TokenRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<TokenResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::POST,
                 "token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

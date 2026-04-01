@@ -1,4 +1,4 @@
-use seed_response_property::prelude::*;
+use seed_response_property::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .get_optional_movie(&"string".to_string(), None)
-        .await;
+    client.service.get_optional_movie(&"string".to_string(), None).await;
 }

@@ -9,6 +9,7 @@ use serde::de::DeserializeOwned;
 use serde::de::Error as SerdeError;
 
 use std::{
+    collections::HashMap,
     pin::Pin,
     str::FromStr,
     sync::Arc,
@@ -88,6 +89,62 @@ impl Stream for ByteStream {
             Poll::Pending => Poll::Pending,
         }
     }
+}
+
+/// Raw HTTP response metadata (status code and headers).
+///
+/// This struct captures the HTTP-level details of a response before the body
+/// is parsed. It is returned alongside the parsed data when using
+/// `_with_raw_response` methods.
+///
+/// # Example
+/// ```no_run
+/// let response = client.user.get_with_raw_response("id", None).await?;
+/// println!("Status: {}", response.raw_response.status);
+/// for (key, value) in &response.raw_response.headers {
+///     println!("{}: {}", key, value);
+/// }
+/// ```
+#[derive(Debug, Clone)]
+pub struct RawResponse {
+    /// The HTTP status code (e.g., 200, 201, 404).
+    pub status: u16,
+    /// The HTTP response headers as key-value pairs.
+    pub headers: HashMap<String, String>,
+}
+
+impl RawResponse {
+    /// Capture HTTP metadata from a response reference before the body is consumed.
+    fn capture(response: &Response) -> Self {
+        let status = response.status().as_u16();
+        let headers = response
+            .headers()
+            .iter()
+            .filter_map(|(k, v)| v.to_str().ok().map(|v| (k.to_string(), v.to_string())))
+            .collect();
+        RawResponse { status, headers }
+    }
+}
+
+/// Wraps a parsed response value with its raw HTTP response metadata.
+///
+/// This is returned by `_with_raw_response` methods and provides access to
+/// both the deserialized data and the underlying HTTP response details
+/// (status code, headers).
+///
+/// # Example
+/// ```no_run
+/// let response = client.user.get_with_raw_response("id", None).await?;
+/// let user = response.data;
+/// let status = response.raw_response.status;
+/// let headers = &response.raw_response.headers;
+/// ```
+#[derive(Debug, Clone)]
+pub struct WithRawResponse<T> {
+    /// The parsed response data.
+    pub data: T,
+    /// The raw HTTP response metadata.
+    pub raw_response: RawResponse,
 }
 
 /// Configuration for OAuth token fetching.
@@ -200,6 +257,50 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a request and return the parsed data alongside raw HTTP response metadata.
+    ///
+    /// This is identical to `execute_request` but additionally captures the HTTP status
+    /// code and headers before parsing the response body.
+    pub async fn execute_request_with_raw_response<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        let raw_response = RawResponse::capture(&response);
+        let data = self.parse_response(response).await?;
+
+        Ok(WithRawResponse { data, raw_response })
+    }
+
     /// Execute a request with an explicit base URL override.
     ///
     /// Used for multi-URL environments where different endpoints
@@ -240,6 +341,48 @@ impl HttpClient {
 
         let response = self.execute_with_retries(req, &options).await?;
         self.parse_response(response).await
+    }
+
+    /// Execute a request with an explicit base URL override and return raw HTTP response metadata.
+    pub async fn execute_request_with_raw_response_and_base_url<T>(
+        &self,
+        base_url: &str,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        let raw_response = RawResponse::capture(&response);
+        let data = self.parse_response(response).await?;
+
+        Ok(WithRawResponse { data, raw_response })
     }
 
     async fn apply_auth_headers(

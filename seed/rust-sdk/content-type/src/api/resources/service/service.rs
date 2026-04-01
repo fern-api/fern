@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, WithRawResponse};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -20,6 +20,32 @@ impl ServiceClient {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::PATCH,
+                "",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn patch_with_raw_response(
+        &self,
+        request: &PatchProxyRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::PATCH,
                 "",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -58,6 +84,38 @@ impl ServiceClient {
             .await
     }
 
+    /// Update with JSON merge patch - complex types.
+    /// This endpoint demonstrates the distinction between:
+    /// - optional<T> fields (can be present or absent, but not null)
+    /// - optional<nullable<T>> fields (can be present, absent, or null)
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn patch_complex_with_raw_response(
+        &self,
+        id: &str,
+        request: &PatchComplexRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::PATCH,
+                &format!("complex/{}", id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Named request with mixed optional/nullable fields and merge-patch content type.
     /// This should trigger the NPE issue when optional fields aren't initialized.
     ///
@@ -76,6 +134,36 @@ impl ServiceClient {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::PATCH,
+                &format!("named-mixed/{}", id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Named request with mixed optional/nullable fields and merge-patch content type.
+    /// This should trigger the NPE issue when optional fields aren't initialized.
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn named_patch_with_mixed_with_raw_response(
+        &self,
+        id: &str,
+        request: &NamedMixedPatchRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::PATCH,
                 &format!("named-mixed/{}", id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -113,6 +201,37 @@ impl ServiceClient {
             .await
     }
 
+    /// Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+    /// This endpoint should:
+    /// 1. Not NPE when fields are not provided (tests initialization)
+    /// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn optional_merge_patch_test_with_raw_response(
+        &self,
+        request: &OptionalMergePatchRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::PATCH,
+                "optional-merge-patch-test",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Regular PATCH endpoint without merge-patch semantics
     ///
     /// # Arguments
@@ -130,6 +249,35 @@ impl ServiceClient {
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
+                Method::PATCH,
+                &format!("regular/{}", id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Regular PATCH endpoint without merge-patch semantics
+    ///
+    /// This method returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn regular_patch_with_raw_response(
+        &self,
+        id: &str,
+        request: &RegularPatchRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<()>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
                 Method::PATCH,
                 &format!("regular/{}", id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

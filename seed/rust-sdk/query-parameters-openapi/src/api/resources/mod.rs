@@ -53,4 +53,51 @@ impl ApiClient {
             )
             .await
     }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `tags` - List of tags. Serialized as a comma-separated list.
+    /// * `optional_tags` - Optional list of tags. Serialized as a comma-separated list.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn search_with_raw_response(
+        &self,
+        request: &SearchQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<SearchResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::GET,
+                "user/getUsername",
+                None,
+                QueryBuilder::new()
+                    .int("limit", request.limit.clone())
+                    .string("id", request.id.clone())
+                    .date("date", request.date.clone())
+                    .datetime("deadline", request.deadline.clone())
+                    .string("bytes", request.bytes.clone())
+                    .serialize("user", Some(request.user.clone()))
+                    .serialize_array("userList", request.user_list.clone())
+                    .datetime("optionalDeadline", request.optional_deadline.clone())
+                    .serialize("keyValue", request.key_value.clone())
+                    .string("optionalString", request.optional_string.clone())
+                    .serialize("nestedUser", request.nested_user.clone())
+                    .serialize("optionalUser", request.optional_user.clone())
+                    .serialize_array("excludeUser", request.exclude_user.clone())
+                    .string_array("filter", request.filter.clone())
+                    .string_array("tags", request.tags.clone())
+                    .string_array("optionalTags", request.optional_tags.clone())
+                    .serialize("neighbor", request.neighbor.clone())
+                    .serialize("neighborRequired", Some(request.neighbor_required.clone()))
+                    .build(),
+                options,
+            )
+            .await
+    }
 }

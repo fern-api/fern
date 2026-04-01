@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_examples::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,10 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client
-        .file
-        .notification
-        .service
-        .get_exception(&"notificationId".to_string(), None)
-        .await;
+    client.file.notification.service.get_exception(&"notificationId".to_string(), None).await;
 }

@@ -1,4 +1,4 @@
-use seed_enum::prelude::*;
+use seed_enum::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,16 +7,10 @@ async fn main() {
         ..Default::default()
     };
     let client = EnumClient::new(config).expect("Failed to build client");
-    client
-        .inlined_request
-        .send(
-            &SendEnumInlinedRequest {
-                operand: Operand::GreaterThan,
-                operand_or_color: ColorOrOperand::Color(Color::Red),
-                maybe_operand: None,
-                maybe_operand_or_color: None,
-            },
-            None,
-        )
-        .await;
+    client.inlined_request.send(&SendEnumInlinedRequest {
+        operand: Operand::GreaterThan,
+        operand_or_color: ColorOrOperand::Color(Color::Red),
+        maybe_operand: None,
+        maybe_operand_or_color: None
+    }, None).await;
 }

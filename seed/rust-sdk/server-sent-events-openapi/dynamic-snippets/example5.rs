@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,13 +7,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .stream_data_context(
-            &StreamRequest {
-                query: Some("query".to_string()),
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
+    client.stream_data_context(&StreamRequest {
+        query: Some("query".to_string()),
+        ..Default::default()
+    }, None).await;
 }

@@ -39,4 +39,36 @@ impl ApiClient {
             )
             .await
     }
+
+    /// Returns a `WithRawResponse<T>` that includes both the parsed
+    /// response data and the raw HTTP response metadata (status code and headers).
+    ///
+    /// # Arguments
+    ///
+    /// * `fields` - Comma-separated list of fields to include in the response.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// The parsed response wrapped with raw HTTP metadata
+    pub async fn bulk_update_tasks_with_raw_response(
+        &self,
+        request: &BulkUpdateTasksRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<WithRawResponse<BulkUpdateTasksResponse>, ApiError> {
+        self.http_client
+            .execute_request_with_raw_response(
+                Method::PUT,
+                "task/",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                QueryBuilder::new()
+                    .serialize("assigned_to", request.filter_assigned_to.clone())
+                    .serialize("is_complete", request.filter_is_complete.clone())
+                    .serialize("date", request.filter_date.clone())
+                    .string("_fields", request.fields.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
 }
