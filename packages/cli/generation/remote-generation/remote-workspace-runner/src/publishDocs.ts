@@ -129,7 +129,8 @@ export async function publishDocs({
     targetAudiences,
     docsUrl,
     cliVersion,
-    ciSource
+    ciSource,
+    deployerAuthor
 }: {
     token: FernToken;
     organization: string;
@@ -151,6 +152,7 @@ export async function publishDocs({
     docsUrl?: string;
     cliVersion?: string;
     ciSource?: CISource;
+    deployerAuthor?: string;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -165,6 +167,9 @@ export async function publishDocs({
     if (ciSource != null) {
         headers["X-CI-Source"] = JSON.stringify(ciSource);
         context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
+    if (deployerAuthor != null) {
+        headers["X-Deployer-Author"] = deployerAuthor;
     }
     const fdr = createFdrService({
         token: token.value,

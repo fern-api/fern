@@ -58,6 +58,19 @@ export function detectCISource(): CISource | undefined {
 }
 
 /**
+ * Detects the deployer author from CI environment variables.
+ * Uses a fallback chain across CI providers. Returns undefined if no value is found.
+ */
+export function detectDeployerAuthor(): string | undefined {
+    const author =
+        process.env.GITHUB_ACTOR ??
+        process.env.GITLAB_USER_LOGIN ??
+        process.env.CIRCLE_USERNAME ??
+        process.env.BUILD_REQUESTEDFOR;
+    return author != null && author.length > 0 ? author : undefined;
+}
+
+/**
  * Checks if the current process is running in a CI/CD environment
  * @returns true if running in any common CI/CD environment
  */
