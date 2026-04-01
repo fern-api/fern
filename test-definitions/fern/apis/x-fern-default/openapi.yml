@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: x-fern-default test
+  version: 1.0.0
+paths:
+  /test/{region}/resource:
+    get:
+      operationId: test_get
+      parameters:
+        - name: region
+          in: path
+          required: true
+          schema:
+            type: string
+          x-fern-default: "us-east-1"
+        - name: X-API-Version
+          in: header
+          required: false
+          schema:
+            type: string
+          x-fern-default: "2024-02-08"
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+          x-fern-default: "100"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
