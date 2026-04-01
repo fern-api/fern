@@ -7,9 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.noAuth.postWithNoAuth(request: .object([
-        "key": .string("value")
-    ]))
+    _ = try await client.inlinedRequests.postWithChildResource(request: .init(childResource: ChildResource(
+        extra: "extra",
+        type: "type",
+        document: "document"
+    )))
 }
 
 try await main()

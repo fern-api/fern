@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.inlinedRequests.getWithEnumPathParam(
-        weather: .sunny,
-        query: "query"
-    )
+    _ = try await client.noReqBody.postWithNoRequestBody()
 }
 
 try await main()

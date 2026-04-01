@@ -3605,6 +3605,163 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.inlinedRequests.<a href="/Sources/Resources/InlinedRequests/InlinedRequestsClient.swift">getWithEnumPathParam</a>(weather: String, query: String, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with enum path parameter to test that enum path params emit string wire values instead of enum case shorthand
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.inlinedRequests.getWithEnumPathParam(
+        weather: .sunny,
+        query: "query"
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**weather:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlinedRequests.<a href="/Sources/Resources/InlinedRequests/InlinedRequestsClient.swift">postWithChildResource</a>(request: Requests.PostWithChildResource, requestOptions: RequestOptions?) -> ChildResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST returning ChildResource to test that inherited property ordering matches Swift struct initializer order
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.inlinedRequests.postWithChildResource(request: .init(childResource: ChildResource(
+        extra: "extra",
+        type: "type",
+        document: "document"
+    )))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.PostWithChildResource` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>client.noAuth.<a href="/Sources/Resources/NoAuth/NoAuthClient.swift">postWithNoAuth</a>(request: JSONValue, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>

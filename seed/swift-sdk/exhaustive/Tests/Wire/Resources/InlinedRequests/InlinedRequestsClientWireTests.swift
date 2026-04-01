@@ -110,4 +110,61 @@ import Exhaustive
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func getWithEnumPathParam1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.inlinedRequests.getWithEnumPathParam(
+            weather: .sunny,
+            query: "query",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func postWithChildResource1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "extra": "extra",
+                  "type": "type",
+                  "document": "document"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ChildResource(
+            extra: Optional("extra"),
+            type: Optional("type"),
+            document: Optional("document")
+        )
+        let response = try await client.inlinedRequests.postWithChildResource(
+            request: .init(childResource: ChildResource(
+                extra: "extra",
+                type: "type",
+                document: "document"
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

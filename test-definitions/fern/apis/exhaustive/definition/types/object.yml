@@ -76,6 +76,32 @@ types:
     docs: Tests that map value types with unknown types don't get spurious | undefined.
     type: map<string, DocumentedUnknownType>
 
+  BaseResource:
+    docs: Base type with a 'type' property, used to test property ordering with inheritance.
+    properties:
+      type:
+        type: optional<string>
+        docs: The type discriminator field
+      document:
+        type: optional<string>
+        docs: A document field
+
+  ChildResource:
+    docs: Child type that extends BaseResource and adds its own properties. When extended by another type, the dynamic IR may reorder properties differently from the Swift struct initializer.
+    extends: BaseResource
+    properties:
+      extra:
+        type: optional<string>
+        docs: An extra field only in the child
+
+  GrandchildResource:
+    docs: Grandchild type used to make ChildResource an "extended" type, triggering different property ordering in the dynamic IR.
+    extends: ChildResource
+    properties:
+      anotherExtra:
+        type: optional<string>
+        docs: A field only in the grandchild
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

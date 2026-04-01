@@ -1,5 +1,6 @@
 imports:
   objects: ./types/object.yml
+  enums: ./types/enum.yml
   errors: ./general-errors.yml
 
 # test req bodies, path params, query params, multiple query params, etc.
@@ -35,3 +36,26 @@ service:
             stream: literal<false>
             query: string
       response: string
+
+    getWithEnumPathParam:
+      docs: GET with enum path parameter to test that enum path params emit string wire values instead of enum case shorthand
+      path: /enum/{weather}
+      method: GET
+      request:
+        name: GetWithEnumPathParam
+        path-parameters:
+          weather: enums.WeatherReport
+        query-parameters:
+          query: string
+      response: string
+
+    postWithChildResource:
+      docs: POST returning ChildResource to test that inherited property ordering matches Swift struct initializer order
+      path: /child-resource
+      method: POST
+      request:
+        name: PostWithChildResource
+        body:
+          properties:
+            childResource: objects.ChildResource
+      response: objects.ChildResource
