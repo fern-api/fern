@@ -8,7 +8,7 @@ pub struct UserProfile {
     #[serde(default)]
     pub email: UserEmail,
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(default, setter(strip_option))]
+    #[builder(default, setter(into, strip_option))]
     pub age: Option<UserAge>,
     #[serde(default)]
     pub tags: UserTags,
