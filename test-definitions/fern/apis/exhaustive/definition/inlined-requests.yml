@@ -23,3 +23,15 @@ service:
       response: objects.ObjectWithOptionalField
       errors:
         - errors.BadRequestBody
+
+    postWithBooleanLiteralInRequest:
+      docs: POST with boolean literal in request body to test that snippets wrap boolean literals correctly
+      path: /boolean-literal
+      method: POST
+      request:
+        name: PostWithBooleanLiteralRequest
+        body:
+          properties:
+            stream: literal<false>
+            query: string
+      response: string

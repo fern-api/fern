@@ -19,4 +19,17 @@ public final class InlinedRequestsClient: Sendable {
             responseType: ObjectWithOptionalField.self
         )
     }
+
+    /// POST with boolean literal in request body to test that snippets wrap boolean literals correctly
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func postWithBooleanLiteralInRequest(request: Requests.PostWithBooleanLiteralRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/req-bodies/boolean-literal",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
 }
