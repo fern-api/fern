@@ -41,6 +41,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-fern/ir-sdk": "66.0.0-alpha.1",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
