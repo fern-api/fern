@@ -2,12 +2,15 @@
 - version: 2.55.4
   changelogEntry:
     - summary: |
-        Fix namespace mismatch in generated subpackage client files. When
-        `explicit-namespaces` is enabled, the Writer's namespace context now
-        matches the class's actual namespace instead of always using the root
-        namespace. This prevents incorrect type qualification and import
-        filtering that could cause C# compilation errors (e.g., CS0118
-        namespace-vs-type ambiguity) in subpackage client files.
+        Fix namespace conflict detection in generated subpackage client and
+        WebSocket client files. `SubPackageClientGenerator`,
+        `SubPackageClientInterfaceGenerator`, and `WebsocketClientGenerator`
+        were using `allNamespacesOf()` (fully-qualified prefix paths) instead
+        of `getAllNamespaceSegments()` (individual segment names) for the
+        `allNamespaceSegments` parameter. This caused `hasProjectNamespaceConflict()`
+        to miss conflicts where a type name matches a namespace segment, leading
+        to C# compilation errors (e.g., CS0118 namespace-vs-type ambiguity)
+        when `explicit-namespaces` is enabled.
       type: fix
   createdAt: "2026-04-01"
   irVersion: 65
