@@ -77,6 +77,9 @@ export namespace GeneratorPipeline {
 
         /** Path to .fernignore file */
         fernignorePath?: string;
+
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
     }
 
     export interface Result {
@@ -139,7 +142,8 @@ export class GeneratorPipeline {
             preview: args.preview,
             outputPath: args.outputPath,
             containerEngine: args.containerEngine,
-            token: args.token
+            token: args.token,
+            skipFernignore: args.skipFernignore
         });
         if (!result.success) {
             return {
@@ -175,7 +179,8 @@ export class GeneratorPipeline {
             shouldLogS3Url: args.shouldLogS3Url,
             preview: args.preview,
             outputPath: args.outputPath,
-            fernignorePath: args.fernignorePath
+            fernignorePath: args.fernignorePath,
+            skipFernignore: args.skipFernignore
         });
         if (!result.success) {
             return {

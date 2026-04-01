@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-optional-literal-alias/fern"
 	core "github.com/go-optional-literal-alias/fern/core"
 	internal "github.com/go-optional-literal-alias/fern/internal"
 	option "github.com/go-optional-literal-alias/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

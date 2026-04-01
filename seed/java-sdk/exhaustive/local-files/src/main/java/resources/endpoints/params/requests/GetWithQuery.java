@@ -6,9 +6,9 @@ package com.fern.sdk.resources.endpoints.params.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
@@ -36,12 +36,12 @@ public final class GetWithQuery {
     this.additionalProperties = additionalProperties;
   }
 
-  @JsonProperty("query")
+  @JsonIgnore
   public String getQuery() {
     return query;
   }
 
-  @JsonProperty("number")
+  @JsonIgnore
   public int getNumber() {
     return number;
   }

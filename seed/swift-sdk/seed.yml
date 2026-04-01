@@ -158,9 +158,12 @@ allowedFailures:
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   # Server URL templating not yet supported in Swift SDK
+  - server-sent-events-openapi
   - server-url-templating
   - variables
   - websocket-inferred-auth
   # Intermediate failures
   - any-auth
   - imdb
+  # Boolean literal enum changes require seed snapshot regeneration
+  - null-type

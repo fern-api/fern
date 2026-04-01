@@ -1,0 +1,32 @@
+openapi: 3.0.1
+info:
+  title: java-default-timeout
+  version: ''
+paths:
+  /user:
+    get:
+      operationId: getUser
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+  securitySchemes: {}

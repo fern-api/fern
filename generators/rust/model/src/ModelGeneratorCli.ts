@@ -95,6 +95,10 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         writer.writeLine("//! Generated models by Fern");
         writer.newLine();
 
+        // Add error module (BuildError for builders)
+        writer.writeLine("pub mod error;");
+        writer.newLine();
+
         // Add types module declaration
         if (context.ir.types && Object.keys(context.ir.types).length > 0) {
             writer.writeLine("pub mod types;");
@@ -126,7 +130,11 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         // Collect unique module names and their corresponding type names from IR types
         if (context.ir.types) {
-            Object.values(context.ir.types).forEach((typeDeclaration) => {
+            Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
+                // Skip types that are inlined into discriminated union variants
+                if (context.inlinedUnionVariantTypeIds.has(typeId)) {
+                    return;
+                }
                 // Use centralized method to get unique filename and extract module name from it
                 const filename = context.getUniqueFilenameForType(typeDeclaration);
                 const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
@@ -198,6 +206,24 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                         uniqueModuleNames.add(escapedModuleName);
                         moduleExports.push({ moduleName: escapedModuleName, typeName });
                         requestTypeCount++; // Query requests are request types
+                    }
+                }
+            }
+        }
+
+        // Add bytes request body types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const filename = context.getFilenameForBytesRequestBody(endpoint.id);
+                    const rawModuleName = filename.replace(".rs", "");
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                    const typeName = context.getBytesRequestTypeName(endpoint.id);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleExports.push({ moduleName: escapedModuleName, typeName });
+                        requestTypeCount++;
                     }
                 }
             }

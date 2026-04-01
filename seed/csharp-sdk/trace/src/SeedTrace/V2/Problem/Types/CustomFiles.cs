@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -65,7 +65,7 @@ public record CustomFiles
     public SeedTrace.V2.BasicCustomFiles AsBasic() =>
         IsBasic
             ? (SeedTrace.V2.BasicCustomFiles)Value!
-            : throw new System.Exception("CustomFiles.Type is not 'basic'");
+            : throw new global::System.Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -74,7 +74,7 @@ public record CustomFiles
     public Dictionary<Language, Files> AsCustom() =>
         IsCustom
             ? (Dictionary<Language, Files>)Value!
-            : throw new System.Exception("CustomFiles.Type is not 'custom'");
+            : throw new global::System.Exception("CustomFiles.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.BasicCustomFiles, T> onBasic,
@@ -147,12 +147,12 @@ public record CustomFiles
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CustomFiles>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CustomFiles).IsAssignableFrom(typeToConvert);
 
         public override CustomFiles Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -218,7 +218,7 @@ public record CustomFiles
 
         public override CustomFiles ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

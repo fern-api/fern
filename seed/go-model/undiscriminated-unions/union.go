@@ -5,6 +5,7 @@ package undiscriminatedunions
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/undiscriminated-unions/fern/internal"
 )
 

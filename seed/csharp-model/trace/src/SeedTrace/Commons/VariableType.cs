@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -176,14 +176,16 @@ public record VariableType
     public object AsIntegerType() =>
         IsIntegerType
             ? Value!
-            : throw new System.Exception("VariableType.Type is not 'integerType'");
+            : throw new global::System.Exception("VariableType.Type is not 'integerType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doubleType'.</exception>
     public object AsDoubleType() =>
-        IsDoubleType ? Value! : throw new System.Exception("VariableType.Type is not 'doubleType'");
+        IsDoubleType
+            ? Value!
+            : throw new global::System.Exception("VariableType.Type is not 'doubleType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
@@ -192,21 +194,25 @@ public record VariableType
     public object AsBooleanType() =>
         IsBooleanType
             ? Value!
-            : throw new System.Exception("VariableType.Type is not 'booleanType'");
+            : throw new global::System.Exception("VariableType.Type is not 'booleanType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stringType'.</exception>
     public object AsStringType() =>
-        IsStringType ? Value! : throw new System.Exception("VariableType.Type is not 'stringType'");
+        IsStringType
+            ? Value!
+            : throw new global::System.Exception("VariableType.Type is not 'stringType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charType'.</exception>
     public object AsCharType() =>
-        IsCharType ? Value! : throw new System.Exception("VariableType.Type is not 'charType'");
+        IsCharType
+            ? Value!
+            : throw new global::System.Exception("VariableType.Type is not 'charType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ListType"/> if <see cref="Type"/> is 'listType', otherwise throws an exception.
@@ -215,7 +221,7 @@ public record VariableType
     public SeedTrace.ListType AsListType() =>
         IsListType
             ? (SeedTrace.ListType)Value!
-            : throw new System.Exception("VariableType.Type is not 'listType'");
+            : throw new global::System.Exception("VariableType.Type is not 'listType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.MapType"/> if <see cref="Type"/> is 'mapType', otherwise throws an exception.
@@ -224,7 +230,7 @@ public record VariableType
     public SeedTrace.MapType AsMapType() =>
         IsMapType
             ? (SeedTrace.MapType)Value!
-            : throw new System.Exception("VariableType.Type is not 'mapType'");
+            : throw new global::System.Exception("VariableType.Type is not 'mapType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
@@ -233,7 +239,7 @@ public record VariableType
     public object AsBinaryTreeType() =>
         IsBinaryTreeType
             ? Value!
-            : throw new System.Exception("VariableType.Type is not 'binaryTreeType'");
+            : throw new global::System.Exception("VariableType.Type is not 'binaryTreeType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
@@ -242,7 +248,7 @@ public record VariableType
     public object AsSinglyLinkedListType() =>
         IsSinglyLinkedListType
             ? Value!
-            : throw new System.Exception("VariableType.Type is not 'singlyLinkedListType'");
+            : throw new global::System.Exception("VariableType.Type is not 'singlyLinkedListType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
@@ -251,7 +257,7 @@ public record VariableType
     public object AsDoublyLinkedListType() =>
         IsDoublyLinkedListType
             ? Value!
-            : throw new System.Exception("VariableType.Type is not 'doublyLinkedListType'");
+            : throw new global::System.Exception("VariableType.Type is not 'doublyLinkedListType'");
 
     public T Match<T>(
         Func<object, T> onIntegerType,
@@ -484,12 +490,12 @@ public record VariableType
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<VariableType>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(VariableType).IsAssignableFrom(typeToConvert);
 
         public override VariableType Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -566,7 +572,7 @@ public record VariableType
 
         public override VariableType ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -15,6 +15,7 @@ import {
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
+    stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
@@ -296,10 +297,10 @@ export class DocsDefinitionResolver {
             this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
         }
 
-        // Store raw markdown content before any processing
+        // Store raw markdown content, stripping MDX comments
         this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
+            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(markdown);
         }
 
         // track all changelog markdown files in parsedDocsConfig.pages
@@ -326,8 +327,8 @@ export class DocsDefinitionResolver {
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                             this.parsedDocsConfig.pages[relativePath] = file.contents;
-                            // Also store the raw content for changelog files
-                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = file.contents;
+                            // Also store raw content for changelog files, stripping MDX comments
+                            this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = stripMdxComments(file.contents);
                         });
                     }
                 },
@@ -516,7 +517,7 @@ export class DocsDefinitionResolver {
             );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
-                markdown,
+                markdown: stripMdxComments(markdown),
                 editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
                 editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
                 rawMarkdown: rawMarkdown
@@ -746,6 +747,13 @@ export class DocsDefinitionResolver {
     }
 
     private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
+        const integrations =
+            this.parsedDocsConfig.integrations != null || this.parsedDocsConfig.context7File != null
+                ? ({
+                      ...this.parsedDocsConfig.integrations,
+                      context7: this.getFileId(this.parsedDocsConfig.context7File)
+                  } as DocsV1Write.DocsConfig["integrations"])
+                : undefined;
         const config: DocsV1Write.DocsConfig = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
@@ -804,7 +812,7 @@ export class DocsDefinitionResolver {
             js: this.convertJavascriptConfiguration(),
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
-            integrations: this.parsedDocsConfig.integrations,
+            integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,
                 value: DocsV1Write.Url(footerLink.value)
@@ -852,14 +860,14 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            editThisPageLaunch: (this.editThisPage?.launch ?? "github") as DocsV1Write.EditThisPageLaunch,
+            editThisPageLaunch: (this.editThisPage?.launch ?? "dashboard") as DocsV1Write.EditThisPageLaunch,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs,
+                          tabs: this.parsedDocsConfig.theme.tabs as DocsV1Write.DocsThemeConfig["tabs"],
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
@@ -1518,7 +1526,7 @@ export class DocsDefinitionResolver {
             }
 
             // Add to both collections so the file appears in the final pages output
-            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.rawMarkdownFiles[relativePath] = stripMdxComments(processedContent);
             this.parsedDocsConfig.pages[relativePath] = processedContent;
         }
 
@@ -2267,7 +2275,7 @@ function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
 ): { url: string | undefined; launch: string } {
-    const launch = editThisPage?.launch ?? "github";
+    const launch = editThisPage?.launch ?? "dashboard";
 
     if (editThisPage?.github == null) {
         return { url: undefined, launch };

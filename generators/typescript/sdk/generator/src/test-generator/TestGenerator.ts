@@ -249,12 +249,16 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^3.2.4", {
+                this.dependencyManager.addDependency("vitest", "^4.1.1", {
                     type: DependencyType.DEV
                 });
                 break;
         }
         if (this.generateWireTests) {
+            // Note: msw is pinned to 2.11.2 because newer versions (e.g. 2.12.x) ship ESM-only
+            // exports that break Jest's module resolution with ts-jest. Jest resolves to msw's .mjs
+            // entry which imports TypeScript source files, causing "SyntaxError: Unexpected token 'export'".
+            // This can be revisited if/when Jest adds better ESM support or the test framework is switched to vitest.
             this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
@@ -1084,7 +1088,7 @@ describe("${serviceName}", () => {
 
     private buildExampleTest({
         endpoint,
-        example,
+        example: rawExample,
         exampleIndex,
         hasMultipleExamples,
         serviceGenerator,
@@ -1101,6 +1105,11 @@ describe("${serviceName}", () => {
         importStatement: Reference;
         baseOptions: Record<string, Code>;
     }): Code | undefined {
+        // Sanitize path parameter examples: replace non-primitive values (objects/arrays)
+        // with the parameter's original name string. This prevents [object Object] in URLs
+        // when the IR contains object-typed path params (e.g. from `unknown` types).
+        const example = sanitizeExamplePathParameters({ endpoint, example: rawExample });
+
         const options: Record<string, Code> = { ...baseOptions };
         const generatedEndpoint = serviceGenerator.getEndpoint({
             endpointId: endpoint.id,
@@ -1144,10 +1153,11 @@ describe("${serviceName}", () => {
                 // If nested, isCursorMissing is forced to true below to skip getNextPage().
                 if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
                     const wireKey = nextProperty.property.name.wireValue;
+                    const paginationMockUrl = example.url;
                     const nextValueCode =
                         pagination.type === "uri"
-                            ? code`\`\${server.baseUrl}${example.url}\``
-                            : code`${literalOf(example.url)}`;
+                            ? code`\`\${server.baseUrl}${paginationMockUrl}\``
+                            : code`${literalOf(paginationMockUrl)}`;
                     uriPathNextOverride = { wireKey, nextValueCode };
                 }
             }
@@ -1405,6 +1415,8 @@ describe("${serviceName}", () => {
             testName += ` (${exampleIndex + 1})`;
         }
 
+        const mockUrl = example.url;
+
         return code`
     test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
@@ -1414,7 +1426,7 @@ describe("${serviceName}", () => {
         ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
-            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .${endpoint.method.toLowerCase()}("${mockUrl}")${example.serviceHeaders
                 .filter((h) => h.value.jsonExample != null)
                 .map((h) => {
                     return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
@@ -1530,17 +1542,24 @@ describe("${serviceName}", () => {
                 typeDeclaration.shape.type === "union" &&
                 typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
             ) {
-                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
+                discriminantField = context.includeSerdeLayer
+                    ? typeDeclaration.shape.discriminant.name.camelCase.unsafeName
+                    : typeDeclaration.shape.discriminant.wireValue;
             }
         }
 
-        const createRawJsonExample = this.createRawJsonExample.bind(this);
         const eventCodes = sseEvents.map((event) => {
+            // Build the deserialized (camelCase) representation of the event data
+            const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
+                isForSnippet: true,
+                isForResponse: true
+            });
             if (discriminantField != null) {
-                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
-                return code`${literalOf(merged)}`;
+                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
+                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
             }
-            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+            return code`${getTextOfTsNode(deserializedData)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
     }
@@ -2252,6 +2271,85 @@ function isPaginationResultsPathMissingInExample({
  * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
  * since there won't be a cursor to indicate a next page.
  */
+/**
+ * Sanitizes an example's path parameter values so that non-primitive values
+ * (objects, arrays, null) are replaced with the parameter's original name string.
+ *
+ * The IR may contain object-typed path param examples (e.g. `{ key: "value" }` for
+ * `unknown`-typed params). The SDK's `encodePathParam` converts these via `String()`,
+ * producing `[object Object]`, while the IR's URL uses `JSON.stringify`, producing
+ * `{"key":"value"}`. This mismatch causes MSW mock URLs to never match.
+ *
+ * By coercing to strings here, both the mock URL and the generated client call use
+ * the same scalar value.
+ */
+function sanitizeExamplePathParameters({
+    endpoint,
+    example
+}: {
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+}): FernIr.ExampleEndpointCall {
+    let needsSanitization = false;
+    const allPathParams = [
+        ...example.rootPathParameters,
+        ...example.servicePathParameters,
+        ...example.endpointPathParameters
+    ];
+    for (const param of allPathParams) {
+        const json = param.value.jsonExample;
+        if (typeof json !== "string" && typeof json !== "number" && typeof json !== "boolean") {
+            needsSanitization = true;
+            break;
+        }
+    }
+    if (!needsSanitization) {
+        return example;
+    }
+
+    const coerce = (param: FernIr.ExamplePathParameter): FernIr.ExamplePathParameter => {
+        const json = param.value.jsonExample;
+        if (typeof json === "string" || typeof json === "number" || typeof json === "boolean") {
+            return param;
+        }
+        const fallback = param.name.originalName;
+        return {
+            ...param,
+            value: {
+                ...param.value,
+                jsonExample: fallback,
+                shape: FernIr.ExampleTypeReferenceShape.primitive(
+                    FernIr.ExamplePrimitive.string({ original: fallback })
+                )
+            }
+        };
+    };
+
+    const sanitized: FernIr.ExampleEndpointCall = {
+        ...example,
+        rootPathParameters: example.rootPathParameters.map(coerce),
+        servicePathParameters: example.servicePathParameters.map(coerce),
+        endpointPathParameters: example.endpointPathParameters.map(coerce)
+    };
+
+    // Rebuild the URL from the sanitized path parameters
+    const pathParameters: Record<string, string> = {};
+    [...sanitized.rootPathParameters, ...sanitized.servicePathParameters, ...sanitized.endpointPathParameters].forEach(
+        (p) => {
+            const value = p.value.jsonExample;
+            pathParameters[p.name.originalName] = typeof value === "string" ? value : String(value);
+        }
+    );
+    const url =
+        endpoint.fullPath.head +
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
+    sanitized.url = url.startsWith("/") || url === "" ? url : `/${url}`;
+
+    return sanitized;
+}
+
 function isPaginationCursorMissingInExample({
     example,
     endpoint
@@ -2314,5 +2412,16 @@ function isPaginationCursorMissingInExample({
     }
 
     // If the leaf is explicitly undefined or null, treat it as "missing"
-    return cursor === undefined || cursor === null;
+    if (cursor === undefined || cursor === null) {
+        return true;
+    }
+
+    // For offset pagination, if the hasNextPage property is explicitly false,
+    // treat it as "missing" so we don't generate hasNextPage().toBe(true) assertions
+    // that would contradict the mock data
+    if (pagination.type === "offset" && cursor === false) {
+        return true;
+    }
+
+    return false;
 }

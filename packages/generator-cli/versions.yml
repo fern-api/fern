@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Upgrade replay to 0.8.0 with support for detecting git revert commits and cancelling matching patches.
+      type: feat
+  createdAt: "2026-03-30"
+  version: 0.8.0
+
+- changelogEntry:
+    - summary: |
+        Update generator-cli to trigger new publish after changing to oidc auth for publish action.
+      type: chore
+  createdAt: "2026-03-25"
+  version: 0.6.14
+
+- changelogEntry:
+    - summary: |
+        Fix publish by bundling @fern-api/core-utils into the API build and
+        filtering workspace protocol dependencies from the dist package.json.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.13
+
+- changelogEntry:
+    - summary: |
+        Include version number in the Gradle installation snippet for Java SDKs
+        in generated README.md files. Previously only the Maven snippet included
+        the version.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.12
 
 - changelogEntry:
     - summary: |

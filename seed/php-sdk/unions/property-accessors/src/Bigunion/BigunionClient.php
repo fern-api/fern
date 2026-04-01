@@ -60,11 +60,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return BigUnion
+     * @return ?BigUnion
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string $id, ?array $options = null): BigUnion
+    public function get(string $id, ?array $options = null): ?BigUnion
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -79,6 +79,9 @@ class BigunionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return BigUnion::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -103,11 +106,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return bool
+     * @return ?bool
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function update(BigUnion $request, ?array $options = null): bool
+    public function update(BigUnion $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -123,6 +126,9 @@ class BigunionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
@@ -147,11 +153,11 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, bool>
+     * @return ?array<string, bool>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateMany(array $request, ?array $options = null): array
+    public function updateMany(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -167,6 +173,9 @@ class BigunionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'bool']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

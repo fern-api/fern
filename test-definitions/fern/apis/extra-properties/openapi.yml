@@ -1,0 +1,57 @@
+openapi: 3.0.1
+info:
+  title: extra-properties
+  version: ''
+paths:
+  /user:
+    post:
+      operationId: user_createUser
+      tags:
+        - User
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _type:
+                  type: string
+                  const: CreateUserRequest
+                _version:
+                  type: string
+                  const: v1
+                name:
+                  type: string
+              required:
+                - _type
+                - _version
+                - name
+components:
+  schemas:
+    Failure:
+      title: Failure
+      type: object
+      properties:
+        status:
+          type: string
+          const: failure
+      required:
+        - status
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+  securitySchemes: {}

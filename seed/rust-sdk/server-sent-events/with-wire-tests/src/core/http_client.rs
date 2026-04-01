@@ -144,6 +144,16 @@ impl HttpClient {
         })
     }
 
+    /// Returns the configured base URL.
+    pub fn base_url(&self) -> &str {
+        &self.config.base_url
+    }
+
+    /// Returns a reference to the client configuration.
+    pub fn config(&self) -> &ClientConfig {
+        &self.config
+    }
+
     /// Execute a request with the given method, path, and options
     pub async fn execute_request<T>(
         &self,
@@ -188,6 +198,48 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a request with an explicit base URL override.
+    ///
+    /// Used for multi-URL environments where different endpoints
+    /// resolve to different base URLs.
+    pub async fn execute_request_with_base_url<T>(
+        &self,
+        base_url: &str,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+
     async fn apply_auth_headers(
         &self,
         request: &mut Request,
@@ -202,7 +254,11 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            let header_value = key.to_string();
+            headers.insert(
+                "api_key",
+                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token - priority: request options > OAuth > config
@@ -474,6 +530,43 @@ impl HttpClient {
         Ok(ByteStream::new(response))
     }
 
+    /// Execute a streaming request with an explicit base URL override.
+    pub async fn execute_stream_request_with_base_url(
+        &self,
+        base_url: &str,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<ByteStream, ApiError> {
+        let url = join_url(base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+
+        Ok(ByteStream::new(response))
+    }
+
     /// Execute a request and return an SSE stream
     ///
     /// This method returns an `SseStream<T>` that automatically parses
@@ -559,10 +652,17 @@ impl HttpClient {
             "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
         );
 
+        // Determine per-event timeout: request-level overrides client-level
+        let timeout = options
+            .as_ref()
+            .and_then(|opts| opts.timeout_seconds)
+            .map(std::time::Duration::from_secs)
+            .unwrap_or(self.config.timeout);
+
         // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
 
-        // Return SSE stream
-        crate::SseStream::new(response, terminator).await
+        // Return SSE stream with per-event timeout
+        crate::SseStream::new(response, terminator, timeout).await
     }
 }

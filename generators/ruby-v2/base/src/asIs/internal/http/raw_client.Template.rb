@@ -43,7 +43,7 @@ module <%= gem_namespace %>
             http_request = build_http_request(
               url:,
               method: request.method,
-              headers: request.encode_headers,
+              headers: request.encode_headers(protected_keys: @default_headers.keys),
               body: request.encode_body
             )
 
@@ -121,6 +121,8 @@ module <%= gem_namespace %>
           [delay + jitter, 0].max
         end
 
+        LOCALHOST_HOSTS = %w[localhost 127.0.0.1 [::1]].freeze
+
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
@@ -130,14 +132,29 @@ module <%= gem_namespace %>
           if request.path.start_with?("http://", "https://")
             url = request.path
             url = "#{url}?#{encode_query(encoded_query)}" if encoded_query&.any?
-            return URI.parse(url)
+            parsed = URI.parse(url)
+            validate_https!(parsed)
+            return parsed
           end
 
           path = request.path.start_with?("/") ? request.path[1..] : request.path
           base = request.base_url || @base_url
           url = "#{base.chomp("/")}/#{path}"
           url = "#{url}?#{encode_query(encoded_query)}" if encoded_query&.any?
-          URI.parse(url)
+          parsed = URI.parse(url)
+          validate_https!(parsed)
+          parsed
+        end
+
+        # Raises if the URL uses http:// for a non-localhost host, which would
+        # send authentication credentials in plaintext.
+        # @param url [URI::Generic] The parsed URL.
+        def validate_https!(url)
+          return if url.scheme != "http"
+          return if LOCALHOST_HOSTS.include?(url.host)
+
+          raise ArgumentError, "Refusing to send request to non-HTTPS URL: #{url}. " \
+            "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
         end
 
         # @param url [URI::Generic] The url to the resource.
@@ -181,6 +198,7 @@ module <%= gem_namespace %>
 
           http = Net::HTTP.new(url.host, port)
           http.use_ssl = is_https
+          http.verify_mode = OpenSSL::SSL::VERIFY_PEER if is_https
           # Note: We handle retries at the application level with HTTP status code awareness,
           # so we set max_retries to 0 to disable Net::HTTP's built-in network-level retries.
           http.max_retries = 0

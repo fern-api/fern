@@ -4,13 +4,14 @@ package params
 
 import (
 	context "context"
+	io "io"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	io "io"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -433,6 +434,50 @@ func (r *RawClient) UploadWithPath(
 		return nil, err
 	}
 	return &core.Response[*types.ObjectWithRequiredField]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetWithPathAndErrors(
+	ctx context.Context,
+	param string,
+	opts ...option.RequestOption,
+) (*core.Response[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/params/path/%v",
+		param,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response string
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(endpoints.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[string]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

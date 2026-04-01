@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -218,7 +218,7 @@ public record DebugVariableValue
     public int AsIntegerValue() =>
         IsIntegerValue
             ? (int)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'integerValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'integerValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'booleanValue', otherwise throws an exception.
@@ -227,7 +227,7 @@ public record DebugVariableValue
     public bool AsBooleanValue() =>
         IsBooleanValue
             ? (bool)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'booleanValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'booleanValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'doubleValue', otherwise throws an exception.
@@ -236,7 +236,7 @@ public record DebugVariableValue
     public double AsDoubleValue() =>
         IsDoubleValue
             ? (double)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'doubleValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'doubleValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'stringValue', otherwise throws an exception.
@@ -245,7 +245,7 @@ public record DebugVariableValue
     public string AsStringValue() =>
         IsStringValue
             ? (string)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'stringValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'stringValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'charValue', otherwise throws an exception.
@@ -254,7 +254,7 @@ public record DebugVariableValue
     public string AsCharValue() =>
         IsCharValue
             ? (string)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'charValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'charValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.DebugMapValue"/> if <see cref="Type"/> is 'mapValue', otherwise throws an exception.
@@ -263,7 +263,7 @@ public record DebugVariableValue
     public SeedTrace.DebugMapValue AsMapValue() =>
         IsMapValue
             ? (SeedTrace.DebugMapValue)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'mapValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'mapValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="IEnumerable<DebugVariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
@@ -272,7 +272,7 @@ public record DebugVariableValue
     public IEnumerable<DebugVariableValue> AsListValue() =>
         IsListValue
             ? (IEnumerable<DebugVariableValue>)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'listValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'listValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.BinaryTreeNodeAndTreeValue"/> if <see cref="Type"/> is 'binaryTreeNodeValue', otherwise throws an exception.
@@ -281,7 +281,9 @@ public record DebugVariableValue
     public SeedTrace.BinaryTreeNodeAndTreeValue AsBinaryTreeNodeValue() =>
         IsBinaryTreeNodeValue
             ? (SeedTrace.BinaryTreeNodeAndTreeValue)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'binaryTreeNodeValue'");
+            : throw new global::System.Exception(
+                "DebugVariableValue.Type is not 'binaryTreeNodeValue'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.SinglyLinkedListNodeAndListValue"/> if <see cref="Type"/> is 'singlyLinkedListNodeValue', otherwise throws an exception.
@@ -290,7 +292,7 @@ public record DebugVariableValue
     public SeedTrace.SinglyLinkedListNodeAndListValue AsSinglyLinkedListNodeValue() =>
         IsSinglyLinkedListNodeValue
             ? (SeedTrace.SinglyLinkedListNodeAndListValue)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "DebugVariableValue.Type is not 'singlyLinkedListNodeValue'"
             );
 
@@ -301,7 +303,7 @@ public record DebugVariableValue
     public SeedTrace.DoublyLinkedListNodeAndListValue AsDoublyLinkedListNodeValue() =>
         IsDoublyLinkedListNodeValue
             ? (SeedTrace.DoublyLinkedListNodeAndListValue)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "DebugVariableValue.Type is not 'doublyLinkedListNodeValue'"
             );
 
@@ -312,7 +314,7 @@ public record DebugVariableValue
     public object AsUndefinedValue() =>
         IsUndefinedValue
             ? Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'undefinedValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'undefinedValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
@@ -321,7 +323,7 @@ public record DebugVariableValue
     public object AsNullValue() =>
         IsNullValue
             ? Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'nullValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'nullValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.GenericValue"/> if <see cref="Type"/> is 'genericValue', otherwise throws an exception.
@@ -330,7 +332,7 @@ public record DebugVariableValue
     public SeedTrace.GenericValue AsGenericValue() =>
         IsGenericValue
             ? (SeedTrace.GenericValue)Value!
-            : throw new System.Exception("DebugVariableValue.Type is not 'genericValue'");
+            : throw new global::System.Exception("DebugVariableValue.Type is not 'genericValue'");
 
     public T Match<T>(
         Func<int, T> onIntegerValue,
@@ -663,12 +665,12 @@ public record DebugVariableValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DebugVariableValue>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(DebugVariableValue).IsAssignableFrom(typeToConvert);
 
         public override DebugVariableValue Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -801,7 +803,7 @@ public record DebugVariableValue
 
         public override DebugVariableValue ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

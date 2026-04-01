@@ -322,6 +322,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -334,17 +335,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                     TraceResponse {
                         submission_id: SubmissionId(
@@ -355,6 +361,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -367,17 +374,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                 ],
             },
@@ -471,11 +483,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -488,17 +502,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
                 TraceResponseV2 {
                     submission_id: SubmissionId(
@@ -508,11 +527,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -525,17 +546,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
             ],
             None,
@@ -609,14 +635,17 @@ async fn main() {
                             exception_type: "exceptionType".to_string(),
                             exception_message: "exceptionMessage".to_string(),
                             exception_stacktrace: "exceptionStacktrace".to_string(),
+                            ..Default::default()
                         },
                     }),
                     exception: Some(ExceptionInfo {
                         exception_type: "exceptionType".to_string(),
                         exception_message: "exceptionMessage".to_string(),
                         exception_stacktrace: "exceptionStacktrace".to_string(),
+                        ..Default::default()
                     }),
                     stdout: "stdout".to_string(),
+                    ..Default::default()
                 },
                 trace_responses: vec![
                     TraceResponse {
@@ -628,6 +657,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -640,17 +670,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                     TraceResponse {
                         submission_id: SubmissionId(
@@ -661,6 +696,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -673,17 +709,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                 ],
             },
@@ -768,11 +809,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -785,17 +828,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
                 TraceResponseV2 {
                     submission_id: SubmissionId(
@@ -805,11 +853,13 @@ async fn main() {
                     file: TracedFile {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
+                        ..Default::default()
                     },
                     return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
+                        ..Default::default()
                     }),
                     stack: StackInformation {
                         num_stack_frames: 1,
@@ -822,17 +872,22 @@ async fn main() {
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
                                         DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
+                                    ..Default::default()
                                 },
                             ],
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                     stdout: Some("stdout".to_string()),
+                    ..Default::default()
                 },
             ],
             None,
@@ -1038,6 +1093,7 @@ async fn main() {
                         ProblemId("problems".to_string()),
                         ProblemId("problems".to_string()),
                     ],
+                    ..Default::default()
                 },
             },
             None,
@@ -1328,6 +1384,7 @@ async fn main() {
                     ProblemId("problems".to_string()),
                     ProblemId("problems".to_string()),
                 ],
+                ..Default::default()
             }),
             None,
         )
@@ -1493,6 +1550,7 @@ async fn main() {
                             value: "value".to_string(),
                         },
                     ],
+                    ..Default::default()
                 },
                 files: HashMap::from([(
                     Language::Java,
@@ -1500,17 +1558,21 @@ async fn main() {
                         solution_file: FileInfo {
                             filename: "filename".to_string(),
                             contents: "contents".to_string(),
+                            ..Default::default()
                         },
                         read_only_files: vec![
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                         ],
+                        ..Default::default()
                     },
                 )]),
                 input_params: vec![
@@ -1532,6 +1594,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },
@@ -1542,6 +1605,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },
@@ -1614,6 +1678,7 @@ async fn main() {
                             value: "value".to_string(),
                         },
                     ],
+                    ..Default::default()
                 },
                 files: HashMap::from([(
                     Language::Java,
@@ -1621,17 +1686,21 @@ async fn main() {
                         solution_file: FileInfo {
                             filename: "filename".to_string(),
                             contents: "contents".to_string(),
+                            ..Default::default()
                         },
                         read_only_files: vec![
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                         ],
+                        ..Default::default()
                     },
                 )]),
                 input_params: vec![
@@ -1653,6 +1722,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },
@@ -1663,6 +1733,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },

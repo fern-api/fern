@@ -287,6 +287,32 @@
             }
         },
         {
+            "example_identifier": "HasNextPage",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(3)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(3)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "NoNextPage",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "20792607",
             "id": {
                 "method": "GET",

@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:query-parameters-openapi'
+  implementation 'com.fern:query-parameters-openapi:0.0.1'
 }
 ```
 

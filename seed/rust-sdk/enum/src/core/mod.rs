@@ -1,5 +1,6 @@
 //! Core client infrastructure
 
+pub mod base64_bytes;
 mod http_client;
 mod oauth_token_provider;
 mod query_parameter_builder;

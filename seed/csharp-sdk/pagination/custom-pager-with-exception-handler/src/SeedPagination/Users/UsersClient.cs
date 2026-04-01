@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedPagination.Core;
 
 namespace SeedPagination;
@@ -1841,7 +1841,7 @@ public partial class UsersClient : IUsersClient
     ///     new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
     ///     {
     ///         Page = 1,
-    ///         Limit = 1,
+    ///         Limit = 3,
     ///         Order = SeedPagination.Order.Asc,
     ///     }
     /// );

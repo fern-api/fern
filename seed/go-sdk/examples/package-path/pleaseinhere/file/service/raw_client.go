@@ -4,12 +4,13 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
 	file "github.com/examples/fern/pleaseinhere/file"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
-	http "net/http"
 )
 
 type RawClient struct {

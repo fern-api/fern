@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
 import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -16,6 +17,8 @@ export declare namespace RequestGenerator {
         extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from JSON serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -26,12 +29,15 @@ export class RequestGenerator {
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, properties, extendedProperties, docsContent, context }: RequestGenerator.Args) {
+    private readonly queryParamFieldNames: Set<string>;
+
+    public constructor({ name, properties, extendedProperties, docsContent, context, queryParamFieldNames }: RequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generate(): rust.Struct {
@@ -152,8 +158,9 @@ export class RequestGenerator {
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const fieldAttributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         // Add field documentation if available
         let docs = undefined;
@@ -206,6 +213,11 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+
+        // Write builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
+
         writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();

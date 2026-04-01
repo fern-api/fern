@@ -5,6 +5,7 @@ package endpointsecurityauth
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/endpoint-security-auth/fern/internal"
 )
 

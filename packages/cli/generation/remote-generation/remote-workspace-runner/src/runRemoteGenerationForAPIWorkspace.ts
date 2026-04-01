@@ -32,9 +32,11 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     validateWorkspace,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -48,9 +50,11 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -80,14 +84,17 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
-                // Auto-discover .fernignore from the generator's local output directory
-                // if not explicitly provided via --fernignore
-                const effectiveFernignorePath =
-                    fernignorePath ??
-                    (await resolveAutoDiscoveredFernignorePath({
-                        generatorInvocation,
-                        context: interactiveTaskContext
-                    }));
+                // When --skip-fernignore is set, skip auto-discovery and use no fernignore path.
+                // The skipFernignore flag is passed downstream to upload an empty .fernignore.
+                // Otherwise, auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore.
+                const effectiveFernignorePath = skipFernignore
+                    ? undefined
+                    : (fernignorePath ??
+                      (await resolveAutoDiscoveredFernignorePath({
+                          generatorInvocation,
+                          context: interactiveTaskContext
+                      })));
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -126,8 +133,10 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     fernignorePath: effectiveFernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

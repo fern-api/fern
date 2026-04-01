@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -78,7 +78,7 @@ public record UnionWithMultipleNoProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
@@ -87,7 +87,9 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty1() =>
         IsEmpty1
             ? Value!
-            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
+            : throw new global::System.Exception(
+                "UnionWithMultipleNoProperties.Type is not 'empty1'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
@@ -96,7 +98,9 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty2() =>
         IsEmpty2
             ? Value!
-            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
+            : throw new global::System.Exception(
+                "UnionWithMultipleNoProperties.Type is not 'empty2'"
+            );
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -189,12 +193,12 @@ public record UnionWithMultipleNoProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithMultipleNoProperties>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithMultipleNoProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithMultipleNoProperties Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -256,7 +260,7 @@ public record UnionWithMultipleNoProperties
 
         public override UnionWithMultipleNoProperties ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

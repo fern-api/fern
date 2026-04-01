@@ -9,8 +9,10 @@
           "Shape": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -66,14 +68,15 @@
       },
       "rawContents": "types:
   Shape:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       triangle: Triangle
       square: Square
     source:
       openapi: ../openapi.json
-    context: data
   TriangleType:
     enum:
       - triangle

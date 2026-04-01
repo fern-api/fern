@@ -25,6 +25,13 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
+# Replace vulnerable plexus-utils in Gradle distribution to fix GHSA-6fmv-xxpf-w3cw
+# (Directory Traversal vulnerability in extractFile method)
+RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/org/codehaus/plexus/plexus-utils/4.0.3/plexus-utils-4.0.3.jar \
+      -o /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar && \
+    echo "421ff6ed146c53a9d4eaade8f629b52b12af7187101f1bd06c2c64e904019f3c  /opt/gradle/lib/plugins/plexus-utils-4.0.3.jar" | sha256sum -c -
+
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
@@ -44,6 +51,7 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
 # curl-minimal/libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524,
 # CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
 # expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
+# Security update 2026-03-30: add freetype (CVE-2026-23865, ALAS2023-2026-1486)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -59,7 +67,8 @@ RUN dnf --releasever=latest update -y \
     alsa-lib \
     expat \
     openssh \
-    openssh-clients && \
+    openssh-clients \
+    freetype && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -78,7 +87,7 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@latest && npm install -g glob@11.1.0
+RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
 
 # Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
@@ -111,6 +120,36 @@ RUN for dir in \
         tar -xzf minimatch-10.2.3.tgz && \
         mv package minimatch && \
         rm minimatch-10.2.3.tgz; \
+      fi; \
+    done
+
+# Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob quantifiers),
+# GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character Classes)
+# Location: npm's bundled tinyglobby depends on picomatch
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done
+
+# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
+# (Zero-step sequence causes process hang and memory exhaustion)
+# Location: npm bundles its own copy of brace-expansion
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
       fi; \
     done
 

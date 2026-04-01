@@ -1,5 +1,8 @@
-import { RustFile } from "@fern-api/rust-base";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { BUILD_ERROR_RS, RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias/index.js";
+import { BytesRequestBodyGenerator } from "./bytes-request-body/index.js";
 import { EnumGenerator } from "./enum/index.js";
 import { FileUploadRequestBodyGenerator } from "./file-upload-request-body/index.js";
 import { InlinedRequestBodyGenerator } from "./inlined-request-body/index.js";
@@ -11,6 +14,18 @@ import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union/index.js"
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
+
+    // Generate error.rs with BuildError (used by generated builders).
+    // In the model generator this becomes src/error.rs directly.
+    // In the SDK generator this file is filtered out since the SDK's ErrorGenerator
+    // produces its own error.rs that includes both ApiError and BuildError.
+    files.push(
+        new RustFile({
+            filename: "error.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: BUILD_ERROR_RS
+        })
+    );
 
     // Pre-compute which type IDs are members of undiscriminated unions.
     // Single-property structs in undiscriminated unions need #[serde(transparent)]
@@ -25,7 +40,17 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         }
     }
 
-    for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+    // Pre-compute which type IDs can be inlined into discriminated union variants.
+    // A type can be inlined if it's ONLY referenced as a samePropertiesAsObject in
+    // exactly one union variant and nowhere else in the IR.
+    computeInlinedUnionVariantTypeIds(context);
+
+    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        // Skip generating separate struct files for types inlined into union variants
+        if (context.inlinedUnionVariantTypeIds.has(typeId)) {
+            continue;
+        }
+
         const file = typeDeclaration.shape._visit<RustFile | undefined>({
             alias: (aliasTypeDeclaration) => {
                 return new AliasGenerator(typeDeclaration, aliasTypeDeclaration, context).generate();
@@ -73,6 +98,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     const referencedRequestWithQueryGenerator = new ReferencedRequestWithQueryGenerator(context);
     files.push(...referencedRequestWithQueryGenerator.generateFiles());
 
+    // Generate bytes request body types for bytes endpoints with query parameters
+    const bytesRequestBodyGenerator = new BytesRequestBodyGenerator(context);
+    files.push(...bytesRequestBodyGenerator.generateFiles());
+
     // Deduplicate files by filename to prevent file collisions
     // This is a safety net for tracing logs - ideally generators shouldn't create duplicates
     const seenFilenames = new Map<string, string>();
@@ -111,4 +140,160 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     }
 
     return deduplicatedFiles;
+}
+
+/**
+ * Counts how many times each typeId is referenced across the entire IR,
+ * then determines which types can be inlined into union variants.
+ *
+ * A type can be inlined if:
+ * 1. It appears as a samePropertiesAsObject in exactly one union variant
+ * 2. It is not referenced anywhere else in the IR (object fields, other unions,
+ *    service endpoints, aliases, containers, etc.)
+ * 3. It is an object type (not an enum, alias, or another union)
+ */
+function computeInlinedUnionVariantTypeIds(context: ModelGeneratorContext): void {
+    const ir = context.ir;
+
+    // Count all references to each typeId across the IR
+    const referenceCount = new Map<string, number>();
+    // Track which typeIds are referenced as samePropertiesAsObject in unions
+    const samePropertiesRefs = new Set<string>();
+
+    function countTypeRef(typeRef: FernIr.TypeReference): void {
+        if (typeRef.type === "named") {
+            referenceCount.set(typeRef.typeId, (referenceCount.get(typeRef.typeId) ?? 0) + 1);
+        } else if (typeRef.type === "container") {
+            typeRef.container._visit({
+                optional: (inner) => countTypeRef(inner),
+                nullable: (inner) => countTypeRef(inner),
+                list: (inner) => countTypeRef(inner),
+                set: (inner) => countTypeRef(inner),
+                map: (mapType) => {
+                    countTypeRef(mapType.keyType);
+                    countTypeRef(mapType.valueType);
+                },
+                literal: () => {},
+                _other: () => {}
+            });
+        }
+    }
+
+    // Count references in all type declarations
+    for (const [_typeId, typeDecl] of Object.entries(ir.types)) {
+        typeDecl.shape._visit({
+            object: (obj) => {
+                for (const prop of obj.properties) {
+                    countTypeRef(prop.valueType);
+                }
+                for (const ext of obj.extends) {
+                    referenceCount.set(ext.typeId, (referenceCount.get(ext.typeId) ?? 0) + 1);
+                }
+            },
+            union: (union) => {
+                for (const prop of union.baseProperties) {
+                    countTypeRef(prop.valueType);
+                }
+                for (const variant of union.types) {
+                    variant.shape._visit({
+                        samePropertiesAsObject: (ref) => {
+                            referenceCount.set(ref.typeId, (referenceCount.get(ref.typeId) ?? 0) + 1);
+                            samePropertiesRefs.add(ref.typeId);
+                        },
+                        singleProperty: (prop) => countTypeRef(prop.type),
+                        noProperties: () => {},
+                        _other: () => {}
+                    });
+                }
+            },
+            undiscriminatedUnion: (uu) => {
+                for (const member of uu.members) {
+                    countTypeRef(member.type);
+                }
+            },
+            alias: (alias) => {
+                countTypeRef(alias.aliasOf);
+            },
+            enum: () => {},
+            _other: () => {}
+        });
+    }
+
+    // Count references in services (endpoint request/response types)
+    for (const service of Object.values(ir.services)) {
+        for (const endpoint of service.endpoints) {
+            // Request body types
+            if (endpoint.requestBody) {
+                endpoint.requestBody._visit({
+                    reference: (ref) => countTypeRef(ref.requestBodyType),
+                    inlinedRequestBody: (inlined) => {
+                        for (const prop of inlined.properties) {
+                            countTypeRef(prop.valueType);
+                        }
+                        for (const ext of inlined.extends) {
+                            referenceCount.set(ext.typeId, (referenceCount.get(ext.typeId) ?? 0) + 1);
+                        }
+                    },
+                    fileUpload: () => {},
+                    bytes: () => {},
+                    _other: () => {}
+                });
+            }
+
+            // Response body type
+            if (endpoint.response?.body) {
+                endpoint.response.body._visit({
+                    json: (jsonResponse) => countTypeRef(jsonResponse.responseBodyType),
+                    streaming: () => {},
+                    fileDownload: () => {},
+                    text: () => {},
+                    bytes: () => {},
+                    streamParameter: () => {},
+                    _other: () => {}
+                });
+            }
+
+            // Error types (look up the error declaration to get the type reference)
+            for (const responseError of endpoint.errors) {
+                const errorDecl = ir.errors[responseError.error.errorId];
+                if (errorDecl?.type) {
+                    countTypeRef(errorDecl.type);
+                }
+            }
+
+            // Path parameters, query parameters, headers
+            for (const param of endpoint.pathParameters) {
+                countTypeRef(param.valueType);
+            }
+            for (const param of endpoint.queryParameters) {
+                countTypeRef(param.valueType);
+            }
+            for (const header of endpoint.headers) {
+                countTypeRef(header.valueType);
+            }
+        }
+    }
+
+    // Count references in error declarations
+    if (ir.errors) {
+        for (const errorDecl of Object.values(ir.errors)) {
+            if (errorDecl.type) {
+                countTypeRef(errorDecl.type);
+            }
+        }
+    }
+
+    // Determine which types can be inlined:
+    // - Referenced exactly once (the samePropertiesAsObject reference)
+    // - That one reference is as samePropertiesAsObject
+    // - The type is an object (not enum, alias, or union)
+    for (const typeId of samePropertiesRefs) {
+        const count = referenceCount.get(typeId) ?? 0;
+        if (count === 1) {
+            const typeDecl = ir.types[typeId];
+            if (typeDecl?.shape.type === "object") {
+                context.inlinedUnionVariantTypeIds.add(typeId);
+            }
+        }
+    }
 }

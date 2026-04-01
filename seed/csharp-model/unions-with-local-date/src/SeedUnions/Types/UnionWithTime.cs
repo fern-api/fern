@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -76,14 +76,18 @@ public record UnionWithTime
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'value'.</exception>
     public int AsValue() =>
-        IsValue ? (int)Value! : throw new System.Exception("UnionWithTime.Type is not 'value'");
+        IsValue
+            ? (int)Value!
+            : throw new global::System.Exception("UnionWithTime.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateOnly"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly AsDate() =>
-        IsDate ? (DateOnly)Value! : throw new System.Exception("UnionWithTime.Type is not 'date'");
+        IsDate
+            ? (DateOnly)Value!
+            : throw new global::System.Exception("UnionWithTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
@@ -92,7 +96,7 @@ public record UnionWithTime
     public DateTime AsDatetime() =>
         IsDatetime
             ? (DateTime)Value!
-            : throw new System.Exception("UnionWithTime.Type is not 'datetime'");
+            : throw new global::System.Exception("UnionWithTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<int, T> onValue,
@@ -187,12 +191,12 @@ public record UnionWithTime
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithTime>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithTime).IsAssignableFrom(typeToConvert);
 
         public override UnionWithTime Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -256,7 +260,7 @@ public record UnionWithTime
 
         public override UnionWithTime ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

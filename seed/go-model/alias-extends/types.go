@@ -5,6 +5,7 @@ package aliasextends
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/alias-extends/fern/internal"
 )
 

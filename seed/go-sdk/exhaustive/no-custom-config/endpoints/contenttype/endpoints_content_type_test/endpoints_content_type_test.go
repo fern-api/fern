@@ -6,15 +6,16 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
 	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(

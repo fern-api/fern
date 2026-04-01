@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    context "context"
+    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -16,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        Id: "id",
-    }
-    client.Endpoints.Put.Add(
+    request := uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    )
+    client.Endpoints.Primitive.GetAndReturnUuid(
         context.TODO(),
         request,
     )

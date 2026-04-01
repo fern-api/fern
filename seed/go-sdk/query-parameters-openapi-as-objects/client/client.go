@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	fern "github.com/query-parameters-openapi-as-objects/fern"
 	core "github.com/query-parameters-openapi-as-objects/fern/core"
 	internal "github.com/query-parameters-openapi-as-objects/fern/internal"

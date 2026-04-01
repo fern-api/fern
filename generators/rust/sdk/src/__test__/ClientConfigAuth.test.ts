@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
+import { ApiClientBuilderGenerator } from "../generators/ApiClientBuilderGenerator.js";
 import { ClientConfigGenerator } from "../generators/ClientConfigGenerator.js";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext.js";
 
@@ -15,8 +16,10 @@ const context = createSampleGeneratorContext();
 const clientConfigGenerator = new ClientConfigGenerator(context);
 const CLIENT_CONFIG = clientConfigGenerator.generate().fileContents;
 
-// Read AsIs files for testing
-const API_CLIENT_BUILDER = readAsIsFile("client.rs");
+// Generate ApiClientBuilder for testing using the generator
+const apiClientBuilderGenerator = new ApiClientBuilderGenerator(context);
+const API_CLIENT_BUILDER = apiClientBuilderGenerator.generate().fileContents;
+
 const HTTP_CLIENT = readAsIsFile("http_client.rs");
 const REQUEST_OPTIONS = readAsIsFile("request_options.rs");
 

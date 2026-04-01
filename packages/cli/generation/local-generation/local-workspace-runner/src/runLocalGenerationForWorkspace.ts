@@ -46,7 +46,10 @@ export async function runLocalGenerationForWorkspace({
     ai,
     replay,
     noReplay,
-    validateWorkspace
+    validateWorkspace,
+    requireEnvVars,
+    skipFernignore,
+    publishToRegistry
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -62,6 +65,9 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    requireEnvVars?: boolean;
+    skipFernignore?: boolean;
+    publishToRegistry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -89,8 +95,19 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const isPreview = absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        {
+                            onError: (e) => {
+                                if (!isPreview && (requireEnvVars ?? true)) {
+                                    interactiveTaskContext.failAndThrow(e);
+                                }
+                            }
+                        },
+                        { substituteAsEmpty: isPreview }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
@@ -327,10 +344,12 @@ export async function runLocalGenerationForWorkspace({
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    publishToRegistry,
                     runner,
                     ai,
                     autoVersioningCache,
-                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
+                    skipFernignore
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -433,18 +452,13 @@ function getPublishConfig({
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
-        const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
-        if (owner == null || repo == null) {
-            return context.failAndThrow(
-                `Invalid GitHub repository URI: ${generatorInvocation.raw.github.uri}. Expected format: owner/repo`
-            );
-        }
+        const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
         return FernIr.PublishingConfig.github({
-            owner,
-            repo,
+            owner: parsed.owner,
+            repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: irMode,

@@ -9,6 +9,6 @@ public class Example5 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.user().getWithBearer();
+        client.user().getWithInferredAuth();
     }
 }

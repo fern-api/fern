@@ -1,0 +1,4496 @@
+openapi: 3.0.1
+info:
+  title: trace
+  version: ''
+paths:
+  /:
+    get:
+      operationId: v2_test
+      tags:
+        - V2
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /admin/store-test-submission-status/{submissionId}:
+    post:
+      operationId: admin_updateTestSubmissionStatus
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestSubmissionStatus'
+  /admin/store-test-submission-status-v2/{submissionId}:
+    post:
+      operationId: admin_sendTestSubmissionUpdate
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestSubmissionUpdate'
+  /admin/store-workspace-submission-status/{submissionId}:
+    post:
+      operationId: admin_updateWorkspaceSubmissionStatus
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceSubmissionStatus'
+  /admin/store-workspace-submission-status-v2/{submissionId}:
+    post:
+      operationId: admin_sendWorkspaceSubmissionUpdate
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceSubmissionUpdate'
+  /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}:
+    post:
+      operationId: admin_storeTracedTestCase
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+        - name: testCaseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                result:
+                  $ref: '#/components/schemas/TestCaseResultWithStdout'
+                traceResponses:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TraceResponse'
+              required:
+                - result
+                - traceResponses
+  /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}:
+    post:
+      operationId: admin_storeTracedTestCaseV2
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+        - name: testCaseId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/v2TestCaseId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TraceResponseV2'
+  /admin/store-workspace-trace/submission/{submissionId}:
+    post:
+      operationId: admin_storeTracedWorkspace
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workspaceRunDetails:
+                  $ref: '#/components/schemas/WorkspaceRunDetails'
+                traceResponses:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TraceResponse'
+              required:
+                - workspaceRunDetails
+                - traceResponses
+  /admin/store-workspace-trace-v2/submission/{submissionId}:
+    post:
+      operationId: admin_storeTracedWorkspaceV2
+      tags:
+        - Admin
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubmissionId'
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TraceResponseV2'
+  /homepage-problems:
+    get:
+      operationId: homepage_getHomepageProblems
+      tags:
+        - Homepage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProblemId'
+    post:
+      operationId: homepage_setHomepageProblems
+      tags:
+        - Homepage
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProblemId'
+  /migration-info/all:
+    get:
+      operationId: migration_getAttemptedMigrations
+      tags:
+        - Migration
+      parameters:
+        - name: admin-key-header
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Migration'
+  /v2/playlist/{serviceParam}/create:
+    post:
+      description: Create a new playlist
+      operationId: playlist_createPlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: datetime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: optionalDatetime
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaylistCreateRequest'
+  /v2/playlist/{serviceParam}/all:
+    get:
+      description: Returns the user's playlists
+      operationId: playlist_getPlaylists
+      tags:
+        - Playlist
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: otherField
+          in: query
+          description: i'm another field
+          required: true
+          schema:
+            type: string
+        - name: multiLineDocs
+          in: query
+          description: |-
+            I'm a multiline
+            description
+          required: true
+          schema:
+            type: string
+        - name: optionalMultipleField
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: multipleField
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Playlist'
+      security: *ref_0
+  /v2/playlist/{serviceParam}/{playlistId}:
+    get:
+      description: Returns a playlist
+      operationId: playlist_getPlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlaylistId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      errorName:
+                        type: string
+                        enum:
+                          - UnauthorizedError
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      errorName:
+                        type: string
+                        enum:
+                          - PlaylistIdNotFoundError
+                      content:
+                        $ref: '#/components/schemas/PlaylistIdNotFoundErrorBody'
+    put:
+      description: Updates a playlist
+      operationId: playlist_updatePlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlaylistId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+                nullable: true
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      errorName:
+                        type: string
+                        enum:
+                          - PlaylistIdNotFoundError
+                      content:
+                        $ref: '#/components/schemas/PlaylistIdNotFoundErrorBody'
+      security: *ref_0
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlaylistRequest'
+              nullable: true
+  /v2/playlist/{serviceParam}/{playlist_id}:
+    delete:
+      description: Deletes a playlist
+      operationId: playlist_deletePlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: playlist_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PlaylistId'
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /problem-crud/create:
+    post:
+      description: Creates a problem
+      operationId: problem_createProblem
+      tags:
+        - Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProblemResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProblemRequest'
+  /problem-crud/update/{problemId}:
+    post:
+      description: Updates a problem
+      operationId: problem_updateProblem
+      tags:
+        - Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProblemResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProblemRequest'
+  /problem-crud/delete/{problemId}:
+    delete:
+      description: Soft deletes a problem
+      operationId: problem_deleteProblem
+      tags:
+        - Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+      responses:
+        '204':
+          description: ''
+  /problem-crud/default-starter-files:
+    post:
+      description: Returns default starter files for problem
+      operationId: problem_getDefaultStarterFiles
+      tags:
+        - Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDefaultStarterFilesResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inputParams:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/VariableTypeAndName'
+                outputType:
+                  $ref: '#/components/schemas/VariableType'
+                methodName:
+                  type: string
+                  description: |-
+                    The name of the `method` that the student has to complete.
+                    The method name cannot include the following characters:
+                      - Greater Than `>`
+                      - Less Than `<``
+                      - Equals `=`
+                      - Period `.`
+              required:
+                - inputParams
+                - outputType
+                - methodName
+  /sessions/create-session/{language}:
+    post:
+      description: Returns sessionId and execution server URL for session. Spins up server.
+      operationId: submission_createExecutionSession
+      tags:
+        - Submission
+      parameters:
+        - name: language
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Language'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionSessionResponse'
+  /sessions/{sessionId}:
+    get:
+      description: >-
+        Returns execution server URL for session. Returns empty if session isn't
+        registered.
+      operationId: submission_getExecutionSession
+      tags:
+        - Submission
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionSessionResponse'
+                nullable: true
+  /sessions/stop/{sessionId}:
+    delete:
+      description: Stops execution session.
+      operationId: submission_stopExecutionSession
+      tags:
+        - Submission
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+  /sessions/execution-sessions-state:
+    get:
+      operationId: submission_getExecutionSessionsState
+      tags:
+        - Submission
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExecutionSessionStateResponse'
+  /sysprop/num-warm-instances/{language}/{numWarmInstances}:
+    put:
+      operationId: sysprop_setNumWarmInstances
+      tags:
+        - Sysprop
+      parameters:
+        - name: language
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Language'
+        - name: numWarmInstances
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: ''
+  /sysprop/num-warm-instances:
+    get:
+      operationId: sysprop_getNumWarmInstances
+      tags:
+        - Sysprop
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+  /problems-v2/lightweight-problem-info:
+    get:
+      description: Returns lightweight versions of all problems
+      operationId: v2_problem_getLightweightProblems
+      tags:
+        - V2Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/v2LightweightProblemInfoV2'
+  /problems-v2/problem-info:
+    get:
+      description: Returns latest versions of all problems
+      operationId: v2_problem_getProblems
+      tags:
+        - V2Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/v2ProblemInfoV2'
+  /problems-v2/problem-info/{problemId}:
+    get:
+      description: Returns latest version of a problem
+      operationId: v2_problem_getLatestProblem
+      tags:
+        - V2Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ProblemInfoV2'
+  /problems-v2/problem-info/{problemId}/version/{problemVersion}:
+    get:
+      description: Returns requested version of a problem
+      operationId: v2_problem_getProblemVersion
+      tags:
+        - V2Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+        - name: problemVersion
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ProblemInfoV2'
+  /problems-v2/v3/lightweight-problem-info:
+    get:
+      description: Returns lightweight versions of all problems
+      operationId: v2_v3_problem_getLightweightProblems
+      tags:
+        - V2V3Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/v2v3LightweightProblemInfoV2'
+  /problems-v2/v3/problem-info:
+    get:
+      description: Returns latest versions of all problems
+      operationId: v2_v3_problem_getProblems
+      tags:
+        - V2V3Problem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/v2v3ProblemInfoV2'
+  /problems-v2/v3/problem-info/{problemId}:
+    get:
+      description: Returns latest version of a problem
+      operationId: v2_v3_problem_getLatestProblem
+      tags:
+        - V2V3Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2v3ProblemInfoV2'
+  /problems-v2/v3/problem-info/{problemId}/version/{problemVersion}:
+    get:
+      description: Returns requested version of a problem
+      operationId: v2_v3_problem_getProblemVersion
+      tags:
+        - V2V3Problem
+      parameters:
+        - name: problemId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProblemId'
+        - name: problemVersion
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2v3ProblemInfoV2'
+components:
+  schemas:
+    Test:
+      title: Test
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - and
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - or
+            value:
+              type: boolean
+          required:
+            - type
+    UserId:
+      title: UserId
+      type: string
+    ProblemId:
+      title: ProblemId
+      type: string
+    NodeId:
+      title: NodeId
+      type: string
+    VariableType:
+      title: VariableType
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integerType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - doubleType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - booleanType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stringType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - charType
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - listType
+            - $ref: '#/components/schemas/ListType'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - mapType
+            - $ref: '#/components/schemas/MapType'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - binaryTreeType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - singlyLinkedListType
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - doublyLinkedListType
+          required:
+            - type
+    ListType:
+      title: ListType
+      type: object
+      properties:
+        valueType:
+          $ref: '#/components/schemas/VariableType'
+        isFixedLength:
+          type: boolean
+          nullable: true
+          description: >-
+            Whether this list is fixed-size (for languages that supports
+            fixed-size lists). Defaults to false.
+      required:
+        - valueType
+    MapType:
+      title: MapType
+      type: object
+      properties:
+        keyType:
+          $ref: '#/components/schemas/VariableType'
+        valueType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - keyType
+        - valueType
+    VariableValue:
+      title: VariableValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integerValue
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - booleanValue
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - doubleValue
+            value:
+              type: number
+              format: double
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stringValue
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - charValue
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - mapValue
+            - $ref: '#/components/schemas/MapValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - listValue
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/VariableValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - binaryTreeValue
+            - $ref: '#/components/schemas/BinaryTreeValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - singlyLinkedListValue
+            - $ref: '#/components/schemas/SinglyLinkedListValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - doublyLinkedListValue
+            - $ref: '#/components/schemas/DoublyLinkedListValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - nullValue
+          required:
+            - type
+    DebugVariableValue:
+      title: DebugVariableValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integerValue
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - booleanValue
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - doubleValue
+            value:
+              type: number
+              format: double
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stringValue
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - charValue
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - mapValue
+            - $ref: '#/components/schemas/DebugMapValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - listValue
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/DebugVariableValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - binaryTreeNodeValue
+            - $ref: '#/components/schemas/BinaryTreeNodeAndTreeValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - singlyLinkedListNodeValue
+            - $ref: '#/components/schemas/SinglyLinkedListNodeAndListValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - doublyLinkedListNodeValue
+            - $ref: '#/components/schemas/DoublyLinkedListNodeAndListValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - undefinedValue
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - nullValue
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - genericValue
+            - $ref: '#/components/schemas/GenericValue'
+          required:
+            - type
+    GenericValue:
+      title: GenericValue
+      type: object
+      properties:
+        stringifiedType:
+          type: string
+          nullable: true
+        stringifiedValue:
+          type: string
+      required:
+        - stringifiedValue
+    MapValue:
+      title: MapValue
+      type: object
+      properties:
+        keyValuePairs:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValuePair'
+      required:
+        - keyValuePairs
+    KeyValuePair:
+      title: KeyValuePair
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/VariableValue'
+        value:
+          $ref: '#/components/schemas/VariableValue'
+      required:
+        - key
+        - value
+    BinaryTreeValue:
+      title: BinaryTreeValue
+      type: object
+      properties:
+        root:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BinaryTreeNodeValue'
+      required:
+        - nodes
+    BinaryTreeNodeValue:
+      title: BinaryTreeNodeValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        val:
+          type: number
+          format: double
+        right:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+        left:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+      required:
+        - nodeId
+        - val
+    BinaryTreeNodeAndTreeValue:
+      title: BinaryTreeNodeAndTreeValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        fullTree:
+          $ref: '#/components/schemas/BinaryTreeValue'
+      required:
+        - nodeId
+        - fullTree
+    SinglyLinkedListValue:
+      title: SinglyLinkedListValue
+      type: object
+      properties:
+        head:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SinglyLinkedListNodeValue'
+      required:
+        - nodes
+    SinglyLinkedListNodeValue:
+      title: SinglyLinkedListNodeValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        val:
+          type: number
+          format: double
+        next:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+      required:
+        - nodeId
+        - val
+    SinglyLinkedListNodeAndListValue:
+      title: SinglyLinkedListNodeAndListValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        fullList:
+          $ref: '#/components/schemas/SinglyLinkedListValue'
+      required:
+        - nodeId
+        - fullList
+    DoublyLinkedListValue:
+      title: DoublyLinkedListValue
+      type: object
+      properties:
+        head:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DoublyLinkedListNodeValue'
+      required:
+        - nodes
+    DoublyLinkedListNodeValue:
+      title: DoublyLinkedListNodeValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        val:
+          type: number
+          format: double
+        next:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+        prev:
+          $ref: '#/components/schemas/NodeId'
+          nullable: true
+      required:
+        - nodeId
+        - val
+    DoublyLinkedListNodeAndListValue:
+      title: DoublyLinkedListNodeAndListValue
+      type: object
+      properties:
+        nodeId:
+          $ref: '#/components/schemas/NodeId'
+        fullList:
+          $ref: '#/components/schemas/DoublyLinkedListValue'
+      required:
+        - nodeId
+        - fullList
+    DebugMapValue:
+      title: DebugMapValue
+      type: object
+      properties:
+        keyValuePairs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DebugKeyValuePairs'
+      required:
+        - keyValuePairs
+    DebugKeyValuePairs:
+      title: DebugKeyValuePairs
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/DebugVariableValue'
+        value:
+          $ref: '#/components/schemas/DebugVariableValue'
+      required:
+        - key
+        - value
+    TestCase:
+      title: TestCase
+      type: object
+      properties:
+        id:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableValue'
+      required:
+        - id
+        - params
+    TestCaseWithExpectedResult:
+      title: TestCaseWithExpectedResult
+      type: object
+      properties:
+        testCase:
+          $ref: '#/components/schemas/TestCase'
+        expectedResult:
+          $ref: '#/components/schemas/VariableValue'
+      required:
+        - testCase
+        - expectedResult
+    FileInfo:
+      title: FileInfo
+      type: object
+      properties:
+        filename:
+          type: string
+        contents:
+          type: string
+      required:
+        - filename
+        - contents
+    Language:
+      title: Language
+      type: string
+      enum:
+        - JAVA
+        - JAVASCRIPT
+        - PYTHON
+    LangServerRequest:
+      title: LangServerRequest
+      type: object
+      properties:
+        request: {}
+      required:
+        - request
+    LangServerResponse:
+      title: LangServerResponse
+      type: object
+      properties:
+        response: {}
+      required:
+        - response
+    MigrationStatus:
+      title: MigrationStatus
+      type: string
+      enum:
+        - RUNNING
+        - FAILED
+        - FINISHED
+    Migration:
+      title: Migration
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/MigrationStatus'
+      required:
+        - name
+        - status
+    PlaylistId:
+      title: PlaylistId
+      type: string
+    Playlist:
+      title: Playlist
+      type: object
+      properties:
+        playlist_id:
+          $ref: '#/components/schemas/PlaylistId'
+        owner-id:
+          $ref: '#/components/schemas/UserId'
+      required:
+        - playlist_id
+        - owner-id
+      allOf:
+        - $ref: '#/components/schemas/PlaylistCreateRequest'
+    PlaylistCreateRequest:
+      title: PlaylistCreateRequest
+      type: object
+      properties:
+        name:
+          type: string
+        problems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemId'
+      required:
+        - name
+        - problems
+    UpdatePlaylistRequest:
+      title: UpdatePlaylistRequest
+      type: object
+      properties:
+        name:
+          type: string
+        problems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemId'
+          description: The problems that make up the playlist.
+      required:
+        - name
+        - problems
+    PlaylistIdNotFoundErrorBody:
+      title: PlaylistIdNotFoundErrorBody
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - playlistId
+            value:
+              $ref: '#/components/schemas/PlaylistId'
+          required:
+            - type
+    ReservedKeywordEnum:
+      title: ReservedKeywordEnum
+      type: string
+      enum:
+        - is
+        - as
+    ProblemInfo:
+      title: ProblemInfo
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        problemName:
+          type: string
+        problemVersion:
+          type: integer
+        files:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ProblemFiles'
+        inputParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeAndName'
+        outputType:
+          $ref: '#/components/schemas/VariableType'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseWithExpectedResult'
+        methodName:
+          type: string
+        supportsCustomTestCases:
+          type: boolean
+      required:
+        - problemId
+        - problemDescription
+        - problemName
+        - problemVersion
+        - files
+        - inputParams
+        - outputType
+        - testcases
+        - methodName
+        - supportsCustomTestCases
+    ProblemDescription:
+      title: ProblemDescription
+      type: object
+      properties:
+        boards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemDescriptionBoard'
+      required:
+        - boards
+    ProblemDescriptionBoard:
+      title: ProblemDescriptionBoard
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - html
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - variable
+            value:
+              $ref: '#/components/schemas/VariableValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - testCaseId
+            value:
+              type: string
+          required:
+            - type
+    ProblemFiles:
+      title: ProblemFiles
+      type: object
+      properties:
+        solutionFile:
+          $ref: '#/components/schemas/FileInfo'
+        readOnlyFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileInfo'
+      required:
+        - solutionFile
+        - readOnlyFiles
+    VariableTypeAndName:
+      title: VariableTypeAndName
+      type: object
+      properties:
+        variableType:
+          $ref: '#/components/schemas/VariableType'
+        name:
+          type: string
+      required:
+        - variableType
+        - name
+    CreateProblemRequest:
+      title: CreateProblemRequest
+      type: object
+      properties:
+        problemName:
+          type: string
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        files:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ProblemFiles'
+        inputParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeAndName'
+        outputType:
+          $ref: '#/components/schemas/VariableType'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCaseWithExpectedResult'
+        methodName:
+          type: string
+      required:
+        - problemName
+        - problemDescription
+        - files
+        - inputParams
+        - outputType
+        - testcases
+        - methodName
+    CreateProblemResponse:
+      title: CreateProblemResponse
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - success
+            value:
+              $ref: '#/components/schemas/ProblemId'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - error
+            value:
+              $ref: '#/components/schemas/CreateProblemError'
+          required:
+            - type
+    UpdateProblemResponse:
+      title: UpdateProblemResponse
+      type: object
+      properties:
+        problemVersion:
+          type: integer
+      required:
+        - problemVersion
+    CreateProblemError:
+      title: CreateProblemError
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                _type:
+                  type: string
+                  enum:
+                    - generic
+            - $ref: '#/components/schemas/GenericCreateProblemError'
+          required:
+            - _type
+    GenericCreateProblemError:
+      title: GenericCreateProblemError
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          type: string
+        stacktrace:
+          type: string
+      required:
+        - message
+        - type
+        - stacktrace
+    GetDefaultStarterFilesResponse:
+      title: GetDefaultStarterFilesResponse
+      type: object
+      properties:
+        files:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ProblemFiles'
+      required:
+        - files
+    SubmissionId:
+      title: SubmissionId
+      type: string
+      format: uuid
+    ShareId:
+      title: ShareId
+      type: string
+    SubmissionRequest:
+      title: SubmissionRequest
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - initializeProblemRequest
+            - $ref: '#/components/schemas/InitializeProblemRequest'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - initializeWorkspaceRequest
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - submitV2
+            - $ref: '#/components/schemas/SubmitRequestV2'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - workspaceSubmit
+            - $ref: '#/components/schemas/WorkspaceSubmitRequest'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - stop
+            - $ref: '#/components/schemas/StopRequest'
+          required:
+            - type
+    InitializeProblemRequest:
+      title: InitializeProblemRequest
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemVersion:
+          type: integer
+          nullable: true
+      required:
+        - problemId
+    SubmitRequestV2:
+      title: SubmitRequestV2
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        language:
+          $ref: '#/components/schemas/Language'
+        submissionFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmissionFileInfo'
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemVersion:
+          type: integer
+          nullable: true
+        userId:
+          type: string
+          nullable: true
+      required:
+        - submissionId
+        - language
+        - submissionFiles
+        - problemId
+    WorkspaceSubmitRequest:
+      title: WorkspaceSubmitRequest
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        language:
+          $ref: '#/components/schemas/Language'
+        submissionFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmissionFileInfo'
+        userId:
+          type: string
+          nullable: true
+      required:
+        - submissionId
+        - language
+        - submissionFiles
+    SubmissionFileInfo:
+      title: SubmissionFileInfo
+      type: object
+      properties:
+        directory:
+          type: string
+        filename:
+          type: string
+        contents:
+          type: string
+      required:
+        - directory
+        - filename
+        - contents
+    SubmissionTypeEnum:
+      title: SubmissionTypeEnum
+      type: string
+      enum:
+        - TEST
+      description: Keep in sync with SubmissionType.
+    StopRequest:
+      title: StopRequest
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - submissionId
+    SubmissionResponse:
+      title: SubmissionResponse
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - serverInitialized
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - problemInitialized
+            value:
+              $ref: '#/components/schemas/ProblemId'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - workspaceInitialized
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - serverErrored
+            - $ref: '#/components/schemas/ExceptionInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - codeExecutionUpdate
+            value:
+              $ref: '#/components/schemas/CodeExecutionUpdate'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - terminated
+            - $ref: '#/components/schemas/TerminatedResponse'
+          required:
+            - type
+    CodeExecutionUpdate:
+      title: CodeExecutionUpdate
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - buildingExecutor
+            - $ref: '#/components/schemas/BuildingExecutorResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - running
+            - $ref: '#/components/schemas/RunningResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - errored
+            - $ref: '#/components/schemas/ErroredResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - stopped
+            - $ref: '#/components/schemas/StoppedResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - graded
+            - $ref: '#/components/schemas/GradedResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - gradedV2
+            - $ref: '#/components/schemas/GradedResponseV2'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - workspaceRan
+            - $ref: '#/components/schemas/WorkspaceRanResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - recording
+            - $ref: '#/components/schemas/RecordingResponseNotification'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - recorded
+            - $ref: '#/components/schemas/RecordedResponseNotification'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - invalidRequest
+            - $ref: '#/components/schemas/InvalidRequestResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - finished
+            - $ref: '#/components/schemas/FinishedResponse'
+          required:
+            - type
+    BuildingExecutorResponse:
+      title: BuildingExecutorResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        status:
+          $ref: '#/components/schemas/ExecutionSessionStatus'
+      required:
+        - submissionId
+        - status
+    RunningResponse:
+      title: RunningResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        state:
+          $ref: '#/components/schemas/RunningSubmissionState'
+      required:
+        - submissionId
+        - state
+    RunningSubmissionState:
+      title: RunningSubmissionState
+      type: string
+      enum:
+        - QUEUEING_SUBMISSION
+        - KILLING_HISTORICAL_SUBMISSIONS
+        - WRITING_SUBMISSION_TO_FILE
+        - COMPILING_SUBMISSION
+        - RUNNING_SUBMISSION
+    ErroredResponse:
+      title: ErroredResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        errorInfo:
+          $ref: '#/components/schemas/ErrorInfo'
+      required:
+        - submissionId
+        - errorInfo
+    ErrorInfo:
+      title: ErrorInfo
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - compileError
+            - $ref: '#/components/schemas/CompileError'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - runtimeError
+            - $ref: '#/components/schemas/RuntimeError'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - internalError
+            - $ref: '#/components/schemas/InternalError'
+          required:
+            - type
+    CompileError:
+      title: CompileError
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    RuntimeError:
+      title: RuntimeError
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    InternalError:
+      title: InternalError
+      type: object
+      properties:
+        exceptionInfo:
+          $ref: '#/components/schemas/ExceptionInfo'
+      required:
+        - exceptionInfo
+    StoppedResponse:
+      title: StoppedResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - submissionId
+    WorkspaceRanResponse:
+      title: WorkspaceRanResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        runDetails:
+          $ref: '#/components/schemas/WorkspaceRunDetails'
+      required:
+        - submissionId
+        - runDetails
+    WorkspaceRunDetails:
+      title: WorkspaceRunDetails
+      type: object
+      properties:
+        exceptionV2:
+          $ref: '#/components/schemas/ExceptionV2'
+          nullable: true
+        exception:
+          $ref: '#/components/schemas/ExceptionInfo'
+          nullable: true
+        stdout:
+          type: string
+      required:
+        - stdout
+    GradedResponse:
+      title: GradedResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        testCases:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestCaseResultWithStdout'
+      required:
+        - submissionId
+        - testCases
+    GradedResponseV2:
+      title: GradedResponseV2
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        testCases:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestCaseGrade'
+      required:
+        - submissionId
+        - testCases
+    TestCaseGrade:
+      title: TestCaseGrade
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - hidden
+            - $ref: '#/components/schemas/TestCaseHiddenGrade'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - nonHidden
+            - $ref: '#/components/schemas/TestCaseNonHiddenGrade'
+          required:
+            - type
+    TestCaseHiddenGrade:
+      title: TestCaseHiddenGrade
+      type: object
+      properties:
+        passed:
+          type: boolean
+      required:
+        - passed
+    TestCaseNonHiddenGrade:
+      title: TestCaseNonHiddenGrade
+      type: object
+      properties:
+        passed:
+          type: boolean
+        actualResult:
+          $ref: '#/components/schemas/VariableValue'
+          nullable: true
+        exception:
+          $ref: '#/components/schemas/ExceptionV2'
+          nullable: true
+        stdout:
+          type: string
+      required:
+        - passed
+        - stdout
+    RecordedResponseNotification:
+      title: RecordedResponseNotification
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        traceResponsesSize:
+          type: integer
+        testCaseId:
+          type: string
+          nullable: true
+      required:
+        - submissionId
+        - traceResponsesSize
+    RecordingResponseNotification:
+      title: RecordingResponseNotification
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        testCaseId:
+          type: string
+          nullable: true
+        lineNumber:
+          type: integer
+        lightweightStackInfo:
+          $ref: '#/components/schemas/LightweightStackframeInformation'
+        tracedFile:
+          $ref: '#/components/schemas/TracedFile'
+          nullable: true
+      required:
+        - submissionId
+        - lineNumber
+        - lightweightStackInfo
+    LightweightStackframeInformation:
+      title: LightweightStackframeInformation
+      type: object
+      properties:
+        numStackFrames:
+          type: integer
+        topStackFrameMethodName:
+          type: string
+      required:
+        - numStackFrames
+        - topStackFrameMethodName
+    TestCaseResultWithStdout:
+      title: TestCaseResultWithStdout
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/TestCaseResult'
+        stdout:
+          type: string
+      required:
+        - result
+        - stdout
+    TestCaseResult:
+      title: TestCaseResult
+      type: object
+      properties:
+        expectedResult:
+          $ref: '#/components/schemas/VariableValue'
+        actualResult:
+          $ref: '#/components/schemas/ActualResult'
+        passed:
+          type: boolean
+      required:
+        - expectedResult
+        - actualResult
+        - passed
+    ActualResult:
+      title: ActualResult
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - value
+            value:
+              $ref: '#/components/schemas/VariableValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - exception
+            - $ref: '#/components/schemas/ExceptionInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - exceptionV2
+            value:
+              $ref: '#/components/schemas/ExceptionV2'
+          required:
+            - type
+    ExceptionV2:
+      title: ExceptionV2
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - generic
+            - $ref: '#/components/schemas/ExceptionInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - timeout
+          required:
+            - type
+    ExceptionInfo:
+      title: ExceptionInfo
+      type: object
+      properties:
+        exceptionType:
+          type: string
+        exceptionMessage:
+          type: string
+        exceptionStacktrace:
+          type: string
+      required:
+        - exceptionType
+        - exceptionMessage
+        - exceptionStacktrace
+    InvalidRequestResponse:
+      title: InvalidRequestResponse
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/SubmissionRequest'
+        cause:
+          $ref: '#/components/schemas/InvalidRequestCause'
+      required:
+        - request
+        - cause
+    InvalidRequestCause:
+      title: InvalidRequestCause
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - submissionIdNotFound
+            - $ref: '#/components/schemas/SubmissionIdNotFound'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - customTestCasesUnsupported
+            - $ref: '#/components/schemas/CustomTestCasesUnsupported'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - unexpectedLanguage
+            - $ref: '#/components/schemas/UnexpectedLanguageError'
+          required:
+            - type
+    ExistingSubmissionExecuting:
+      title: ExistingSubmissionExecuting
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - submissionId
+    SubmissionIdNotFound:
+      title: SubmissionIdNotFound
+      type: object
+      properties:
+        missingSubmissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - missingSubmissionId
+    CustomTestCasesUnsupported:
+      title: CustomTestCasesUnsupported
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - problemId
+        - submissionId
+    UnexpectedLanguageError:
+      title: UnexpectedLanguageError
+      type: object
+      properties:
+        expectedLanguage:
+          $ref: '#/components/schemas/Language'
+        actualLanguage:
+          $ref: '#/components/schemas/Language'
+      required:
+        - expectedLanguage
+        - actualLanguage
+    TerminatedResponse:
+      title: TerminatedResponse
+      type: object
+      properties: {}
+    FinishedResponse:
+      title: FinishedResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+      required:
+        - submissionId
+    StdoutResponse:
+      title: StdoutResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        stdout:
+          type: string
+      required:
+        - submissionId
+        - stdout
+    StderrResponse:
+      title: StderrResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        stderr:
+          type: string
+      required:
+        - submissionId
+        - stderr
+    TraceResponse:
+      title: TraceResponse
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        lineNumber:
+          type: integer
+        returnValue:
+          $ref: '#/components/schemas/DebugVariableValue'
+          nullable: true
+        expressionLocation:
+          $ref: '#/components/schemas/ExpressionLocation'
+          nullable: true
+        stack:
+          $ref: '#/components/schemas/StackInformation'
+        stdout:
+          type: string
+          nullable: true
+      required:
+        - submissionId
+        - lineNumber
+        - stack
+    TraceResponseV2:
+      title: TraceResponseV2
+      type: object
+      properties:
+        submissionId:
+          $ref: '#/components/schemas/SubmissionId'
+        lineNumber:
+          type: integer
+        file:
+          $ref: '#/components/schemas/TracedFile'
+        returnValue:
+          $ref: '#/components/schemas/DebugVariableValue'
+          nullable: true
+        expressionLocation:
+          $ref: '#/components/schemas/ExpressionLocation'
+          nullable: true
+        stack:
+          $ref: '#/components/schemas/StackInformation'
+        stdout:
+          type: string
+          nullable: true
+      required:
+        - submissionId
+        - lineNumber
+        - file
+        - stack
+    TracedFile:
+      title: TracedFile
+      type: object
+      properties:
+        filename:
+          type: string
+        directory:
+          type: string
+      required:
+        - filename
+        - directory
+    ExpressionLocation:
+      title: ExpressionLocation
+      type: object
+      properties:
+        start:
+          type: integer
+        offset:
+          type: integer
+      required:
+        - start
+        - offset
+    StackInformation:
+      title: StackInformation
+      type: object
+      properties:
+        numStackFrames:
+          type: integer
+        topStackFrame:
+          $ref: '#/components/schemas/StackFrame'
+          nullable: true
+      required:
+        - numStackFrames
+    StackFrame:
+      title: StackFrame
+      type: object
+      properties:
+        methodName:
+          type: string
+        lineNumber:
+          type: integer
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scope'
+      required:
+        - methodName
+        - lineNumber
+        - scopes
+    Scope:
+      title: Scope
+      type: object
+      properties:
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DebugVariableValue'
+      required:
+        - variables
+    ExecutionSessionResponse:
+      title: ExecutionSessionResponse
+      type: object
+      properties:
+        sessionId:
+          type: string
+        executionSessionUrl:
+          type: string
+          nullable: true
+        language:
+          $ref: '#/components/schemas/Language'
+        status:
+          $ref: '#/components/schemas/ExecutionSessionStatus'
+      required:
+        - sessionId
+        - language
+        - status
+    ExecutionSessionStatus:
+      title: ExecutionSessionStatus
+      type: string
+      enum:
+        - CREATING_CONTAINER
+        - PROVISIONING_CONTAINER
+        - PENDING_CONTAINER
+        - RUNNING_CONTAINER
+        - LIVE_CONTAINER
+        - FAILED_TO_LAUNCH
+    SubmissionStatusV2:
+      title: SubmissionStatusV2
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - test
+            - $ref: '#/components/schemas/TestSubmissionStatusV2'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - workspace
+            - $ref: '#/components/schemas/WorkspaceSubmissionStatusV2'
+          required:
+            - type
+    TestSubmissionStatusV2:
+      title: TestSubmissionStatusV2
+      type: object
+      properties:
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSubmissionUpdate'
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemVersion:
+          type: integer
+        problemInfo:
+          $ref: '#/components/schemas/v2ProblemInfoV2'
+      required:
+        - updates
+        - problemId
+        - problemVersion
+        - problemInfo
+    WorkspaceSubmissionStatusV2:
+      title: WorkspaceSubmissionStatusV2
+      type: object
+      properties:
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkspaceSubmissionUpdate'
+      required:
+        - updates
+    TestSubmissionUpdate:
+      title: TestSubmissionUpdate
+      type: object
+      properties:
+        updateTime:
+          type: string
+          format: date-time
+        updateInfo:
+          $ref: '#/components/schemas/TestSubmissionUpdateInfo'
+      required:
+        - updateTime
+        - updateInfo
+    TestSubmissionUpdateInfo:
+      title: TestSubmissionUpdateInfo
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - running
+            value:
+              $ref: '#/components/schemas/RunningSubmissionState'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stopped
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - errored
+            value:
+              $ref: '#/components/schemas/ErrorInfo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - gradedTestCase
+            - $ref: '#/components/schemas/GradedTestCaseUpdate'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - recordedTestCase
+            - $ref: '#/components/schemas/RecordedTestCaseUpdate'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - finished
+          required:
+            - type
+    WorkspaceSubmissionUpdate:
+      title: WorkspaceSubmissionUpdate
+      type: object
+      properties:
+        updateTime:
+          type: string
+          format: date-time
+        updateInfo:
+          $ref: '#/components/schemas/WorkspaceSubmissionUpdateInfo'
+      required:
+        - updateTime
+        - updateInfo
+    WorkspaceSubmissionUpdateInfo:
+      title: WorkspaceSubmissionUpdateInfo
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - running
+            value:
+              $ref: '#/components/schemas/RunningSubmissionState'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - ran
+            - $ref: '#/components/schemas/WorkspaceRunDetails'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stopped
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - traced
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - tracedV2
+            - $ref: '#/components/schemas/WorkspaceTracedUpdate'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - errored
+            value:
+              $ref: '#/components/schemas/ErrorInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - finished
+          required:
+            - type
+    GradedTestCaseUpdate:
+      title: GradedTestCaseUpdate
+      type: object
+      properties:
+        testCaseId:
+          $ref: '#/components/schemas/v2TestCaseId'
+        grade:
+          $ref: '#/components/schemas/TestCaseGrade'
+      required:
+        - testCaseId
+        - grade
+    RecordedTestCaseUpdate:
+      title: RecordedTestCaseUpdate
+      type: object
+      properties:
+        testCaseId:
+          $ref: '#/components/schemas/v2TestCaseId'
+        traceResponsesSize:
+          type: integer
+      required:
+        - testCaseId
+        - traceResponsesSize
+    WorkspaceTracedUpdate:
+      title: WorkspaceTracedUpdate
+      type: object
+      properties:
+        traceResponsesSize:
+          type: integer
+      required:
+        - traceResponsesSize
+    SubmissionTypeState:
+      title: SubmissionTypeState
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - test
+            - $ref: '#/components/schemas/TestSubmissionState'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - workspace
+            - $ref: '#/components/schemas/WorkspaceSubmissionState'
+          required:
+            - type
+    WorkspaceSubmissionState:
+      title: WorkspaceSubmissionState
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/WorkspaceSubmissionStatus'
+      required:
+        - status
+    WorkspaceSubmissionStatus:
+      title: WorkspaceSubmissionStatus
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stopped
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - errored
+            value:
+              $ref: '#/components/schemas/ErrorInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - running
+            value:
+              $ref: '#/components/schemas/RunningSubmissionState'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - ran
+            - $ref: '#/components/schemas/WorkspaceRunDetails'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - traced
+            - $ref: '#/components/schemas/WorkspaceRunDetails'
+          required:
+            - type
+    TestSubmissionState:
+      title: TestSubmissionState
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        defaultTestCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        customTestCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        status:
+          $ref: '#/components/schemas/TestSubmissionStatus'
+      required:
+        - problemId
+        - defaultTestCases
+        - customTestCases
+        - status
+    TestSubmissionStatus:
+      title: TestSubmissionStatus
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - stopped
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - errored
+            value:
+              $ref: '#/components/schemas/ErrorInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - running
+            value:
+              $ref: '#/components/schemas/RunningSubmissionState'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - testCaseIdToState
+            value:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/SubmissionStatusForTestCase'
+          required:
+            - type
+    SubmissionStatusForTestCase:
+      title: SubmissionStatusForTestCase
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - graded
+            - $ref: '#/components/schemas/TestCaseResultWithStdout'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - gradedV2
+            value:
+              $ref: '#/components/schemas/TestCaseGrade'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - traced
+            - $ref: '#/components/schemas/TracedTestCase'
+          required:
+            - type
+    TracedTestCase:
+      title: TracedTestCase
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/TestCaseResultWithStdout'
+        traceResponsesSize:
+          type: integer
+      required:
+        - result
+        - traceResponsesSize
+    TraceResponsesPage:
+      title: TraceResponsesPage
+      type: object
+      properties:
+        offset:
+          type: integer
+          nullable: true
+          description: |-
+            If present, use this to load subsequent pages.
+            The offset is the id of the next trace response to load.
+        traceResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceResponse'
+      required:
+        - traceResponses
+    TraceResponsesPageV2:
+      title: TraceResponsesPageV2
+      type: object
+      properties:
+        offset:
+          type: integer
+          nullable: true
+          description: |-
+            If present, use this to load subsequent pages.
+            The offset is the id of the next trace response to load.
+        traceResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraceResponseV2'
+      required:
+        - traceResponses
+    GetTraceResponsesPageRequest:
+      title: GetTraceResponsesPageRequest
+      type: object
+      properties:
+        offset:
+          type: integer
+          nullable: true
+    WorkspaceStarterFilesResponse:
+      title: WorkspaceStarterFilesResponse
+      type: object
+      properties:
+        files:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WorkspaceFiles'
+      required:
+        - files
+    WorkspaceStarterFilesResponseV2:
+      title: WorkspaceStarterFilesResponseV2
+      type: object
+      properties:
+        filesByLanguage:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2Files'
+      required:
+        - filesByLanguage
+    WorkspaceFiles:
+      title: WorkspaceFiles
+      type: object
+      properties:
+        mainFile:
+          $ref: '#/components/schemas/FileInfo'
+        readOnlyFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileInfo'
+      required:
+        - mainFile
+        - readOnlyFiles
+    ExecutionSessionState:
+      title: ExecutionSessionState
+      type: object
+      properties:
+        lastTimeContacted:
+          type: string
+          nullable: true
+        sessionId:
+          type: string
+          description: The auto-generated session id. Formatted as a uuid.
+        isWarmInstance:
+          type: boolean
+        awsTaskId:
+          type: string
+          nullable: true
+        language:
+          $ref: '#/components/schemas/Language'
+        status:
+          $ref: '#/components/schemas/ExecutionSessionStatus'
+      required:
+        - sessionId
+        - isWarmInstance
+        - language
+        - status
+    GetExecutionSessionStateResponse:
+      title: GetExecutionSessionStateResponse
+      type: object
+      properties:
+        states:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExecutionSessionState'
+        numWarmingInstances:
+          type: integer
+          nullable: true
+        warmingSessionIds:
+          type: array
+          items:
+            type: string
+      required:
+        - states
+        - warmingSessionIds
+    GetSubmissionStateResponse:
+      title: GetSubmissionStateResponse
+      type: object
+      properties:
+        timeSubmitted:
+          type: string
+          format: date-time
+          nullable: true
+        submission:
+          type: string
+        language:
+          $ref: '#/components/schemas/Language'
+        submissionTypeState:
+          $ref: '#/components/schemas/SubmissionTypeState'
+      required:
+        - submission
+        - language
+        - submissionTypeState
+    v2TestCaseTemplateId:
+      title: v2TestCaseTemplateId
+      type: string
+    v2TestCaseId:
+      title: v2TestCaseId
+      type: string
+    v2ParameterId:
+      title: v2ParameterId
+      type: string
+    v2ProblemInfoV2:
+      title: v2ProblemInfoV2
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        problemName:
+          type: string
+        problemVersion:
+          type: integer
+        supportedLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+        customFiles:
+          $ref: '#/components/schemas/v2CustomFiles'
+        generatedFiles:
+          $ref: '#/components/schemas/v2GeneratedFiles'
+        customTestCaseTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TestCaseTemplate'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TestCaseV2'
+        isPublic:
+          type: boolean
+      required:
+        - problemId
+        - problemDescription
+        - problemName
+        - problemVersion
+        - supportedLanguages
+        - customFiles
+        - generatedFiles
+        - customTestCaseTemplates
+        - testcases
+        - isPublic
+    v2LightweightProblemInfoV2:
+      title: v2LightweightProblemInfoV2
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemName:
+          type: string
+        problemVersion:
+          type: integer
+        variableTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableType'
+      required:
+        - problemId
+        - problemName
+        - problemVersion
+        - variableTypes
+    v2CreateProblemRequestV2:
+      title: v2CreateProblemRequestV2
+      type: object
+      properties:
+        problemName:
+          type: string
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        customFiles:
+          $ref: '#/components/schemas/v2CustomFiles'
+        customTestCaseTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TestCaseTemplate'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TestCaseV2'
+        supportedLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+        isPublic:
+          type: boolean
+      required:
+        - problemName
+        - problemDescription
+        - customFiles
+        - customTestCaseTemplates
+        - testcases
+        - supportedLanguages
+        - isPublic
+    v2TestCaseV2:
+      title: v2TestCaseV2
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/v2TestCaseMetadata'
+        implementation:
+          $ref: '#/components/schemas/v2TestCaseImplementationReference'
+        arguments:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableValue'
+        expects:
+          $ref: '#/components/schemas/v2TestCaseExpects'
+          nullable: true
+      required:
+        - metadata
+        - implementation
+        - arguments
+    v2TestCaseExpects:
+      title: v2TestCaseExpects
+      type: object
+      properties:
+        expectedStdout:
+          type: string
+          nullable: true
+    v2TestCaseImplementationReference:
+      title: v2TestCaseImplementationReference
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - templateId
+            value:
+              $ref: '#/components/schemas/v2TestCaseTemplateId'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - implementation
+            - $ref: '#/components/schemas/v2TestCaseImplementation'
+          required:
+            - type
+    v2BasicTestCaseTemplate:
+      title: v2BasicTestCaseTemplate
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/v2TestCaseTemplateId'
+        name:
+          type: string
+        description:
+          $ref: '#/components/schemas/v2TestCaseImplementationDescription'
+        expectedValueParameterId:
+          $ref: '#/components/schemas/v2ParameterId'
+      required:
+        - templateId
+        - name
+        - description
+        - expectedValueParameterId
+    v2TestCaseTemplate:
+      title: v2TestCaseTemplate
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/v2TestCaseTemplateId'
+        name:
+          type: string
+        implementation:
+          $ref: '#/components/schemas/v2TestCaseImplementation'
+      required:
+        - templateId
+        - name
+        - implementation
+    v2TestCaseImplementation:
+      title: v2TestCaseImplementation
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/v2TestCaseImplementationDescription'
+        function:
+          $ref: '#/components/schemas/v2TestCaseFunction'
+      required:
+        - description
+        - function
+    v2TestCaseFunction:
+      title: v2TestCaseFunction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - withActualResult
+            - $ref: '#/components/schemas/v2TestCaseWithActualResultImplementation'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - custom
+            - $ref: '#/components/schemas/v2VoidFunctionDefinition'
+          required:
+            - type
+    v2TestCaseWithActualResultImplementation:
+      title: v2TestCaseWithActualResultImplementation
+      type: object
+      properties:
+        getActualResult:
+          $ref: '#/components/schemas/v2NonVoidFunctionDefinition'
+        assertCorrectnessCheck:
+          $ref: '#/components/schemas/v2AssertCorrectnessCheck'
+      required:
+        - getActualResult
+        - assertCorrectnessCheck
+    v2VoidFunctionDefinition:
+      title: v2VoidFunctionDefinition
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Parameter'
+        code:
+          $ref: '#/components/schemas/v2FunctionImplementationForMultipleLanguages'
+      required:
+        - parameters
+        - code
+    v2Parameter:
+      title: v2Parameter
+      type: object
+      properties:
+        parameterId:
+          $ref: '#/components/schemas/v2ParameterId'
+        name:
+          type: string
+        variableType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameterId
+        - name
+        - variableType
+    v2NonVoidFunctionDefinition:
+      title: v2NonVoidFunctionDefinition
+      type: object
+      properties:
+        signature:
+          $ref: '#/components/schemas/v2NonVoidFunctionSignature'
+        code:
+          $ref: '#/components/schemas/v2FunctionImplementationForMultipleLanguages'
+      required:
+        - signature
+        - code
+    v2VoidFunctionSignature:
+      title: v2VoidFunctionSignature
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Parameter'
+      required:
+        - parameters
+    v2NonVoidFunctionSignature:
+      title: v2NonVoidFunctionSignature
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Parameter'
+        returnType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameters
+        - returnType
+    v2VoidFunctionSignatureThatTakesActualResult:
+      title: v2VoidFunctionSignatureThatTakesActualResult
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Parameter'
+        actualResultType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameters
+        - actualResultType
+    v2AssertCorrectnessCheck:
+      title: v2AssertCorrectnessCheck
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - deepEquality
+            - $ref: '#/components/schemas/v2DeepEqualityCorrectnessCheck'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - custom
+            - $ref: >-
+                #/components/schemas/v2VoidFunctionDefinitionThatTakesActualResult
+          required:
+            - type
+    v2DeepEqualityCorrectnessCheck:
+      title: v2DeepEqualityCorrectnessCheck
+      type: object
+      properties:
+        expectedValueParameterId:
+          $ref: '#/components/schemas/v2ParameterId'
+      required:
+        - expectedValueParameterId
+    v2VoidFunctionDefinitionThatTakesActualResult:
+      title: v2VoidFunctionDefinitionThatTakesActualResult
+      type: object
+      description: The generated signature will include an additional param, actualResult
+      properties:
+        additionalParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2Parameter'
+        code:
+          $ref: '#/components/schemas/v2FunctionImplementationForMultipleLanguages'
+      required:
+        - additionalParameters
+        - code
+    v2TestCaseImplementationDescription:
+      title: v2TestCaseImplementationDescription
+      type: object
+      properties:
+        boards:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TestCaseImplementationDescriptionBoard'
+      required:
+        - boards
+    v2TestCaseImplementationDescriptionBoard:
+      title: v2TestCaseImplementationDescriptionBoard
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - html
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - paramId
+            value:
+              $ref: '#/components/schemas/v2ParameterId'
+          required:
+            - type
+    v2TestCaseMetadata:
+      title: v2TestCaseMetadata
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/v2TestCaseId'
+        name:
+          type: string
+        hidden:
+          type: boolean
+      required:
+        - id
+        - name
+        - hidden
+    v2FunctionImplementationForMultipleLanguages:
+      title: v2FunctionImplementationForMultipleLanguages
+      type: object
+      properties:
+        codeByLanguage:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2FunctionImplementation'
+      required:
+        - codeByLanguage
+    v2FunctionImplementation:
+      title: v2FunctionImplementation
+      type: object
+      properties:
+        impl:
+          type: string
+        imports:
+          type: string
+          nullable: true
+      required:
+        - impl
+    v2GeneratedFiles:
+      title: v2GeneratedFiles
+      type: object
+      properties:
+        generatedTestCaseFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2Files'
+        generatedTemplateFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2Files'
+        other:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2Files'
+      required:
+        - generatedTestCaseFiles
+        - generatedTemplateFiles
+        - other
+    v2CustomFiles:
+      title: v2CustomFiles
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - basic
+            - $ref: '#/components/schemas/v2BasicCustomFiles'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - custom
+            value:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/v2Files'
+          required:
+            - type
+    v2BasicCustomFiles:
+      title: v2BasicCustomFiles
+      type: object
+      properties:
+        methodName:
+          type: string
+        signature:
+          $ref: '#/components/schemas/v2NonVoidFunctionSignature'
+        additionalFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2Files'
+        basicTestCaseTemplate:
+          $ref: '#/components/schemas/v2BasicTestCaseTemplate'
+      required:
+        - methodName
+        - signature
+        - additionalFiles
+        - basicTestCaseTemplate
+    v2Files:
+      title: v2Files
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2FileInfoV2'
+      required:
+        - files
+    v2FileInfoV2:
+      title: v2FileInfoV2
+      type: object
+      properties:
+        filename:
+          type: string
+        directory:
+          type: string
+        contents:
+          type: string
+        editable:
+          type: boolean
+      required:
+        - filename
+        - directory
+        - contents
+        - editable
+    v2DefaultProvidedFile:
+      title: v2DefaultProvidedFile
+      type: object
+      properties:
+        file:
+          $ref: '#/components/schemas/v2FileInfoV2'
+        relatedTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableType'
+      required:
+        - file
+        - relatedTypes
+    v2FunctionSignature:
+      title: v2FunctionSignature
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - void
+            - $ref: '#/components/schemas/v2VoidFunctionSignature'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - nonVoid
+            - $ref: '#/components/schemas/v2NonVoidFunctionSignature'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - voidThatTakesActualResult
+            - $ref: >-
+                #/components/schemas/v2VoidFunctionSignatureThatTakesActualResult
+          required:
+            - type
+    v2GetFunctionSignatureRequest:
+      title: v2GetFunctionSignatureRequest
+      type: object
+      properties:
+        functionSignature:
+          $ref: '#/components/schemas/v2FunctionSignature'
+      required:
+        - functionSignature
+    v2GetFunctionSignatureResponse:
+      title: v2GetFunctionSignatureResponse
+      type: object
+      properties:
+        functionByLanguage:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - functionByLanguage
+    v2GetBasicSolutionFileRequest:
+      title: v2GetBasicSolutionFileRequest
+      type: object
+      properties:
+        methodName:
+          type: string
+        signature:
+          $ref: '#/components/schemas/v2NonVoidFunctionSignature'
+      required:
+        - methodName
+        - signature
+    v2GetBasicSolutionFileResponse:
+      title: v2GetBasicSolutionFileResponse
+      type: object
+      properties:
+        solutionFileByLanguage:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2FileInfoV2'
+      required:
+        - solutionFileByLanguage
+    v2GetGeneratedTestCaseFileRequest:
+      title: v2GetGeneratedTestCaseFileRequest
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/v2TestCaseTemplate'
+          nullable: true
+        testCase:
+          $ref: '#/components/schemas/v2TestCaseV2'
+      required:
+        - testCase
+    v2GetGeneratedTestCaseTemplateFileRequest:
+      title: v2GetGeneratedTestCaseTemplateFileRequest
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/v2TestCaseTemplate'
+      required:
+        - template
+    v2v3TestCaseTemplateId:
+      title: v2v3TestCaseTemplateId
+      type: string
+    v2v3TestCaseId:
+      title: v2v3TestCaseId
+      type: string
+    v2v3ParameterId:
+      title: v2v3ParameterId
+      type: string
+    v2v3ProblemInfoV2:
+      title: v2v3ProblemInfoV2
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        problemName:
+          type: string
+        problemVersion:
+          type: integer
+        supportedLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+        customFiles:
+          $ref: '#/components/schemas/v2v3CustomFiles'
+        generatedFiles:
+          $ref: '#/components/schemas/v2v3GeneratedFiles'
+        customTestCaseTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3TestCaseTemplate'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3TestCaseV2'
+        isPublic:
+          type: boolean
+      required:
+        - problemId
+        - problemDescription
+        - problemName
+        - problemVersion
+        - supportedLanguages
+        - customFiles
+        - generatedFiles
+        - customTestCaseTemplates
+        - testcases
+        - isPublic
+    v2v3LightweightProblemInfoV2:
+      title: v2v3LightweightProblemInfoV2
+      type: object
+      properties:
+        problemId:
+          $ref: '#/components/schemas/ProblemId'
+        problemName:
+          type: string
+        problemVersion:
+          type: integer
+        variableTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableType'
+      required:
+        - problemId
+        - problemName
+        - problemVersion
+        - variableTypes
+    v2v3CreateProblemRequestV2:
+      title: v2v3CreateProblemRequestV2
+      type: object
+      properties:
+        problemName:
+          type: string
+        problemDescription:
+          $ref: '#/components/schemas/ProblemDescription'
+        customFiles:
+          $ref: '#/components/schemas/v2v3CustomFiles'
+        customTestCaseTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3TestCaseTemplate'
+        testcases:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3TestCaseV2'
+        supportedLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+        isPublic:
+          type: boolean
+      required:
+        - problemName
+        - problemDescription
+        - customFiles
+        - customTestCaseTemplates
+        - testcases
+        - supportedLanguages
+        - isPublic
+    v2v3TestCaseV2:
+      title: v2v3TestCaseV2
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/v2v3TestCaseMetadata'
+        implementation:
+          $ref: '#/components/schemas/v2v3TestCaseImplementationReference'
+        arguments:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableValue'
+        expects:
+          $ref: '#/components/schemas/v2v3TestCaseExpects'
+          nullable: true
+      required:
+        - metadata
+        - implementation
+        - arguments
+    v2v3TestCaseExpects:
+      title: v2v3TestCaseExpects
+      type: object
+      properties:
+        expectedStdout:
+          type: string
+          nullable: true
+    v2v3TestCaseImplementationReference:
+      title: v2v3TestCaseImplementationReference
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - templateId
+            value:
+              $ref: '#/components/schemas/v2v3TestCaseTemplateId'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - implementation
+            - $ref: '#/components/schemas/v2v3TestCaseImplementation'
+          required:
+            - type
+    v2v3BasicTestCaseTemplate:
+      title: v2v3BasicTestCaseTemplate
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/v2v3TestCaseTemplateId'
+        name:
+          type: string
+        description:
+          $ref: '#/components/schemas/v2v3TestCaseImplementationDescription'
+        expectedValueParameterId:
+          $ref: '#/components/schemas/v2v3ParameterId'
+      required:
+        - templateId
+        - name
+        - description
+        - expectedValueParameterId
+    v2v3TestCaseTemplate:
+      title: v2v3TestCaseTemplate
+      type: object
+      properties:
+        templateId:
+          $ref: '#/components/schemas/v2v3TestCaseTemplateId'
+        name:
+          type: string
+        implementation:
+          $ref: '#/components/schemas/v2v3TestCaseImplementation'
+      required:
+        - templateId
+        - name
+        - implementation
+    v2v3TestCaseImplementation:
+      title: v2v3TestCaseImplementation
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/v2v3TestCaseImplementationDescription'
+        function:
+          $ref: '#/components/schemas/v2v3TestCaseFunction'
+      required:
+        - description
+        - function
+    v2v3TestCaseFunction:
+      title: v2v3TestCaseFunction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - withActualResult
+            - $ref: '#/components/schemas/v2v3TestCaseWithActualResultImplementation'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - custom
+            - $ref: '#/components/schemas/v2v3VoidFunctionDefinition'
+          required:
+            - type
+    v2v3TestCaseWithActualResultImplementation:
+      title: v2v3TestCaseWithActualResultImplementation
+      type: object
+      properties:
+        getActualResult:
+          $ref: '#/components/schemas/v2v3NonVoidFunctionDefinition'
+        assertCorrectnessCheck:
+          $ref: '#/components/schemas/v2v3AssertCorrectnessCheck'
+      required:
+        - getActualResult
+        - assertCorrectnessCheck
+    v2v3VoidFunctionDefinition:
+      title: v2v3VoidFunctionDefinition
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3Parameter'
+        code:
+          $ref: '#/components/schemas/v2v3FunctionImplementationForMultipleLanguages'
+      required:
+        - parameters
+        - code
+    v2v3Parameter:
+      title: v2v3Parameter
+      type: object
+      properties:
+        parameterId:
+          $ref: '#/components/schemas/v2v3ParameterId'
+        name:
+          type: string
+        variableType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameterId
+        - name
+        - variableType
+    v2v3NonVoidFunctionDefinition:
+      title: v2v3NonVoidFunctionDefinition
+      type: object
+      properties:
+        signature:
+          $ref: '#/components/schemas/v2v3NonVoidFunctionSignature'
+        code:
+          $ref: '#/components/schemas/v2v3FunctionImplementationForMultipleLanguages'
+      required:
+        - signature
+        - code
+    v2v3VoidFunctionSignature:
+      title: v2v3VoidFunctionSignature
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3Parameter'
+      required:
+        - parameters
+    v2v3NonVoidFunctionSignature:
+      title: v2v3NonVoidFunctionSignature
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3Parameter'
+        returnType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameters
+        - returnType
+    v2v3VoidFunctionSignatureThatTakesActualResult:
+      title: v2v3VoidFunctionSignatureThatTakesActualResult
+      type: object
+      properties:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3Parameter'
+        actualResultType:
+          $ref: '#/components/schemas/VariableType'
+      required:
+        - parameters
+        - actualResultType
+    v2v3AssertCorrectnessCheck:
+      title: v2v3AssertCorrectnessCheck
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - deepEquality
+            - $ref: '#/components/schemas/v2v3DeepEqualityCorrectnessCheck'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - custom
+            - $ref: >-
+                #/components/schemas/v2v3VoidFunctionDefinitionThatTakesActualResult
+          required:
+            - type
+    v2v3DeepEqualityCorrectnessCheck:
+      title: v2v3DeepEqualityCorrectnessCheck
+      type: object
+      properties:
+        expectedValueParameterId:
+          $ref: '#/components/schemas/v2v3ParameterId'
+      required:
+        - expectedValueParameterId
+    v2v3VoidFunctionDefinitionThatTakesActualResult:
+      title: v2v3VoidFunctionDefinitionThatTakesActualResult
+      type: object
+      description: The generated signature will include an additional param, actualResult
+      properties:
+        additionalParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3Parameter'
+        code:
+          $ref: '#/components/schemas/v2v3FunctionImplementationForMultipleLanguages'
+      required:
+        - additionalParameters
+        - code
+    v2v3TestCaseImplementationDescription:
+      title: v2v3TestCaseImplementationDescription
+      type: object
+      properties:
+        boards:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3TestCaseImplementationDescriptionBoard'
+      required:
+        - boards
+    v2v3TestCaseImplementationDescriptionBoard:
+      title: v2v3TestCaseImplementationDescriptionBoard
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - html
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - paramId
+            value:
+              $ref: '#/components/schemas/v2v3ParameterId'
+          required:
+            - type
+    v2v3TestCaseMetadata:
+      title: v2v3TestCaseMetadata
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/v2v3TestCaseId'
+        name:
+          type: string
+        hidden:
+          type: boolean
+      required:
+        - id
+        - name
+        - hidden
+    v2v3FunctionImplementationForMultipleLanguages:
+      title: v2v3FunctionImplementationForMultipleLanguages
+      type: object
+      properties:
+        codeByLanguage:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3FunctionImplementation'
+      required:
+        - codeByLanguage
+    v2v3FunctionImplementation:
+      title: v2v3FunctionImplementation
+      type: object
+      properties:
+        impl:
+          type: string
+        imports:
+          type: string
+          nullable: true
+      required:
+        - impl
+    v2v3GeneratedFiles:
+      title: v2v3GeneratedFiles
+      type: object
+      properties:
+        generatedTestCaseFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3Files'
+        generatedTemplateFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3Files'
+        other:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3Files'
+      required:
+        - generatedTestCaseFiles
+        - generatedTemplateFiles
+        - other
+    v2v3CustomFiles:
+      title: v2v3CustomFiles
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - basic
+            - $ref: '#/components/schemas/v2v3BasicCustomFiles'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - custom
+            value:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/v2v3Files'
+          required:
+            - type
+    v2v3BasicCustomFiles:
+      title: v2v3BasicCustomFiles
+      type: object
+      properties:
+        methodName:
+          type: string
+        signature:
+          $ref: '#/components/schemas/v2v3NonVoidFunctionSignature'
+        additionalFiles:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3Files'
+        basicTestCaseTemplate:
+          $ref: '#/components/schemas/v2v3BasicTestCaseTemplate'
+      required:
+        - methodName
+        - signature
+        - additionalFiles
+        - basicTestCaseTemplate
+    v2v3Files:
+      title: v2v3Files
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2v3FileInfoV2'
+      required:
+        - files
+    v2v3FileInfoV2:
+      title: v2v3FileInfoV2
+      type: object
+      properties:
+        filename:
+          type: string
+        directory:
+          type: string
+        contents:
+          type: string
+        editable:
+          type: boolean
+      required:
+        - filename
+        - directory
+        - contents
+        - editable
+    v2v3DefaultProvidedFile:
+      title: v2v3DefaultProvidedFile
+      type: object
+      properties:
+        file:
+          $ref: '#/components/schemas/v2v3FileInfoV2'
+        relatedTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableType'
+      required:
+        - file
+        - relatedTypes
+    v2v3FunctionSignature:
+      title: v2v3FunctionSignature
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - void
+            - $ref: '#/components/schemas/v2v3VoidFunctionSignature'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - nonVoid
+            - $ref: '#/components/schemas/v2v3NonVoidFunctionSignature'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - voidThatTakesActualResult
+            - $ref: >-
+                #/components/schemas/v2v3VoidFunctionSignatureThatTakesActualResult
+          required:
+            - type
+    v2v3GetFunctionSignatureRequest:
+      title: v2v3GetFunctionSignatureRequest
+      type: object
+      properties:
+        functionSignature:
+          $ref: '#/components/schemas/v2v3FunctionSignature'
+      required:
+        - functionSignature
+    v2v3GetFunctionSignatureResponse:
+      title: v2v3GetFunctionSignatureResponse
+      type: object
+      properties:
+        functionByLanguage:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - functionByLanguage
+    v2v3GetBasicSolutionFileRequest:
+      title: v2v3GetBasicSolutionFileRequest
+      type: object
+      properties:
+        methodName:
+          type: string
+        signature:
+          $ref: '#/components/schemas/v2v3NonVoidFunctionSignature'
+      required:
+        - methodName
+        - signature
+    v2v3GetBasicSolutionFileResponse:
+      title: v2v3GetBasicSolutionFileResponse
+      type: object
+      properties:
+        solutionFileByLanguage:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v2v3FileInfoV2'
+      required:
+        - solutionFileByLanguage
+    v2v3GetGeneratedTestCaseFileRequest:
+      title: v2v3GetGeneratedTestCaseFileRequest
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/v2v3TestCaseTemplate'
+          nullable: true
+        testCase:
+          $ref: '#/components/schemas/v2v3TestCaseV2'
+      required:
+        - testCase
+    v2v3GetGeneratedTestCaseTemplateFileRequest:
+      title: v2v3GetGeneratedTestCaseTemplateFileRequest
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/v2v3TestCaseTemplate'
+      required:
+        - template
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.trace.come
+    description: Prod

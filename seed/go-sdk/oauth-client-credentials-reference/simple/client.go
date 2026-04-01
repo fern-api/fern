@@ -4,6 +4,7 @@ package simple
 
 import (
 	context "context"
+
 	core "github.com/oauth-client-credentials-reference/fern/core"
 	internal "github.com/oauth-client-credentials-reference/fern/internal"
 	option "github.com/oauth-client-credentials-reference/fern/option"

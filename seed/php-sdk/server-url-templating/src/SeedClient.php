@@ -79,11 +79,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<User>
+     * @return ?array<User>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(?array $options = null): array
+    public function getUsers(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -98,6 +98,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -121,11 +124,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return User
+     * @return ?User
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUser(string $userId, ?array $options = null): User
+    public function getUser(string $userId, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -140,6 +143,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return User::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -163,11 +169,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return TokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(TokenRequest $request, ?array $options = null): TokenResponse
+    public function getToken(TokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -183,6 +189,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {

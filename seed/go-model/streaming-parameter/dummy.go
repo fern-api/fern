@@ -5,6 +5,7 @@ package streaming
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/streaming-parameter/fern/internal"
 )
 

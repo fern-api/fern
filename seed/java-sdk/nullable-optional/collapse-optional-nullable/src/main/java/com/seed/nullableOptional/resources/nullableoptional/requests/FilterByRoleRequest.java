@@ -5,14 +5,13 @@ package com.seed.nullableOptional.resources.nullableoptional.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullableOptional.core.Nullable;
-import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
@@ -44,8 +43,7 @@ public final class FilterByRoleRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("role")
+    @JsonIgnore
     public OptionalNullable<UserRole> getRole() {
         if (role == null) {
             return OptionalNullable.absent();
@@ -53,29 +51,16 @@ public final class FilterByRoleRequest {
         return role;
     }
 
-    @JsonProperty("status")
+    @JsonIgnore
     public Optional<UserStatus> getStatus() {
         return status;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("secondaryRole")
+    @JsonIgnore
     public OptionalNullable<UserRole> getSecondaryRole() {
         if (secondaryRole == null) {
             return OptionalNullable.absent();
         }
-        return secondaryRole;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("role")
-    private OptionalNullable<UserRole> _getRole() {
-        return role;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("secondaryRole")
-    private OptionalNullable<UserRole> _getSecondaryRole() {
         return secondaryRole;
     }
 

@@ -5,6 +5,7 @@ package mixedfiledirectory
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/mixed-file-directory/fern/internal"
 )
 

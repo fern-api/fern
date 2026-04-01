@@ -1,0 +1,33 @@
+openapi: 3.0.1
+info:
+  title: websocket-multi-url
+  version: ''
+paths: {}
+components:
+  schemas:
+    SendEvent:
+      title: SendEvent
+      type: object
+      properties:
+        text:
+          type: string
+        priority:
+          type: integer
+      required:
+        - text
+        - priority
+    ReceiveEvent:
+      title: ReceiveEvent
+      type: object
+      properties:
+        data:
+          type: string
+        timestamp:
+          type: integer
+      required:
+        - data
+        - timestamp
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

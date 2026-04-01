@@ -93,6 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "client_secret",
         "token",
         "_token_getter_override",
+        "async_token",
         "logging",
     }
 
@@ -587,6 +588,25 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         )
                         if add_validation and param.environment_variable is not None
                         else None
+                    ),
+                )
+            )
+
+        # For async clients with bearer auth (non-OAuth), expose an async_token parameter
+        # so users can supply an async token provider that won't block the event loop.
+        if is_async and self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                    type_hint=AST.TypeHint.optional(
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()))
+                    ),
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                    exclude_from_wrapper_construction=True,
+                    docs=(
+                        "An async callable that returns a bearer token. Use this when token acquisition "
+                        "involves async I/O (e.g., refreshing tokens via an async HTTP client). "
+                        "When provided, this is used instead of the synchronous token for async requests."
                     ),
                 )
             )
@@ -1372,6 +1392,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         ),
                     )
                 )
+        elif is_async and self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None:
+            # For non-OAuth async clients with bearer auth, forward the user-supplied async_token
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                    AST.Expression(ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME),
+                )
+            )
 
         httpx_client_kwargs_with_redirects: List[typing.Tuple[str, AST.Expression]] = [
             ("timeout", AST.Expression(f"{timeout_local_variable}")),

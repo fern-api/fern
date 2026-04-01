@@ -1,4 +1,88 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.8.5
+  changelogEntry:
+    - summary: |
+        Upgrade WireMock.Net from 1.25.0 to 2.2.0 in generated test projects.
+        This is a test-only dependency and does not affect the shipped SDK.
+      type: chore
+  createdAt: "2026-04-01"
+  irVersion: 65
+
+- version: 0.8.4
+  changelogEntry:
+    - summary: |
+        Upgrade test infrastructure NuGet packages in generated C# SDK test projects.
+        These are test-only dependencies and do not affect the shipped SDK.
+
+        - Microsoft.NET.Test.Sdk: 17.13.0 → 18.3.0
+        - NUnit: 4.3.2 → 4.5.1
+        - NUnit3TestAdapter: 5.0.0 → 6.2.0
+        - NUnit.Analyzers: 4.6.0 → 4.12.0
+        - coverlet.collector: 6.0.4 → 8.0.1
+        - WireMock.Net: 1.7.4 → 1.25.0
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 0.8.3
+  changelogEntry:
+    - summary: |
+        Upgrade BCL/runtime NuGet package versions in generated C# SDKs.
+        All packages remain within the 9.x line for net8.0 compatibility.
+
+        - Portable.System.DateTimeOnly: 8.0.2 → 9.0.1
+        - System.Text.Json: 8.0.5 → 9.0.9 (legacy TFM conditional)
+        - Microsoft.Extensions.Logging.Abstractions: 8.0.2 → 9.0.13 (WebSocket)
+        - System.Threading.Channels: 8.0.0 → 9.0.13 (WebSocket)
+        - System.Net.ServerSentEvents: 9.0.9 → 9.0.14 (SSE)
+      type: chore
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 0.8.2
+  changelogEntry:
+    - summary: |
+        Replace `Activator.CreateInstance<TConverterType>()` with `new TConverterType()`
+        in `CollectionItemSerializer`. The `new()` generic constraint allows compile-time
+        instantiation, removing the reflection-based call that is not AOT-safe.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 65
+
+- version: 0.8.1
+  changelogEntry:
+    - summary: |
+        Remove the generic `EnumSerializer<T>` template that used reflection
+        (`GetField`, `GetCustomAttributes`) at runtime. All enums already use
+        per-enum generated serializers with static dictionary lookups, so the
+        generic template was dead code. This cleanup removes the last
+        reflection-based enum serialization path, improving NativeAOT and
+        IL-trimming compatibility.
+      type: chore
+  createdAt: "2026-03-24"
+  irVersion: 65
+
+- version: 0.8.0
+  changelogEntry:
+    - summary: |
+        Enforce `global::` prefix on all `System` namespace references in generated code.
+        This prevents CS0118/CS0426 compile errors when customer projects define a type or
+        namespace named `System`.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 0.7.0
+  changelogEntry:
+    - summary: |
+        Conditionally emit System.Text.Json as a PackageReference only when
+        targeting pre-net8.0 TFMs (netstandard2.0, net462). The package is
+        wrapped in an ItemGroup with an MSBuild IsTargetFrameworkCompatible
+        condition so it is skipped for net8.0+ where it ships in-box.
+      type: feat
+  createdAt: "2026-03-20"
+  irVersion: 65
+
 - version: 0.6.1
   changelogEntry:
     - summary: |

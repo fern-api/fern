@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
-    fern "github.com/pagination/fern"
-    context "context"
 )
 
 func do() {
@@ -16,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
+    request := &fern.ListWithGlobalConfigRequest{
+        Offset: fern.Int(
             1,
         ),
     }
-    client.Users.ListWithOptionalData(
+    client.Users.ListWithGlobalConfig(
         context.TODO(),
         request,
     )

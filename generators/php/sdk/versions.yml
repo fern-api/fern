@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.6
+  changelogEntry:
+    - summary: |
+        Support multiple Basic Auth schemes with `AuthSchemesRequirement.Any`.
+        When an API defines more than one basic auth scheme (e.g.,
+        accountId/authToken and apiKey/apiKeySecret), the generated client now
+        produces conditional if/else if blocks that check which credential pair
+        was provided and sets the Authorization header accordingly. Previously,
+        only the first basic auth scheme was used.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 62
+
+- version: 2.2.5
+  changelogEntry:
+    - summary: |
+        Wire Basic Auth credentials into the Authorization header. Previously,
+        the generated client accepted username/password constructor parameters
+        but never set the `Authorization: Basic <base64>` header on outgoing
+        requests. The constructor now encodes the credentials and adds the
+        header automatically.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 62
+
+- version: 2.2.4
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 62
+- version: 2.2.3
+  changelogEntry:
+    - summary: |
+        Fix 204 No Content handling for endpoints with a JSON response type.
+        Previously, endpoints returning an empty body (e.g. 204) would throw a
+        `BrevoException` even on a successful response. Now all JSON response
+        return types are nullable (`?Type`) and the generated code returns `null`
+        instead of throwing when the response body is empty.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 62
+
+- version: 2.2.2
+  changelogEntry:
+    - summary: |
+        Fix JSON deserialization error when API returns an empty response body for
+        endpoints with a declared JSON response type. Previously, a `JsonException:
+        Syntax error` was thrown because the SDK attempted to JSON-decode an empty
+        string. Now the generated code checks for an empty response body before
+        attempting deserialization and returns null gracefully.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 62
+
 - version: 2.2.1
   changelogEntry:
     - summary: |

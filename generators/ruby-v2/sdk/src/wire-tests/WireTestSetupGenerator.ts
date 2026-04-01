@@ -88,7 +88,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");

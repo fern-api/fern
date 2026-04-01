@@ -1,0 +1,726 @@
+openapi: 3.0.1
+info:
+  title: examples
+  version: ''
+paths:
+  /:
+    post:
+      operationId: echo
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /create-type:
+    post:
+      operationId: createType
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Identifier'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Type'
+  /file/notification/{notificationId}:
+    get:
+      operationId: file_notification_service_getException
+      tags:
+        - FileNotificationService
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+      security: &ref_0
+        - BearerAuth: []
+  /file/{filename}:
+    get:
+      description: This endpoint returns a file by its name.
+      operationId: file_service_getFile
+      tags:
+        - FileService
+      parameters:
+        - name: filename
+          in: path
+          description: This is a filename
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security: *ref_0
+  /check/{id}:
+    get:
+      description: This endpoint checks the health of a resource.
+      operationId: health_service_check
+      tags:
+        - HealthService
+      parameters:
+        - name: id
+          in: path
+          description: The id to check
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      security: *ref_0
+  /ping:
+    get:
+      description: This endpoint checks the health of the service.
+      operationId: health_service_ping
+      tags:
+        - HealthService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      security: *ref_0
+  /service/movie/{movieId}:
+    get:
+      operationId: service_getMovie
+      tags:
+        - Service
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/MovieId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+  /service/movie:
+    post:
+      operationId: service_createMovie
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+  /service/metadata:
+    get:
+      operationId: service_getMetadata
+      tags:
+        - Service
+      parameters:
+        - name: shallow
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: tag
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: X-API-Version
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+  /service/big-entity:
+    post:
+      operationId: service_createBigEntity
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BigEntity'
+  /service/refresh-token:
+    post:
+      operationId: service_refreshToken
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+              nullable: true
+components:
+  schemas:
+    Type:
+      title: Type
+      oneOf:
+        - $ref: '#/components/schemas/BasicType'
+        - $ref: '#/components/schemas/ComplexType'
+    Identifier:
+      title: Identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        value:
+          type: string
+        label:
+          type: string
+      required:
+        - type
+        - value
+        - label
+    BasicType:
+      title: BasicType
+      type: string
+      enum:
+        - primitive
+        - literal
+    ComplexType:
+      title: ComplexType
+      type: string
+      enum:
+        - object
+        - union
+        - unknown
+    TypeWithSingleCharPropertyEqualToTypeStartingLetter:
+      title: TypeWithSingleCharPropertyEqualToTypeStartingLetter
+      type: object
+      properties:
+        t:
+          type: string
+        ty:
+          type: string
+      required:
+        - t
+        - ty
+    commonsTag:
+      title: commonsTag
+      type: string
+    commonsMetadata:
+      title: commonsMetadata
+      type: object
+      properties:
+        id:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        jsonString:
+          type: string
+          nullable: true
+      required:
+        - id
+    commonsEventInfo:
+      title: commonsEventInfo
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - metadata
+            - $ref: '#/components/schemas/commonsMetadata'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - tag
+            value:
+              $ref: '#/components/schemas/commonsTag'
+          required:
+            - type
+    commonsData:
+      title: commonsData
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - string
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - base64
+            value:
+              type: string
+              format: byte
+          required:
+            - type
+    fileFilename:
+      title: fileFilename
+      type: string
+    MovieId:
+      title: MovieId
+      type: string
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MovieId'
+        prequel:
+          $ref: '#/components/schemas/MovieId'
+          nullable: true
+        title:
+          type: string
+        from:
+          type: string
+        rating:
+          type: number
+          format: double
+          description: The rating scale is one to five stars
+        type:
+          type: string
+          const: movie
+        tag:
+          $ref: '#/components/schemas/commonsTag'
+        book:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+        revenue:
+          type: integer
+          format: int64
+      required:
+        - id
+        - title
+        - from
+        - rating
+        - type
+        - tag
+        - metadata
+        - revenue
+    CastMember:
+      title: CastMember
+      oneOf:
+        - $ref: '#/components/schemas/Actor'
+        - $ref: '#/components/schemas/Actress'
+        - $ref: '#/components/schemas/StuntDouble'
+    Actor:
+      title: Actor
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+      required:
+        - name
+        - id
+    Actress:
+      title: Actress
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+      required:
+        - name
+        - id
+    StuntDouble:
+      title: StuntDouble
+      type: object
+      properties:
+        name:
+          type: string
+        actorOrActressId:
+          type: string
+      required:
+        - name
+        - actorOrActressId
+    ExtendedMovie:
+      title: ExtendedMovie
+      type: object
+      properties:
+        cast:
+          type: array
+          items:
+            type: string
+      required:
+        - cast
+      allOf:
+        - $ref: '#/components/schemas/Movie'
+    Moment:
+      title: Moment
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: date
+        datetime:
+          type: string
+          format: date-time
+      required:
+        - id
+        - date
+        - datetime
+    File:
+      title: File
+      type: object
+      properties:
+        name:
+          type: string
+        contents:
+          type: string
+      required:
+        - name
+        - contents
+    Directory:
+      title: Directory
+      type: object
+      properties:
+        name:
+          type: string
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+          nullable: true
+        directories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Directory'
+          nullable: true
+      required:
+        - name
+    Node:
+      title: Node
+      type: object
+      properties:
+        name:
+          type: string
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+          nullable: true
+        trees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tree'
+          nullable: true
+      required:
+        - name
+    Tree:
+      title: Tree
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+          nullable: true
+    Metadata:
+      title: Metadata
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - html
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - markdown
+            value:
+              type: string
+          required:
+            - type
+      required:
+        - extra
+        - tags
+      properties:
+        extra:
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+    Exception:
+      title: Exception
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - generic
+            - $ref: '#/components/schemas/ExceptionInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - timeout
+          required:
+            - type
+    ExceptionInfo:
+      title: ExceptionInfo
+      type: object
+      properties:
+        exceptionType:
+          type: string
+        exceptionMessage:
+          type: string
+        exceptionStacktrace:
+          type: string
+      required:
+        - exceptionType
+        - exceptionMessage
+        - exceptionStacktrace
+    MigrationStatus:
+      title: MigrationStatus
+      type: string
+      enum:
+        - RUNNING
+        - FAILED
+        - FINISHED
+    Migration:
+      title: Migration
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/MigrationStatus'
+      required:
+        - name
+        - status
+    Request:
+      title: Request
+      type: object
+      properties:
+        request: {}
+      required:
+        - request
+    Response:
+      title: Response
+      type: object
+      properties:
+        response: {}
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
+      required:
+        - response
+        - identifiers
+    ResponseType:
+      title: ResponseType
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+      required:
+        - type
+    Test:
+      title: Test
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - and
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - or
+            value:
+              type: boolean
+          required:
+            - type
+    Entity:
+      title: Entity
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        name:
+          type: string
+      required:
+        - type
+        - name
+    BigEntity:
+      title: BigEntity
+      type: object
+      properties:
+        castMember:
+          $ref: '#/components/schemas/CastMember'
+          nullable: true
+        extendedMovie:
+          $ref: '#/components/schemas/ExtendedMovie'
+          nullable: true
+        entity:
+          $ref: '#/components/schemas/Entity'
+          nullable: true
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          nullable: true
+        commonMetadata:
+          $ref: '#/components/schemas/commonsMetadata'
+          nullable: true
+        eventInfo:
+          $ref: '#/components/schemas/commonsEventInfo'
+          nullable: true
+        data:
+          $ref: '#/components/schemas/commonsData'
+          nullable: true
+        migration:
+          $ref: '#/components/schemas/Migration'
+          nullable: true
+        exception:
+          $ref: '#/components/schemas/Exception'
+          nullable: true
+        test:
+          $ref: '#/components/schemas/Test'
+          nullable: true
+        node:
+          $ref: '#/components/schemas/Node'
+          nullable: true
+        directory:
+          $ref: '#/components/schemas/Directory'
+          nullable: true
+        moment:
+          $ref: '#/components/schemas/Moment'
+          nullable: true
+    CronJob:
+      title: CronJob
+      type: object
+      properties:
+        expression:
+          type: string
+      required:
+        - expression
+    RefreshTokenRequest:
+      title: RefreshTokenRequest
+      type: object
+      properties:
+        ttl:
+          type: integer
+      required:
+        - ttl
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://production.com/api
+    description: Production
+  - url: https://staging.com/api
+    description: Staging

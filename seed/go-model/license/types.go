@@ -5,6 +5,7 @@ package license
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/license/fern/internal"
 )
 

@@ -1,0 +1,160 @@
+openapi: 3.0.1
+info:
+  title: java-pagination-deep-cursor-path
+  version: ''
+paths:
+  /do-thing:
+    post:
+      operationId: deepCursorPath_do-thing
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/A'
+  /do-thing-required:
+    post:
+      operationId: deepCursorPath_do-thing-required
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MainRequired'
+  /do-thing-inline:
+    post:
+      operationId: deepCursorPath_do-thing-inline
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InlineA'
+components:
+  schemas:
+    D:
+      title: D
+      type: object
+      properties:
+        starting_after:
+          type: string
+          nullable: true
+    C:
+      title: C
+      type: object
+      properties:
+        d:
+          $ref: '#/components/schemas/D'
+          nullable: true
+    B:
+      title: B
+      type: object
+      properties:
+        c:
+          $ref: '#/components/schemas/C'
+      required:
+        - c
+    A:
+      title: A
+      type: object
+      properties:
+        b:
+          $ref: '#/components/schemas/B'
+          nullable: true
+    Response:
+      title: Response
+      type: object
+      properties:
+        starting_after:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            type: string
+      required:
+        - results
+    IndirectionRequired:
+      title: IndirectionRequired
+      type: object
+      properties:
+        starting_after:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            type: string
+      required:
+        - results
+    MainRequired:
+      title: MainRequired
+      type: object
+      properties:
+        indirection:
+          $ref: '#/components/schemas/IndirectionRequired'
+      required:
+        - indirection
+    InlineD:
+      title: InlineD
+      type: object
+      properties:
+        starting_after:
+          type: string
+          nullable: true
+    InlineC:
+      title: InlineC
+      type: object
+      properties:
+        b:
+          $ref: '#/components/schemas/InlineD'
+          nullable: true
+    InlineB:
+      title: InlineB
+      type: object
+      properties:
+        c:
+          $ref: '#/components/schemas/InlineC'
+      required:
+        - c
+    InlineA:
+      title: InlineA
+      type: object
+      properties:
+        b:
+          $ref: '#/components/schemas/InlineB'
+          nullable: true
+  securitySchemes: {}
