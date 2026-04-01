@@ -786,22 +786,51 @@ function buildAuthFailureMessage(
 
     switch (code) {
         case "FORBIDDEN":
-            return (
-                `The domain '${domain}' is already registered to a different organization.\n\n` +
-                "If you own this domain, please reach out to support@buildwithfern.com to transfer it."
-            );
+            return buildForbiddenMessage(domain, organization, message);
         case "UNAUTHORIZED":
-            return (
-                `You are not authorized to publish docs under organization '${organization}'. ` +
-                "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
-            );
+            return buildUnauthorizedMessage(organization, message);
+        case "INTERNAL_SERVER_ERROR":
+            return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
         default:
             if (message != null) {
-                return `Failed to publish docs to '${domain}': ${message}`;
+                return message;
             }
             return `Failed to publish docs to '${domain}'. Please reach out to support@buildwithfern.com for assistance.`;
     }
+}
+
+// FDR overloads FORBIDDEN for domain ownership, org membership, CLI permissions,
+// and entitlement errors. Only org membership needs CLI-specific hints (fern login);
+// all other FDR FORBIDDEN messages are already actionable with billing URLs and
+// admin contact guidance, so we pass them through directly.
+const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
+
+function buildForbiddenMessage(domain: string, organization: string, message: string | undefined): string {
+    if (message == null) {
+        return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
+    }
+
+    if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
+        return (
+            `You are not a member of organization '${organization}'. ` +
+            "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+            "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+        );
+    }
+
+    return message;
+}
+
+function buildUnauthorizedMessage(organization: string, message: string | undefined): string {
+    if (message != null && message.includes("Invalid authorization token")) {
+        return "Your authentication token is invalid or expired. " + "Please run 'fern login' to re-authenticate.";
+    }
+
+    return (
+        `You are not authorized to publish docs under organization '${organization}'. ` +
+        "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+    );
 }
 
 function extractServerError(content: Record<string, unknown> | undefined): {
