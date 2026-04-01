@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.3
+  changelogEntry:
+    - summary: |
+        Upgrade WireMock.Net from 1.25.0 to 2.2.0 in generated test projects.
+        This is a test-only dependency and does not affect the shipped SDK.
+      type: chore
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 2.55.2
   changelogEntry:
     - summary: |
