@@ -5229,6 +5229,7 @@ docs: Real-time transcription
                     "type": "optional<date>",
                   },
                   "limit": {
+                    "default": 10,
                     "docs": "Maximum amount of transcripts to retrieve",
                     "type": "optional<long>",
                   },
@@ -5358,6 +5359,7 @@ service:
         query-parameters:
           limit:
             type: optional<long>
+            default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
             type: optional<ListTranscriptRequestStatus>
