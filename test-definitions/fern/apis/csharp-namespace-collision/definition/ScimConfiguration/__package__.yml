@@ -1,0 +1,28 @@
+types:
+  ScimConfiguration:
+    properties:
+      connectionId: string
+      connectionName: string
+      strategy: string
+      tenant: string
+
+  ScimToken:
+    properties:
+      tokenId: string
+      token: optional<string>
+      scopes: optional<list<string>>
+      createdAt: string
+
+service:
+  auth: false
+  base-path: /scim-configuration
+  endpoints:
+    getConfiguration:
+      method: GET
+      path: ""
+      response: ScimConfiguration
+    createToken:
+      method: POST
+      path: /tokens
+      request: ScimToken
+      response: ScimToken

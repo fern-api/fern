@@ -1,44 +1,18 @@
 using System.Text.Json;
 using SeedCsharpNamespaceCollision.Core;
-using SeedCsharpNamespaceCollision.ScimConfiguration;
-using SeedCsharpNamespaceCollision.System;
 
-namespace SeedCsharpNamespaceCollision;
+namespace SeedCsharpNamespaceCollision.ScimConfiguration;
 
-public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCollisionClient
+public partial class ScimConfigurationClient : IScimConfigurationClient
 {
     private readonly RawClient _client;
 
-    public SeedCsharpNamespaceCollisionClient(ClientOptions? clientOptions = null)
+    internal ScimConfigurationClient(RawClient client)
     {
-        clientOptions ??= new ClientOptions();
-        var platformHeaders = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "X-Fern-Language", "C#" },
-                { "X-Fern-SDK-Name", "SeedCsharpNamespaceCollision" },
-                { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Ferncsharp-namespace-collision/0.0.1" },
-            }
-        );
-        foreach (var header in platformHeaders)
-        {
-            if (!clientOptions.Headers.ContainsKey(header.Key))
-            {
-                clientOptions.Headers[header.Key] = header.Value;
-            }
-        }
-        _client = new RawClient(clientOptions);
-        ScimConfiguration = new ScimConfigurationClient(_client);
-        System = new SystemClient(_client);
+        _client = client;
     }
 
-    public IScimConfigurationClient ScimConfiguration { get; }
-
-    public ISystemClient System { get; }
-
-    private async Task<WithRawResponse<User>> CreateUserAsyncCore(
-        User request,
+    private async Task<WithRawResponse<ScimConfiguration>> GetConfigurationAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -53,9 +27,8 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    Method = HttpMethod.Post,
-                    Path = "/users",
-                    Body = request,
+                    Method = HttpMethod.Get,
+                    Path = "/scim-configuration",
                     Headers = _headers,
                     Options = options,
                 },
@@ -69,8 +42,8 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
-                return new WithRawResponse<User>()
+                var responseData = JsonUtils.Deserialize<ScimConfiguration>(responseBody)!;
+                return new WithRawResponse<ScimConfiguration>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -103,8 +76,8 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
         }
     }
 
-    private async Task<WithRawResponse<Task>> CreateTaskAsyncCore(
-        Task request,
+    private async Task<WithRawResponse<ScimToken>> CreateTokenAsyncCore(
+        ScimToken request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -120,7 +93,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/scim-configuration/tokens",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -135,8 +108,8 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
-                return new WithRawResponse<Task>()
+                var responseData = JsonUtils.Deserialize<ScimToken>(responseBody)!;
+                return new WithRawResponse<ScimToken>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -170,46 +143,37 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
     }
 
     /// <example><code>
-    /// await client.CreateUserAsync(
-    ///     new global::SeedCsharpNamespaceCollision.User
-    ///     {
-    ///         Id = "id",
-    ///         Name = "name",
-    ///         Email = "email",
-    ///         Password = "password",
-    ///     }
-    /// );
+    /// await client.ScimConfiguration.GetConfigurationAsync();
     /// </code></example>
-    public WithRawResponseTask<User> CreateUserAsync(
-        User request,
+    public WithRawResponseTask<ScimConfiguration> GetConfigurationAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<User>(
-            CreateUserAsyncCore(request, options, cancellationToken)
+        return new WithRawResponseTask<ScimConfiguration>(
+            GetConfigurationAsyncCore(options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.CreateTaskAsync(
-    ///     new global::SeedCsharpNamespaceCollision.Task
+    /// await client.ScimConfiguration.CreateTokenAsync(
+    ///     new ScimToken
     ///     {
-    ///         Id = "id",
-    ///         Name = "name",
-    ///         Email = "email",
-    ///         Password = "password",
+    ///         TokenId = "tokenId",
+    ///         Token = "token",
+    ///         Scopes = new List&lt;string&gt;() { "scopes", "scopes" },
+    ///         CreatedAt = "createdAt",
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<Task> CreateTaskAsync(
-        Task request,
+    public WithRawResponseTask<ScimToken> CreateTokenAsync(
+        ScimToken request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<Task>(
-            CreateTaskAsyncCore(request, options, cancellationToken)
+        return new WithRawResponseTask<ScimToken>(
+            CreateTokenAsyncCore(request, options, cancellationToken)
         );
     }
 }

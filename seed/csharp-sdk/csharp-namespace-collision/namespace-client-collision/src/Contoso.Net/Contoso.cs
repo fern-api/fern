@@ -1,4 +1,5 @@
 using global::Contoso.Net.Core;
+using global::Contoso.Net.ScimConfiguration;
 using global::Contoso.Net.System;
 using global::System.Text.Json;
 
@@ -28,8 +29,11 @@ public partial class Contoso : IContoso
             }
         }
         _client = new RawClient(clientOptions);
+        ScimConfiguration = new ScimConfigurationClient(_client);
         System = new SystemClient(_client);
     }
+
+    public IScimConfigurationClient ScimConfiguration { get; }
 
     public ISystemClient System { get; }
 

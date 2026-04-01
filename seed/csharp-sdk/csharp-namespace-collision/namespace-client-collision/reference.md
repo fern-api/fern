@@ -95,6 +95,80 @@ await client.CreateTaskAsync(
 </dl>
 </details>
 
+## ScimConfiguration
+<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">GetConfigurationAsync</a>() -> WithRawResponseTask&lt;ScimConfiguration&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.ScimConfiguration.GetConfigurationAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">CreateTokenAsync</a>(ScimToken { ... }) -> WithRawResponseTask&lt;ScimToken&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.ScimConfiguration.CreateTokenAsync(
+    new ScimToken
+    {
+        TokenId = "tokenId",
+        Token = "token",
+        Scopes = new List<string>() { "scopes", "scopes" },
+        CreatedAt = "createdAt",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ScimToken` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## System
 <details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
