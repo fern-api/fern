@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v66
 displayName: Postman
 image: fernapi/fern-postman
 changelogLocation: ../../generators/postman/versions.yml
