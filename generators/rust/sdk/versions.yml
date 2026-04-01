@@ -10,6 +10,16 @@
   createdAt: "2026-03-31"
   irVersion: 65
 
+- version: 0.30.1
+  changelogEntry:
+    - summary: |
+        Generate request structs for bytes (octet-stream) endpoints with query
+        parameters, replacing positional arguments with a single struct that
+        bundles the raw body and all query params with a builder pattern.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 0.30.0
   changelogEntry:
     - summary: |
