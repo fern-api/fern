@@ -200,7 +200,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
-        llms: noop,
+        agents: noop,
         settings: noop,
         logo: async () => {
             if (contents.logo?.dark != null) {
