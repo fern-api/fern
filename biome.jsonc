@@ -176,6 +176,12 @@
                 "useArrayLiterals": "error",
                 "useAsConstAssertion": "error",
                 "useBlockStatements": "error",
+                "useConsistentMemberAccessibility": {
+                    "level": "warn",
+                    "options": {
+                        "accessibility": "explicit"
+                    }
+                },
                 "useLiteralEnumMembers": "error"
             },
             "suspicious": {
