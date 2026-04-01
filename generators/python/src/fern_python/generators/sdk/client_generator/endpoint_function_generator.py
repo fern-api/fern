@@ -264,7 +264,8 @@ class EndpointFunctionGenerator:
         else:
             # Even when not inlining path params, path params with client_default
             # need to be added as named parameters since they were skipped from unnamed params
-            client_default_path_params = [p for p in self._endpoint.all_path_parameters if p.client_default is not None]
+            non_variable_path_params = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            client_default_path_params = [p for p in non_variable_path_params if p.client_default is not None]
             if client_default_path_params:
                 named_path_parameters = self._named_parameters_from_path_parameters(client_default_path_params)
                 named_parameters = named_path_parameters + named_parameters
@@ -456,22 +457,9 @@ class EndpointFunctionGenerator:
                         name=get_parameter_name(header.name.name),
                         docs=header.docs,
                         type_hint=header_type_hint,
-                        initializer=(
-                            client_default_initializer
-                            if client_default_initializer is not None
-                            else (
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{header.env}"')],
-                                    )
-                                )
-                                if header.env is not None
-                                else None
-                            )
+                        initializer=self._get_header_initializer(
+                            env=header.env,
+                            client_default_initializer=client_default_initializer,
                         ),
                     ),
                 )
@@ -1656,6 +1644,27 @@ class EndpointFunctionGenerator:
             string=lambda value: AST.Expression(f'"{value}"'),
             boolean=lambda value: AST.Expression(f"{value}"),
         )
+
+    def _get_header_initializer(
+        self,
+        *,
+        env: Optional[str],
+        client_default_initializer: Optional[AST.Expression],
+    ) -> Optional[AST.Expression]:
+        if env is not None:
+            getenv_args = [AST.Expression(f'"{env}"')]
+            if client_default_initializer is not None:
+                getenv_args.append(client_default_initializer)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        return client_default_initializer
 
     def _is_enum_type_with_value(
         self,

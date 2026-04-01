@@ -197,22 +197,9 @@ class WebsocketConnectMethodGenerator:
                         name=get_parameter_name(header.name.name),
                         docs=header.docs,
                         type_hint=header_type_hint,
-                        initializer=(
-                            client_default_initializer
-                            if client_default_initializer is not None
-                            else (
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{header.env}"')],
-                                    )
-                                )
-                                if header.env is not None
-                                else None
-                            )
+                        initializer=self._get_header_initializer(
+                            env=header.env,
+                            client_default_initializer=client_default_initializer,
                         ),
                     ),
                 )
@@ -798,6 +785,27 @@ class WebsocketConnectMethodGenerator:
             string=lambda value: AST.Expression(f'"{value}"'),
             boolean=lambda value: AST.Expression(f"{value}"),
         )
+
+    def _get_header_initializer(
+        self,
+        *,
+        env: Optional[str],
+        client_default_initializer: Optional[AST.Expression],
+    ) -> Optional[AST.Expression]:
+        if env is not None:
+            getenv_args = [AST.Expression(f'"{env}"')]
+            if client_default_initializer is not None:
+                getenv_args.append(client_default_initializer)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        return client_default_initializer
 
     def _is_enum_type_with_value(
         self,
