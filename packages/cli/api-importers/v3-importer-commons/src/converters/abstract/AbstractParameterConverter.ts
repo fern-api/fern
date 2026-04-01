@@ -85,7 +85,8 @@ export abstract class AbstractParameterConverter<
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
                         availability,
-                        explode: this.getExplodeForQueryParameter()
+                        explode: this.getExplodeForQueryParameter(),
+                        clientDefault: undefined
                     },
                     inlinedTypes
                 };
@@ -104,7 +105,8 @@ export abstract class AbstractParameterConverter<
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        availability
+                        availability,
+                        clientDefault: undefined
                     },
                     inlinedTypes
                 };
@@ -121,7 +123,8 @@ export abstract class AbstractParameterConverter<
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        explode: this.getExplodeForPathParameter()
+                        explode: this.getExplodeForPathParameter(),
+                        clientDefault: undefined
                     },
                     inlinedTypes
                 };
