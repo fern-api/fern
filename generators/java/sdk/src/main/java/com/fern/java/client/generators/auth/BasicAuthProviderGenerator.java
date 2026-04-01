@@ -126,9 +126,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         // Get username value - null-safe for omittable fields, direct for required fields
         if (usernameOmitted) {
             builder.addStatement(
-                    "String username = $N != null ? $N.get() : null",
-                    usernameSupplierField,
-                    usernameSupplierField);
+                    "String username = $N != null ? $N.get() : null", usernameSupplierField, usernameSupplierField);
         } else {
             builder.addStatement("String username = $N.get()", usernameSupplierField);
         }
@@ -136,9 +134,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         // Get password value - null-safe for omittable fields, direct for required fields
         if (passwordOmitted) {
             builder.addStatement(
-                    "String password = $N != null ? $N.get() : null",
-                    passwordSupplierField,
-                    passwordSupplierField);
+                    "String password = $N != null ? $N.get() : null", passwordSupplierField, passwordSupplierField);
         } else {
             builder.addStatement("String password = $N.get()", passwordSupplierField);
         }
