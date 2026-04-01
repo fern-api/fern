@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.53.2
+- version: 4.53.3
   changelogEntry:
     - summary: |
         Skip the CLI upgrade suggestion when the current version is `0.0.0`,
         which is the placeholder used for local development builds.
       type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
+- version: 4.53.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for cli docs publishing.
+      type: chore
   createdAt: "2026-04-01"
   irVersion: 65
 
