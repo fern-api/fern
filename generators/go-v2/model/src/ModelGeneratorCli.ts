@@ -22,6 +22,10 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): ModelCustomConfigSchema {
+        const parsed = customConfig != null ? ModelCustomConfigSchema.parse(customConfig) : undefined;
+        if (parsed != null) {
+            return parsed;
+        }
         return {};
     }
 
