@@ -33,6 +33,11 @@ minimumReleaseAgeExclude:
 # losing its attestation). Catches compromised maintainer accounts.
 trustPolicy: no-downgrade
 
+# Only enforce trust checks on versions published within the last day.
+# Older versions that lost attestation are unlikely to be supply chain attacks;
+# attacks target the install window immediately after compromise.
+trustPolicyIgnoreAfter: 1440
+
 # Block transitive dependencies from using exotic sources (git repos, tarball URLs).
 # Only direct dependencies may use non-registry sources.
 blockExoticSubdeps: true
