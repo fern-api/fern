@@ -334,22 +334,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ChatRequestStreaming",
+                        "originalName": "ChatStreamRequest",
                         "camelCase": {
-                            "unsafeName": "chatRequestStreaming",
-                            "safeName": "chatRequestStreaming"
+                            "unsafeName": "chatStreamRequest",
+                            "safeName": "chatStreamRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "chat_request_streaming",
-                            "safeName": "chat_request_streaming"
+                            "unsafeName": "chat_stream_request",
+                            "safeName": "chat_stream_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "CHAT_REQUEST_STREAMING",
-                            "safeName": "CHAT_REQUEST_STREAMING"
+                            "unsafeName": "CHAT_STREAM_REQUEST",
+                            "safeName": "CHAT_STREAM_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ChatRequestStreaming",
-                            "safeName": "ChatRequestStreaming"
+                            "unsafeName": "ChatStreamRequest",
+                            "safeName": "ChatStreamRequest"
                         }
                     },
                     "fernFilepath": {
