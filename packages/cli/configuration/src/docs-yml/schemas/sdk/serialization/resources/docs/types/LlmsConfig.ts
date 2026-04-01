@@ -6,8 +6,14 @@ import type * as serializers from "../../../index.js";
 
 export const LlmsConfig: core.serialization.ObjectSchema<serializers.LlmsConfig.Raw, FernDocsConfig.LlmsConfig> =
     core.serialization.object({
-        pageDirectivePrepend: core.serialization.property("page-directive-prepend", core.serialization.string().optional()),
-        pageDirectiveAppend: core.serialization.property("page-directive-append", core.serialization.string().optional()),
+        pageDirectivePrepend: core.serialization.property(
+            "page-directive-prepend",
+            core.serialization.string().optional(),
+        ),
+        pageDirectiveAppend: core.serialization.property(
+            "page-directive-append",
+            core.serialization.string().optional(),
+        ),
     });
 
 export declare namespace LlmsConfig {

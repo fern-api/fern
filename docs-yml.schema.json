@@ -218,6 +218,16 @@
         }
       ]
     },
+    "llms": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.LlmsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -4355,6 +4365,32 @@
           ]
         },
         "style": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.LlmsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive-prepend": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-directive-append": {
           "oneOf": [
             {
               "type": "string"
