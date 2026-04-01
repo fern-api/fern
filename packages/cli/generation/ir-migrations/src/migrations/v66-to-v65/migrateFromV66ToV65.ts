@@ -29,7 +29,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: "0.7.0-rc.0",
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
