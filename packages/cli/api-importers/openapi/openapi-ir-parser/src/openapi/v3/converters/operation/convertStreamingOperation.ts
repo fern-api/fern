@@ -4,7 +4,6 @@ import type { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir"
 import type { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension.js";
-import { getSchemaIdFromReference } from "../../../../schema/convertSchemas.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import type { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
