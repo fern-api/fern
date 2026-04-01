@@ -139,7 +139,7 @@ done
 echo ""
 echo "</details>"
 echo ""
-echo "_Timings include Docker startup, IR parsing, generation, and build scripts. Variance of ±10% is normal._"
+echo "_Timings measure generator-only performance (--skip-scripts): Docker startup, IR parsing, and code generation. Build/test scripts are excluded for cleaner signal. Full E2E timings are captured in the nightly baseline for reference._"
 echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly runs on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"

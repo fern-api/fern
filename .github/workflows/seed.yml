@@ -890,12 +890,43 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs
+  # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
+  # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
   # Baseline timings come from the nightly benchmark-baseline.yml workflow (cached).
+  #
+  # Specs are fetched once in benchmark-setup and shared via artifact to avoid redundant downloads.
+  benchmark-setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [get-all-test-matrices]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && github.event.pull_request.draft == false
+      }}
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/actions/fetch-benchmark-specs
+            benchmarks/fern/apis
+
+      - name: Fetch benchmark OpenAPI specs
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Upload specs as shared artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis/*/openapi.json
+          retention-days: 1
+
   benchmark:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [get-all-test-matrices]
+    needs: [get-all-test-matrices, benchmark-setup]
     if: >-
       ${{
         github.event_name == 'pull_request'
@@ -913,13 +944,17 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Fetch benchmark OpenAPI specs
-        uses: ./.github/actions/fetch-benchmark-specs
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
 
-      - name: Run benchmark (PR branch)
+      - name: Run benchmark (PR branch, generator-only)
         uses: ./.github/actions/run-benchmark
         with:
           generator: ${{ matrix.generator }}
+          skip-scripts: "true"
 
       - name: Upload PR results
         uses: actions/upload-artifact@v4

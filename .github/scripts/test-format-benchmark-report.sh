@@ -63,19 +63,19 @@ test_basic_report() {
 
   assert_contains "$OUTPUT" "## SDK Generation Benchmark Results" "Has header"
   assert_contains "$OUTPUT" "| ts-sdk | square | 180s | 200s | +20s (+11.1%) |" "Shows correct delta"
-  assert_contains "$OUTPUT" "Variance of" "Has variance note"
+  assert_contains "$OUTPUT" "generator-only performance" "Has generator-only timing note"
 }
 
 # Test 2: Negative delta (improvement)
 test_negative_delta() {
   echo "Test: Negative delta (performance improvement)"
   setup_dirs
-  echo '{"generator":"python-sdk","spec":"elevenlabs","duration_seconds":90,"exit_code":0}' > "$PR_DIR/python-sdk.jsonl"
-  echo '{"generator":"python-sdk","spec":"elevenlabs","duration_seconds":100,"exit_code":0}' > "$MAIN_DIR/python-sdk.jsonl"
+  echo '{"generator":"python-sdk","spec":"square","duration_seconds":90,"exit_code":0}' > "$PR_DIR/python-sdk.jsonl"
+  echo '{"generator":"python-sdk","spec":"square","duration_seconds":100,"exit_code":0}' > "$MAIN_DIR/python-sdk.jsonl"
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "| python-sdk | elevenlabs | 100s | 90s | -10s (-10.0%) |" "Shows negative delta"
+  assert_contains "$OUTPUT" "| python-sdk | square | 100s | 90s | -10s (-10.0%) |" "Shows negative delta"
 }
 
 # Test 3: Non-zero exit code shows warning marker
@@ -114,22 +114,22 @@ test_skipped_spec() {
   assert_not_contains "$OUTPUT" "0s" "Does not show 0s duration for skipped"
 }
 
-# Test 6: Multiple generators and specs
+# Test 6: Multiple generators
 test_multiple_generators() {
   echo "Test: Multiple generators produce multiple rows"
   setup_dirs
   echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
-  echo '{"generator":"ts-sdk","spec":"elevenlabs","duration_seconds":300,"exit_code":0}' >> "$PR_DIR/ts-sdk.jsonl"
   echo '{"generator":"python-sdk","spec":"square","duration_seconds":150,"exit_code":0}' > "$PR_DIR/python-sdk.jsonl"
+  echo '{"generator":"go-sdk","spec":"square","duration_seconds":100,"exit_code":0}' > "$PR_DIR/go-sdk.jsonl"
   echo '{"generator":"ts-sdk","spec":"square","duration_seconds":190,"exit_code":0}' > "$MAIN_DIR/ts-sdk.jsonl"
-  echo '{"generator":"ts-sdk","spec":"elevenlabs","duration_seconds":290,"exit_code":0}' >> "$MAIN_DIR/ts-sdk.jsonl"
   echo '{"generator":"python-sdk","spec":"square","duration_seconds":140,"exit_code":0}' > "$MAIN_DIR/python-sdk.jsonl"
+  echo '{"generator":"go-sdk","spec":"square","duration_seconds":95,"exit_code":0}' > "$MAIN_DIR/go-sdk.jsonl"
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
   assert_contains "$OUTPUT" "| ts-sdk | square |" "Has ts-sdk square row"
-  assert_contains "$OUTPUT" "| ts-sdk | elevenlabs |" "Has ts-sdk elevenlabs row"
   assert_contains "$OUTPUT" "| python-sdk | square |" "Has python-sdk square row"
+  assert_contains "$OUTPUT" "| go-sdk | square |" "Has go-sdk square row"
 }
 
 # Test 7: Empty PR directory produces valid report structure
@@ -155,6 +155,18 @@ test_baseline_timestamp() {
   assert_contains "$OUTPUT" "cached" "Shows cached baseline label"
   assert_contains "$OUTPUT" "2026-03-30T04:00:00Z" "Shows baseline timestamp"
   assert_contains "$OUTPUT" "benchmark-baseline" "Shows link to refresh workflow"
+}
+
+# Test 9: No baseline timestamp when BASELINE_TIMESTAMP is unset
+test_no_baseline_timestamp() {
+  echo "Test: No baseline timestamp when unset"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  OUTPUT=$(unset BASELINE_TIMESTAMP; bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_not_contains "$OUTPUT" "cached" "Does not show cached label without timestamp"
+  assert_contains "$OUTPUT" "Comparing PR branch against" "Shows generic comparison header"
 }
 
 # Test 10: Median baseline from history (odd number of runs)
@@ -244,18 +256,6 @@ test_history_partial_coverage() {
 
   assert_contains "$OUTPUT" "| ts-sdk | square | 185s (n=2)" "ts-sdk has median from history"
   assert_contains "$OUTPUT" "| go-sdk | square | N/A | 150s | N/A |" "go-sdk shows N/A (no history)"
-}
-
-# Test 9: No baseline timestamp when BASELINE_TIMESTAMP is unset
-test_no_baseline_timestamp() {
-  echo "Test: No baseline timestamp when unset"
-  setup_dirs
-  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
-
-  OUTPUT=$(unset BASELINE_TIMESTAMP; bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
-
-  assert_not_contains "$OUTPUT" "cached" "Does not show cached label without timestamp"
-  assert_contains "$OUTPUT" "Comparing PR branch against" "Shows generic comparison header"
 }
 
 # Run all tests

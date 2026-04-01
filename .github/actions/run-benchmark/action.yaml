@@ -5,6 +5,10 @@ inputs:
   generator:
     description: "Generator name (e.g. ts-sdk, python-sdk)"
     required: true
+  skip-scripts:
+    description: "If true, skip post-generation build/test scripts (--skip-scripts). Measures generator-only time."
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -20,7 +24,7 @@ runs:
         RESULTS_DIR="benchmark-results"
         mkdir -p "$RESULTS_DIR"
 
-        for SPEC in square elevenlabs; do
+        for SPEC in square; do
           # Skip specs whose OAS file was not successfully fetched
           if [ ! -f "benchmarks/fern/apis/${SPEC}/openapi.json" ]; then
             echo "::warning::Skipping ${GENERATOR} x ${SPEC} — OpenAPI spec not available"
@@ -35,10 +39,15 @@ runs:
           START_TIME=$EPOCHSECONDS
           EXIT_CODE=0
 
-          # Run full E2E generation including build/test scripts
+          # Run generation (--skip-scripts omits post-gen build/test for cleaner signal)
+          SKIP_FLAG=""
+          if [ "${{ inputs.skip-scripts }}" = "true" ]; then
+            SKIP_FLAG="--skip-scripts"
+          fi
           pnpm seed:local run \
             --generator "${GENERATOR}" \
-            --path "benchmarks/fern/apis/${SPEC}" 2>&1 || EXIT_CODE=$?
+            --path "benchmarks/fern/apis/${SPEC}" \
+            ${SKIP_FLAG} 2>&1 || EXIT_CODE=$?
 
           END_TIME=$EPOCHSECONDS
           DURATION=$(( END_TIME - START_TIME ))
