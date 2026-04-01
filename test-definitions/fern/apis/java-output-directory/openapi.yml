@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-output-directory
-  version: ''
+  version: ""
 paths:
   /users/{userId}:
     get:
@@ -15,12 +15,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     User:

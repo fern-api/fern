@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: go-content-type
-  version: ''
+  version: ""
 paths:
   /movies/create-movie:
     post:
@@ -11,8 +11,8 @@ paths:
         - Imdb
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -22,7 +22,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateMovieRequest'
+              $ref: "#/components/schemas/CreateMovieRequest"
 components:
   schemas:
     CreateMovieRequest:

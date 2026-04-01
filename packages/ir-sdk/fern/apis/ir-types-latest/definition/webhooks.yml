@@ -31,7 +31,7 @@ types:
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
 
-  WebhookName: commons.Name
+  WebhookName: commons.NameOrString
 
   WebhookPayload:
     union:
@@ -45,14 +45,14 @@ types:
 
   InlinedWebhookPayload:
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedWebhookPayloadProperty>
 
   InlinedWebhookPayloadProperty:
     extends: commons.WithDocsAndAvailability
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       valueType: types.TypeReference
 
   WebhookHttpMethod:
@@ -67,7 +67,7 @@ types:
       (e.g. headers).
     extends: commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       payload: types.ExampleTypeReference
 
   WebhookSignatureVerification:
@@ -85,7 +85,7 @@ types:
   HmacSignatureVerification:
     properties:
       signatureHeaderName:
-        type: commons.NameAndWireValue
+        type: commons.NameAndWireValueOrString
         docs: The HTTP header that contains the webhook signature.
       algorithm: HmacAlgorithm
       encoding: WebhookSignatureEncoding
@@ -109,7 +109,7 @@ types:
   AsymmetricKeySignatureVerification:
     properties:
       signatureHeaderName:
-        type: commons.NameAndWireValue
+        type: commons.NameAndWireValueOrString
         docs: The HTTP header that contains the webhook signature.
       algorithm: AsymmetricAlgorithm
       encoding: WebhookSignatureEncoding
@@ -147,7 +147,7 @@ types:
         type: string
         docs: The JWKS endpoint URL.
       keyIdHeader:
-        type: optional<commons.NameAndWireValue>
+        type: optional<commons.NameAndWireValueOrString>
         docs: Optional HTTP header containing the key ID to select from the JWKS set.
 
   StaticKeySource:
@@ -166,7 +166,7 @@ types:
       where the timestamp is outside the allowed tolerance window.
     properties:
       headerName:
-        type: commons.NameAndWireValue
+        type: commons.NameAndWireValueOrString
         docs: The HTTP header containing the delivery timestamp.
       format: WebhookTimestampFormat
       tolerance:

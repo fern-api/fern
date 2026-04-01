@@ -10,9 +10,9 @@ types:
       availability: optional<Availability>
   FernFilepath:
     properties:
-      allParts: list<Name>
-      packagePath: list<Name>
-      file: optional<Name>
+      allParts: list<NameOrString>
+      packagePath: list<NameOrString>
+      file: optional<NameOrString>
 
   # names
 
@@ -23,11 +23,21 @@ types:
       pascalCase: SafeAndUnsafeString
       snakeCase: SafeAndUnsafeString
       screamingSnakeCase: SafeAndUnsafeString
+  NameOrString:
+    discriminated: false
+    union:
+      - string
+      - Name
   DisplayName: string
   NameAndWireValue:
     properties:
       wireValue: string
-      name: Name
+      name: NameOrString
+  NameAndWireValueOrString:
+    discriminated: false
+    union:
+      - string
+      - NameAndWireValue
   SafeAndUnsafeString:
     properties:
       unsafeName:

@@ -1,22 +1,22 @@
 openapi: 3.0.1
 info:
   title: alias
-  version: ''
+  version: ""
 paths:
   /{typeId}:
     get:
       operationId: get
       tags:
-        - ''
+        - ""
       parameters:
         - name: typeId
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/TypeId'
+            $ref: "#/components/schemas/TypeId"
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas:
     TypeId:
@@ -29,7 +29,7 @@ components:
       description: A simple type with just a name.
       properties:
         id:
-          $ref: '#/components/schemas/TypeId'
+          $ref: "#/components/schemas/TypeId"
         name:
           type: string
       required:
@@ -37,6 +37,6 @@ components:
         - name
     Object:
       title: Object
-      $ref: '#/components/schemas/Type'
+      $ref: "#/components/schemas/Type"
       description: Object is an alias for a type.
   securitySchemes: {}

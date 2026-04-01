@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: websocket-inferred-auth
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -15,12 +15,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -58,12 +58,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:

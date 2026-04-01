@@ -19,7 +19,7 @@ import {
     ExampleTypeShape,
     FernIr
 } from "@fern-api/ir-sdk";
-import { FilteredIr } from "@fern-api/ir-utils";
+import { FilteredIr, getWireValue } from "@fern-api/ir-utils";
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
@@ -36,7 +36,9 @@ function filterExampleSingleUnionTypeProperties({
                       object: {
                           ...s.object,
                           properties: s.object.properties
-                              .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                              .filter((p) =>
+                                  filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
+                              )
                               .map((p) => ({
                                   ...p,
                                   value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
@@ -190,7 +192,7 @@ function filterExampleTypeReference({
                                   ...o,
                                   properties: o.properties
                                       .filter((p) =>
-                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                                       )
                                       .map((p) => ({
                                           ...p,
@@ -326,7 +328,7 @@ function filterExampleRequestBody({
                 properties: inlined.properties
                     .filter((p) =>
                         p.originalTypeDeclaration
-                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                             : true
                     )
                     .map((property) => {
@@ -460,7 +462,7 @@ export function filterExampleType({
             shape: ExampleTypeShape.object({
                 ...o,
                 properties: o.properties
-                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
                     .map((p) => ({
                         ...p,
                         value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })

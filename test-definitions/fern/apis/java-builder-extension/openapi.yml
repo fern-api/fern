@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-builder-extension
-  version: ''
+  version: ""
 paths:
   /api/hello:
     get:
@@ -10,12 +10,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HelloResponse'
+                $ref: "#/components/schemas/HelloResponse"
       security:
         - BearerAuth: []
 components:

@@ -5,7 +5,7 @@ import type * as FernIr from "../../../index.js";
 export interface ErrorDeclaration extends FernIr.WithDocs {
     name: FernIr.DeclaredErrorName;
     displayName: string | undefined;
-    discriminantValue: FernIr.NameAndWireValue;
+    discriminantValue: FernIr.NameAndWireValueOrString;
     type: FernIr.TypeReference | undefined;
     statusCode: number;
     /**

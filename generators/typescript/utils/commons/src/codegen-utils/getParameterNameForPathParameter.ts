@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName.js";
 
@@ -7,17 +8,20 @@ import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName.js";
 export function getParameterNameForPositionalPathParameter({
     pathParameter,
     retainOriginalCasing,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
     pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing,
         includeSerdeLayer: false,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }
 
@@ -27,11 +31,13 @@ export function getParameterNameForPositionalPathParameter({
 export function getParameterNameForRootPathParameter({
     pathParameter,
     retainOriginalCasing,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
     pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     if (pathParameter.location !== "ROOT") {
         throw new Error("pathParameter.location must be ROOT");
@@ -40,7 +46,8 @@ export function getParameterNameForRootPathParameter({
         pathParameterName: pathParameter.name,
         retainOriginalCasing,
         includeSerdeLayer: false,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }
 /**
@@ -49,17 +56,20 @@ export function getParameterNameForRootPathParameter({
 export function getParameterNameForRootExamplePathParameter({
     pathParameter,
     retainOriginalCasing,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
     pathParameter: FernIr.ExamplePathParameter;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing,
         includeSerdeLayer: false,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }
 
@@ -70,18 +80,21 @@ export function getParameterNameForPropertyPathParameter({
     pathParameter,
     retainOriginalCasing,
     includeSerdeLayer,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
     pathParameter: FernIr.PathParameter;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     return getParameterNameForPropertyPathParameterName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing,
         includeSerdeLayer,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }
 
@@ -92,18 +105,21 @@ export function getParameterNameForPropertyPathParameterName({
     pathParameterName,
     retainOriginalCasing,
     includeSerdeLayer,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
-    pathParameterName: FernIr.Name;
+    pathParameterName: FernIr.NameOrString;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName,
         retainOriginalCasing,
         includeSerdeLayer,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }
 
@@ -111,17 +127,20 @@ function getParameterNameForPathParameterInternalName({
     pathParameterName,
     retainOriginalCasing,
     includeSerdeLayer,
-    parameterNaming
+    parameterNaming,
+    caseConverter
 }: {
-    pathParameterName: FernIr.Name;
+    pathParameterName: FernIr.NameOrString;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
 }): string {
     return getSdkParameterPropertyName({
         name: pathParameterName,
         includeSerdeLayer,
         retainOriginalCasing,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     });
 }

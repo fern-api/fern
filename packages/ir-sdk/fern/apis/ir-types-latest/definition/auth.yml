@@ -82,7 +82,7 @@ types:
   BearerAuthScheme:
     extends: BaseAuthScheme
     properties:
-      token: commons.Name
+      token: commons.NameOrString
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
@@ -143,14 +143,14 @@ types:
   BasicAuthScheme:
     extends: BaseAuthScheme
     properties:
-      username: commons.Name
+      username: commons.NameOrString
       usernameEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the username.
       usernameOmit:
         type: optional<boolean>
         docs: If true, the username will be omitted from the SDK.
-      password: commons.Name
+      password: commons.NameOrString
       passwordEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the password.
@@ -161,7 +161,7 @@ types:
   HeaderAuthScheme:
     extends: BaseAuthScheme
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       valueType: types.TypeReference
       prefix: optional<string>
       headerEnvVar:
