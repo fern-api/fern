@@ -236,9 +236,8 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
-export const LlmsConfig = z.object({
-    "page-directive-prepend": z.string().optional(),
-    "page-directive-append": z.string().optional()
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional()
 });
 
 export const AIChatConfig = z.object({
@@ -952,7 +951,7 @@ export const DocsConfiguration = z.object({
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
-    llms: LlmsConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
     check: CheckConfig.optional(),
