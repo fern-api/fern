@@ -181,7 +181,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         [exampleName]: this.generateStringParameterExample({ example: param })
                     }
                 },
-                explode: undefined
+                explode: undefined,
+                clientDefault: undefined
             });
         }
     }
