@@ -126,8 +126,9 @@ public class AsyncSeedBasicAuthOptionalClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.username != null && this.password != null) {
-            String unencodedToken = this.username + ":" + this.password;
+        if (this.username != null) {
+            String unencodedToken =
+                    this.username + ":" + (this.password != null ? this.password : "");
             String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
             builder.addHeader("Authorization", "Basic " + encodedToken);
         }
@@ -220,9 +221,6 @@ public class AsyncSeedBasicAuthOptionalClientBuilder {
     public AsyncSeedBasicAuthOptionalClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username");
-        }
-        if (this.password == null) {
-            throw new RuntimeException("Please provide password");
         }
         validateConfiguration();
         return new AsyncSeedBasicAuthOptionalClient(buildClientOptions());
