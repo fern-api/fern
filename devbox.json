@@ -20,6 +20,9 @@
     "docker@latest",
     "bun@latest"
   ],
+  "env": {
+    "DEVBOX_COREPACK_ENABLED": "true"
+  },
   "shell": {
     "init_hook": [
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
