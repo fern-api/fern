@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",
@@ -105,5 +107,8 @@
     "vitest": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "tmp-promise": "catalog:"
   }
 }
