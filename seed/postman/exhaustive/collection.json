@@ -3124,6 +3124,124 @@
                   "_postman_previewlanguage": "json"
                 }
               ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Path And Errors",
+              "request": {
+                "description": "GET with path param that can throw errors",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path param that can throw errors",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Bad Request Body",
+                  "status": "Bad Request Body",
+                  "code": 400,
+                  "originalRequest": {
+                    "description": "GET with path param that can throw errors",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"message\": \"message\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },

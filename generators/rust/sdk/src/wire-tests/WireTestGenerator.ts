@@ -248,8 +248,9 @@ export class WireTestGenerator {
                 if (inConfigStruct) {
                     lines.push(`        ..Default::default()`);
                     lines.push(`    };`);
-                    // Add base_url override after config creation
+                    // Override base_url and clear environment so requests go to WireMock
                     lines.push(`    config.base_url = wiremock_base_url.to_string();`);
+                    lines.push(`    config.environment = None;`);
                     inConfigStruct = false;
                 } else {
                     lines.push(`    ${trimmedLine}`);

@@ -15,6 +15,18 @@ impl Environment {
             Self::RegionalApiServer(urls) => &urls.base,
         }
     }
+
+    pub fn base_url(&self) -> &str {
+        match self {
+            Self::RegionalApiServer(urls) => &urls.base,
+        }
+    }
+
+    pub fn auth_url(&self) -> &str {
+        match self {
+            Self::RegionalApiServer(urls) => &urls.auth,
+        }
+    }
 }
 impl Default for Environment {
     fn default() -> Self {

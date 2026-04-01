@@ -50,8 +50,8 @@ test:
       - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
     runCommand: ./fern-go-sdk {CONFIG_PATH}
     env:
-      # Set path to the go-v2 CLI built from TypeScript (absolute path)
-      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
+      # Set path to the go-v2 CLI built from TypeScript (relative to workingDirectory: generators/go)
+      GO_V2_PATH: "../go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github

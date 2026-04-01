@@ -456,3 +456,207 @@ async def test_async_connection_error_exhausts_retries(mock_sleep: AsyncMock) ->
     # 1 initial + 2 retries = 3 total attempts
     assert mock_client.request.call_count == 3
     assert mock_sleep.call_count == 2
+
+
+# ---------------------------------------------------------------------------
+# base_max_retries constructor parameter tests
+# ---------------------------------------------------------------------------
+
+
+def test_sync_http_client_default_base_max_retries() -> None:
+    """HttpClient defaults to base_max_retries=2."""
+    http_client = HttpClient(
+        httpx_client=MagicMock(),  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+    )
+    assert http_client.base_max_retries == 2
+
+
+def test_async_http_client_default_base_max_retries() -> None:
+    """AsyncHttpClient defaults to base_max_retries=2."""
+    http_client = AsyncHttpClient(
+        httpx_client=MagicMock(),  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+    )
+    assert http_client.base_max_retries == 2
+
+
+def test_sync_http_client_custom_base_max_retries() -> None:
+    """HttpClient accepts a custom base_max_retries value."""
+    http_client = HttpClient(
+        httpx_client=MagicMock(),  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_max_retries=5,
+    )
+    assert http_client.base_max_retries == 5
+
+
+def test_async_http_client_custom_base_max_retries() -> None:
+    """AsyncHttpClient accepts a custom base_max_retries value."""
+    http_client = AsyncHttpClient(
+        httpx_client=MagicMock(),  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_max_retries=5,
+    )
+    assert http_client.base_max_retries == 5
+
+
+@patch("seed.matryoshka.doll.structure.core.http_client.time.sleep", return_value=None)
+def test_sync_base_max_retries_zero_disables_retries(mock_sleep: MagicMock) -> None:
+    """Sync: base_max_retries=0 disables retries when no request_options override."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = httpx.ConnectError("connection failed")
+    http_client = HttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=0,
+    )
+
+    with pytest.raises(httpx.ConnectError):
+        http_client.request(path="/test", method="GET")
+
+    # No retries, just the initial attempt
+    assert mock_client.request.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+@pytest.mark.asyncio
+@patch("seed.matryoshka.doll.structure.core.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_base_max_retries_zero_disables_retries(mock_sleep: AsyncMock) -> None:
+    """Async: base_max_retries=0 disables retries when no request_options override."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(side_effect=httpx.ConnectError("connection failed"))
+    http_client = AsyncHttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=0,
+    )
+
+    with pytest.raises(httpx.ConnectError):
+        await http_client.request(path="/test", method="GET")
+
+    # No retries, just the initial attempt
+    assert mock_client.request.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+@patch("seed.matryoshka.doll.structure.core.http_client.time.sleep", return_value=None)
+def test_sync_request_options_override_base_max_retries(mock_sleep: MagicMock) -> None:
+    """Sync: request_options max_retries overrides base_max_retries."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = [
+        httpx.ConnectError("connection failed"),
+        httpx.ConnectError("connection failed"),
+        _DummyResponse(),
+    ]
+    http_client = HttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=0,  # base says no retries
+    )
+
+    # But request_options overrides to allow 2 retries
+    response = http_client.request(
+        path="/test",
+        method="GET",
+        request_options={"max_retries": 2},
+    )
+
+    assert response.status_code == 200
+    # 1 initial + 2 retries = 3 total attempts
+    assert mock_client.request.call_count == 3
+
+
+@pytest.mark.asyncio
+@patch("seed.matryoshka.doll.structure.core.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_request_options_override_base_max_retries(mock_sleep: AsyncMock) -> None:
+    """Async: request_options max_retries overrides base_max_retries."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(
+        side_effect=[
+            httpx.ConnectError("connection failed"),
+            httpx.ConnectError("connection failed"),
+            _DummyResponse(),
+        ]
+    )
+    http_client = AsyncHttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=0,  # base says no retries
+    )
+
+    # But request_options overrides to allow 2 retries
+    response = await http_client.request(
+        path="/test",
+        method="GET",
+        request_options={"max_retries": 2},
+    )
+
+    assert response.status_code == 200
+    # 1 initial + 2 retries = 3 total attempts
+    assert mock_client.request.call_count == 3
+
+
+@patch("seed.matryoshka.doll.structure.core.http_client.time.sleep", return_value=None)
+def test_sync_base_max_retries_used_as_default(mock_sleep: MagicMock) -> None:
+    """Sync: base_max_retries is used when request_options has no max_retries."""
+    mock_client = MagicMock()
+    mock_client.request.side_effect = [
+        httpx.ConnectError("fail"),
+        httpx.ConnectError("fail"),
+        httpx.ConnectError("fail"),
+        _DummyResponse(),
+    ]
+    http_client = HttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=3,
+    )
+
+    response = http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    # 1 initial + 3 retries = 4 total attempts
+    assert mock_client.request.call_count == 4
+
+
+@pytest.mark.asyncio
+@patch("seed.matryoshka.doll.structure.core.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_base_max_retries_used_as_default(mock_sleep: AsyncMock) -> None:
+    """Async: base_max_retries is used when request_options has no max_retries."""
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(
+        side_effect=[
+            httpx.ConnectError("fail"),
+            httpx.ConnectError("fail"),
+            httpx.ConnectError("fail"),
+            _DummyResponse(),
+        ]
+    )
+    http_client = AsyncHttpClient(
+        httpx_client=mock_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        base_max_retries=3,
+    )
+
+    response = await http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    # 1 initial + 3 retries = 4 total attempts
+    assert mock_client.request.call_count == 4

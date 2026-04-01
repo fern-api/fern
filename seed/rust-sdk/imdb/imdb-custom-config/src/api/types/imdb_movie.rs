@@ -8,6 +8,7 @@ pub struct Movie {
     pub title: String,
     /// The rating scale is one to five stars
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub rating: f64,
 }
 

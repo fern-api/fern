@@ -44,7 +44,7 @@ function createSingleBaseUrlEnvironment(name: string, url: string): FernIr.Singl
         displayName: name,
         url,
         docs: undefined
-    } as FernIr.SingleBaseUrlEnvironment;
+    } as unknown as FernIr.SingleBaseUrlEnvironment;
 }
 
 // Mock function to create environments union with _visit method
@@ -97,7 +97,7 @@ function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, st
         displayName: name,
         urls,
         docs: undefined
-    } as FernIr.MultipleBaseUrlsEnvironment;
+    } as unknown as FernIr.MultipleBaseUrlsEnvironment;
 }
 
 // Mock function to create environment base URL with ID
@@ -130,7 +130,10 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
     return {
         ir,
         getClientName: () => "TestClient",
-        customConfig: {}
+        customConfig: {},
+        hasEnvironments: () => ir.environments?.environments != null,
+        hasMultipleBaseUrls: () => ir.environments?.environments?.type === "multipleBaseUrls",
+        getEnvironmentEnumName: () => "Environment"
     } as SdkGeneratorContext;
 }
 

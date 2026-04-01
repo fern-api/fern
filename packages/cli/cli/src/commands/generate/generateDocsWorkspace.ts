@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
@@ -107,15 +107,14 @@ export async function generateDocsWorkspace({
 
     let token: FernToken | null = null;
     if (hasFdrOriginOverride) {
-        const fernToken = process.env["FERN_TOKEN"];
+        const fernToken = await getToken();
         if (!fernToken) {
-            cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
+            cliContext.failAndThrow(
+                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`."
+            );
             return;
         }
-        token = {
-            type: "organization",
-            value: fernToken
-        };
+        token = fernToken;
     } else {
         token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
