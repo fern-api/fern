@@ -127,7 +127,7 @@ import Exhaustive
         )
         let expectedResponse = "string"
         let response = try await client.inlinedRequests.getWithEnumPathParam(
-            weather: .sunny,
+            weather: "SUNNY",
             query: "query",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -159,9 +159,9 @@ import Exhaustive
         )
         let response = try await client.inlinedRequests.postWithChildResource(
             request: .init(childResource: ChildResource(
-                extra: "extra",
                 type: "type",
-                document: "document"
+                document: "document",
+                extra: "extra"
             )),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.inlinedRequests.getWithEnumPathParam(
-        weather: .sunny,
+        weather: "SUNNY",
         query: "query"
     )
 }

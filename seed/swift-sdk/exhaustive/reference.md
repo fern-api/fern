@@ -3639,7 +3639,7 @@ private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
     _ = try await client.inlinedRequests.getWithEnumPathParam(
-        weather: .sunny,
+        weather: "SUNNY",
         query: "query"
     )
 }
@@ -3721,9 +3721,9 @@ private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
     _ = try await client.inlinedRequests.postWithChildResource(request: .init(childResource: ChildResource(
-        extra: "extra",
         type: "type",
-        document: "document"
+        document: "document",
+        extra: "extra"
     )))
 }
 
