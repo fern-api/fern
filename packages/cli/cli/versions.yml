@@ -1,4 +1,134 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.53.1
+  changelogEntry:
+    - summary: |
+        Fix auto-generated path parameter examples producing object values
+        (e.g. `{ key: "value" }`) for `unknown`-typed path parameters.
+        `generatePathParameterExamples` now coerces non-primitive values to
+        a string fallback derived from the parameter name, preventing
+        `[object Object]` from appearing in generated wire test URLs.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.53.0
+  changelogEntry:
+    - summary: |
+        Log which group is being used when `fern generate` falls back to the
+        `default-group` configured in `generators.yml`, so it is clear which
+        group is running even when `--group` is not explicitly passed.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 4.52.2
+  changelogEntry:
+    - summary: |
+        Fall back to reading `auth` and `auth-schemes` from the spec's overrides
+        file when no auth is configured in `generators.yml`. This allows auth
+        configuration to live exclusively in the overrides file alongside other
+        OpenAPI overrides, without needing to duplicate it in `generators.yml`.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 4.52.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer not converting boolean enums with a single value
+        (`type: boolean, enum: [true]` or `enum: [false]`) into literal types.
+        Previously these were treated as plain `boolean`; now they correctly
+        produce `literal<true>` or `literal<false>` in the IR, resulting in
+        literal types in generated SDKs (e.g. `true` in TypeScript,
+        `typing.Literal[True]` in Python).
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.52.0
+  changelogEntry:
+    - summary: |
+        Add `integrations.context7` to `docs.yml` so Fern can upload and publish a customer-provided
+        `context7.json` verification file for docs sites.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.51.0
+  changelogEntry:
+    - summary: |
+        Make dashboard the default launch option for the "Edit this page" button.
+        Previously the default was `github`, which required users to configure
+        `launch: dashboard` explicitly.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.50.5
+  changelogEntry:
+    - summary: |
+        Fix example validation rejecting valid `null` values in `anyOf`/`oneOf`
+        schemas. The `ExampleConverter` now correctly preserves explicit `null`
+        examples (e.g. `anyOf: [{type: "string"}, {type: "null"}]` with
+        `"query": null`) instead of treating them as missing or undefined. This
+        affected both union conversion (nullish coalescing dropped null) and
+        object property validation (null was treated as omitted when the schema
+        allowed it via anyOf/oneOf).
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 4.50.4
+  changelogEntry:
+    - summary: |
+        Cache loaded OpenAPI documents across OSS validation rules to avoid
+        redundant parsing and overlay application. Previously each of the
+        4 validator rules independently called `loadOpenAPI()`, causing the
+        overlay log message to appear multiple times. Documents are now
+        pre-loaded once and shared. Also demotes the overlay temp-file log
+        from `info` to `debug`.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 4.50.3
+  changelogEntry:
+    - summary: |
+        Improve MDX validation error formatting in `fern docs md check`.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+- version: 4.50.2
+  changelogEntry:
+    - summary: |
+        Don't exclude streaming request body ref schemas during stream condition
+        processing, as they may be referenced by other operations and need to
+        remain in the generated output.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.50.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping object properties with `type: "null"`
+        (valid in OpenAPI 3.1). Properties declared as `type: "null"` were
+        silently filtered out before conversion, causing fields like
+        `conversation_id` to disappear from generated SDK response models.
+        The importer now represents `type: "null"` as `nullable(unknown)`,
+        producing `unknown | null` in TypeScript and `Optional[Any]` in Python.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.50.0
+  changelogEntry:
+    - summary: |
+        Auto-infer `x-fern-discriminator-context` for discriminated unions that
+        match the SSE event spec shape. When all variants of a discriminated union
+        have properties exclusively drawn from `{event, data, id, retry}` with
+        correct types, the discriminator context is now inferred as `protocol`
+        instead of defaulting to `data`. This applies to the legacy OpenAPI importer.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 65
+
 - version: 4.49.0
   changelogEntry:
     - summary: |
@@ -11,7 +141,6 @@
       type: feat
   createdAt: "2026-03-30"
   irVersion: 65
-
 - version: 4.48.1
   changelogEntry:
     - summary: |

@@ -129,13 +129,20 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
-    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
+    const context7FilePromise = parseContext7File({
+        rawPath: rawDocsConfiguration.integrations?.context7,
+        absoluteFilepathToDocsConfig,
+        context
+    });
+
+    const [navigation, pages, typography, css, js, metadata, context7File] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
         typographyPromise,
         cssPromise,
         jsPromise,
-        metadataPromise
+        metadataPromise,
+        context7FilePromise
     ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
@@ -186,6 +193,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        context7File,
         theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
@@ -450,6 +458,34 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableAnalytics: settings.disableAnalytics ?? false
     };
+}
+
+async function parseContext7File({
+    rawPath,
+    absoluteFilepathToDocsConfig,
+    context
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
+        return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    const contents = await readFile(absolutePath, "utf8");
+
+    try {
+        JSON.parse(contents);
+    } catch (error) {
+        context.failAndThrow(
+            `Invalid JSON in Context7 config file: ${rawPath}`,
+            error instanceof Error ? error.message : String(error)
+        );
+    }
+
+    return absolutePath;
 }
 
 function convertLayoutConfig(

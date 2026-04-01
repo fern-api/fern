@@ -1,0 +1,98 @@
+openapi: 3.0.1
+info:
+  title: undiscriminated-union-with-response-property
+  version: ''
+paths:
+  /union:
+    get:
+      operationId: getUnion
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnionResponse'
+  /unions:
+    get:
+      operationId: listUnions
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnionListResponse'
+components:
+  schemas:
+    UnionResponse:
+      title: UnionResponse
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MyUnion'
+      required:
+        - data
+    UnionListResponse:
+      title: UnionListResponse
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyUnion'
+      required:
+        - data
+    MyUnion:
+      title: MyUnion
+      oneOf:
+        - $ref: '#/components/schemas/VariantA'
+        - $ref: '#/components/schemas/VariantB'
+        - $ref: '#/components/schemas/VariantC'
+      description: |-
+        Undiscriminated union with multiple object variants.
+        This reproduces the Pipedream issue where Emitter is a union of
+        DeployedComponent, HttpInterface, and TimerInterface.
+    VariantA:
+      title: VariantA
+      type: object
+      properties:
+        type:
+          type: string
+          const: A
+        valueA:
+          type: string
+      required:
+        - type
+        - valueA
+    VariantB:
+      title: VariantB
+      type: object
+      properties:
+        type:
+          type: string
+          const: B
+        valueB:
+          type: integer
+      required:
+        - type
+        - valueB
+    VariantC:
+      title: VariantC
+      type: object
+      properties:
+        type:
+          type: string
+          const: C
+        valueC:
+          type: boolean
+      required:
+        - type
+        - valueC
+  securitySchemes: {}

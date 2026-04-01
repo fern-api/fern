@@ -208,7 +208,9 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 **Always provide explicit return types for exported functions and public methods.** This serves as documentation and catches accidental return type changes.
 
-**Prefer type guards and discriminated unions over type assertions for narrowing.** Write `if ('kind' in x)` or custom type guards rather than asserting.
+**Prefer named type guard functions over inline `in` checks.** Instead of scattering `"prop" in obj && obj.prop === value` throughout business logic, extract these into well-named type guard functions (e.g., `isInlineSchema(s)`, `schemaAllowsNull(s)`). This keeps call sites readable and centralizes the narrowing logic. Use TypeScript's `x is T` return type for type guards that narrow.
+
+**Prefer type guards and discriminated unions over type assertions for narrowing.** Write custom type guards rather than asserting.
 
 **Prefer `unknown` over `any` in generic constraints when the type truly varies.** Use `<T>` or `<T extends SomeBase>` rather than accepting `any`.
 

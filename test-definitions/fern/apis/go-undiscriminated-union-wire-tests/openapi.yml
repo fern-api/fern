@@ -1,0 +1,67 @@
+openapi: 3.0.1
+info:
+  title: go-undiscriminated-union-wire-tests
+  version: ''
+paths:
+  /rerank:
+    post:
+      description: Rerank documents based on relevance to a query
+      operationId: service_rerank
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RerankResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RerankRequest'
+components:
+  schemas:
+    DocumentItem:
+      title: DocumentItem
+      oneOf:
+        - type: string
+        - $ref: '#/components/schemas/DocumentObject'
+    DocumentObject:
+      title: DocumentObject
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+        - text
+    RerankRequest:
+      title: RerankRequest
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentItem'
+        query:
+          type: string
+      required:
+        - documents
+        - query
+    RerankResponse:
+      title: RerankResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+      required:
+        - results
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

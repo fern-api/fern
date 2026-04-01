@@ -1,0 +1,198 @@
+openapi: 3.0.1
+info:
+  title: response-property
+  version: ''
+paths:
+  /movie:
+    post:
+      operationId: service_getMovie
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/docs:
+    post:
+      operationId: service_getMovieDocs
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/name:
+    post:
+      operationId: service_getMovieName
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StringResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/metadata:
+    post:
+      operationId: service_getMovieMetadata
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/optional:
+    post:
+      operationId: service_getOptionalMovie
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+                nullable: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/optional/docs:
+    post:
+      operationId: service_getOptionalMovieDocs
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionalWithDocs'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+  /movie/optional/name:
+    post:
+      operationId: service_getOptionalMovieName
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionalStringResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+components:
+  schemas:
+    StringResponse:
+      title: StringResponse
+      type: object
+      properties:
+        data:
+          type: string
+      required:
+        - data
+    OptionalStringResponse:
+      title: OptionalStringResponse
+      $ref: '#/components/schemas/StringResponse'
+      nullable: true
+    WithMetadata:
+      title: WithMetadata
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - metadata
+    WithDocs:
+      title: WithDocs
+      type: object
+      properties:
+        docs:
+          type: string
+      required:
+        - docs
+    OptionalWithDocs:
+      title: OptionalWithDocs
+      $ref: '#/components/schemas/WithDocs'
+      nullable: true
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    Response:
+      title: Response
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Movie'
+      required:
+        - data
+      allOf:
+        - $ref: '#/components/schemas/WithMetadata'
+        - $ref: '#/components/schemas/WithDocs'
+  securitySchemes: {}

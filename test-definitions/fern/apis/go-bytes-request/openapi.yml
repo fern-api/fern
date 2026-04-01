@@ -1,0 +1,24 @@
+openapi: 3.0.1
+info:
+  title: go-bytes-request
+  version: ''
+paths:
+  /upload-content:
+    post:
+      operationId: service_upload
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+components:
+  schemas: {}
+  securitySchemes: {}

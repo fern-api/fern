@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: java-streaming-accept-header
+  version: ''
+paths:
+  /generate-stream:
+    post:
+      operationId: dummy_generate-stream
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/jsonl:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                num_events:
+                  type: integer
+              required:
+                - num_events
+  /generate:
+    post:
+      operationId: dummy_generate
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                num_events:
+                  type: integer
+              required:
+                - num_events
+components:
+  schemas:
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    StreamResponse:
+      title: StreamResponse
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          nullable: true
+      required:
+        - id
+  securitySchemes: {}

@@ -1,0 +1,214 @@
+openapi: 3.0.1
+info:
+  title: java-staged-builder-ordering
+  version: ''
+paths:
+  /staged-builder/simple:
+    post:
+      operationId: service_createSimple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimpleStaged'
+  /staged-builder/medium:
+    post:
+      operationId: service_createMedium
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediumStaged'
+  /staged-builder/complex:
+    post:
+      operationId: service_createComplex
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplexStaged'
+  /staged-builder/mixed:
+    post:
+      operationId: service_createMixed
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MixedStaged'
+  /staged-builder/parent:
+    post:
+      operationId: service_createParent
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parent'
+components:
+  schemas:
+    SimpleStaged:
+      title: SimpleStaged
+      type: object
+      properties:
+        first:
+          type: string
+        second:
+          type: string
+        third:
+          type: string
+      required:
+        - first
+        - second
+        - third
+    MediumStaged:
+      title: MediumStaged
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+        gamma:
+          type: string
+        delta:
+          type: boolean
+        optional:
+          type: string
+          nullable: true
+      required:
+        - alpha
+        - beta
+        - gamma
+        - delta
+    ComplexStaged:
+      title: ComplexStaged
+      type: object
+      properties:
+        fieldA:
+          type: string
+        fieldB:
+          type: integer
+        fieldC:
+          type: boolean
+        fieldD:
+          type: string
+        fieldE:
+          type: number
+          format: double
+        optionalX:
+          type: string
+          nullable: true
+        optionalY:
+          type: integer
+          nullable: true
+        optionalZ:
+          type: boolean
+          nullable: true
+      required:
+        - fieldA
+        - fieldB
+        - fieldC
+        - fieldD
+        - fieldE
+    MixedStaged:
+      title: MixedStaged
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        nested:
+          $ref: '#/components/schemas/SimpleStaged'
+        count:
+          type: integer
+      required:
+        - id
+        - name
+        - timestamp
+        - nested
+        - count
+    Child:
+      title: Child
+      type: object
+      properties:
+        childId:
+          type: string
+        childValue:
+          type: integer
+      required:
+        - childId
+        - childValue
+    Parent:
+      title: Parent
+      type: object
+      properties:
+        parentId:
+          type: string
+        child:
+          $ref: '#/components/schemas/Child'
+        parentName:
+          type: string
+      required:
+        - parentId
+        - child
+        - parentName
+  securitySchemes: {}

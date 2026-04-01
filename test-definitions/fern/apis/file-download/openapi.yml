@@ -1,0 +1,31 @@
+openapi: 3.0.1
+info:
+  title: file-download
+  version: ''
+paths:
+  /snippet:
+    post:
+      operationId: service_simple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /:
+    post:
+      operationId: service_downloadFile
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas: {}
+  securitySchemes: {}

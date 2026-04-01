@@ -1,0 +1,41 @@
+openapi: 3.0.1
+info:
+  title: java-builder-extension
+  version: ''
+paths:
+  /api/hello:
+    get:
+      operationId: service_hello
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloResponse'
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    HelloResponse:
+      title: HelloResponse
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.example.com
+    description: Production
+  - url: https://api.${DEV_NAMESPACE}.example.com
+    description: Development
+  - url: https://api.${STAGE_ENV}.example.com
+    description: Staging
