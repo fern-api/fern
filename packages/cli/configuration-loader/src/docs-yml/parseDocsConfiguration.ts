@@ -83,7 +83,7 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
-        llms,
+        agents,
 
         pageActions,
 
@@ -241,7 +241,7 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        llms,
+        agents,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
