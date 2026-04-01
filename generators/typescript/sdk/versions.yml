@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.9
+  changelogEntry:
+    - summary: |
+        Omit request body and Content-Type header when an optional request body
+        is not provided. Previously the SDK would send an empty serialized body
+        (e.g. `{}`) with `Content-Type: application/json` even when the caller
+        omitted the optional body argument. The generated code now wraps the
+        serialized body in a null check so that `undefined` is passed to the
+        fetcher, which in turn omits both the body and the Content-Type header
+        from the outgoing request.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 3.60.8
   changelogEntry:
     - summary: |

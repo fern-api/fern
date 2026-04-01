@@ -259,7 +259,27 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return undefined;
         }
 
-        return this.getSerializedRequestBodyWithoutNullCheck(this.requestBody, referenceToRequestBody, context);
+        const serialized = this.getSerializedRequestBodyWithoutNullCheck(
+            this.requestBody,
+            referenceToRequestBody,
+            context
+        );
+
+        if (this.requestParameter.isOptional({ context })) {
+            return ts.factory.createConditionalExpression(
+                ts.factory.createBinaryExpression(
+                    referenceToRequestBody,
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                serialized,
+                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                ts.factory.createIdentifier("undefined")
+            );
+        }
+
+        return serialized;
     }
 
     private getSerializedRequestBodyWithoutNullCheck(
