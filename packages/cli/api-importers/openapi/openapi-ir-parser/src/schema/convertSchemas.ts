@@ -938,15 +938,17 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
+            const rawDiscriminatorContext = getExtension<string>(
+                schema.discriminator,
+                FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
+            );
             const objectDiscriminatorContext =
-                getExtension<"data" | "protocol">(
-                    schema.discriminator,
-                    FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
-                ) ??
-                inferDiscriminatorContext({
-                    discriminator: schema.discriminator,
-                    context
-                });
+                rawDiscriminatorContext === "data" || rawDiscriminatorContext === "protocol"
+                    ? rawDiscriminatorContext
+                    : inferDiscriminatorContext({
+                          discriminator: schema.discriminator,
+                          context
+                      });
             if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
                 return convertDiscriminatedOneOf({
                     nameOverride,
@@ -993,15 +995,17 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
+                const rawContext = getExtension<string>(
+                    schema.discriminator,
+                    FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
+                );
                 const discriminatorContext =
-                    getExtension<"data" | "protocol">(
-                        schema.discriminator,
-                        FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
-                    ) ??
-                    inferDiscriminatorContext({
-                        discriminator: schema.discriminator,
-                        context
-                    });
+                    rawContext === "data" || rawContext === "protocol"
+                        ? rawContext
+                        : inferDiscriminatorContext({
+                              discriminator: schema.discriminator,
+                              context
+                          });
                 if (
                     (context.options.discriminatedUnionV2 || isUndiscriminated) &&
                     discriminatorContext !== "protocol"
