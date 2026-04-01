@@ -116,12 +116,11 @@ export function convertAlias({
     docs: string | undefined;
 }): OpenApiComponentSchema {
     const convertedAliasOf = convertTypeReference(aliasTypeDeclaration.aliasOf);
-    if ("$ref" in convertedAliasOf) {
-        const schema: OpenAPIV3.SchemaObject = { allOf: [convertedAliasOf] };
-        if (docs != null) {
-            schema.description = docs;
-        }
-        return schema;
+    if ("$ref" in convertedAliasOf && docs != null) {
+        return {
+            allOf: [convertedAliasOf],
+            description: docs
+        };
     }
     return {
         ...convertedAliasOf,
@@ -202,12 +201,11 @@ export function convertUnion({
             Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
         >((acc, property) => {
             const converted = convertTypeReference(property.valueType);
-            if ("$ref" in converted) {
-                const propSchema: OpenAPIV3.SchemaObject = { allOf: [converted] };
-                if (property.docs != null) {
-                    propSchema.description = property.docs;
-                }
-                acc[property.name.wireValue] = propSchema;
+            if ("$ref" in converted && property.docs != null) {
+                acc[property.name.wireValue] = {
+                    allOf: [converted],
+                    description: property.docs
+                };
             } else {
                 acc[property.name.wireValue] = {
                     description: property.docs ?? undefined,
@@ -234,12 +232,11 @@ export function convertUndiscriminatedUnion({
     return {
         oneOf: undiscriminatedUnionDeclaration.members.map((member) => {
             const converted = convertTypeReference(member.type);
-            if ("$ref" in converted) {
-                const schema: OpenAPIV3.SchemaObject = { allOf: [converted] };
-                if (member.docs != null) {
-                    schema.description = member.docs;
-                }
-                return schema;
+            if ("$ref" in converted && member.docs != null) {
+                return {
+                    allOf: [converted],
+                    description: member.docs
+                };
             }
             return {
                 description: member.docs ?? undefined,

@@ -42,7 +42,7 @@ export function convertObject({
             example = objectProperty.example.value.jsonExample;
         }
 
-        if ("$ref" in convertedObjectProperty) {
+        if ("$ref" in convertedObjectProperty && (objectProperty.docs != null || example !== undefined)) {
             // In OAS 3.0.x, $ref must be the only property — siblings are ignored.
             // Wrap in allOf to preserve description and example alongside the $ref.
             const schema: OpenApiComponentSchema = {

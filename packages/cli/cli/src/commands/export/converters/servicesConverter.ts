@@ -325,14 +325,11 @@ function convertRequestBody({
                                     },
                                     bodyProperty: (bodyProperty) => {
                                         const converted = convertTypeReference(bodyProperty.valueType);
-                                        if ("$ref" in converted) {
-                                            const schema: Record<string, unknown> = {
-                                                allOf: [converted]
-                                            };
-                                            if (bodyProperty.docs != null) {
-                                                schema.description = bodyProperty.docs;
-                                            }
-                                            acc[bodyProperty.name.wireValue] = schema as OpenAPIV3.SchemaObject;
+                                        if ("$ref" in converted && bodyProperty.docs != null) {
+                                            acc[bodyProperty.name.wireValue] = {
+                                                allOf: [converted],
+                                                description: bodyProperty.docs
+                                            } as OpenAPIV3.SchemaObject;
                                         } else {
                                             acc[bodyProperty.name.wireValue] = {
                                                 description: bodyProperty.docs ?? undefined,
