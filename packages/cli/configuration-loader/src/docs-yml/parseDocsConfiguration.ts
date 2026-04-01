@@ -244,8 +244,8 @@ export async function parseDocsConfiguration({
         llmsConfig:
             llms != null
                 ? {
-                      pageDirectivePrepend: llms["page-directive-prepend"],
-                      pageDirectiveAppend: llms["page-directive-append"]
+                      pageDirectivePrepend: llms.pageDirectiveAppend,
+                      pageDirectiveAppend: llms.pageDirectiveAppend
                   }
                 : undefined,
 
