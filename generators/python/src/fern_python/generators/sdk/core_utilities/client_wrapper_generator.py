@@ -523,63 +523,56 @@ class ClientWrapperGenerator:
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
             if basic_auth_scheme is not None:
-                either_omitted = (
-                    getattr(basic_auth_scheme, "username_omit", None) is True
-                    or getattr(basic_auth_scheme, "password_omit", None) is True
-                )
+                username_omitted = getattr(basic_auth_scheme, "username_omit", None) is True
+                password_omitted = getattr(basic_auth_scheme, "password_omit", None) is True
+
+                def _get_username_arg(var_expr: str) -> AST.Expression:
+                    return AST.Expression(f'{var_expr} or ""') if username_omitted else AST.Expression(var_expr)
+
+                def _get_password_arg(var_expr: str) -> AST.Expression:
+                    return AST.Expression(f'{var_expr} or ""') if password_omitted else AST.Expression(var_expr)
+
                 if not self._context.ir.sdk_config.is_auth_mandatory:
                     username_var = names.get_username_constructor_parameter_name(basic_auth_scheme)
                     password_var = names.get_password_constructor_parameter_name(basic_auth_scheme)
                     writer.write_line(f"{username_var} = self.{names.get_username_getter_name(basic_auth_scheme)}()")
                     writer.write_line(f"{password_var} = self.{names.get_password_getter_name(basic_auth_scheme)}()")
-                    condition_op = "or" if either_omitted else "and"
-                    writer.write_line(f"if {username_var} is not None {condition_op} {password_var} is not None:")
+                    # Per-field condition: required fields must be present, omittable fields are always satisfied
+                    if not username_omitted and not password_omitted:
+                        condition = f"{username_var} is not None and {password_var} is not None"
+                    elif username_omitted and password_omitted:
+                        condition = f"{username_var} is not None or {password_var} is not None"
+                    elif username_omitted:
+                        condition = f"{password_var} is not None"
+                    else:
+                        condition = f"{username_var} is not None"
+                    writer.write_line(f"if {condition}:")
                     with writer.indent():
                         writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                        if either_omitted:
-                            writer.write_node(
-                                AST.ClassInstantiation(
-                                    class_=httpx.HttpX.BASIC_AUTH,
-                                    args=[
-                                        AST.Expression(f'{username_var} or ""'),
-                                        AST.Expression(f'{password_var} or ""'),
-                                    ],
-                                )
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=httpx.HttpX.BASIC_AUTH,
+                                args=[
+                                    _get_username_arg(username_var),
+                                    _get_password_arg(password_var),
+                                ],
                             )
-                        else:
-                            writer.write_node(
-                                AST.ClassInstantiation(
-                                    class_=httpx.HttpX.BASIC_AUTH,
-                                    args=[
-                                        AST.Expression(f"{username_var}"),
-                                        AST.Expression(f"{password_var}"),
-                                    ],
-                                )
-                            )
+                        )
                         writer.write("._auth_header")
                         writer.write_newline_if_last_line_not()
                 else:
                     writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                    if either_omitted:
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
-                                args=[
-                                    AST.Expression(f'self.{names.get_username_getter_name(basic_auth_scheme)}() or ""'),
-                                    AST.Expression(f'self.{names.get_password_getter_name(basic_auth_scheme)}() or ""'),
-                                ],
-                            )
+                    username_getter = f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
+                    password_getter = f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=httpx.HttpX.BASIC_AUTH,
+                            args=[
+                                _get_username_arg(username_getter),
+                                _get_password_arg(password_getter),
+                            ],
                         )
-                    else:
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
-                                args=[
-                                    AST.Expression(f"self.{names.get_username_getter_name(basic_auth_scheme)}()"),
-                                    AST.Expression(f"self.{names.get_password_getter_name(basic_auth_scheme)}()"),
-                                ],
-                            )
-                        )
+                    )
                     writer.write("._auth_header")
                     writer.write_newline_if_last_line_not()
             for param in constructor_parameters:
@@ -829,14 +822,17 @@ class ClientWrapperGenerator:
 
         basic_auth_scheme = self._get_basic_auth_scheme()
         if basic_auth_scheme is not None:
+            username_omitted = getattr(basic_auth_scheme, "username_omit", None) is True
+            password_omitted = getattr(basic_auth_scheme, "password_omit", None) is True
             username_constructor_parameter_name = names.get_username_constructor_parameter_name(basic_auth_scheme)
+            username_is_optional = not self._context.ir.sdk_config.is_auth_mandatory or username_omitted
             username_constructor_parameter = ConstructorParameter(
                 constructor_parameter_name=username_constructor_parameter_name,
                 private_member_name=names.get_username_member_name(basic_auth_scheme),
                 type_hint=(
-                    ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                    if self._context.ir.sdk_config.is_auth_mandatory
-                    else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    if username_is_optional
+                    else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 ),
                 initializer=AST.Expression(
                     f'{username_constructor_parameter_name}="YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}"',
@@ -846,17 +842,17 @@ class ClientWrapperGenerator:
                     signature=AST.FunctionSignature(
                         parameters=[],
                         return_type=(
-                            AST.TypeHint.str_()
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else AST.TypeHint.optional(AST.TypeHint.str_())
+                            AST.TypeHint.optional(AST.TypeHint.str_())
+                            if username_is_optional
+                            else AST.TypeHint.str_()
                         ),
                     ),
                     body=AST.CodeWriter(
-                        self._get_required_getter_body_writer(
+                        self._get_optional_getter_body_writer(
                             member_name=names.get_username_member_name(basic_auth_scheme)
                         )
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else self._get_optional_getter_body_writer(
+                        if username_is_optional
+                        else self._get_required_getter_body_writer(
                             member_name=names.get_username_member_name(basic_auth_scheme)
                         )
                     ),
@@ -879,13 +875,14 @@ class ClientWrapperGenerator:
                 ),
             )
             password_constructor_parameter_name = names.get_password_constructor_parameter_name(basic_auth_scheme)
+            password_is_optional = not self._context.ir.sdk_config.is_auth_mandatory or password_omitted
             password_constructor_parameter = ConstructorParameter(
                 constructor_parameter_name=password_constructor_parameter_name,
                 private_member_name=names.get_password_member_name(basic_auth_scheme),
                 type_hint=(
-                    ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                    if self._context.ir.sdk_config.is_auth_mandatory
-                    else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    if password_is_optional
+                    else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 ),
                 initializer=AST.Expression(
                     f'{password_constructor_parameter_name}="YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}"',
@@ -895,17 +892,17 @@ class ClientWrapperGenerator:
                     signature=AST.FunctionSignature(
                         parameters=[],
                         return_type=(
-                            AST.TypeHint.str_()
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else AST.TypeHint.optional(AST.TypeHint.str_())
+                            AST.TypeHint.optional(AST.TypeHint.str_())
+                            if password_is_optional
+                            else AST.TypeHint.str_()
                         ),
                     ),
                     body=AST.CodeWriter(
-                        self._get_required_getter_body_writer(
+                        self._get_optional_getter_body_writer(
                             member_name=names.get_password_member_name(basic_auth_scheme)
                         )
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else self._get_optional_getter_body_writer(
+                        if password_is_optional
+                        else self._get_required_getter_body_writer(
                             member_name=names.get_password_member_name(basic_auth_scheme)
                         )
                     ),
