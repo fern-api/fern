@@ -680,6 +680,7 @@
         {
           "allPathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The unique identifier of the user",
               "explode": undefined,
               "location": "ENDPOINT",
@@ -814,6 +815,7 @@
           },
           "pathParameters": [
             {
+              "clientDefault": undefined,
               "docs": "The unique identifier of the user",
               "explode": undefined,
               "location": "ENDPOINT",
@@ -867,6 +869,7 @@
             {
               "allowMultiple": false,
               "availability": undefined,
+              "clientDefault": undefined,
               "docs": "Whether to include user metadata",
               "explode": undefined,
               "name": {
