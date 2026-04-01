@@ -11,6 +11,37 @@ packages:
   - "!packages/cli/cli-v2/dist/dev"
   - "!packages/cli/cli-v2/dist/prod"
 
+# Supply chain security settings
+# See: https://pnpm.io/settings
+onlyBuiltDependencies:
+  - "@sentry/cli"
+  - esbuild
+  - puppeteer
+
+# Require packages to be published for at least 1 day before they can be installed.
+# This mitigates supply chain attacks like the axios compromise (March 2026) where
+# malicious versions were published and removed within hours.
+minimumReleaseAge: 1440
+
+# Exempt internal Fern packages from the release age requirement since they are
+# published and consumed frequently within the monorepo ecosystem.
+minimumReleaseAgeExclude:
+  - "@fern-api/*"
+  - "@fern-fern/*"
+
+# Prevent trust level downgrades (e.g. a previously trusted-publisher package
+# losing its attestation). Catches compromised maintainer accounts.
+trustPolicy: no-downgrade
+
+# Only enforce trust checks on versions published within the last day.
+# Older versions that lost attestation are unlikely to be supply chain attacks;
+# attacks target the install window immediately after compromise.
+trustPolicyIgnoreAfter: 1440
+
+# Block transitive dependencies from using exotic sources (git repos, tarball URLs).
+# Only direct dependencies may use non-registry sources.
+blockExoticSubdeps: true
+
 catalog:
   "@babel/core": ^7.29.0
   "@babel/preset-env": ^7.29.2
