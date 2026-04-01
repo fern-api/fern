@@ -60,7 +60,14 @@ async fn main() {
     let client = BytesUploadClient::new(config).expect("Failed to build client");
     client
         .service
-        .upload_with_query_params(&"nova-2".to_string(), &None, &vec![], None)
+        .upload_with_query_params(
+            &UploadWithQueryParamsRequest {
+                model: "nova-2".to_string(),
+                body: todo!("Invalid bytes value"),
+                language: None,
+            },
+            None,
+        )
         .await;
 }
 ```
