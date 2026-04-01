@@ -22,6 +22,9 @@ export declare namespace PublishCommand {
         strict: boolean;
         preview: boolean;
         "skip-upload": boolean;
+
+        /** Require all referenced environment variables to be defined */
+        "require-env-vars": boolean;
     }
 }
 
@@ -136,7 +139,8 @@ export class PublishCommand {
             const result = await publisher.publish({
                 instanceUrl,
                 preview: args.preview,
-                skipUpload: args["skip-upload"] || undefined
+                skipUpload: args["skip-upload"] || undefined,
+                requireEnvVars: args["require-env-vars"]
             });
             if (!result.success) {
                 docsTask.stage.publish.fail(result.error);
@@ -291,6 +295,12 @@ export function addPublishCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description: "Generate a preview link instead of publishing to production",
                     hidden: true
+                })
+                .option("require-env-vars", {
+                    type: "boolean",
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 })
     );
 }

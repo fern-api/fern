@@ -65,6 +65,9 @@ export namespace LegacyRemoteGenerationRunner {
         /** Ignore the .fernignore file and upload an empty one */
         skipFernignore?: boolean;
 
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
+
         /** Version override for the generated SDK */
         version?: string;
     }
@@ -131,7 +134,7 @@ export class LegacyRemoteGenerationRunner {
                 whitelabel: undefined,
                 dynamicIrOnly: false,
                 retryRateLimited: false,
-                requireEnvVars: true
+                requireEnvVars: args.requireEnvVars ?? true
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {
