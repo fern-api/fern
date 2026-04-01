@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: go-undiscriminated-union-wire-tests
-  version: ''
+  version: ""
 paths:
   /rerank:
     post:
@@ -11,25 +11,25 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RerankResponse'
+                $ref: "#/components/schemas/RerankResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RerankRequest'
+              $ref: "#/components/schemas/RerankRequest"
 components:
   schemas:
     DocumentItem:
       title: DocumentItem
       oneOf:
         - type: string
-        - $ref: '#/components/schemas/DocumentObject'
+        - $ref: "#/components/schemas/DocumentObject"
     DocumentObject:
       title: DocumentObject
       type: object
@@ -45,7 +45,7 @@ components:
         documents:
           type: array
           items:
-            $ref: '#/components/schemas/DocumentItem'
+            $ref: "#/components/schemas/DocumentItem"
         query:
           type: string
       required:

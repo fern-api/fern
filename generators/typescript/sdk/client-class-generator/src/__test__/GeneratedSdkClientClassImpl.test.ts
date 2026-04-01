@@ -2,6 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createMinimalIR,
@@ -126,6 +127,7 @@ function createClientClass(opts?: {
 }): GeneratedSdkClientClassImpl {
     const ir = opts?.ir ?? createIR();
     return new GeneratedSdkClientClassImpl({
+        caseConverter,
         isRoot: opts?.isRoot ?? true,
         importsManager: createMockImportsManager(),
         exportsManager: createMockExportsManager(),
@@ -157,10 +159,10 @@ function createClientClass(opts?: {
 }
 
 /**
- * Creates a minimal mock SdkContext.
+ * Creates a minimal mock FileContext.
  */
-// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
-function createMockSdkContext(opts?: { ir?: FernIr.IntermediateRepresentation }): any {
+// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
+function createMockFileContext(opts?: { ir?: FernIr.IntermediateRepresentation }): any {
     return {
         ir: opts?.ir ?? createMinimalIR(),
         sourceFile: {
@@ -266,7 +268,8 @@ function createMockSdkContext(opts?: { ir?: FernIr.IntermediateRepresentation })
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("Readable")
                 }
             }
-        }
+        },
+        case: caseConverter
     };
 }
 
@@ -430,14 +433,14 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("getReferenceToFetcher", () => {
         it("returns core.fetcher when custom fetcher not allowed", () => {
             const clientClass = createClientClass({ allowCustomFetcher: false });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = clientClass.getReferenceToFetcher(context);
             expect(serializeExpression(ref)).toBe("core.fetcher");
         });
 
         it("returns options.fetcher ?? core.fetcher when custom fetcher allowed", () => {
             const clientClass = createClientClass({ allowCustomFetcher: true });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = clientClass.getReferenceToFetcher(context);
             expect(serializeExpression(ref)).toMatchSnapshot();
         });
@@ -658,7 +661,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("getReferenceToLogger", () => {
         it("returns this._options.logging", () => {
             const clientClass = createClientClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = clientClass.getReferenceToLogger(context);
             expect(serializeExpression(ref)).toBe("this._options.logging");
         });
@@ -683,7 +686,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("getEndpoint", () => {
         it("returns undefined when no endpoints exist", () => {
             const clientClass = createClientClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const endpoint = clientClass.getEndpoint({ context, endpointId: "nonexistent" });
             expect(endpoint).toBeUndefined();
         });
@@ -705,7 +708,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 }
             });
             const clientClass = createClientClass({ ir });
-            const context = createMockSdkContext({ ir });
+            const context = createMockFileContext({ ir });
             const endpoint = clientClass.getEndpoint({ context, endpointId: httpEndpoint.id });
             expect(endpoint).toBeDefined();
             expect(endpoint?.endpoint.id).toBe(httpEndpoint.id);
@@ -715,7 +718,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("invokeEndpoint", () => {
         it("returns undefined for nonexistent endpoint", () => {
             const clientClass = createClientClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = clientClass.invokeEndpoint({
                 context,
                 endpointId: "nonexistent",
@@ -729,7 +732,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("getBaseUrl", () => {
         it("returns baseUrl ?? environment reference", () => {
             const clientClass = createClientClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const endpoint = createHttpEndpoint();
             const ref = clientClass.getBaseUrl(endpoint, context);
             expect(serializeExpression(ref)).toMatchSnapshot();
@@ -953,7 +956,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 }
             });
             const clientClass = createClientClass({ ir, neverThrowErrors: true });
-            const context = createMockSdkContext({ ir });
+            const context = createMockFileContext({ ir });
             const endpoint = clientClass.getEndpoint({
                 context,
                 endpointId: ir.rootPackage.service ? (ir.services[ir.rootPackage.service]?.endpoints[0]?.id ?? "") : ""
@@ -965,7 +968,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("requireDefaultEnvironment", () => {
         it("throws when requireDefaultEnvironment is true and no default environment", () => {
             const clientClass = createClientClass({ requireDefaultEnvironment: true });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const endpoint = createHttpEndpoint();
             expect(() => clientClass.getEnvironment(endpoint, context)).toThrow(
                 "Cannot use default environment because none exists"
@@ -977,7 +980,7 @@ describe("GeneratedSdkClientClassImpl", () => {
             const defaultEnvExpr = ts.factory.createStringLiteral("https://api.example.com");
             // biome-ignore lint/suspicious/noExplicitAny: test mock override
             const context: any = {
-                ...createMockSdkContext(),
+                ...createMockFileContext(),
                 environments: {
                     getGeneratedEnvironments: () => ({
                         getReferenceToDefaultEnvironment: () => defaultEnvExpr,
@@ -999,7 +1002,7 @@ describe("GeneratedSdkClientClassImpl", () => {
     describe("getOptionsPropertiesForSnippet", () => {
         it("includes environment property when no default environment and not requireDefaultEnvironment", () => {
             const clientClass = createClientClass({ requireDefaultEnvironment: false });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const props = clientClass.getOptionsPropertiesForSnippet(context);
             // Should include environment: "YOUR_BASE_URL" since no default env and no first enum
             expect(props.length).toBeGreaterThan(0);
@@ -1035,7 +1038,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 }
             });
             const clientClass = createClientClass({ ir });
-            const context = createMockSdkContext({ ir });
+            const context = createMockFileContext({ ir });
             const props = clientClass.getOptionsPropertiesForSnippet(context);
             // Should include both environment and auth token properties
             expect(props.length).toBeGreaterThanOrEqual(1);

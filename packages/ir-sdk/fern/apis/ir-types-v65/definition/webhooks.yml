@@ -1,0 +1,215 @@
+imports:
+  commons: commons.yml
+  types: types.yml
+  http: http.yml
+  examples: examples.yml
+
+types:
+  WebhookGroup: list<Webhook>
+
+  Webhook:
+    extends: commons.Declaration
+    properties:
+      id: commons.WebhookId
+      name: WebhookName
+      displayName: optional<string>
+      method: WebhookHttpMethod
+      headers: list<http.HttpHeader>
+      payload: WebhookPayload
+      signatureVerification:
+        type: optional<WebhookSignatureVerification>
+        docs: |
+          Configuration for verifying webhook signatures. When present, SDK generators
+          can produce utilities that verify the signature of incoming webhook requests.
+      fileUploadPayload:
+        type: optional<http.FileUploadRequest>
+        docs: |
+          Optional multipart form data payload for webhooks that use multipart/form-data content type.
+          This is populated when the webhook request body uses multipart/form-data encoding.
+          When set, the payload field will contain a reference type as a placeholder.
+      responses: optional<list<http.HttpResponse>>
+      examples: optional<list<ExampleWebhookCall>>
+      v2Examples: optional<examples.V2WebhookExamples>
+
+  WebhookName: commons.Name
+
+  WebhookPayload:
+    union:
+      inlinedPayload: InlinedWebhookPayload
+      reference: WebhookPayloadReference
+
+  WebhookPayloadReference:
+    extends: commons.WithDocs
+    properties:
+      payloadType: types.TypeReference
+
+  InlinedWebhookPayload:
+    properties:
+      name: commons.Name
+      extends: list<types.DeclaredTypeName>
+      properties: list<InlinedWebhookPayloadProperty>
+
+  InlinedWebhookPayloadProperty:
+    extends: commons.WithDocsAndAvailability
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+
+  WebhookHttpMethod:
+    enum:
+      - GET
+      - POST
+
+  ExampleWebhookCall:
+    docs: |
+      An example webhook call. For now, this only includes the payload,
+      but it can be easily extended to support other endpoint properties
+      (e.g. headers).
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      payload: types.ExampleTypeReference
+
+  WebhookSignatureVerification:
+    docs: |
+      Configuration for verifying webhook signatures. When present, SDK generators
+      can produce utilities that verify the signature of incoming webhook requests.
+    union:
+      hmac:
+        type: HmacSignatureVerification
+        docs: HMAC-based signature verification using a shared secret.
+      asymmetric:
+        type: AsymmetricKeySignatureVerification
+        docs: Asymmetric key signature verification using a public key or JWKS endpoint.
+
+  HmacSignatureVerification:
+    properties:
+      signatureHeaderName:
+        type: commons.NameAndWireValue
+        docs: The HTTP header that contains the webhook signature.
+      algorithm: HmacAlgorithm
+      encoding: WebhookSignatureEncoding
+      signaturePrefix:
+        type: optional<string>
+        docs: |
+          Prefix prepended to the signature in the header value.
+          For example, GitHub uses "sha256=" so the header value is "sha256=<signature>".
+          When set, the prefix is stripped before comparing signatures.
+      payloadFormat: WebhookPayloadFormat
+      timestamp: optional<WebhookTimestampConfig>
+
+  HmacAlgorithm:
+    docs: The HMAC algorithm used to compute the webhook signature.
+    enum:
+      - SHA256
+      - SHA1
+      - SHA384
+      - SHA512
+
+  AsymmetricKeySignatureVerification:
+    properties:
+      signatureHeaderName:
+        type: commons.NameAndWireValue
+        docs: The HTTP header that contains the webhook signature.
+      algorithm: AsymmetricAlgorithm
+      encoding: WebhookSignatureEncoding
+      signaturePrefix:
+        type: optional<string>
+        docs: |
+          Prefix prepended to the signature in the header value.
+          When set, the prefix is stripped before comparing signatures.
+      keySource: AsymmetricKeySource
+      timestamp: optional<WebhookTimestampConfig>
+
+  AsymmetricAlgorithm:
+    docs: The asymmetric signing algorithm.
+    enum:
+      - RSA_SHA256
+      - RSA_SHA384
+      - RSA_SHA512
+      - ECDSA_SHA256
+      - ECDSA_SHA384
+      - ECDSA_SHA512
+      - ED25519
+
+  AsymmetricKeySource:
+    union:
+      jwks:
+        type: JwksKeySource
+        docs: Fetch public keys from a JWKS endpoint.
+      static:
+        type: StaticKeySource
+        docs: Use a static public key provided at runtime.
+
+  JwksKeySource:
+    properties:
+      url:
+        type: string
+        docs: The JWKS endpoint URL.
+      keyIdHeader:
+        type: optional<commons.NameAndWireValue>
+        docs: Optional HTTP header containing the key ID to select from the JWKS set.
+
+  StaticKeySource:
+    properties: {}
+
+  WebhookSignatureEncoding:
+    docs: The encoding of the computed signature.
+    enum:
+      - BASE64
+      - HEX
+
+  WebhookTimestampConfig:
+    docs: |
+      Configuration for timestamp-based replay protection.
+      When present, the webhook consumer should reject requests
+      where the timestamp is outside the allowed tolerance window.
+    properties:
+      headerName:
+        type: commons.NameAndWireValue
+        docs: The HTTP header containing the delivery timestamp.
+      format: WebhookTimestampFormat
+      tolerance:
+        type: optional<integer>
+        docs: Allowed clock skew in seconds. Defaults to 300 (5 minutes).
+
+  WebhookTimestampFormat:
+    docs: The format of the timestamp value in the header.
+    enum:
+      - UNIX_SECONDS
+      - UNIX_MILLIS
+      - ISO8601
+
+  WebhookPayloadFormat:
+    docs: |
+      Describes how the signed payload is constructed from webhook request components.
+      Components are concatenated in order using the specified delimiter.
+    properties:
+      components:
+        type: list<WebhookPayloadComponent>
+        docs: Ordered list of components to concatenate when computing the signature.
+      delimiter:
+        type: string
+        docs: String used to join components. Use empty string for direct concatenation.
+      bodySort:
+        type: optional<WebhookPayloadBodySort>
+        docs: |
+          When set, POST body parameters are sorted before being concatenated
+          into the signing payload. Required by providers like Twilio.
+
+  WebhookPayloadBodySort:
+    docs: The sort order to apply to POST body parameters before signing.
+    enum:
+      - ALPHABETICAL
+
+  WebhookPayloadComponent:
+    docs: A component included in the signed payload.
+    enum:
+      - value: BODY
+        docs: The raw request body.
+      - value: TIMESTAMP
+        docs: The delivery timestamp value from the timestamp header.
+      - value: NOTIFICATION_URL
+        docs: The notification/callback URL.
+      - value: MESSAGE_ID
+        docs: A provider-assigned message identifier.

@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { getOriginalName, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createHttpService,
@@ -22,7 +23,7 @@ import { StatusCodeDiscriminatedEndpointErrorSchema } from "../StatusCodeDiscrim
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -95,7 +96,10 @@ function createMockSdkContext() {
         sdkError: {
             getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => ({
                 name: errorName,
-                discriminantValue: createNameAndWireValue(errorName.name.originalName, errorName.name.originalName),
+                discriminantValue: createNameAndWireValue(
+                    getOriginalName(errorName.name),
+                    getOriginalName(errorName.name)
+                ),
                 type: undefined,
                 statusCode: 400
             })
@@ -167,7 +171,8 @@ describe("SdkEndpointTypeSchemasGenerator", () => {
             skipResponseValidation: false,
             includeSerdeLayer: true,
             allowExtraFields: false,
-            omitUndefined: false
+            omitUndefined: false,
+            caseConverter
         });
         const endpoint = createHttpEndpoint();
         const service: FernIr.HttpService = { ...createHttpService(), endpoints: [endpoint] };
@@ -187,7 +192,8 @@ describe("SdkEndpointTypeSchemasGenerator", () => {
             skipResponseValidation: false,
             includeSerdeLayer: true,
             allowExtraFields: false,
-            omitUndefined: false
+            omitUndefined: false,
+            caseConverter
         });
         const endpoint = createHttpEndpoint();
         const service: FernIr.HttpService = { ...createHttpService(), endpoints: [endpoint] };
@@ -227,7 +233,8 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
             skipResponseValidation: opts.skipResponseValidation ?? false,
             includeSerdeLayer: opts.includeSerdeLayer ?? true,
             allowExtraFields: opts.allowExtraFields ?? false,
-            omitUndefined: opts.omitUndefined ?? false
+            omitUndefined: opts.omitUndefined ?? false,
+            caseConverter
         });
     }
 
@@ -235,7 +242,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
         it("writes nothing for endpoint with no schemas to generate", () => {
             const endpoint = createHttpEndpoint();
             const schemas = createEndpointSchemas({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toBe("");
         });
@@ -252,7 +259,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -276,7 +283,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             // Named types don't generate request schema
             expect(context.sourceFile.getFullText()).toBe("");
@@ -294,7 +301,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toBe("");
         });
@@ -313,7 +320,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -336,7 +343,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -366,7 +373,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toBe("");
         });
@@ -390,7 +397,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -421,7 +428,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toBe("");
         });
@@ -453,7 +460,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 endpoint: endpointWithRefBody,
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             // No schemas generated when serde layer disabled
             expect(context.sourceFile.getFullText()).toBe("");
@@ -483,7 +490,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithBoth });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -502,7 +509,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("request");
             const result = schemas.serializeRequest(ref, context);
@@ -528,7 +535,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("request");
             const result = schemas.serializeRequest(ref, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -546,7 +553,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("request");
             const result = schemas.serializeRequest(ref, context);
             expect(getTextOfTsNode(result)).toBe("request");
@@ -567,7 +574,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 endpoint: endpointWithRefBody,
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("request");
             const result = schemas.serializeRequest(ref, context);
             expect(getTextOfTsNode(result)).toBe("request");
@@ -576,7 +583,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
         it("throws for non-reference request body", () => {
             const endpoint = createHttpEndpoint();
             const schemas = createEndpointSchemas({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("request");
             expect(() => schemas.serializeRequest(ref, context)).toThrow(
                 "Cannot serialize request because it's not a reference"
@@ -603,7 +610,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
@@ -635,7 +642,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -659,7 +666,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toBe("response");
@@ -686,7 +693,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 endpoint: endpointWithResponse,
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -707,7 +714,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toBe("response");
@@ -728,7 +735,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toBe("response");
@@ -749,7 +756,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -774,7 +781,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             expect(() => schemas.deserializeResponse(ref, context)).toThrow("Cannot deserialize streaming response");
         });
@@ -782,7 +789,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
         it("throws when no response body defined", () => {
             const endpoint = createHttpEndpoint();
             const schemas = createEndpointSchemas({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             expect(() => schemas.deserializeResponse(ref, context)).toThrow(
                 "Cannot deserialize response because it's not defined"
@@ -810,7 +817,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("streamData");
             const result = schemas.deserializeStreamData({ referenceToRawStreamData: ref, context });
@@ -843,7 +850,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("streamData");
             const result = schemas.deserializeStreamData({ referenceToRawStreamData: ref, context });
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -868,7 +875,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("streamData");
             const result = schemas.deserializeStreamData({ referenceToRawStreamData: ref, context });
             expect(getTextOfTsNode(result)).toBe("streamData");
@@ -877,7 +884,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
         it("throws for non-streaming endpoint", () => {
             const endpoint = createHttpEndpoint();
             const schemas = createEndpointSchemas({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("streamData");
             expect(() => schemas.deserializeStreamData({ referenceToRawStreamData: ref, context })).toThrow(
                 "Cannot deserialize stream data"
@@ -893,7 +900,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 includeSerdeLayer: false,
                 shouldGenerateErrors: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("error");
             const result = schemas.deserializeError(ref, context);
             expect(getTextOfTsNode(result)).toBe("error");
@@ -905,7 +912,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 endpoint,
                 shouldGenerateErrors: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("error");
             expect(() => schemas.deserializeError(ref, context)).toThrow("Cannot deserialize endpoint error");
         });
@@ -923,7 +930,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 shouldGenerateErrors: true,
                 errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             // Status code strategy is a no-op for writeToFile
             expect(context.sourceFile.getFullText()).toBe("");
@@ -940,7 +947,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 shouldGenerateErrors: true,
                 errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(() => schemas.getReferenceToRawError(context)).toThrow(
                 "No endpoint error schema was generated because errors are status-code discriminated"
             );
@@ -1013,7 +1020,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                     contentProperty: createNameAndWireValue("content", "content")
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("error");
             const result = schemas.deserializeError(ref, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -1033,7 +1040,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                     contentProperty: createNameAndWireValue("content", "content")
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = schemas.getReferenceToRawError(context);
             expect(getTextOfTsNode(result)).toBeDefined();
         });
@@ -1085,7 +1092,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("streamData");
             const result = schemas.deserializeStreamData({ referenceToRawStreamData: ref, context });
@@ -1097,7 +1104,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
         it("throws when no response schema was generated", () => {
             const endpoint = createHttpEndpoint();
             const schemas = createEndpointSchemas({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(() => schemas.getReferenceToRawResponse(context)).toThrow("No response schema was generated");
         });
     });
@@ -1117,7 +1124,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 })
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("request");
             const result = schemas.serializeRequest(ref, context);
@@ -1148,7 +1155,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schemas.writeToFile(context);
             const ref = ts.factory.createIdentifier("response");
             const result = schemas.deserializeResponse(ref, context);
@@ -1181,7 +1188,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 }
             };
             const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("response");
             expect(() => schemas.deserializeResponse(ref, context)).toThrow(
                 "Cannot deserialize streaming response in deserializeResponse"
@@ -1208,7 +1215,7 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                     v2Examples: undefined
                 })
             };
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             // Override getTypeDeclaration to return extraProperties=true
             context.type.getTypeDeclaration = () => ({
                 shape: FernIr.Type.object({
@@ -1235,21 +1242,21 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
 
 describe("StatusCodeDiscriminatedEndpointErrorSchema", () => {
     it("writeToFile is a no-op", () => {
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         StatusCodeDiscriminatedEndpointErrorSchema.writeToFile(context);
         // Should not modify the source file
         expect(context.sourceFile.getFullText()).toBe("");
     });
 
     it("getReferenceToRawShape throws", () => {
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         expect(() => StatusCodeDiscriminatedEndpointErrorSchema.getReferenceToRawShape(context)).toThrow(
             "No endpoint error schema was generated because errors are status-code discriminated"
         );
     });
 
     it("getReferenceToZurgSchema throws", () => {
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         expect(() => StatusCodeDiscriminatedEndpointErrorSchema.getReferenceToZurgSchema(context)).toThrow(
             "No endpoint error schema was generated because errors are status-code discriminated"
         );
@@ -1323,9 +1330,10 @@ describe("RawSinglePropertyErrorSingleUnionType", () => {
             packageId: TEST_PACKAGE_ID,
             endpoint: endpointWithErrors,
             errorResolver: createMockErrorResolver(errorDeclarations),
-            discriminationStrategy
+            discriminationStrategy,
+            caseConverter
         });
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         // Override sdkError to return the typed error declaration
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         (context as any).sdkError = {
@@ -1354,8 +1362,8 @@ describe("RawSinglePropertyErrorSingleUnionType", () => {
             contentProperty: createNameAndWireValue("content", "content")
         };
 
-        // Create a mock SdkContext that returns an error with no type
-        const mockContext = createMockSdkContext();
+        // Create a mock FileContext that returns an error with no type
+        const mockContext = createMockFileContext();
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         (mockContext as any).sdkError = {
             getErrorDeclaration: () => ({
@@ -1411,7 +1419,8 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
         expect(schema).toBeDefined();
     });
@@ -1431,7 +1440,8 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
         expect(schema).toBeDefined();
     });
@@ -1450,9 +1460,10 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         schema.writeToFile(context);
         const output = context.sourceFile.getFullText();
         expect(output).toMatchSnapshot();
@@ -1472,9 +1483,10 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const rawShape = schema.getReferenceToRawShape(context);
         expect(rawShape).toBeDefined();
     });
@@ -1493,9 +1505,10 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const zurgSchema = schema.getReferenceToZurgSchema(context);
         expect(zurgSchema).toBeDefined();
         expect(zurgSchema.toExpression()).toBeDefined();
@@ -1534,9 +1547,10 @@ describe("GeneratedEndpointErrorSchemaImpl", () => {
             discriminationStrategy: {
                 discriminant: createNameAndWireValue("errorName", "errorName"),
                 contentProperty: createNameAndWireValue("content", "content")
-            }
+            },
+            caseConverter
         });
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         // Override sdkError to return proper typed/untyped declarations
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         (context as any).sdkError = {

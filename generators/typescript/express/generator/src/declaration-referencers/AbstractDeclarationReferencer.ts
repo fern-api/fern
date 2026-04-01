@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import {
     ExportedDirectory,
@@ -13,16 +14,19 @@ export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         namespaceExport: string;
         containingDirectory: ExportedDirectory[];
+        caseConverter: CaseConverter;
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
+    protected readonly caseConverter: CaseConverter;
 
-    constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
+    constructor({ namespaceExport, containingDirectory, caseConverter }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
+        this.caseConverter = caseConverter;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

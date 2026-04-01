@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface QueryParameter extends FernIr.Declaration {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     allowMultiple: boolean;
     /**

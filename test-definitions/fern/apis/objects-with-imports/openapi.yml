@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: objects-with-imports
-  version: ''
+  version: ""
 paths: {}
 components:
   schemas:
@@ -15,7 +15,7 @@ components:
           type: string
           nullable: true
         metadata:
-          $ref: '#/components/schemas/commonsMetadata'
+          $ref: "#/components/schemas/commonsMetadata"
           nullable: true
       required:
         - id
@@ -26,7 +26,7 @@ components:
         nodes:
           type: array
           items:
-            $ref: '#/components/schemas/Node'
+            $ref: "#/components/schemas/Node"
           nullable: true
     commonsMetadata:
       title: commonsMetadata
@@ -50,7 +50,7 @@ components:
         contents:
           type: string
         info:
-          $ref: '#/components/schemas/FileInfo'
+          $ref: "#/components/schemas/FileInfo"
       required:
         - name
         - contents
@@ -70,12 +70,12 @@ components:
         files:
           type: array
           items:
-            $ref: '#/components/schemas/File'
+            $ref: "#/components/schemas/File"
           nullable: true
         directories:
           type: array
           items:
-            $ref: '#/components/schemas/fileDirectory'
+            $ref: "#/components/schemas/fileDirectory"
           nullable: true
       required:
         - name

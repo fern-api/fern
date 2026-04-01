@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
-
+import { getWireValue } from "@fern-api/ir-utils";
 import { FernFileContext } from "../../FernFileContext.js";
 import { convertDeclaration } from "../convertDeclaration.js";
 
@@ -25,7 +25,7 @@ export function convertEnumTypeDeclaration({
     });
     let defaultValue: EnumValue | undefined;
     if (_enum.default != null) {
-        defaultValue = values.find((enumValue) => enumValue.name.wireValue === _enum.default);
+        defaultValue = values.find((enumValue) => getWireValue(enumValue.name) === _enum.default);
         if (defaultValue == null) {
             throw new Error(`Default value ${_enum.default} not found in enum values`);
         }

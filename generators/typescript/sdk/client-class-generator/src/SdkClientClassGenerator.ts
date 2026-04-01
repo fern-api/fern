@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
@@ -7,6 +8,7 @@ import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
+        caseConverter: CaseConverter;
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         errorResolver: ErrorResolver;
         packageResolver: PackageResolver;
@@ -44,6 +46,7 @@ export declare namespace SdkClientClassGenerator {
 }
 
 export class SdkClientClassGenerator {
+    private readonly caseConverter: CaseConverter;
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly packageResolver: PackageResolver;
@@ -70,6 +73,7 @@ export class SdkClientClassGenerator {
     private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
+        caseConverter,
         intermediateRepresentation,
         errorResolver,
         packageResolver,
@@ -95,6 +99,7 @@ export class SdkClientClassGenerator {
         parameterNaming,
         offsetSemantics
     }: SdkClientClassGenerator.Init) {
+        this.caseConverter = caseConverter;
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.packageResolver = packageResolver;
@@ -128,6 +133,7 @@ export class SdkClientClassGenerator {
         importsManager
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
+            caseConverter: this.caseConverter,
             isRoot,
             importsManager,
             exportsManager: this.exportsManager,

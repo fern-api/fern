@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "no-content-response",
     "apiDocs": null,
     "auth": {
@@ -34,25 +16,7 @@
         "type_:Contact": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "Contact",
-                    "camelCase": {
-                        "unsafeName": "contact",
-                        "safeName": "contact"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "contact",
-                        "safeName": "contact"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CONTACT",
-                        "safeName": "CONTACT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Contact",
-                        "safeName": "Contact"
-                    }
-                },
+                "name": "Contact",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -66,28 +30,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
+                        "name": "id",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -108,28 +51,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
-                            "wireValue": "name"
-                        },
+                        "name": "name",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -150,28 +72,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "email",
-                                "camelCase": {
-                                    "unsafeName": "email",
-                                    "safeName": "email"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "email",
-                                    "safeName": "email"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EMAIL",
-                                    "safeName": "EMAIL"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Email",
-                                    "safeName": "Email"
-                                }
-                            },
-                            "wireValue": "email"
-                        },
+                        "name": "email",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -221,46 +122,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "contacts",
-                            "camelCase": {
-                                "unsafeName": "contacts",
-                                "safeName": "contacts"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "contacts",
-                                "safeName": "contacts"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CONTACTS",
-                                "safeName": "CONTACTS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Contacts",
-                                "safeName": "Contacts"
-                            }
-                        }
+                        "contacts"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "contacts",
-                        "camelCase": {
-                            "unsafeName": "contacts",
-                            "safeName": "contacts"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "contacts",
-                            "safeName": "contacts"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CONTACTS",
-                            "safeName": "CONTACTS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Contacts",
-                            "safeName": "Contacts"
-                        }
-                    }
+                    "file": "contacts"
                 }
             },
             "displayName": null,
@@ -280,25 +145,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_contacts.create",
-                    "name": {
-                        "originalName": "create",
-                        "camelCase": {
-                            "unsafeName": "create",
-                            "safeName": "create"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "create",
-                            "safeName": "create"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATE",
-                            "safeName": "CREATE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Create",
-                            "safeName": "Create"
-                        }
-                    },
+                    "name": "create",
                     "displayName": "Create Contact",
                     "auth": false,
                     "security": null,
@@ -321,50 +168,11 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": {
-                            "originalName": "CreateContactRequest",
-                            "camelCase": {
-                                "unsafeName": "createContactRequest",
-                                "safeName": "createContactRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "create_contact_request",
-                                "safeName": "create_contact_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CREATE_CONTACT_REQUEST",
-                                "safeName": "CREATE_CONTACT_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "CreateContactRequest",
-                                "safeName": "CreateContactRequest"
-                            }
-                        },
+                        "name": "CreateContactRequest",
                         "extends": [],
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "valueType": {
                                     "_type": "primitive",
                                     "primitive": {
@@ -385,28 +193,7 @@
                                 "docs": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "email",
-                                        "camelCase": {
-                                            "unsafeName": "email",
-                                            "safeName": "email"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "email",
-                                            "safeName": "email"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "EMAIL",
-                                            "safeName": "EMAIL"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Email",
-                                            "safeName": "Email"
-                                        }
-                                    },
-                                    "wireValue": "email"
-                                },
+                                "name": "email",
                                 "valueType": {
                                     "_type": "container",
                                     "container": {
@@ -443,66 +230,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "CreateContactRequest",
-                                "camelCase": {
-                                    "unsafeName": "createContactRequest",
-                                    "safeName": "createContactRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "create_contact_request",
-                                    "safeName": "create_contact_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CREATE_CONTACT_REQUEST",
-                                    "safeName": "CREATE_CONTACT_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "CreateContactRequest",
-                                    "safeName": "CreateContactRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "CreateContactRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -516,25 +249,7 @@
                                         "_type": "optional",
                                         "optional": {
                                             "_type": "named",
-                                            "name": {
-                                                "originalName": "Contact",
-                                                "camelCase": {
-                                                    "unsafeName": "contact",
-                                                    "safeName": "contact"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "contact",
-                                                    "safeName": "contact"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "CONTACT",
-                                                    "safeName": "CONTACT"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Contact",
-                                                    "safeName": "Contact"
-                                                }
-                                            },
+                                            "name": "Contact",
                                             "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": [],
@@ -573,28 +288,7 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -634,53 +328,14 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "displayName": null
                                                             },
                                                             "shape": {
                                                                 "type": "object",
                                                                 "properties": [
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "id"
-                                                                        },
+                                                                        "name": "id",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "primitive",
@@ -700,52 +355,13 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "name",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NAME",
-                                                                                    "safeName": "NAME"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Name",
-                                                                                    "safeName": "Name"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "name"
-                                                                        },
+                                                                        "name": "name",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "primitive",
@@ -765,52 +381,13 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "email",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "email",
-                                                                                    "safeName": "email"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "email",
-                                                                                    "safeName": "email"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "EMAIL",
-                                                                                    "safeName": "EMAIL"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Email",
-                                                                                    "safeName": "Email"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "email"
-                                                                        },
+                                                                        "name": "email",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "container",
@@ -850,25 +427,7 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
@@ -885,25 +444,7 @@
                                                     },
                                                     "valueType": {
                                                         "_type": "named",
-                                                        "name": {
-                                                            "originalName": "Contact",
-                                                            "camelCase": {
-                                                                "unsafeName": "contact",
-                                                                "safeName": "contact"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "contact",
-                                                                "safeName": "contact"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "CONTACT",
-                                                                "safeName": "CONTACT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Contact",
-                                                                "safeName": "Contact"
-                                                            }
-                                                        },
+                                                        "name": "Contact",
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -932,7 +473,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e306e3ef",
+                                "id": "9e966d",
                                 "url": "/contacts",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -945,28 +486,7 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -982,28 +502,7 @@
                                             }
                                         },
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "email",
-                                                    "camelCase": {
-                                                        "unsafeName": "email",
-                                                        "safeName": "email"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "email",
-                                                        "safeName": "email"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "EMAIL",
-                                                        "safeName": "EMAIL"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Email",
-                                                        "safeName": "Email"
-                                                    }
-                                                },
-                                                "wireValue": "email"
-                                            },
+                                            "name": "email",
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -1048,48 +547,9 @@
                                                                 "type": "object",
                                                                 "properties": [
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "id"
-                                                                        },
+                                                                        "name": "id",
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1113,48 +573,9 @@
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "name",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NAME",
-                                                                                    "safeName": "NAME"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Name",
-                                                                                    "safeName": "Name"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "name"
-                                                                        },
+                                                                        "name": "name",
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1178,48 +599,9 @@
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "email",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "email",
-                                                                                    "safeName": "email"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "email",
-                                                                                    "safeName": "email"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "EMAIL",
-                                                                                    "safeName": "EMAIL"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Email",
-                                                                                    "safeName": "Email"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "email"
-                                                                        },
+                                                                        "name": "email",
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "Contact",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "contact",
-                                                                                    "safeName": "contact"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "CONTACT",
-                                                                                    "safeName": "CONTACT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Contact",
-                                                                                    "safeName": "Contact"
-                                                                                }
-                                                                            },
+                                                                            "name": "Contact",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1266,25 +648,7 @@
                                                                 "extraProperties": null
                                                             },
                                                             "typeName": {
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -1302,25 +666,7 @@
                                                     },
                                                     "valueType": {
                                                         "_type": "named",
-                                                        "name": {
-                                                            "originalName": "Contact",
-                                                            "camelCase": {
-                                                                "unsafeName": "contact",
-                                                                "safeName": "contact"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "contact",
-                                                                "safeName": "contact"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "CONTACT",
-                                                                "safeName": "CONTACT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Contact",
-                                                                "safeName": "Contact"
-                                                            }
-                                                        },
+                                                        "name": "Contact",
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -1358,25 +704,7 @@
                 },
                 {
                     "id": "endpoint_contacts.get",
-                    "name": {
-                        "originalName": "get",
-                        "camelCase": {
-                            "unsafeName": "get",
-                            "safeName": "get"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get",
-                            "safeName": "get"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET",
-                            "safeName": "GET"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Get",
-                            "safeName": "Get"
-                        }
-                    },
+                    "name": "get",
                     "displayName": "Get Contact",
                     "auth": false,
                     "security": null,
@@ -1405,25 +733,7 @@
                     },
                     "pathParameters": [
                         {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
+                            "name": "id",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1448,25 +758,7 @@
                     ],
                     "allPathParameters": [
                         {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
+                            "name": "id",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1496,66 +788,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "GetContactsRequest",
-                                "camelCase": {
-                                    "unsafeName": "getContactsRequest",
-                                    "safeName": "getContactsRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "get_contacts_request",
-                                    "safeName": "get_contacts_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "GET_CONTACTS_REQUEST",
-                                    "safeName": "GET_CONTACTS_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "GetContactsRequest",
-                                    "safeName": "GetContactsRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "GetContactsRequest",
+                            "bodyKey": "body",
                             "includePathParameters": true,
                             "onlyPathParameters": true
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -1565,25 +803,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "Contact",
-                                        "camelCase": {
-                                            "unsafeName": "contact",
-                                            "safeName": "contact"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "contact",
-                                            "safeName": "contact"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CONTACT",
-                                            "safeName": "CONTACT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Contact",
-                                            "safeName": "Contact"
-                                        }
-                                    },
+                                    "name": "Contact",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -1613,25 +833,7 @@
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "id",
-                                            "camelCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            }
-                                        },
+                                        "name": "id",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -1665,53 +867,14 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "Contact",
-                                                        "camelCase": {
-                                                            "unsafeName": "contact",
-                                                            "safeName": "contact"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "contact",
-                                                            "safeName": "contact"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CONTACT",
-                                                            "safeName": "CONTACT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Contact",
-                                                            "safeName": "Contact"
-                                                        }
-                                                    },
+                                                    "name": "Contact",
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "id",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    }
-                                                                },
-                                                                "wireValue": "id"
-                                                            },
+                                                            "name": "id",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -1731,52 +894,13 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "name",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NAME",
-                                                                        "safeName": "NAME"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Name",
-                                                                        "safeName": "Name"
-                                                                    }
-                                                                },
-                                                                "wireValue": "name"
-                                                            },
+                                                            "name": "name",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -1796,52 +920,13 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "email",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "email",
-                                                                        "safeName": "email"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "email",
-                                                                        "safeName": "email"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EMAIL",
-                                                                        "safeName": "EMAIL"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Email",
-                                                                        "safeName": "Email"
-                                                                    }
-                                                                },
-                                                                "wireValue": "email"
-                                                            },
+                                                            "name": "email",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -1881,25 +966,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -1924,31 +991,13 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "6c4f2100",
+                                "id": "5f82f655",
                                 "url": "/contacts/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "id",
-                                            "camelCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            }
-                                        },
+                                        "name": "id",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -1979,48 +1028,9 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "id",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    }
-                                                                },
-                                                                "wireValue": "id"
-                                                            },
+                                                            "name": "id",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2044,48 +1054,9 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "name",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NAME",
-                                                                        "safeName": "NAME"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Name",
-                                                                        "safeName": "Name"
-                                                                    }
-                                                                },
-                                                                "wireValue": "name"
-                                                            },
+                                                            "name": "name",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2109,48 +1080,9 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "email",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "email",
-                                                                        "safeName": "email"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "email",
-                                                                        "safeName": "email"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EMAIL",
-                                                                        "safeName": "EMAIL"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Email",
-                                                                        "safeName": "Email"
-                                                                    }
-                                                                },
-                                                                "wireValue": "email"
-                                                            },
+                                                            "name": "email",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "Contact",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "contact",
-                                                                        "safeName": "contact"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CONTACT",
-                                                                        "safeName": "CONTACT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Contact",
-                                                                        "safeName": "Contact"
-                                                                    }
-                                                                },
+                                                                "name": "Contact",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2197,25 +1129,7 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "Contact",
-                                                        "camelCase": {
-                                                            "unsafeName": "contact",
-                                                            "safeName": "contact"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "contact",
-                                                            "safeName": "contact"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CONTACT",
-                                                            "safeName": "CONTACT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Contact",
-                                                            "safeName": "Contact"
-                                                        }
-                                                    },
+                                                    "name": "Contact",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -2253,28 +1167,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -2330,6 +1223,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -2348,8 +1242,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2360,6 +1253,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "name",
                             "name": {
                                 "originalName": "name",
                                 "camelCase": {
@@ -2378,8 +1272,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                 }
-                            },
-                            "wireValue": "name"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2390,6 +1283,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "email",
                             "name": {
                                 "originalName": "email",
                                 "camelCase": {
@@ -2408,8 +1302,7 @@
                                     "unsafeName": "Email",
                                     "safeName": "Email"
                                 }
-                            },
-                            "wireValue": "email"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -2572,6 +1465,7 @@
                         "value": [
                             {
                                 "name": {
+                                    "wireValue": "name",
                                     "name": {
                                         "originalName": "name",
                                         "camelCase": {
@@ -2590,8 +1484,7 @@
                                             "unsafeName": "Name",
                                             "safeName": "Name"
                                         }
-                                    },
-                                    "wireValue": "name"
+                                    }
                                 },
                                 "typeReference": {
                                     "type": "primitive",
@@ -2602,6 +1495,7 @@
                             },
                             {
                                 "name": {
+                                    "wireValue": "email",
                                     "name": {
                                         "originalName": "email",
                                         "camelCase": {
@@ -2620,8 +1514,7 @@
                                             "unsafeName": "Email",
                                             "safeName": "Email"
                                         }
-                                    },
-                                    "wireValue": "email"
+                                    }
                                 },
                                 "typeReference": {
                                     "type": "optional",
@@ -2835,70 +1728,21 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {
         "subpackage_contacts": {
-            "name": {
-                "originalName": "contacts",
-                "camelCase": {
-                    "unsafeName": "contacts",
-                    "safeName": "contacts"
-                },
-                "snakeCase": {
-                    "unsafeName": "contacts",
-                    "safeName": "contacts"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "CONTACTS",
-                    "safeName": "CONTACTS"
-                },
-                "pascalCase": {
-                    "unsafeName": "Contacts",
-                    "safeName": "Contacts"
-                }
-            },
+            "name": "contacts",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "contacts",
-                        "camelCase": {
-                            "unsafeName": "contacts",
-                            "safeName": "contacts"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "contacts",
-                            "safeName": "contacts"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CONTACTS",
-                            "safeName": "CONTACTS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Contacts",
-                            "safeName": "Contacts"
-                        }
-                    }
+                    "contacts"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "contacts",
-                    "camelCase": {
-                        "unsafeName": "contacts",
-                        "safeName": "contacts"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "contacts",
-                        "safeName": "contacts"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CONTACTS",
-                        "safeName": "CONTACTS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Contacts",
-                        "safeName": "Contacts"
-                    }
-                }
+                "file": "contacts"
             },
             "service": "service_contacts",
             "types": [],

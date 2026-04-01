@@ -4,7 +4,7 @@ import type * as FernIr from "../../../index.js";
 
 export interface SingleBaseUrlEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     url: FernIr.EnvironmentUrl;
     audiences: string[] | undefined;
     /**

@@ -74,6 +74,7 @@ catalog:
   "@fern-fern/ir-v61-sdk": 1.0.1
   "@fern-fern/ir-v62-sdk": 1.0.1
   "@fern-fern/ir-v63-sdk": 1.0.2
+  "@fern-fern/ir-v65-sdk": 0.0.5
   "@fern-fern/legacy-docs-config": 0.0.58
   "@fern-fern/postman-sdk": 0.1.1
   "@inquirer/prompts": ^7.1.0

@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 import {
@@ -28,6 +29,7 @@ export declare namespace TypeGenerator {
         retainOriginalCasing: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 
     export namespace generateType {
@@ -55,6 +57,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private readonly retainOriginalCasing: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         useBrandedStringAliases,
@@ -65,7 +68,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         noOptionalProperties,
         retainOriginalCasing,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
@@ -76,6 +80,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.caseConverter = caseConverter;
     }
 
     public generateType({
@@ -143,7 +148,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -178,7 +184,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             inline,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -208,7 +215,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -240,7 +248,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             enableForwardCompatibleEnums: this.enableForwardCompatibleEnums,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -271,7 +280,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   noOptionalProperties: this.noOptionalProperties,
                   retainOriginalCasing: this.retainOriginalCasing,
                   enableInlineTypes: this.enableInlineTypes,
-                  generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+                  generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+                  caseConverter: this.caseConverter
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -284,7 +294,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   noOptionalProperties: this.noOptionalProperties,
                   retainOriginalCasing: this.retainOriginalCasing,
                   enableInlineTypes: this.enableInlineTypes,
-                  generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+                  generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+                  caseConverter: this.caseConverter
               });
     }
 }
@@ -303,6 +314,7 @@ function isTypeStringLike(type: FernIr.TypeReference): boolean {
         boolean: () => false,
         long: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         uuid: () => true,
         date: () => true,
         base64: () => true,

@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -129,7 +130,8 @@ export async function publishDocs({
     targetAudiences,
     docsUrl,
     cliVersion,
-    ciSource
+    ciSource,
+    deployerAuthor
 }: {
     token: FernToken;
     organization: string;
@@ -151,6 +153,7 @@ export async function publishDocs({
     docsUrl?: string;
     cliVersion?: string;
     ciSource?: CISource;
+    deployerAuthor?: { username?: string; email?: string };
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -165,6 +168,12 @@ export async function publishDocs({
     if (ciSource != null) {
         headers["X-CI-Source"] = JSON.stringify(ciSource);
         context.logger.debug(`CI source detected: ${ciSource.type} (${ciSource.repo ?? "unknown repo"})`);
+    }
+    if (deployerAuthor?.username != null) {
+        headers["X-Deployer-Author"] = deployerAuthor.username;
+    }
+    if (deployerAuthor?.email != null) {
+        headers["X-Deployer-Author-Email"] = deployerAuthor.email;
     }
     const fdr = createFdrService({
         token: token.value,
@@ -507,7 +516,7 @@ export async function publishDocs({
 
                 const response = await fdr.api.v1.register.registerApiDefinition({
                     orgId: CjsFdrSdk.OrgId(organization),
-                    apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
+                    apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
                     definition: apiDefinition,
                     definitionV2: undefined,
                     dynamicIRs: dynamicIRsByLanguage,

@@ -1,6 +1,6 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import type { AuthProviderInstance } from "./AuthProviderInstance.js";
 
@@ -11,7 +11,7 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
         this.authScheme = authScheme;
     }
 
-    public instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression {
+    public instantiate({ context, params }: { context: FileContext; params: ts.Expression[] }): ts.Expression {
         context.importsManager.addImportFromRoot("auth/BasicAuthProvider", {
             namedImports: ["BasicAuthProvider"]
         });
@@ -26,15 +26,15 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
         );
     }
 
-    public getSnippetProperties(_context: SdkContext): ts.ObjectLiteralElementLike[] {
+    public getSnippetProperties(context: FileContext): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createPropertyAssignment(
-                getPropertyKey(this.authScheme.username.camelCase.safeName),
-                ts.factory.createStringLiteral(`YOUR_${this.authScheme.username.screamingSnakeCase.unsafeName}`)
+                getPropertyKey(context.case.camelSafe(this.authScheme.username)),
+                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.username)}`)
             ),
             ts.factory.createPropertyAssignment(
-                getPropertyKey(this.authScheme.password.camelCase.safeName),
-                ts.factory.createStringLiteral(`YOUR_${this.authScheme.password.screamingSnakeCase.unsafeName}`)
+                getPropertyKey(context.case.camelSafe(this.authScheme.password)),
+                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.password)}`)
             )
         ];
     }

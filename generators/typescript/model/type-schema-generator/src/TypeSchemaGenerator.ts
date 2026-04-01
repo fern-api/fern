@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 import {
@@ -21,6 +22,7 @@ export declare namespace TypeSchemaGenerator {
     export interface Init {
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
+        caseConverter: CaseConverter;
     }
 
     export namespace generateTypeSchema {
@@ -37,10 +39,12 @@ export declare namespace TypeSchemaGenerator {
 export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
     private noOptionalProperties: boolean;
+    private caseConverter: CaseConverter;
 
-    constructor({ includeUtilsOnUnionMembers, noOptionalProperties }: TypeSchemaGenerator.Init) {
+    constructor({ includeUtilsOnUnionMembers, noOptionalProperties, caseConverter }: TypeSchemaGenerator.Init) {
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.noOptionalProperties = noOptionalProperties;
+        this.caseConverter = caseConverter;
     }
 
     public generateTypeSchema({
@@ -117,7 +121,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -140,7 +145,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -163,7 +169,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -186,7 +193,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            caseConverter: this.caseConverter
         });
     }
 
@@ -209,7 +217,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties
+            noOptionalProperties: this.noOptionalProperties,
+            caseConverter: this.caseConverter
         });
     }
 }

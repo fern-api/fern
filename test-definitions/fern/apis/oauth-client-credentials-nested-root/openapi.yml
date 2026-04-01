@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: oauth-client-credentials-nested-root
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/authTokenResponse'
+                $ref: "#/components/schemas/authTokenResponse"
       requestBody:
         required: true
         content:
@@ -48,8 +48,8 @@ paths:
         - NestedNoAuthApi
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
@@ -57,8 +57,8 @@ paths:
         - NestedApi
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: &ref_0
         - BearerAuth: []
   /get-something:
@@ -68,8 +68,8 @@ paths:
         - Simple
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
 components:
   schemas:

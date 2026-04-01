@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -16,11 +16,11 @@ import {
     AuthProviderContext,
     BaseClientContext,
     EnvironmentsContext,
+    FileContext,
     GenericAPISdkErrorContext,
     JsonContext,
     NonStatusCodeErrorHandlerContext,
     SdkClientClassContext,
-    SdkContext,
     SdkInlinedRequestBodySchemaContext,
     TimeoutSdkErrorContext,
     WebsocketTypeSchemaContext
@@ -77,7 +77,7 @@ import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/Websocke
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 
-export declare namespace SdkContextImpl {
+export declare namespace FileContextImpl {
     export interface Init {
         logger: Logger;
         version: string | undefined;
@@ -153,9 +153,9 @@ export declare namespace SdkContextImpl {
     }
 }
 
-export class SdkContextImpl implements SdkContext {
+export class FileContextImpl implements FileContext {
     // Stored init params for lazy sub-context initialization
-    private readonly initParams: SdkContextImpl.Init;
+    private readonly initParams: FileContextImpl.Init;
 
     // Eagerly initialized (cheap scalar/reference assignments)
     public readonly logger: Logger;
@@ -182,6 +182,8 @@ export class SdkContextImpl implements SdkContext {
     public readonly relativeTestPath: string;
     public readonly enableInlineTypes: boolean;
     public readonly baseClient: BaseClientContext;
+    public readonly case: CaseConverter;
+    public readonly version: string | undefined;
 
     // Lazy backing fields for sub-contexts and utilities
     private _generatorNotificationService: GeneratorNotificationService | undefined;
@@ -206,7 +208,7 @@ export class SdkContextImpl implements SdkContext {
     private _nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContextImpl | undefined;
     private _authProvider: AuthProviderContext | undefined;
 
-    constructor(init: SdkContextImpl.Init) {
+    constructor(init: FileContextImpl.Init) {
         this.initParams = init;
         this.logger = init.logger;
         this.ir = init.ir;
@@ -232,6 +234,12 @@ export class SdkContextImpl implements SdkContext {
         this.enableInlineTypes = init.enableInlineTypes;
         this.fernConstants = init.fernConstants;
         this.baseClient = init.baseClientContext;
+        this.version = init.version;
+        this.case = new CaseConverter({
+            generationLanguage: "typescript",
+            keywords: init.ir.casingsConfig?.keywords,
+            smartCasing: init.ir.casingsConfig?.smartCasing ?? true
+        });
     }
 
     // Lazy getters for utilities
@@ -299,7 +307,8 @@ export class SdkContextImpl implements SdkContext {
             omitUndefined: this.omitUndefined,
             useDefaultRequestParameterValues: this.initParams.useDefaultRequestParameterValues,
             context: this,
-            generateReadWriteOnlyTypes: this.initParams.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.initParams.generateReadWriteOnlyTypes,
+            caseConverter: this.case
         }));
     }
 
@@ -375,6 +384,7 @@ export class SdkContextImpl implements SdkContext {
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
             parameterNaming: this.initParams.parameterNaming,
+            caseConverter: this.case,
             resolveQueryParameterNameConflicts: this.initParams.resolveQueryParameterNameConflicts
         }));
     }
@@ -444,7 +454,8 @@ export class SdkContextImpl implements SdkContext {
             exportsManager: this.exportsManager,
             intermediateRepresentation: this.initParams.intermediateRepresentation,
             environmentsDeclarationReferencer: this.initParams.environmentsDeclarationReferencer,
-            environmentsGenerator: this.initParams.environmentsGenerator
+            environmentsGenerator: this.initParams.environmentsGenerator,
+            caseConverter: this.case
         }));
     }
 
@@ -484,6 +495,4 @@ export class SdkContextImpl implements SdkContext {
             context: this
         }));
     }
-
-    version: string | undefined;
 }

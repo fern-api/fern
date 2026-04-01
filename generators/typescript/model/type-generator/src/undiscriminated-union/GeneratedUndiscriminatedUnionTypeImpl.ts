@@ -184,7 +184,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         }
 
         const namedTypeDeclaration = context.type.getTypeDeclaration(unwrappedRef);
-        return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
+        return this.caseConverter.pascalUnsafe(namedTypeDeclaration.name.name) === this.typeName;
     }
 
     private applyIndexSignatureSubstitution(
