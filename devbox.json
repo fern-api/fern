@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.1/.schema/devbox.schema.json",
   "// NOTE": "DO NOT add dotnet to devbox. The C# generators require multiple .NET SDK versions, but devbox can only pin one version at a time. .NET must be installed separately or managed outside of devbox.",
   "packages": [
     "nodejs@24",
