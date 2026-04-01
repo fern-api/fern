@@ -18,8 +18,7 @@
     "git-lfs@latest",
     "git@latest",
     "docker@latest",
-    "bun@latest",
-    "pnpm@latest"
+    "bun@latest"
   ],
   "shell": {
     "init_hook": [
