@@ -64,7 +64,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
             allNamespaceSegments: this.registry.allNamespacesOf(this.interfaceReference.namespace),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
+            namespace: this.interfaceReference.namespace,
             generation: this.generation
         });
     }

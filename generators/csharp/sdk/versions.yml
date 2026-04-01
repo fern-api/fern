@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.4
+  changelogEntry:
+    - summary: |
+        Fix namespace mismatch in generated subpackage client files. When
+        `explicit-namespaces` is enabled, the Writer's namespace context now
+        matches the class's actual namespace instead of always using the root
+        namespace. This prevents incorrect type qualification and import
+        filtering that could cause C# compilation errors (e.g., CS0118
+        namespace-vs-type ambiguity) in subpackage client files.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 2.55.3
   changelogEntry:
     - summary: |
