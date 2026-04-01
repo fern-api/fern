@@ -3,12 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import {
-    collectBuilderFieldsFromExtends,
-    collectBuilderFieldsFromProperties,
-    writeBuilderCode
-} from "../utils/builderUtils.js";
-import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -35,7 +30,7 @@ export class StructGenerator {
     public generate(): RustFile {
         const properties = this.getEffectiveProperties();
         const rustStruct = this.generateStructForTypeDeclaration(properties);
-        const fileContents = this.generateFileContents(rustStruct, properties);
+        const fileContents = this.generateFileContents(rustStruct);
         return new RustFile({
             filename: this.getFilename(),
             directory: this.getFileDirectory(),
@@ -72,7 +67,7 @@ export class StructGenerator {
         return RelativeFilePath.of("src");
     }
 
-    private generateFileContents(rustStruct: rust.Struct, properties: FernIr.ObjectProperty[]): string {
+    private generateFileContents(rustStruct: rust.Struct): string {
         const writer = rust.writer();
 
         // Add use statements
@@ -81,16 +76,6 @@ export class StructGenerator {
 
         // Write the struct
         rustStruct.write(writer);
-
-        // Write builder code
-        const inheritedFields = collectBuilderFieldsFromExtends(
-            this.objectTypeDeclaration.extends,
-            this.context
-        );
-        const propertyFields = collectBuilderFieldsFromProperties(properties, this.context, this.typeId);
-        writeBuilderCode(writer, this.structName, [...inheritedFields, ...propertyFields], {
-            hasExtraProperties: this.objectTypeDeclaration.extraProperties
-        });
 
         return writer.toString();
     }
@@ -126,7 +111,7 @@ export class StructGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Build derives conditionally based on actual needs
-        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize", "Builder"];
 
         // Default - add if all fields support Default
         if (this.canDeriveDefault()) {
@@ -144,6 +129,9 @@ export class StructGenerator {
         }
 
         attributes.push(Attribute.derive(derives));
+
+        // Add struct-level builder attribute
+        attributes.push(Attribute.builder.structLevel());
 
         // Add #[serde(transparent)] for single-property structs used in undiscriminated unions.
         // This makes the struct serialize/deserialize as the inner value directly,
@@ -166,6 +154,11 @@ export class StructGenerator {
         // as they are incompatible with #[serde(transparent)]
         const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+
+        // Add builder attribute for optional fields
+        if (isOptionalType(property.valueType)) {
+            fieldAttributes.push(Attribute.builder.optionalField());
+        }
 
         return rust.field({
             name: fieldName,
@@ -191,7 +184,7 @@ export class StructGenerator {
                 rust.reference({ name: "std::collections::HashMap<String, serde_json::Value>" })
             ),
             visibility: PUBLIC,
-            attributes: [Attribute.serde.flatten()],
+            attributes: [Attribute.serde.flatten(), Attribute.builder.defaultField()],
             docs: rust.docComment({
                 summary: "Additional properties that are not part of the defined schema."
             })

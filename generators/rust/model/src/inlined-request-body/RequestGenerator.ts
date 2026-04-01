@@ -1,7 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
 import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -74,7 +73,7 @@ export class RequestGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Build derives conditionally based on actual needs
-        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize", "Builder"];
 
         // Default - add if all fields support Default
         if (this.canDeriveDefault()) {
@@ -92,6 +91,9 @@ export class RequestGenerator {
         }
 
         attributes.push(Attribute.derive(derives));
+
+        // Add struct-level builder attribute
+        attributes.push(Attribute.builder.structLevel());
 
         return attributes;
     }
@@ -162,6 +164,11 @@ export class RequestGenerator {
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const fieldAttributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
+        // Add builder attribute for optional fields
+        if (isOptionalType(property.valueType)) {
+            fieldAttributes.push(Attribute.builder.optionalField());
+        }
+
         // Add field documentation if available
         let docs = undefined;
         if (property.docs) {
@@ -213,10 +220,6 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
-
-        // Write builder code
-        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
-        writeBuilderCode(writer, this.name, fields);
 
         writer.newLine(); // Ensure file ends with newline
 

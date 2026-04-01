@@ -586,7 +586,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));

@@ -144,4 +144,36 @@ export class Attribute extends AstNode {
             name: "non_exhaustive"
         });
     }
+
+    public static builder = {
+        /**
+         * Struct-level builder attribute with setter(into, strip_option) and custom error type.
+         * Generates: #[builder(setter(into, strip_option), build_fn(error = "derive_builder::UninitializedFieldError"))]
+         */
+        structLevel: (): Attribute =>
+            new Attribute({
+                name: "builder",
+                args: ['setter(into, strip_option)', 'build_fn(error = "derive_builder::UninitializedFieldError")']
+            }),
+
+        /**
+         * Field-level builder attribute for optional fields that should default to None.
+         * Generates: #[builder(default, setter(strip_option))]
+         */
+        optionalField: (): Attribute =>
+            new Attribute({
+                name: "builder",
+                args: ["default", "setter(strip_option)"]
+            }),
+
+        /**
+         * Field-level builder attribute for fields that should default (e.g. extra properties HashMap).
+         * Generates: #[builder(default)]
+         */
+        defaultField: (): Attribute =>
+            new Attribute({
+                name: "builder",
+                args: ["default"]
+            })
+    };
 }

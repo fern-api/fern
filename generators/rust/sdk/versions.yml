@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.31.0
+  changelogEntry:
+    - summary: |
+        Switch from custom builder pattern to `derive_builder` crate. Structs now
+        use `#[derive(Builder)]` with `setter(into, strip_option)` for ergonomic
+        field setters. Removes the hand-rolled `BuildError` type from `error.rs`
+        in favor of `derive_builder::UninitializedFieldError`.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 0.30.2
   changelogEntry:
     - summary: |

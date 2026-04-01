@@ -17,7 +17,6 @@ import {
     Type,
     UseStatement
 } from "@fern-api/rust-codegen";
-import { BUILD_ERROR_RS } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator {
@@ -35,7 +34,7 @@ export class ErrorGenerator {
             implBlocks: [this.buildErrorImpl()]
         });
 
-        return errorModule.toString() + "\n" + BUILD_ERROR_RS;
+        return errorModule.toString();
     }
 
     private buildErrorEnum(): Enum {

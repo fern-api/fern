@@ -11,7 +11,6 @@ import {
     Type
 } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
 import { isOptionalType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
@@ -82,10 +81,6 @@ export class FileUploadRequestGenerator {
         // Generate impl block
         const implBlock = this.generateImplBlock();
         implBlock.write(writer);
-
-        // Generate builder code
-        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
-        writeBuilderCode(writer, this.name, fields);
 
         return writer.toString();
     }
@@ -223,7 +218,7 @@ export class FileUploadRequestGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Build derives conditionally
-        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize", "Builder"];
 
         // Default - only add if all properties are optional
         if (this.allPropertiesAreOptional()) {
@@ -242,6 +237,9 @@ export class FileUploadRequestGenerator {
 
         attributes.push(Attribute.derive(derives));
 
+        // Add struct-level builder attribute
+        attributes.push(Attribute.builder.structLevel());
+
         return attributes;
     }
 
@@ -250,6 +248,11 @@ export class FileUploadRequestGenerator {
         const fieldType = generateFieldType(property, this.context);
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const attributes = generateFieldAttributes(property, this.context, { skipSerialization });
+
+        // Add builder attribute for optional fields
+        if (isOptionalType(property.valueType)) {
+            attributes.push(Attribute.builder.optionalField());
+        }
 
         return rust.field({
             name: fieldName,

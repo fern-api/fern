@@ -77,6 +77,7 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
+        this.dependencyManager.add("derive_builder", "0.20");
 
         // Conditionally include ordered-float only when floating-point sets are used
         if (this.usesOrderedFloat()) {
