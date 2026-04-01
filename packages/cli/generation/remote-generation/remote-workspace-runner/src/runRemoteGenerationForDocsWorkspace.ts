@@ -50,7 +50,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload: boolean | undefined;
     cliVersion?: string;
     ciSource?: CISource;
-    deployerAuthor?: string;
+    deployerAuthor?: { username?: string; email?: string };
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
