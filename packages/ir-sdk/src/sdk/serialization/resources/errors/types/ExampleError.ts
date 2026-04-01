@@ -3,14 +3,14 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { WithJsonExample } from "../../commons/types/WithJsonExample.js";
 
 export const ExampleError: core.serialization.ObjectSchema<serializers.ExampleError.Raw, FernIr.ExampleError> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: Name.optional(),
+            name: NameOrString.optional(),
             shape: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
         })
         .extend(WithJsonExample)
@@ -18,7 +18,7 @@ export const ExampleError: core.serialization.ObjectSchema<serializers.ExampleEr
 
 export declare namespace ExampleError {
     export interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
-        name?: Name.Raw | null;
+        name?: NameOrString.Raw | null;
         shape: serializers.ExampleTypeReference.Raw;
     }
 }

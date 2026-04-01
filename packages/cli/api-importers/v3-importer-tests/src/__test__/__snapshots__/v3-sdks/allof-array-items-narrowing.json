@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "PaginatedList",
-          "camelCase": {
-            "unsafeName": "paginatedList",
-            "safeName": "paginatedList"
-          },
-          "snakeCase": {
-            "unsafeName": "paginated_list",
-            "safeName": "paginated_list"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PAGINATED_LIST",
-            "safeName": "PAGINATED_LIST"
-          },
-          "pascalCase": {
-            "unsafeName": "PaginatedList",
-            "safeName": "PaginatedList"
-          }
-        }
+        "name": "PaginatedList"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
-              "wireValue": "results"
-            },
+            "name": "results",
             "valueType": {
               "container": {
                 "optional": {
@@ -105,51 +66,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Item",
-          "camelCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "snakeCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM",
-            "safeName": "ITEM"
-          },
-          "pascalCase": {
-            "unsafeName": "Item",
-            "safeName": "Item"
-          }
-        }
+        "name": "Item"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -174,28 +96,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -243,51 +144,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ItemList",
-          "camelCase": {
-            "unsafeName": "itemList",
-            "safeName": "itemList"
-          },
-          "snakeCase": {
-            "unsafeName": "item_list",
-            "safeName": "item_list"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM_LIST",
-            "safeName": "ITEM_LIST"
-          },
-          "pascalCase": {
-            "unsafeName": "ItemList",
-            "safeName": "ItemList"
-          }
-        }
+        "name": "ItemList"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
-              "wireValue": "results"
-            },
+            "name": "results",
             "valueType": {
               "container": {
                 "optional": {
@@ -297,25 +159,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Item",
-                        "camelCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ITEM",
-                          "safeName": "ITEM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Item",
-                          "safeName": "Item"
-                        }
-                      },
+                      "name": "Item",
                       "typeId": "Item",
                       "inline": false,
                       "type": "named"
@@ -345,25 +189,7 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": {
-              "originalName": "PaginatedList",
-              "camelCase": {
-                "unsafeName": "paginatedList",
-                "safeName": "paginatedList"
-              },
-              "snakeCase": {
-                "unsafeName": "paginated_list",
-                "safeName": "paginated_list"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PAGINATED_LIST",
-                "safeName": "PAGINATED_LIST"
-              },
-              "pascalCase": {
-                "unsafeName": "PaginatedList",
-                "safeName": "PaginatedList"
-              }
-            }
+            "name": "PaginatedList"
           }
         ],
         "extendedProperties": [],
@@ -388,51 +214,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ItemListExplicitType",
-          "camelCase": {
-            "unsafeName": "itemListExplicitType",
-            "safeName": "itemListExplicitType"
-          },
-          "snakeCase": {
-            "unsafeName": "item_list_explicit_type",
-            "safeName": "item_list_explicit_type"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM_LIST_EXPLICIT_TYPE",
-            "safeName": "ITEM_LIST_EXPLICIT_TYPE"
-          },
-          "pascalCase": {
-            "unsafeName": "ItemListExplicitType",
-            "safeName": "ItemListExplicitType"
-          }
-        }
+        "name": "ItemListExplicitType"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
-              "wireValue": "results"
-            },
+            "name": "results",
             "valueType": {
               "container": {
                 "optional": {
@@ -442,25 +229,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Item",
-                        "camelCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ITEM",
-                          "safeName": "ITEM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Item",
-                          "safeName": "Item"
-                        }
-                      },
+                      "name": "Item",
                       "typeId": "Item",
                       "inline": false,
                       "type": "named"
@@ -490,25 +259,7 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": {
-              "originalName": "PaginatedList",
-              "camelCase": {
-                "unsafeName": "paginatedList",
-                "safeName": "paginatedList"
-              },
-              "snakeCase": {
-                "unsafeName": "paginated_list",
-                "safeName": "paginated_list"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PAGINATED_LIST",
-                "safeName": "PAGINATED_LIST"
-              },
-              "pascalCase": {
-                "unsafeName": "PaginatedList",
-                "safeName": "PaginatedList"
-              }
-            }
+            "name": "PaginatedList"
           }
         ],
         "extendedProperties": [],
@@ -533,99 +284,18 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "RuleExecutionContext",
-          "camelCase": {
-            "unsafeName": "ruleExecutionContext",
-            "safeName": "ruleExecutionContext"
-          },
-          "snakeCase": {
-            "unsafeName": "rule_execution_context",
-            "safeName": "rule_execution_context"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RULE_EXECUTION_CONTEXT",
-            "safeName": "RULE_EXECUTION_CONTEXT"
-          },
-          "pascalCase": {
-            "unsafeName": "RuleExecutionContext",
-            "safeName": "RuleExecutionContext"
-          }
-        }
+        "name": "RuleExecutionContext"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "prod",
-                "camelCase": {
-                  "unsafeName": "prod",
-                  "safeName": "prod"
-                },
-                "snakeCase": {
-                  "unsafeName": "prod",
-                  "safeName": "prod"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PROD",
-                  "safeName": "PROD"
-                },
-                "pascalCase": {
-                  "unsafeName": "Prod",
-                  "safeName": "Prod"
-                }
-              },
-              "wireValue": "prod"
-            }
+            "name": "prod"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "staging",
-                "camelCase": {
-                  "unsafeName": "staging",
-                  "safeName": "staging"
-                },
-                "snakeCase": {
-                  "unsafeName": "staging",
-                  "safeName": "staging"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STAGING",
-                  "safeName": "STAGING"
-                },
-                "pascalCase": {
-                  "unsafeName": "Staging",
-                  "safeName": "Staging"
-                }
-              },
-              "wireValue": "staging"
-            }
+            "name": "staging"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "dev",
-                "camelCase": {
-                  "unsafeName": "dev",
-                  "safeName": "dev"
-                },
-                "snakeCase": {
-                  "unsafeName": "dev",
-                  "safeName": "dev"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DEV",
-                  "safeName": "DEV"
-                },
-                "pascalCase": {
-                  "unsafeName": "Dev",
-                  "safeName": "Dev"
-                }
-              },
-              "wireValue": "dev"
-            }
+            "name": "dev"
           }
         ],
         "type": "enum"
@@ -648,25 +318,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "RuleConfigExecutionContext",
-          "camelCase": {
-            "unsafeName": "ruleConfigExecutionContext",
-            "safeName": "ruleConfigExecutionContext"
-          },
-          "snakeCase": {
-            "unsafeName": "rule_config_execution_context",
-            "safeName": "rule_config_execution_context"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RULE_CONFIG_EXECUTION_CONTEXT",
-            "safeName": "RULE_CONFIG_EXECUTION_CONTEXT"
-          },
-          "pascalCase": {
-            "unsafeName": "RuleConfigExecutionContext",
-            "safeName": "RuleConfigExecutionContext"
-          }
-        }
+        "name": "RuleConfigExecutionContext"
       },
       "shape": {
         "properties": [],
@@ -677,25 +329,7 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": {
-              "originalName": "RuleExecutionContext",
-              "camelCase": {
-                "unsafeName": "ruleExecutionContext",
-                "safeName": "ruleExecutionContext"
-              },
-              "snakeCase": {
-                "unsafeName": "rule_execution_context",
-                "safeName": "rule_execution_context"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "RULE_EXECUTION_CONTEXT",
-                "safeName": "RULE_EXECUTION_CONTEXT"
-              },
-              "pascalCase": {
-                "unsafeName": "RuleExecutionContext",
-                "safeName": "RuleExecutionContext"
-              }
-            }
+            "name": "RuleExecutionContext"
           }
         ],
         "extendedProperties": [],
@@ -720,51 +354,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "RuleConfig",
-          "camelCase": {
-            "unsafeName": "ruleConfig",
-            "safeName": "ruleConfig"
-          },
-          "snakeCase": {
-            "unsafeName": "rule_config",
-            "safeName": "rule_config"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RULE_CONFIG",
-            "safeName": "RULE_CONFIG"
-          },
-          "pascalCase": {
-            "unsafeName": "RuleConfig",
-            "safeName": "RuleConfig"
-          }
-        }
+        "name": "RuleConfig"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -789,28 +384,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "executionContext",
-                "camelCase": {
-                  "unsafeName": "executionContext",
-                  "safeName": "executionContext"
-                },
-                "snakeCase": {
-                  "unsafeName": "execution_context",
-                  "safeName": "execution_context"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EXECUTION_CONTEXT",
-                  "safeName": "EXECUTION_CONTEXT"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExecutionContext",
-                  "safeName": "ExecutionContext"
-                }
-              },
-              "wireValue": "executionContext"
-            },
+            "name": "executionContext",
             "valueType": {
               "container": {
                 "optional": {
@@ -818,25 +392,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "RuleConfigExecutionContext",
-                    "camelCase": {
-                      "unsafeName": "ruleConfigExecutionContext",
-                      "safeName": "ruleConfigExecutionContext"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "rule_config_execution_context",
-                      "safeName": "rule_config_execution_context"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RULE_CONFIG_EXECUTION_CONTEXT",
-                      "safeName": "RULE_CONFIG_EXECUTION_CONTEXT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "RuleConfigExecutionContext",
-                      "safeName": "RuleConfigExecutionContext"
-                    }
-                  },
+                  "name": "RuleConfigExecutionContext",
                   "typeId": "RuleConfigExecutionContext",
                   "inline": false,
                   "type": "named"
@@ -914,47 +470,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "allOf Array Items Narrowing",
-    "camelCase": {
-      "unsafeName": "allOfArrayItemsNarrowing",
-      "safeName": "allOfArrayItemsNarrowing"
-    },
-    "snakeCase": {
-      "unsafeName": "all_of_array_items_narrowing",
-      "safeName": "all_of_array_items_narrowing"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "ALL_OF_ARRAY_ITEMS_NARROWING",
-      "safeName": "ALL_OF_ARRAY_ITEMS_NARROWING"
-    },
-    "pascalCase": {
-      "unsafeName": "AllOfArrayItemsNarrowing",
-      "safeName": "AllOfArrayItemsNarrowing"
-    }
-  },
+  "apiName": "allOf Array Items Narrowing",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

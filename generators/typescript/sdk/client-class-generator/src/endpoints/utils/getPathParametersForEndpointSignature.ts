@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 
 import { getNonVariablePathParameters } from "./getNonVariablePathParameters.js";
 
@@ -10,7 +10,7 @@ export function getPathParametersForEndpointSignature({
 }: {
     service: FernIr.HttpService;
     endpoint: FernIr.HttpEndpoint;
-    context: SdkContext;
+    context: FileContext;
 }): FernIr.PathParameter[] {
     const shouldInlinePathParameters = context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest);
     return shouldInlinePathParameters

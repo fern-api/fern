@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "Discriminator Context Test",
     "apiDocs": null,
     "auth": {
@@ -34,25 +16,7 @@
         "type_:SseServerEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "SseServerEvent",
-                    "camelCase": {
-                        "unsafeName": "sseServerEvent",
-                        "safeName": "sseServerEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sse_server_event",
-                        "safeName": "sse_server_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SSE_SERVER_EVENT",
-                        "safeName": "SSE_SERVER_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SseServerEvent",
-                        "safeName": "SseServerEvent"
-                    }
-                },
+                "name": "SseServerEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -63,75 +27,15 @@
             },
             "shape": {
                 "_type": "union",
-                "discriminant": {
-                    "name": {
-                        "originalName": "event",
-                        "camelCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "EVENT",
-                            "safeName": "EVENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Event",
-                            "safeName": "Event"
-                        }
-                    },
-                    "wireValue": "event"
-                },
+                "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
                 "types": [
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
-                            "wireValue": "message"
-                        },
+                        "discriminantValue": "message",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "SseMessageEvent",
-                                "camelCase": {
-                                    "unsafeName": "sseMessageEvent",
-                                    "safeName": "sseMessageEvent"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "sse_message_event",
-                                    "safeName": "sse_message_event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SSE_MESSAGE_EVENT",
-                                    "safeName": "SSE_MESSAGE_EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "SseMessageEvent",
-                                    "safeName": "SseMessageEvent"
-                                }
-                            },
+                            "name": "SseMessageEvent",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -145,49 +49,10 @@
                         "docs": null
                     },
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "heartbeat",
-                                "camelCase": {
-                                    "unsafeName": "heartbeat",
-                                    "safeName": "heartbeat"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "heartbeat",
-                                    "safeName": "heartbeat"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "HEARTBEAT",
-                                    "safeName": "HEARTBEAT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Heartbeat",
-                                    "safeName": "Heartbeat"
-                                }
-                            },
-                            "wireValue": "heartbeat"
-                        },
+                        "discriminantValue": "heartbeat",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "SseHeartbeatEvent",
-                                "camelCase": {
-                                    "unsafeName": "sseHeartbeatEvent",
-                                    "safeName": "sseHeartbeatEvent"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "sse_heartbeat_event",
-                                    "safeName": "sse_heartbeat_event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SSE_HEARTBEAT_EVENT",
-                                    "safeName": "SSE_HEARTBEAT_EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "SseHeartbeatEvent",
-                                    "safeName": "SseHeartbeatEvent"
-                                }
-                            },
+                            "name": "SseHeartbeatEvent",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -201,49 +66,10 @@
                         "docs": null
                     },
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "error",
-                                "camelCase": {
-                                    "unsafeName": "error",
-                                    "safeName": "error"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "error",
-                                    "safeName": "error"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ERROR",
-                                    "safeName": "ERROR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Error",
-                                    "safeName": "Error"
-                                }
-                            },
-                            "wireValue": "error"
-                        },
+                        "discriminantValue": "error",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "SseErrorEvent",
-                                "camelCase": {
-                                    "unsafeName": "sseErrorEvent",
-                                    "safeName": "sseErrorEvent"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "sse_error_event",
-                                    "safeName": "sse_error_event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SSE_ERROR_EVENT",
-                                    "safeName": "SSE_ERROR_EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "SseErrorEvent",
-                                    "safeName": "SseErrorEvent"
-                                }
-                            },
+                            "name": "SseErrorEvent",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -279,25 +105,7 @@
         "type_:SseMessageEventData": {
             "inline": true,
             "name": {
-                "name": {
-                    "originalName": "SseMessageEventData",
-                    "camelCase": {
-                        "unsafeName": "sseMessageEventData",
-                        "safeName": "sseMessageEventData"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sse_message_event_data",
-                        "safeName": "sse_message_event_data"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                        "safeName": "SSE_MESSAGE_EVENT_DATA"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SseMessageEventData",
-                        "safeName": "SseMessageEventData"
-                    }
-                },
+                "name": "SseMessageEventData",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -311,28 +119,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "text",
-                                "camelCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TEXT",
-                                    "safeName": "TEXT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Text",
-                                    "safeName": "Text"
-                                }
-                            },
-                            "wireValue": "text"
-                        },
+                        "name": "text",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -377,25 +164,7 @@
         "type_:SseMessageEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "SseMessageEvent",
-                    "camelCase": {
-                        "unsafeName": "sseMessageEvent",
-                        "safeName": "sseMessageEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sse_message_event",
-                        "safeName": "sse_message_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SSE_MESSAGE_EVENT",
-                        "safeName": "SSE_MESSAGE_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SseMessageEvent",
-                        "safeName": "SseMessageEvent"
-                    }
-                },
+                "name": "SseMessageEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -409,49 +178,10 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "data",
-                                "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                }
-                            },
-                            "wireValue": "data"
-                        },
+                        "name": "data",
                         "valueType": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "SseMessageEventData",
-                                "camelCase": {
-                                    "unsafeName": "sseMessageEventData",
-                                    "safeName": "sseMessageEventData"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "sse_message_event_data",
-                                    "safeName": "sse_message_event_data"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                                    "safeName": "SSE_MESSAGE_EVENT_DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "SseMessageEventData",
-                                    "safeName": "SseMessageEventData"
-                                }
-                            },
+                            "name": "SseMessageEventData",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -471,28 +201,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
+                        "name": "id",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -539,25 +248,7 @@
         "type_:SseHeartbeatEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "SseHeartbeatEvent",
-                    "camelCase": {
-                        "unsafeName": "sseHeartbeatEvent",
-                        "safeName": "sseHeartbeatEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sse_heartbeat_event",
-                        "safeName": "sse_heartbeat_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SSE_HEARTBEAT_EVENT",
-                        "safeName": "SSE_HEARTBEAT_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SseHeartbeatEvent",
-                        "safeName": "SseHeartbeatEvent"
-                    }
-                },
+                "name": "SseHeartbeatEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -571,28 +262,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
+                        "name": "id",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -637,25 +307,7 @@
         "type_:SseErrorEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "SseErrorEvent",
-                    "camelCase": {
-                        "unsafeName": "sseErrorEvent",
-                        "safeName": "sseErrorEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sse_error_event",
-                        "safeName": "sse_error_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SSE_ERROR_EVENT",
-                        "safeName": "SSE_ERROR_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SseErrorEvent",
-                        "safeName": "SseErrorEvent"
-                    }
-                },
+                "name": "SseErrorEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -669,28 +321,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "data",
-                                "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                }
-                            },
-                            "wireValue": "data"
-                        },
+                        "name": "data",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -711,28 +342,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "retry",
-                                "camelCase": {
-                                    "unsafeName": "retry",
-                                    "safeName": "retry"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "retry",
-                                    "safeName": "retry"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RETRY",
-                                    "safeName": "RETRY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Retry",
-                                    "safeName": "Retry"
-                                }
-                            },
-                            "wireValue": "retry"
-                        },
+                        "name": "retry",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -777,25 +387,7 @@
         "type_:RegularUnion": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "RegularUnion",
-                    "camelCase": {
-                        "unsafeName": "regularUnion",
-                        "safeName": "regularUnion"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "regular_union",
-                        "safeName": "regular_union"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "REGULAR_UNION",
-                        "safeName": "REGULAR_UNION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RegularUnion",
-                        "safeName": "RegularUnion"
-                    }
-                },
+                "name": "RegularUnion",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -806,75 +398,15 @@
             },
             "shape": {
                 "_type": "union",
-                "discriminant": {
-                    "name": {
-                        "originalName": "type",
-                        "camelCase": {
-                            "unsafeName": "type",
-                            "safeName": "type"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "type",
-                            "safeName": "type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TYPE",
-                            "safeName": "TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Type",
-                            "safeName": "Type"
-                        }
-                    },
-                    "wireValue": "type"
-                },
+                "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
                 "types": [
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "dog",
-                                "camelCase": {
-                                    "unsafeName": "dog",
-                                    "safeName": "dog"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "dog",
-                                    "safeName": "dog"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOG",
-                                    "safeName": "DOG"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Dog",
-                                    "safeName": "Dog"
-                                }
-                            },
-                            "wireValue": "dog"
-                        },
+                        "discriminantValue": "dog",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "DogVariant",
-                                "camelCase": {
-                                    "unsafeName": "dogVariant",
-                                    "safeName": "dogVariant"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "dog_variant",
-                                    "safeName": "dog_variant"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOG_VARIANT",
-                                    "safeName": "DOG_VARIANT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "DogVariant",
-                                    "safeName": "DogVariant"
-                                }
-                            },
+                            "name": "DogVariant",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -888,49 +420,10 @@
                         "docs": null
                     },
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "cat",
-                                "camelCase": {
-                                    "unsafeName": "cat",
-                                    "safeName": "cat"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "cat",
-                                    "safeName": "cat"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CAT",
-                                    "safeName": "CAT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Cat",
-                                    "safeName": "Cat"
-                                }
-                            },
-                            "wireValue": "cat"
-                        },
+                        "discriminantValue": "cat",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "CatVariant",
-                                "camelCase": {
-                                    "unsafeName": "catVariant",
-                                    "safeName": "catVariant"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "cat_variant",
-                                    "safeName": "cat_variant"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CAT_VARIANT",
-                                    "safeName": "CAT_VARIANT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "CatVariant",
-                                    "safeName": "CatVariant"
-                                }
-                            },
+                            "name": "CatVariant",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -964,25 +457,7 @@
         "type_:DogVariant": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DogVariant",
-                    "camelCase": {
-                        "unsafeName": "dogVariant",
-                        "safeName": "dogVariant"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "dog_variant",
-                        "safeName": "dog_variant"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DOG_VARIANT",
-                        "safeName": "DOG_VARIANT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DogVariant",
-                        "safeName": "DogVariant"
-                    }
-                },
+                "name": "DogVariant",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -996,28 +471,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
-                            "wireValue": "name"
-                        },
+                        "name": "name",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -1038,28 +492,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "breed",
-                                "camelCase": {
-                                    "unsafeName": "breed",
-                                    "safeName": "breed"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "breed",
-                                    "safeName": "breed"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BREED",
-                                    "safeName": "BREED"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Breed",
-                                    "safeName": "Breed"
-                                }
-                            },
-                            "wireValue": "breed"
-                        },
+                        "name": "breed",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -1104,25 +537,7 @@
         "type_:CatVariant": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "CatVariant",
-                    "camelCase": {
-                        "unsafeName": "catVariant",
-                        "safeName": "catVariant"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "cat_variant",
-                        "safeName": "cat_variant"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CAT_VARIANT",
-                        "safeName": "CAT_VARIANT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CatVariant",
-                        "safeName": "CatVariant"
-                    }
-                },
+                "name": "CatVariant",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -1136,28 +551,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
-                            "wireValue": "name"
-                        },
+                        "name": "name",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -1178,28 +572,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "indoor",
-                                "camelCase": {
-                                    "unsafeName": "indoor",
-                                    "safeName": "indoor"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "indoor",
-                                    "safeName": "indoor"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "INDOOR",
-                                    "safeName": "INDOOR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Indoor",
-                                    "safeName": "Indoor"
-                                }
-                            },
-                            "wireValue": "indoor"
-                        },
+                        "name": "indoor",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -1243,25 +616,7 @@
         "type_:ExplicitContextUnion": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ExplicitContextUnion",
-                    "camelCase": {
-                        "unsafeName": "explicitContextUnion",
-                        "safeName": "explicitContextUnion"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "explicit_context_union",
-                        "safeName": "explicit_context_union"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "EXPLICIT_CONTEXT_UNION",
-                        "safeName": "EXPLICIT_CONTEXT_UNION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ExplicitContextUnion",
-                        "safeName": "ExplicitContextUnion"
-                    }
-                },
+                "name": "ExplicitContextUnion",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -1272,75 +627,15 @@
             },
             "shape": {
                 "_type": "union",
-                "discriminant": {
-                    "name": {
-                        "originalName": "event",
-                        "camelCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "EVENT",
-                            "safeName": "EVENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Event",
-                            "safeName": "Event"
-                        }
-                    },
-                    "wireValue": "event"
-                },
+                "discriminant": "event",
                 "extends": [],
                 "baseProperties": [],
                 "types": [
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
-                            "wireValue": "message"
-                        },
+                        "discriminantValue": "message",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "ExplicitMessageEvent",
-                                "camelCase": {
-                                    "unsafeName": "explicitMessageEvent",
-                                    "safeName": "explicitMessageEvent"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "explicit_message_event",
-                                    "safeName": "explicit_message_event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EXPLICIT_MESSAGE_EVENT",
-                                    "safeName": "EXPLICIT_MESSAGE_EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ExplicitMessageEvent",
-                                    "safeName": "ExplicitMessageEvent"
-                                }
-                            },
+                            "name": "ExplicitMessageEvent",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -1354,49 +649,10 @@
                         "docs": null
                     },
                     {
-                        "discriminantValue": {
-                            "name": {
-                                "originalName": "heartbeat",
-                                "camelCase": {
-                                    "unsafeName": "heartbeat",
-                                    "safeName": "heartbeat"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "heartbeat",
-                                    "safeName": "heartbeat"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "HEARTBEAT",
-                                    "safeName": "HEARTBEAT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Heartbeat",
-                                    "safeName": "Heartbeat"
-                                }
-                            },
-                            "wireValue": "heartbeat"
-                        },
+                        "discriminantValue": "heartbeat",
                         "shape": {
                             "_type": "samePropertiesAsObject",
-                            "name": {
-                                "originalName": "ExplicitHeartbeatEvent",
-                                "camelCase": {
-                                    "unsafeName": "explicitHeartbeatEvent",
-                                    "safeName": "explicitHeartbeatEvent"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "explicit_heartbeat_event",
-                                    "safeName": "explicit_heartbeat_event"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EXPLICIT_HEARTBEAT_EVENT",
-                                    "safeName": "EXPLICIT_HEARTBEAT_EVENT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ExplicitHeartbeatEvent",
-                                    "safeName": "ExplicitHeartbeatEvent"
-                                }
-                            },
+                            "name": "ExplicitHeartbeatEvent",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -1430,25 +686,7 @@
         "type_:ExplicitMessageEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ExplicitMessageEvent",
-                    "camelCase": {
-                        "unsafeName": "explicitMessageEvent",
-                        "safeName": "explicitMessageEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "explicit_message_event",
-                        "safeName": "explicit_message_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "EXPLICIT_MESSAGE_EVENT",
-                        "safeName": "EXPLICIT_MESSAGE_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ExplicitMessageEvent",
-                        "safeName": "ExplicitMessageEvent"
-                    }
-                },
+                "name": "ExplicitMessageEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -1462,28 +700,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "data",
-                                "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                }
-                            },
-                            "wireValue": "data"
-                        },
+                        "name": "data",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -1528,25 +745,7 @@
         "type_:ExplicitHeartbeatEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ExplicitHeartbeatEvent",
-                    "camelCase": {
-                        "unsafeName": "explicitHeartbeatEvent",
-                        "safeName": "explicitHeartbeatEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "explicit_heartbeat_event",
-                        "safeName": "explicit_heartbeat_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "EXPLICIT_HEARTBEAT_EVENT",
-                        "safeName": "EXPLICIT_HEARTBEAT_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ExplicitHeartbeatEvent",
-                        "safeName": "ExplicitHeartbeatEvent"
-                    }
-                },
+                "name": "ExplicitHeartbeatEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -1560,28 +759,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
+                        "name": "id",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -1652,25 +830,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_.getSseEvents",
-                    "name": {
-                        "originalName": "getSseEvents",
-                        "camelCase": {
-                            "unsafeName": "getSseEvents",
-                            "safeName": "getSseEvents"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_sse_events",
-                            "safeName": "get_sse_events"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_SSE_EVENTS",
-                            "safeName": "GET_SSE_EVENTS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetSseEvents",
-                            "safeName": "GetSseEvents"
-                        }
-                    },
+                    "name": "getSseEvents",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -1701,25 +861,7 @@
                                 "type": "sse",
                                 "payload": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "SseServerEvent",
-                                        "camelCase": {
-                                            "unsafeName": "sseServerEvent",
-                                            "safeName": "sseServerEvent"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "sse_server_event",
-                                            "safeName": "sse_server_event"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SSE_SERVER_EVENT",
-                                            "safeName": "SSE_SERVER_EVENT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "SseServerEvent",
-                                            "safeName": "SseServerEvent"
-                                        }
-                                    },
+                                    "name": "SseServerEvent",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -1771,102 +913,21 @@
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "name": {
-                                                                "originalName": "SseServerEvent",
-                                                                "camelCase": {
-                                                                    "unsafeName": "sseServerEvent",
-                                                                    "safeName": "sseServerEvent"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "sse_server_event",
-                                                                    "safeName": "sse_server_event"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "SSE_SERVER_EVENT",
-                                                                    "safeName": "SSE_SERVER_EVENT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "SseServerEvent",
-                                                                    "safeName": "SseServerEvent"
-                                                                }
-                                                            },
+                                                            "name": "SseServerEvent",
                                                             "displayName": null
                                                         },
                                                         "shape": {
                                                             "type": "union",
-                                                            "discriminant": {
-                                                                "name": {
-                                                                    "originalName": "event",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EVENT",
-                                                                        "safeName": "EVENT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Event",
-                                                                        "safeName": "Event"
-                                                                    }
-                                                                },
-                                                                "wireValue": "event"
-                                                            },
+                                                            "discriminant": "event",
                                                             "singleUnionType": {
-                                                                "wireDiscriminantValue": {
-                                                                    "name": {
-                                                                        "originalName": "message",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "MESSAGE",
-                                                                            "safeName": "MESSAGE"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Message",
-                                                                            "safeName": "Message"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "message"
-                                                                },
+                                                                "wireDiscriminantValue": "message",
                                                                 "shape": {
                                                                     "type": "samePropertiesAsObject",
                                                                     "typeId": "type_:SseMessageEvent",
                                                                     "object": {
                                                                         "properties": [
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "data",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "DATA",
-                                                                                            "safeName": "DATA"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Data",
-                                                                                            "safeName": "Data"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "data"
-                                                                                },
+                                                                                "name": "data",
                                                                                 "value": {
                                                                                     "shape": {
                                                                                         "type": "named",
@@ -1877,53 +938,14 @@
                                                                                                 "packagePath": [],
                                                                                                 "file": null
                                                                                             },
-                                                                                            "name": {
-                                                                                                "originalName": "SseMessageEventData",
-                                                                                                "camelCase": {
-                                                                                                    "unsafeName": "sseMessageEventData",
-                                                                                                    "safeName": "sseMessageEventData"
-                                                                                                },
-                                                                                                "snakeCase": {
-                                                                                                    "unsafeName": "sse_message_event_data",
-                                                                                                    "safeName": "sse_message_event_data"
-                                                                                                },
-                                                                                                "screamingSnakeCase": {
-                                                                                                    "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                                                                                                    "safeName": "SSE_MESSAGE_EVENT_DATA"
-                                                                                                },
-                                                                                                "pascalCase": {
-                                                                                                    "unsafeName": "SseMessageEventData",
-                                                                                                    "safeName": "SseMessageEventData"
-                                                                                                }
-                                                                                            },
+                                                                                            "name": "SseMessageEventData",
                                                                                             "displayName": null
                                                                                         },
                                                                                         "shape": {
                                                                                             "type": "object",
                                                                                             "properties": [
                                                                                                 {
-                                                                                                    "name": {
-                                                                                                        "name": {
-                                                                                                            "originalName": "text",
-                                                                                                            "camelCase": {
-                                                                                                                "unsafeName": "text",
-                                                                                                                "safeName": "text"
-                                                                                                            },
-                                                                                                            "snakeCase": {
-                                                                                                                "unsafeName": "text",
-                                                                                                                "safeName": "text"
-                                                                                                            },
-                                                                                                            "screamingSnakeCase": {
-                                                                                                                "unsafeName": "TEXT",
-                                                                                                                "safeName": "TEXT"
-                                                                                                            },
-                                                                                                            "pascalCase": {
-                                                                                                                "unsafeName": "Text",
-                                                                                                                "safeName": "Text"
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "wireValue": "text"
-                                                                                                    },
+                                                                                                    "name": "text",
                                                                                                     "value": {
                                                                                                         "shape": {
                                                                                                             "type": "container",
@@ -1963,25 +985,7 @@
                                                                                                             "packagePath": [],
                                                                                                             "file": null
                                                                                                         },
-                                                                                                        "name": {
-                                                                                                            "originalName": "SseMessageEventData",
-                                                                                                            "camelCase": {
-                                                                                                                "unsafeName": "sseMessageEventData",
-                                                                                                                "safeName": "sseMessageEventData"
-                                                                                                            },
-                                                                                                            "snakeCase": {
-                                                                                                                "unsafeName": "sse_message_event_data",
-                                                                                                                "safeName": "sse_message_event_data"
-                                                                                                            },
-                                                                                                            "screamingSnakeCase": {
-                                                                                                                "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                                                                                                                "safeName": "SSE_MESSAGE_EVENT_DATA"
-                                                                                                            },
-                                                                                                            "pascalCase": {
-                                                                                                                "unsafeName": "SseMessageEventData",
-                                                                                                                "safeName": "SseMessageEventData"
-                                                                                                            }
-                                                                                                        },
+                                                                                                        "name": "SseMessageEventData",
                                                                                                         "displayName": null
                                                                                                     },
                                                                                                     "propertyAccess": null
@@ -2001,52 +1005,13 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "name": {
-                                                                                        "originalName": "SseMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "sseMessageEvent",
-                                                                                            "safeName": "sseMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "sse_message_event",
-                                                                                            "safeName": "sse_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "SSE_MESSAGE_EVENT",
-                                                                                            "safeName": "SSE_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "SseMessageEvent",
-                                                                                            "safeName": "SseMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "SseMessageEvent",
                                                                                     "displayName": null
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             },
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "id",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "id",
-                                                                                            "safeName": "id"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "id",
-                                                                                            "safeName": "id"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "ID",
-                                                                                            "safeName": "ID"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "ID",
-                                                                                            "safeName": "ID"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "id"
-                                                                                },
+                                                                                "name": "id",
                                                                                 "value": {
                                                                                     "shape": {
                                                                                         "type": "container",
@@ -2086,25 +1051,7 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "name": {
-                                                                                        "originalName": "SseMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "sseMessageEvent",
-                                                                                            "safeName": "sseMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "sse_message_event",
-                                                                                            "safeName": "sse_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "SSE_MESSAGE_EVENT",
-                                                                                            "safeName": "SSE_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "SseMessageEvent",
-                                                                                            "safeName": "SseMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "SseMessageEvent",
                                                                                     "displayName": null
                                                                                 },
                                                                                 "propertyAccess": null
@@ -2138,7 +1085,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ddc44d66",
+                                "id": "8c5408c4",
                                 "url": "/sse-events",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2159,99 +1106,18 @@
                                                         "type": "named",
                                                         "shape": {
                                                             "type": "union",
-                                                            "discriminant": {
-                                                                "name": {
-                                                                    "originalName": "event",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EVENT",
-                                                                        "safeName": "EVENT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Event",
-                                                                        "safeName": "Event"
-                                                                    }
-                                                                },
-                                                                "wireValue": "event"
-                                                            },
+                                                            "discriminant": "event",
                                                             "singleUnionType": {
-                                                                "wireDiscriminantValue": {
-                                                                    "name": {
-                                                                        "originalName": "message",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "MESSAGE",
-                                                                            "safeName": "MESSAGE"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Message",
-                                                                            "safeName": "Message"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "message"
-                                                                },
+                                                                "wireDiscriminantValue": "message",
                                                                 "shape": {
                                                                     "type": "samePropertiesAsObject",
                                                                     "typeId": "type_:SseMessageEvent",
                                                                     "object": {
                                                                         "properties": [
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "data",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "DATA",
-                                                                                            "safeName": "DATA"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Data",
-                                                                                            "safeName": "Data"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "data"
-                                                                                },
+                                                                                "name": "data",
                                                                                 "originalTypeDeclaration": {
-                                                                                    "name": {
-                                                                                        "originalName": "SseMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "sseMessageEvent",
-                                                                                            "safeName": "sseMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "sse_message_event",
-                                                                                            "safeName": "sse_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "SSE_MESSAGE_EVENT",
-                                                                                            "safeName": "SSE_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "SseMessageEvent",
-                                                                                            "safeName": "SseMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "SseMessageEvent",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
@@ -2267,48 +1133,9 @@
                                                                                             "type": "object",
                                                                                             "properties": [
                                                                                                 {
-                                                                                                    "name": {
-                                                                                                        "name": {
-                                                                                                            "originalName": "text",
-                                                                                                            "camelCase": {
-                                                                                                                "unsafeName": "text",
-                                                                                                                "safeName": "text"
-                                                                                                            },
-                                                                                                            "snakeCase": {
-                                                                                                                "unsafeName": "text",
-                                                                                                                "safeName": "text"
-                                                                                                            },
-                                                                                                            "screamingSnakeCase": {
-                                                                                                                "unsafeName": "TEXT",
-                                                                                                                "safeName": "TEXT"
-                                                                                                            },
-                                                                                                            "pascalCase": {
-                                                                                                                "unsafeName": "Text",
-                                                                                                                "safeName": "Text"
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "wireValue": "text"
-                                                                                                    },
+                                                                                                    "name": "text",
                                                                                                     "originalTypeDeclaration": {
-                                                                                                        "name": {
-                                                                                                            "originalName": "SseMessageEventData",
-                                                                                                            "camelCase": {
-                                                                                                                "unsafeName": "sseMessageEventData",
-                                                                                                                "safeName": "sseMessageEventData"
-                                                                                                            },
-                                                                                                            "snakeCase": {
-                                                                                                                "unsafeName": "sse_message_event_data",
-                                                                                                                "safeName": "sse_message_event_data"
-                                                                                                            },
-                                                                                                            "screamingSnakeCase": {
-                                                                                                                "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                                                                                                                "safeName": "SSE_MESSAGE_EVENT_DATA"
-                                                                                                            },
-                                                                                                            "pascalCase": {
-                                                                                                                "unsafeName": "SseMessageEventData",
-                                                                                                                "safeName": "SseMessageEventData"
-                                                                                                            }
-                                                                                                        },
+                                                                                                        "name": "SseMessageEventData",
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [],
                                                                                                             "packagePath": [],
@@ -2355,25 +1182,7 @@
                                                                                             "extraProperties": null
                                                                                         },
                                                                                         "typeName": {
-                                                                                            "name": {
-                                                                                                "originalName": "SseMessageEventData",
-                                                                                                "camelCase": {
-                                                                                                    "unsafeName": "sseMessageEventData",
-                                                                                                    "safeName": "sseMessageEventData"
-                                                                                                },
-                                                                                                "snakeCase": {
-                                                                                                    "unsafeName": "sse_message_event_data",
-                                                                                                    "safeName": "sse_message_event_data"
-                                                                                                },
-                                                                                                "screamingSnakeCase": {
-                                                                                                    "unsafeName": "SSE_MESSAGE_EVENT_DATA",
-                                                                                                    "safeName": "SSE_MESSAGE_EVENT_DATA"
-                                                                                                },
-                                                                                                "pascalCase": {
-                                                                                                    "unsafeName": "SseMessageEventData",
-                                                                                                    "safeName": "SseMessageEventData"
-                                                                                                }
-                                                                                            },
+                                                                                            "name": "SseMessageEventData",
                                                                                             "fernFilepath": {
                                                                                                 "allParts": [],
                                                                                                 "packagePath": [],
@@ -2390,48 +1199,9 @@
                                                                                 "propertyAccess": null
                                                                             },
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "id",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "id",
-                                                                                            "safeName": "id"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "id",
-                                                                                            "safeName": "id"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "ID",
-                                                                                            "safeName": "ID"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "ID",
-                                                                                            "safeName": "ID"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "id"
-                                                                                },
+                                                                                "name": "id",
                                                                                 "originalTypeDeclaration": {
-                                                                                    "name": {
-                                                                                        "originalName": "SseMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "sseMessageEvent",
-                                                                                            "safeName": "sseMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "sse_message_event",
-                                                                                            "safeName": "sse_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "SSE_MESSAGE_EVENT",
-                                                                                            "safeName": "SSE_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "SseMessageEvent",
-                                                                                            "safeName": "SseMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "SseMessageEvent",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
@@ -2483,25 +1253,7 @@
                                                             "extendProperties": []
                                                         },
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "SseServerEvent",
-                                                                "camelCase": {
-                                                                    "unsafeName": "sseServerEvent",
-                                                                    "safeName": "sseServerEvent"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "sse_server_event",
-                                                                    "safeName": "sse_server_event"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "SSE_SERVER_EVENT",
-                                                                    "safeName": "SSE_SERVER_EVENT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "SseServerEvent",
-                                                                    "safeName": "SseServerEvent"
-                                                                }
-                                                            },
+                                                            "name": "SseServerEvent",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
@@ -2541,25 +1293,7 @@
                 },
                 {
                     "id": "endpoint_.getRegularEvents",
-                    "name": {
-                        "originalName": "getRegularEvents",
-                        "camelCase": {
-                            "unsafeName": "getRegularEvents",
-                            "safeName": "getRegularEvents"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_regular_events",
-                            "safeName": "get_regular_events"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_REGULAR_EVENTS",
-                            "safeName": "GET_REGULAR_EVENTS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetRegularEvents",
-                            "safeName": "GetRegularEvents"
-                        }
-                    },
+                    "name": "getRegularEvents",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -2590,25 +1324,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "RegularUnion",
-                                        "camelCase": {
-                                            "unsafeName": "regularUnion",
-                                            "safeName": "regularUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "regular_union",
-                                            "safeName": "regular_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "REGULAR_UNION",
-                                            "safeName": "REGULAR_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "RegularUnion",
-                                            "safeName": "RegularUnion"
-                                        }
-                                    },
+                                    "name": "RegularUnion",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -2656,102 +1372,21 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "RegularUnion",
-                                                        "camelCase": {
-                                                            "unsafeName": "regularUnion",
-                                                            "safeName": "regularUnion"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "regular_union",
-                                                            "safeName": "regular_union"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "REGULAR_UNION",
-                                                            "safeName": "REGULAR_UNION"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RegularUnion",
-                                                            "safeName": "RegularUnion"
-                                                        }
-                                                    },
+                                                    "name": "RegularUnion",
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "union",
-                                                    "discriminant": {
-                                                        "name": {
-                                                            "originalName": "type",
-                                                            "camelCase": {
-                                                                "unsafeName": "type",
-                                                                "safeName": "type"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "type",
-                                                                "safeName": "type"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "TYPE",
-                                                                "safeName": "TYPE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Type",
-                                                                "safeName": "Type"
-                                                            }
-                                                        },
-                                                        "wireValue": "type"
-                                                    },
+                                                    "discriminant": "type",
                                                     "singleUnionType": {
-                                                        "wireDiscriminantValue": {
-                                                            "name": {
-                                                                "originalName": "dog",
-                                                                "camelCase": {
-                                                                    "unsafeName": "dog",
-                                                                    "safeName": "dog"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "dog",
-                                                                    "safeName": "dog"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "DOG",
-                                                                    "safeName": "DOG"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Dog",
-                                                                    "safeName": "Dog"
-                                                                }
-                                                            },
-                                                            "wireValue": "dog"
-                                                        },
+                                                        "wireDiscriminantValue": "dog",
                                                         "shape": {
                                                             "type": "samePropertiesAsObject",
                                                             "typeId": "type_:DogVariant",
                                                             "object": {
                                                                 "properties": [
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "name",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NAME",
-                                                                                    "safeName": "NAME"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Name",
-                                                                                    "safeName": "Name"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "name"
-                                                                        },
+                                                                        "name": "name",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "primitive",
@@ -2771,52 +1406,13 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DogVariant",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "dogVariant",
-                                                                                    "safeName": "dogVariant"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "dog_variant",
-                                                                                    "safeName": "dog_variant"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOG_VARIANT",
-                                                                                    "safeName": "DOG_VARIANT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DogVariant",
-                                                                                    "safeName": "DogVariant"
-                                                                                }
-                                                                            },
+                                                                            "name": "DogVariant",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "breed",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "breed",
-                                                                                    "safeName": "breed"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "breed",
-                                                                                    "safeName": "breed"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BREED",
-                                                                                    "safeName": "BREED"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Breed",
-                                                                                    "safeName": "Breed"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "breed"
-                                                                        },
+                                                                        "name": "breed",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "container",
@@ -2856,25 +1452,7 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DogVariant",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "dogVariant",
-                                                                                    "safeName": "dogVariant"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "dog_variant",
-                                                                                    "safeName": "dog_variant"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOG_VARIANT",
-                                                                                    "safeName": "DOG_VARIANT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DogVariant",
-                                                                                    "safeName": "DogVariant"
-                                                                                }
-                                                                            },
+                                                                            "name": "DogVariant",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
@@ -2904,7 +1482,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8dafc284",
+                                "id": "f8aab3c4",
                                 "url": "/regular-events",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2923,99 +1501,18 @@
                                                 "type": "named",
                                                 "shape": {
                                                     "type": "union",
-                                                    "discriminant": {
-                                                        "name": {
-                                                            "originalName": "type",
-                                                            "camelCase": {
-                                                                "unsafeName": "type",
-                                                                "safeName": "type"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "type",
-                                                                "safeName": "type"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "TYPE",
-                                                                "safeName": "TYPE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Type",
-                                                                "safeName": "Type"
-                                                            }
-                                                        },
-                                                        "wireValue": "type"
-                                                    },
+                                                    "discriminant": "type",
                                                     "singleUnionType": {
-                                                        "wireDiscriminantValue": {
-                                                            "name": {
-                                                                "originalName": "dog",
-                                                                "camelCase": {
-                                                                    "unsafeName": "dog",
-                                                                    "safeName": "dog"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "dog",
-                                                                    "safeName": "dog"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "DOG",
-                                                                    "safeName": "DOG"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Dog",
-                                                                    "safeName": "Dog"
-                                                                }
-                                                            },
-                                                            "wireValue": "dog"
-                                                        },
+                                                        "wireDiscriminantValue": "dog",
                                                         "shape": {
                                                             "type": "samePropertiesAsObject",
                                                             "typeId": "type_:DogVariant",
                                                             "object": {
                                                                 "properties": [
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "name",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "name",
-                                                                                    "safeName": "name"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NAME",
-                                                                                    "safeName": "NAME"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Name",
-                                                                                    "safeName": "Name"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "name"
-                                                                        },
+                                                                        "name": "name",
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DogVariant",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "dogVariant",
-                                                                                    "safeName": "dogVariant"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "dog_variant",
-                                                                                    "safeName": "dog_variant"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOG_VARIANT",
-                                                                                    "safeName": "DOG_VARIANT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DogVariant",
-                                                                                    "safeName": "DogVariant"
-                                                                                }
-                                                                            },
+                                                                            "name": "DogVariant",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -3039,48 +1536,9 @@
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "breed",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "breed",
-                                                                                    "safeName": "breed"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "breed",
-                                                                                    "safeName": "breed"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "BREED",
-                                                                                    "safeName": "BREED"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Breed",
-                                                                                    "safeName": "Breed"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "breed"
-                                                                        },
+                                                                        "name": "breed",
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DogVariant",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "dogVariant",
-                                                                                    "safeName": "dogVariant"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "dog_variant",
-                                                                                    "safeName": "dog_variant"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOG_VARIANT",
-                                                                                    "safeName": "DOG_VARIANT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DogVariant",
-                                                                                    "safeName": "DogVariant"
-                                                                                }
-                                                                            },
+                                                                            "name": "DogVariant",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -3132,25 +1590,7 @@
                                                     "extendProperties": []
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "RegularUnion",
-                                                        "camelCase": {
-                                                            "unsafeName": "regularUnion",
-                                                            "safeName": "regularUnion"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "regular_union",
-                                                            "safeName": "regular_union"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "REGULAR_UNION",
-                                                            "safeName": "REGULAR_UNION"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RegularUnion",
-                                                            "safeName": "RegularUnion"
-                                                        }
-                                                    },
+                                                    "name": "RegularUnion",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -3185,25 +1625,7 @@
                 },
                 {
                     "id": "endpoint_.getExplicitContext",
-                    "name": {
-                        "originalName": "getExplicitContext",
-                        "camelCase": {
-                            "unsafeName": "getExplicitContext",
-                            "safeName": "getExplicitContext"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_explicit_context",
-                            "safeName": "get_explicit_context"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_EXPLICIT_CONTEXT",
-                            "safeName": "GET_EXPLICIT_CONTEXT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetExplicitContext",
-                            "safeName": "GetExplicitContext"
-                        }
-                    },
+                    "name": "getExplicitContext",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -3234,25 +1656,7 @@
                                 "type": "sse",
                                 "payload": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "ExplicitContextUnion",
-                                        "camelCase": {
-                                            "unsafeName": "explicitContextUnion",
-                                            "safeName": "explicitContextUnion"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "explicit_context_union",
-                                            "safeName": "explicit_context_union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "EXPLICIT_CONTEXT_UNION",
-                                            "safeName": "EXPLICIT_CONTEXT_UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ExplicitContextUnion",
-                                            "safeName": "ExplicitContextUnion"
-                                        }
-                                    },
+                                    "name": "ExplicitContextUnion",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -3304,102 +1708,21 @@
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "name": {
-                                                                "originalName": "ExplicitContextUnion",
-                                                                "camelCase": {
-                                                                    "unsafeName": "explicitContextUnion",
-                                                                    "safeName": "explicitContextUnion"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "explicit_context_union",
-                                                                    "safeName": "explicit_context_union"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "EXPLICIT_CONTEXT_UNION",
-                                                                    "safeName": "EXPLICIT_CONTEXT_UNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ExplicitContextUnion",
-                                                                    "safeName": "ExplicitContextUnion"
-                                                                }
-                                                            },
+                                                            "name": "ExplicitContextUnion",
                                                             "displayName": null
                                                         },
                                                         "shape": {
                                                             "type": "union",
-                                                            "discriminant": {
-                                                                "name": {
-                                                                    "originalName": "event",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EVENT",
-                                                                        "safeName": "EVENT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Event",
-                                                                        "safeName": "Event"
-                                                                    }
-                                                                },
-                                                                "wireValue": "event"
-                                                            },
+                                                            "discriminant": "event",
                                                             "singleUnionType": {
-                                                                "wireDiscriminantValue": {
-                                                                    "name": {
-                                                                        "originalName": "message",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "MESSAGE",
-                                                                            "safeName": "MESSAGE"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Message",
-                                                                            "safeName": "Message"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "message"
-                                                                },
+                                                                "wireDiscriminantValue": "message",
                                                                 "shape": {
                                                                     "type": "samePropertiesAsObject",
                                                                     "typeId": "type_:ExplicitMessageEvent",
                                                                     "object": {
                                                                         "properties": [
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "data",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "DATA",
-                                                                                            "safeName": "DATA"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Data",
-                                                                                            "safeName": "Data"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "data"
-                                                                                },
+                                                                                "name": "data",
                                                                                 "value": {
                                                                                     "shape": {
                                                                                         "type": "container",
@@ -3439,25 +1762,7 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "name": {
-                                                                                        "originalName": "ExplicitMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "explicitMessageEvent",
-                                                                                            "safeName": "explicitMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "explicit_message_event",
-                                                                                            "safeName": "explicit_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "EXPLICIT_MESSAGE_EVENT",
-                                                                                            "safeName": "EXPLICIT_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "ExplicitMessageEvent",
-                                                                                            "safeName": "ExplicitMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "ExplicitMessageEvent",
                                                                                     "displayName": null
                                                                                 },
                                                                                 "propertyAccess": null
@@ -3488,7 +1793,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "5ce936a8",
+                                "id": "9776086b",
                                 "url": "/explicit-context",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3509,99 +1814,18 @@
                                                         "type": "named",
                                                         "shape": {
                                                             "type": "union",
-                                                            "discriminant": {
-                                                                "name": {
-                                                                    "originalName": "event",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "event",
-                                                                        "safeName": "event"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "EVENT",
-                                                                        "safeName": "EVENT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Event",
-                                                                        "safeName": "Event"
-                                                                    }
-                                                                },
-                                                                "wireValue": "event"
-                                                            },
+                                                            "discriminant": "event",
                                                             "singleUnionType": {
-                                                                "wireDiscriminantValue": {
-                                                                    "name": {
-                                                                        "originalName": "message",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "message",
-                                                                            "safeName": "message"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "MESSAGE",
-                                                                            "safeName": "MESSAGE"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Message",
-                                                                            "safeName": "Message"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "message"
-                                                                },
+                                                                "wireDiscriminantValue": "message",
                                                                 "shape": {
                                                                     "type": "samePropertiesAsObject",
                                                                     "typeId": "type_:ExplicitMessageEvent",
                                                                     "object": {
                                                                         "properties": [
                                                                             {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "data",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "DATA",
-                                                                                            "safeName": "DATA"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Data",
-                                                                                            "safeName": "Data"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "data"
-                                                                                },
+                                                                                "name": "data",
                                                                                 "originalTypeDeclaration": {
-                                                                                    "name": {
-                                                                                        "originalName": "ExplicitMessageEvent",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "explicitMessageEvent",
-                                                                                            "safeName": "explicitMessageEvent"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "explicit_message_event",
-                                                                                            "safeName": "explicit_message_event"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "EXPLICIT_MESSAGE_EVENT",
-                                                                                            "safeName": "EXPLICIT_MESSAGE_EVENT"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "ExplicitMessageEvent",
-                                                                                            "safeName": "ExplicitMessageEvent"
-                                                                                        }
-                                                                                    },
+                                                                                    "name": "ExplicitMessageEvent",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
@@ -3653,25 +1877,7 @@
                                                             "extendProperties": []
                                                         },
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "ExplicitContextUnion",
-                                                                "camelCase": {
-                                                                    "unsafeName": "explicitContextUnion",
-                                                                    "safeName": "explicitContextUnion"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "explicit_context_union",
-                                                                    "safeName": "explicit_context_union"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "EXPLICIT_CONTEXT_UNION",
-                                                                    "safeName": "EXPLICIT_CONTEXT_UNION"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ExplicitContextUnion",
-                                                                    "safeName": "ExplicitContextUnion"
-                                                                }
-                                                            },
+                                                            "name": "ExplicitContextUnion",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
@@ -3711,28 +1917,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -3796,6 +1981,7 @@
                     }
                 },
                 "discriminant": {
+                    "wireValue": "event",
                     "name": {
                         "originalName": "event",
                         "camelCase": {
@@ -3814,14 +2000,14 @@
                             "unsafeName": "Event",
                             "safeName": "Event"
                         }
-                    },
-                    "wireValue": "event"
+                    }
                 },
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:SseMessageEvent",
                         "discriminantValue": {
+                            "wireValue": "message",
                             "name": {
                                 "originalName": "message",
                                 "camelCase": {
@@ -3840,8 +2026,7 @@
                                     "unsafeName": "Message",
                                     "safeName": "Message"
                                 }
-                            },
-                            "wireValue": "message"
+                            }
                         },
                         "properties": []
                     },
@@ -3849,6 +2034,7 @@
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:SseHeartbeatEvent",
                         "discriminantValue": {
+                            "wireValue": "heartbeat",
                             "name": {
                                 "originalName": "heartbeat",
                                 "camelCase": {
@@ -3867,8 +2053,7 @@
                                     "unsafeName": "Heartbeat",
                                     "safeName": "Heartbeat"
                                 }
-                            },
-                            "wireValue": "heartbeat"
+                            }
                         },
                         "properties": []
                     },
@@ -3876,6 +2061,7 @@
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:SseErrorEvent",
                         "discriminantValue": {
+                            "wireValue": "error",
                             "name": {
                                 "originalName": "error",
                                 "camelCase": {
@@ -3894,8 +2080,7 @@
                                     "unsafeName": "Error",
                                     "safeName": "Error"
                                 }
-                            },
-                            "wireValue": "error"
+                            }
                         },
                         "properties": []
                     }
@@ -3932,6 +2117,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "text",
                             "name": {
                                 "originalName": "text",
                                 "camelCase": {
@@ -3950,8 +2136,7 @@
                                     "unsafeName": "Text",
                                     "safeName": "Text"
                                 }
-                            },
-                            "wireValue": "text"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -3998,6 +2183,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "data",
                             "name": {
                                 "originalName": "data",
                                 "camelCase": {
@@ -4016,8 +2202,7 @@
                                     "unsafeName": "Data",
                                     "safeName": "Data"
                                 }
-                            },
-                            "wireValue": "data"
+                            }
                         },
                         "typeReference": {
                             "type": "named",
@@ -4028,6 +2213,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -4046,8 +2232,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4094,6 +2279,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -4112,8 +2298,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4160,6 +2345,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "data",
                             "name": {
                                 "originalName": "data",
                                 "camelCase": {
@@ -4178,8 +2364,7 @@
                                     "unsafeName": "Data",
                                     "safeName": "Data"
                                 }
-                            },
-                            "wireValue": "data"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -4190,6 +2375,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "retry",
                             "name": {
                                 "originalName": "retry",
                                 "camelCase": {
@@ -4208,8 +2394,7 @@
                                     "unsafeName": "Retry",
                                     "safeName": "Retry"
                                 }
-                            },
-                            "wireValue": "retry"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4254,6 +2439,7 @@
                     }
                 },
                 "discriminant": {
+                    "wireValue": "type",
                     "name": {
                         "originalName": "type",
                         "camelCase": {
@@ -4272,14 +2458,14 @@
                             "unsafeName": "Type",
                             "safeName": "Type"
                         }
-                    },
-                    "wireValue": "type"
+                    }
                 },
                 "types": {
                     "dog": {
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:DogVariant",
                         "discriminantValue": {
+                            "wireValue": "dog",
                             "name": {
                                 "originalName": "dog",
                                 "camelCase": {
@@ -4298,8 +2484,7 @@
                                     "unsafeName": "Dog",
                                     "safeName": "Dog"
                                 }
-                            },
-                            "wireValue": "dog"
+                            }
                         },
                         "properties": []
                     },
@@ -4307,6 +2492,7 @@
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:CatVariant",
                         "discriminantValue": {
+                            "wireValue": "cat",
                             "name": {
                                 "originalName": "cat",
                                 "camelCase": {
@@ -4325,8 +2511,7 @@
                                     "unsafeName": "Cat",
                                     "safeName": "Cat"
                                 }
-                            },
-                            "wireValue": "cat"
+                            }
                         },
                         "properties": []
                     }
@@ -4363,6 +2548,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "name",
                             "name": {
                                 "originalName": "name",
                                 "camelCase": {
@@ -4381,8 +2567,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                 }
-                            },
-                            "wireValue": "name"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -4393,6 +2578,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "breed",
                             "name": {
                                 "originalName": "breed",
                                 "camelCase": {
@@ -4411,8 +2597,7 @@
                                     "unsafeName": "Breed",
                                     "safeName": "Breed"
                                 }
-                            },
-                            "wireValue": "breed"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4459,6 +2644,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "name",
                             "name": {
                                 "originalName": "name",
                                 "camelCase": {
@@ -4477,8 +2663,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                 }
-                            },
-                            "wireValue": "name"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -4489,6 +2674,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "indoor",
                             "name": {
                                 "originalName": "indoor",
                                 "camelCase": {
@@ -4507,8 +2693,7 @@
                                     "unsafeName": "Indoor",
                                     "safeName": "Indoor"
                                 }
-                            },
-                            "wireValue": "indoor"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4553,6 +2738,7 @@
                     }
                 },
                 "discriminant": {
+                    "wireValue": "event",
                     "name": {
                         "originalName": "event",
                         "camelCase": {
@@ -4571,14 +2757,14 @@
                             "unsafeName": "Event",
                             "safeName": "Event"
                         }
-                    },
-                    "wireValue": "event"
+                    }
                 },
                 "types": {
                     "message": {
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:ExplicitMessageEvent",
                         "discriminantValue": {
+                            "wireValue": "message",
                             "name": {
                                 "originalName": "message",
                                 "camelCase": {
@@ -4597,8 +2783,7 @@
                                     "unsafeName": "Message",
                                     "safeName": "Message"
                                 }
-                            },
-                            "wireValue": "message"
+                            }
                         },
                         "properties": []
                     },
@@ -4606,6 +2791,7 @@
                         "type": "samePropertiesAsObject",
                         "typeId": "type_:ExplicitHeartbeatEvent",
                         "discriminantValue": {
+                            "wireValue": "heartbeat",
                             "name": {
                                 "originalName": "heartbeat",
                                 "camelCase": {
@@ -4624,8 +2810,7 @@
                                     "unsafeName": "Heartbeat",
                                     "safeName": "Heartbeat"
                                 }
-                            },
-                            "wireValue": "heartbeat"
+                            }
                         },
                         "properties": []
                     }
@@ -4662,6 +2847,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "data",
                             "name": {
                                 "originalName": "data",
                                 "camelCase": {
@@ -4680,8 +2866,7 @@
                                     "unsafeName": "Data",
                                     "safeName": "Data"
                                 }
-                            },
-                            "wireValue": "data"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4728,6 +2913,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -4746,8 +2932,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -4901,6 +3086,11 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

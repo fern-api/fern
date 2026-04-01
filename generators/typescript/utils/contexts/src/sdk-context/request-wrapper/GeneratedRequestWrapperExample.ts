@@ -1,8 +1,8 @@
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { SdkContext } from "../index.js";
+import { FileContext } from "../index.js";
 
 export interface GeneratedRequestWrapperExample {
-    build: (context: SdkContext, opts: GetReferenceOpts) => ts.Expression;
+    build: (context: FileContext, opts: GetReferenceOpts) => ts.Expression;
 }

@@ -1,14 +1,14 @@
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export interface AuthProviderInstance {
-    instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression;
+    instantiate({ context, params }: { context: FileContext; params: ts.Expression[] }): ts.Expression;
 
     /**
      * Returns the properties to include in client instantiation snippets.
      * For example, for basic auth this returns username and password properties.
      */
-    getSnippetProperties(context: SdkContext): ts.ObjectLiteralElementLike[];
+    getSnippetProperties(context: FileContext): ts.ObjectLiteralElementLike[];
 }
 
 export namespace AuthProviderInstance {

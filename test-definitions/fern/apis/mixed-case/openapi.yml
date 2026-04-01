@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: mixed-case
-  version: ''
+  version: ""
 paths:
   /resource/{ResourceID}:
     get:
@@ -15,12 +15,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
+                $ref: "#/components/schemas/Resource"
   /resource:
     get:
       operationId: service_listResources
@@ -39,14 +39,14 @@ paths:
             type: string
             format: date
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Resource'
+                  $ref: "#/components/schemas/Resource"
 components:
   schemas:
     Organization:
@@ -82,7 +82,7 @@ components:
         Name:
           type: string
         NestedUser:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
       required:
         - Name
         - NestedUser
@@ -103,7 +103,7 @@ components:
                   type: string
                   enum:
                     - user
-            - $ref: '#/components/schemas/User'
+            - $ref: "#/components/schemas/User"
           required:
             - resource_type
         - type: object
@@ -114,12 +114,12 @@ components:
                   type: string
                   enum:
                     - Organization
-            - $ref: '#/components/schemas/Organization'
+            - $ref: "#/components/schemas/Organization"
           required:
             - resource_type
       required:
         - status
       properties:
         status:
-          $ref: '#/components/schemas/ResourceStatus'
+          $ref: "#/components/schemas/ResourceStatus"
   securitySchemes: {}

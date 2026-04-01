@@ -330,6 +330,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "a",
                         "name": {
                             "originalName": "a",
                             "camelCase": {
@@ -348,8 +349,7 @@
                                 "unsafeName": "A",
                                 "safeName": "A"
                             }
-                        },
-                        "wireValue": "a"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -360,6 +360,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "b",
                         "name": {
                             "originalName": "b",
                             "camelCase": {
@@ -378,8 +379,7 @@
                                 "unsafeName": "B",
                                 "safeName": "B"
                             }
-                        },
-                        "wireValue": "b"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -463,6 +463,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "a",
                         "name": {
                             "originalName": "a",
                             "camelCase": {
@@ -481,8 +482,7 @@
                                 "unsafeName": "A",
                                 "safeName": "A"
                             }
-                        },
-                        "wireValue": "a"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -493,6 +493,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "b",
                         "name": {
                             "originalName": "b",
                             "camelCase": {
@@ -511,8 +512,7 @@
                                 "unsafeName": "B",
                                 "safeName": "B"
                             }
-                        },
-                        "wireValue": "b"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -594,6 +594,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -612,8 +613,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

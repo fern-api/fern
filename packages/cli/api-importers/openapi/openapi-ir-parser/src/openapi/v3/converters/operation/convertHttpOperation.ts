@@ -105,7 +105,8 @@ export function convertHttpOperation({
                                 title: undefined
                             }),
                             description: undefined,
-                            explode: undefined
+                            explode: undefined,
+                            clientDefault: undefined
                         });
                     }
                 }
@@ -152,7 +153,8 @@ export function convertHttpOperation({
                                     title: undefined
                                 }),
                                 description: undefined,
-                                explode: undefined
+                                explode: undefined,
+                                clientDefault: undefined
                             });
                         }
                     }

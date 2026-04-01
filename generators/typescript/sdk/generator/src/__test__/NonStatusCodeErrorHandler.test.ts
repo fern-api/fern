@@ -7,7 +7,7 @@ import { GeneratedNonStatusCodeErrorHandlerImpl } from "../non-status-code-error
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -87,14 +87,14 @@ function createMockSdkContext() {
 describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
     it("writes handleNonStatusCodeError function", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         expect(context.sourceFile.getFullText()).toMatchSnapshot();
     });
 
     it("generates exported function with correct parameters", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain("export function handleNonStatusCodeError");
@@ -107,7 +107,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("generates switch on error.reason", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain("switch (error.reason)");
@@ -115,7 +115,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("handles non-json error case", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain('"non-json"');
@@ -125,7 +125,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("handles body-is-null error case", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain('"body-is-null"');
@@ -133,7 +133,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("handles timeout error case with template literal", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain('"timeout"');
@@ -143,7 +143,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("handles unknown error case", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain('"unknown"');
@@ -152,7 +152,7 @@ describe("GeneratedNonStatusCodeErrorHandlerImpl", () => {
 
     it("includes default case", () => {
         const impl = new GeneratedNonStatusCodeErrorHandlerImpl();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         impl.writeToFile(context);
         const text = context.sourceFile.getFullText();
         expect(text).toContain("default:");

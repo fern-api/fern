@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { DeclaredTypeName } from "./DeclaredTypeName.js";
 import { ObjectProperty } from "./ObjectProperty.js";
 import { SingleUnionType } from "./SingleUnionType.js";
@@ -13,7 +13,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     serializers.UnionTypeDeclaration.Raw,
     FernIr.UnionTypeDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
-    discriminant: NameAndWireValue,
+    discriminant: NameAndWireValueOrString,
     extends: core.serialization.list(DeclaredTypeName),
     types: core.serialization.list(SingleUnionType),
     baseProperties: core.serialization.list(ObjectProperty),
@@ -22,7 +22,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
 
 export declare namespace UnionTypeDeclaration {
     export interface Raw {
-        discriminant: NameAndWireValue.Raw;
+        discriminant: NameAndWireValueOrString.Raw;
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];
         baseProperties: ObjectProperty.Raw[];

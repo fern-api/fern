@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -62,6 +62,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -80,8 +81,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -226,6 +226,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "data",
                                 "name": {
                                     "originalName": "data",
                                     "camelCase": {
@@ -244,8 +245,7 @@
                                         "unsafeName": "Data",
                                         "safeName": "Data"
                                     }
-                                },
-                                "wireValue": "data"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",

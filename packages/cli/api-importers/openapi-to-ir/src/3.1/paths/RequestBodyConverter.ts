@@ -8,6 +8,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -216,7 +217,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
-                        const encoding = mediaTypeObject.encoding?.[property.name.wireValue];
+                        const encoding = mediaTypeObject.encoding?.[getWireValue(property.name)];
                         return this.convertRequestBodyProperty({ property, contentType, encoding });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
@@ -484,9 +485,11 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return false;
         }
 
-        const queryParameterNames = new Set(this.queryParameters.map((param) => param.name.wireValue.toLowerCase()));
+        const queryParameterNames = new Set(
+            this.queryParameters.map((param) => getWireValue(param.name).toLowerCase())
+        );
 
-        return bodyProperties.some((property) => queryParameterNames.has(property.name.wireValue.toLowerCase()));
+        return bodyProperties.some((property) => queryParameterNames.has(getWireValue(property.name).toLowerCase()));
     }
 }
 

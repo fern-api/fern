@@ -501,7 +501,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 valueType,
                 env: undefined,
                 v2Examples,
-                availability: undefined
+                availability: undefined,
+                clientDefault: undefined
             });
         }
 

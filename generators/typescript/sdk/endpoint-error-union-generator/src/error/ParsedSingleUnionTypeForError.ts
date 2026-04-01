@@ -1,5 +1,6 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     AbstractKnownSingleUnionType,
@@ -18,14 +19,16 @@ export declare namespace ParsedSingleUnionTypeForError {
         retainOriginalCasing: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
-export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<SdkContext> {
+export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<FileContext> {
     private errorDeclaration: FernIr.ErrorDeclaration;
     private responseError: FernIr.ResponseError;
     private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private retainOriginalCasing: boolean;
+    private caseConverter: CaseConverter;
 
     constructor({
         error,
@@ -35,7 +38,8 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         noOptionalProperties,
         retainOriginalCasing,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
@@ -46,7 +50,8 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
                 noOptionalProperties,
                 retainOriginalCasing,
                 enableInlineTypes,
-                generateReadWriteOnlyTypes
+                generateReadWriteOnlyTypes,
+                caseConverter
             }),
             includeUtilsOnUnionMembers
         });
@@ -55,6 +60,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         this.responseError = error;
         this.errorDeclaration = errorDeclaration;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.caseConverter = caseConverter;
     }
 
     public getDocs(): string | null | undefined {
@@ -62,12 +68,12 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.pascalCase.unsafeName);
+        return sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public getDiscriminantValue(): string | number {
         return FernIr.ErrorDiscriminationStrategy._visit<string | number>(this.errorDiscriminationStrategy, {
-            property: () => this.errorDeclaration.discriminantValue.wireValue,
+            property: () => getWireValue(this.errorDeclaration.discriminantValue),
             statusCode: () => this.errorDeclaration.statusCode,
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
@@ -77,14 +83,14 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
 
     public getBuilderName(): string {
         return this.retainOriginalCasing
-            ? sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.originalName)
-            : sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.camelCase.unsafeName);
+            ? sanitizeIdentifier(getOriginalName(this.errorDeclaration.discriminantValue))
+            : sanitizeIdentifier(this.caseConverter.camelUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public getVisitorKey(): string {
         return this.retainOriginalCasing
-            ? sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.originalName)
-            : sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.camelCase.unsafeName);
+            ? sanitizeIdentifier(getOriginalName(this.errorDeclaration.discriminantValue))
+            : sanitizeIdentifier(this.caseConverter.camelUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public needsRequestResponse(): { request: boolean; response: boolean } {
@@ -113,7 +119,8 @@ function getSingleUnionTypeGenerator({
     retainOriginalCasing,
     enableInlineTypes,
     getTypeName,
-    generateReadWriteOnlyTypes
+    generateReadWriteOnlyTypes,
+    caseConverter
 }: {
     errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     errorDeclaration: FernIr.ErrorDeclaration;
@@ -122,7 +129,8 @@ function getSingleUnionTypeGenerator({
     enableInlineTypes: boolean;
     getTypeName: () => string;
     generateReadWriteOnlyTypes: boolean;
-}): SingleUnionTypeGenerator<SdkContext> {
+    caseConverter: CaseConverter;
+}): SingleUnionTypeGenerator<FileContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
     }
@@ -130,14 +138,14 @@ function getSingleUnionTypeGenerator({
 
     const propertyName = FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         property: ({ contentProperty }) =>
-            retainOriginalCasing ? contentProperty.name.originalName : contentProperty.name.camelCase.unsafeName,
+            retainOriginalCasing ? getWireValue(contentProperty) : caseConverter.camelUnsafe(contentProperty),
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
             throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
         }
     });
 
-    return new SinglePropertySingleUnionTypeGenerator<SdkContext>({
+    return new SinglePropertySingleUnionTypeGenerator<FileContext>({
         getTypeName,
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),

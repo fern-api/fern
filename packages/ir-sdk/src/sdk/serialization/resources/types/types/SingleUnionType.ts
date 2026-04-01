@@ -4,14 +4,14 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Availability } from "../../commons/types/Availability.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { SingleUnionTypeProperties } from "./SingleUnionTypeProperties.js";
 
 export const SingleUnionType: core.serialization.ObjectSchema<serializers.SingleUnionType.Raw, FernIr.SingleUnionType> =
     core.serialization
         .objectWithoutOptionalProperties({
-            discriminantValue: NameAndWireValue,
+            discriminantValue: NameAndWireValueOrString,
             shape: SingleUnionTypeProperties,
             displayName: core.serialization.string().optional(),
             availability: Availability.optional(),
@@ -20,7 +20,7 @@ export const SingleUnionType: core.serialization.ObjectSchema<serializers.Single
 
 export declare namespace SingleUnionType {
     export interface Raw extends WithDocs.Raw {
-        discriminantValue: NameAndWireValue.Raw;
+        discriminantValue: NameAndWireValueOrString.Raw;
         shape: SingleUnionTypeProperties.Raw;
         displayName?: string | null;
         availability?: Availability.Raw | null;

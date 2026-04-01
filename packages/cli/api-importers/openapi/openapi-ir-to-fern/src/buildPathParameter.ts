@@ -27,7 +27,8 @@ export function buildPathParameter({
     if (
         pathParameter.variableReference == null &&
         pathParameter.description == null &&
-        pathParameter.availability == null
+        pathParameter.availability == null &&
+        pathParameter.clientDefault == null
     ) {
         return getTypeFromTypeReference(typeReference);
     }
@@ -45,6 +46,9 @@ export function buildPathParameter({
     }
     if (pathParameter.availability != null) {
         pathParameterSchema.availability = convertAvailability(pathParameter.availability);
+    }
+    if (pathParameter.clientDefault != null && "type" in pathParameterSchema) {
+        pathParameterSchema.default = pathParameter.clientDefault;
     }
 
     return pathParameterSchema;

@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "no-retries",
-        "camelCase": {
-            "unsafeName": "noRetries",
-            "safeName": "noRetries"
-        },
-        "snakeCase": {
-            "unsafeName": "no_retries",
-            "safeName": "no_retries"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "NO_RETRIES",
-            "safeName": "NO_RETRIES"
-        },
-        "pascalCase": {
-            "unsafeName": "NoRetries",
-            "safeName": "NoRetries"
-        }
-    },
+    "apiName": "no-retries",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -34,67 +16,13 @@
         "type_retries:User": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "User",
-                    "camelCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USER",
-                        "safeName": "USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "User",
-                        "safeName": "User"
-                    }
-                },
+                "name": "User",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "retries",
-                            "camelCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "RETRIES",
-                                "safeName": "RETRIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Retries",
-                                "safeName": "Retries"
-                            }
-                        }
+                        "retries"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "retries",
-                        "camelCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RETRIES",
-                            "safeName": "RETRIES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Retries",
-                            "safeName": "Retries"
-                        }
-                    }
+                    "file": "retries"
                 },
                 "displayName": null,
                 "typeId": "type_retries:User"
@@ -104,28 +32,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
-                            "wireValue": "id"
-                        },
+                        "name": "id",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -146,28 +53,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
-                            "wireValue": "name"
-                        },
+                        "name": "name",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -211,46 +97,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "retries",
-                            "camelCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "RETRIES",
-                                "safeName": "RETRIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Retries",
-                                "safeName": "Retries"
-                            }
-                        }
+                        "retries"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "retries",
-                        "camelCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RETRIES",
-                            "safeName": "RETRIES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Retries",
-                            "safeName": "Retries"
-                        }
-                    }
+                    "file": "retries"
                 }
             },
             "displayName": null,
@@ -270,25 +120,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_retries.getUsers",
-                    "name": {
-                        "originalName": "getUsers",
-                        "camelCase": {
-                            "unsafeName": "getUsers",
-                            "safeName": "getUsers"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_users",
-                            "safeName": "get_users"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_USERS",
-                            "safeName": "GET_USERS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetUsers",
-                            "safeName": "GetUsers"
-                        }
-                    },
+                    "name": "getUsers",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -323,67 +155,13 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "named",
-                                            "name": {
-                                                "originalName": "User",
-                                                "camelCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "USER",
-                                                    "safeName": "USER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "User",
-                                                    "safeName": "User"
-                                                }
-                                            },
+                                            "name": "User",
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    {
-                                                        "originalName": "retries",
-                                                        "camelCase": {
-                                                            "unsafeName": "retries",
-                                                            "safeName": "retries"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "retries",
-                                                            "safeName": "retries"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "RETRIES",
-                                                            "safeName": "RETRIES"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Retries",
-                                                            "safeName": "Retries"
-                                                        }
-                                                    }
+                                                    "retries"
                                                 ],
                                                 "packagePath": [],
-                                                "file": {
-                                                    "originalName": "retries",
-                                                    "camelCase": {
-                                                        "unsafeName": "retries",
-                                                        "safeName": "retries"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "retries",
-                                                        "safeName": "retries"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "RETRIES",
-                                                        "safeName": "RETRIES"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Retries",
-                                                        "safeName": "Retries"
-                                                    }
-                                                }
+                                                "file": "retries"
                                             },
                                             "displayName": null,
                                             "typeId": "type_retries:User",
@@ -406,7 +184,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "4a954d01",
+                                "id": "b2ba5002",
                                 "url": "/users",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -433,90 +211,15 @@
                                                                     "type": "object",
                                                                     "properties": [
                                                                         {
-                                                                            "name": {
-                                                                                "name": {
-                                                                                    "originalName": "id",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "id",
-                                                                                        "safeName": "id"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "id",
-                                                                                        "safeName": "id"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "ID",
-                                                                                        "safeName": "ID"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "ID",
-                                                                                        "safeName": "ID"
-                                                                                    }
-                                                                                },
-                                                                                "wireValue": "id"
-                                                                            },
+                                                                            "name": "id",
                                                                             "originalTypeDeclaration": {
-                                                                                "name": {
-                                                                                    "originalName": "User",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "USER",
-                                                                                        "safeName": "USER"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "User",
-                                                                                        "safeName": "User"
-                                                                                    }
-                                                                                },
+                                                                                "name": "User",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
-                                                                                        {
-                                                                                            "originalName": "retries",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "RETRIES",
-                                                                                                "safeName": "RETRIES"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Retries",
-                                                                                                "safeName": "Retries"
-                                                                                            }
-                                                                                        }
+                                                                                        "retries"
                                                                                     ],
                                                                                     "packagePath": [],
-                                                                                    "file": {
-                                                                                        "originalName": "retries",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "RETRIES",
-                                                                                            "safeName": "RETRIES"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Retries",
-                                                                                            "safeName": "Retries"
-                                                                                        }
-                                                                                    }
+                                                                                    "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
                                                                                 "typeId": "type_retries:User"
@@ -536,90 +239,15 @@
                                                                             "propertyAccess": null
                                                                         },
                                                                         {
-                                                                            "name": {
-                                                                                "name": {
-                                                                                    "originalName": "name",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "name",
-                                                                                        "safeName": "name"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "name",
-                                                                                        "safeName": "name"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "NAME",
-                                                                                        "safeName": "NAME"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Name",
-                                                                                        "safeName": "Name"
-                                                                                    }
-                                                                                },
-                                                                                "wireValue": "name"
-                                                                            },
+                                                                            "name": "name",
                                                                             "originalTypeDeclaration": {
-                                                                                "name": {
-                                                                                    "originalName": "User",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "USER",
-                                                                                        "safeName": "USER"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "User",
-                                                                                        "safeName": "User"
-                                                                                    }
-                                                                                },
+                                                                                "name": "User",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
-                                                                                        {
-                                                                                            "originalName": "retries",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "RETRIES",
-                                                                                                "safeName": "RETRIES"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Retries",
-                                                                                                "safeName": "Retries"
-                                                                                            }
-                                                                                        }
+                                                                                        "retries"
                                                                                     ],
                                                                                     "packagePath": [],
-                                                                                    "file": {
-                                                                                        "originalName": "retries",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "RETRIES",
-                                                                                            "safeName": "RETRIES"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Retries",
-                                                                                            "safeName": "Retries"
-                                                                                        }
-                                                                                    }
+                                                                                    "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
                                                                                 "typeId": "type_retries:User"
@@ -642,67 +270,13 @@
                                                                     "extraProperties": null
                                                                 },
                                                                 "typeName": {
-                                                                    "name": {
-                                                                        "originalName": "User",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "USER",
-                                                                            "safeName": "USER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "User",
-                                                                            "safeName": "User"
-                                                                        }
-                                                                    },
+                                                                    "name": "User",
                                                                     "fernFilepath": {
                                                                         "allParts": [
-                                                                            {
-                                                                                "originalName": "retries",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "retries",
-                                                                                    "safeName": "retries"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "retries",
-                                                                                    "safeName": "retries"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "RETRIES",
-                                                                                    "safeName": "RETRIES"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Retries",
-                                                                                    "safeName": "Retries"
-                                                                                }
-                                                                            }
+                                                                            "retries"
                                                                         ],
                                                                         "packagePath": [],
-                                                                        "file": {
-                                                                            "originalName": "retries",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "retries",
-                                                                                "safeName": "retries"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "retries",
-                                                                                "safeName": "retries"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "RETRIES",
-                                                                                "safeName": "RETRIES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Retries",
-                                                                                "safeName": "Retries"
-                                                                            }
-                                                                        }
+                                                                        "file": "retries"
                                                                     },
                                                                     "displayName": null,
                                                                     "typeId": "type_retries:User"
@@ -720,90 +294,15 @@
                                                                     "type": "object",
                                                                     "properties": [
                                                                         {
-                                                                            "name": {
-                                                                                "name": {
-                                                                                    "originalName": "id",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "id",
-                                                                                        "safeName": "id"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "id",
-                                                                                        "safeName": "id"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "ID",
-                                                                                        "safeName": "ID"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "ID",
-                                                                                        "safeName": "ID"
-                                                                                    }
-                                                                                },
-                                                                                "wireValue": "id"
-                                                                            },
+                                                                            "name": "id",
                                                                             "originalTypeDeclaration": {
-                                                                                "name": {
-                                                                                    "originalName": "User",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "USER",
-                                                                                        "safeName": "USER"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "User",
-                                                                                        "safeName": "User"
-                                                                                    }
-                                                                                },
+                                                                                "name": "User",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
-                                                                                        {
-                                                                                            "originalName": "retries",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "RETRIES",
-                                                                                                "safeName": "RETRIES"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Retries",
-                                                                                                "safeName": "Retries"
-                                                                                            }
-                                                                                        }
+                                                                                        "retries"
                                                                                     ],
                                                                                     "packagePath": [],
-                                                                                    "file": {
-                                                                                        "originalName": "retries",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "RETRIES",
-                                                                                            "safeName": "RETRIES"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Retries",
-                                                                                            "safeName": "Retries"
-                                                                                        }
-                                                                                    }
+                                                                                    "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
                                                                                 "typeId": "type_retries:User"
@@ -823,90 +322,15 @@
                                                                             "propertyAccess": null
                                                                         },
                                                                         {
-                                                                            "name": {
-                                                                                "name": {
-                                                                                    "originalName": "name",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "name",
-                                                                                        "safeName": "name"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "name",
-                                                                                        "safeName": "name"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "NAME",
-                                                                                        "safeName": "NAME"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Name",
-                                                                                        "safeName": "Name"
-                                                                                    }
-                                                                                },
-                                                                                "wireValue": "name"
-                                                                            },
+                                                                            "name": "name",
                                                                             "originalTypeDeclaration": {
-                                                                                "name": {
-                                                                                    "originalName": "User",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "user",
-                                                                                        "safeName": "user"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "USER",
-                                                                                        "safeName": "USER"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "User",
-                                                                                        "safeName": "User"
-                                                                                    }
-                                                                                },
+                                                                                "name": "User",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
-                                                                                        {
-                                                                                            "originalName": "retries",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "retries",
-                                                                                                "safeName": "retries"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "RETRIES",
-                                                                                                "safeName": "RETRIES"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Retries",
-                                                                                                "safeName": "Retries"
-                                                                                            }
-                                                                                        }
+                                                                                        "retries"
                                                                                     ],
                                                                                     "packagePath": [],
-                                                                                    "file": {
-                                                                                        "originalName": "retries",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "retries",
-                                                                                            "safeName": "retries"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "RETRIES",
-                                                                                            "safeName": "RETRIES"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Retries",
-                                                                                            "safeName": "Retries"
-                                                                                        }
-                                                                                    }
+                                                                                    "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
                                                                                 "typeId": "type_retries:User"
@@ -929,67 +353,13 @@
                                                                     "extraProperties": null
                                                                 },
                                                                 "typeName": {
-                                                                    "name": {
-                                                                        "originalName": "User",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "USER",
-                                                                            "safeName": "USER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "User",
-                                                                            "safeName": "User"
-                                                                        }
-                                                                    },
+                                                                    "name": "User",
                                                                     "fernFilepath": {
                                                                         "allParts": [
-                                                                            {
-                                                                                "originalName": "retries",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "retries",
-                                                                                    "safeName": "retries"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "retries",
-                                                                                    "safeName": "retries"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "RETRIES",
-                                                                                    "safeName": "RETRIES"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Retries",
-                                                                                    "safeName": "Retries"
-                                                                                }
-                                                                            }
+                                                                            "retries"
                                                                         ],
                                                                         "packagePath": [],
-                                                                        "file": {
-                                                                            "originalName": "retries",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "retries",
-                                                                                "safeName": "retries"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "retries",
-                                                                                "safeName": "retries"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "RETRIES",
-                                                                                "safeName": "RETRIES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Retries",
-                                                                                "safeName": "Retries"
-                                                                            }
-                                                                        }
+                                                                        "file": "retries"
                                                                     },
                                                                     "displayName": null,
                                                                     "typeId": "type_retries:User"
@@ -1003,67 +373,13 @@
                                                     ],
                                                     "itemType": {
                                                         "_type": "named",
-                                                        "name": {
-                                                            "originalName": "User",
-                                                            "camelCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "USER",
-                                                                "safeName": "USER"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "User",
-                                                                "safeName": "User"
-                                                            }
-                                                        },
+                                                        "name": "User",
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                {
-                                                                    "originalName": "retries",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "retries",
-                                                                        "safeName": "retries"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "retries",
-                                                                        "safeName": "retries"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RETRIES",
-                                                                        "safeName": "RETRIES"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Retries",
-                                                                        "safeName": "Retries"
-                                                                    }
-                                                                }
+                                                                "retries"
                                                             ],
                                                             "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "retries",
-                                                                "camelCase": {
-                                                                    "unsafeName": "retries",
-                                                                    "safeName": "retries"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "retries",
-                                                                    "safeName": "retries"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "RETRIES",
-                                                                    "safeName": "RETRIES"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Retries",
-                                                                    "safeName": "Retries"
-                                                                }
-                                                            }
+                                                            "file": "retries"
                                                         },
                                                         "displayName": null,
                                                         "typeId": "type_retries:User",
@@ -1107,28 +423,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -1222,6 +517,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -1240,8 +536,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1252,6 +547,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "name",
                             "name": {
                                 "originalName": "name",
                                 "camelCase": {
@@ -1270,8 +566,7 @@
                                     "unsafeName": "Name",
                                     "safeName": "Name"
                                 }
-                            },
-                            "wireValue": "name"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1376,70 +671,21 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {
         "subpackage_retries": {
-            "name": {
-                "originalName": "retries",
-                "camelCase": {
-                    "unsafeName": "retries",
-                    "safeName": "retries"
-                },
-                "snakeCase": {
-                    "unsafeName": "retries",
-                    "safeName": "retries"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "RETRIES",
-                    "safeName": "RETRIES"
-                },
-                "pascalCase": {
-                    "unsafeName": "Retries",
-                    "safeName": "Retries"
-                }
-            },
+            "name": "retries",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "retries",
-                        "camelCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RETRIES",
-                            "safeName": "RETRIES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Retries",
-                            "safeName": "Retries"
-                        }
-                    }
+                    "retries"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "retries",
-                    "camelCase": {
-                        "unsafeName": "retries",
-                        "safeName": "retries"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "retries",
-                        "safeName": "retries"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "RETRIES",
-                        "safeName": "RETRIES"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Retries",
-                        "safeName": "Retries"
-                    }
-                }
+                "file": "retries"
             },
             "service": "service_retries",
             "types": [

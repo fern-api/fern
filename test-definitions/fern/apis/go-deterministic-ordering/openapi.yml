@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: go-deterministic-ordering
-  version: ''
+  version: ""
 paths:
   /container/list-of-primitives:
     post:
@@ -10,8 +10,8 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -35,14 +35,14 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+                  $ref: "#/components/schemas/typesObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
@@ -51,7 +51,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
   /container/set-of-primitives:
     post:
       operationId: endpoints_container_getAndReturnSetOfPrimitives
@@ -59,8 +59,8 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -83,14 +83,14 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+                  $ref: "#/components/schemas/typesObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
@@ -99,7 +99,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
   /container/map-prim-to-prim:
     post:
       operationId: endpoints_container_getAndReturnMapPrimToPrim
@@ -107,8 +107,8 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -131,14 +131,14 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
-                  $ref: '#/components/schemas/typesObjectWithRequiredField'
+                  $ref: "#/components/schemas/typesObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
@@ -147,7 +147,7 @@ paths:
             schema:
               type: object
               additionalProperties:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
   /container/map-prim-to-union:
     post:
       operationId: endpoints_container_getAndReturnMapOfPrimToUndiscriminatedUnion
@@ -155,14 +155,14 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
-                  $ref: '#/components/schemas/typesMixedType'
+                  $ref: "#/components/schemas/typesMixedType"
       security: *ref_0
       requestBody:
         required: true
@@ -171,7 +171,7 @@ paths:
             schema:
               type: object
               additionalProperties:
-                $ref: '#/components/schemas/typesMixedType'
+                $ref: "#/components/schemas/typesMixedType"
   /container/opt-objects:
     post:
       operationId: endpoints_container_getAndReturnOptional
@@ -179,12 +179,12 @@ paths:
         - EndpointsContainer
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
                 nullable: true
       security: *ref_0
       requestBody:
@@ -192,7 +192,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithRequiredField'
+              $ref: "#/components/schemas/typesObjectWithRequiredField"
               nullable: true
   /foo/bar:
     post:
@@ -201,15 +201,15 @@ paths:
         - EndpointsContentType
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithOptionalField'
+              $ref: "#/components/schemas/typesObjectWithOptionalField"
   /foo/baz:
     post:
       operationId: endpoints_contentType_postJsonPatchContentWithCharsetType
@@ -217,15 +217,15 @@ paths:
         - EndpointsContentType
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithOptionalField'
+              $ref: "#/components/schemas/typesObjectWithOptionalField"
   /duplicate-names-a:
     post:
       description: Create endpoint for service A
@@ -234,12 +234,12 @@ paths:
         - EndpointsDuplicateNamesA
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
@@ -274,8 +274,8 @@ paths:
             type: integer
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /duplicate-names-a/{id}:
     get:
@@ -296,8 +296,8 @@ paths:
             type: string
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /duplicate-names-b:
     post:
@@ -307,12 +307,12 @@ paths:
         - EndpointsDuplicateNamesB
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
@@ -347,8 +347,8 @@ paths:
             type: integer
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /duplicate-names-b/{id}:
     get:
@@ -369,8 +369,8 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /duplicate-names-c:
     post:
@@ -380,12 +380,12 @@ paths:
         - EndpointsDuplicateNamesC
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
@@ -420,8 +420,8 @@ paths:
             type: integer
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /duplicate-names-c/{id}:
     get:
@@ -442,8 +442,8 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /enum:
     post:
@@ -452,19 +452,19 @@ paths:
         - EndpointsEnum
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesWeatherReport'
+                $ref: "#/components/schemas/typesWeatherReport"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesWeatherReport'
+              $ref: "#/components/schemas/typesWeatherReport"
   /http-methods/{id}:
     get:
       operationId: endpoints_httpMethods_testGet
@@ -477,8 +477,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -495,19 +495,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithRequiredField'
+              $ref: "#/components/schemas/typesObjectWithRequiredField"
     patch:
       operationId: endpoints_httpMethods_testPatch
       tags:
@@ -519,19 +519,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithOptionalField'
+              $ref: "#/components/schemas/typesObjectWithOptionalField"
     delete:
       operationId: endpoints_httpMethods_testDelete
       tags:
@@ -543,8 +543,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -557,19 +557,19 @@ paths:
         - EndpointsHttpMethods
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithRequiredField'
+              $ref: "#/components/schemas/typesObjectWithRequiredField"
   /object/get-and-return-with-optional-field:
     post:
       operationId: endpoints_object_getAndReturnWithOptionalField
@@ -577,19 +577,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithOptionalField'
+              $ref: "#/components/schemas/typesObjectWithOptionalField"
   /object/get-and-return-with-required-field:
     post:
       operationId: endpoints_object_getAndReturnWithRequiredField
@@ -597,19 +597,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithRequiredField'
+              $ref: "#/components/schemas/typesObjectWithRequiredField"
   /object/get-and-return-with-map-of-map:
     post:
       operationId: endpoints_object_getAndReturnWithMapOfMap
@@ -617,19 +617,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithMapOfMap'
+                $ref: "#/components/schemas/typesObjectWithMapOfMap"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithMapOfMap'
+              $ref: "#/components/schemas/typesObjectWithMapOfMap"
   /object/get-and-return-nested-with-optional-field:
     post:
       operationId: endpoints_object_getAndReturnNestedWithOptionalField
@@ -637,19 +637,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
+                $ref: "#/components/schemas/typesNestedObjectWithOptionalField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
+              $ref: "#/components/schemas/typesNestedObjectWithOptionalField"
   /object/get-and-return-nested-with-required-field/{string}:
     post:
       operationId: endpoints_object_getAndReturnNestedWithRequiredField
@@ -662,19 +662,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+                $ref: "#/components/schemas/typesNestedObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+              $ref: "#/components/schemas/typesNestedObjectWithRequiredField"
   /object/get-and-return-nested-with-required-field-list:
     post:
       operationId: endpoints_object_getAndReturnNestedWithRequiredFieldAsList
@@ -682,12 +682,12 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+                $ref: "#/components/schemas/typesNestedObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
@@ -696,7 +696,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
+                $ref: "#/components/schemas/typesNestedObjectWithRequiredField"
   /object/get-and-return-with-unknown-field:
     post:
       operationId: endpoints_object_getAndReturnWithUnknownField
@@ -704,19 +704,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithUnknownField'
+                $ref: "#/components/schemas/typesObjectWithUnknownField"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithUnknownField'
+              $ref: "#/components/schemas/typesObjectWithUnknownField"
   /object/get-and-return-with-datetime-like-string:
     post:
       description: >-
@@ -732,19 +732,19 @@ paths:
         - EndpointsObject
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+                $ref: "#/components/schemas/typesObjectWithDatetimeLikeString"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+              $ref: "#/components/schemas/typesObjectWithDatetimeLikeString"
   /pagination:
     get:
       description: List items with cursor pagination
@@ -767,12 +767,12 @@ paths:
             type: integer
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/endpointsPaginatedResponse'
+                $ref: "#/components/schemas/endpointsPaginatedResponse"
       security: *ref_0
   /params/path/{param}:
     get:
@@ -787,8 +787,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -806,8 +806,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -831,12 +831,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
+                $ref: "#/components/schemas/typesObjectWithRequiredField"
       security: *ref_0
       requestBody:
         required: true
@@ -858,8 +858,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -877,8 +877,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -908,8 +908,8 @@ paths:
           schema:
             type: integer
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /params/allow-multiple-query:
     get:
@@ -933,8 +933,8 @@ paths:
             items:
               type: integer
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /params/path-query/{param}:
     get:
@@ -954,8 +954,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /params/inline-path-query/{param}:
     get:
@@ -975,8 +975,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /primitive/string:
     post:
@@ -985,8 +985,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1005,8 +1005,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1025,8 +1025,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1047,8 +1047,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1069,8 +1069,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1089,8 +1089,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1111,8 +1111,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1133,8 +1133,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1155,8 +1155,8 @@ paths:
         - EndpointsPrimitive
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1182,12 +1182,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/endpointsPutResponse'
+                $ref: "#/components/schemas/endpointsPutResponse"
       summary: Put
       security: *ref_0
   /union:
@@ -1197,19 +1197,19 @@ paths:
         - EndpointsUnion
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesAnimal'
+                $ref: "#/components/schemas/typesAnimal"
       security: *ref_0
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesAnimal'
+              $ref: "#/components/schemas/typesAnimal"
   /urls/MixedCase:
     get:
       operationId: endpoints_urls_withMixedCase
@@ -1217,8 +1217,8 @@ paths:
         - EndpointsUrls
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1231,8 +1231,8 @@ paths:
         - EndpointsUrls
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1245,8 +1245,8 @@ paths:
         - EndpointsUrls
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1259,8 +1259,8 @@ paths:
         - EndpointsUrls
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1274,18 +1274,18 @@ paths:
         - InlinedRequests
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
-        '400':
-          description: ''
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadObjectRequestInfo'
+                $ref: "#/components/schemas/BadObjectRequestInfo"
       requestBody:
         required: true
         content:
@@ -1298,7 +1298,7 @@ paths:
                 integer:
                   type: integer
                 NestedObject:
-                  $ref: '#/components/schemas/typesObjectWithOptionalField'
+                  $ref: "#/components/schemas/typesObjectWithOptionalField"
               required:
                 - string
                 - integer
@@ -1311,18 +1311,18 @@ paths:
         - NoAuth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: boolean
-        '400':
-          description: ''
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadObjectRequestInfo'
+                $ref: "#/components/schemas/BadObjectRequestInfo"
       requestBody:
         required: true
         content:
@@ -1335,12 +1335,12 @@ paths:
         - NoReqBody
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithOptionalField'
+                $ref: "#/components/schemas/typesObjectWithOptionalField"
       security: *ref_0
     post:
       operationId: noReqBody_postWithNoRequestBody
@@ -1348,8 +1348,8 @@ paths:
         - NoReqBody
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1367,8 +1367,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
       requestBody:
         required: true
@@ -1385,7 +1385,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/typesObjectWithRequiredField'
+            $ref: "#/components/schemas/typesObjectWithRequiredField"
         next:
           type: string
           nullable: true
@@ -1396,9 +1396,9 @@ components:
       type: object
       properties:
         category:
-          $ref: '#/components/schemas/endpointsErrorCategory'
+          $ref: "#/components/schemas/endpointsErrorCategory"
         code:
-          $ref: '#/components/schemas/endpointsErrorCode'
+          $ref: "#/components/schemas/endpointsErrorCode"
         detail:
           type: string
           nullable: true
@@ -1437,7 +1437,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/endpointsError'
+            $ref: "#/components/schemas/endpointsError"
           nullable: true
     BadObjectRequestInfo:
       title: BadObjectRequestInfo
@@ -1616,7 +1616,7 @@ components:
           type: string
           nullable: true
         NestedObject:
-          $ref: '#/components/schemas/typesObjectWithOptionalField'
+          $ref: "#/components/schemas/typesObjectWithOptionalField"
           nullable: true
     typesNestedObjectWithRequiredField:
       title: typesNestedObjectWithRequiredField
@@ -1625,7 +1625,7 @@ components:
         string:
           type: string
         NestedObject:
-          $ref: '#/components/schemas/typesObjectWithOptionalField'
+          $ref: "#/components/schemas/typesObjectWithOptionalField"
       required:
         - string
         - NestedObject
@@ -1634,7 +1634,7 @@ components:
       type: object
       properties:
         optionalAlias:
-          $ref: '#/components/schemas/typesOptionalAlias'
+          $ref: "#/components/schemas/typesOptionalAlias"
           nullable: true
     typesOptionalAlias:
       title: typesOptionalAlias
@@ -1679,7 +1679,7 @@ components:
                   type: string
                   enum:
                     - dog
-            - $ref: '#/components/schemas/typesDog'
+            - $ref: "#/components/schemas/typesDog"
           required:
             - animal
         - type: object
@@ -1690,7 +1690,7 @@ components:
                   type: string
                   enum:
                     - cat
-            - $ref: '#/components/schemas/typesCat'
+            - $ref: "#/components/schemas/typesCat"
           required:
             - animal
     typesDog:
