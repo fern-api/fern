@@ -7,6 +7,8 @@ import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorConte
 export interface FilePropertyInfo {
     fileFields: swift.FunctionArgument[];
     bodyPropertyFields: swift.FunctionArgument[];
+    /** All fields in original IR property order (interleaved file and body fields). */
+    allFields: swift.FunctionArgument[];
 }
 
 export class FilePropertyMapper {
@@ -27,7 +29,8 @@ export class FilePropertyMapper {
     }): FilePropertyInfo {
         const result: FilePropertyInfo = {
             fileFields: [],
-            bodyPropertyFields: []
+            bodyPropertyFields: [],
+            allFields: []
         };
         const record = this.context.getRecord(value) ?? {};
         for (const property of body.properties) {
@@ -38,6 +41,7 @@ export class FilePropertyMapper {
                         value: this.getSingleFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.allFields.push(arg);
                     break;
                 }
                 case "fileArray": {
@@ -46,6 +50,7 @@ export class FilePropertyMapper {
                         value: this.getArrayFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.allFields.push(arg);
                     break;
                 }
                 case "bodyProperty": {
@@ -54,6 +59,7 @@ export class FilePropertyMapper {
                         value: this.getBodyProperty({ fromSymbol, property, record })
                     });
                     result.bodyPropertyFields.push(arg);
+                    result.allFields.push(arg);
                     break;
                 }
                 default:

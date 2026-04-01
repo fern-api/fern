@@ -243,8 +243,9 @@ export class WireTestFunctionGenerator {
                                 nullableContainer.nullable.shape.container.type === "optional"
                                     ? nullableContainer.nullable.shape.container.optional
                                     : nullableContainer.nullable;
+                            const optionalName = this.getOptionalTypeName(exampleTypeRef, fromScope);
                             return swift.Expression.structInitialization({
-                                unsafeName: "Optional",
+                                unsafeName: optionalName,
                                 arguments_: [
                                     swift.functionArgument({
                                         value:
@@ -281,8 +282,9 @@ export class WireTestFunctionGenerator {
                                       ? inner.shape.container.nullable
                                       : inner
                                 : inner;
+                        const optionalName = this.getOptionalTypeName(exampleTypeRef, fromScope);
                         return swift.Expression.structInitialization({
-                            unsafeName: "Optional",
+                            unsafeName: optionalName,
                             arguments_: [
                                 swift.functionArgument({
                                     value:
@@ -338,12 +340,25 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
+                        const caseName = exampleEnumType.value.name.camelCase.unsafeName;
+                        // Use fully qualified enum name when case is "none" to avoid
+                        // ambiguity with Optional.none in Swift.
+                        if (caseName === "none") {
+                            return swift.Expression.memberAccess({
+                                target: swift.Expression.reference(symbol.name),
+                                memberName: caseName
+                            });
+                        }
+                        return swift.Expression.enumCaseShorthand(caseName);
                     },
                     object: (exampleObjectType) => {
+                        const orderedProperties = this.getOrderedExampleObjectProperties(
+                            exampleNamedType.typeName.typeId,
+                            exampleObjectType.properties
+                        );
                         return swift.Expression.structInitialization({
                             unsafeName: symbol.name,
-                            arguments_: exampleObjectType.properties
+                            arguments_: orderedProperties
                                 .map((property) => {
                                     if (
                                         property.value.shape.type === "container" &&
@@ -372,8 +387,12 @@ export class WireTestFunctionGenerator {
                                     memberName: caseName
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) => {
+                                const orderedUnionProperties = this.getOrderedExampleObjectProperties(
+                                    exampleObjectTypeWithId.typeId,
+                                    exampleObjectTypeWithId.object.properties
+                                );
                                 const declaredWireNames = new Set(
-                                    exampleObjectTypeWithId.object.properties.map((p) => p.name.wireValue)
+                                    orderedUnionProperties.map((p) => p.name.wireValue)
                                 );
                                 const jsonObj =
                                     exampleTypeRef.jsonExample != null &&
@@ -384,7 +403,7 @@ export class WireTestFunctionGenerator {
                                 const extraEntries = Object.entries(jsonObj).filter(
                                     ([key]) => !declaredWireNames.has(key)
                                 );
-                                const propertyArgs: swift.FunctionArgument[] = exampleObjectTypeWithId.object.properties
+                                const propertyArgs: swift.FunctionArgument[] = orderedUnionProperties
                                     .map((property) => {
                                         if (
                                             property.value.shape.type === "container" &&
@@ -551,6 +570,82 @@ export class WireTestFunctionGenerator {
             },
             unknown: () => this.referencer.referenceAsIsType("JSONValue"),
             _other: () => this.referencer.referenceAsIsType("JSONValue")
+        });
+    }
+
+    /**
+     * Returns the appropriate Optional type name for wrapping a value.
+     * Uses `Optional<Type>` with explicit generic parameter only when the inner value
+     * is a named enum type (where Swift can't infer the type from enum case shorthand).
+     * For all other types, plain `Optional` is sufficient.
+     */
+    private getOptionalTypeName(
+        exampleTypeRef: FernIr.ExampleTypeReference | null | undefined,
+        fromScope: swift.Symbol | string
+    ): string {
+        if (exampleTypeRef == null) {
+            return "Optional";
+        }
+        // Only add explicit type parameter for named enum types,
+        // since enum case shorthand (.value) can't be inferred inside Optional(...)
+        if (exampleTypeRef.shape.type === "named") {
+            const typeId = exampleTypeRef.shape.typeName.typeId;
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "enum") {
+                const innerSwiftType = this.getSwiftTypeReferenceForExampleTypeReference(exampleTypeRef, fromScope);
+                return `Optional<${innerSwiftType.toString()}>`;
+            }
+        }
+        return "Optional";
+    }
+
+    /**
+     * Reorders example object properties to match the Swift struct initializer order.
+     * The Swift struct lists extended (inherited) properties first, then own properties,
+     * each group in declaration order. This method builds an ordered wire-value list
+     * from the type declaration and sorts example properties accordingly.
+     */
+    private getOrderedExampleObjectProperties(
+        typeId: FernIr.TypeId,
+        properties: FernIr.ExampleObjectProperty[]
+    ): FernIr.ExampleObjectProperty[] {
+        const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+        if (typeDeclaration == null) {
+            return properties;
+        }
+        // Build the ordered list of wire values from the type declaration:
+        // [extended properties..., own properties...]
+        const orderedWireValues = typeDeclaration.shape._visit<string[]>({
+            object: (otd) => {
+                const wireValues: string[] = [];
+                for (const prop of otd.extendedProperties ?? []) {
+                    wireValues.push(prop.name.wireValue);
+                }
+                for (const prop of otd.properties) {
+                    wireValues.push(prop.name.wireValue);
+                }
+                return wireValues;
+            },
+            alias: () => [],
+            enum: () => [],
+            union: () => [],
+            undiscriminatedUnion: () => [],
+            _other: () => []
+        });
+        if (orderedWireValues.length === 0) {
+            return properties;
+        }
+        const wireValueToIndex = new Map<string, number>();
+        for (let i = 0; i < orderedWireValues.length; i++) {
+            const wireValue = orderedWireValues[i];
+            if (wireValue != null) {
+                wireValueToIndex.set(wireValue, i);
+            }
+        }
+        return [...properties].sort((a, b) => {
+            const indexA = wireValueToIndex.get(a.name.wireValue) ?? Number.MAX_SAFE_INTEGER;
+            const indexB = wireValueToIndex.get(b.name.wireValue) ?? Number.MAX_SAFE_INTEGER;
+            return indexA - indexB;
         });
     }
 

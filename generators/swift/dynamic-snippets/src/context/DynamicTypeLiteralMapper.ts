@@ -176,7 +176,7 @@ export class DynamicTypeLiteralMapper {
                 });
             }
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ typeId, enum_: named, value });
             case "object":
                 return this.convertObject({ fromSymbol, typeId, object_: named, value });
             case "undiscriminatedUnion": {
@@ -291,12 +291,22 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): swift.Expression {
+    private convertEnum({ typeId, enum_, value }: { typeId: string; enum_: FernIr.dynamic.EnumType; value: unknown }): swift.Expression {
         const nameAndWireValue = this.getEnumValue({ enum_, value });
         if (nameAndWireValue == null) {
             return swift.Expression.nop();
         }
-        return swift.Expression.enumCaseShorthand(nameAndWireValue.name.camelCase.unsafeName);
+        const caseName = nameAndWireValue.name.camelCase.unsafeName;
+        // Use fully qualified enum name when case is "none" to avoid
+        // ambiguity with Optional.none in Swift.
+        if (caseName === "none") {
+            const enumSymbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+            return swift.Expression.memberAccess({
+                target: swift.Expression.reference(enumSymbol.name),
+                memberName: caseName
+            });
+        }
+        return swift.Expression.enumCaseShorthand(caseName);
     }
 
     private getEnumValue({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }) {

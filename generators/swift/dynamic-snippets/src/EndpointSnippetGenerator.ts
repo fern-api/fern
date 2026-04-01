@@ -499,7 +499,8 @@ export class EndpointSnippetGenerator {
         if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
             return {
                 fileFields: [],
-                bodyPropertyFields: []
+                bodyPropertyFields: [],
+                allFields: []
             };
         }
         return this.context.filePropertyMapper.getFilePropertyInfo({
@@ -549,7 +550,7 @@ export class EndpointSnippetGenerator {
     }): swift.FunctionArgument[] {
         switch (body.type) {
             case "fileUpload":
-                return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+                return filePropertyInfo.allFields;
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
             case "referenced":
