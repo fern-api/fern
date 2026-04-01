@@ -1252,6 +1252,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitBasic(BasicAuthScheme basic) {
+            boolean usernameOmitted = basic.getUsernameOmit().orElse(false);
+            boolean passwordOmitted = basic.getPasswordOmit().orElse(false);
+
             // username
             String usernameFieldName = basic.getUsername().getCamelCase().getSafeName();
             FieldSpec.Builder usernameField =
@@ -1289,27 +1292,32 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                     .build());
 
+            // Per-field build() validation: skip null check for fields with omit=true
             if (isMandatory) {
-                this.buildMethod
-                        .beginControlFlow("if (this.$L == null)", usernameFieldName)
-                        .addStatement(
-                                "throw new RuntimeException($S)",
-                                basic.getUsernameEnvVar().isEmpty()
-                                        ? getErrorMessage(usernameFieldName)
-                                        : getErrorMessage(
-                                                usernameFieldName,
-                                                basic.getUsernameEnvVar().get()))
-                        .endControlFlow();
-                this.buildMethod
-                        .beginControlFlow("if (this.$L == null)", passwordFieldName)
-                        .addStatement(
-                                "throw new RuntimeException($S)",
-                                basic.getPasswordEnvVar().isEmpty()
-                                        ? getErrorMessage(passwordFieldName)
-                                        : getErrorMessage(
-                                                passwordFieldName,
-                                                basic.getPasswordEnvVar().get()))
-                        .endControlFlow();
+                if (!usernameOmitted) {
+                    this.buildMethod
+                            .beginControlFlow("if (this.$L == null)", usernameFieldName)
+                            .addStatement(
+                                    "throw new RuntimeException($S)",
+                                    basic.getUsernameEnvVar().isEmpty()
+                                            ? getErrorMessage(usernameFieldName)
+                                            : getErrorMessage(
+                                                    usernameFieldName,
+                                                    basic.getUsernameEnvVar().get()))
+                            .endControlFlow();
+                }
+                if (!passwordOmitted) {
+                    this.buildMethod
+                            .beginControlFlow("if (this.$L == null)", passwordFieldName)
+                            .addStatement(
+                                    "throw new RuntimeException($S)",
+                                    basic.getPasswordEnvVar().isEmpty()
+                                            ? getErrorMessage(passwordFieldName)
+                                            : getErrorMessage(
+                                                    passwordFieldName,
+                                                    basic.getPasswordEnvVar().get()))
+                            .endControlFlow();
+                }
             }
 
             // For ENDPOINT_SECURITY, track auth info instead of adding headers directly
@@ -1323,13 +1331,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 authProviderInfos.add(new AuthProviderInfo(
                         "Basic", "BasicAuthProvider", usernameFieldName, passwordFieldName, envVarHint, true));
             } else if (this.configureAuthMethod != null) {
+                // Per-field condition for setAuthentication: only require non-omitted fields
+                if (!usernameOmitted && !passwordOmitted) {
+                    this.configureAuthMethod.beginControlFlow(
+                            "if (this.$L != null && this.$L != null)", usernameFieldName, passwordFieldName);
+                } else if (usernameOmitted && passwordOmitted) {
+                    this.configureAuthMethod.beginControlFlow(
+                            "if (this.$L != null || this.$L != null)", usernameFieldName, passwordFieldName);
+                } else if (usernameOmitted) {
+                    // Only password is required
+                    this.configureAuthMethod.beginControlFlow("if (this.$L != null)", passwordFieldName);
+                } else {
+                    // Only username is required
+                    this.configureAuthMethod.beginControlFlow("if (this.$L != null)", usernameFieldName);
+                }
+                // Per-field token construction: use empty string fallback for omittable fields
+                String usernameRef = usernameOmitted
+                        ? "(this." + usernameFieldName + " != null ? this." + usernameFieldName + " : \"\")"
+                        : "this." + usernameFieldName;
+                String passwordRef = passwordOmitted
+                        ? "(this." + passwordFieldName + " != null ? this." + passwordFieldName + " : \"\")"
+                        : "this." + passwordFieldName;
                 this.configureAuthMethod
-                        .beginControlFlow(
-                                "if (this.$L != null && this.$L != null)", usernameFieldName, passwordFieldName)
-                        .addStatement(
-                                "String unencodedToken = this.$L + \":\" + this.$L",
-                                usernameFieldName,
-                                passwordFieldName)
+                        .addStatement("String unencodedToken = " + usernameRef + " + \":\" + " + passwordRef)
                         .addStatement(
                                 "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
                                 Base64.class)
