@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test/{region}/resource",
+                "method": "GET",
+                "identifier_override": "endpoint_.test_get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/x-fern-default\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", apiVersion: \"YOUR_API_VERSION\" });\nawait client.testGet({\n    region: \"region\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

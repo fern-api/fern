@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.7.0] - 2026-03-31
+- Feature: Add optional `clientDefault` field to `HttpHeader`, `PathParameter`, and `QueryParameter`.
+  When present, the parameter/header is optional in the generated SDK and the literal value is sent
+  when the caller does not provide one. Populated from the `x-fern-default` OpenAPI extension.
+
 ## [v65.5.0] - 2026-03-10
 - Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
   (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as

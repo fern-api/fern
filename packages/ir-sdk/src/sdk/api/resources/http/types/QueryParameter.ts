@@ -6,6 +6,13 @@ export interface QueryParameter extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     allowMultiple: boolean;
+    /**
+     * A client-side default value for this query parameter. When present,
+     * the parameter is optional in the generated SDK and this literal value
+     * is sent when the caller does not provide one. Populated from the
+     * `x-fern-default` OpenAPI extension.
+     */
+    clientDefault: FernIr.Literal | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
     explode: boolean | undefined;
 }

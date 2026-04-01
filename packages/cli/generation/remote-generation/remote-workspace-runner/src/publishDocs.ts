@@ -351,7 +351,12 @@ export async function publishDocs({
                             sanitizedToAbsoluteMap
                         );
                     } else {
-                        return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                        return await startDocsRegisterFailed(
+                            startDocsRegisterResponse.error,
+                            context,
+                            organization,
+                            domain
+                        );
                     }
                 } else {
                     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -407,7 +412,7 @@ export async function publishDocs({
                             sanitizedToAbsoluteMap
                         );
                     } else {
-                        return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                        return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization, domain);
                     }
                 }
             },
@@ -706,7 +711,8 @@ function convertToFilePathPairs(
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
     context: TaskContext,
-    organization: string
+    organization: string,
+    domain: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -715,13 +721,18 @@ async function startDocsRegisterFailed(
         }
     });
 
+    const errorDetails = extractErrorDetails(error);
+    context.logger.debug(
+        `startDocsRegister failed for domain '${domain}', org '${organization}'. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+    );
+
     const errorObj = error as unknown as Record<string, unknown>;
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage);
     }
@@ -736,10 +747,7 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow(
-                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
-                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
-            );
+            return context.failAndThrow(buildAuthFailureMessage(domain, organization, errorContent));
         case "UserNotInOrgError":
             return context.failAndThrow(
                 `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
@@ -754,7 +762,7 @@ async function startDocsRegisterFailed(
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+function getAuthenticationErrorMessage(error: unknown, organization: string, domain: string): string | undefined {
     const errorObj = error as Record<string, unknown>;
     const content = errorObj?.content as Record<string, unknown> | undefined;
 
@@ -762,15 +770,94 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
         const statusCode = content.statusCode as number | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
-            const contactMessage =
-                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
-
-            return `${baseMessage}\n\n${contactMessage}`;
+            return buildAuthFailureMessage(domain, organization, content);
         }
     }
 
     return undefined;
+}
+
+function buildAuthFailureMessage(
+    domain: string,
+    organization: string,
+    errorContent: Record<string, unknown> | undefined
+): string {
+    const { code, message } = extractServerError(errorContent);
+
+    switch (code) {
+        case "FORBIDDEN":
+            return buildForbiddenMessage(domain, organization, message);
+        case "UNAUTHORIZED":
+            return buildUnauthorizedMessage(organization, message);
+        case "INTERNAL_SERVER_ERROR":
+            return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
+        default:
+            if (message != null) {
+                return message;
+            }
+            return `Failed to publish docs to '${domain}'. Please reach out to support@buildwithfern.com for assistance.`;
+    }
+}
+
+// FDR overloads FORBIDDEN for domain ownership, org membership, CLI permissions,
+// and entitlement errors. Only org membership needs CLI-specific hints (fern login);
+// all other FDR FORBIDDEN messages are already actionable with billing URLs and
+// admin contact guidance, so we pass them through directly.
+const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
+
+function buildForbiddenMessage(domain: string, organization: string, message: string | undefined): string {
+    if (message == null) {
+        return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
+    }
+
+    if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
+        return (
+            `You are not a member of organization '${organization}'. ` +
+            "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+            "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+        );
+    }
+
+    return message;
+}
+
+function buildUnauthorizedMessage(organization: string, message: string | undefined): string {
+    if (message != null && message.includes("Invalid authorization token")) {
+        return "Your authentication token is invalid or expired. " + "Please run 'fern login' to re-authenticate.";
+    }
+
+    return (
+        `You are not authorized to publish docs under organization '${organization}'. ` +
+        "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+    );
+}
+
+function extractServerError(content: Record<string, unknown> | undefined): {
+    code: string | undefined;
+    message: string | undefined;
+} {
+    if (content == null) {
+        return { code: undefined, message: undefined };
+    }
+
+    const body = content.body as Record<string, unknown> | string | undefined;
+    if (body != null && typeof body === "object") {
+        const code = typeof body.code === "string" ? body.code : undefined;
+        const message = typeof body.message === "string" ? body.message : undefined;
+        return { code, message };
+    }
+
+    const message =
+        typeof body === "string" && body.length > 0
+            ? body
+            : typeof content.errorMessage === "string"
+              ? content.errorMessage
+              : typeof content.message === "string"
+                ? content.message
+                : undefined;
+
+    return { code: undefined, message };
 }
 
 function parseBasePath(domain: string): string | undefined {

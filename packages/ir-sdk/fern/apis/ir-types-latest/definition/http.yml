@@ -134,6 +134,13 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       env: optional<string>
+      clientDefault:
+        type: optional<types.Literal>
+        docs: |
+          A client-side default value for this header. When present, the header
+          is optional in the generated SDK and this literal value is sent when
+          the caller does not provide one. Populated from the `x-fern-default`
+          OpenAPI extension.
       v2Examples: optional<examples.V2SchemaExamples>
 
   PathParameter:
@@ -143,6 +150,13 @@ types:
       valueType: types.TypeReference
       location: PathParameterLocation
       variable: optional<variables.VariableId>
+      clientDefault:
+        type: optional<types.Literal>
+        docs: |
+          A client-side default value for this path parameter. When present,
+          the parameter is optional in the generated SDK and this literal value
+          is sent when the caller does not provide one. Populated from the
+          `x-fern-default` OpenAPI extension.
       v2Examples: optional<examples.V2SchemaExamples>
       explode: optional<boolean>
 
@@ -158,6 +172,13 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       allowMultiple: boolean
+      clientDefault:
+        type: optional<types.Literal>
+        docs: |
+          A client-side default value for this query parameter. When present,
+          the parameter is optional in the generated SDK and this literal value
+          is sent when the caller does not provide one. Populated from the
+          `x-fern-default` OpenAPI extension.
       v2Examples: optional<examples.V2SchemaExamples>
       explode: optional<boolean>
 

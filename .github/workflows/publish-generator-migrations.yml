@@ -82,9 +82,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - name: Test packages
         run: |
           pnpm turbo run test --filter=@fern-api/migrations-base

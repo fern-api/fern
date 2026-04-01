@@ -17,6 +17,21 @@ devbox shell
 
 DevBox automatically provides: Node.js 22, pnpm 9.4.0, Go 1.23, Python 3.10, Poetry 1.8, JDK 17, buf 1.50.0, and git-lfs. All versions are pinned in `devbox.json` to match CI.
 
+**Manual .NET Installation** (Required for C# generator development):
+
+DevBox cannot pin multiple .NET SDK versions simultaneously, so .NET must be installed separately. The C# generators require:
+- **.NET 10** (latest)
+- **.NET 9** (test TFM)
+
+We provide a setup script that helps:
+```bash
+bash scripts/setup-dotnet.sh
+```
+
+This script checks for required .NET versions and can automatically install them using official Microsoft installation scripts, or provide links to the official guides. When you run `devbox shell`, the setup script runs automatically and the `.NET` installation is added to your PATH.
+
+Alternatively, follow [Microsoft .NET Installation Guide](https://learn.microsoft.com/en-us/dotnet/core/install/) for your platform (macOS, Linux, Windows) and install to `$HOME/.dotnet`.
+
 **Available DevBox Scripts**:
 ```bash
 devbox run install                # Run pnpm install
