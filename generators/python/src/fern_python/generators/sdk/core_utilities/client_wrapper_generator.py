@@ -685,13 +685,18 @@ class ClientWrapperGenerator:
                 )
                 continue
             constructor_parameter_name = names.get_header_constructor_parameter_name(header)
+            client_default_initializer = self._get_client_default_initializer(header.client_default)
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_header_private_member_name(header),
                     type_hint=type_hint,
-                    initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
+                    initializer=(
+                        client_default_initializer
+                        if client_default_initializer is not None
+                        else AST.Expression(
+                            f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
+                        )
                     ),
                     header_key=header.name.wire_value,
                     environment_variable=header.env,
@@ -913,6 +918,14 @@ class ClientWrapperGenerator:
         return ConstructorInfo(
             constructor_parameters=parameters,
             literal_headers=literal_headers,
+        )
+
+    def _get_client_default_initializer(self, client_default: typing.Optional[ir_types.Literal]) -> typing.Optional[AST.Expression]:
+        if client_default is None:
+            return None
+        return client_default.visit(
+            string=lambda value: AST.Expression(f'"{value}"'),
+            boolean=lambda value: AST.Expression(f"{value}"),
         )
 
     def _get_optional_getter_body_writer(self, *, member_name: str) -> AST.CodeWriterFunction:
