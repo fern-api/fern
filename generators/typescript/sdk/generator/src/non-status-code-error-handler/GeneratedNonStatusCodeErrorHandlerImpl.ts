@@ -1,9 +1,9 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export class GeneratedNonStatusCodeErrorHandlerImpl {
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const errorType = context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
         const rawResponseType = context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType();
 

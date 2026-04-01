@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { casingsGenerator, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { StructureKind, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -47,7 +47,7 @@ function createHeader(opts: {
 }
 
 /**
- * Creates a mock SdkContext for BaseClientTypeGenerator.writeToFile().
+ * Creates a mock FileContext for BaseClientTypeGenerator.writeToFile().
  * Tracks all statements/interfaces/imports added to sourceFile.
  */
 function createMockContext(opts?: {
@@ -55,7 +55,7 @@ function createMockContext(opts?: {
     npmPackage?: { packageName: string; version: string } | null;
     hasVersion?: boolean;
     defaultVersion?: string | null;
-    // biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
+    // biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
 }): any {
     const statements: string[] = [];
     // biome-ignore lint/suspicious/noExplicitAny: test mock
@@ -174,7 +174,8 @@ function createMockContext(opts?: {
                     getDefaultVersion: () => opts?.defaultVersion ?? null
                 };
             }
-        }
+        },
+        case: caseConverter
     };
 }
 

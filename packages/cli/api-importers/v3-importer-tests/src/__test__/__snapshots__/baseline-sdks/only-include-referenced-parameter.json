@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Parameter Reference Test",
   "auth": {
     "requirement": "ALL",
@@ -30,25 +12,7 @@
     "type_:SearchFilter": {
       "docs": "This schema is referenced by a parameter and should be kept",
       "name": {
-        "name": {
-          "originalName": "SearchFilter",
-          "camelCase": {
-            "unsafeName": "searchFilter",
-            "safeName": "searchFilter"
-          },
-          "snakeCase": {
-            "unsafeName": "search_filter",
-            "safeName": "search_filter"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_FILTER",
-            "safeName": "SEARCH_FILTER"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchFilter",
-            "safeName": "SearchFilter"
-          }
-        },
+        "name": "SearchFilter",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,28 +23,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "query",
-                "camelCase": {
-                  "unsafeName": "query",
-                  "safeName": "query"
-                },
-                "snakeCase": {
-                  "unsafeName": "query",
-                  "safeName": "query"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "QUERY",
-                  "safeName": "QUERY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Query",
-                  "safeName": "Query"
-                }
-              },
-              "wireValue": "query"
-            },
+            "name": "query",
             "valueType": {
               "container": {
                 "optional": {
@@ -102,28 +45,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "limit",
-                "camelCase": {
-                  "unsafeName": "limit",
-                  "safeName": "limit"
-                },
-                "snakeCase": {
-                  "unsafeName": "limit",
-                  "safeName": "limit"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LIMIT",
-                  "safeName": "LIMIT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Limit",
-                  "safeName": "Limit"
-                }
-              },
-              "wireValue": "limit"
-            },
+            "name": "limit",
             "valueType": {
               "container": {
                 "optional": {
@@ -181,25 +103,7 @@
       "endpoints": [
         {
           "id": "endpoint_.search",
-          "name": {
-            "originalName": "search",
-            "camelCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "snakeCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SEARCH",
-              "safeName": "SEARCH"
-            },
-            "pascalCase": {
-              "unsafeName": "Search",
-              "safeName": "Search"
-            }
-          },
+          "name": "search",
           "displayName": "Search with filter",
           "auth": false,
           "idempotent": false,
@@ -216,48 +120,9 @@
           "allPathParameters": [],
           "queryParameters": [
             {
-              "name": {
-                "name": {
-                  "originalName": "filter",
-                  "camelCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FILTER",
-                    "safeName": "FILTER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Filter",
-                    "safeName": "Filter"
-                  }
-                },
-                "wireValue": "filter"
-              },
+              "name": "filter",
               "valueType": {
-                "name": {
-                  "originalName": "SearchFilter",
-                  "camelCase": {
-                    "unsafeName": "searchFilter",
-                    "safeName": "searchFilter"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "search_filter",
-                    "safeName": "search_filter"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_FILTER",
-                    "safeName": "SEARCH_FILTER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SearchFilter",
-                    "safeName": "SearchFilter"
-                  }
-                },
+                "name": "SearchFilter",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -275,67 +140,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SearchRequest",
-                "camelCase": {
-                  "unsafeName": "searchRequest",
-                  "safeName": "searchRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "search_request",
-                  "safeName": "search_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SEARCH_REQUEST",
-                  "safeName": "SEARCH_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "SearchRequest",
-                  "safeName": "SearchRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "SearchRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -372,28 +183,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -442,6 +232,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "query",
               "name": {
                 "originalName": "query",
                 "camelCase": {
@@ -460,8 +251,7 @@
                   "unsafeName": "Query",
                   "safeName": "Query"
                 }
-              },
-              "wireValue": "query"
+              }
             },
             "typeReference": {
               "value": {
@@ -473,6 +263,7 @@
           },
           {
             "name": {
+              "wireValue": "limit",
               "name": {
                 "originalName": "limit",
                 "camelCase": {
@@ -491,8 +282,7 @@
                   "unsafeName": "Limit",
                   "safeName": "Limit"
                 }
-              },
-              "wireValue": "limit"
+              }
             },
             "typeReference": {
               "value": {
@@ -569,6 +359,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "filter",
                 "name": {
                   "originalName": "filter",
                   "camelCase": {
@@ -587,8 +378,7 @@
                     "unsafeName": "Filter",
                     "safeName": "Filter"
                   }
-                },
-                "wireValue": "filter"
+                }
               },
               "typeReference": {
                 "value": "type_:SearchFilter",
@@ -612,6 +402,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

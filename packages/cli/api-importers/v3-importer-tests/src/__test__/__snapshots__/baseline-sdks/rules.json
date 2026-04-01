@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Sample API",
   "auth": {
     "requirement": "ALL",
@@ -30,25 +12,7 @@
     "type_:GetExampleResponseMessage": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "GetExampleResponseMessage",
-          "camelCase": {
-            "unsafeName": "getExampleResponseMessage",
-            "safeName": "getExampleResponseMessage"
-          },
-          "snakeCase": {
-            "unsafeName": "get_example_response_message",
-            "safeName": "get_example_response_message"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_EXAMPLE_RESPONSE_MESSAGE",
-            "safeName": "GET_EXAMPLE_RESPONSE_MESSAGE"
-          },
-          "pascalCase": {
-            "unsafeName": "GetExampleResponseMessage",
-            "safeName": "GetExampleResponseMessage"
-          }
-        },
+        "name": "GetExampleResponseMessage",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,28 +23,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
-              "wireValue": "message"
-            },
+            "name": "message",
             "valueType": {
               "container": {
                 "optional": {
@@ -115,25 +58,7 @@
     },
     "type_:GetExampleResponse": {
       "name": {
-        "name": {
-          "originalName": "GetExampleResponse",
-          "camelCase": {
-            "unsafeName": "getExampleResponse",
-            "safeName": "getExampleResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "get_example_response",
-            "safeName": "get_example_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_EXAMPLE_RESPONSE",
-            "safeName": "GET_EXAMPLE_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GetExampleResponse",
-            "safeName": "GetExampleResponse"
-          }
-        },
+        "name": "GetExampleResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -144,25 +69,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Schema",
-                "camelCase": {
-                  "unsafeName": "schema",
-                  "safeName": "schema"
-                },
-                "snakeCase": {
-                  "unsafeName": "schema",
-                  "safeName": "schema"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SCHEMA",
-                  "safeName": "SCHEMA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Schema",
-                  "safeName": "Schema"
-                }
-              },
+              "name": "Schema",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -174,25 +81,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "GetExampleResponseMessage",
-                "camelCase": {
-                  "unsafeName": "getExampleResponseMessage",
-                  "safeName": "getExampleResponseMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_example_response_message",
-                  "safeName": "get_example_response_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_EXAMPLE_RESPONSE_MESSAGE",
-                  "safeName": "GET_EXAMPLE_RESPONSE_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetExampleResponseMessage",
-                  "safeName": "GetExampleResponseMessage"
-                }
-              },
+              "name": "GetExampleResponseMessage",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -214,25 +103,7 @@
     },
     "type_:String": {
       "name": {
-        "name": {
-          "originalName": "String",
-          "camelCase": {
-            "unsafeName": "string",
-            "safeName": "string"
-          },
-          "snakeCase": {
-            "unsafeName": "string",
-            "safeName": "string"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "STRING",
-            "safeName": "STRING"
-          },
-          "pascalCase": {
-            "unsafeName": "String",
-            "safeName": "String"
-          }
-        },
+        "name": "String",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -274,25 +145,7 @@
     },
     "type_:Schema": {
       "name": {
-        "name": {
-          "originalName": "Schema",
-          "camelCase": {
-            "unsafeName": "schema",
-            "safeName": "schema"
-          },
-          "snakeCase": {
-            "unsafeName": "schema",
-            "safeName": "schema"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SCHEMA",
-            "safeName": "SCHEMA"
-          },
-          "pascalCase": {
-            "unsafeName": "Schema",
-            "safeName": "Schema"
-          }
-        },
+        "name": "Schema",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -304,28 +157,7 @@
         "properties": [
           {
             "docs": "The unique ID of the type.",
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -356,28 +188,7 @@
           },
           {
             "docs": "The age of the type.",
-            "name": {
-              "name": {
-                "originalName": "age",
-                "camelCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "snakeCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AGE",
-                  "safeName": "AGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Age",
-                  "safeName": "Age"
-                }
-              },
-              "wireValue": "age"
-            },
+            "name": "age",
             "valueType": {
               "container": {
                 "optional": {
@@ -406,28 +217,7 @@
           },
           {
             "docs": "The unique name of the type.",
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -456,28 +246,7 @@
           },
           {
             "docs": "The value of the type.",
-            "name": {
-              "name": {
-                "originalName": "value",
-                "camelCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
-                },
-                "snakeCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "VALUE",
-                  "safeName": "VALUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Value",
-                  "safeName": "Value"
-                }
-              },
-              "wireValue": "value"
-            },
+            "name": "value",
             "valueType": {
               "container": {
                 "optional": {
@@ -541,25 +310,7 @@
       "endpoints": [
         {
           "id": "endpoint_.defaultAndValidationRules",
-          "name": {
-            "originalName": "defaultAndValidationRules",
-            "camelCase": {
-              "unsafeName": "defaultAndValidationRules",
-              "safeName": "defaultAndValidationRules"
-            },
-            "snakeCase": {
-              "unsafeName": "default_and_validation_rules",
-              "safeName": "default_and_validation_rules"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT_AND_VALIDATION_RULES",
-              "safeName": "DEFAULT_AND_VALIDATION_RULES"
-            },
-            "pascalCase": {
-              "unsafeName": "DefaultAndValidationRules",
-              "safeName": "DefaultAndValidationRules"
-            }
-          },
+          "name": "defaultAndValidationRules",
           "displayName": "Default and validation rules",
           "auth": false,
           "idempotent": false,
@@ -581,25 +332,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetExampleResponse",
-                    "camelCase": {
-                      "unsafeName": "getExampleResponse",
-                      "safeName": "getExampleResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "get_example_response",
-                      "safeName": "get_example_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GET_EXAMPLE_RESPONSE",
-                      "safeName": "GET_EXAMPLE_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GetExampleResponse",
-                      "safeName": "GetExampleResponse"
-                    }
-                  },
+                  "name": "GetExampleResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -623,28 +356,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -697,6 +409,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -715,8 +428,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": {
@@ -829,6 +541,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -847,8 +560,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -860,6 +572,7 @@
           },
           {
             "name": {
+              "wireValue": "age",
               "name": {
                 "originalName": "age",
                 "camelCase": {
@@ -878,8 +591,7 @@
                   "unsafeName": "Age",
                   "safeName": "Age"
                 }
-              },
-              "wireValue": "age"
+              }
             },
             "typeReference": {
               "value": {
@@ -891,6 +603,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -909,8 +622,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -922,6 +634,7 @@
           },
           {
             "name": {
+              "wireValue": "value",
               "name": {
                 "originalName": "value",
                 "camelCase": {
@@ -940,8 +653,7 @@
                   "unsafeName": "Value",
                   "safeName": "Value"
                 }
-              },
-              "wireValue": "value"
+              }
             },
             "typeReference": {
               "value": {
@@ -1001,6 +713,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

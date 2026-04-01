@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: streaming-parameter
-  version: ''
+  version: ""
 paths:
   /generate:
     post:
@@ -10,8 +10,8 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:

@@ -26,7 +26,7 @@ types:
         docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
       apiName:
-        type: commons.Name
+        type: commons.NameOrString
         docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
       apiDocs: optional<string>
@@ -70,6 +70,27 @@ types:
       apiPlayground:
         type: optional<boolean>
         docs: Whether the API playground should be enabled. Defaults to true.
+      casingsConfig:
+        type: optional<CasingsConfig>
+        docs: |
+          Configuration used for generating names. Stored for backwards compatibility so that
+          IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
+
+  CasingsConfig:
+    docs: |
+      Configuration for the name/casing generator. Stored in the IR for backwards compatibility
+      so that IR migrations can reconstruct the correct CasingsGenerator when inflating
+      compressed NameOrString values back to full Name objects.
+    properties:
+      generationLanguage:
+        type: optional<http.SupportedSdkLanguage>
+        docs: The target language, used to apply language-specific casing rules and reserved keywords.
+      keywords:
+        type: optional<list<string>>
+        docs: Reserved keywords for the target language. Names that match these will be escaped.
+      smartCasing:
+        type: boolean
+        docs: Whether to apply smart casing (e.g., capitalizing acronyms like HTTP → Http in camelCase).
 
   GenerationMetadata:
     docs: |
@@ -202,8 +223,8 @@ types:
       property: ErrorDiscriminationByPropertyStrategy
   ErrorDiscriminationByPropertyStrategy:
     properties:
-      discriminant: commons.NameAndWireValue
-      contentProperty: commons.NameAndWireValue
+      discriminant: commons.NameAndWireValueOrString
+      contentProperty: commons.NameAndWireValueOrString
   Package:
     extends: commons.WithDocs
     properties:
@@ -219,7 +240,7 @@ types:
   Subpackage:
     extends: Package
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
   PackageNavigationConfig:
     properties:

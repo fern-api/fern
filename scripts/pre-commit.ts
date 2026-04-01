@@ -26,7 +26,7 @@ function runPreCommitScripts(): void {
             process.stdout.write(`📋 Running: ${file}`);
 
             try {
-                execSync(`npx tsx ${scriptPath}`, {
+                execSync(`pnpm tsx ${scriptPath}`, {
                     stdio: "inherit",
                     cwd: process.cwd()
                 });

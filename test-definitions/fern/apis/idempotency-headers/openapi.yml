@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: idempotency-headers
-  version: ''
+  version: ""
 paths:
   /payment:
     post:
@@ -10,8 +10,8 @@ paths:
         - Payment
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -29,7 +29,7 @@ paths:
                 amount:
                   type: integer
                 currency:
-                  $ref: '#/components/schemas/Currency'
+                  $ref: "#/components/schemas/Currency"
               required:
                 - amount
                 - currency
@@ -45,8 +45,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
 components:
   schemas:

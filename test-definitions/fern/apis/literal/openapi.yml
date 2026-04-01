@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: literal
-  version: ''
+  version: ""
   description: Test definition for literal schemas.
 paths:
   /headers:
@@ -23,12 +23,12 @@ paths:
             type: boolean
             const: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendResponse'
+                $ref: "#/components/schemas/SendResponse"
       requestBody:
         required: true
         content:
@@ -47,12 +47,12 @@ paths:
         - Inlined
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendResponse'
+                $ref: "#/components/schemas/SendResponse"
       requestBody:
         required: true
         content:
@@ -77,12 +77,12 @@ paths:
                   type: boolean
                   const: false
                 aliasedContext:
-                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                  $ref: "#/components/schemas/SomeAliasedLiteral"
                 maybeContext:
-                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                  $ref: "#/components/schemas/SomeAliasedLiteral"
                   nullable: true
                 objectWithLiteral:
-                  $ref: '#/components/schemas/ATopLevelLiteral'
+                  $ref: "#/components/schemas/ATopLevelLiteral"
               required:
                 - prompt
                 - query
@@ -100,14 +100,14 @@ paths:
           required: true
           schema:
             type: string
-            const: '123'
+            const: "123"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendResponse'
+                $ref: "#/components/schemas/SendResponse"
   /query:
     post:
       operationId: query_send
@@ -131,12 +131,12 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/AliasToPrompt'
+            $ref: "#/components/schemas/AliasToPrompt"
         - name: alias_optional_prompt
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToPrompt'
+            $ref: "#/components/schemas/AliasToPrompt"
             nullable: true
         - name: query
           in: query
@@ -160,20 +160,20 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/AliasToStream'
+            $ref: "#/components/schemas/AliasToStream"
         - name: alias_optional_stream
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToStream'
+            $ref: "#/components/schemas/AliasToStream"
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendResponse'
+                $ref: "#/components/schemas/SendResponse"
   /reference:
     post:
       operationId: reference_send
@@ -181,18 +181,18 @@ paths:
         - Reference
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendResponse'
+                $ref: "#/components/schemas/SendResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendRequest'
+              $ref: "#/components/schemas/SendRequest"
 components:
   schemas:
     SendResponse:
@@ -219,7 +219,7 @@ components:
       type: object
       properties:
         nestedLiteral:
-          $ref: '#/components/schemas/ANestedLiteral'
+          $ref: "#/components/schemas/ANestedLiteral"
       required:
         - nestedLiteral
     ANestedLiteral:
@@ -315,12 +315,12 @@ components:
           type: string
           const: $ending
         context:
-          $ref: '#/components/schemas/SomeLiteral'
+          $ref: "#/components/schemas/SomeLiteral"
         maybeContext:
-          $ref: '#/components/schemas/SomeLiteral'
+          $ref: "#/components/schemas/SomeLiteral"
           nullable: true
         containerObject:
-          $ref: '#/components/schemas/ContainerObject'
+          $ref: "#/components/schemas/ContainerObject"
       required:
         - prompt
         - query
@@ -335,7 +335,7 @@ components:
         nestedObjects:
           type: array
           items:
-            $ref: '#/components/schemas/NestedObjectWithLiterals'
+            $ref: "#/components/schemas/NestedObjectWithLiterals"
       required:
         - nestedObjects
     NestedObjectWithLiterals:

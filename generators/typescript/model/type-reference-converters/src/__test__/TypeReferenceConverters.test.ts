@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
-import { casingsGenerator } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -504,9 +504,9 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
             includeSerdeLayer: opts?.includeSerdeLayer ?? true,
             enableInlineTypes: opts?.enableInlineTypes ?? false,
             generateReadWriteOnlyTypes: opts?.generateReadWriteOnlyTypes ?? false,
-            getReferenceToNamedType: (typeName) => ts.factory.createIdentifier(typeName.name.pascalCase.safeName),
+            getReferenceToNamedType: (typeName) => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name)),
             generateForInlineUnion: (typeName) => ({
-                typeNode: ts.factory.createTypeReferenceNode(typeName.name.pascalCase.safeName),
+                typeNode: ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
                 requestTypeNode: undefined,
                 responseTypeNode: undefined
             })
@@ -730,9 +730,10 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
             const converter = new TypeReferenceToParsedTypeNodeConverter({
                 ...init,
                 treatUnknownAsAny: true,
-                getReferenceToNamedType: (typeName) => ts.factory.createIdentifier(typeName.name.pascalCase.safeName),
+                getReferenceToNamedType: (typeName) =>
+                    ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name)),
                 generateForInlineUnion: (typeName) => ({
-                    typeNode: ts.factory.createTypeReferenceNode(typeName.name.pascalCase.safeName),
+                    typeNode: ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
                     requestTypeNode: undefined,
                     responseTypeNode: undefined
                 })
@@ -885,9 +886,9 @@ describe("TypeReferenceToRawTypeNodeConverter", () => {
             ...init,
             useBigInt: opts?.useBigInt ?? false,
             generateReadWriteOnlyTypes: opts?.generateReadWriteOnlyTypes ?? false,
-            getReferenceToNamedType: (typeName) => ts.factory.createIdentifier(typeName.name.pascalCase.safeName),
+            getReferenceToNamedType: (typeName) => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name)),
             generateForInlineUnion: (typeName) => ({
-                typeNode: ts.factory.createTypeReferenceNode(typeName.name.pascalCase.safeName),
+                typeNode: ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
                 requestTypeNode: undefined,
                 responseTypeNode: undefined
             })

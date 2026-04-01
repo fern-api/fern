@@ -1,17 +1,17 @@
 openapi: 3.0.1
 info:
   title: extends
-  version: ''
+  version: ""
 paths:
   /extends/extended-inline-request-body:
     post:
       operationId: extendedInlineRequestBody
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -24,7 +24,7 @@ paths:
               required:
                 - unique
               allOf:
-                - $ref: '#/components/schemas/ExampleType'
+                - $ref: "#/components/schemas/ExampleType"
 components:
   schemas:
     ExampleType:
@@ -36,7 +36,7 @@ components:
       required:
         - name
       allOf:
-        - $ref: '#/components/schemas/Docs'
+        - $ref: "#/components/schemas/Docs"
     NestedType:
       title: NestedType
       type: object
@@ -46,7 +46,7 @@ components:
       required:
         - name
       allOf:
-        - $ref: '#/components/schemas/JSON'
+        - $ref: "#/components/schemas/JSON"
     Docs:
       title: Docs
       type: object
@@ -64,5 +64,5 @@ components:
       required:
         - raw
       allOf:
-        - $ref: '#/components/schemas/Docs'
+        - $ref: "#/components/schemas/Docs"
   securitySchemes: {}

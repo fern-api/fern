@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import {
@@ -19,6 +20,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -26,6 +28,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     private singleUnionTypeFromUnion: FernIr.SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private caseConverter: CaseConverter;
     protected union: FernIr.UnionTypeDeclaration;
 
     constructor({
@@ -36,7 +39,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         retainOriginalCasing,
         noOptionalProperties,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: FernIr.SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -50,7 +54,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                             getTypeName: () => this.getTypeName(),
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                                 includeSerdeLayer,
-                                retainOriginalCasing
+                                retainOriginalCasing,
+                                caseConverter
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
@@ -72,6 +77,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.caseConverter = caseConverter;
     }
 
     public getDocs(): string | null | undefined {
@@ -79,7 +85,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.unsafeName);
+        return sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
@@ -87,37 +93,41 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getDiscriminantValue(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+        return getWireValue(this.singleUnionTypeFromUnion.discriminantValue);
     }
 
     public getBuilderName(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName);
+            return sanitizeIdentifier(this.caseConverter.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
-            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
+            return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
     }
 
     public getVisitorKey(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName);
+            return sanitizeIdentifier(this.caseConverter.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
-            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
+            return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
     }
 
-    protected getDiscriminant(): FernIr.NameAndWireValue {
+    protected getDiscriminant(): FernIr.NameAndWireValueOrString {
         return this.union.discriminant;
     }
 
     public static getSinglePropertyKey(
         singleProperty: FernIr.SingleUnionTypeProperty,
-        { includeSerdeLayer, retainOriginalCasing }: { includeSerdeLayer: boolean; retainOriginalCasing: boolean }
+        {
+            includeSerdeLayer,
+            retainOriginalCasing,
+            caseConverter
+        }: { includeSerdeLayer: boolean; retainOriginalCasing: boolean; caseConverter: CaseConverter }
     ): string {
         if (includeSerdeLayer && !retainOriginalCasing) {
-            return singleProperty.name.name.camelCase.unsafeName;
+            return caseConverter.camelUnsafe(singleProperty.name);
         } else {
-            return singleProperty.name.wireValue;
+            return getWireValue(singleProperty.name);
         }
     }
 }

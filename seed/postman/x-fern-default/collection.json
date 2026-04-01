@@ -1,0 +1,142 @@
+{
+  "info": {
+    "name": "x-fern-default test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Test Get",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/test/:region/resource",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "test",
+            ":region",
+            "resource"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "region",
+              "description": null,
+              "value": "region"
+            }
+          ]
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/test/:region/resource",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test",
+                ":region",
+                "resource"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "region",
+                  "description": null,
+                  "value": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": "Success",
+          "body": "{\n    \"message\": \"message\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/test/:region/resource?limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test",
+                ":region",
+                "resource"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "100",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "region",
+                  "description": null,
+                  "value": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": "Success",
+          "body": "{\n    \"message\": \"message\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}
