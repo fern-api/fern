@@ -448,8 +448,10 @@ export class EndpointSnippetGenerator {
                 // so we must convert their values as STRING primitives regardless
                 // of the original type reference (e.g. enum types should emit
                 // string wire values, not enum case shorthand).
-                const pathParameterTypeReference: FernIr.dynamic.TypeReference =
-                    FernIr.dynamic.TypeReference.primitive("STRING");
+                const pathParameterTypeReference: FernIr.dynamic.TypeReference = {
+                    type: "primitive",
+                    value: "STRING"
+                };
                 return swift.functionArgument({
                     label: parameter.name.name.camelCase.unsafeName,
                     value: this.context.dynamicTypeLiteralMapper.convert({
