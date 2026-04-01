@@ -812,6 +812,8 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
+            // @ts-expect-error - LlmsConfig is not yet supported in fdr-sdk
+            llms: this.parsedDocsConfig.llmsConfig,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations,
@@ -883,13 +885,6 @@ export class DocsDefinitionResolver {
             colorsV2: undefined,
             typography: undefined,
             backgroundImage: undefined,
-            // TODO: Wire llmsConfig through once @fern-api/fdr-sdk is updated with LlmsConfig support
-            // llmsConfig: this.parsedDocsConfig.llmsConfig != null
-            //     ? {
-            //           pageDirectivePrepend: this.parsedDocsConfig.llmsConfig.pageDirectivePrepend,
-            //           pageDirectiveAppend: this.parsedDocsConfig.llmsConfig.pageDirectiveAppend
-            //       }
-            //     : undefined,
             // custom components - the compiled JS will be stored in jsFiles and referenced by relative path
             header: this.parsedDocsConfig.header ? this.toRelativeFilepath(this.parsedDocsConfig.header) : undefined,
             footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
