@@ -336,6 +336,7 @@
         {
           "allPathParameters": [
             {
+              "clientDefault": undefined,
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",
@@ -403,6 +404,7 @@
           },
           "pathParameters": [
             {
+              "clientDefault": undefined,
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",

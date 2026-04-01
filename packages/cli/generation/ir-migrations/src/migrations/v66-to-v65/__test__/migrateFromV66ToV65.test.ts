@@ -525,7 +525,8 @@ describe("migrateFromV66ToV65", () => {
                 name: "Authorization",
                 valueType: IrVersions.V66.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 env: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                clientDefault: undefined
             };
 
             const v66IR = createMinimalV66IR({ headers: [header] });

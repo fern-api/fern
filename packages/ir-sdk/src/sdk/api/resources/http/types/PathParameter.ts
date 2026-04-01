@@ -7,6 +7,13 @@ export interface PathParameter extends FernIr.WithDocs {
     valueType: FernIr.TypeReference;
     location: FernIr.PathParameterLocation;
     variable: FernIr.VariableId | undefined;
+    /**
+     * A client-side default value for this path parameter. When present,
+     * the parameter is optional in the generated SDK and this literal value
+     * is sent when the caller does not provide one. Populated from the
+     * `x-fern-default` OpenAPI extension.
+     */
+    clientDefault: FernIr.Literal | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
     explode: boolean | undefined;
 }

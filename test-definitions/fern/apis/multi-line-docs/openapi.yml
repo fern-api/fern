@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: multi-line-docs
-  version: ''
+  version: ""
 paths:
   /users/{userId}:
     get:
@@ -21,8 +21,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /users:
     post:
       description: |-
@@ -33,12 +33,12 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
@@ -65,8 +65,8 @@ components:
       title: Operand
       type: string
       enum:
-        - '>'
-        - '='
+        - ">"
+        - "="
         - less_than
       description: |-
         Tests enum name and value can be 

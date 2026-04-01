@@ -91,8 +91,8 @@ catalogs:
       specifier: 1.0.2
       version: 1.0.2
     '@fern-fern/ir-v65-sdk':
-      specifier: 0.0.3
-      version: 0.0.3
+      specifier: 0.0.5
+      version: 0.0.5
     '@fern-fern/legacy-docs-config':
       specifier: 0.0.58
       version: 0.0.58
@@ -6343,7 +6343,7 @@ importers:
         version: 1.0.2
       '@fern-fern/ir-v65-sdk':
         specifier: 'catalog:'
-        version: 0.0.3
+        version: 0.0.5
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23
@@ -9870,8 +9870,8 @@ packages:
     resolution: {integrity: sha512-M1P2yW/KKSfAWjzW0jffPelONtBt72AwwmsutM0WVio0W8BI6PlLC9Tf9xbgYt8HBeN0IP7Hh6rQfxdXeWLRtw==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-v65-sdk@0.0.3':
-    resolution: {integrity: sha512-xDQCPnjSaUSY/1tRGW9PCpmYc0rDD0wbk77goRxFt1UTYQApVSnqolu98dN82lQXjCGqG2ILILKSRSNnjxt8hQ==}
+  '@fern-fern/ir-v65-sdk@0.0.5':
+    resolution: {integrity: sha512-IjHhwXZVhpf3sPbUCnHR3JqgnXbhSSNLc9ZkSwE0mM9GNg0UtJNJTZyGp60ophclgEErwFJ8RIcY5GyALtGftw==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/legacy-docs-config@0.0.58':
@@ -16688,7 +16688,7 @@ snapshots:
   '@fern-api/core-utils@0.4.24-rc1':
     dependencies:
       lodash-es: 4.17.23
-      strip-ansi: 7.1.2
+      strip-ansi: 7.2.0
 
   '@fern-api/docs-parsers@0.0.65(typescript@5.9.3)':
     dependencies:
@@ -16891,7 +16891,7 @@ snapshots:
 
   '@fern-fern/ir-v63-sdk@1.0.2': {}
 
-  '@fern-fern/ir-v65-sdk@0.0.3': {}
+  '@fern-fern/ir-v65-sdk@0.0.5': {}
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 

@@ -594,7 +594,8 @@ function inflateIr(
         location: pp.location,
         variable: pp.variable,
         v2Examples: pp.v2Examples != null ? inflateV2SchemaExamples(pp.v2Examples) : undefined,
-        explode: pp.explode
+        explode: pp.explode,
+        clientDefault: undefined
     });
 
     const inflateQueryParameter = (qp: IrVersions.V66.QueryParameter): IrVersions.V65.QueryParameter => ({
@@ -604,7 +605,8 @@ function inflateIr(
         valueType: inflateTypeReference(qp.valueType),
         allowMultiple: qp.allowMultiple,
         v2Examples: qp.v2Examples != null ? inflateV2SchemaExamples(qp.v2Examples) : undefined,
-        explode: qp.explode
+        explode: qp.explode,
+        clientDefault: undefined
     });
 
     const inflateHeader = (h: IrVersions.V66.HttpHeader): IrVersions.V65.HttpHeader => ({
@@ -613,7 +615,8 @@ function inflateIr(
         name: inflateNameAndWireValue(h.name),
         valueType: inflateTypeReference(h.valueType),
         env: h.env,
-        v2Examples: h.v2Examples != null ? inflateV2SchemaExamples(h.v2Examples) : undefined
+        v2Examples: h.v2Examples != null ? inflateV2SchemaExamples(h.v2Examples) : undefined,
+        clientDefault: undefined
     });
 
     const inflateFileProperty = (fp: IrVersions.V66.FileProperty): IrVersions.V65.FileProperty => {
