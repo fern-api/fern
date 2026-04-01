@@ -5,12 +5,9 @@ pub use crate::prelude::*;
 pub struct CreatePlaylistRequest {
     #[serde(skip_serializing)]
     #[serde(default)]
-    #[serde(with = "crate::core::flexible_datetime::offset")]
     pub datetime: DateTime<FixedOffset>,
     #[serde(rename = "optionalDatetime")]
     #[serde(skip_serializing)]
-    #[serde(default)]
-    #[serde(with = "crate::core::flexible_datetime::offset::option")]
     pub optional_datetime: Option<DateTime<FixedOffset>>,
     #[serde(default)]
     pub body: PlaylistCreateRequest,
