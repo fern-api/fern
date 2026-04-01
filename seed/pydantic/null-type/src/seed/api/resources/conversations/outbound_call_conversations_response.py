@@ -12,7 +12,7 @@ class OutboundCallConversationsResponse(UniversalBaseModel):
     Always null when dry_run is true.
     """
 
-    dry_run: bool = pydantic.Field()
+    dry_run: typing.Literal[True] = pydantic.Field(default=True)
     """
     Always true for this response.
     """

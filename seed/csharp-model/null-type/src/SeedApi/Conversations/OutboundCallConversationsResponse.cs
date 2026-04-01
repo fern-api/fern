@@ -21,7 +21,7 @@ public record OutboundCallConversationsResponse : IJsonOnDeserialized
     /// Always true for this response.
     /// </summary>
     [JsonPropertyName("dry_run")]
-    public required bool DryRun { get; set; }
+    public bool DryRun { get; set; } = true;
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

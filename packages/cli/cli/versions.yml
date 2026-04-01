@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.53.2
+- version: 4.53.3
   changelogEntry:
     - summary: |
         Fix section summary pages being incorrectly promoted to the API landing
@@ -9,9 +9,16 @@
         fallback now only promotes auto-generated tag description pages, not
         user-defined section summaries.
       type: fix
-  createdAt: "2026-03-31"
+  createdAt: "2026-04-01"
   irVersion: 65
 
+- version: 4.53.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for cli docs publishing.
+      type: chore
+  createdAt: "2026-04-01"
+  irVersion: 65
 - version: 4.53.1
   changelogEntry:
     - summary: |
