@@ -45,6 +45,7 @@ import {
     getExampleAsNumber,
     getExamplesString
 } from "./examples/getExample.js";
+import { inferDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedTypeName } from "./utils/getSchemaName.js";
@@ -937,7 +938,16 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-            if (!context.options.discriminatedUnionV2) {
+            const objectDiscriminatorContext =
+                getExtension<"data" | "protocol">(
+                    schema.discriminator,
+                    FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
+                ) ??
+                inferDiscriminatorContext({
+                    discriminator: schema.discriminator,
+                    context
+                });
+            if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -983,7 +993,19 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                const discriminatorContext =
+                    getExtension<"data" | "protocol">(
+                        schema.discriminator,
+                        FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
+                    ) ??
+                    inferDiscriminatorContext({
+                        discriminator: schema.discriminator,
+                        context
+                    });
+                if (
+                    (context.options.discriminatedUnionV2 || isUndiscriminated) &&
+                    discriminatorContext !== "protocol"
+                ) {
                     return convertUndiscriminatedOneOfWithDiscriminant({
                         nameOverride,
                         generatedName,
