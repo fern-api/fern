@@ -6,7 +6,8 @@
 // Client and configuration
 pub use crate::config::ClientConfig;
 pub use crate::core::{HttpClient, RequestOptions};
-pub use crate::error::{ApiError, BuildError};
+pub use crate::error::ApiError;
+pub use derive_builder::Builder;
 
 // Main client and resource clients
 pub use crate::api::*;

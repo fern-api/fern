@@ -158,12 +158,12 @@ export class Attribute extends AstNode {
 
         /**
          * Field-level builder attribute for optional fields that should default to None.
-         * Generates: #[builder(default, setter(strip_option))]
+         * Generates: #[builder(default, setter(into, strip_option))]
          */
         optionalField: (): Attribute =>
             new Attribute({
                 name: "builder",
-                args: ["default", "setter(strip_option)"]
+                args: ["default", "setter(into, strip_option)"]
             }),
 
         /**

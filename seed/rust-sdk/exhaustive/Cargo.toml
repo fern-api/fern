@@ -14,6 +14,7 @@ doctest = false
 base64 = "0.22"
 bytes = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
+derive_builder = "0.20"
 futures = "0.3"
 num-bigint = { version = "0.4", features = ["serde"] }
 reqwest = { version = "0.12", features = ["json", "stream"], default-features = false }
