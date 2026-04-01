@@ -555,7 +555,7 @@ function addRunCommand(cli: Argv) {
                     demandOption: false,
                     default: false
                 })
-                .option("skip-autogeneration-if-manual-examples-exist", {
+                .option("prefer-manual-examples", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
@@ -594,7 +594,7 @@ function addRunCommand(cli: Argv) {
                 inspect: argv.inspect,
                 local: argv.local,
                 keepContainer: argv.keepContainer,
-                skipAutogenerationIfManualExamplesExist: argv.skipAutogenerationIfManualExamplesExist
+                skipAutogenerationIfManualExamplesExist: argv.preferManualExamples
             });
         }
     );
