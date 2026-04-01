@@ -340,17 +340,27 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
 
             if (!usernameOmit && !passwordOmit) {
                 // Both required (default) - check each individually
-                lines.push(`if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`);
-                lines.push(`if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`);
+                lines.push(
+                    `if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`
+                );
+                lines.push(
+                    `if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`
+                );
             } else if (usernameOmit && passwordOmit) {
                 // Both optional - need at least one
-                lines.push(`if (${usernameVar} == null && ${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE`)} }`);
+                lines.push(
+                    `if (${usernameVar} == null && ${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE`)} }`
+                );
             } else if (usernameOmit) {
                 // Only password is required
-                lines.push(`if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`);
+                lines.push(
+                    `if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`
+                );
             } else {
                 // Only username is required
-                lines.push(`if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`);
+                lines.push(
+                    `if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`
+                );
             }
             return lines.map((l) => `        ${l}`).join("\n");
         };
