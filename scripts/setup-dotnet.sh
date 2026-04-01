@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-REQUIRED_VERSIONS=("9" "10")
+REQUIRED_VERSIONS=("9.0" "10.0")
 DOTNET_INSTALL_URL="https://dot.net/v1/dotnet-install.sh"
 DOTNET_INSTALL_SCRIPT="/tmp/dotnet-install.sh"
 
@@ -66,39 +66,22 @@ main() {
         return 0
     fi
 
-    echo -e "${YELLOW}Missing .NET versions detected.${NC}"
+    echo -e "${YELLOW}Missing .NET versions detected. Installing automatically...${NC}"
     echo ""
-    echo "To install the required .NET versions, you have two options:"
-    echo ""
-    echo "1. ${YELLOW}Automatic installation (requires $HOME/.dotnet to be in PATH):${NC}"
-    echo "   This script can automatically download and install using official Microsoft scripts."
-    echo "   After installation, add to your shell profile (~/.zshrc, ~/.bashrc, etc):"
-    echo "     export PATH=\"\$HOME/.dotnet:\$PATH\""
-    echo ""
-    echo "2. ${YELLOW}Official Microsoft Installation Guide:${NC}"
-    echo "   https://learn.microsoft.com/en-us/dotnet/core/install/"
-    echo ""
-    echo "Would you like to proceed with automatic installation? (y/n)"
-    read -r response
 
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        for version in "${REQUIRED_VERSIONS[@]}"; do
-            if ! check_version "$version"; then
-                install_dotnet_version "$version" || true
-            fi
-        done
+    for version in "${REQUIRED_VERSIONS[@]}"; do
+        if ! check_version "$version"; then
+            install_dotnet_version "$version" || true
+        fi
+    done
 
-        echo ""
-        echo -e "${YELLOW}Make sure to add to your shell profile:${NC}"
-        echo "  export PATH=\"\$HOME/.dotnet:\$PATH\""
-        echo ""
-        echo "Then restart your shell or run: source ~/.zshrc (or ~/.bashrc)"
-    else
-        echo ""
-        echo "Skipping automatic installation."
-        echo "Please follow the official Microsoft installation guide:"
-        echo "https://learn.microsoft.com/en-us/dotnet/core/install/"
-    fi
+    echo ""
+    echo -e "${YELLOW}Make sure \$HOME/.dotnet is in your PATH.${NC}"
+    echo "Add to your shell profile (~/.zshrc, ~/.bashrc, etc):"
+    echo "  export PATH=\"\$HOME/.dotnet:\$PATH\""
+    echo ""
+    echo "Alternatively, follow the official Microsoft installation guide:"
+    echo "  https://learn.microsoft.com/en-us/dotnet/core/install/"
 }
 
 main "$@"
