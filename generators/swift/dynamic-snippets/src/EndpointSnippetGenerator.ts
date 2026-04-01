@@ -457,7 +457,7 @@ export class EndpointSnippetGenerator {
                     value: this.context.dynamicTypeLiteralMapper.convert({
                         fromSymbol: moduleSymbol,
                         typeReference: pathParameterTypeReference,
-                        value: parameter.value
+                        value: typeof parameter.value === "string" ? parameter.value : String(parameter.value)
                     })
                 });
             });
