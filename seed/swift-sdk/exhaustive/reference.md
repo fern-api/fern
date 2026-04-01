@@ -3565,7 +3565,7 @@ private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
     _ = try await client.inlinedRequests.postWithBooleanLiteralInRequest(request: .init(
-        stream: false,
+        stream: .bool(false),
         query: "query"
     ))
 }

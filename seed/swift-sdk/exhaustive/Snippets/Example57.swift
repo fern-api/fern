@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.inlinedRequests.postWithBooleanLiteralInRequest(request: .init(
-        stream: false,
+        stream: .bool(false),
         query: "query"
     ))
 }
