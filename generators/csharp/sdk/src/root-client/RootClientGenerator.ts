@@ -466,24 +466,29 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
-                            const eitherOmitted =
-                                basicScheme.usernameOmit === true || basicScheme.passwordOmit === true;
-                            const condition = eitherOmitted
-                                ? `${usernameAccess} != null || ${passwordAccess} != null`
-                                : `${usernameAccess} != null && ${passwordAccess} != null`;
+                            const usernameOmitted = basicScheme.usernameOmit === true;
+                            const passwordOmitted = basicScheme.passwordOmit === true;
+                            // Per-field condition: required fields must be present, omittable fields are always satisfied
+                            let condition: string;
+                            if (!usernameOmitted && !passwordOmitted) {
+                                condition = `${usernameAccess} != null && ${passwordAccess} != null`;
+                            } else if (usernameOmitted && passwordOmitted) {
+                                condition = `${usernameAccess} != null || ${passwordAccess} != null`;
+                            } else if (usernameOmitted) {
+                                condition = `${passwordAccess} != null`;
+                            } else {
+                                condition = `${usernameAccess} != null`;
+                            }
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 const controlFlowKeyword = i === 0 ? "if" : "else if";
                                 innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
                             }
-                            if (eitherOmitted) {
-                                innerWriter.writeTextStatement(
-                                    `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess} ?? ""}:{${passwordAccess} ?? ""}"))}"`
-                                );
-                            } else {
-                                innerWriter.writeTextStatement(
-                                    `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
-                                );
-                            }
+                            // Per-field null coalescing: only omittable fields get ?? "" fallback
+                            const usernameExpr = usernameOmitted ? `${usernameAccess} ?? ""` : `${usernameAccess}`;
+                            const passwordExpr = passwordOmitted ? `${passwordAccess} ?? ""` : `${passwordAccess}`;
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameExpr}}:{${passwordExpr}}"))}"`
+                            );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
                             }
@@ -809,11 +814,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             {
                 const usernameName = scheme.username.camelCase.safeName;
                 const passwordName = scheme.password.camelCase.safeName;
+                const usernameIsOptional = isOptional || scheme.usernameOmit === true;
+                const passwordIsOptional = isOptional || scheme.passwordOmit === true;
                 return [
                     {
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
-                        isOptional,
+                        isOptional: usernameIsOptional,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
@@ -828,7 +835,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     {
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
-                        isOptional,
+                        isOptional: passwordIsOptional,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
