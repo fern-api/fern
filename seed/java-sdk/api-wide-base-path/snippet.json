@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "91538192",
+            "example_identifier": "1e6d684c",
             "id": {
                 "method": "POST",
                 "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
