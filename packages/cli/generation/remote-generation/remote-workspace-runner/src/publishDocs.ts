@@ -351,7 +351,12 @@ export async function publishDocs({
                             sanitizedToAbsoluteMap
                         );
                     } else {
-                        return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                        return await startDocsRegisterFailed(
+                            startDocsRegisterResponse.error,
+                            context,
+                            organization,
+                            domain
+                        );
                     }
                 } else {
                     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -407,7 +412,7 @@ export async function publishDocs({
                             sanitizedToAbsoluteMap
                         );
                     } else {
-                        return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
+                        return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization, domain);
                     }
                 }
             },
@@ -706,7 +711,8 @@ function convertToFilePathPairs(
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
     context: TaskContext,
-    organization: string
+    organization: string,
+    domain: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -715,16 +721,23 @@ async function startDocsRegisterFailed(
         }
     });
 
+    const errorDetails = extractErrorDetails(error);
+    context.logger.debug(
+        `startDocsRegister failed for domain '${domain}', org '${organization}'. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+    );
+
     const errorObj = error as unknown as Record<string, unknown>;
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage);
     }
+
+    const serverMessage = extractServerMessage(errorContent);
 
     switch (error.error) {
         case "InvalidCustomDomainError":
@@ -736,8 +749,15 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
+            if (serverMessage != null) {
+                return context.failAndThrow(`Failed to publish docs to '${domain}': ${serverMessage}`);
+            }
             return context.failAndThrow(
-                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                `You do not have permission to publish docs to '${domain}' under organization '${organization}'.\n\n` +
+                    "This can happen if:\n" +
+                    "  - You are not logged in with the correct account (run 'fern login')\n" +
+                    "  - You are not a member of this organization\n" +
+                    `  - The domain '${domain}' is already registered to a different organization\n\n` +
                     "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UserNotInOrgError":
@@ -754,7 +774,7 @@ async function startDocsRegisterFailed(
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+function getAuthenticationErrorMessage(error: unknown, organization: string, domain: string): string | undefined {
     const errorObj = error as Record<string, unknown>;
     const content = errorObj?.content as Record<string, unknown> | undefined;
 
@@ -762,12 +782,48 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
         const statusCode = content.statusCode as number | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const serverMessage = extractServerMessage(content);
+
+            if (serverMessage != null) {
+                return `Failed to publish docs to '${domain}': ${serverMessage}`;
+            }
+
+            const baseMessage = `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
+            const hints = [
+                "This can happen if:",
+                "  - You are not logged in with the correct account (run 'fern login')",
+                "  - You are not a member of this organization",
+                `  - The domain '${domain}' is already registered to a different organization`
+            ].join("\n");
             const contactMessage =
                 "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
 
-            return `${baseMessage}\n\n${contactMessage}`;
+            return `${baseMessage}\n\n${hints}\n\n${contactMessage}`;
         }
+    }
+
+    return undefined;
+}
+
+function extractServerMessage(content: Record<string, unknown> | undefined): string | undefined {
+    if (content == null) {
+        return undefined;
+    }
+
+    const body = content.body as Record<string, unknown> | string | undefined;
+    if (typeof body === "string" && body.length > 0) {
+        return body;
+    }
+    if (body != null && typeof body === "object") {
+        const msg = (body as Record<string, unknown>).message ?? (body as Record<string, unknown>).error;
+        if (typeof msg === "string" && msg.length > 0) {
+            return msg;
+        }
+    }
+
+    const message = content.errorMessage ?? content.message;
+    if (typeof message === "string" && message.length > 0) {
+        return message;
     }
 
     return undefined;
