@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "timeZoneOffset",
                         "name": {
                             "originalName": "timeZoneOffset",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "TimeZoneOffset",
                                 "safeName": "TimeZoneOffset"
                             }
-                        },
-                        "wireValue": "timeZoneOffset"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -62,6 +62,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "mathExpression",
                         "name": {
                             "originalName": "mathExpression",
                             "camelCase": {
@@ -80,8 +81,7 @@
                                 "unsafeName": "MathExpression",
                                 "safeName": "MathExpression"
                             }
-                        },
-                        "wireValue": "mathExpression"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -92,6 +92,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "validEntity",
                         "name": {
                             "originalName": "validEntity",
                             "camelCase": {
@@ -110,8 +111,7 @@
                                 "unsafeName": "ValidEntity",
                                 "safeName": "ValidEntity"
                             }
-                        },
-                        "wireValue": "validEntity"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -122,6 +122,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "specialChars",
                         "name": {
                             "originalName": "specialChars",
                             "camelCase": {
@@ -140,8 +141,7 @@
                                 "unsafeName": "SpecialChars",
                                 "safeName": "SpecialChars"
                             }
-                        },
-                        "wireValue": "specialChars"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",

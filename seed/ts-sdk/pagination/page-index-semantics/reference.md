@@ -1488,7 +1488,7 @@ const response = page.response;
 ```typescript
 const pageableResponse = await client.users.listWithOffsetPaginationHasNextPage({
     page: 1,
-    limit: 1,
+    limit: 3,
     order: "asc"
 });
 for await (const item of pageableResponse) {
@@ -1498,7 +1498,7 @@ for await (const item of pageableResponse) {
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithOffsetPaginationHasNextPage({
     page: 1,
-    limit: 1,
+    limit: 3,
     order: "asc"
 });
 while (page.hasNextPage()) {

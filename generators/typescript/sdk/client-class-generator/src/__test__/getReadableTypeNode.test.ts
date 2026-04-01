@@ -6,7 +6,7 @@ import { getReadableTypeNode } from "../getReadableTypeNode.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(): any {
     return {
         externalDependencies: {

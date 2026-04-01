@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { getReadableTypeNode } from "../../../getReadableTypeNode.js";
@@ -14,7 +14,7 @@ export function getSuccessReturnType(
         | FernIr.HttpResponseBody.Text
         | FernIr.HttpResponseBody.Bytes
         | undefined,
-    context: SdkContext,
+    context: FileContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
         streamType: "wrapper" | "web";
@@ -77,7 +77,7 @@ function getFileType({
     streamType,
     fileResponseType
 }: {
-    context: SdkContext;
+    context: FileContext;
     includeContentHeadersOnResponse: boolean;
     streamType: "wrapper" | "web";
     fileResponseType: "stream" | "binary-response";

@@ -25,14 +25,11 @@ import java.util.Optional;
 public final class OutboundCallConversationsResponse {
     private final Optional<Object> conversationId;
 
-    private final boolean dryRun;
-
     private final Map<String, Object> additionalProperties;
 
     private OutboundCallConversationsResponse(
-            Optional<Object> conversationId, boolean dryRun, Map<String, Object> additionalProperties) {
+            Optional<Object> conversationId, Map<String, Object> additionalProperties) {
         this.conversationId = conversationId;
-        this.dryRun = dryRun;
         this.additionalProperties = additionalProperties;
     }
 
@@ -51,8 +48,8 @@ public final class OutboundCallConversationsResponse {
      * @return Always true for this response.
      */
     @JsonProperty("dry_run")
-    public boolean getDryRun() {
-        return dryRun;
+    public Boolean getDryRun() {
+        return true;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -73,12 +70,12 @@ public final class OutboundCallConversationsResponse {
     }
 
     private boolean equalTo(OutboundCallConversationsResponse other) {
-        return conversationId.equals(other.conversationId) && dryRun == other.dryRun;
+        return conversationId.equals(other.conversationId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.conversationId, this.dryRun);
+        return Objects.hash(this.conversationId);
     }
 
     @java.lang.Override
@@ -86,40 +83,12 @@ public final class OutboundCallConversationsResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static DryRunStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface DryRunStage {
-        /**
-         * <p>Always true for this response.</p>
-         */
-        _FinalStage dryRun(boolean dryRun);
-
-        Builder from(OutboundCallConversationsResponse other);
-    }
-
-    public interface _FinalStage {
-        OutboundCallConversationsResponse build();
-
-        _FinalStage additionalProperty(String key, Object value);
-
-        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>Always null when dry_run is true.</p>
-         */
-        _FinalStage conversationId(Optional<Object> conversationId);
-
-        _FinalStage conversationId(Object conversationId);
-
-        _FinalStage conversationId(Nullable<Object> conversationId);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DryRunStage, _FinalStage {
-        private boolean dryRun;
-
+    public static final class Builder {
         private Optional<Object> conversationId = Optional.empty();
 
         @JsonAnySetter
@@ -127,31 +96,26 @@ public final class OutboundCallConversationsResponse {
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(OutboundCallConversationsResponse other) {
             conversationId(other.getConversationId());
-            dryRun(other.getDryRun());
-            return this;
-        }
-
-        /**
-         * <p>Always true for this response.</p>
-         * <p>Always true for this response.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("dry_run")
-        public _FinalStage dryRun(boolean dryRun) {
-            this.dryRun = dryRun;
             return this;
         }
 
         /**
          * <p>Always null when dry_run is true.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @java.lang.Override
-        public _FinalStage conversationId(Nullable<Object> conversationId) {
+        @JsonSetter(value = "conversation_id", nulls = Nulls.SKIP)
+        public Builder conversationId(Optional<Object> conversationId) {
+            this.conversationId = conversationId;
+            return this;
+        }
+
+        public Builder conversationId(Object conversationId) {
+            this.conversationId = Optional.ofNullable(conversationId);
+            return this;
+        }
+
+        public Builder conversationId(Nullable<Object> conversationId) {
             if (conversationId.isNull()) {
                 this.conversationId = null;
             } else if (conversationId.isEmpty()) {
@@ -162,38 +126,15 @@ public final class OutboundCallConversationsResponse {
             return this;
         }
 
-        /**
-         * <p>Always null when dry_run is true.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage conversationId(Object conversationId) {
-            this.conversationId = Optional.ofNullable(conversationId);
-            return this;
-        }
-
-        /**
-         * <p>Always null when dry_run is true.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "conversation_id", nulls = Nulls.SKIP)
-        public _FinalStage conversationId(Optional<Object> conversationId) {
-            this.conversationId = conversationId;
-            return this;
-        }
-
-        @java.lang.Override
         public OutboundCallConversationsResponse build() {
-            return new OutboundCallConversationsResponse(conversationId, dryRun, additionalProperties);
+            return new OutboundCallConversationsResponse(conversationId, additionalProperties);
         }
 
-        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

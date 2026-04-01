@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -95,6 +95,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "secret",
                         "name": {
                             "originalName": "secret",
                             "camelCase": {
@@ -113,8 +114,7 @@
                                 "unsafeName": "Secret",
                                 "safeName": "Secret"
                             }
-                        },
-                        "wireValue": "secret"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -158,6 +158,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -176,8 +177,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

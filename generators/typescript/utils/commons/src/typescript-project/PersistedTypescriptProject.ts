@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
+import { cp, readdir, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -214,13 +214,27 @@ export class PersistedTypescriptProject {
 
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
-            logger
+            logger,
+            doNotPipeOutput: true
         });
         try {
             const startTime = Date.now();
-            await pm(this.formatCommand);
+            const result = await pm(this.formatCommand);
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
             logger.debug(`[TIMING] format took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -233,13 +247,27 @@ export class PersistedTypescriptProject {
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger,
-            reject: false
+            reject: false,
+            doNotPipeOutput: true
         });
         try {
             const startTime = Date.now();
-            await pm(this.checkFixCommand);
+            const result = await pm(this.checkFixCommand);
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
             logger.debug(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -491,6 +519,29 @@ export class PersistedTypescriptProject {
             maxRetries: 3,
             retryDelay: 100
         });
+    }
+
+    private async writeToolOutputToLogFile({
+        step,
+        stdout,
+        stderr,
+        logger
+    }: {
+        step: string;
+        stdout: string;
+        stderr: string;
+        logger: Logger;
+    }): Promise<void> {
+        const logFilePath = `/tmp/fern-${step}.log`;
+        const content = [stdout, stderr].filter(Boolean).join("\n");
+        if (content.length > 0) {
+            try {
+                await writeFile(logFilePath, content);
+                logger.debug(`${step} output written to ${logFilePath}`);
+            } catch (error) {
+                logger.debug(`Failed to write ${step} output to ${logFilePath}: ${error}`);
+            }
+        }
     }
 
     public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {

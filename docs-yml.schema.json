@@ -5714,6 +5714,16 @@
               "type": "null"
             }
           ]
+        },
+        "context7": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

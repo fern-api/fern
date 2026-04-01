@@ -73,7 +73,7 @@ export async function applyOverlays<T extends object>({
     const outputPath = path.join(dir, outputFileName);
 
     await writeFile(outputPath, JSON.stringify(result, null, 2), "utf8");
-    context.logger.info(`Wrote overlaid OpenAPI spec to: ${outputPath}`);
+    context.logger.debug(`Wrote overlaid OpenAPI spec to: ${outputPath}`);
 
     return result;
 }

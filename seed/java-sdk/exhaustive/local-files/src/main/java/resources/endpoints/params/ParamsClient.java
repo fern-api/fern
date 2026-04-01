@@ -193,4 +193,18 @@ public class ParamsClient {
       RequestOptions requestOptions) {
     return this.rawClient.uploadWithPath(param, request, requestOptions).body();
   }
+
+  /**
+   * GET with path param that can throw errors
+   */
+  public String getWithPathAndErrors(String param) {
+    return this.rawClient.getWithPathAndErrors(param).body();
+  }
+
+  /**
+   * GET with path param that can throw errors
+   */
+  public String getWithPathAndErrors(String param, RequestOptions requestOptions) {
+    return this.rawClient.getWithPathAndErrors(param, requestOptions).body();
+  }
 }

@@ -651,16 +651,14 @@ export class LocalTaskHandler {
         // leverage git's file-tracking for resolving .fernignore paths. We inline the
         // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
         // Touch ID on macOS) and unnecessary overhead.
-        await this.runGitCommand(["init"], tmpOutputResolutionDir);
-        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-        await this.runGitCommand(
+        await this.runThrowawayGitCommand(["init"], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(
             [
                 "-c",
                 "user.name=fern",
                 "-c",
                 "user.email=hey@buildwithfern.com",
-                "-c",
-                "commit.gpgsign=false",
                 "commit",
                 "--allow-empty",
                 "--no-verify",
@@ -671,17 +669,17 @@ export class LocalTaskHandler {
         );
 
         // Stage deletions `git rm -rf .`
-        await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
 
         // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
-        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
 
         // Undo changes to preserved paths (fernignore + README.md if missing from output)
-        await this.runGitCommand(["reset", "--", ...pathsToPreserve], tmpOutputResolutionDir);
-        await this.runGitCommand(["clean", "-fd", "--", ...pathsToPreserve], tmpOutputResolutionDir);
-        await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["reset", "--", ...pathsToPreserve], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["clean", "-fd", "--", ...pathsToPreserve], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
         await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
@@ -798,6 +796,19 @@ export class LocalTaskHandler {
             cwd,
             doNotPipeOutput: true
         });
+        return response.stdout;
+    }
+
+    private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
+        const response = await loggingExeca(
+            this.context.logger,
+            "git",
+            ["-c", "commit.gpgsign=false", "-c", "core.hooksPath=/dev/null", ...options],
+            {
+                cwd,
+                doNotPipeOutput: true
+            }
+        );
         return response.stdout;
     }
 

@@ -1,5 +1,6 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
@@ -9,7 +10,7 @@ import {
 export declare namespace GeneratedQueryParams {
     export interface Init {
         queryParameters: FernIr.QueryParameter[] | undefined;
-        referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+        referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
     }
 }
 
@@ -17,14 +18,14 @@ export class GeneratedQueryParams {
     public static readonly QUERY_PARAMS_VARIABLE_NAME = "_queryParams" as const;
 
     private queryParameters: FernIr.QueryParameter[] | undefined;
-    private referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+    private referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
 
     constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
         this.queryParameters = queryParameters;
         this.referenceToQueryParameterProperty = referenceToQueryParameterProperty;
     }
 
-    public getBuildStatements(context: SdkContext): ts.Statement[] {
+    public getBuildStatements(context: FileContext): ts.Statement[] {
         if (this.queryParameters == null || this.queryParameters.length === 0) {
             return [];
         }
@@ -32,7 +33,7 @@ export class GeneratedQueryParams {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
         for (const queryParameter of this.queryParameters) {
-            const wireValue = queryParameter.name.wireValue;
+            const wireValue = getWireValue(queryParameter.name);
             const referenceToQueryParameter = this.referenceToQueryParameterProperty(wireValue, context);
             const valueExpression = this.getQueryParameterValueExpression({
                 queryParameter,
@@ -85,7 +86,7 @@ export class GeneratedQueryParams {
     }: {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Expression {
         const listItemType =
             queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
@@ -139,13 +140,13 @@ export class GeneratedQueryParams {
     }: {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Expression {
         const objectType = this.getObjectType(queryParameter.valueType, context);
         const primitiveType = objectType ? undefined : this.getPrimitiveType(queryParameter.valueType, context);
         const paramName = context.retainOriginalCasing
-            ? queryParameter.name.name.originalName
-            : queryParameter.name.name.camelCase.unsafeName;
+            ? getOriginalName(queryParameter.name)
+            : context.case.camelUnsafe(queryParameter.name);
 
         if (objectType != null) {
             if (context.includeSerdeLayer) {
@@ -200,7 +201,7 @@ export class GeneratedQueryParams {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
         listItemType: FernIr.TypeReference;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Expression {
         const objectType = this.getObjectType(listItemType, context);
         const needsItemTransform = this.listItemNeedsTransform(listItemType, context);
@@ -225,8 +226,8 @@ export class GeneratedQueryParams {
                         breadcrumbsPrefix: [
                             "request",
                             context.retainOriginalCasing
-                                ? queryParameter.name.name.originalName
-                                : queryParameter.name.name.camelCase.unsafeName
+                                ? getOriginalName(queryParameter.name)
+                                : context.case.camelUnsafe(queryParameter.name)
                         ],
                         omitUndefined: context.omitUndefined
                     });
@@ -291,7 +292,7 @@ export class GeneratedQueryParams {
 
     private getPrimitiveType(
         typeReference: FernIr.TypeReference,
-        context: SdkContext
+        context: FileContext
     ): FernIr.TypeReference.Primitive | undefined {
         switch (typeReference.type) {
             case "primitive":
@@ -320,7 +321,7 @@ export class GeneratedQueryParams {
 
     private getObjectType(
         typeReference: FernIr.TypeReference,
-        context: SdkContext
+        context: FileContext
     ): FernIr.DeclaredTypeName | undefined {
         switch (typeReference.type) {
             case "named":
@@ -354,7 +355,7 @@ export class GeneratedQueryParams {
         return false;
     }
 
-    private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: SdkContext): boolean {
+    private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: FileContext): boolean {
         const objectType = this.getObjectType(listItemType, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
@@ -366,7 +367,7 @@ export class GeneratedQueryParams {
         return true;
     }
 
-    private scalarValueNeedsTransform(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
+    private scalarValueNeedsTransform(typeReference: FernIr.TypeReference, context: FileContext): boolean {
         const objectType = this.getObjectType(typeReference, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
@@ -395,7 +396,10 @@ function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boole
             return false;
         case "DATE":
         case "DATE_TIME":
+        case "DATE_TIME_RFC_2822":
             return true;
+        default:
+            return false;
     }
 }
 

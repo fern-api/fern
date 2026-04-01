@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { casingsGenerator, createDeclaredTypeName, createNameAndWireValue } from "@fern-typescript/test-utils";
@@ -8,6 +9,12 @@ import { ParsedSingleUnionTypeForUnion } from "../union/ParsedSingleUnionTypeFor
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "../union/SamePropertiesAsObjectSingleUnionTypeGenerator.js";
 import { UnknownSingleUnionType } from "../union/UnknownSingleUnionType.js";
 import { UnknownSingleUnionTypeGenerator } from "../union/UnknownSingleUnionTypeGenerator.js";
+
+const testCaseConverter = new CaseConverter({
+    generationLanguage: "typescript",
+    keywords: undefined,
+    smartCasing: false
+});
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -351,7 +358,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getTypeName()).toBe("None");
             expect(parsed.getDiscriminantValue()).toBe("none");
@@ -373,7 +381,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getTypeName()).toBe("User");
             expect(parsed.getDiscriminantValue()).toBe("user");
@@ -398,7 +407,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getTypeName()).toBe("Text");
             expect(parsed.getDiscriminantValue()).toBe("text");
@@ -416,7 +426,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getDocs()).toBeUndefined();
         });
@@ -437,7 +448,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getDocs()).toBe("A type with no properties");
         });
@@ -457,9 +469,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
-            expect(parsed.getBuilderName()).toBe(singleUnionType.discriminantValue.name.camelCase.unsafeName);
+            expect(parsed.getBuilderName()).toBe(testCaseConverter.camelUnsafe(singleUnionType.discriminantValue));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
@@ -475,7 +488,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: true,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getBuilderName()).toBe("my_variant");
         });
@@ -493,7 +507,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getBuilderName()).toBe("my_variant");
         });
@@ -510,9 +525,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
-            expect(parsed.getVisitorKey()).toBe(singleUnionType.discriminantValue.name.camelCase.unsafeName);
+            expect(parsed.getVisitorKey()).toBe(testCaseConverter.camelUnsafe(singleUnionType.discriminantValue));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
@@ -525,7 +541,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: true,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             expect(parsed.getVisitorKey()).toBe("some_key");
         });
@@ -539,9 +556,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
             };
             const key = ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                 includeSerdeLayer: true,
-                retainOriginalCasing: false
+                retainOriginalCasing: false,
+                caseConverter: testCaseConverter
             });
-            expect(key).toBe(singleProperty.name.name.camelCase.unsafeName);
+            expect(key).toBe(testCaseConverter.camelUnsafe(singleProperty.name));
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
@@ -551,7 +569,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
             };
             const key = ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                 includeSerdeLayer: true,
-                retainOriginalCasing: true
+                retainOriginalCasing: true,
+                caseConverter: testCaseConverter
             });
             expect(key).toBe("my_prop");
         });
@@ -563,7 +582,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
             };
             const key = ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                 includeSerdeLayer: false,
-                retainOriginalCasing: false
+                retainOriginalCasing: false,
+                caseConverter: testCaseConverter
             });
             expect(key).toBe("my_prop");
         });
@@ -591,7 +611,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const typeName = parsed.getTypeName();
             // sanitizeIdentifier should prefix with _ if starts with digit
@@ -614,7 +635,8 @@ describe("ParsedSingleUnionTypeForUnion", () => {
                 retainOriginalCasing: false,
                 noOptionalProperties: false,
                 enableInlineTypes: false,
-                generateReadWriteOnlyTypes: false
+                generateReadWriteOnlyTypes: false,
+                caseConverter: testCaseConverter
             });
             const context = createMockBaseContext();
             const result = parsed.needsRequestResponse(context);

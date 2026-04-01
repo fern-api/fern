@@ -15,6 +15,7 @@ async fn test_endpoints_content_type_post_json_patch_content_type_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -63,6 +64,7 @@ async fn test_endpoints_content_type_post_json_patch_content_with_charset_type_w
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

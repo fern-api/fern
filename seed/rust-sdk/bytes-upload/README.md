@@ -50,10 +50,7 @@ async fn main() {
         ..Default::default()
     };
     let client = BytesUploadClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .upload(&todo!("Invalid bytes value"), None)
-        .await;
+    client.service.upload(&vec![], None).await;
 }
 ```
 

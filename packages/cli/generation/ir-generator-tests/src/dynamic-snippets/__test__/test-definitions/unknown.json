@@ -140,6 +140,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "unknown",
                         "name": {
                             "originalName": "unknown",
                             "camelCase": {
@@ -158,8 +159,7 @@
                                 "unsafeName": "Unknown",
                                 "safeName": "Unknown"
                             }
-                        },
-                        "wireValue": "unknown"
+                        }
                     },
                     "typeReference": {
                         "type": "unknown"

@@ -7,6 +7,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 
+import { getOriginalName } from "../../utils/namesUtils.js";
+
 import { getRequestBodyExamples } from "./getRequestBodyExamples.js";
 import { getResponseExamples } from "./getResponseExamples.js";
 
@@ -234,7 +236,7 @@ function createExamplesForResponseStatusCodes({
 
         // Create response example from auto-generated example if no user-specified examples were created
         if (!examplesCreatedForResponse) {
-            const fallbackExampleDisplayName = camelCase(`${endpoint.name.originalName}_example`);
+            const fallbackExampleDisplayName = camelCase(`${getOriginalName(endpoint.name)}_example`);
             if (firstUserRequestName && firstUserRequestExample) {
                 requestExamplesUsed.add(firstUserRequestName);
             }

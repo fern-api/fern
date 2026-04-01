@@ -12,75 +12,15 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ExampleResponseStatus",
-          "camelCase": {
-            "unsafeName": "exampleResponseStatus",
-            "safeName": "exampleResponseStatus"
-          },
-          "snakeCase": {
-            "unsafeName": "example_response_status",
-            "safeName": "example_response_status"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-            "safeName": "EXAMPLE_RESPONSE_STATUS"
-          },
-          "pascalCase": {
-            "unsafeName": "ExampleResponseStatus",
-            "safeName": "ExampleResponseStatus"
-          }
-        }
+        "name": "ExampleResponseStatus"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "success",
-                "camelCase": {
-                  "unsafeName": "success",
-                  "safeName": "success"
-                },
-                "snakeCase": {
-                  "unsafeName": "success",
-                  "safeName": "success"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SUCCESS",
-                  "safeName": "SUCCESS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Success",
-                  "safeName": "Success"
-                }
-              },
-              "wireValue": "success"
-            }
+            "name": "success"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "failure",
-                "camelCase": {
-                  "unsafeName": "failure",
-                  "safeName": "failure"
-                },
-                "snakeCase": {
-                  "unsafeName": "failure",
-                  "safeName": "failure"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FAILURE",
-                  "safeName": "FAILURE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Failure",
-                  "safeName": "Failure"
-                }
-              },
-              "wireValue": "failure"
-            }
+            "name": "failure"
           }
         ],
         "type": "enum"
@@ -103,51 +43,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ExampleResponse",
-          "camelCase": {
-            "unsafeName": "exampleResponse",
-            "safeName": "exampleResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "example_response",
-            "safeName": "example_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EXAMPLE_RESPONSE",
-            "safeName": "EXAMPLE_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ExampleResponse",
-            "safeName": "ExampleResponse"
-          }
-        }
+        "name": "ExampleResponse"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
-              "wireValue": "status"
-            },
+            "name": "status",
             "valueType": {
               "container": {
                 "optional": {
@@ -155,25 +56,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "ExampleResponseStatus",
-                    "camelCase": {
-                      "unsafeName": "exampleResponseStatus",
-                      "safeName": "exampleResponseStatus"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "example_response_status",
-                      "safeName": "example_response_status"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                      "safeName": "EXAMPLE_RESPONSE_STATUS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ExampleResponseStatus",
-                      "safeName": "ExampleResponseStatus"
-                    }
-                  },
+                  "name": "ExampleResponseStatus",
                   "typeId": "ExampleResponseStatus",
                   "inline": false,
                   "type": "named"
@@ -190,28 +73,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
-              "wireValue": "message"
-            },
+            "name": "message",
             "valueType": {
               "container": {
                 "optional": {
@@ -236,28 +98,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "custom_fields",
-                "camelCase": {
-                  "unsafeName": "customFields",
-                  "safeName": "customFields"
-                },
-                "snakeCase": {
-                  "unsafeName": "custom_fields",
-                  "safeName": "custom_fields"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CUSTOM_FIELDS",
-                  "safeName": "CUSTOM_FIELDS"
-                },
-                "pascalCase": {
-                  "unsafeName": "CustomFields",
-                  "safeName": "CustomFields"
-                }
-              },
-              "wireValue": "custom_fields"
-            },
+            "name": "custom_fields",
             "valueType": {
               "container": {
                 "optional": {
@@ -320,74 +161,20 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "GrantTypeEnum",
-          "camelCase": {
-            "unsafeName": "grantTypeEnum",
-            "safeName": "grantTypeEnum"
-          },
-          "snakeCase": {
-            "unsafeName": "grant_type_enum",
-            "safeName": "grant_type_enum"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GRANT_TYPE_ENUM",
-            "safeName": "GRANT_TYPE_ENUM"
-          },
-          "pascalCase": {
-            "unsafeName": "GrantTypeEnum",
-            "safeName": "GrantTypeEnum"
-          }
-        }
+        "name": "GrantTypeEnum"
       },
       "shape": {
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "urn-devrev-params-oauth-grant-type-token-issue",
-                "camelCase": {
-                  "unsafeName": "urnDevrevParamsOauthGrantTypeTokenIssue",
-                  "safeName": "urnDevrevParamsOauthGrantTypeTokenIssue"
-                },
-                "snakeCase": {
-                  "unsafeName": "urn_devrev_params_oauth_grant_type_token_issue",
-                  "safeName": "urn_devrev_params_oauth_grant_type_token_issue"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "URN_DEVREV_PARAMS_OAUTH_GRANT_TYPE_TOKEN_ISSUE",
-                  "safeName": "URN_DEVREV_PARAMS_OAUTH_GRANT_TYPE_TOKEN_ISSUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
-                  "safeName": "UrnDevrevParamsOauthGrantTypeTokenIssue"
-                }
-              },
-              "wireValue": "urn:devrev:params:oauth:grant-type:token-issue"
+              "wireValue": "urn:devrev:params:oauth:grant-type:token-issue",
+              "name": "urn-devrev-params-oauth-grant-type-token-issue"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "urn-ietf-params-oauth-grant-type-token-exchange",
-                "camelCase": {
-                  "unsafeName": "urnIetfParamsOauthGrantTypeTokenExchange",
-                  "safeName": "urnIetfParamsOauthGrantTypeTokenExchange"
-                },
-                "snakeCase": {
-                  "unsafeName": "urn_ietf_params_oauth_grant_type_token_exchange",
-                  "safeName": "urn_ietf_params_oauth_grant_type_token_exchange"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE",
-                  "safeName": "URN_IETF_PARAMS_OAUTH_GRANT_TYPE_TOKEN_EXCHANGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "UrnIetfParamsOauthGrantTypeTokenExchange",
-                  "safeName": "UrnIetfParamsOauthGrantTypeTokenExchange"
-                }
-              },
-              "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange"
+              "wireValue": "urn:ietf:params:oauth:grant-type:token-exchange",
+              "name": "urn-ietf-params-oauth-grant-type-token-exchange"
             }
           }
         ],
@@ -437,7 +224,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d9f36576",
+                "id": "9a37d36d",
                 "url": "/example",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -459,53 +246,14 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "status",
-                                  "camelCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "STATUS",
-                                    "safeName": "STATUS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Status",
-                                    "safeName": "Status"
-                                  }
-                                },
-                                "wireValue": "status"
-                              },
+                              "name": "status",
                               "originalTypeDeclaration": {
                                 "typeId": "ExampleResponse",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "ExampleResponse",
-                                  "camelCase": {
-                                    "unsafeName": "exampleResponse",
-                                    "safeName": "exampleResponse"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "example_response",
-                                    "safeName": "example_response"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "EXAMPLE_RESPONSE",
-                                    "safeName": "EXAMPLE_RESPONSE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "ExampleResponse",
-                                    "safeName": "ExampleResponse"
-                                  }
-                                }
+                                "name": "ExampleResponse"
                               },
                               "value": {
                                 "jsonExample": "success",
@@ -515,28 +263,7 @@
                                       "jsonExample": "success",
                                       "shape": {
                                         "shape": {
-                                          "value": {
-                                            "name": {
-                                              "originalName": "success",
-                                              "camelCase": {
-                                                "unsafeName": "success",
-                                                "safeName": "success"
-                                              },
-                                              "snakeCase": {
-                                                "unsafeName": "success",
-                                                "safeName": "success"
-                                              },
-                                              "screamingSnakeCase": {
-                                                "unsafeName": "SUCCESS",
-                                                "safeName": "SUCCESS"
-                                              },
-                                              "pascalCase": {
-                                                "unsafeName": "Success",
-                                                "safeName": "Success"
-                                              }
-                                            },
-                                            "wireValue": "success"
-                                          },
+                                          "value": "success",
                                           "type": "enum"
                                         },
                                         "typeName": {
@@ -545,25 +272,7 @@
                                             "allParts": [],
                                             "packagePath": []
                                           },
-                                          "name": {
-                                            "originalName": "ExampleResponseStatus",
-                                            "camelCase": {
-                                              "unsafeName": "exampleResponseStatus",
-                                              "safeName": "exampleResponseStatus"
-                                            },
-                                            "snakeCase": {
-                                              "unsafeName": "example_response_status",
-                                              "safeName": "example_response_status"
-                                            },
-                                            "screamingSnakeCase": {
-                                              "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                              "safeName": "EXAMPLE_RESPONSE_STATUS"
-                                            },
-                                            "pascalCase": {
-                                              "unsafeName": "ExampleResponseStatus",
-                                              "safeName": "ExampleResponseStatus"
-                                            }
-                                          }
+                                          "name": "ExampleResponseStatus"
                                         },
                                         "type": "named"
                                       }
@@ -573,25 +282,7 @@
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": {
-                                        "originalName": "ExampleResponseStatus",
-                                        "camelCase": {
-                                          "unsafeName": "exampleResponseStatus",
-                                          "safeName": "exampleResponseStatus"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "example_response_status",
-                                          "safeName": "example_response_status"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "EXAMPLE_RESPONSE_STATUS",
-                                          "safeName": "EXAMPLE_RESPONSE_STATUS"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "ExampleResponseStatus",
-                                          "safeName": "ExampleResponseStatus"
-                                        }
-                                      },
+                                      "name": "ExampleResponseStatus",
                                       "typeId": "ExampleResponseStatus",
                                       "inline": false,
                                       "type": "named"
@@ -603,53 +294,14 @@
                               }
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "message",
-                                  "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                  }
-                                },
-                                "wireValue": "message"
-                              },
+                              "name": "message",
                               "originalTypeDeclaration": {
                                 "typeId": "ExampleResponse",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "ExampleResponse",
-                                  "camelCase": {
-                                    "unsafeName": "exampleResponse",
-                                    "safeName": "exampleResponse"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "example_response",
-                                    "safeName": "example_response"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "EXAMPLE_RESPONSE",
-                                    "safeName": "EXAMPLE_RESPONSE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "ExampleResponse",
-                                    "safeName": "ExampleResponse"
-                                  }
-                                }
+                                "name": "ExampleResponse"
                               },
                               "value": {
                                 "jsonExample": "message",
@@ -684,53 +336,14 @@
                               }
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "custom_fields",
-                                  "camelCase": {
-                                    "unsafeName": "customFields",
-                                    "safeName": "customFields"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "custom_fields",
-                                    "safeName": "custom_fields"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "CUSTOM_FIELDS",
-                                    "safeName": "CUSTOM_FIELDS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "CustomFields",
-                                    "safeName": "CustomFields"
-                                  }
-                                },
-                                "wireValue": "custom_fields"
-                              },
+                              "name": "custom_fields",
                               "originalTypeDeclaration": {
                                 "typeId": "ExampleResponse",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "ExampleResponse",
-                                  "camelCase": {
-                                    "unsafeName": "exampleResponse",
-                                    "safeName": "exampleResponse"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "example_response",
-                                    "safeName": "example_response"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "EXAMPLE_RESPONSE",
-                                    "safeName": "EXAMPLE_RESPONSE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "ExampleResponse",
-                                    "safeName": "ExampleResponse"
-                                  }
-                                }
+                                "name": "ExampleResponse"
                               },
                               "value": {
                                 "jsonExample": {
@@ -836,25 +449,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "ExampleResponse",
-                            "camelCase": {
-                              "unsafeName": "exampleResponse",
-                              "safeName": "exampleResponse"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "example_response",
-                              "safeName": "example_response"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "EXAMPLE_RESPONSE",
-                              "safeName": "EXAMPLE_RESPONSE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ExampleResponse",
-                              "safeName": "ExampleResponse"
-                            }
-                          }
+                          "name": "ExampleResponse"
                         },
                         "type": "named"
                       }
@@ -877,25 +472,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getExample",
-          "name": {
-            "originalName": "getExample",
-            "camelCase": {
-              "unsafeName": "getExample",
-              "safeName": "getExample"
-            },
-            "snakeCase": {
-              "unsafeName": "get_example",
-              "safeName": "get_example"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_EXAMPLE",
-              "safeName": "GET_EXAMPLE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetExample",
-              "safeName": "GetExample"
-            }
-          },
+          "name": "getExample",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -906,25 +483,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "ExampleResponse",
-                    "camelCase": {
-                      "unsafeName": "exampleResponse",
-                      "safeName": "exampleResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "example_response",
-                      "safeName": "example_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EXAMPLE_RESPONSE",
-                      "safeName": "EXAMPLE_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ExampleResponse",
-                      "safeName": "ExampleResponse"
-                    }
-                  },
+                  "name": "ExampleResponse",
                   "typeId": "ExampleResponse",
                   "inline": false,
                   "type": "named"
@@ -985,25 +544,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "ExampleResponse",
-                        "camelCase": {
-                          "unsafeName": "exampleResponse",
-                          "safeName": "exampleResponse"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "example_response",
-                          "safeName": "example_response"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "EXAMPLE_RESPONSE",
-                          "safeName": "EXAMPLE_RESPONSE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ExampleResponse",
-                          "safeName": "ExampleResponse"
-                        }
-                      },
+                      "name": "ExampleResponse",
                       "typeId": "ExampleResponse",
                       "inline": false,
                       "type": "named"
@@ -1071,47 +612,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Example API",
-    "camelCase": {
-      "unsafeName": "exampleApi",
-      "safeName": "exampleApi"
-    },
-    "snakeCase": {
-      "unsafeName": "example_api",
-      "safeName": "example_api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "EXAMPLE_API",
-      "safeName": "EXAMPLE_API"
-    },
-    "pascalCase": {
-      "unsafeName": "ExampleApi",
-      "safeName": "ExampleApi"
-    }
-  },
+  "apiName": "Example API",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

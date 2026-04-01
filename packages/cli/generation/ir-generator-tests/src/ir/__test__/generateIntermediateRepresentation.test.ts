@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdirSync } from "fs";
@@ -189,7 +190,7 @@ describe("discriminator context inference", () => {
         const unionTypes = new Map<string, { discriminatorContext: string | undefined }>();
         for (const typeDecl of Object.values(ir.types)) {
             if (typeDecl.shape.type === "union") {
-                unionTypes.set(typeDecl.name.name.originalName, {
+                unionTypes.set(getOriginalName(typeDecl.name.name), {
                     discriminatorContext: typeDecl.shape.discriminatorContext
                 });
             }

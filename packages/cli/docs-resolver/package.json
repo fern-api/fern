@@ -43,6 +43,7 @@
     "@fern-api/graphql-to-fdr": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",

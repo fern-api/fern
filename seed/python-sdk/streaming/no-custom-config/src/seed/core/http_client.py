@@ -271,11 +271,13 @@ class HttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
 
@@ -370,7 +372,11 @@ class HttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
 
         try:
             response = self.httpx_client.request(
@@ -547,12 +553,14 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
@@ -656,7 +664,11 @@ class AsyncHttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
 
         try:
             response = await self.httpx_client.request(
