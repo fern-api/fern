@@ -1,4 +1,5 @@
 export * from "./AbsoluteProductPath.js";
+export * from "./AgentsConfig.js";
 export * from "./AiChatConfig.js";
 export * from "./AiChatDatasource.js";
 export * from "./AiChatLocation.js";
@@ -81,7 +82,6 @@ export * from "./LibraryName.js";
 export * from "./LibraryOutputConfiguration.js";
 export * from "./LibraryReferenceConfiguration.js";
 export * from "./LinkConfiguration.js";
-export * from "./LlmsConfig.js";
 export * from "./LogoConfiguration.js";
 export * from "./MetadataConfig.js";
 export * from "./NavbarDropdownConfig.js";

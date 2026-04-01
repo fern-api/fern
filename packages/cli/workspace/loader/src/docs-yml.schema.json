@@ -218,10 +218,10 @@
         }
       ]
     },
-    "llms": {
+    "agents": {
       "oneOf": [
         {
-          "$ref": "#/definitions/docs.LlmsConfig"
+          "$ref": "#/definitions/docs.AgentsConfig"
         },
         {
           "type": "null"
@@ -4377,20 +4377,10 @@
       },
       "additionalProperties": false
     },
-    "docs.LlmsConfig": {
+    "docs.AgentsConfig": {
       "type": "object",
       "properties": {
-        "page-directive-prepend": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "page-directive-append": {
+        "page-directive": {
           "oneOf": [
             {
               "type": "string"

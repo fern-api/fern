@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AgentsConfig } from "./AgentsConfig.js";
 import { AiChatConfig } from "./AiChatConfig.js";
 import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
@@ -22,7 +23,6 @@ import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
 import { LibraryConfiguration } from "./LibraryConfiguration.js";
 import { LibraryName } from "./LibraryName.js";
-import { LlmsConfig } from "./LlmsConfig.js";
 import { LogoConfiguration } from "./LogoConfiguration.js";
 import { MetadataConfig } from "./MetadataConfig.js";
 import { NavbarLink } from "./NavbarLink.js";
@@ -62,7 +62,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
-    llms: LlmsConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     check: CheckConfig.optional(),
@@ -103,7 +103,7 @@ export declare namespace DocsConfiguration {
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;
-        llms?: LlmsConfig.Raw | null;
+        agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         check?: CheckConfig.Raw | null;
