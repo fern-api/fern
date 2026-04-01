@@ -125,7 +125,7 @@ class SeedExhaustive:
 
 
 def _make_default_async_client(
-    timeout: typing.Optional[float],
+    timeout: float,
     follow_redirects: typing.Optional[bool],
 ) -> httpx.AsyncClient:
     try:
