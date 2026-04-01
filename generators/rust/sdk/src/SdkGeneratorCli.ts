@@ -752,6 +752,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add bytes request body types for bytes endpoints with query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const uniqueRequestName = context.getBytesRequestTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForBytesRequestBody(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,
@@ -973,19 +996,16 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             return true;
         }
 
-        // Check for inline request bodies
+        // Check for endpoints that generate request types
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     return true;
                 }
-            }
-        }
-
-        // Check for query-only endpoints that generate request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
                 if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
                     return true;
                 }
             }
