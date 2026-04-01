@@ -13,12 +13,12 @@ namespace SeedMultiUrlEnvironmentNoDefault.Core;
 internal static class QueryStringBuilder
 {
 #if NET8_0_OR_GREATER
-    private static readonly SearchValues<char> UnreservedChars = SearchValues.Create(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~"
+    private static readonly SearchValues<char> SafeQueryChars = SearchValues.Create(
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/"
     );
 #else
-    private const string UnreservedChars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+    private const string SafeQueryChars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/";
 #endif
 
 #if NET7_0_OR_GREATER
@@ -202,7 +202,7 @@ internal static class QueryStringBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool NeedsEncoding(ReadOnlySpan<char> value)
     {
-        return value.ContainsAnyExcept(UnreservedChars);
+        return value.ContainsAnyExcept(SafeQueryChars);
     }
 
     private static int EncodeSlow(ReadOnlySpan<char> input, Span<char> output)
@@ -211,7 +211,7 @@ internal static class QueryStringBuilder
 
         foreach (var c in input)
         {
-            if (IsUnreserved(c))
+            if (IsSafeQueryChar(c))
             {
                 output[position++] = c;
             }
@@ -265,7 +265,7 @@ internal static class QueryStringBuilder
     {
         foreach (var c in value)
         {
-            if (IsUnreserved(c))
+            if (IsSafeQueryChar(c))
             {
                 sb.Append(c);
             }
@@ -298,10 +298,10 @@ internal static class QueryStringBuilder
 #endif
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsUnreserved(char c)
+    private static bool IsSafeQueryChar(char c)
     {
 #if NET8_0_OR_GREATER
-        return UnreservedChars.Contains(c);
+        return SafeQueryChars.Contains(c);
 #else
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')
@@ -309,7 +309,18 @@ internal static class QueryStringBuilder
             || c == '-'
             || c == '_'
             || c == '.'
-            || c == '~';
+            || c == '~'
+            || c == '!'
+            || c == '$'
+            || c == '''
+            || c == '('
+            || c == ')'
+            || c == '*'
+            || c == ','
+            || c == ';'
+            || c == ':'
+            || c == '@'
+            || c == '/';
 #endif
     }
 

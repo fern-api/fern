@@ -46,7 +46,7 @@ public class QueryStringBuilderTests
         Assert.That(
             result,
             Is.EqualTo(
-                "?email=test%40example.com&url=https%3A%2F%2Fexample.com%2Fpath%3Fquery%3Dvalue&special=a%2Bb%3Dc%26d"
+                "?email=test@example.com&url=https://example.com/path%3Fquery%3Dvalue&special=a%2Bb%3Dc%26d"
             )
         );
     }
@@ -159,7 +159,7 @@ public class QueryStringBuilderTests
 
         var result = QueryStringBuilder.Build(parameters);
 
-        // Unreserved characters: A-Z a-z 0-9 - _ . ~
+        // Safe query characters include RFC 3986 unreserved + sub-delimiters (except & = +) + : @ /
         Assert.That(result, Is.EqualTo("?path=some-path&id=123-456_789.test~value"));
     }
 
