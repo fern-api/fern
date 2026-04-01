@@ -1,15 +1,15 @@
 packages:
   - packages/**
   - generators/**
-  - "!**/dist"
-  - "!**/lib"
-  - "!**/generated"
-  - "!packages/cli/cli/dist/local"
-  - "!packages/cli/cli/dist/dev"
-  - "!packages/cli/cli/dist/prod"
-  - "!packages/cli/cli-v2/dist/local"
-  - "!packages/cli/cli-v2/dist/dev"
-  - "!packages/cli/cli-v2/dist/prod"
+  - '!**/dist'
+  - '!**/lib'
+  - '!**/generated'
+  - '!packages/cli/cli/dist/local'
+  - '!packages/cli/cli/dist/dev'
+  - '!packages/cli/cli/dist/prod'
+  - '!packages/cli/cli-v2/dist/local'
+  - '!packages/cli/cli-v2/dist/dev'
+  - '!packages/cli/cli-v2/dist/prod'
 
 # Supply chain security settings
 # See: https://pnpm.io/settings
@@ -248,7 +248,6 @@ catalog:
   url-join: ^4.0.1
   uuid: ^9.0.1
   validate-npm-package-name: ^5.0.1
-  "@vitest/coverage-v8": 4.1.0
   vitest: 4.1.0
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
@@ -258,3 +257,18 @@ catalog:
   yauzl: ^3.2.1
   yazl: ^3.3.1
   zod: ^3.22.3
+
+minimumReleaseAge: 1440
+
+minimumReleaseAgeExclude:
+  - '@fern-api/*'
+  - '@fern-fern/*'
+
+onlyBuiltDependencies:
+  - '@sentry/cli'
+  - esbuild
+  - puppeteer
+
+trustPolicy: no-downgrade
+
+trustPolicyIgnoreAfter: 1440
