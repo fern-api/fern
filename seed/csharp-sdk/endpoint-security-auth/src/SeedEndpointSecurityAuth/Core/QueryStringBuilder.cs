@@ -312,7 +312,7 @@ internal static class QueryStringBuilder
             || c == '~'
             || c == '!'
             || c == '$'
-            || c == '''
+            || c == '\''
             || c == '('
             || c == ')'
             || c == '*'
