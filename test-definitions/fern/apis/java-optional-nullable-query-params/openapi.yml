@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: java-optional-nullable-query-params
+  version: ''
+paths:
+  /api/search:
+    get:
+      description: Search endpoint with optional nullable query params with defaults
+      operationId: search
+      tags:
+        - ''
+      parameters:
+        - name: query
+          in: query
+          description: Search query - defaults to empty string when absent
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: limit
+          in: query
+          description: Max results - defaults to 10 when absent
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: includeArchived
+          in: query
+          description: Include archived items - defaults to false when absent
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: sortOrder
+          in: query
+          description: Sort order - defaults to ASC when absent
+          required: false
+          schema:
+            $ref: '#/components/schemas/SortOrder'
+            nullable: true
+        - name: optionalWithoutDefault
+          in: query
+          description: Optional nullable without default - should check wasSpecified
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: regularOptional
+          in: query
+          description: Another optional nullable with default for comparison
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: regularOptionalNoDefault
+          in: query
+          description: Another optional nullable without default for comparison
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+components:
+  schemas:
+    SortOrder:
+      title: SortOrder
+      type: string
+      enum:
+        - ASC
+        - DESC
+      description: Sort order enum
+    SearchResponse:
+      title: SearchResponse
+      type: object
+      description: Search response
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+        totalCount:
+          type: integer
+        query:
+          type: string
+          nullable: true
+        limit:
+          type: integer
+          nullable: true
+        includeArchived:
+          type: boolean
+          nullable: true
+        sortOrder:
+          $ref: '#/components/schemas/SortOrder'
+          nullable: true
+      required:
+        - results
+        - totalCount
+  securitySchemes: {}

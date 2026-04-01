@@ -12,9 +12,8 @@ import (
 type OutboundCallConversationsResponse struct {
 	// Always null when dry_run is true.
 	ConversationId any `json:"conversation_id" url:"conversation_id"`
-	// Always true for this response.
-	DryRun bool `json:"dry_run" url:"dry_run"`
 
+	dryRun          bool
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
@@ -30,7 +29,7 @@ func (o *OutboundCallConversationsResponse) GetDryRun() bool {
 	if o == nil {
 		return false
 	}
-	return o.DryRun
+	return o.dryRun
 }
 
 func (o *OutboundCallConversationsResponse) GetExtraProperties() map[string]any {
@@ -43,19 +42,40 @@ func (o *OutboundCallConversationsResponse) GetExtraProperties() map[string]any 
 func (o *OutboundCallConversationsResponse) UnmarshalJSON(
 	data []byte,
 ) error {
-	type unmarshaler OutboundCallConversationsResponse
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed OutboundCallConversationsResponse
+	var unmarshaler = struct {
+		embed
+		DryRun bool `json:"dry_run"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*o = OutboundCallConversationsResponse(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	*o = OutboundCallConversationsResponse(unmarshaler.embed)
+	if unmarshaler.DryRun != true {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", o, true, unmarshaler.DryRun)
+	}
+	o.dryRun = unmarshaler.DryRun
+	extraProperties, err := internal.ExtractExtraProperties(data, *o, "dryRun")
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
 	o.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (o *OutboundCallConversationsResponse) MarshalJSON() ([]byte, error) {
+	type embed OutboundCallConversationsResponse
+	var marshaler = struct {
+		embed
+		DryRun bool `json:"dry_run"`
+	}{
+		embed:  embed(*o),
+		DryRun: true,
+	}
+	return json.Marshal(marshaler)
 }
 
 func (o *OutboundCallConversationsResponse) String() string {

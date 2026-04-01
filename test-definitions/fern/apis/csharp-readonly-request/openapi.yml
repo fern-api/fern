@@ -1,0 +1,73 @@
+openapi: 3.0.1
+info:
+  title: csharp-readonly-request
+  version: ''
+paths:
+  /vendors/batch:
+    post:
+      operationId: batchCreate
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVendorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVendorRequest'
+components:
+  schemas:
+    Vendor:
+      title: Vendor
+      type: object
+      description: A vendor object with read-only timestamps
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the vendor.
+        name:
+          type: string
+          description: The name of the vendor.
+        created_at:
+          type: string
+          description: The timestamp when the vendor was created.
+        updated_at:
+          type: string
+          description: The timestamp when the vendor was last updated.
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+    CreateVendorRequest:
+      title: CreateVendorRequest
+      type: object
+      description: Request to create vendors
+      properties:
+        vendors:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Vendor'
+          description: Map of vendor ID to vendor data
+      required:
+        - vendors
+    CreateVendorResponse:
+      title: CreateVendorResponse
+      type: object
+      description: Response from creating vendors
+      properties:
+        vendors:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Vendor'
+          description: Map of vendor ID to created vendor
+      required:
+        - vendors
+  securitySchemes: {}

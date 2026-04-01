@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.60.8
+  changelogEntry:
+    - summary: |
+        Sanitize non-primitive path parameter example values at test-generation time.
+        When the IR contains object-typed path params (e.g. from `unknown` types), the
+        test generator now coerces them to the parameter's original name string and
+        rebuilds the mock URL accordingly. This prevents `[object Object]` in generated
+        wire test URLs regardless of the CLI version used to produce the IR.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
 - version: 3.60.7
   changelogEntry:
     - summary: |

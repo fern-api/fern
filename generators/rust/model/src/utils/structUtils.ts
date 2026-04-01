@@ -245,10 +245,10 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.default());
     }
 
-    // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
-    // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
-    // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
-    if (context) {
+    // Add custom serde with/format attributes for special types.
+    // Skip when the field is entirely excluded from serialization (e.g. query params or bytes body)
+    // since the with modules may not exist and aren't needed.
+    if (context && !options?.skipSerialization) {
         const dateTimeType = context.getDateTimeType();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {

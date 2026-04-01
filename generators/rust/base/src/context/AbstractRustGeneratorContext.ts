@@ -787,6 +787,39 @@ export abstract class AbstractRustGeneratorContext<
             `Registered ${referencedRequestWithQueryCount} referenced request with query filenames and type names`
         );
 
+        // Priority 3.6: Bytes request body with query parameters
+        let bytesRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only bytes endpoints with query parameters
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerBytesRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerBytesRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Bytes request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    bytesRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${bytesRequestCount} bytes request filenames and type names`);
+
         // Priority 4: Client names (root client + all subpackage clients)
         let clientNameCount = 0;
 
@@ -1246,23 +1279,23 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get filename for bytes request (bytes body + query params) using endpoint ID.
+     * Get filename for bytes request body using endpoint ID.
      * @param endpointId - The unique endpoint ID from IR
      */
-    public getFilenameForBytesRequest(endpointId: string): string {
+    public getFilenameForBytesRequestBody(endpointId: string): string {
         return this.project.filenameRegistry.getBytesRequestFilenameOrThrow(endpointId);
     }
 
     /**
-     * Get module name for bytes request from filename.
+     * Get module name for bytes request body from filename.
      */
-    public getModuleNameForBytesRequest(endpointId: string): string {
-        const filename = this.getFilenameForBytesRequest(endpointId);
+    public getModuleNameForBytesRequestBody(endpointId: string): string {
+        const filename = this.getFilenameForBytesRequestBody(endpointId);
         return filename.replace(".rs", "");
     }
 
     /**
-     * Get unique type name for bytes request using endpoint ID.
+     * Get unique type name for bytes request body using endpoint ID.
      * @param endpointId - The unique endpoint ID from IR
      */
     public getBytesRequestTypeName(endpointId: string): string {

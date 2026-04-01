@@ -13,6 +13,7 @@ async fn test_dummy_get_dummy_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = SingleUrlEnvironmentDefaultClient::new(config).expect("Failed to build client");
 
     let result = client.dummy.get_dummy(None).await;

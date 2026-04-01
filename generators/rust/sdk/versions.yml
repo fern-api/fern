@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.31.0
+- version: 0.30.1
   changelogEntry:
     - summary: |
-        Add request struct support for bytes+query endpoints. Bytes endpoints with
-        query parameters now generate a dedicated request struct instead of 30+
-        positional `Option` parameters.
-      type: feat
+        Generate request structs for bytes (octet-stream) endpoints with query
+        parameters, replacing positional arguments with a single struct that
+        bundles the raw body and all query params with a builder pattern.
+      type: fix
   createdAt: "2026-03-31"
   irVersion: 65
 
