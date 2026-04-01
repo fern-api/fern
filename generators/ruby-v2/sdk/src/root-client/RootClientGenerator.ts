@@ -369,28 +369,26 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const usernameParam = ruby.parameters.keyword({
                         name: scheme.username.snakeCase.safeName,
                         type: usernameType,
-                        initializer:
-                            usernameOmitted
-                                ? ruby.nilValue()
-                                : scheme.usernameEnvVar != null
-                                  ? ruby.codeblock((writer) => {
-                                        writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                    })
-                                  : undefined,
+                        initializer: usernameOmitted
+                            ? ruby.nilValue()
+                            : scheme.usernameEnvVar != null
+                              ? ruby.codeblock((writer) => {
+                                    writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                })
+                              : undefined,
                         docs: undefined
                     });
                     parameters.push(usernameParam);
                     const passwordParam = ruby.parameters.keyword({
                         name: scheme.password.snakeCase.safeName,
                         type: passwordType,
-                        initializer:
-                            passwordOmitted
-                                ? ruby.nilValue()
-                                : scheme.passwordEnvVar != null
-                                  ? ruby.codeblock((writer) => {
-                                        writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                    })
-                                  : undefined,
+                        initializer: passwordOmitted
+                            ? ruby.nilValue()
+                            : scheme.passwordEnvVar != null
+                              ? ruby.codeblock((writer) => {
+                                    writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                })
+                              : undefined,
                         docs: undefined
                     });
                     parameters.push(passwordParam);
