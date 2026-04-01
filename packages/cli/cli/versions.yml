@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.54.1
+- version: 4.54.2
   changelogEntry:
     - summary: |
         Fix section summary pages being incorrectly promoted to the API landing
@@ -12,6 +12,14 @@
   createdAt: "2026-04-01"
   irVersion: 65
 
+- version: 4.54.1
+  changelogEntry:
+    - summary: |
+        Skip the CLI upgrade suggestion when the current version is `0.0.0`,
+        which is the placeholder used for local development builds.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
 - version: 4.54.0
   changelogEntry:
     - summary: |
