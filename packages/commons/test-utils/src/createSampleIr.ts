@@ -1,3 +1,6 @@
+import { access, readFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -19,6 +22,42 @@ export interface CreateSampleIrOptions {
     readme?: generatorsYml.ReadmeSchema;
     version?: string;
     packageName?: string;
+}
+
+/**
+ * Crawls up the directory tree from the given path to find the nearest package.json,
+ * then extracts the major version of @fern-fern/ir-sdk and returns it as a version string (e.g. "v65").
+ */
+export async function getIrVersionFromPackageJson(startDir: string): Promise<string> {
+    let dir = startDir;
+    while (true) {
+        const candidate = resolve(dir, "package.json");
+        const exists = await access(candidate)
+            .then(() => true)
+            .catch(() => false);
+        if (exists) {
+            const packageJson = JSON.parse(await readFile(candidate, "utf-8")) as {
+                devDependencies?: Record<string, string>;
+                dependencies?: Record<string, string>;
+            };
+            const irSdkVersion =
+                packageJson.devDependencies?.["@fern-fern/ir-sdk"] ?? packageJson.dependencies?.["@fern-fern/ir-sdk"];
+            if (irSdkVersion != null) {
+                const majorVersion = irSdkVersion.replace(/^\^|^~/, "").split(".")[0];
+                if (majorVersion == null) {
+                    throw new Error(`Could not parse major version from @fern-fern/ir-sdk version: ${irSdkVersion}`);
+                }
+                return `v${majorVersion}`;
+            }
+        }
+        const parent = dirname(dir);
+        if (parent === dir) {
+            throw new Error(
+                `Could not find a package.json with @fern-fern/ir-sdk in devDependencies or dependencies starting from ${startDir}`
+            );
+        }
+        dir = parent;
+    }
 }
 
 /**

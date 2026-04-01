@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createMigratedSampleIr } from "@fern-api/test-utils";
+import { createMigratedSampleIr, getIrVersionFromPackageJson } from "@fern-api/test-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "../../ModelCustomConfig.js";
@@ -10,7 +10,10 @@ import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));
-    const ir = await createMigratedSampleIr<FernIr.IntermediateRepresentation>(absolutePathToWorkspace, "v65");
+    const ir = await createMigratedSampleIr<FernIr.IntermediateRepresentation>(
+        absolutePathToWorkspace,
+        await getIrVersionFromPackageJson(__dirname)
+    );
     const generatorConfig = createSampleGeneratorConfig();
     const customConfig: ModelCustomConfigSchema = ModelCustomConfigSchema.parse({
         generateBuilders: false,

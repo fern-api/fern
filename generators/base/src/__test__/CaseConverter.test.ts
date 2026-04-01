@@ -1,13 +1,24 @@
 import { Name, NameAndWireValue } from "@fern-api/ir-sdk";
-import { CaseConverter, getOriginalName, getWireValue } from "../utils/CaseConverter.js";
+import { CaseConverter } from "../utils/CaseConverter.js";
+import { getOriginalName, getWireValue } from "../utils/NameHelpers.js";
 
 function makeName(originalName: string): Name {
+    const words = originalName.split(/(?=[A-Z])|_/).map((w) => w.toLowerCase());
+    const camel =
+        words[0] +
+        words
+            .slice(1)
+            .map((w) => w[0]?.toUpperCase() + w.slice(1))
+            .join("");
+    const pascal = words.map((w) => w[0]?.toUpperCase() + w.slice(1)).join("");
+    const snake = words.join("_");
+    const screaming = snake.toUpperCase();
     return {
         originalName,
-        camelCase: { safeName: `${originalName}Camel`, unsafeName: `${originalName}CamelUnsafe` },
-        pascalCase: { safeName: `${originalName}Pascal`, unsafeName: `${originalName}PascalUnsafe` },
-        snakeCase: { safeName: `${originalName}_snake`, unsafeName: `${originalName}_snake_unsafe` },
-        screamingSnakeCase: { safeName: `${originalName}_SCREAMING`, unsafeName: `${originalName}_SCREAMING_UNSAFE` }
+        camelCase: { safeName: camel, unsafeName: `${camel}_` },
+        pascalCase: { safeName: pascal, unsafeName: `${pascal}_` },
+        snakeCase: { safeName: snake, unsafeName: `${snake}_` },
+        screamingSnakeCase: { safeName: screaming, unsafeName: `${screaming}_` }
     };
 }
 
@@ -64,11 +75,11 @@ describe("CaseConverter", () => {
         });
 
         it("returns pre-computed camelCase from Name object", () => {
-            expect(caseConverter.camelUnsafe(makeName("test"))).toBe("testCamelUnsafe");
+            expect(caseConverter.camelUnsafe(makeName("myField"))).toBe("myField_");
         });
 
         it("returns pre-computed camelCase safe from Name object", () => {
-            expect(caseConverter.camelSafe(makeName("test"))).toBe("testCamel");
+            expect(caseConverter.camelSafe(makeName("myField"))).toBe("myField");
         });
 
         it("computes camelCase safe from a string", () => {
@@ -84,11 +95,11 @@ describe("CaseConverter", () => {
         });
 
         it("returns pre-computed pascalCase from Name object", () => {
-            expect(caseConverter.pascalUnsafe(makeName("test"))).toBe("testPascalUnsafe");
+            expect(caseConverter.pascalUnsafe(makeName("myField"))).toBe("MyField_");
         });
 
         it("returns pre-computed pascalCase safe from Name object", () => {
-            expect(caseConverter.pascalSafe(makeName("test"))).toBe("testPascal");
+            expect(caseConverter.pascalSafe(makeName("myField"))).toBe("MyField");
         });
 
         it("computes PascalCase safe from a string", () => {
@@ -104,11 +115,11 @@ describe("CaseConverter", () => {
         });
 
         it("returns pre-computed snakeCase from Name object", () => {
-            expect(caseConverter.snakeUnsafe(makeName("test"))).toBe("test_snake_unsafe");
+            expect(caseConverter.snakeUnsafe(makeName("myField"))).toBe("my_field_");
         });
 
         it("returns pre-computed snakeCase safe from Name object", () => {
-            expect(caseConverter.snakeSafe(makeName("test"))).toBe("test_snake");
+            expect(caseConverter.snakeSafe(makeName("myField"))).toBe("my_field");
         });
 
         it("computes snake_case safe from a string", () => {
@@ -124,11 +135,11 @@ describe("CaseConverter", () => {
         });
 
         it("returns pre-computed screamingSnakeCase from Name object", () => {
-            expect(caseConverter.screamingSnakeUnsafe(makeName("test"))).toBe("test_SCREAMING_UNSAFE");
+            expect(caseConverter.screamingSnakeUnsafe(makeName("myField"))).toBe("MY_FIELD_");
         });
 
         it("returns pre-computed screamingSnakeCase safe from Name object", () => {
-            expect(caseConverter.screamingSnakeSafe(makeName("test"))).toBe("test_SCREAMING");
+            expect(caseConverter.screamingSnakeSafe(makeName("myField"))).toBe("MY_FIELD");
         });
 
         it("computes SCREAMING_SNAKE_CASE safe from a string", () => {
