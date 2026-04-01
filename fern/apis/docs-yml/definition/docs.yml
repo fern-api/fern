@@ -145,6 +145,17 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  LlmsConfig:
+    properties:
+      "page-directive-prepend":
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through LLM endpoints.
+      "page-directive-append":
+        type: optional<string>
+        docs: |
+          Text to append to each page when it is served through LLM endpoints.
+
   CheckRuleSeverity:
     enum:
       - warn
@@ -245,6 +256,11 @@ types:
         type: optional<AiExamplesConfig>
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+      llms:
+        type: optional<LlmsConfig>
+        docs: |
+          Configuration for LLM-serving endpoints.
 
       # seo
       metadata: optional<MetadataConfig>
