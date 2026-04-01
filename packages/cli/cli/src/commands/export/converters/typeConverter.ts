@@ -116,6 +116,13 @@ export function convertAlias({
     docs: string | undefined;
 }): OpenApiComponentSchema {
     const convertedAliasOf = convertTypeReference(aliasTypeDeclaration.aliasOf);
+    if ("$ref" in convertedAliasOf) {
+        const schema: OpenAPIV3.SchemaObject = { allOf: [convertedAliasOf] };
+        if (docs != null) {
+            schema.description = docs;
+        }
+        return schema;
+    }
     return {
         ...convertedAliasOf,
         description: docs
@@ -194,10 +201,19 @@ export function convertUnion({
         schema.properties = unionTypeDeclaration.baseProperties.reduce<
             Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
         >((acc, property) => {
-            acc[property.name.wireValue] = {
-                description: property.docs ?? undefined,
-                ...convertTypeReference(property.valueType)
-            };
+            const converted = convertTypeReference(property.valueType);
+            if ("$ref" in converted) {
+                const propSchema: OpenAPIV3.SchemaObject = { allOf: [converted] };
+                if (property.docs != null) {
+                    propSchema.description = property.docs;
+                }
+                acc[property.name.wireValue] = propSchema;
+            } else {
+                acc[property.name.wireValue] = {
+                    description: property.docs ?? undefined,
+                    ...converted
+                };
+            }
             if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
                 schema.required = [...(schema.required ?? []), property.name.wireValue];
             }
@@ -216,10 +232,20 @@ export function convertUndiscriminatedUnion({
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     return {
-        oneOf: undiscriminatedUnionDeclaration.members.map((member) => ({
-            description: member.docs ?? undefined,
-            ...convertTypeReference(member.type)
-        })),
+        oneOf: undiscriminatedUnionDeclaration.members.map((member) => {
+            const converted = convertTypeReference(member.type);
+            if ("$ref" in converted) {
+                const schema: OpenAPIV3.SchemaObject = { allOf: [converted] };
+                if (member.docs != null) {
+                    schema.description = member.docs;
+                }
+                return schema;
+            }
+            return {
+                description: member.docs ?? undefined,
+                ...converted
+            };
+        }),
         description: docs
     };
 }
@@ -455,16 +481,10 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         optional: (optionalType) => {
-            return {
-                ...convertTypeReference(optionalType),
-                nullable: true
-            };
+            return convertNullableTypeReference(optionalType);
         },
         nullable: (nullableType) => {
-            return {
-                ...convertTypeReference(nullableType),
-                nullable: true
-            };
+            return convertNullableTypeReference(nullableType);
         },
         literal: (literalType) => {
             return literalType._visit({
@@ -487,6 +507,25 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             throw new Error("Encountered unknown containerType: " + containerType.type);
         }
     });
+}
+
+/**
+ * Converts an optional/nullable type reference to an OAS 3.0.x compliant schema.
+ * In OAS 3.0.x, a $ref must be the only property in an object — siblings like
+ * `nullable` are ignored. To make a $ref nullable, we wrap it in allOf.
+ */
+function convertNullableTypeReference(innerType: TypeReference): OpenApiComponentSchema {
+    const converted = convertTypeReference(innerType);
+    if ("$ref" in converted) {
+        return {
+            allOf: [converted],
+            nullable: true
+        };
+    }
+    return {
+        ...converted,
+        nullable: true
+    };
 }
 
 export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {

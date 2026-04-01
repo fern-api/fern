@@ -324,10 +324,21 @@ function convertRequestBody({
                                         };
                                     },
                                     bodyProperty: (bodyProperty) => {
-                                        acc[bodyProperty.name.wireValue] = {
-                                            description: bodyProperty.docs ?? undefined,
-                                            ...convertTypeReference(bodyProperty.valueType)
-                                        };
+                                        const converted = convertTypeReference(bodyProperty.valueType);
+                                        if ("$ref" in converted) {
+                                            const schema: Record<string, unknown> = {
+                                                allOf: [converted]
+                                            };
+                                            if (bodyProperty.docs != null) {
+                                                schema.description = bodyProperty.docs;
+                                            }
+                                            acc[bodyProperty.name.wireValue] = schema as OpenAPIV3.SchemaObject;
+                                        } else {
+                                            acc[bodyProperty.name.wireValue] = {
+                                                description: bodyProperty.docs ?? undefined,
+                                                ...converted
+                                            };
+                                        }
                                     },
                                     _other: () => {
                                         throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -681,10 +692,6 @@ function convertPathParameter({
                     value: pathParameterExample.value.jsonExample
                 };
             }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = pathParameterExample.value.jsonExample;
-            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -728,10 +735,6 @@ function convertQueryParameter({
                     value: queryParameterExample.value.jsonExample
                 };
             }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = queryParameterExample.value.jsonExample;
-            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -772,10 +775,6 @@ function convertHeader({
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: headerExample.value.jsonExample
                 };
-            }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = headerExample.value.jsonExample;
             }
         }
     }

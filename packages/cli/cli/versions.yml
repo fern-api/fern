@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.53.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI 3.0.x spec violations in the IR-to-OpenAPI export:
+        (1) No longer emits both `example` and `examples` on the same
+        parameter object (mutually exclusive per OAS 3.0.x).
+        (2) Wraps `$ref` in `allOf` when adding `nullable: true` or other
+        sibling properties, since `$ref` must be the sole property in
+        OAS 3.0.x Reference Objects.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 4.53.1
   changelogEntry:
     - summary: |

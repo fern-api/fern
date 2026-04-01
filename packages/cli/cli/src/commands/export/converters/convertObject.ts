@@ -42,11 +42,26 @@ export function convertObject({
             example = objectProperty.example.value.jsonExample;
         }
 
-        convertedProperties[objectProperty.name.wireValue] = {
-            ...convertedObjectProperty,
-            description: objectProperty.docs ?? undefined,
-            example
-        };
+        if ("$ref" in convertedObjectProperty) {
+            // In OAS 3.0.x, $ref must be the only property — siblings are ignored.
+            // Wrap in allOf to preserve description and example alongside the $ref.
+            const schema: OpenApiComponentSchema = {
+                allOf: [convertedObjectProperty]
+            };
+            if (objectProperty.docs != null) {
+                (schema as OpenAPIV3.SchemaObject).description = objectProperty.docs;
+            }
+            if (example !== undefined) {
+                (schema as OpenAPIV3.SchemaObject).example = example;
+            }
+            convertedProperties[objectProperty.name.wireValue] = schema;
+        } else {
+            convertedProperties[objectProperty.name.wireValue] = {
+                ...convertedObjectProperty,
+                description: objectProperty.docs ?? undefined,
+                example
+            };
+        }
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {
