@@ -14,7 +14,7 @@ export class BasicAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
-        return options?.[USERNAME_PARAM] != null || options?.[PASSWORD_PARAM] != null;
+        return options?.[USERNAME_PARAM] != null && true;
     }
 
     public async getAuthRequest({
@@ -24,9 +24,9 @@ export class BasicAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
         const password = await core.Supplier.get(this.options[PASSWORD_PARAM]);
-        if (username == null && password == null) {
+        if (username == null) {
             throw new errors.SeedBasicAuthOptionalError({
-                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
 
