@@ -114,8 +114,8 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
 
     private MethodSpec buildGetAuthHeaders(
             ClassName endpointMetadataClassName, FieldSpec usernameSupplierField, FieldSpec passwordSupplierField) {
-        boolean eitherOmitted = basicAuthScheme.getUsernameOmit().orElse(false)
-                || basicAuthScheme.getPasswordOmit().orElse(false);
+        boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
+        boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
@@ -123,28 +123,53 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
                 .returns(ParameterizedTypeName.get(Map.class, String.class, String.class));
 
-        if (eitherOmitted) {
+        // Get username value - null-safe for omittable fields, direct for required fields
+        if (usernameOmitted) {
             builder.addStatement(
-                            "String username = $N != null ? $N.get() : null",
-                            usernameSupplierField,
-                            usernameSupplierField)
-                    .addStatement(
-                            "String password = $N != null ? $N.get() : null",
-                            passwordSupplierField,
-                            passwordSupplierField)
-                    .beginControlFlow("if (username == null && password == null)")
-                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
-                    .endControlFlow()
-                    .addStatement(
-                            "String credentials = (username != null ? username : \"\") + \":\" + (password != null ? password : \"\")");
+                    "String username = $N != null ? $N.get() : null",
+                    usernameSupplierField,
+                    usernameSupplierField);
         } else {
-            builder.addStatement("String username = $N.get()", usernameSupplierField)
-                    .addStatement("String password = $N.get()", passwordSupplierField)
-                    .beginControlFlow("if (username == null || password == null)")
-                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
-                    .endControlFlow()
-                    .addStatement("String credentials = username + \":\" + password");
+            builder.addStatement("String username = $N.get()", usernameSupplierField);
         }
+
+        // Get password value - null-safe for omittable fields, direct for required fields
+        if (passwordOmitted) {
+            builder.addStatement(
+                    "String password = $N != null ? $N.get() : null",
+                    passwordSupplierField,
+                    passwordSupplierField);
+        } else {
+            builder.addStatement("String password = $N.get()", passwordSupplierField);
+        }
+
+        // Null checks based on per-field omit flags
+        if (!usernameOmitted && !passwordOmitted) {
+            // Both required (default)
+            builder.beginControlFlow("if (username == null || password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        } else if (usernameOmitted && passwordOmitted) {
+            // Both optional - need at least one
+            builder.beginControlFlow("if (username == null && password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        } else if (usernameOmitted) {
+            // Only password is required
+            builder.beginControlFlow("if (password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        } else {
+            // Only username is required
+            builder.beginControlFlow("if (username == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        }
+
+        // Build credentials string - use fallback to empty string only for omittable fields
+        String usernameExpr = usernameOmitted ? "(username != null ? username : \"\")" : "username";
+        String passwordExpr = passwordOmitted ? "(password != null ? password : \"\")" : "password";
+        builder.addStatement("String credentials = " + usernameExpr + " + \":\" + " + passwordExpr);
 
         return builder.addStatement(
                         "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
@@ -157,9 +182,8 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String usernameEnvVar, String passwordEnvVar) {
-        boolean eitherOmitted = basicAuthScheme.getUsernameOmit().orElse(false)
-                || basicAuthScheme.getPasswordOmit().orElse(false);
-        String combiner = eitherOmitted ? ") || (" : ") && (";
+        boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
+        boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
 
         ParameterizedTypeName stringSupplierType =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
@@ -171,18 +195,32 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                 .addParameter(stringSupplierType, "passwordSupplier")
                 .returns(boolean.class);
 
-        StringBuilder condition = new StringBuilder();
-        condition.append("(usernameSupplier != null");
-        if (usernameEnvVar != null) {
-            condition.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
+        // Build per-field checks: omittable fields are always satisfied, required fields must be present
+        String usernameCheck;
+        if (usernameOmitted) {
+            usernameCheck = "true";
+        } else {
+            StringBuilder uc = new StringBuilder("(usernameSupplier != null");
+            if (usernameEnvVar != null) {
+                uc.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
+            }
+            uc.append(")");
+            usernameCheck = uc.toString();
         }
-        condition.append(combiner).append("passwordSupplier != null");
-        if (passwordEnvVar != null) {
-            condition.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
-        }
-        condition.append(")");
 
-        builder.addStatement("return " + condition);
+        String passwordCheck;
+        if (passwordOmitted) {
+            passwordCheck = "true";
+        } else {
+            StringBuilder pc = new StringBuilder("(passwordSupplier != null");
+            if (passwordEnvVar != null) {
+                pc.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
+            }
+            pc.append(")");
+            passwordCheck = pc.toString();
+        }
+
+        builder.addStatement("return " + usernameCheck + " && " + passwordCheck);
 
         return builder.build();
     }
