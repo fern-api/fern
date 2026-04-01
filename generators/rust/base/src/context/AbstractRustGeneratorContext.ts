@@ -787,39 +787,6 @@ export abstract class AbstractRustGeneratorContext<
             `Registered ${referencedRequestWithQueryCount} referenced request with query filenames and type names`
         );
 
-        // Priority 3.6: Bytes request body with query parameters
-        let bytesRequestCount = 0;
-        for (const service of Object.values(ir.services)) {
-            for (const endpoint of service.endpoints) {
-                // Only bytes endpoints with query parameters
-                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
-                    const baseFilename = convertPascalToSnakeCase(requestName);
-
-                    // Register both filename and type name
-                    const registeredFilename = this.project.filenameRegistry.registerBytesRequestFilename(
-                        endpoint.id,
-                        baseFilename
-                    );
-                    const registeredTypeName = this.project.filenameRegistry.registerBytesRequestTypeName(
-                        endpoint.id,
-                        requestName
-                    );
-
-                    // Log if collision was resolved
-                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
-                        this.logger.debug(
-                            `Bytes request collision resolved: ` +
-                                `${requestName} → ${registeredTypeName}, ` +
-                                `${baseFilename}.rs → ${registeredFilename}.rs`
-                        );
-                    }
-                    bytesRequestCount++;
-                }
-            }
-        }
-        this.logger.debug(`Registered ${bytesRequestCount} bytes request filenames and type names`);
-
         // Priority 4: Client names (root client + all subpackage clients)
         let clientNameCount = 0;
 
