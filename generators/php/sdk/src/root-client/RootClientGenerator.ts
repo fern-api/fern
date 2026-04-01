@@ -358,23 +358,29 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         const passwordName = this.context.getParameterName(basicAuthScheme.password);
                         // usernameOmit/passwordOmit may exist in newer IR versions
                         const scheme = basicAuthScheme as unknown as Record<string, unknown>;
-                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
+                        const usernameOmitted = scheme.usernameOmit === true;
+                        const passwordOmitted = scheme.passwordOmit === true;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             const controlFlowKeyword = i === 0 ? "if" : "else if";
-                            const condition = eitherOmitted
-                                ? `$${usernameName} !== null || $${passwordName} !== null`
-                                : `$${usernameName} !== null && $${passwordName} !== null`;
+                            // Per-field condition: required fields must be present, omittable fields are always satisfied
+                            let condition: string;
+                            if (!usernameOmitted && !passwordOmitted) {
+                                condition = `$${usernameName} !== null && $${passwordName} !== null`;
+                            } else if (usernameOmitted && passwordOmitted) {
+                                condition = `$${usernameName} !== null || $${passwordName} !== null`;
+                            } else if (usernameOmitted) {
+                                condition = `$${passwordName} !== null`;
+                            } else {
+                                condition = `$${usernameName} !== null`;
+                            }
                             writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
                         }
-                        if (eitherOmitted) {
-                            writer.writeLine(
-                                `$defaultHeaders['Authorization'] = "Basic " . base64_encode(($${usernameName} ?? "") . ":" . ($${passwordName} ?? ""));`
-                            );
-                        } else {
-                            writer.writeLine(
-                                `$defaultHeaders['Authorization'] = "Basic " . base64_encode($${usernameName} . ":" . $${passwordName});`
-                            );
-                        }
+                        // Per-field null coalescing: only omittable fields get ?? "" fallback
+                        const usernameExpr = usernameOmitted ? `($${usernameName} ?? "")` : `$${usernameName}`;
+                        const passwordExpr = passwordOmitted ? `($${passwordName} ?? "")` : `$${passwordName}`;
+                        writer.writeLine(
+                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${usernameExpr} . ":" . ${passwordExpr});`
+                        );
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             writer.endControlFlow();
                         }
@@ -606,26 +612,30 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             case "basic": {
                 const username = this.context.getParameterName(scheme.username);
                 const password = this.context.getParameterName(scheme.password);
+                // Per-field optionality: make parameter optional when its omit flag is set
+                const schemeRecord = scheme as unknown as Record<string, unknown>;
+                const usernameIsOptional = isOptional || schemeRecord.usernameOmit === true;
+                const passwordIsOptional = isOptional || schemeRecord.passwordOmit === true;
                 return [
                     {
                         name: username,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name: username }),
-                        isOptional,
+                        isOptional: usernameIsOptional,
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: STRING_TYPE_REFERENCE,
                             envVar: scheme.usernameEnvVar,
-                            isOptional
+                            isOptional: usernameIsOptional
                         }),
                         environmentVariable: scheme.usernameEnvVar
                     },
                     {
                         name: password,
-                        docs: this.getAuthParameterDocs({ docs: scheme.docs, name: username }),
-                        isOptional,
+                        docs: this.getAuthParameterDocs({ docs: scheme.docs, name: password }),
+                        isOptional: passwordIsOptional,
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: STRING_TYPE_REFERENCE,
                             envVar: scheme.passwordEnvVar,
-                            isOptional
+                            isOptional: passwordIsOptional
                         }),
                         environmentVariable: scheme.passwordEnvVar
                     }
