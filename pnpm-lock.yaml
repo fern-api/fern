@@ -5930,6 +5930,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../workspace/lazy-fern-workspace
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
