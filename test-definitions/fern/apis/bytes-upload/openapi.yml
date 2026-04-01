@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: bytes-upload
-  version: ''
+  version: ""
 paths:
   /upload-content:
     post:
@@ -10,8 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -39,8 +39,8 @@ paths:
             type: string
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:

@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
@@ -14,6 +15,7 @@ export declare namespace SdkEndpointTypeSchemasGenerator {
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        caseConverter: CaseConverter;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -33,6 +35,7 @@ export class SdkEndpointTypeSchemasGenerator {
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
+    private caseConverter: CaseConverter;
 
     constructor({
         errorResolver,
@@ -41,7 +44,8 @@ export class SdkEndpointTypeSchemasGenerator {
         skipResponseValidation,
         includeSerdeLayer,
         allowExtraFields,
-        omitUndefined
+        omitUndefined,
+        caseConverter
     }: SdkEndpointTypeSchemasGenerator.Init) {
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -50,6 +54,7 @@ export class SdkEndpointTypeSchemasGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
+        this.caseConverter = caseConverter;
     }
 
     public generateEndpointTypeSchemas({
@@ -67,7 +72,8 @@ export class SdkEndpointTypeSchemasGenerator {
             skipResponseValidation: this.skipResponseValidation,
             includeSerdeLayer: this.includeSerdeLayer,
             allowExtraFields: this.allowExtraFields,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            caseConverter: this.caseConverter
         });
     }
 }

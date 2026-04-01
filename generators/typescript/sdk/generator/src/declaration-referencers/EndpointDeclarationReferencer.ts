@@ -9,6 +9,8 @@ export declare namespace EndpointDeclarationReferencer {
         packageId: PackageId;
         endpoint: FernIr.HttpEndpoint;
     }
+
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
 }
 export class EndpointDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<EndpointDeclarationReferencer.Name> {
     public getExportedFilepath(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
@@ -28,7 +30,7 @@ export class EndpointDeclarationReferencer extends AbstractSdkClientClassDeclara
     }
 
     private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name): string {
-        return endpoint.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(endpoint.name);
     }
 
     public getReferenceToEndpointExport(

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: object
-  version: ''
+  version: ""
 paths: {}
 components:
   schemas:
@@ -74,7 +74,7 @@ components:
           type: string
           const: eighteen
         nineteen:
-          $ref: '#/components/schemas/Name'
+          $ref: "#/components/schemas/Name"
         twenty:
           type: integer
           format: int64

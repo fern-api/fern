@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "code",
                         "name": {
                             "originalName": "code",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Code",
                                 "safeName": "Code"
                             }
-                        },
-                        "wireValue": "code"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -201,6 +201,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "bar",
                         "name": {
                             "originalName": "bar",
                             "camelCase": {
@@ -219,8 +220,7 @@
                                 "unsafeName": "Bar",
                                 "safeName": "Bar"
                             }
-                        },
-                        "wireValue": "bar"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -302,6 +302,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "bar",
                         "name": {
                             "originalName": "bar",
                             "camelCase": {
@@ -320,8 +321,7 @@
                                 "unsafeName": "Bar",
                                 "safeName": "Bar"
                             }
-                        },
-                        "wireValue": "bar"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

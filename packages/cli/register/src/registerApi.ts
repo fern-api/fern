@@ -11,6 +11,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi.js";
+import { getOriginalName } from "./ir-to-fdr-converter/nameUtils.js";
 
 export async function registerApi({
     organization,
@@ -78,13 +79,13 @@ export async function registerApi({
             token,
             organization,
             openApiSources.length > 0 ? openApiSources : undefined,
-            ir.apiName.originalName
+            getOriginalName(ir.apiName)
         );
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
-        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
+        apiId: FdrCjsSdk.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition
     });
 

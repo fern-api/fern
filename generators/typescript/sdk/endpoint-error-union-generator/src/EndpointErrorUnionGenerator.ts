@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
@@ -14,6 +15,7 @@ export declare namespace EndpointErrorUnionGenerator {
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 
     export namespace generateEndpointErrorUnion {
@@ -32,6 +34,7 @@ export class EndpointErrorUnionGenerator {
     private readonly noOptionalProperties: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         intermediateRepresentation,
@@ -40,7 +43,8 @@ export class EndpointErrorUnionGenerator {
         retainOriginalCasing,
         noOptionalProperties,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -49,6 +53,7 @@ export class EndpointErrorUnionGenerator {
         this.noOptionalProperties = noOptionalProperties;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.caseConverter = caseConverter;
     }
 
     public generateEndpointErrorUnion({
@@ -64,7 +69,8 @@ export class EndpointErrorUnionGenerator {
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.caseConverter
         });
     }
 }

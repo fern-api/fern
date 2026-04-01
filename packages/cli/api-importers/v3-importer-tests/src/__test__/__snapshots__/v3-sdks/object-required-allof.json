@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "TreeCreateLocation",
-          "camelCase": {
-            "unsafeName": "treeCreateLocation",
-            "safeName": "treeCreateLocation"
-          },
-          "snakeCase": {
-            "unsafeName": "tree_create_location",
-            "safeName": "tree_create_location"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TREE_CREATE_LOCATION",
-            "safeName": "TREE_CREATE_LOCATION"
-          },
-          "pascalCase": {
-            "unsafeName": "TreeCreateLocation",
-            "safeName": "TreeCreateLocation"
-          }
-        }
+        "name": "TreeCreateLocation"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "latitude",
-                "camelCase": {
-                  "unsafeName": "latitude",
-                  "safeName": "latitude"
-                },
-                "snakeCase": {
-                  "unsafeName": "latitude",
-                  "safeName": "latitude"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LATITUDE",
-                  "safeName": "LATITUDE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Latitude",
-                  "safeName": "Latitude"
-                }
-              },
-              "wireValue": "latitude"
-            },
+            "name": "latitude",
             "valueType": {
               "container": {
                 "optional": {
@@ -81,28 +42,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "longitude",
-                "camelCase": {
-                  "unsafeName": "longitude",
-                  "safeName": "longitude"
-                },
-                "snakeCase": {
-                  "unsafeName": "longitude",
-                  "safeName": "longitude"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LONGITUDE",
-                  "safeName": "LONGITUDE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Longitude",
-                  "safeName": "Longitude"
-                }
-              },
-              "wireValue": "longitude"
-            },
+            "name": "longitude",
             "valueType": {
               "container": {
                 "optional": {
@@ -150,51 +90,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "TreeCreate",
-          "camelCase": {
-            "unsafeName": "treeCreate",
-            "safeName": "treeCreate"
-          },
-          "snakeCase": {
-            "unsafeName": "tree_create",
-            "safeName": "tree_create"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TREE_CREATE",
-            "safeName": "TREE_CREATE"
-          },
-          "pascalCase": {
-            "unsafeName": "TreeCreate",
-            "safeName": "TreeCreate"
-          }
-        }
+        "name": "TreeCreate"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "species",
-                "camelCase": {
-                  "unsafeName": "species",
-                  "safeName": "species"
-                },
-                "snakeCase": {
-                  "unsafeName": "species",
-                  "safeName": "species"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SPECIES",
-                  "safeName": "SPECIES"
-                },
-                "pascalCase": {
-                  "unsafeName": "Species",
-                  "safeName": "Species"
-                }
-              },
-              "wireValue": "species"
-            },
+            "name": "species",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -213,28 +114,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "height",
-                "camelCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "snakeCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "HEIGHT",
-                  "safeName": "HEIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Height",
-                  "safeName": "Height"
-                }
-              },
-              "wireValue": "height"
-            },
+            "name": "height",
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -253,28 +133,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "age",
-                "camelCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "snakeCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AGE",
-                  "safeName": "AGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Age",
-                  "safeName": "Age"
-                }
-              },
-              "wireValue": "age"
-            },
+            "name": "age",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -293,52 +152,13 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "location",
-                "camelCase": {
-                  "unsafeName": "location",
-                  "safeName": "location"
-                },
-                "snakeCase": {
-                  "unsafeName": "location",
-                  "safeName": "location"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LOCATION",
-                  "safeName": "LOCATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Location",
-                  "safeName": "Location"
-                }
-              },
-              "wireValue": "location"
-            },
+            "name": "location",
             "valueType": {
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "TreeCreateLocation",
-                "camelCase": {
-                  "unsafeName": "treeCreateLocation",
-                  "safeName": "treeCreateLocation"
-                },
-                "snakeCase": {
-                  "unsafeName": "tree_create_location",
-                  "safeName": "tree_create_location"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TREE_CREATE_LOCATION",
-                  "safeName": "TREE_CREATE_LOCATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "TreeCreateLocation",
-                  "safeName": "TreeCreateLocation"
-                }
-              },
+              "name": "TreeCreateLocation",
               "typeId": "TreeCreateLocation",
               "inline": false,
               "type": "named"
@@ -377,51 +197,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "TreeBase",
-          "camelCase": {
-            "unsafeName": "treeBase",
-            "safeName": "treeBase"
-          },
-          "snakeCase": {
-            "unsafeName": "tree_base",
-            "safeName": "tree_base"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TREE_BASE",
-            "safeName": "TREE_BASE"
-          },
-          "pascalCase": {
-            "unsafeName": "TreeBase",
-            "safeName": "TreeBase"
-          }
-        }
+        "name": "TreeBase"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "species",
-                "camelCase": {
-                  "unsafeName": "species",
-                  "safeName": "species"
-                },
-                "snakeCase": {
-                  "unsafeName": "species",
-                  "safeName": "species"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SPECIES",
-                  "safeName": "SPECIES"
-                },
-                "pascalCase": {
-                  "unsafeName": "Species",
-                  "safeName": "Species"
-                }
-              },
-              "wireValue": "species"
-            },
+            "name": "species",
             "valueType": {
               "container": {
                 "optional": {
@@ -446,28 +227,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "height",
-                "camelCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "snakeCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "HEIGHT",
-                  "safeName": "HEIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Height",
-                  "safeName": "Height"
-                }
-              },
-              "wireValue": "height"
-            },
+            "name": "height",
             "valueType": {
               "container": {
                 "optional": {
@@ -541,7 +301,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "27b41eba",
+                "id": "1f9da454",
                 "url": "/trees",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -560,53 +320,14 @@
                     "shape": {
                       "properties": [
                         {
-                          "name": {
-                            "name": {
-                              "originalName": "species",
-                              "camelCase": {
-                                "unsafeName": "species",
-                                "safeName": "species"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "species",
-                                "safeName": "species"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "SPECIES",
-                                "safeName": "SPECIES"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "Species",
-                                "safeName": "Species"
-                              }
-                            },
-                            "wireValue": "species"
-                          },
+                          "name": "species",
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
                             "fernFilepath": {
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": {
-                              "originalName": "TreeCreate",
-                              "camelCase": {
-                                "unsafeName": "treeCreate",
-                                "safeName": "treeCreate"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "tree_create",
-                                "safeName": "tree_create"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "TREE_CREATE",
-                                "safeName": "TREE_CREATE"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "TreeCreate",
-                                "safeName": "TreeCreate"
-                              }
-                            }
+                            "name": "TreeCreate"
                           },
                           "value": {
                             "jsonExample": "species",
@@ -622,53 +343,14 @@
                           }
                         },
                         {
-                          "name": {
-                            "name": {
-                              "originalName": "height",
-                              "camelCase": {
-                                "unsafeName": "height",
-                                "safeName": "height"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "height",
-                                "safeName": "height"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "HEIGHT",
-                                "safeName": "HEIGHT"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "Height",
-                                "safeName": "Height"
-                              }
-                            },
-                            "wireValue": "height"
-                          },
+                          "name": "height",
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
                             "fernFilepath": {
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": {
-                              "originalName": "TreeCreate",
-                              "camelCase": {
-                                "unsafeName": "treeCreate",
-                                "safeName": "treeCreate"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "tree_create",
-                                "safeName": "tree_create"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "TREE_CREATE",
-                                "safeName": "TREE_CREATE"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "TreeCreate",
-                                "safeName": "TreeCreate"
-                              }
-                            }
+                            "name": "TreeCreate"
                           },
                           "value": {
                             "jsonExample": 1.1,
@@ -682,53 +364,14 @@
                           }
                         },
                         {
-                          "name": {
-                            "name": {
-                              "originalName": "age",
-                              "camelCase": {
-                                "unsafeName": "age",
-                                "safeName": "age"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "age",
-                                "safeName": "age"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "AGE",
-                                "safeName": "AGE"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "Age",
-                                "safeName": "Age"
-                              }
-                            },
-                            "wireValue": "age"
-                          },
+                          "name": "age",
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
                             "fernFilepath": {
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": {
-                              "originalName": "TreeCreate",
-                              "camelCase": {
-                                "unsafeName": "treeCreate",
-                                "safeName": "treeCreate"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "tree_create",
-                                "safeName": "tree_create"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "TREE_CREATE",
-                                "safeName": "TREE_CREATE"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "TreeCreate",
-                                "safeName": "TreeCreate"
-                              }
-                            }
+                            "name": "TreeCreate"
                           },
                           "value": {
                             "jsonExample": "age",
@@ -744,53 +387,14 @@
                           }
                         },
                         {
-                          "name": {
-                            "name": {
-                              "originalName": "location",
-                              "camelCase": {
-                                "unsafeName": "location",
-                                "safeName": "location"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "location",
-                                "safeName": "location"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "LOCATION",
-                                "safeName": "LOCATION"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "Location",
-                                "safeName": "Location"
-                              }
-                            },
-                            "wireValue": "location"
-                          },
+                          "name": "location",
                           "originalTypeDeclaration": {
                             "typeId": "TreeCreate",
                             "fernFilepath": {
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": {
-                              "originalName": "TreeCreate",
-                              "camelCase": {
-                                "unsafeName": "treeCreate",
-                                "safeName": "treeCreate"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "tree_create",
-                                "safeName": "tree_create"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "TREE_CREATE",
-                                "safeName": "TREE_CREATE"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "TreeCreate",
-                                "safeName": "TreeCreate"
-                              }
-                            }
+                            "name": "TreeCreate"
                           },
                           "value": {
                             "jsonExample": {},
@@ -798,53 +402,14 @@
                               "shape": {
                                 "properties": [
                                   {
-                                    "name": {
-                                      "name": {
-                                        "originalName": "latitude",
-                                        "camelCase": {
-                                          "unsafeName": "latitude",
-                                          "safeName": "latitude"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "latitude",
-                                          "safeName": "latitude"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "LATITUDE",
-                                          "safeName": "LATITUDE"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "Latitude",
-                                          "safeName": "Latitude"
-                                        }
-                                      },
-                                      "wireValue": "latitude"
-                                    },
+                                    "name": "latitude",
                                     "originalTypeDeclaration": {
                                       "typeId": "TreeCreateLocation",
                                       "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": {
-                                        "originalName": "TreeCreateLocation",
-                                        "camelCase": {
-                                          "unsafeName": "treeCreateLocation",
-                                          "safeName": "treeCreateLocation"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "tree_create_location",
-                                          "safeName": "tree_create_location"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "TREE_CREATE_LOCATION",
-                                          "safeName": "TREE_CREATE_LOCATION"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "TreeCreateLocation",
-                                          "safeName": "TreeCreateLocation"
-                                        }
-                                      }
+                                      "name": "TreeCreateLocation"
                                     },
                                     "value": {
                                       "shape": {
@@ -866,53 +431,14 @@
                                     }
                                   },
                                   {
-                                    "name": {
-                                      "name": {
-                                        "originalName": "longitude",
-                                        "camelCase": {
-                                          "unsafeName": "longitude",
-                                          "safeName": "longitude"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "longitude",
-                                          "safeName": "longitude"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "LONGITUDE",
-                                          "safeName": "LONGITUDE"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "Longitude",
-                                          "safeName": "Longitude"
-                                        }
-                                      },
-                                      "wireValue": "longitude"
-                                    },
+                                    "name": "longitude",
                                     "originalTypeDeclaration": {
                                       "typeId": "TreeCreateLocation",
                                       "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": {
-                                        "originalName": "TreeCreateLocation",
-                                        "camelCase": {
-                                          "unsafeName": "treeCreateLocation",
-                                          "safeName": "treeCreateLocation"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "tree_create_location",
-                                          "safeName": "tree_create_location"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "TREE_CREATE_LOCATION",
-                                          "safeName": "TREE_CREATE_LOCATION"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "TreeCreateLocation",
-                                          "safeName": "TreeCreateLocation"
-                                        }
-                                      }
+                                      "name": "TreeCreateLocation"
                                     },
                                     "value": {
                                       "shape": {
@@ -942,25 +468,7 @@
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "TreeCreateLocation",
-                                  "camelCase": {
-                                    "unsafeName": "treeCreateLocation",
-                                    "safeName": "treeCreateLocation"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "tree_create_location",
-                                    "safeName": "tree_create_location"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "TREE_CREATE_LOCATION",
-                                    "safeName": "TREE_CREATE_LOCATION"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "TreeCreateLocation",
-                                    "safeName": "TreeCreateLocation"
-                                  }
-                                }
+                                "name": "TreeCreateLocation"
                               },
                               "type": "named"
                             }
@@ -975,25 +483,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "TreeCreate",
-                        "camelCase": {
-                          "unsafeName": "treeCreate",
-                          "safeName": "treeCreate"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "tree_create",
-                          "safeName": "tree_create"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TREE_CREATE",
-                          "safeName": "TREE_CREATE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TreeCreate",
-                          "safeName": "TreeCreate"
-                        }
-                      }
+                      "name": "TreeCreate"
                     },
                     "type": "named"
                   },
@@ -1031,25 +521,7 @@
           },
           "audiences": [],
           "id": "endpoint_.createTree",
-          "name": {
-            "originalName": "createTree",
-            "camelCase": {
-              "unsafeName": "createTree",
-              "safeName": "createTree"
-            },
-            "snakeCase": {
-              "unsafeName": "create_tree",
-              "safeName": "create_tree"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_TREE",
-              "safeName": "CREATE_TREE"
-            },
-            "pascalCase": {
-              "unsafeName": "CreateTree",
-              "safeName": "CreateTree"
-            }
-          },
+          "name": "createTree",
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -1057,25 +529,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "TreeCreate",
-                "camelCase": {
-                  "unsafeName": "treeCreate",
-                  "safeName": "treeCreate"
-                },
-                "snakeCase": {
-                  "unsafeName": "tree_create",
-                  "safeName": "tree_create"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TREE_CREATE",
-                  "safeName": "TREE_CREATE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TreeCreate",
-                  "safeName": "TreeCreate"
-                }
-              },
+              "name": "TreeCreate",
               "typeId": "TreeCreate",
               "inline": false,
               "type": "named"
@@ -1100,25 +554,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "TreeCreate",
-                    "camelCase": {
-                      "unsafeName": "treeCreate",
-                      "safeName": "treeCreate"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "tree_create",
-                      "safeName": "tree_create"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TREE_CREATE",
-                      "safeName": "TREE_CREATE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TreeCreate",
-                      "safeName": "TreeCreate"
-                    }
-                  },
+                  "name": "TreeCreate",
                   "typeId": "TreeCreate",
                   "inline": false,
                   "type": "named"
@@ -1266,47 +702,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Tree API",
-    "camelCase": {
-      "unsafeName": "treeApi",
-      "safeName": "treeApi"
-    },
-    "snakeCase": {
-      "unsafeName": "tree_api",
-      "safeName": "tree_api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TREE_API",
-      "safeName": "TREE_API"
-    },
-    "pascalCase": {
-      "unsafeName": "TreeApi",
-      "safeName": "TreeApi"
-    }
-  },
+  "apiName": "Tree API",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

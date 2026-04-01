@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tags",
                         "name": {
                             "originalName": "tags",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Tags",
                                 "safeName": "Tags"
                             }
-                        },
-                        "wireValue": "tags"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -204,6 +204,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -222,8 +223,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -234,6 +234,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "user",
                         "name": {
                             "originalName": "user",
                             "camelCase": {
@@ -252,8 +253,7 @@
                                 "unsafeName": "User",
                                 "safeName": "User"
                             }
-                        },
-                        "wireValue": "user"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -335,6 +335,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "username",
                         "name": {
                             "originalName": "username",
                             "camelCase": {
@@ -353,8 +354,7 @@
                                 "unsafeName": "Username",
                                 "safeName": "Username"
                             }
-                        },
-                        "wireValue": "username"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -365,6 +365,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "password",
                         "name": {
                             "originalName": "password",
                             "camelCase": {
@@ -383,8 +384,7 @@
                                 "unsafeName": "Password",
                                 "safeName": "Password"
                             }
-                        },
-                        "wireValue": "password"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -395,6 +395,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -413,8 +414,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -496,6 +496,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "username",
                         "name": {
                             "originalName": "username",
                             "camelCase": {
@@ -514,8 +515,7 @@
                                 "unsafeName": "Username",
                                 "safeName": "Username"
                             }
-                        },
-                        "wireValue": "username"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -529,6 +529,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "password",
                         "name": {
                             "originalName": "password",
                             "camelCase": {
@@ -547,8 +548,7 @@
                                 "unsafeName": "Password",
                                 "safeName": "Password"
                             }
-                        },
-                        "wireValue": "password"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -562,6 +562,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -580,8 +581,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -740,6 +740,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "tags",
                             "name": {
                                 "originalName": "tags",
                                 "camelCase": {
@@ -758,8 +759,7 @@
                                     "unsafeName": "Tags",
                                     "safeName": "Tags"
                                 }
-                            },
-                            "wireValue": "tags"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -778,6 +778,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "username",
                                 "name": {
                                     "originalName": "username",
                                     "camelCase": {
@@ -796,8 +797,7 @@
                                         "unsafeName": "Username",
                                         "safeName": "Username"
                                     }
-                                },
-                                "wireValue": "username"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -808,6 +808,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "password",
                                 "name": {
                                     "originalName": "password",
                                     "camelCase": {
@@ -826,8 +827,7 @@
                                         "unsafeName": "Password",
                                         "safeName": "Password"
                                     }
-                                },
-                                "wireValue": "password"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -838,6 +838,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "name",
                                 "name": {
                                     "originalName": "name",
                                     "camelCase": {
@@ -856,8 +857,7 @@
                                         "unsafeName": "Name",
                                         "safeName": "Name"
                                     }
-                                },
-                                "wireValue": "name"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1018,6 +1018,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "tags",
                             "name": {
                                 "originalName": "tags",
                                 "camelCase": {
@@ -1036,8 +1037,7 @@
                                     "unsafeName": "Tags",
                                     "safeName": "Tags"
                                 }
-                            },
-                            "wireValue": "tags"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -1322,6 +1322,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -1340,8 +1341,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1352,6 +1352,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "id",
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -1370,8 +1371,7 @@
                                     "unsafeName": "ID",
                                     "safeName": "ID"
                                 }
-                            },
-                            "wireValue": "id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1382,6 +1382,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "date",
                             "name": {
                                 "originalName": "date",
                                 "camelCase": {
@@ -1400,8 +1401,7 @@
                                     "unsafeName": "Date",
                                     "safeName": "Date"
                                 }
-                            },
-                            "wireValue": "date"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1412,6 +1412,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "deadline",
                             "name": {
                                 "originalName": "deadline",
                                 "camelCase": {
@@ -1430,8 +1431,7 @@
                                     "unsafeName": "Deadline",
                                     "safeName": "Deadline"
                                 }
-                            },
-                            "wireValue": "deadline"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1442,6 +1442,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "bytes",
                             "name": {
                                 "originalName": "bytes",
                                 "camelCase": {
@@ -1460,8 +1461,7 @@
                                     "unsafeName": "Bytes",
                                     "safeName": "Bytes"
                                 }
-                            },
-                            "wireValue": "bytes"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1472,6 +1472,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "user",
                             "name": {
                                 "originalName": "user",
                                 "camelCase": {
@@ -1490,8 +1491,7 @@
                                     "unsafeName": "User",
                                     "safeName": "User"
                                 }
-                            },
-                            "wireValue": "user"
+                            }
                         },
                         "typeReference": {
                             "type": "named",
@@ -1502,6 +1502,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "userList",
                             "name": {
                                 "originalName": "userList",
                                 "camelCase": {
@@ -1520,8 +1521,7 @@
                                     "unsafeName": "UserList",
                                     "safeName": "UserList"
                                 }
-                            },
-                            "wireValue": "userList"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -1535,6 +1535,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "optionalDeadline",
                             "name": {
                                 "originalName": "optionalDeadline",
                                 "camelCase": {
@@ -1553,8 +1554,7 @@
                                     "unsafeName": "OptionalDeadline",
                                     "safeName": "OptionalDeadline"
                                 }
-                            },
-                            "wireValue": "optionalDeadline"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1568,6 +1568,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "keyValue",
                             "name": {
                                 "originalName": "keyValue",
                                 "camelCase": {
@@ -1586,8 +1587,7 @@
                                     "unsafeName": "KeyValue",
                                     "safeName": "KeyValue"
                                 }
-                            },
-                            "wireValue": "keyValue"
+                            }
                         },
                         "typeReference": {
                             "type": "map",
@@ -1605,6 +1605,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "optionalString",
                             "name": {
                                 "originalName": "optionalString",
                                 "camelCase": {
@@ -1623,8 +1624,7 @@
                                     "unsafeName": "OptionalString",
                                     "safeName": "OptionalString"
                                 }
-                            },
-                            "wireValue": "optionalString"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1638,6 +1638,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "nestedUser",
                             "name": {
                                 "originalName": "nestedUser",
                                 "camelCase": {
@@ -1656,8 +1657,7 @@
                                     "unsafeName": "NestedUser",
                                     "safeName": "NestedUser"
                                 }
-                            },
-                            "wireValue": "nestedUser"
+                            }
                         },
                         "typeReference": {
                             "type": "named",
@@ -1668,6 +1668,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "optionalUser",
                             "name": {
                                 "originalName": "optionalUser",
                                 "camelCase": {
@@ -1686,8 +1687,7 @@
                                     "unsafeName": "OptionalUser",
                                     "safeName": "OptionalUser"
                                 }
-                            },
-                            "wireValue": "optionalUser"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1701,6 +1701,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "excludeUser",
                             "name": {
                                 "originalName": "excludeUser",
                                 "camelCase": {
@@ -1719,8 +1720,7 @@
                                     "unsafeName": "ExcludeUser",
                                     "safeName": "ExcludeUser"
                                 }
-                            },
-                            "wireValue": "excludeUser"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -1734,6 +1734,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "filter",
                             "name": {
                                 "originalName": "filter",
                                 "camelCase": {
@@ -1752,8 +1753,7 @@
                                     "unsafeName": "Filter",
                                     "safeName": "Filter"
                                 }
-                            },
-                            "wireValue": "filter"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -1767,6 +1767,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "longParam",
                             "name": {
                                 "originalName": "longParam",
                                 "camelCase": {
@@ -1785,8 +1786,7 @@
                                     "unsafeName": "LongParam",
                                     "safeName": "LongParam"
                                 }
-                            },
-                            "wireValue": "longParam"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1797,6 +1797,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "bigIntParam",
                             "name": {
                                 "originalName": "bigIntParam",
                                 "camelCase": {
@@ -1815,8 +1816,7 @@
                                     "unsafeName": "BigIntParam",
                                     "safeName": "BigIntParam"
                                 }
-                            },
-                            "wireValue": "bigIntParam"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",

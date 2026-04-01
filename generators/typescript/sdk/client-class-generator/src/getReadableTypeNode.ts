@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getReadableTypeNode({
@@ -8,7 +8,7 @@ export function getReadableTypeNode({
     streamType
 }: {
     typeArgument?: ts.TypeNode;
-    context: SdkContext;
+    context: FileContext;
     streamType: "wrapper" | "web";
 }): ts.TypeNode {
     switch (streamType) {

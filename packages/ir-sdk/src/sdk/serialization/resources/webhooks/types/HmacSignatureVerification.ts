@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { HmacAlgorithm } from "./HmacAlgorithm.js";
 import { WebhookPayloadFormat } from "./WebhookPayloadFormat.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
@@ -13,7 +13,7 @@ export const HmacSignatureVerification: core.serialization.ObjectSchema<
     serializers.HmacSignatureVerification.Raw,
     FernIr.HmacSignatureVerification
 > = core.serialization.objectWithoutOptionalProperties({
-    signatureHeaderName: NameAndWireValue,
+    signatureHeaderName: NameAndWireValueOrString,
     algorithm: HmacAlgorithm,
     encoding: WebhookSignatureEncoding,
     signaturePrefix: core.serialization.string().optional(),
@@ -23,7 +23,7 @@ export const HmacSignatureVerification: core.serialization.ObjectSchema<
 
 export declare namespace HmacSignatureVerification {
     export interface Raw {
-        signatureHeaderName: NameAndWireValue.Raw;
+        signatureHeaderName: NameAndWireValueOrString.Raw;
         algorithm: HmacAlgorithm.Raw;
         encoding: WebhookSignatureEncoding.Raw;
         signaturePrefix?: string | null;

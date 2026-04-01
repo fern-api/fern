@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { Literal } from "../../types/types/Literal.js";
@@ -13,7 +13,7 @@ import { PathParameterLocation } from "./PathParameterLocation.js";
 export const PathParameter: core.serialization.ObjectSchema<serializers.PathParameter.Raw, FernIr.PathParameter> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: Name,
+            name: NameOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             location: PathParameterLocation,
             variable: VariableId.optional(),
@@ -25,7 +25,7 @@ export const PathParameter: core.serialization.ObjectSchema<serializers.PathPara
 
 export declare namespace PathParameter {
     export interface Raw extends WithDocs.Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         location: PathParameterLocation.Raw;
         variable?: VariableId.Raw | null;

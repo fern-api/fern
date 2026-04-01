@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: client-side-params
-  version: ''
+  version: ""
 paths:
   /api/resources:
     get:
@@ -55,14 +55,14 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Resource'
+                  $ref: "#/components/schemas/Resource"
   /api/resources/{resourceId}:
     get:
       description: Get a single resource
@@ -88,12 +88,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resource'
+                $ref: "#/components/schemas/Resource"
   /api/resources/search:
     post:
       description: Search resources with complex parameters
@@ -114,12 +114,12 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: "#/components/schemas/SearchResponse"
       requestBody:
         required: true
         content:
@@ -203,14 +203,14 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
+        "200":
           description: >-
             Returns either PaginatedUserResponse (if include_totals=true) or
             list<User> (if include_totals=false)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserResponse'
+                $ref: "#/components/schemas/PaginatedUserResponse"
     post:
       description: Create a new user
       operationId: service_createUser
@@ -218,18 +218,18 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserRequest'
+              $ref: "#/components/schemas/CreateUserRequest"
   /api/users/{userId}:
     get:
       description: Get a user by ID
@@ -257,12 +257,12 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
     patch:
       description: Update a user
       operationId: service_updateUser
@@ -275,18 +275,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
+              $ref: "#/components/schemas/UpdateUserRequest"
     delete:
       description: Delete a user
       operationId: service_deleteUser
@@ -299,8 +299,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /api/connections:
     get:
       description: List all connections
@@ -330,14 +330,14 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Connection'
+                  $ref: "#/components/schemas/Connection"
   /api/connections/{connectionId}:
     get:
       description: Get a connection by ID
@@ -358,12 +358,12 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Connection'
+                $ref: "#/components/schemas/Connection"
   /api/clients:
     get:
       description: List all clients/applications
@@ -432,12 +432,12 @@ paths:
               type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedClientResponse'
+                $ref: "#/components/schemas/PaginatedClientResponse"
   /api/clients/{clientId}:
     get:
       description: Get a client by ID
@@ -465,12 +465,12 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
+                $ref: "#/components/schemas/Client"
 components:
   schemas:
     Resource:
@@ -506,7 +506,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Resource'
+            $ref: "#/components/schemas/Resource"
         total:
           type: integer
           nullable: true
@@ -544,7 +544,7 @@ components:
         identities:
           type: array
           items:
-            $ref: '#/components/schemas/Identity'
+            $ref: "#/components/schemas/Identity"
           nullable: true
         app_metadata:
           type: object
@@ -624,7 +624,7 @@ components:
         users:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
         start:
           type: integer
         limit:
@@ -919,7 +919,7 @@ components:
         clients:
           type: array
           items:
-            $ref: '#/components/schemas/Client'
+            $ref: "#/components/schemas/Client"
           description: List of clients
       required:
         - start

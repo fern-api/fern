@@ -4,6 +4,10 @@ import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
 import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
+export declare namespace WebsocketSocketDeclarationReferencer {
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
+}
+
 export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<FernIr.SubpackageId> {
     public getExportedFilepath(subpackageId: FernIr.SubpackageId): ExportedFilePath {
         return {
@@ -20,10 +24,10 @@ export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClass
 
     public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
-        if (subpackage.name.pascalCase.safeName !== this.namespaceExport) {
-            return `${subpackage.name.pascalCase.safeName}Socket`;
+        if (this.caseConverter.pascalSafe(subpackage.name) !== this.namespaceExport) {
+            return `${this.caseConverter.pascalSafe(subpackage.name)}Socket`;
         } else {
-            return `${subpackage.name.pascalCase.unsafeName}Socket`;
+            return `${this.caseConverter.pascalUnsafe(subpackage.name)}Socket`;
         }
     }
 

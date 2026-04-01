@@ -1,27 +1,27 @@
 openapi: 3.0.1
 info:
   title: csharp-readonly-request
-  version: ''
+  version: ""
 paths:
   /vendors/batch:
     post:
       operationId: batchCreate
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateVendorResponse'
+                $ref: "#/components/schemas/CreateVendorResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateVendorRequest'
+              $ref: "#/components/schemas/CreateVendorRequest"
 components:
   schemas:
     Vendor:
@@ -54,7 +54,7 @@ components:
         vendors:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Vendor'
+            $ref: "#/components/schemas/Vendor"
           description: Map of vendor ID to vendor data
       required:
         - vendors
@@ -66,7 +66,7 @@ components:
         vendors:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Vendor'
+            $ref: "#/components/schemas/Vendor"
           description: Map of vendor ID to created vendor
       required:
         - vendors

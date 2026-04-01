@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 
 export const ExampleCodeSampleLanguage: core.serialization.ObjectSchema<
@@ -11,7 +11,7 @@ export const ExampleCodeSampleLanguage: core.serialization.ObjectSchema<
     FernIr.ExampleCodeSampleLanguage
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: Name.optional(),
+        name: NameOrString.optional(),
         language: core.serialization.string(),
         code: core.serialization.string(),
         install: core.serialization.string().optional(),
@@ -20,7 +20,7 @@ export const ExampleCodeSampleLanguage: core.serialization.ObjectSchema<
 
 export declare namespace ExampleCodeSampleLanguage {
     export interface Raw extends WithDocs.Raw {
-        name?: Name.Raw | null;
+        name?: NameOrString.Raw | null;
         language: string;
         code: string;
         install?: string | null;
