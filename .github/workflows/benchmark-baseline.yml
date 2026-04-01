@@ -184,6 +184,7 @@ jobs:
           fi
 
           # Prune history older than 7 days
+          # Note: 'date -d' is GNU coreutils syntax (CI runs on Ubuntu; not portable to macOS)
           CUTOFF=$(date -u -d '7 days ago' +%Y-%m-%d)
           for dir in benchmark-baseline-results/history/*/; do
             [ -d "$dir" ] || continue

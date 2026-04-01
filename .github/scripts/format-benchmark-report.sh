@@ -117,7 +117,9 @@ echo ""
 echo "| Generator | Spec | main (generator) | main (E2E) | PR (generator) | Delta |"
 echo "|-----------|------|------------------|------------|----------------|-------|"
 
-# Collect all results from the PR directory
+# Collect all results from the PR directory, then sort rows by generator name for
+# deterministic output regardless of filesystem glob order or artifact download timing.
+TABLE_ROWS=""
 for PR_FILE in "${PR_DIR}"/*.jsonl; do
   [ -f "$PR_FILE" ] || continue
 
@@ -165,7 +167,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     # Check if this spec was skipped (fetch failure)
     PR_SKIPPED=$(echo "$LINE" | jq -r '.skipped // false')
     if [ "$PR_SKIPPED" = "true" ]; then
-      echo "| ${GENERATOR} | ${SPEC} | — | — | ⏭️ skipped | — |"
+      TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | — | — | ⏭️ skipped | — |\n"
       continue
     fi
 
@@ -174,14 +176,17 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       PR_DISPLAY="${PR_DURATION}s ⚠️"
     fi
 
-    echo "| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${E2E_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
+    TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${E2E_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |\n"
   done < "$PR_FILE"
 done
+
+# Sort rows alphabetically by generator name (first column) for consistent ordering
+printf '%b' "$TABLE_ROWS" | sort -t'|' -k2,2
 
 echo ""
 echo "</details>"
 echo ""
-echo "_**main (generator)**: generator-only time via --skip-scripts (Docker startup, IR parsing, code generation). **main (E2E)**: full customer-observable time including build/test scripts (nightly baseline, informational). **Delta** is computed against generator-only baseline._"
+echo "_**main (generator)**: generator-only time via --skip-scripts (includes Docker image build, container startup, IR parsing, and code generation — this is the same Docker-based flow customers use via \`fern generate\`). **main (E2E)**: full customer-observable time including build/test scripts (nightly baseline, informational). **Delta** is computed against generator-only baseline._"
 echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly runs on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
