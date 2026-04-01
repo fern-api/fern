@@ -812,8 +812,8 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - LlmsConfig is not yet supported in fdr-sdk
-            llms: this.parsedDocsConfig.llms,
+            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
+            agents: this.parsedDocsConfig.agents,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations,
