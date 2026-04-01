@@ -163,20 +163,25 @@ jobs:
               [ -f "$f" ] && cp "$f" "$RUN_DIR/"
             done
           else
-            echo "::warning::No generator-only baseline results found. Skipping history entry."
+            echo "::warning::No generator-only baseline results found. Removing empty history entry."
+            rm -rf "$RUN_DIR"
+            echo "SKIP_CACHE_SAVE=true" >> "$GITHUB_ENV"
           fi
 
-          # Copy full E2E results into a separate subdirectory (informational only)
-          if [ -d todays-e2e-results ] && ls todays-e2e-results/*.jsonl 1>/dev/null 2>&1; then
-            mkdir -p "$RUN_DIR/e2e"
-            for f in todays-e2e-results/*.jsonl; do
-              [ -f "$f" ] && cp "$f" "$RUN_DIR/e2e/"
-            done
-          fi
+          # Only proceed with E2E + metadata if generator-only results were found
+          if [ -d "$RUN_DIR" ]; then
+            # Copy full E2E results into a separate subdirectory (informational only)
+            if [ -d todays-e2e-results ] && ls todays-e2e-results/*.jsonl 1>/dev/null 2>&1; then
+              mkdir -p "$RUN_DIR/e2e"
+              for f in todays-e2e-results/*.jsonl; do
+                [ -f "$f" ] && cp "$f" "$RUN_DIR/e2e/"
+              done
+            fi
 
-          # Store metadata for this run
-          echo "{\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\"}" \
-            > "$RUN_DIR/_metadata.json"
+            # Store metadata for this run
+            echo "{\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\"}" \
+              > "$RUN_DIR/_metadata.json"
+          fi
 
           # Prune history older than 7 days
           CUTOFF=$(date -u -d '7 days ago' +%Y-%m-%d)
@@ -200,6 +205,7 @@ jobs:
           ls -la benchmark-baseline-results/history/
 
       - name: Save baseline to cache
+        if: ${{ env.SKIP_CACHE_SAVE != 'true' }}
         uses: actions/cache/save@v4
         with:
           path: benchmark-baseline-results
