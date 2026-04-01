@@ -920,7 +920,9 @@ class ClientWrapperGenerator:
             literal_headers=literal_headers,
         )
 
-    def _get_client_default_initializer(self, client_default: typing.Optional[ir_types.Literal]) -> typing.Optional[AST.Expression]:
+    def _get_client_default_initializer(
+        self, client_default: typing.Optional[ir_types.Literal]
+    ) -> typing.Optional[AST.Expression]:
         if client_default is None:
             return None
         return client_default.visit(
