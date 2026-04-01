@@ -46,7 +46,7 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
       <PackageReference Include="NUnit3TestAdapter" Version="5.0.0"/> \
       <PackageReference Include="NUnit.Analyzers" Version="4.6.0" /> \
       <PackageReference Include="coverlet.collector" Version="6.0.4" /> \
-      <PackageReference Include="WireMock.Net" Version="2.1.0" /> \
+      <PackageReference Include="WireMock.Net" Version="2.2.0" /> \
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" /> \
       <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" /> \
       <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" /> \
