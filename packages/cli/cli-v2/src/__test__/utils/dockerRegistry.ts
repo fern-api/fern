@@ -97,14 +97,23 @@ export async function startLocalRegistry(): Promise<LocalRegistry> {
 
 async function waitForRegistry(maxRetries = 30): Promise<void> {
     for (let i = 0; i < maxRetries; i++) {
-        try {
-            await docker(["exec", REGISTRY_CONTAINER, "wget", "-q", "--spider", "http://localhost:5000/v2/"], {
-                reject: true
-            });
+        // With auth enabled, /v2/ returns 401 — that's fine, it means the registry is up.
+        // BusyBox wget returns 1 for any HTTP error, so we check stderr for an HTTP response.
+        const result = await docker([
+            "exec",
+            REGISTRY_CONTAINER,
+            "wget",
+            "-q",
+            "-O",
+            "/dev/null",
+            "http://localhost:5000/v2/"
+        ]);
+        // exitCode 0 = 200 OK; exitCode 1 with "401" or "Unauthorized" = auth required but up
+        const output = result.stdout + result.stderr;
+        if (result.exitCode === 0 || output.includes("401") || output.includes("Unauthorized")) {
             return;
-        } catch {
-            await new Promise((resolve) => setTimeout(resolve, 500));
         }
+        await new Promise((resolve) => setTimeout(resolve, 500));
     }
     throw new Error(`Registry did not become ready within ${maxRetries * 0.5}s`);
 }

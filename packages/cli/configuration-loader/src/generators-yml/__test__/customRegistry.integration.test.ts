@@ -64,15 +64,23 @@ describe.skipIf(!dockerAvailable)("Custom Registry Integration (v1)", () => {
             { reject: true }
         );
 
+        // Wait for registry to be ready. With auth enabled, /v2/ returns 401 — that's fine,
+        // it means the registry is up. BusyBox wget returns 1 for HTTP errors.
         for (let i = 0; i < 30; i++) {
-            try {
-                await docker(["exec", REGISTRY_CONTAINER, "wget", "-q", "--spider", "http://localhost:5000/v2/"], {
-                    reject: true
-                });
+            const result = await docker([
+                "exec",
+                REGISTRY_CONTAINER,
+                "wget",
+                "-q",
+                "-O",
+                "/dev/null",
+                "http://localhost:5000/v2/"
+            ]);
+            const output = result.stdout + result.stderr;
+            if (result.exitCode === 0 || output.includes("401") || output.includes("Unauthorized")) {
                 break;
-            } catch {
-                await new Promise((resolve) => setTimeout(resolve, 500));
             }
+            await new Promise((resolve) => setTimeout(resolve, 500));
         }
 
         await docker(["login", registryUrl, "-u", TEST_USER, "-p", TEST_PASS], { reject: true });
