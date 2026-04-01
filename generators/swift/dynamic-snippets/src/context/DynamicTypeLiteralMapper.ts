@@ -291,7 +291,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ typeId, enum_, value }: { typeId: string; enum_: FernIr.dynamic.EnumType; value: unknown }): swift.Expression {
+    private convertEnum({
+        typeId,
+        enum_,
+        value
+    }: {
+        typeId: string;
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+    }): swift.Expression {
         const nameAndWireValue = this.getEnumValue({ enum_, value });
         if (nameAndWireValue == null) {
             return swift.Expression.nop();

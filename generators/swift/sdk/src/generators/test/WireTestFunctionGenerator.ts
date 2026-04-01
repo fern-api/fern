@@ -391,9 +391,7 @@ export class WireTestFunctionGenerator {
                                     exampleObjectTypeWithId.typeId,
                                     exampleObjectTypeWithId.object.properties
                                 );
-                                const declaredWireNames = new Set(
-                                    orderedUnionProperties.map((p) => p.name.wireValue)
-                                );
+                                const declaredWireNames = new Set(orderedUnionProperties.map((p) => p.name.wireValue));
                                 const jsonObj =
                                     exampleTypeRef.jsonExample != null &&
                                     typeof exampleTypeRef.jsonExample === "object" &&
