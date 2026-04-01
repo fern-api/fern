@@ -236,7 +236,7 @@ catalog:
   tsdown: 0.20.1
   tsup: ^8.5.1
   tsx: ^4.21.0
-  turbo: ^2.8.20
+  turbo: ^2.9.1
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
   undici: ^6.24.0
