@@ -842,9 +842,7 @@ class ClientWrapperGenerator:
                     signature=AST.FunctionSignature(
                         parameters=[],
                         return_type=(
-                            AST.TypeHint.optional(AST.TypeHint.str_())
-                            if username_is_optional
-                            else AST.TypeHint.str_()
+                            AST.TypeHint.optional(AST.TypeHint.str_()) if username_is_optional else AST.TypeHint.str_()
                         ),
                     ),
                     body=AST.CodeWriter(
@@ -892,9 +890,7 @@ class ClientWrapperGenerator:
                     signature=AST.FunctionSignature(
                         parameters=[],
                         return_type=(
-                            AST.TypeHint.optional(AST.TypeHint.str_())
-                            if password_is_optional
-                            else AST.TypeHint.str_()
+                            AST.TypeHint.optional(AST.TypeHint.str_()) if password_is_optional else AST.TypeHint.str_()
                         ),
                     ),
                     body=AST.CodeWriter(
