@@ -12,7 +12,7 @@ class BaseClientWrapper:
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -37,7 +37,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["Authorization"] = httpx.BasicAuth(self._get_username() or "", self._get_password() or "")._auth_header
+        headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_password() or "")._auth_header
         return headers
 
     def _get_username(self) -> str:
@@ -46,8 +46,8 @@ class BaseClientWrapper:
         else:
             return self._username()
 
-    def _get_password(self) -> str:
-        if isinstance(self._password, str):
+    def _get_password(self) -> typing.Optional[str]:
+        if isinstance(self._password, str) or self._password is None:
             return self._password
         else:
             return self._password()
@@ -67,7 +67,7 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -91,7 +91,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,

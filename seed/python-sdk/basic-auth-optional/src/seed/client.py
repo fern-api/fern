@@ -22,7 +22,7 @@ class SeedBasicAuthOptional:
         The base url to use for requests from the client.
 
     username : typing.Union[str, typing.Callable[[], str]]
-    password : typing.Union[str, typing.Callable[[], str]]
+    password : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -54,7 +54,7 @@ class SeedBasicAuthOptional:
         *,
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -98,7 +98,7 @@ class AsyncSeedBasicAuthOptional:
         The base url to use for requests from the client.
 
     username : typing.Union[str, typing.Callable[[], str]]
-    password : typing.Union[str, typing.Callable[[], str]]
+    password : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -130,7 +130,7 @@ class AsyncSeedBasicAuthOptional:
         *,
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
