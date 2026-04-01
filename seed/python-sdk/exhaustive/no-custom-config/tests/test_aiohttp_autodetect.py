@@ -85,9 +85,9 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
     def test_default_aiohttp_client_raises_without_package(self) -> None:
         """DefaultAioHttpClient raises RuntimeError when httpx_aiohttp not installed."""
-        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
-            import seed._default_clients
+        import seed._default_clients
 
+        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
             importlib.reload(seed._default_clients)
 
             with self.assertRaises(RuntimeError) as ctx:
