@@ -1,8 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Literal, QueryParameter } from "@fern-api/ir-sdk";
+import { QueryParameter } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { convertDeclaration } from "../convertDeclaration.js";
+import { convertDefaultToLiteral } from "./convertDefaultToLiteral.js";
 
 export function convertQueryParameter({
     file,
@@ -35,23 +36,6 @@ export function convertQueryParameter({
         explode:
             typeof queryParameter !== "string" && queryParameter.explode != null ? queryParameter.explode : undefined
     };
-}
-
-function convertDefaultToLiteral(defaultValue: unknown): Literal | undefined {
-    if (defaultValue == null) {
-        return undefined;
-    }
-    if (typeof defaultValue === "string") {
-        return Literal.string(defaultValue);
-    }
-    if (typeof defaultValue === "boolean") {
-        return Literal.boolean(defaultValue);
-    }
-    // biome-ignore lint/suspicious/noConsole: intentional warning for unsupported x-fern-default value types
-    console.warn(
-        `Unsupported x-fern-default value type '${typeof defaultValue}': only string and boolean are supported.`
-    );
-    return undefined;
 }
 
 export function getQueryParameterName({

@@ -551,7 +551,7 @@ export const FernOpenAPIExtension = {
     DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context",
 
     /**
-     * Used to specify a client-side default value for a parameter (header or query).
+     * Used to specify a client-side default value for a parameter (path, header, or query).
      * When present, the parameter becomes optional in the generated SDK, and the
      * default value is sent when the user doesn't provide one.
      *
