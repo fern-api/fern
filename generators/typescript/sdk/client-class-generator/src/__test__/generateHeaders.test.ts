@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     createHttpHeader,
     createMockCoreUtilities,
     createMockGeneratedSdkClientClass,
@@ -27,7 +28,8 @@ function createMockContext() {
         },
         versionContext: {
             getGeneratedVersion: () => undefined
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: single-url-environment-no-default
-  version: ''
+  version: ""
 paths:
   /dummy:
     get:
@@ -10,8 +10,8 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:

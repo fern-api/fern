@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { createHttpEndpoint, serializeStatements } from "@fern-typescript/test-utils";
+import { caseConverter, createHttpEndpoint, serializeStatements } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 import type { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
@@ -99,10 +99,10 @@ function createMockClientClass(): any {
 }
 
 /**
- * Creates a mock SdkContext for streaming endpoint tests.
+ * Creates a mock FileContext for streaming endpoint tests.
  */
-// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
-function createMockSdkContext(): any {
+// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
+function createMockFileContext(): any {
     return {
         coreUtilities: {
             fetcher: {
@@ -158,7 +158,8 @@ function createMockSdkContext(): any {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("Readable")
                 }
             }
-        }
+        },
+        case: caseConverter
     };
 }
 
@@ -203,7 +204,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("isPaginated", () => {
         it("always returns false", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(impl.isPaginated(context)).toBe(false);
         });
     });
@@ -227,7 +228,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                     ])
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const sig = impl.getSignature(context);
             // endpoint param + requestOptions
             expect(sig.parameters).toHaveLength(2);
@@ -276,7 +277,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("getStatements", () => {
         it("generates streaming endpoint body", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -284,7 +285,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
 
         it("generates streaming endpoint body with endpoint metadata", () => {
             const impl = createImpl({ generateEndpointMetadata: true });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -308,7 +309,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
             const impl = createImpl({
                 request: createMockRequest({ buildStatements: [buildStmt] })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toContain("_body");
@@ -318,7 +319,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("getExample", () => {
         it("returns endpoint invocation example", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const example = impl.getExample({
                 context,
                 example: createMinimalExampleEndpointCall(),
@@ -335,7 +336,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
             // biome-ignore lint/suspicious/noExplicitAny: test mock override
             (request as any).getExampleEndpointParameters = () => undefined;
             const impl = createImpl({ request });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const example = impl.getExample({
                 context,
                 example: createMinimalExampleEndpointCall(),
@@ -349,7 +350,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("maybeLeverageInvocation", () => {
         it("returns for-await-of pattern for streaming", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
                 context
@@ -363,7 +364,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("invokeFetcher", () => {
         it("generates fetcher invocation with streaming response type", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcher(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -371,7 +372,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
 
         it("includes withCredentials when enabled", () => {
             const impl = createImpl({ includeCredentialsOnCrossOriginRequests: true });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcher(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -379,7 +380,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
 
         it("uses web stream type when streamType is web", () => {
             const impl = createImpl({ streamType: "web" });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcher(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -403,7 +404,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                 docs: undefined
             };
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcher(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -432,7 +433,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                 docs: undefined
             };
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcher(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -456,20 +457,20 @@ describe("GeneratedStreamingEndpointImplementation", () => {
     describe("delegation methods", () => {
         it("getReferenceToRequestBody delegates to request", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(impl.getReferenceToRequestBody(context)).toBeUndefined();
         });
 
         it("getReferenceToPathParameter delegates to request", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = impl.getReferenceToPathParameter("userId", context);
             expect(getTextOfTsNode(ref)).toBe("userId");
         });
 
         it("getReferenceToQueryParameter delegates to request", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = impl.getReferenceToQueryParameter("limit", context);
             expect(getTextOfTsNode(ref)).toBe("limit");
         });

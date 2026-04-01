@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, getOriginalName, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
     GeneratedExpressInlinedRequestBodySchema
@@ -48,14 +48,14 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
 
     public getGeneratedInlinedRequestBodySchema(
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ): GeneratedExpressInlinedRequestBodySchema {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.expressInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
             packageId,
@@ -67,13 +67,13 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
         });
     }
 
-    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.Name): Reference {
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: FernIr.NameOrString): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.expressInlinedRequestBodySchemaDeclarationReferencer.getReferenceToInlinedRequestBody({
             name: { packageId, endpoint },

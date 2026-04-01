@@ -8,7 +8,7 @@ import { WebhooksHelperGenerator } from "../webhooks/WebhooksHelperGenerator.js"
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -98,7 +98,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -117,7 +117,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -136,7 +136,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("SIGNATURE_PREFIX");
@@ -162,7 +162,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("TIMESTAMP_TOLERANCE_SECONDS");
@@ -189,7 +189,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("unix milliseconds");
@@ -215,7 +215,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("ISO 8601");
@@ -241,7 +241,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("messageId");
@@ -263,7 +263,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("notificationUrl");
@@ -285,7 +285,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain('"sha1"');
@@ -306,7 +306,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain('"sha384"');
@@ -327,7 +327,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification, "MyWebhookVerifier");
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("class MyWebhookVerifier");
@@ -347,7 +347,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("string | Record<string, string>");
@@ -371,7 +371,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("string | Record<string, string>");
@@ -396,7 +396,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("Record<string, string> of POST body parameters");
@@ -419,7 +419,7 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.static({})
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("publicKey");
@@ -441,7 +441,7 @@ describe("WebhooksHelperGenerator", () => {
                 })
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("fetchJwks");
@@ -463,7 +463,7 @@ describe("WebhooksHelperGenerator", () => {
                 })
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("keyIdHeader");
@@ -484,7 +484,7 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.static({})
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("TIMESTAMP_TOLERANCE_SECONDS");
@@ -503,7 +503,7 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.static({})
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain('"ED25519"');
@@ -530,7 +530,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("Verify an HMAC webhook signature");
@@ -555,7 +555,7 @@ describe("WebhooksHelperGenerator", () => {
                 }
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("X-Webhook-Timestamp");
@@ -574,7 +574,7 @@ describe("WebhooksHelperGenerator", () => {
                 })
             });
             const generator = new WebhooksHelperGenerator(verification);
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
             expect(text).toContain("Verify an asymmetric webhook signature");

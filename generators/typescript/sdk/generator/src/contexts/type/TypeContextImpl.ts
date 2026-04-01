@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -40,6 +41,7 @@ export declare namespace TypeContextImpl {
         useDefaultRequestParameterValues: boolean;
         context: BaseContext;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -59,6 +61,7 @@ export class TypeContextImpl implements TypeContext {
     private npmPackage: NpmPackage | undefined;
     private context: BaseContext;
     private useDefaultRequestParameterValues: boolean;
+    private readonly caseConverter: CaseConverter;
     private requestResponseVariantCache: Map<FernIr.TypeId, { request: boolean; response: boolean }> = new Map();
     private requestResponseVariantInProgress: Set<FernIr.TypeId> = new Set();
 
@@ -81,7 +84,8 @@ export class TypeContextImpl implements TypeContext {
         omitUndefined,
         useDefaultRequestParameterValues,
         context,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -96,6 +100,7 @@ export class TypeContextImpl implements TypeContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.context = context;
+        this.caseConverter = caseConverter;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
@@ -586,12 +591,16 @@ export class TypeContextImpl implements TypeContext {
         return ts.factory.createIdentifier(this.generateSetterForRequestPropertyAsString({ variable, property }));
     }
 
-    private getPropertyName({ name }: { name: FernIr.Name }): string {
-        return this.retainOriginalCasing || !this.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    private getPropertyName({ name }: { name: FernIr.NameOrString }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer
+            ? getOriginalName(name)
+            : this.caseConverter.camelSafe(name);
     }
 
-    private getNameFromWireValue({ name }: { name: FernIr.NameAndWireValue }): string {
-        return this.retainOriginalCasing || !this.includeSerdeLayer ? name.wireValue : name.name.camelCase.safeName;
+    private getNameFromWireValue({ name }: { name: FernIr.NameAndWireValueOrString }): string {
+        return this.retainOriginalCasing || !this.includeSerdeLayer
+            ? getWireValue(name)
+            : this.caseConverter.camelSafe(name);
     }
 
     public getReferenceToResponsePropertyType({
@@ -603,7 +612,12 @@ export class TypeContextImpl implements TypeContext {
     }): ts.TypeNode {
         const propertyPath = [
             ...(property.propertyPath ?? []),
-            { name: property.property.name.name, type: property.property.valueType } as FernIr.PropertyPathItem
+            {
+                name: (typeof property.property.name === "string"
+                    ? property.property.name
+                    : property.property.name.name) as FernIr.Name,
+                type: property.property.valueType
+            } as FernIr.PropertyPathItem
         ];
         let rootNotInlinePropertyPathItem;
         const inlinePropertyPathItems = [];
@@ -625,7 +639,7 @@ export class TypeContextImpl implements TypeContext {
             const ref = this.getReferenceToInlinePropertyType(
                 inlinePropertyPathItem.type,
                 getTextOfTsNode(currentParentTypeNode),
-                inlinePropertyPathItem.name.pascalCase.safeName
+                this.caseConverter.pascalSafe(inlinePropertyPathItem.name)
             );
             currentParentTypeNode = ref.responseTypeNode ?? ref.typeNode;
         }

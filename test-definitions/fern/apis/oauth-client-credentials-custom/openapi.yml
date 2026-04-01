@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: oauth-client-credentials-custom
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -54,12 +54,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -95,8 +95,8 @@ paths:
         - NestedNoAuthApi
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
@@ -104,8 +104,8 @@ paths:
         - NestedApi
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: &ref_0
         - BearerAuth: []
   /get-something:
@@ -115,8 +115,8 @@ paths:
         - Simple
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
 components:
   schemas:

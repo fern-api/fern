@@ -19,8 +19,8 @@ import {
     IntermediateRepresentation,
     JsonResponse,
     Literal,
-    Name,
-    NameAndWireValue,
+    NameAndWireValueOrString,
+    NameOrString,
     ObjectProperty,
     PathParameter,
     QueryParameter,
@@ -32,6 +32,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "./hashJSON.js";
 import { isMarkedUnstable } from "./utils/availabilityUtils.js";
+import { getNameFromWireValue, getOriginalName, getWireValue } from "./utils/namesUtils.js";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -341,8 +342,8 @@ export class IntermediateRepresentationChangeDetector {
         from: PathParameter[];
         to: PathParameter[];
     }): void {
-        const fromPathParams = Object.fromEntries(from.map((param) => [param.name.originalName, param]));
-        const toPathParams = Object.fromEntries(to.map((param) => [param.name.originalName, param]));
+        const fromPathParams = Object.fromEntries(from.map((param) => [getOriginalName(param.name), param]));
+        const toPathParams = Object.fromEntries(to.map((param) => [getOriginalName(param.name), param]));
         for (const [paramName, fromParam] of Object.entries(fromPathParams)) {
             const toParam = toPathParams[paramName];
             if (!toParam) {
@@ -364,8 +365,8 @@ export class IntermediateRepresentationChangeDetector {
         from: QueryParameter[];
         to: QueryParameter[];
     }): void {
-        const fromQueryParams = Object.fromEntries(from.map((param) => [param.name.wireValue, param]));
-        const toQueryParams = Object.fromEntries(to.map((param) => [param.name.wireValue, param]));
+        const fromQueryParams = Object.fromEntries(from.map((param) => [getWireValue(param.name), param]));
+        const toQueryParams = Object.fromEntries(to.map((param) => [getWireValue(param.name), param]));
 
         this.checkForNewRequiredTypeReferences({
             from: Object.fromEntries(Object.entries(fromQueryParams).map(([name, param]) => [name, param.valueType])),
@@ -388,8 +389,8 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkHeadersBreakingChanges({ id, from, to }: { id: string; from: HttpHeader[]; to: HttpHeader[] }): void {
-        const fromHeaders = Object.fromEntries(from.map((header) => [header.name.wireValue, header]));
-        const toHeaders = Object.fromEntries(to.map((header) => [header.name.wireValue, header]));
+        const fromHeaders = Object.fromEntries(from.map((header) => [getWireValue(header.name), header]));
+        const toHeaders = Object.fromEntries(to.map((header) => [getWireValue(header.name), header]));
 
         this.checkForNewRequiredTypeReferences({
             from: Object.fromEntries(Object.entries(fromHeaders).map(([name, header]) => [name, header.valueType])),
@@ -727,15 +728,15 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areEnumTypesCompatible({ from, to }: { from: Type.Enum; to: Type.Enum }): boolean {
-        const fromValues = Object.fromEntries(from.values.map((value) => [value.name.wireValue, value]));
-        const toValues = Object.fromEntries(to.values.map((value) => [value.name.wireValue, value]));
+        const fromValues = Object.fromEntries(from.values.map((value) => [getWireValue(value.name), value]));
+        const toValues = Object.fromEntries(to.values.map((value) => [getWireValue(value.name), value]));
         if (Object.keys(fromValues).length !== Object.keys(toValues).length) {
             return false;
         }
         return Object.values(fromValues).every((value) => {
-            const toValue = toValues[value.name.wireValue];
+            const toValue = toValues[getWireValue(value.name)];
             if (!toValue) {
-                this.errors.add(`Enum value "${value.name.wireValue}" was removed.`);
+                this.errors.add(`Enum value "${getWireValue(value.name)}" was removed.`);
                 return false;
             }
             return this.areNameAndWireValuesCompatible({
@@ -747,12 +748,12 @@ export class IntermediateRepresentationChangeDetector {
 
     private areObjectTypesCompatible({ from, to }: { from: Type.Object_; to: Type.Object_ }): boolean {
         const fromProperties = Object.fromEntries([
-            ...from.properties.map((property) => [property.name.wireValue, property] as const),
-            ...(from.extendedProperties?.map((property) => [property.name.wireValue, property] as const) ?? [])
+            ...from.properties.map((property) => [getWireValue(property.name), property] as const),
+            ...(from.extendedProperties?.map((property) => [getWireValue(property.name), property] as const) ?? [])
         ]);
         const toProperties = Object.fromEntries([
-            ...to.properties.map((property) => [property.name.wireValue, property] as const),
-            ...(to.extendedProperties?.map((property) => [property.name.wireValue, property] as const) ?? [])
+            ...to.properties.map((property) => [getWireValue(property.name), property] as const),
+            ...(to.extendedProperties?.map((property) => [getWireValue(property.name), property] as const) ?? [])
         ]);
 
         this.checkForNewRequiredTypeReferences({
@@ -763,9 +764,9 @@ export class IntermediateRepresentationChangeDetector {
         });
 
         return Object.values(fromProperties).every((property) => {
-            const toProperty = toProperties[property.name.wireValue];
+            const toProperty = toProperties[getWireValue(property.name)];
             if (!toProperty) {
-                this.errors.add(`Object property "${property.name.wireValue}" was removed.`);
+                this.errors.add(`Object property "${getWireValue(property.name)}" was removed.`);
                 return false;
             }
             return this.areObjectPropertiesCompatible({
@@ -795,7 +796,7 @@ export class IntermediateRepresentationChangeDetector {
                 to: to.discriminant
             })
         ) {
-            this.errors.add(`Union type with discriminant value "${from.discriminant.wireValue}" changed.`);
+            this.errors.add(`Union type with discriminant value "${getWireValue(from.discriminant)}" changed.`);
             return false;
         }
 
@@ -808,13 +809,15 @@ export class IntermediateRepresentationChangeDetector {
             }
         }
 
-        const fromProperties = Object.fromEntries(from.baseProperties.map((value) => [value.name.wireValue, value]));
-        const toProperties = Object.fromEntries(to.baseProperties.map((value) => [value.name.wireValue, value]));
+        const fromProperties = Object.fromEntries(
+            from.baseProperties.map((value) => [getWireValue(value.name), value])
+        );
+        const toProperties = Object.fromEntries(to.baseProperties.map((value) => [getWireValue(value.name), value]));
         for (const property of Object.values(fromProperties)) {
-            const toProperty = toProperties[property.name.wireValue];
+            const toProperty = toProperties[getWireValue(property.name)];
             if (!toProperty) {
                 this.errors.add(
-                    `Union type with discriminant value "${property.name.wireValue}" no longer has a property named "${property.name.wireValue}".`
+                    `Union type with discriminant value "${getWireValue(property.name)}" no longer has a property named "${getWireValue(property.name)}".`
                 );
                 return false;
             }
@@ -835,13 +838,13 @@ export class IntermediateRepresentationChangeDetector {
             to: Object.fromEntries(Object.entries(toProperties).map(([name, property]) => [name, property.valueType]))
         });
 
-        const fromTypes = Object.fromEntries(from.types.map((value) => [value.discriminantValue.wireValue, value]));
-        const toTypes = Object.fromEntries(to.types.map((value) => [value.discriminantValue.wireValue, value]));
+        const fromTypes = Object.fromEntries(from.types.map((value) => [getWireValue(value.discriminantValue), value]));
+        const toTypes = Object.fromEntries(to.types.map((value) => [getWireValue(value.discriminantValue), value]));
         return Object.values(fromTypes).every((value) => {
-            const toValue = toTypes[value.discriminantValue.wireValue];
+            const toValue = toTypes[getWireValue(value.discriminantValue)];
             if (!toValue) {
                 this.errors.add(
-                    `Union type for discriminant value "${value.discriminantValue.wireValue}" was removed.`
+                    `Union type for discriminant value "${getWireValue(value.discriminantValue)}" was removed.`
                 );
                 return false;
             }
@@ -1132,12 +1135,18 @@ export class IntermediateRepresentationChangeDetector {
         );
     }
 
-    private areNameAndWireValuesCompatible({ from, to }: { from: NameAndWireValue; to: NameAndWireValue }): boolean {
+    private areNameAndWireValuesCompatible({
+        from,
+        to
+    }: {
+        from: NameAndWireValueOrString;
+        to: NameAndWireValueOrString;
+    }): boolean {
         return (
             this.areNamesCompatible({
-                from: from.name,
-                to: to.name
-            }) && from.wireValue === to.wireValue
+                from: getNameFromWireValue(from),
+                to: getNameFromWireValue(to)
+            }) && getWireValue(from) === getWireValue(to)
         );
     }
 
@@ -1175,8 +1184,8 @@ export class IntermediateRepresentationChangeDetector {
         });
     }
 
-    private areNamesCompatible({ from, to }: { from: Name; to: Name }): boolean {
-        return from.originalName === to.originalName;
+    private areNamesCompatible({ from, to }: { from: NameOrString; to: NameOrString }): boolean {
+        return getOriginalName(from) === getOriginalName(to);
     }
 
     private getInlinedRequestBody(
@@ -1184,7 +1193,7 @@ export class IntermediateRepresentationChangeDetector {
     ): IntermediateRepresentationChangeDetector.InlinedRequestBody {
         const requestBody: IntermediateRepresentationChangeDetector.InlinedRequestBody = {};
         for (const property of [...(inlinedRequestBody.extendedProperties ?? []), ...inlinedRequestBody.properties]) {
-            requestBody[property.name.wireValue] = property.valueType;
+            requestBody[getWireValue(property.name)] = property.valueType;
         }
         return requestBody;
     }
@@ -1196,10 +1205,10 @@ export class IntermediateRepresentationChangeDetector {
         for (const property of fileUploadRequestProperties) {
             switch (property.type) {
                 case "file":
-                    properties[property.value.key.wireValue] = "file";
+                    properties[getWireValue(property.value.key)] = "file";
                     break;
                 case "bodyProperty":
-                    properties[property.name.wireValue] = property.valueType;
+                    properties[getWireValue(property.name)] = property.valueType;
                     break;
                 default:
                     assertNever(property);
@@ -1208,8 +1217,8 @@ export class IntermediateRepresentationChangeDetector {
         return properties;
     }
 
-    private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join(".");
-        return `${prefix}.${name.pascalCase.unsafeName}`;
+    private getKeyForDeclaration({ name, fernFilepath }: { name: NameOrString; fernFilepath: FernFilepath }): string {
+        const prefix = fernFilepath.allParts.map((part) => getOriginalName(part)).join(".");
+        return `${prefix}.${getOriginalName(name)}`;
     }
 }

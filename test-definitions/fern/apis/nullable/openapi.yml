@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: nullable
-  version: ''
+  version: ""
 paths:
   /users:
     get:
@@ -46,26 +46,26 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
     post:
       operationId: nullable_createUser
       tags:
         - Nullable
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
@@ -81,7 +81,7 @@ paths:
                     type: string
                   nullable: true
                 metadata:
-                  $ref: '#/components/schemas/Metadata'
+                  $ref: "#/components/schemas/Metadata"
                   nullable: true
                 avatar:
                   type: string
@@ -94,8 +94,8 @@ paths:
         - Nullable
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -138,19 +138,19 @@ components:
         name:
           type: string
         id:
-          $ref: '#/components/schemas/UserId'
+          $ref: "#/components/schemas/UserId"
         tags:
           type: array
           items:
             type: string
           nullable: true
         metadata:
-          $ref: '#/components/schemas/Metadata'
+          $ref: "#/components/schemas/Metadata"
           nullable: true
         email:
-          $ref: '#/components/schemas/Email'
+          $ref: "#/components/schemas/Email"
         favorite-number:
-          $ref: '#/components/schemas/WeirdNumber'
+          $ref: "#/components/schemas/WeirdNumber"
         numbers:
           type: array
           items:
@@ -218,7 +218,7 @@ components:
           type: boolean
           nullable: true
         status:
-          $ref: '#/components/schemas/Status'
+          $ref: "#/components/schemas/Status"
         values:
           type: object
           additionalProperties:

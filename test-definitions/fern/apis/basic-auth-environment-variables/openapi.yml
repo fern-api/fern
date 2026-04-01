@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: basic-auth-environment-variables
-  version: ''
+  version: ""
 paths:
   /basic-auth:
     get:
@@ -11,18 +11,18 @@ paths:
         - BasicAuth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: boolean
-        '401':
-          description: ''
+        "401":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+                $ref: "#/components/schemas/UnauthorizedRequestErrorBody"
       security: &ref_0
         - BasicAuth: []
     post:
@@ -32,20 +32,20 @@ paths:
         - BasicAuth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: boolean
-        '400':
-          description: ''
-        '401':
-          description: ''
+        "400":
+          description: ""
+        "401":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+                $ref: "#/components/schemas/UnauthorizedRequestErrorBody"
       security: *ref_0
       requestBody:
         required: true

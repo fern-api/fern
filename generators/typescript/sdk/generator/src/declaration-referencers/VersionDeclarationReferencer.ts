@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportedFilePath,
@@ -119,8 +120,10 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
 
     private getFirstVersionName(apiVersion: FernIr.ApiVersionScheme): string {
         switch (apiVersion.type) {
-            case "header":
-                return apiVersion.value.values[0]?.name.wireValue ?? "1.0.0";
+            case "header": {
+                const firstName = apiVersion.value.values[0]?.name;
+                return (firstName != null ? getWireValue(firstName) : undefined) ?? "1.0.0";
+            }
         }
     }
 }

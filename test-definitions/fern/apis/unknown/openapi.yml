@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: unknown
-  version: ''
+  version: ""
 paths:
   /:
     post:
@@ -10,8 +10,8 @@ paths:
         - Unknown
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -29,8 +29,8 @@ paths:
         - Unknown
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -41,7 +41,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MyObject'
+              $ref: "#/components/schemas/MyObject"
 components:
   schemas:
     MyAlias:

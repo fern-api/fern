@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { UnionTypeDeclaration } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
@@ -14,13 +15,13 @@ export declare namespace convertUnionToJsonSchema {
 }
 
 export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonSchema.Args): JSONSchema4 {
-    const discriminant = union.discriminant.wireValue;
+    const discriminant = getWireValue(union.discriminant);
     return {
         type: "object",
         properties: {
             [discriminant]: {
                 type: "string",
-                enum: union.types.map((member) => member.discriminantValue.wireValue)
+                enum: union.types.map((member) => getWireValue(member.discriminantValue))
             }
         },
         oneOf: union.types.map((member) => {
@@ -51,7 +52,7 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
             }
             return {
                 properties: {
-                    [discriminant]: { const: member.discriminantValue.wireValue },
+                    [discriminant]: { const: getWireValue(member.discriminantValue) },
                     ...properties
                 },
                 required: [discriminant, ...required]

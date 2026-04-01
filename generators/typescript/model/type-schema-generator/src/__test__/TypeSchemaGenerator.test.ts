@@ -1,7 +1,13 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedType } from "@fern-typescript/contexts";
-import { casingsGenerator, createMockReference, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    casingsGenerator,
+    createMockReference,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -266,7 +272,8 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches enum shape to GeneratedEnumTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.enum({
@@ -288,7 +295,8 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches object shape to GeneratedObjectTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.object({
@@ -311,7 +319,8 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches alias shape to GeneratedAliasTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.alias({
@@ -335,7 +344,8 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches union shape to GeneratedUnionTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.union({
@@ -359,7 +369,8 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches undiscriminated union shape", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.undiscriminatedUnion({
@@ -379,7 +390,8 @@ describe("TypeSchemaGenerator", () => {
     it("passes noOptionalProperties to generated schemas", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: true
+            noOptionalProperties: true,
+            caseConverter
         });
 
         const shape = FernIr.Type.object({
@@ -406,7 +418,8 @@ describe("TypeSchemaGenerator", () => {
     it("passes includeUtilsOnUnionMembers to union schemas", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: true,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.union({
@@ -441,7 +454,8 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
             getGeneratedType: createMockGeneratedEnumType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -513,12 +527,13 @@ describe("GeneratedObjectTypeSchemaImpl", () => {
             getGeneratedType: () =>
                 createMockGeneratedObjectType({
                     propertyKeys: Object.fromEntries(
-                        (opts.properties ?? []).map((p) => [p.name.wireValue, p.name.name.camelCase.unsafeName])
+                        (opts.properties ?? []).map((p) => [getWireValue(p.name), caseConverter.camelUnsafe(p.name)])
                     )
                 }),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -667,7 +682,8 @@ describe("GeneratedAliasTypeSchemaImpl", () => {
             getGeneratedType: () => createMockGeneratedAliasType({ isBranded: opts.isBranded }),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -774,7 +790,8 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -881,7 +898,8 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
             noOptionalProperties: opts.noOptionalProperties ?? false,
-            includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false
+            includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false,
+            caseConverter
         });
     }
 

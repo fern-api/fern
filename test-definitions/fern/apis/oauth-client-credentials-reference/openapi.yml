@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: oauth-client-credentials-reference
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -10,18 +10,18 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetTokenRequest'
+              $ref: "#/components/schemas/GetTokenRequest"
   /get-something:
     get:
       operationId: simple_getSomething
@@ -29,8 +29,8 @@ paths:
         - Simple
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security:
         - BearerAuth: []
 components:
