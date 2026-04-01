@@ -25,7 +25,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
     private serviceId?: ServiceId;
     private service?: HttpService;
 
-    constructor({ subpackage, context, serviceId, service }: SubPackageClientInterfaceGenerator.Args) {
+    public constructor({ subpackage, context, serviceId, service }: SubPackageClientInterfaceGenerator.Args) {
         super(context);
         this.interfaceReference = this.context.getSubpackageInterfaceReference(subpackage);
         this.subpackage = subpackage;

@@ -12,7 +12,7 @@ import { Logger } from "@fern-api/logger";
 export class GeneratorAgentClient {
     private logger: Logger;
 
-    constructor({ logger }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
+    public constructor({ logger }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
         this.logger = logger;
     }
 

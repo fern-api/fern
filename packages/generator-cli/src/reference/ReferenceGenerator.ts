@@ -13,7 +13,7 @@ import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
 export class ReferenceGenerator {
     private referenceConfig: FernGeneratorCli.ReferenceConfig;
 
-    constructor({
+    public constructor({
         referenceConfig
     }: {
         referenceConfig: FernGeneratorCli.ReferenceConfig;

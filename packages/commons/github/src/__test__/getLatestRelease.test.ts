@@ -7,7 +7,7 @@ const mockListReleases = vi.fn();
 vi.mock("octokit", () => {
     return {
         Octokit: class MockOctokit {
-            rest = {
+            public rest = {
                 repos: {
                     getLatestRelease: mockGetLatestRelease,
                     listReleases: mockListReleases
@@ -17,7 +17,7 @@ vi.mock("octokit", () => {
              * Simulates octokit.paginate(endpoint, params, mapFn) by calling the
              * map function with the mock listReleases response and a done callback.
              */
-            paginate = async (
+            public paginate = async (
                 _endpoint: unknown,
                 _params: unknown,
                 mapFn: (response: unknown, done: () => void) => string[]

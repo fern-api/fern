@@ -26,7 +26,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
     private generatedUnion: GeneratedUnionImpl<Context>;
     private readonly inline: boolean;
 
-    constructor({
+    public constructor({
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         inline,

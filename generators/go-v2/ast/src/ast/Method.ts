@@ -40,7 +40,7 @@ export class Method extends AstNode {
     public readonly receiver: string | undefined;
     public readonly pointerReceiver: boolean | undefined;
 
-    constructor({
+    public constructor({
         name,
         parameters,
         return_,

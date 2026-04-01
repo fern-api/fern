@@ -27,7 +27,7 @@ export class WebsocketContextImpl implements WebsocketClassContext {
     public websocketGenerator: WebsocketClassGenerator;
     public includeSerdeLayer: boolean;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

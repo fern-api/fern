@@ -23,7 +23,7 @@ export class MdxFileWriter {
     private outputDir: string;
     private writtenFiles: string[] = [];
 
-    constructor(outputDir: string) {
+    public constructor(outputDir: string) {
         this.outputDir = outputDir;
     }
 
@@ -35,7 +35,7 @@ export class MdxFileWriter {
      * @param content - MDX content to write
      * @returns Absolute path of the written file
      */
-    writePage(pageKey: string, content: string): string {
+    public writePage(pageKey: string, content: string): string {
         const filePath = join(this.outputDir, pageKey);
         mkdirSync(dirname(filePath), { recursive: true });
         writeFileSync(filePath, content);
@@ -46,7 +46,7 @@ export class MdxFileWriter {
     /**
      * Get the accumulated result after all pages have been written.
      */
-    result(): { writtenFiles: string[]; pageCount: number } {
+    public result(): { writtenFiles: string[]; pageCount: number } {
         return { writtenFiles: this.writtenFiles, pageCount: this.writtenFiles.length };
     }
 }

@@ -14,7 +14,7 @@ export declare namespace DynamicTypeMapper {
 export class DynamicTypeMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         super(context.generation);
         this.context = context;
     }
@@ -58,7 +58,7 @@ export class DynamicTypeMapper extends WithGeneration {
         }
     }
 
-    convertToClassReference(named: FernIr.dynamic.NamedType): ast.ClassReference {
+    public convertToClassReference(named: FernIr.dynamic.NamedType): ast.ClassReference {
         return this.csharp.classReference({
             origin: named.declaration,
             namespace: this.context.getNamespace(named.declaration.fernFilepath)

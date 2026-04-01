@@ -27,7 +27,7 @@ export class Writer extends AbstractWriter {
     protected starImportAliases: Record<ModuleName, Alias> = {};
     protected starImportAliasesInverse: Record<Alias, ModuleName> = {};
 
-    constructor({ customConfig, formatter }: Writer.Args) {
+    public constructor({ customConfig, formatter }: Writer.Args) {
         super();
         this.customConfig = customConfig;
         this.formatter = formatter ?? new NopFormatter();

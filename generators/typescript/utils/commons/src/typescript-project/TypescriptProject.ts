@@ -123,7 +123,7 @@ export abstract class TypescriptProject {
 
     private readonly runScripts: boolean;
 
-    constructor({
+    public constructor({
         npmPackage,
         runScripts,
         tsMorphProject,

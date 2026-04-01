@@ -18,7 +18,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
     private extended: FernIr.DeclaredTypeName;
     private enableInlineTypes: boolean;
 
-    constructor({ extended, enableInlineTypes }: SamePropertiesAsObjectSingleUnionTypeGenerator.Init) {
+    public constructor({ extended, enableInlineTypes }: SamePropertiesAsObjectSingleUnionTypeGenerator.Init) {
         this.extended = extended;
         this.enableInlineTypes = enableInlineTypes;
     }

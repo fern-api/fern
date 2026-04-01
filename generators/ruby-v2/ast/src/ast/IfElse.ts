@@ -25,7 +25,7 @@ export class IfElse extends AstNode {
     public readonly elseIfs: IfElse.If[];
     public readonly elseBody: AstNode[] | undefined;
 
-    constructor({ if: ifBranch, elseIf, elseBody }: IfElse.Args) {
+    public constructor({ if: ifBranch, elseIf, elseBody }: IfElse.Args) {
         super();
         this.ifBranch = ifBranch;
         this.elseIfs = elseIf ?? [];

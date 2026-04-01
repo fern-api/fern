@@ -25,7 +25,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         environmentsGenerator,
         environmentsDeclarationReferencer,

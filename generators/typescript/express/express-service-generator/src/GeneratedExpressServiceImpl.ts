@@ -44,7 +44,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private skipResponseValidation: boolean;
     private requestValidationStatusCode: number;
 
-    constructor({
+    public constructor({
         packageId,
         package: package_,
         serviceClassName,

@@ -21,7 +21,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     private readonly discriminantPropertyName: string;
     private readonly unionMembers: UnionMember[];
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly unionDeclaration: FernIr.UnionTypeDeclaration

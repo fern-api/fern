@@ -25,7 +25,7 @@ export class Interface extends AstNode {
 
     public readonly methods: Method[] = [];
 
-    constructor({ name, namespace, docs, extends_ }: Interface.Args) {
+    public constructor({ name, namespace, docs, extends_ }: Interface.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

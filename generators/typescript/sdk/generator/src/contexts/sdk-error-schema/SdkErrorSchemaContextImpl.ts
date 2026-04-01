@@ -29,7 +29,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
     private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
     private errorResolver: ErrorResolver;
 
-    constructor({
+    public constructor({
         sourceFile,
         coreUtilities,
         importsManager,

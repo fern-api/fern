@@ -40,7 +40,7 @@ export class PersistedTypescriptProject {
 
     private runScripts;
 
-    constructor({
+    public constructor({
         directory,
         srcDirectory,
         distDirectory,

@@ -28,7 +28,7 @@ export class SourceFetcher {
     private context: AbstractGeneratorContext;
     private sourceConfig: SourceConfig | undefined;
 
-    constructor({
+    public constructor({
         context,
         sourceConfig
     }: {
@@ -144,7 +144,7 @@ export class SourceFetcher {
         await promisify(pipeline)(response.body as any, fileStream);
     }
 
-    async findFiles(absoluteFilePath: AbsoluteFilePath): Promise<RelativeFilePath[]> {
+    public async findFiles(absoluteFilePath: AbsoluteFilePath): Promise<RelativeFilePath[]> {
         const absoluteFilePaths: AbsoluteFilePath[] = [];
 
         const listFiles = async (currentDirectory: AbsoluteFilePath): Promise<void> => {

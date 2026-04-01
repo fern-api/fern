@@ -15,7 +15,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
     private discriminant: FernIr.NameAndWireValue;
     private discriminantValueWithAllCasings: FernIr.NameAndWireValue;
 
-    constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
+    public constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
         this.discriminant = discriminant;
         this.discriminantValueWithAllCasings = discriminantValue;
     }

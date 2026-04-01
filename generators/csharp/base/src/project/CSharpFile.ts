@@ -36,7 +36,7 @@ export class CSharpFile extends File {
     private fileHeader: string | undefined;
     private resolved: boolean = false;
 
-    constructor({
+    public constructor({
         clazz,
         directory,
         allNamespaceSegments,

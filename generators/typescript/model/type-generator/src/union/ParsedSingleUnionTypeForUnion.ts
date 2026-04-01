@@ -28,7 +28,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     private retainOriginalCasing: boolean;
     protected union: FernIr.UnionTypeDeclaration;
 
-    constructor({
+    public constructor({
         singleUnionType,
         union,
         includeUtilsOnUnionMembers,

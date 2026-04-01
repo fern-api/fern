@@ -2,7 +2,7 @@ import { Logger } from "./Logger.js";
 import { LogLevel } from "./LogLevel.js";
 
 class LoggerImpl implements Logger {
-    constructor(
+    public constructor(
         public readonly log: (level: LogLevel, ...args: string[]) => void,
         private enabled: boolean = true
     ) {}

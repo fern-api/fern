@@ -22,7 +22,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly isPaginationEnabled: boolean;
 
-    constructor({
+    public constructor({
         context,
         endpointSnippets
     }: {

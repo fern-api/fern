@@ -27,7 +27,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     protected httpEndpoint: FernIr.HttpEndpoint;
     protected allTypes: FernIr.TypeDeclaration[];
 
-    constructor({ authHeaders, httpEndpoint, httpService, allTypes, ir }: AbstractGeneratedRequest.Init) {
+    public constructor({ authHeaders, httpEndpoint, httpService, allTypes, ir }: AbstractGeneratedRequest.Init) {
         this.ir = ir;
         this.authHeaders = authHeaders;
         this.httpService = httpService;

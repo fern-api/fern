@@ -13,7 +13,7 @@ export declare namespace DynamicTypeMapper {
 export class DynamicTypeMapper {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

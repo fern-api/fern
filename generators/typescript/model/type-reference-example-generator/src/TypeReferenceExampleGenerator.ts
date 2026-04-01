@@ -14,7 +14,7 @@ export class TypeReferenceExampleGenerator {
     private useBigInt: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({ useBigInt, includeSerdeLayer }: TypeReferenceExampleGenerator.Init) {
+    public constructor({ useBigInt, includeSerdeLayer }: TypeReferenceExampleGenerator.Init) {
         this.useBigInt = useBigInt;
         this.includeSerdeLayer = includeSerdeLayer;
     }

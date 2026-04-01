@@ -19,7 +19,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     private resolvedClientName: string;
     private resolvedEnvironmentName: string;
 
-    constructor({
+    public constructor({
         ir,
         config
     }: {

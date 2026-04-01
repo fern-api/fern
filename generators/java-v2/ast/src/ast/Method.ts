@@ -29,7 +29,7 @@ export class Method extends AstNode {
     private return_: Type | undefined;
     private static_: boolean;
 
-    constructor({ name, access, parameters, body, static_, return_ }: Method.Args) {
+    public constructor({ name, access, parameters, body, static_, return_ }: Method.Args) {
         super();
 
         this.name = name;

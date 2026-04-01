@@ -26,7 +26,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
 
     protected namingOverride: string | undefined;
 
-    constructor({
+    public constructor({
         namespaceExport,
         containingDirectory,
         consolidateTypeFiles = false,

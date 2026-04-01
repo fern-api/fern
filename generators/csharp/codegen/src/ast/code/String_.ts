@@ -12,7 +12,7 @@ export declare namespace String_ {
 export class String_ extends AstNode {
     private string: string;
 
-    constructor(args: String_.Args, generation: Generation) {
+    public constructor(args: String_.Args, generation: Generation) {
         super(generation);
         this.string = args.string;
     }

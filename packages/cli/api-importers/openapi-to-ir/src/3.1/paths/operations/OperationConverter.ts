@@ -65,7 +65,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         operation,

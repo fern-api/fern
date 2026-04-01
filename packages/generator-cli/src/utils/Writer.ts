@@ -21,7 +21,7 @@ export abstract class Writer {
 }
 
 export class StreamWriter extends Writer {
-    constructor(private stream: fs.WriteStream | NodeJS.Process["stdout"]) {
+    public constructor(private stream: fs.WriteStream | NodeJS.Process["stdout"]) {
         super();
         this.stream = stream;
     }
@@ -83,7 +83,7 @@ export class StreamWriter extends Writer {
 export class StringWriter extends Writer {
     private content: string;
 
-    constructor() {
+    public constructor() {
         super();
         this.content = "";
     }

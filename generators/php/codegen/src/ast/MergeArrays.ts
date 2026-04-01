@@ -26,7 +26,7 @@ export class MergeArrays extends AstNode {
           }
     )[];
 
-    constructor(arrays: MergeArrays.Args) {
+    public constructor(arrays: MergeArrays.Args) {
         super();
         this.arrays = arrays;
     }

@@ -17,7 +17,7 @@ export class AnonymousFunction {
     private readonly isAsync: boolean;
     private readonly parameters: Parameter[];
     private readonly body: CodeBlock;
-    constructor(methodBaseArgs: AnonymousFunction.Args) {
+    public constructor(methodBaseArgs: AnonymousFunction.Args) {
         this.isAsync = methodBaseArgs.isAsync ?? false;
         this.parameters = methodBaseArgs.parameters;
         this.body = methodBaseArgs.body;

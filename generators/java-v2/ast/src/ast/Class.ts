@@ -18,7 +18,7 @@ export class Class extends AstNode {
 
     private methods: Method[] = [];
 
-    constructor({ name, access }: Class.Args) {
+    public constructor({ name, access }: Class.Args) {
         super();
 
         this.name = name;

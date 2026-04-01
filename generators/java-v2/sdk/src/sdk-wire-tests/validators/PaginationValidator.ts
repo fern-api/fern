@@ -7,7 +7,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
  * Generates assertions to verify pagination structure and navigation.
  */
 export class PaginationValidator {
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Generates pagination validation for endpoints with pagination support.

@@ -24,7 +24,7 @@ export class GeneratedExpressErrorSchemaImpl
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
 
-    constructor({
+    public constructor({
         errorName,
         errorDeclaration,
         type,

@@ -56,7 +56,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns A PascalCase class name with "Api" suffix
      */
-    static createWebsocketClientClassName(websocketChannel: WebSocketChannel) {
+    public static createWebsocketClientClassName(websocketChannel: WebSocketChannel) {
         return `${websocketChannel.name.pascalCase.safeName}Api`;
     }
 
@@ -66,7 +66,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns A PascalCase interface name with "I" prefix and "Api" suffix
      */
-    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
+    public static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
         return `I${websocketChannel.name.pascalCase.safeName}Api`;
     }
 
@@ -119,7 +119,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param namespace - The namespace for the generated class
      * @param websocketChannel - The WebSocket channel definition
      */
-    static createWebSocketApiInterfaceFactories(
+    public static createWebSocketApiInterfaceFactories(
         interface_: ast.Interface,
         subpackage: Subpackage,
         context: SdkGeneratorContext,
@@ -169,7 +169,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         });
     }
 
-    static createWebSocketApiFactories(
+    public static createWebSocketApiFactories(
         cls: ast.Class,
         subpackage: Subpackage,
         context: SdkGeneratorContext,
@@ -268,7 +268,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param subpackage - The subpackage containing the WebSocket channel
      * @param websocketChannel - The WebSocket channel definition to generate code for
      */
-    constructor({ context, subpackage, websocketChannel }: WebSocketClientGenerator.Args) {
+    public constructor({ context, subpackage, websocketChannel }: WebSocketClientGenerator.Args) {
         super(context.generation);
         this.context = context;
         this.subpackage = subpackage;
@@ -387,7 +387,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      *
      * @returns True if there are multiple environments, false if only one (which will be used as BaseUrl)
      */
-    get hasEnvironments() {
+    public get hasEnvironments() {
         // if it only has one environment, then we're just going to use that as the BaseUrl
         // without the over-head of the using an Environments class.
         return this.environments != null && this.environments.length > 1;

@@ -25,7 +25,7 @@ export class CliError extends Error {
     public readonly code?: CliError.Code;
     public readonly docsLink?: string;
 
-    constructor({
+    public constructor({
         message,
         code,
         docsLink

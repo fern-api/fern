@@ -17,7 +17,7 @@ export class ReadmeConfigBuilder {
     private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
 
-    constructor({
+    public constructor({
         endpointSnippets,
         fileResponseType,
         fetchSupport,

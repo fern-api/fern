@@ -81,7 +81,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
 
-    constructor({
+    public constructor({
         typeName,
         shape,
         discriminant,

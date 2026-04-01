@@ -75,7 +75,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
 
     public readonly key = "x-fern-examples";
 
-    constructor({ context, breadcrumbs, operation, baseDir }: FernExamplesExtension.Args) {
+    public constructor({ context, breadcrumbs, operation, baseDir }: FernExamplesExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
         this.baseDir = baseDir;

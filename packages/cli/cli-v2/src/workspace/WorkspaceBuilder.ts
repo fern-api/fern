@@ -23,7 +23,7 @@ export namespace WorkspaceBuilder {
 export class WorkspaceBuilder {
     private readonly context: Context;
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.context = context;
     }
 

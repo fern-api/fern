@@ -13,7 +13,7 @@ export declare namespace WriteablePythonFile {
 }
 
 export class WriteablePythonFile extends File {
-    constructor({ filename, directory, contents }: WriteablePythonFile.Args) {
+    public constructor({ filename, directory, contents }: WriteablePythonFile.Args) {
         super(`${filename}.py`, directory, contents.toString());
     }
 

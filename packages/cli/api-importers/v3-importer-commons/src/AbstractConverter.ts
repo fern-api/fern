@@ -40,7 +40,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
         FernIr.ContainerType.optional(AbstractConverter.STRING)
     );
 
-    constructor({ breadcrumbs = [], context }: AbstractConverter.Args<Context>) {
+    public constructor({ breadcrumbs = [], context }: AbstractConverter.Args<Context>) {
         this.breadcrumbs = breadcrumbs;
         this.context = context;
     }

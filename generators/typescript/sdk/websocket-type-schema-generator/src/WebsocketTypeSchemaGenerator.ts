@@ -25,7 +25,11 @@ export class WebsocketTypeSchemaGenerator {
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({ includeSerdeLayer, omitUndefined, skipResponseValidation }: WebsocketTypeSchemaGenerator.Init) {
+    public constructor({
+        includeSerdeLayer,
+        omitUndefined,
+        skipResponseValidation
+    }: WebsocketTypeSchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
         this.skipResponseValidation = skipResponseValidation;

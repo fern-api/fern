@@ -18,7 +18,7 @@ export namespace LegacyGeneratorInvocationAdapter {
 export class LegacyGeneratorInvocationAdapter {
     private readonly context: Context;
 
-    constructor(config: LegacyGeneratorInvocationAdapter.Config) {
+    public constructor(config: LegacyGeneratorInvocationAdapter.Config) {
         this.context = config.context;
     }
 

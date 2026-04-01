@@ -25,7 +25,7 @@ export class VersionContextImpl implements VersionContext {
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         versionGenerator,
         versionDeclarationReferencer,

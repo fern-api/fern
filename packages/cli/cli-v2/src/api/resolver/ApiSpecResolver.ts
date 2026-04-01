@@ -26,7 +26,7 @@ export class ApiSpecResolver {
     private readonly context: Context;
     private readonly detector: ApiSpecDetector;
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.context = context;
         this.detector = new ApiSpecDetector();
     }

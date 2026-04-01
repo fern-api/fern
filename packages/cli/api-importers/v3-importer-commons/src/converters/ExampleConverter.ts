@@ -166,7 +166,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly generateOptionalProperties: boolean;
     private readonly seenRefs: Set<string>;
 
-    constructor({
+    public constructor({
         breadcrumbs,
         context,
         schema,

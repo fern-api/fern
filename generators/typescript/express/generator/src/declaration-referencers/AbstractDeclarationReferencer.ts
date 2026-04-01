@@ -20,7 +20,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
 
-    constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
+    public constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
     }

@@ -14,7 +14,7 @@ export declare namespace RequestBodyParameter {
 export class RequestBodyParameter extends AbstractRequestParameter {
     private requestBodyReference: FernIr.HttpRequestBodyReference;
 
-    constructor({ requestBodyReference, ...superInit }: RequestBodyParameter.Init) {
+    public constructor({ requestBodyReference, ...superInit }: RequestBodyParameter.Init) {
         super(superInit);
         this.requestBodyReference = requestBodyReference;
     }

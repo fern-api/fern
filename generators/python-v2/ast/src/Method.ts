@@ -41,7 +41,7 @@ export class Method extends AstNode {
     private readonly statements: AstNode[] = [];
     private readonly static_: boolean;
 
-    constructor({ static_, name, parameters, return_, docstring, type, decorators }: Method.Args) {
+    public constructor({ static_, name, parameters, return_, docstring, type, decorators }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters ?? [];

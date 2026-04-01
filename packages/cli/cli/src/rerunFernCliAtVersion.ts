@@ -9,7 +9,7 @@ export class RerunCliError extends Error {
     public readonly stderr: string;
     public readonly version: string;
 
-    constructor({ version, stdout, stderr }: { version: string; stdout: string; stderr: string }) {
+    public constructor({ version, stdout, stderr }: { version: string; stdout: string; stderr: string }) {
         super(`Failed to rerun CLI at version ${version}`);
         this.name = "RerunCliError";
         this.version = version;

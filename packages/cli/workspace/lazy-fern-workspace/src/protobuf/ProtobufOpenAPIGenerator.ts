@@ -27,7 +27,7 @@ export class ProtobufOpenAPIGenerator {
     private protocGenOpenAPIResolved = false;
     private resolvedBufCommand: string | undefined;
 
-    constructor({ context }: { context: TaskContext }) {
+    public constructor({ context }: { context: TaskContext }) {
         this.context = context;
     }
 

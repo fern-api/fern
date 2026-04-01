@@ -14,7 +14,7 @@ import { LegacyApiSpecAdapter } from "./LegacyApiSpecAdapter.js";
 export class LegacyOSSWorkspaceAdapter {
     private readonly specAdapter: LegacyApiSpecAdapter;
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.specAdapter = new LegacyApiSpecAdapter({ context });
     }
 

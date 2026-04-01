@@ -20,7 +20,7 @@ export class FernDefinitionFileFormatter {
     private fileContents: string;
     private formatted: string | undefined;
 
-    constructor({ fileContents }: { fileContents: string }) {
+    public constructor({ fileContents }: { fileContents: string }) {
         this.fileContents = fileContents;
     }
 
@@ -187,7 +187,7 @@ export class FernDefinitionFileFormatter {
 class LineReader {
     private lineIndex = 0;
 
-    constructor(private readonly lines: string[]) {}
+    public constructor(private readonly lines: string[]) {}
 
     public isEof() {
         return this.lines[this.lineIndex] == null;

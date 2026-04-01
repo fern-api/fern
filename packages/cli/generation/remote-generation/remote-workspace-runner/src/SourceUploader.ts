@@ -16,7 +16,7 @@ export class SourceUploader {
     private context: InteractiveTaskContext;
     private sources: Record<string, IdentifiableSource>;
 
-    constructor(context: InteractiveTaskContext, sources: IdentifiableSource[]) {
+    public constructor(context: InteractiveTaskContext, sources: IdentifiableSource[]) {
         this.context = context;
         this.sources = Object.fromEntries(sources.map((source) => [source.id, source]));
         this.sourceTypes = new Set<SourceType>(Object.values(this.sources).map((source) => source.type));

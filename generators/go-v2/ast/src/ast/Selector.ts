@@ -14,7 +14,7 @@ export class Selector extends AstNode {
     public readonly on: AstNode;
     public readonly selector: AstNode;
 
-    constructor({ on, selector }: Selector.Args) {
+    public constructor({ on, selector }: Selector.Args) {
         super();
         this.on = on;
         this.selector = selector;

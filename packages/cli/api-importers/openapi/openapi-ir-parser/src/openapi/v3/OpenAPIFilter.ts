@@ -9,7 +9,7 @@ export class OpenAPIFilter {
 
     private readonly parser = new HttpEndpointReferenceParser();
 
-    constructor({ context, options }: { context: TaskContext; options: ParseOpenAPIOptions }) {
+    public constructor({ context, options }: { context: TaskContext; options: ParseOpenAPIOptions }) {
         this.endpoints = options.filter?.endpoints
             ? new Set(this.validateAndFilterEndpoints({ context, endpoints: options.filter.endpoints }))
             : undefined;

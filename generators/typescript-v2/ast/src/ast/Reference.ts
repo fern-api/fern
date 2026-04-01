@@ -34,7 +34,7 @@ export class Reference extends AstNode {
     public readonly importFrom: Reference.ModuleImport | undefined;
     public readonly memberName: string | undefined;
 
-    constructor({ name, importFrom, memberName }: Reference.Args) {
+    public constructor({ name, importFrom, memberName }: Reference.Args) {
         super();
         this.name = name;
         this.importFrom = importFrom;

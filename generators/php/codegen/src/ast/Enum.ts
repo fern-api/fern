@@ -37,7 +37,7 @@ export class Enum extends AstNode {
     public readonly members: Enum.Member[] = [];
     public readonly serializable: boolean;
 
-    constructor({ name, namespace, backing, docs, serializable }: Enum.Args) {
+    public constructor({ name, namespace, backing, docs, serializable }: Enum.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

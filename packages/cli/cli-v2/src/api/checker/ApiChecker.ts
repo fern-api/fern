@@ -67,7 +67,7 @@ export class ApiChecker {
     private readonly cliVersion: string;
     private readonly task: Task | undefined;
 
-    constructor(config: ApiChecker.Config) {
+    public constructor(config: ApiChecker.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
         this.task = config.task;

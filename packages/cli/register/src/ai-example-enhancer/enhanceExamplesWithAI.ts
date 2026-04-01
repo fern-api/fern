@@ -75,7 +75,7 @@ class ConcurrentEndpointProcessor {
     private stats: ConcurrencyStats = { pending: 0, active: 0, completed: 0, failed: 0, totalStarted: 0 };
     private completedSinceLastCallback: ProcessingResult[] = [];
 
-    constructor(
+    public constructor(
         maxConcurrency: number,
         private progressCallback?: ProgressCallback
     ) {

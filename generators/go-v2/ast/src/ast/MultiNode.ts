@@ -10,7 +10,7 @@ export declare namespace MultiNode {
 export class MultiNode extends AstNode {
     public readonly nodes: AstNode[];
 
-    constructor({ nodes }: MultiNode.Args) {
+    public constructor({ nodes }: MultiNode.Args) {
         super();
         this.nodes = nodes;
     }

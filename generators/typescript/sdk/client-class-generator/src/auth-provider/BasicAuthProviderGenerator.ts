@@ -37,7 +37,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
-    constructor(init: BasicAuthProviderGenerator.Init) {
+    public constructor(init: BasicAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;

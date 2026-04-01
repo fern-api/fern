@@ -13,7 +13,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
 
     protected typeName: string;
 
-    constructor({ typeName }: AbstractGeneratedSchema.Init) {
+    public constructor({ typeName }: AbstractGeneratedSchema.Init) {
         this.typeName = typeName;
     }
 

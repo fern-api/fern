@@ -44,7 +44,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
 
-    constructor({
+    public constructor({
         packageId,
         endpoint,
         response,

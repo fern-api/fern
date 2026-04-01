@@ -21,7 +21,7 @@ export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Sett
     public type: string = "conjure";
     private absolutePathToConjureFolder: AbsoluteFilePath;
 
-    constructor({ relativePathToConjureDirectory, ...superArgs }: ConjureWorkspace.Args) {
+    public constructor({ relativePathToConjureDirectory, ...superArgs }: ConjureWorkspace.Args) {
         super(superArgs);
         this.absolutePathToConjureFolder = join(superArgs.absoluteFilePath, relativePathToConjureDirectory);
     }

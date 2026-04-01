@@ -16,7 +16,7 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

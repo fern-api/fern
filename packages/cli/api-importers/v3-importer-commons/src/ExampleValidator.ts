@@ -94,7 +94,7 @@ export declare namespace ExampleValidator {
 export class ExampleValidator {
     private readonly context: AbstractConverterContext<object>;
 
-    constructor({ context }: ExampleValidator.Args) {
+    public constructor({ context }: ExampleValidator.Args) {
         this.context = context;
     }
 

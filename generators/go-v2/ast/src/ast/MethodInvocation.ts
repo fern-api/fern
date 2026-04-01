@@ -21,7 +21,7 @@ export class MethodInvocation extends AstNode {
     private arguments_: AstNode[];
     private multiline: boolean | undefined;
 
-    constructor({ method, arguments_, on, multiline }: MethodInvocation.Args) {
+    public constructor({ method, arguments_, on, multiline }: MethodInvocation.Args) {
         super();
 
         this.on = on;

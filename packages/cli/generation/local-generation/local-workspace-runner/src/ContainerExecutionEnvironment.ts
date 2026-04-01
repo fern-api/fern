@@ -16,7 +16,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly keepContainer: boolean;
     private readonly runner?: ContainerRunner;
 
-    constructor({
+    public constructor({
         containerImage,
         keepContainer,
         runner,

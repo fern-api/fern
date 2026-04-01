@@ -33,7 +33,7 @@ export class EndpointErrorUnionGenerator {
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         errorResolver,
         includeSerdeLayer,

@@ -117,7 +117,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly expressErrorSchema: ExpressErrorSchemaContext;
     public readonly jsonContext: JsonContext;
 
-    constructor({
+    public constructor({
         logger,
         typeResolver,
         typeGenerator,

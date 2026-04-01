@@ -36,7 +36,7 @@ export class Comment extends AstNode {
 
     private tags: Comment.Tag[] = [];
 
-    constructor({ docs }: Comment.Args = {}) {
+    public constructor({ docs }: Comment.Args = {}) {
         super();
         this.docs = docs;
     }

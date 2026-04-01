@@ -33,7 +33,7 @@ export class ServersConverter extends AbstractConverter<
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly endpointLevelServers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ breadcrumbs, context, servers, endpointLevelServers }: ServersConverter.Args) {
+    public constructor({ breadcrumbs, context, servers, endpointLevelServers }: ServersConverter.Args) {
         super({ breadcrumbs, context });
         this.servers = servers;
         this.endpointLevelServers = endpointLevelServers;

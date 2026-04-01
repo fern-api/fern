@@ -64,7 +64,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly offsetSemantics: "item-index" | "page-index";
 
-    constructor({
+    public constructor({
         packageId,
         endpoint,
         response,

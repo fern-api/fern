@@ -36,7 +36,7 @@ export abstract class CoreUtility {
     }) => Reference;
     protected readonly generateEndpointMetadata: boolean;
 
-    constructor(init: CoreUtility.Init) {
+    public constructor(init: CoreUtility.Init) {
         this.getReferenceToExportInCoreUtilities = init.getReferenceToExport;
         this.generateEndpointMetadata = init.generateEndpointMetadata;
     }

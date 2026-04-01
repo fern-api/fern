@@ -17,7 +17,7 @@ export declare namespace AbstractErrorClassGenerator {
 export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
     protected errorClassName: string;
 
-    constructor({ errorClassName }: AbstractErrorClassGenerator.Init) {
+    public constructor({ errorClassName }: AbstractErrorClassGenerator.Init) {
         this.errorClassName = errorClassName;
     }
 

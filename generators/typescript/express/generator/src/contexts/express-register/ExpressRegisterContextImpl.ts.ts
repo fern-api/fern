@@ -10,7 +10,7 @@ export declare namespace ExpressRegisterContextImpl {
 export class ExpressRegisterContextImpl implements ExpressRegisterContext {
     private expressRegisterGenerator: ExpressRegisterGenerator;
 
-    constructor({ expressRegisterGenerator }: ExpressRegisterContextImpl.Init) {
+    public constructor({ expressRegisterGenerator }: ExpressRegisterContextImpl.Init) {
         this.expressRegisterGenerator = expressRegisterGenerator;
     }
 

@@ -8,7 +8,7 @@ import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
 export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
-    constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
+    public constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
         super(context);
         this.baseOptionsGenerator = baseOptionsGenerator;
     }

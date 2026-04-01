@@ -56,7 +56,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
 
-    constructor({
+    public constructor({
         sourceFile,
         coreUtilities,
         importsManager,

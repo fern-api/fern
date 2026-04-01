@@ -63,7 +63,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
 
-    constructor(protected readonly args: Spec.Args<Spec>) {
+    public constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
         this.settings = args.settings;
         this.errorCollector = args.errorCollector;

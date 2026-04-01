@@ -53,7 +53,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
-    constructor({
+    public constructor({
         ir,
         packageId,
         sdkRequest,

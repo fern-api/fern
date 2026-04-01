@@ -12,7 +12,7 @@ import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.
 export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private serviceId: ServiceId | undefined;
 
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         super(context);
         this.serviceId = this.context.ir.rootPackage.service;
     }

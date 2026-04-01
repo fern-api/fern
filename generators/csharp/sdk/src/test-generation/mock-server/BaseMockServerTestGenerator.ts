@@ -18,7 +18,7 @@ import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         super(context);
         this.rootClientGenerator = new RootClientGenerator(context);
         this.mockEndpointGenerator = new MockEndpointGenerator(context);

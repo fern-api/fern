@@ -13,7 +13,7 @@ export declare namespace OpenRPCConverter {
 }
 
 export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterContext3_1, IntermediateRepresentation> {
-    constructor({ context, breadcrumbs, audiences }: OpenRPCConverter.Args) {
+    public constructor({ context, breadcrumbs, audiences }: OpenRPCConverter.Args) {
         super({ context, breadcrumbs, audiences });
     }
 

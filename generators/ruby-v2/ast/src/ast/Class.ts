@@ -18,7 +18,7 @@ export class Class_ extends Module_ {
     public readonly statements: AstNode[];
     public readonly methods: Method[] = [];
 
-    constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
+    public constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
         super({ name, docstring, typeParameters });
 
         this.superclass = superclass;

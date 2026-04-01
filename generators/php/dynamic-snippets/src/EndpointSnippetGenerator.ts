@@ -13,7 +13,7 @@ const PHP_PREFIX = "<?php\n\n";
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

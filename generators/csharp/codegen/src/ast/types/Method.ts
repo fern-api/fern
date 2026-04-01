@@ -34,7 +34,7 @@ export class Method extends MemberNode {
     private readonly annotations: Annotation[];
     private readonly interfaceReference?: ClassReference;
 
-    constructor(
+    public constructor(
         {
             name,
             isAsync,

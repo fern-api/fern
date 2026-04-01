@@ -5,7 +5,7 @@ import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.j
  * @deprecated Use ContainerExecutionEnvironment instead. This class is maintained for backward compatibility.
  */
 export class DockerExecutionEnvironment extends ContainerExecutionEnvironment {
-    constructor({
+    public constructor({
         dockerImage,
         keepDocker,
         runner

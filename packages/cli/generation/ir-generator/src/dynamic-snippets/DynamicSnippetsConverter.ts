@@ -66,7 +66,7 @@ export class DynamicSnippetsConverter {
     // Types that are extended by other types (have self-interfaces in Java)
     private readonly extendedTypeIds: Set<TypeId>;
 
-    constructor(args: DynamicSnippetsConverter.Args) {
+    public constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
         this.generatorConfig = args.generatorConfig;
         this.casingsGenerator = constructCasingsGenerator({

@@ -10,7 +10,7 @@ export class JsonValidator {
     private static readonly INLINE_JSON_THRESHOLD_LINES = 50;
     private static readonly INLINE_JSON_THRESHOLD_BYTES = 2048;
 
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Checks if JSON data should be stored in a resource file instead of inline.

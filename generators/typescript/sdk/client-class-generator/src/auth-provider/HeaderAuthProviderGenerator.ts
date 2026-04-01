@@ -37,7 +37,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
-    constructor(init: HeaderAuthProviderGenerator.Init) {
+    public constructor(init: HeaderAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;

@@ -23,7 +23,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private areImplementationsOptional: boolean;
     private packageResolver: PackageResolver;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         registerFunctionName,
         areImplementationsOptional,

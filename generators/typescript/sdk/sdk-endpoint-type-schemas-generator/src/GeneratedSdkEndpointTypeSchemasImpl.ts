@@ -41,7 +41,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
 
-    constructor({
+    public constructor({
         packageId,
         service,
         endpoint,

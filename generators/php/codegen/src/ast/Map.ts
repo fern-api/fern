@@ -17,7 +17,7 @@ export class Map extends AstNode {
     private entries: Map.Entry[];
     private multiline: boolean;
 
-    constructor({ entries, multiline }: Map.Args) {
+    public constructor({ entries, multiline }: Map.Args) {
         super();
         this.entries = entries ?? [];
         this.multiline = multiline ?? false;

@@ -10,7 +10,7 @@ export declare namespace Decorator {
 export class Decorator extends AstNode {
     private callable: AstNode;
 
-    constructor({ callable }: Decorator.Args) {
+    public constructor({ callable }: Decorator.Args) {
         super();
         this.callable = callable;
         this.inheritReferences(callable);

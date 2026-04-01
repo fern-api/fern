@@ -10,7 +10,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
     private readonly commands: string[];
     private readonly workingDirectory?: string;
     private readonly env?: Record<string, string>;
-    constructor({
+    public constructor({
         commands,
         workingDirectory,
         env

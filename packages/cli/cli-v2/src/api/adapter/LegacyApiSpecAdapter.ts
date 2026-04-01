@@ -32,7 +32,7 @@ export namespace LegacyApiSpecAdapter {
 export class LegacyApiSpecAdapter {
     private readonly context: Context;
 
-    constructor(config: LegacyApiSpecAdapter.Config) {
+    public constructor(config: LegacyApiSpecAdapter.Config) {
         this.context = config.context;
     }
 

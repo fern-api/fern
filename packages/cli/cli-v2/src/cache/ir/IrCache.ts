@@ -75,7 +75,7 @@ export class IrCache {
     private readonly tempPath: AbsoluteFilePath;
     private readonly logger: Logger | undefined;
 
-    constructor({
+    public constructor({
         absoluteFilePath,
         tempPath,
         logger

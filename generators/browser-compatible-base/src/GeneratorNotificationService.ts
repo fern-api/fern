@@ -17,7 +17,7 @@ export class GeneratorNotificationService implements AbstractGeneratorNotificati
     private taskId: FernGeneratorExec.TaskId | undefined;
     private buffer: FernGeneratorExec.GeneratorUpdate[] = [];
 
-    constructor(environment: FernGeneratorExec.GeneratorEnvironment) {
+    public constructor(environment: FernGeneratorExec.GeneratorEnvironment) {
         if (environment.type === "remote") {
             this.client = new FernGeneratorExecClient({
                 environment: environment.coordinatorUrlV2

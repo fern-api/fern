@@ -62,14 +62,14 @@ export declare namespace Wizard {
  * Thrown by a step to signal that the user wants to go back.
  */
 class GoBackSignal {
-    readonly _tag = "GoBackSignal";
+    public readonly _tag = "GoBackSignal";
 }
 
 export class Wizard {
     private readonly context: Context;
     private readonly args: Wizard.Args;
 
-    constructor({ context, args }: { context: Context; args: Wizard.Args }) {
+    public constructor({ context, args }: { context: Context; args: Wizard.Args }) {
         this.context = context;
         this.args = args;
     }

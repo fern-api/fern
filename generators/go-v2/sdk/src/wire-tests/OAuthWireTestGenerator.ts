@@ -47,7 +47,7 @@ interface OAuthServiceInfo {
 export class OAuthWireTestGenerator {
     private readonly context: SdkGeneratorContext;
 
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         this.context = context;
     }
 

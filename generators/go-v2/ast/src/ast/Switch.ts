@@ -23,7 +23,7 @@ export class Switch extends AstNode {
     public readonly cases: Switch.Case[];
     public readonly default: AstNode | undefined;
 
-    constructor({ on, cases, default: default_ }: Switch.Args) {
+    public constructor({ on, cases, default: default_ }: Switch.Args) {
         super();
         this.on = on;
         this.cases = cases;

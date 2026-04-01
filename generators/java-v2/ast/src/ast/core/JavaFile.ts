@@ -5,7 +5,7 @@ export declare namespace JavaFile {
 }
 
 export class JavaFile extends Writer {
-    constructor({ packageName, customConfig, formatter }: JavaFile.Args) {
+    public constructor({ packageName, customConfig, formatter }: JavaFile.Args) {
         super({ packageName, customConfig, formatter });
     }
 

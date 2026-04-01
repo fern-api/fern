@@ -14,7 +14,7 @@ export declare namespace JsonDeclarationReferencer {
 }
 
 export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
-    constructor({ ...superInit }: JsonDeclarationReferencer.Init) {
+    public constructor({ ...superInit }: JsonDeclarationReferencer.Init) {
         super(superInit);
     }
 

@@ -11,7 +11,7 @@ export declare namespace PositionalArgument {
 export class PositionalArgument extends AstNode {
     public readonly value: AstNode;
 
-    constructor({ value }: PositionalArgument.Args) {
+    public constructor({ value }: PositionalArgument.Args) {
         super();
         this.value = value;
     }

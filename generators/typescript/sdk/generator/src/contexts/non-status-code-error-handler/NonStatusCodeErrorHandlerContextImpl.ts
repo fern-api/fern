@@ -22,7 +22,7 @@ export class NonStatusCodeErrorHandlerContextImpl implements NonStatusCodeErrorH
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         nonStatusCodeErrorHandlerDeclarationReferencer,
         nonStatusCodeErrorHandlerGenerator,
         importsManager,

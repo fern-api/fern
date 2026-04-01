@@ -42,7 +42,7 @@ export class ErrorCollector {
 
     public readonly relativeFilepathToSpec?: string;
 
-    constructor({
+    public constructor({
         logger,
         relativeFilepathToSpec
     }: {
@@ -180,7 +180,7 @@ class BreadcrumbToLineNumber {
     private readonly map = new SourceMap();
     private initialized = false;
 
-    constructor({ relativePathToFile, logger }: BreadcrumbToLineNumber.Args) {
+    public constructor({ relativePathToFile, logger }: BreadcrumbToLineNumber.Args) {
         this.relativePathToFile = relativePathToFile;
         this.logger = logger;
     }

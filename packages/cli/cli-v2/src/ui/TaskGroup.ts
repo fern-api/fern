@@ -39,7 +39,7 @@ export class TaskGroup {
     private startTime: number | undefined;
     private isRegistered = false;
 
-    constructor(config: TaskGroup.Config) {
+    public constructor(config: TaskGroup.Config) {
         this.context = config.context;
         this.stream = config.stream ?? process.stderr;
     }

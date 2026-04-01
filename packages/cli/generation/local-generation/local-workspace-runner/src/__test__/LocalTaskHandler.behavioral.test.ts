@@ -37,28 +37,28 @@ vi.mock("@boundaryml/baml", () => {
             })
         },
         BamlCtxManager: class BamlCtxManager {
-            cloneContext() {
+            public cloneContext() {
                 return {};
             }
-            allowResets() {
+            public allowResets() {
                 return false;
             }
-            reset() {
+            public reset() {
                 /* noop */
             }
-            traceFnAsync() {
+            public traceFnAsync() {
                 return noop;
             }
-            traceFnSync() {
+            public traceFnSync() {
                 return noop;
             }
-            upsertTags() {
+            public upsertTags() {
                 /* noop */
             }
-            flush() {
+            public flush() {
                 /* noop */
             }
-            onLogEvent() {
+            public onLogEvent() {
                 /* noop */
             }
         },
@@ -171,21 +171,21 @@ vi.mock("semver", () => ({
 // Mock the AutoVersioningService
 vi.mock("../AutoVersioningService.js", () => ({
     AutoVersioningService: class MockAutoVersioningService {
-        extractPreviousVersion() {
+        public extractPreviousVersion() {
             return "1.0.0";
         }
-        cleanDiffForAI() {
+        public cleanDiffForAI() {
             return "cleaned diff content";
         }
-        chunkDiff(...args: unknown[]) {
+        public chunkDiff(...args: unknown[]) {
             return mockChunkDiff(...args);
         }
-        replaceMagicVersion() {
+        public replaceMagicVersion() {
             return Promise.resolve(undefined);
         }
     },
     AutoVersioningException: class AutoVersioningException extends Error {
-        constructor(message: string) {
+        public constructor(message: string) {
             super(message);
             this.name = "AutoVersioningException";
         }
@@ -203,7 +203,7 @@ vi.mock("../AutoVersioningCache.js", () => ({
     AutoVersioningCache: class MockAutoVersioningCache {
         private cache = new Map<string, Promise<unknown>>();
 
-        key(
+        public key(
             cleanedDiff: string,
             language: string,
             previousVersion: string,
@@ -213,7 +213,7 @@ vi.mock("../AutoVersioningCache.js", () => ({
             return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
         }
 
-        getOrCompute(key: string, compute: () => Promise<unknown>) {
+        public getOrCompute(key: string, compute: () => Promise<unknown>) {
             const existing = this.cache.get(key);
             if (existing !== undefined) {
                 return { promise: existing, isHit: true };

@@ -33,7 +33,7 @@ export declare namespace GenerationRunner {
  * Runs code generation using different execution environments.
  */
 export class GenerationRunner {
-    constructor(private readonly executionEnvironment: ExecutionEnvironment) {}
+    public constructor(private readonly executionEnvironment: ExecutionEnvironment) {}
 
     public async run({
         organization,

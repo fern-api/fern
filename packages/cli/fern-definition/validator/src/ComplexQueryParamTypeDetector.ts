@@ -24,7 +24,7 @@ import { CASINGS_GENERATOR } from "./utils/casingsGenerator.js";
 export class ComplexQueryParamTypeDetector {
     private typeResolver: TypeResolver;
 
-    constructor(private readonly workspace: FernWorkspace) {
+    public constructor(private readonly workspace: FernWorkspace) {
         this.typeResolver = new TypeResolverImpl(workspace);
     }
 

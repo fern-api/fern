@@ -28,7 +28,7 @@ export class Field extends AstNode {
     public readonly initializer: AstNode | undefined;
     public readonly docs: string | undefined;
 
-    constructor({ name, type, initializer, docs }: Field.Args) {
+    public constructor({ name, type, initializer, docs }: Field.Args) {
         super();
         this.name = name;
         this.type = type;

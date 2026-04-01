@@ -14,7 +14,7 @@ export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension
     private readonly tag: object;
     public readonly key = "x-displayName";
 
-    constructor({ breadcrumbs, tag, context }: DisplayNameExtension.Args) {
+    public constructor({ breadcrumbs, tag, context }: DisplayNameExtension.Args) {
         super({ breadcrumbs, context });
         this.tag = tag;
     }

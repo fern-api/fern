@@ -25,7 +25,11 @@ export class SdkInlinedRequestBodySchemaGenerator {
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
 
-    constructor({ includeSerdeLayer, allowExtraFields, omitUndefined }: SdkInlinedRequestBodySchemaGenerator.Init) {
+    public constructor({
+        includeSerdeLayer,
+        allowExtraFields,
+        omitUndefined
+    }: SdkInlinedRequestBodySchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;

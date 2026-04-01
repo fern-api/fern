@@ -15,7 +15,7 @@ export class LegacyDevServer {
     private readonly context: Context;
     private readonly adapter: LegacyProjectAdapter;
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.context = context;
         this.adapter = new LegacyProjectAdapter({ context });
     }

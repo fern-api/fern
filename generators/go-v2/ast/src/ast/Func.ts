@@ -11,7 +11,7 @@ export declare namespace Func {
 export class Func extends AstNode {
     private func: Method;
 
-    constructor({ name, parameters, return_, body, docs, multiline }: Func.Args) {
+    public constructor({ name, parameters, return_, body, docs, multiline }: Func.Args) {
         super();
         this.func = new Method({ name, parameters, return_, body, docs, multiline });
     }

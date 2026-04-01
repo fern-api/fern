@@ -13,7 +13,7 @@ export class LegacyProjectAdapter {
     private readonly docsAdapter = new LegacyDocsWorkspaceAdapter();
     private readonly ossAdapter: LegacyOSSWorkspaceAdapter;
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.context = context;
         this.ossAdapter = new LegacyOSSWorkspaceAdapter({ context });
     }

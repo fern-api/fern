@@ -13,7 +13,7 @@ export class JavaTypeMapper {
     private context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>;
     private readonly wrappedAliases: boolean;
 
-    constructor(context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>) {
+    public constructor(context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>) {
         this.context = context;
         this.wrappedAliases = this.context.customConfig["wrapped-aliases"] ?? false;
     }

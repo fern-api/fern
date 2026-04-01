@@ -21,7 +21,7 @@ export abstract class ExternalDependency {
     private importsManager: ImportsManager;
     private dependencyManager: DependencyManager;
 
-    constructor({ importsManager, dependencyManager }: ExternalDependency.Init) {
+    public constructor({ importsManager, dependencyManager }: ExternalDependency.Init) {
         this.importsManager = importsManager;
         this.dependencyManager = dependencyManager;
     }

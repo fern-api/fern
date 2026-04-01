@@ -41,7 +41,7 @@ export class Writer extends AbstractWriter {
     /* Import statements */
     private references: Record<FullyQualifiedName, ClassReference[]> = {};
 
-    constructor({ namespace, rootNamespace, customConfig }: Writer.Args) {
+    public constructor({ namespace, rootNamespace, customConfig }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.rootNamespace = rootNamespace;

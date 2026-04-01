@@ -9,7 +9,7 @@ import { extname, join } from "path";
  * to extract or process version information.
  */
 export class AutoVersioningException extends Error {
-    constructor(message: string, cause?: Error) {
+    public constructor(message: string, cause?: Error) {
         super(message);
         this.name = "AutoVersioningException";
         if (cause) {
@@ -170,7 +170,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
 export class AutoVersioningService {
     private readonly logger: TaskContext["logger"];
 
-    constructor({ logger }: { logger: TaskContext["logger"] }) {
+    public constructor({ logger }: { logger: TaskContext["logger"] }) {
         this.logger = logger;
     }
 

@@ -7,7 +7,7 @@ import { FernRcSchemaLoader } from "./FernRcSchemaLoader.js";
 export class FernRcTelemetryManager {
     private readonly loader: FernRcSchemaLoader;
 
-    constructor({ loader }: { loader: FernRcSchemaLoader }) {
+    public constructor({ loader }: { loader: FernRcSchemaLoader }) {
         this.loader = loader;
     }
 

@@ -19,7 +19,7 @@ export class FuncInvocation extends AstNode {
     private arguments_: AstNode[];
     private multiline: boolean | undefined;
 
-    constructor({ func, arguments_, multiline = true }: FuncInvocation.Args) {
+    public constructor({ func, arguments_, multiline = true }: FuncInvocation.Args) {
         super();
 
         this.func = func;

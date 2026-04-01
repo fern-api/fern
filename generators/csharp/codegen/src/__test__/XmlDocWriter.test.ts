@@ -8,25 +8,25 @@ import { XmlDocWriter } from "../ast/core/XmlDocWriter.js";
 class MockWriter {
     private buffer = "";
 
-    write(text: string): void {
+    public write(text: string): void {
         this.buffer += text;
     }
 
-    writeLine(text = ""): void {
+    public writeLine(text = ""): void {
         this.buffer += text + "\n";
     }
 
-    writeNewLineIfLastLineNot(): void {
+    public writeNewLineIfLastLineNot(): void {
         if (!this.buffer.endsWith("\n")) {
             this.buffer += "\n";
         }
     }
 
-    writeNode(): void {
+    public writeNode(): void {
         // No-op for tests
     }
 
-    toString(): string {
+    public toString(): string {
         return this.buffer;
     }
 }

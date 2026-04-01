@@ -24,7 +24,7 @@ export class ReadmeGenerator {
     private organizationPascalCase: string;
     private apiName: string;
 
-    constructor({
+    public constructor({
         readmeParser,
         readmeConfig,
         originalReadme

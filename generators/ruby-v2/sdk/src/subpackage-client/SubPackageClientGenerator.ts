@@ -23,7 +23,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private subpackageId: FernIr.SubpackageId;
     private subpackage: FernIr.Subpackage;
 
-    constructor({ subpackage, context, subpackageId }: SubClientGenerator.Args) {
+    public constructor({ subpackage, context, subpackageId }: SubClientGenerator.Args) {
         super(context);
         this.subpackageId = subpackageId;
         this.subpackage = subpackage;

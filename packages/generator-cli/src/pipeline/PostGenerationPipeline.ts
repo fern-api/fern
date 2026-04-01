@@ -17,7 +17,7 @@ import type {
 export class PostGenerationPipeline {
     private steps: BaseStep[] = [];
 
-    constructor(
+    public constructor(
         private readonly config: PipelineConfig,
         private readonly logger: PipelineLogger = consolePipelineLogger
     ) {
@@ -53,7 +53,7 @@ export class PostGenerationPipeline {
         }
     }
 
-    async run(): Promise<PipelineResult> {
+    public async run(): Promise<PipelineResult> {
         // Set git identity BEFORE any steps run, so all commits
         // (including replay commits) are attributed to fern-bot.
         if (this.config.github?.enabled) {

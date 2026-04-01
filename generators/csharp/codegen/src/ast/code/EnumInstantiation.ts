@@ -14,7 +14,7 @@ export class EnumInstantiation extends AstNode {
     private reference: ClassReference;
     private value: string;
 
-    constructor({ reference, value }: EnumInstantiation.Args, generation: Generation) {
+    public constructor({ reference, value }: EnumInstantiation.Args, generation: Generation) {
         super(generation);
         this.reference = reference;
         this.value = value;

@@ -34,7 +34,7 @@ export class LegacyFernWorkspaceAdapter {
     private readonly taskContext: TaskContextAdapter;
     private readonly cliVersion: string;
 
-    constructor(config: LegacyFernWorkspaceAdapter.Config) {
+    public constructor(config: LegacyFernWorkspaceAdapter.Config) {
         this.context = config.context;
         this.taskContext = new TaskContextAdapter({ context: this.context, task: config.task });
         this.cliVersion = config.cliVersion;
@@ -50,7 +50,7 @@ export class LegacyFernWorkspaceAdapter {
      *
      * Note: Spec combination validation is performed earlier in ApiDefinitionConverter.
      */
-    async adapt(definition: ApiDefinition): Promise<FernWorkspace> {
+    public async adapt(definition: ApiDefinition): Promise<FernWorkspace> {
         const fernSpec = definition.specs.find(isFernSpec);
         if (fernSpec != null) {
             return this.adaptFernSpec(fernSpec);

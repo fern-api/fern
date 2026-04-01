@@ -24,7 +24,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private requestBody: FernIr.HttpRequestBody | undefined;
     private flattenRequestParameters: boolean;
 
-    constructor({
+    public constructor({
         bodyPropertyName,
         example,
         packageId,

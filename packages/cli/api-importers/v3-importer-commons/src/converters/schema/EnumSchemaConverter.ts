@@ -23,7 +23,7 @@ export class EnumSchemaConverter extends AbstractConverter<
     private readonly maybeFernEnum: FernEnumConfig | undefined;
     private readonly forwardCompatible: boolean;
 
-    constructor({ context, breadcrumbs, schema, maybeFernEnum, forwardCompatible }: EnumSchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schema, maybeFernEnum, forwardCompatible }: EnumSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.maybeFernEnum = maybeFernEnum;

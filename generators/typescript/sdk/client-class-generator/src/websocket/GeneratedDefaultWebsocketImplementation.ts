@@ -62,7 +62,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     public readonly channel: FernIr.WebSocketChannel;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         generatedSdkClientClass,
         channelId,

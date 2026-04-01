@@ -5,7 +5,7 @@ import { AbstractServerConverter } from "../../converters/AbstractServerConverte
 import { ServerV2 } from "../types.js";
 
 export class ServersConverter2_X extends AbstractServerConverter<ServerV2> {
-    constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<ServerV2>) {
+    public constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<ServerV2>) {
         super({ context, breadcrumbs, servers });
     }
 

@@ -63,7 +63,7 @@ class IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
     implements IntermediateRepresentationMigratorBuilder<LaterVersion>
 {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    constructor(protected readonly migrations: IrMigration<any, any>[]) {}
+    public constructor(protected readonly migrations: IrMigration<any, any>[]) {}
 
     public withMigration<EarlierVersion>(
         migration: IrMigration<LaterVersion, EarlierVersion>
@@ -86,7 +86,7 @@ class BuildaleIntermediateRepresentationMigratorBuilderImpl<LaterVersion>
 
 class IntermediateRepresentationMigratorImpl implements IntermediateRepresentationMigrator {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    constructor(public readonly migrations: IrMigration<any, any>[]) {}
+    public constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
     public migrateForGenerator({
         intermediateRepresentation,

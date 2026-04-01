@@ -27,7 +27,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
 
     private generatedUnionSchema: GeneratedUnionSchema<Context>;
 
-    constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
+    public constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
         super(superInit);
         const discriminant = this.shape.discriminant;
 

@@ -12,7 +12,7 @@ export declare namespace KeywordParameter {
 export class KeywordParameter extends Parameter {
     public readonly initializer: AstNode | undefined;
 
-    constructor({ name, type, initializer, optional }: KeywordParameter.Args) {
+    public constructor({ name, type, initializer, optional }: KeywordParameter.Args) {
         super({ name, type, optional });
 
         this.initializer = initializer;

@@ -38,7 +38,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
     private noOptionalProperties: boolean;
 
-    constructor({ includeUtilsOnUnionMembers, noOptionalProperties }: TypeSchemaGenerator.Init) {
+    public constructor({ includeUtilsOnUnionMembers, noOptionalProperties }: TypeSchemaGenerator.Init) {
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.noOptionalProperties = noOptionalProperties;
     }

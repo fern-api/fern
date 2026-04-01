@@ -9,7 +9,7 @@ export class OpenAPIRefResolver extends BaseResolver {
     private absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     private absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
 
-    constructor({
+    public constructor({
         absolutePathToOpenAPIOverrides,
         absolutePathToOpenAPIOverlays
     }: {

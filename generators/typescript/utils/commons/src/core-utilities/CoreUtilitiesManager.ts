@@ -55,7 +55,7 @@ export class CoreUtilitiesManager {
     private readonly generateEndpointMetadata: boolean;
     private readonly customPagerName: string;
 
-    constructor({
+    public constructor({
         streamType,
         formDataSupport,
         fetchSupport,

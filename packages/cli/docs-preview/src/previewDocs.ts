@@ -337,7 +337,7 @@ type APIDefinitionID = string;
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
 
-    constructor(private readonly context: TaskContext) {}
+    public constructor(private readonly context: TaskContext) {}
 
     public addReferencedAPI({
         ir,
@@ -400,7 +400,7 @@ class ReferencedAPICollector {
 class ReferencedAPICollectorV2 {
     private readonly apis: Record<APIDefinitionID, FdrAPI.api.latest.ApiDefinition> = {};
 
-    constructor(private readonly context: TaskContext) {}
+    public constructor(private readonly context: TaskContext) {}
 
     public addReferencedAPI({
         api,

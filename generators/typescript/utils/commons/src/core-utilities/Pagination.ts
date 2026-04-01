@@ -37,7 +37,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
     public readonly MANIFEST = MANIFEST;
     public readonly Page: Pagination["Page"];
 
-    constructor(init: CoreUtility.Init) {
+    public constructor(init: CoreUtility.Init) {
         super(init);
 
         this.Page = {

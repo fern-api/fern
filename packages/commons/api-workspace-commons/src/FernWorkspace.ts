@@ -19,7 +19,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
 
     public type: string = "fern";
 
-    constructor({ definition, sources, ...superArgs }: FernWorkspace.Args) {
+    public constructor({ definition, sources, ...superArgs }: FernWorkspace.Args) {
         super(superArgs);
         this.definition = definition;
         this.sources = sources ?? [];

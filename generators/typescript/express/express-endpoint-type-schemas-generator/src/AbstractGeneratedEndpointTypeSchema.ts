@@ -20,7 +20,7 @@ export abstract class AbstractGeneratedEndpointTypeSchema
     protected service: FernIr.HttpService;
     protected endpoint: FernIr.HttpEndpoint;
 
-    constructor({ packageId, service, endpoint, ...superInit }: AbstractGeneratedEndpointTypeSchema.Init) {
+    public constructor({ packageId, service, endpoint, ...superInit }: AbstractGeneratedEndpointTypeSchema.Init) {
         super(superInit);
         this.packageId = packageId;
         this.service = service;

@@ -24,7 +24,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(init: RoutingAuthProviderGenerator.Init) {
+    public constructor(init: RoutingAuthProviderGenerator.Init) {
         this.ir = init.ir;
     }
 

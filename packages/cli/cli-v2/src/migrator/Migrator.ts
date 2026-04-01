@@ -21,7 +21,7 @@ export class Migrator {
     private readonly logger: Logger;
     private readonly deleteOriginals: boolean;
 
-    constructor(config: MigratorConfig) {
+    public constructor(config: MigratorConfig) {
         this.cwd = config.cwd;
         this.logger = config.logger;
         this.deleteOriginals = config.deleteOriginals ?? true;

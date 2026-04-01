@@ -52,7 +52,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly audiences: string[];
     private readonly nameOverride?: string;
 
-    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride }: SchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;

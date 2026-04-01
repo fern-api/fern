@@ -41,7 +41,7 @@ export class DocsWorkspaceValidator {
     private readonly context: Context;
     private readonly taskContext: TaskContextAdapter;
 
-    constructor(config: DocsWorkspaceValidator.Config) {
+    public constructor(config: DocsWorkspaceValidator.Config) {
         this.context = config.context;
         this.taskContext = new TaskContextAdapter({ context: this.context, task: config.task });
     }

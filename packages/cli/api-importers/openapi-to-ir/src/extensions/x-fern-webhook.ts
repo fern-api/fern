@@ -10,7 +10,7 @@ export class FernWebhookExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-webhook";
 
-    constructor({ breadcrumbs, operation, context }: FernWebhookExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernWebhookExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

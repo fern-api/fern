@@ -22,7 +22,7 @@ export class TimeoutSdkErrorContextImpl implements TimeoutSdkErrorContext {
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         timeoutSdkErrorDeclarationReferencer,
         timeoutSdkErrorGenerator,
         importsManager,

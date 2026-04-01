@@ -23,7 +23,14 @@ export class FunctionParameter extends AstNode {
     public readonly defaultValue?: Expression;
     public readonly docsContent?: string;
 
-    constructor({ argumentLabel, unsafeName, escaping, type, defaultValue, docsContent }: FunctionParameter.Args) {
+    public constructor({
+        argumentLabel,
+        unsafeName,
+        escaping,
+        type,
+        defaultValue,
+        docsContent
+    }: FunctionParameter.Args) {
         super();
         this.argumentLabel = argumentLabel;
         this.unsafeName = unsafeName;

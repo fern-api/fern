@@ -16,7 +16,7 @@ export class ClassInstantiation extends AstNode {
     private classReference: ClassReference;
     private arguments_: AstNode[];
 
-    constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
+    public constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
         super();
 
         this.classReference = classReference;

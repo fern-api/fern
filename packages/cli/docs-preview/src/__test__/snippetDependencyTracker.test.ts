@@ -8,7 +8,7 @@ class SnippetDependencyTracker {
     // Map: page file path -> Set of snippet files it references
     private pageToSnippets = new Map<string, Set<string>>();
 
-    constructor(private context: TaskContext) {}
+    public constructor(private context: TaskContext) {}
 
     /**
      * Extract referenced markdown and code files from a markdown file

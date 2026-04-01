@@ -27,7 +27,7 @@ export declare namespace CredentialStore {
 export class CredentialStore {
     private readonly keyring: PlatformKeyring;
 
-    constructor() {
+    public constructor() {
         this.keyring = new PlatformKeyring();
     }
 

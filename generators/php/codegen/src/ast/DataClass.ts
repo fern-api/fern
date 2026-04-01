@@ -25,7 +25,15 @@ export class DataClass extends AstNode {
     private readonly constructorAccess: Access;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
+    public constructor({
+        name,
+        namespace,
+        abstract,
+        docs,
+        parentClassReference,
+        traits,
+        constructorAccess
+    }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

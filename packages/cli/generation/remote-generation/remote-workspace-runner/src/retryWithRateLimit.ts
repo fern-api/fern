@@ -6,7 +6,7 @@ const RATE_LIMIT_MAX_RETRIES = 3;
 const RATE_LIMIT_JITTER_FACTOR = 0.2;
 
 export class TooManyRequestsError extends Error {
-    constructor() {
+    public constructor() {
         super("Received 429 Too Many Requests");
         Object.setPrototypeOf(this, TooManyRequestsError.prototype);
     }

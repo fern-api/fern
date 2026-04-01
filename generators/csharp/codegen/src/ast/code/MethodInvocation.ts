@@ -38,7 +38,7 @@ export class MethodInvocation extends AstNode {
     private generics: Type[];
     private multiline: boolean;
 
-    constructor(
+    public constructor(
         {
             method,
             arguments_,

@@ -11,9 +11,9 @@ import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
 export class GithubStep extends BaseStep {
-    readonly name = "github";
+    public readonly name = "github";
 
-    constructor(
+    public constructor(
         outputDir: string,
         logger: PipelineLogger,
         private readonly config: GithubStepConfig
@@ -21,7 +21,7 @@ export class GithubStep extends BaseStep {
         super(outputDir, logger);
     }
 
-    async execute(context: PipelineContext): Promise<GithubStepResult> {
+    public async execute(context: PipelineContext): Promise<GithubStepResult> {
         const replayResult = context.previousStepResults.replay;
         const skipCommit = this.config.skipCommit ?? this.deriveSkipCommit(replayResult);
         const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);

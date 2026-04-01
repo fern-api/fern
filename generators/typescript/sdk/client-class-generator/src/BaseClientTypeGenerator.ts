@@ -22,7 +22,7 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
 
-    constructor({ generateIdempotentRequestOptions, ir, omitFernHeaders }: BaseClientTypeGenerator.Init) {
+    public constructor({ generateIdempotentRequestOptions, ir, omitFernHeaders }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;

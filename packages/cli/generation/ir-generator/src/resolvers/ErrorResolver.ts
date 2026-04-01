@@ -16,7 +16,7 @@ export interface ErrorResolver {
 }
 
 export class ErrorResolverImpl implements ErrorResolver {
-    constructor(private readonly workspace: FernWorkspace) {}
+    public constructor(private readonly workspace: FernWorkspace) {}
 
     public getDeclarationOrThrow(
         referenceToError: string,

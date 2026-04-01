@@ -26,7 +26,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
     private fernWorkspaces: Record<string, FernWorkspace> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;
 
-    constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
+    public constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
         super(superArgs);
         this.context = context;
         this.loadAPIWorkspace = loadAPIWorkspace;

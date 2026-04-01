@@ -15,7 +15,7 @@ export class RawSamePropertiesAsObjectSingleUnionType<
 > extends AbstractRawSingleUnionType<Context> {
     private extended: FernIr.DeclaredTypeName;
 
-    constructor({ extended, ...superInit }: RawSamePropertiesAsObjectSingleUnionType.Init) {
+    public constructor({ extended, ...superInit }: RawSamePropertiesAsObjectSingleUnionType.Init) {
         super(superInit);
         this.extended = extended;
     }

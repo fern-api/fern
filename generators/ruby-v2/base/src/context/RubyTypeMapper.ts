@@ -16,7 +16,7 @@ export declare namespace RubyTypeMapper {
 export class RubyTypeMapper {
     private context: AbstractRubyGeneratorContext<object>;
 
-    constructor(context: AbstractRubyGeneratorContext<object>) {
+    public constructor(context: AbstractRubyGeneratorContext<object>) {
         this.context = context;
     }
 

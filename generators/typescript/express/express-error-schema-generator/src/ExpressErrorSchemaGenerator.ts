@@ -21,7 +21,7 @@ export class ExpressErrorSchemaGenerator {
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
 
-    constructor({ includeSerdeLayer, allowExtraFields }: ExpressErrorSchemaGenerator.Init) {
+    public constructor({ includeSerdeLayer, allowExtraFields }: ExpressErrorSchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
     }

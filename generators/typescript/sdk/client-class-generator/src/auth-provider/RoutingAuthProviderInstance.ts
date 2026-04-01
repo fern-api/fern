@@ -5,7 +5,7 @@ import { AuthProviderInstance } from "./AuthProviderInstance.js";
 export class RoutingAuthProviderInstance implements AuthProviderInstance {
     private readonly providers: Map<string, AuthProviderInstance>;
 
-    constructor(providers: Map<string, AuthProviderInstance>) {
+    public constructor(providers: Map<string, AuthProviderInstance>) {
         this.providers = providers;
     }
 

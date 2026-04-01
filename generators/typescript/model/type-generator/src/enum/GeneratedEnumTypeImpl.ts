@@ -39,7 +39,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     private includeEnumUtils: boolean;
     private enableForwardCompatibleEnums: boolean;
 
-    constructor({ includeEnumUtils, enableForwardCompatibleEnums, ...superInit }: GeneratedEnumTypeImpl.Init<Context>) {
+    public constructor({
+        includeEnumUtils,
+        enableForwardCompatibleEnums,
+        ...superInit
+    }: GeneratedEnumTypeImpl.Init<Context>) {
         super(superInit);
         this.includeEnumUtils = includeEnumUtils;
         this.enableForwardCompatibleEnums = enableForwardCompatibleEnums;

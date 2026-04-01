@@ -86,7 +86,7 @@ export class OpenApiIrConverterContext {
      */
     private reachability: SchemaReachability | undefined;
 
-    constructor({
+    public constructor({
         taskContext,
         ir,
         options,

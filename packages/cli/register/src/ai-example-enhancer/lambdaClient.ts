@@ -26,7 +26,12 @@ export class LambdaExampleEnhancer {
     private organizationId: string;
     private venusAirGappedResult: boolean | undefined;
 
-    constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken, organizationId: string) {
+    public constructor(
+        config: AIExampleEnhancerConfig,
+        context: TaskContext,
+        token: FernToken,
+        organizationId: string
+    ) {
         this.config = {
             enabled: config.enabled,
             openaiApiKey: config.openaiApiKey,
@@ -130,7 +135,7 @@ export class LambdaExampleEnhancer {
         return result.token;
     }
 
-    async enhanceExample(request: ExampleEnhancementRequest): Promise<ExampleEnhancementResponse> {
+    public async enhanceExample(request: ExampleEnhancementRequest): Promise<ExampleEnhancementResponse> {
         if (!this.config.enabled) {
             return {
                 enhancedRequestExample: request.originalRequestExample,

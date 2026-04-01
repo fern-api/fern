@@ -22,7 +22,7 @@ export class GeneratedSdkErrorClassImpl
 
     private errorDeclaration: FernIr.ErrorDeclaration;
 
-    constructor({ errorClassName, errorDeclaration }: GeneratedSdkErrorClassImpl.Init) {
+    public constructor({ errorClassName, errorDeclaration }: GeneratedSdkErrorClassImpl.Init) {
         super({ errorClassName });
         this.errorDeclaration = errorDeclaration;
     }

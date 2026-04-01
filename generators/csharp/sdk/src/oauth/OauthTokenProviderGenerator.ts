@@ -37,7 +37,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private requestType: ast.ClassReference;
     private additionalRequestFields = new Map<string, ast.Field>();
 
-    constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
+    public constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
         this.scheme = scheme;
         this.classReference = this.Types.OAuthTokenProvider;

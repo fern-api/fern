@@ -27,7 +27,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
     private typeDeclaration: TypeDeclaration;
     private protoStructClassReference: ast.ClassReference;
 
-    constructor({
+    public constructor({
         context,
         classReference,
         typeDeclaration,

@@ -19,7 +19,7 @@ export interface HttpHeadersFieldOptionArgs {
 }
 
 export class BaseOptionsGenerator extends WithGeneration {
-    constructor(private readonly context: SdkGeneratorContext) {
+    public constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
     }
 

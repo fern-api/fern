@@ -38,7 +38,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
 
-    constructor({ context, breadcrumbs, schema, id, inlinedTypes }: OneOfSchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schema, id, inlinedTypes }: OneOfSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;

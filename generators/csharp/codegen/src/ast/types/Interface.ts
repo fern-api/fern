@@ -7,7 +7,7 @@ export declare namespace Interface {
 }
 
 export class Interface extends DefinedType {
-    constructor(
+    public constructor(
         { name, namespace, access, partial, interfaceReferences, enclosingType, origin }: Interface.Args,
         generation: Generation
     ) {

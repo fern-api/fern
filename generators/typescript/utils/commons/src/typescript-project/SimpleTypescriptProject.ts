@@ -20,7 +20,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private useLegacyExports: boolean;
     private resolutions: Record<string, string>;
 
-    constructor({ outputEsm, resolutions, useLegacyExports, ...superInit }: SimpleTypescriptProject.Init) {
+    public constructor({ outputEsm, resolutions, useLegacyExports, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.outputEsm = outputEsm;
         this.resolutions = resolutions;

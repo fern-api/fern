@@ -67,7 +67,7 @@ export class TokenService {
     // Tracks whether or not we've already performed the migration.
     private migrationPromise: Promise<void> | null = null;
 
-    constructor({ credential }: { credential: CredentialStore }) {
+    public constructor({ credential }: { credential: CredentialStore }) {
         this.credential = credential;
 
         const loader = new FernRcSchemaLoader();

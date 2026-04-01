@@ -11,7 +11,7 @@ export declare namespace GeneratedExampleRequest {
 export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     private example: FernIr.ExampleEndpointCall;
 
-    constructor({ example, ...superInit }: GeneratedExampleRequest.Init) {
+    public constructor({ example, ...superInit }: GeneratedExampleRequest.Init) {
         super(superInit);
         this.example = example;
     }

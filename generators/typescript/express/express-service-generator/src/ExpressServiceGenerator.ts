@@ -32,7 +32,7 @@ export class ExpressServiceGenerator {
     private skipResponseValidation: boolean;
     private requestValidationStatusCode: number;
 
-    constructor({
+    public constructor({
         packageResolver,
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,

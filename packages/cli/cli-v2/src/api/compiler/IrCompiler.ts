@@ -32,7 +32,7 @@ export class IrCompiler {
     private readonly context: Context;
     private readonly cliVersion: string;
 
-    constructor(config: IrCompiler.Config) {
+    public constructor(config: IrCompiler.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
     }

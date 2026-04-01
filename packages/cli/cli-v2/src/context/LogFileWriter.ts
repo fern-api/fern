@@ -9,7 +9,7 @@ export class LogFileWriter {
     public readonly absoluteFilePath: AbsoluteFilePath;
     private initialized = false;
 
-    constructor(logsDirectory: AbsoluteFilePath) {
+    public constructor(logsDirectory: AbsoluteFilePath) {
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
         this.absoluteFilePath = join(logsDirectory, RelativeFilePath.of(`${timestamp}.log`));
     }

@@ -57,7 +57,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
-    constructor(init: InferredAuthProviderGenerator.Init) {
+    public constructor(init: InferredAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;

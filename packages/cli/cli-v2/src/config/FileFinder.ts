@@ -13,7 +13,7 @@ export namespace FileFinder {
 export class FileFinder {
     private readonly from: string;
 
-    constructor(options: FileFinder.Options) {
+    public constructor(options: FileFinder.Options) {
         this.from = options.from;
     }
 

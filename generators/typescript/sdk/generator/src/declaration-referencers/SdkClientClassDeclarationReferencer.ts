@@ -9,7 +9,7 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
     private rootClientClassDeclarationReferencer: SdkRootClientClassDeclarationReferencer;
     private subpackageClientClassDeclarationReferencer: SdkSubpackageClientClassDeclarationReferencer;
 
-    constructor(superInit: AbstractSdkClientClassDeclarationReferencer.Init) {
+    public constructor(superInit: AbstractSdkClientClassDeclarationReferencer.Init) {
         super(superInit);
         this.rootClientClassDeclarationReferencer = new SdkRootClientClassDeclarationReferencer(superInit);
         this.subpackageClientClassDeclarationReferencer = new SdkSubpackageClientClassDeclarationReferencer(superInit);

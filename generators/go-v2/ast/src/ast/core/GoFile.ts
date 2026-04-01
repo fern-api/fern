@@ -5,7 +5,7 @@ export declare namespace GoFile {
 }
 
 export class GoFile extends Writer {
-    constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: GoFile.Args) {
+    public constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: GoFile.Args) {
         super({ packageName, rootImportPath, importPath, customConfig, formatter });
     }
 

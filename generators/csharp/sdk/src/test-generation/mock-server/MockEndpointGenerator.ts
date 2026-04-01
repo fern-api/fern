@@ -21,7 +21,7 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
-    constructor(private readonly context: SdkGeneratorContext) {
+    public constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
     }
 

@@ -42,7 +42,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly includeSerdeLayer: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
-    constructor(init: OAuthAuthProviderGenerator.Init) {
+    public constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;

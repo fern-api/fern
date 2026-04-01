@@ -39,7 +39,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly filter: OpenAPIFilter;
     public readonly namespace: string | undefined;
     private readonly schemaNamespaceMapping: Map<SchemaId, string | undefined> | undefined;
-    constructor({
+    public constructor({
         document,
         taskContext,
         authHeaders,

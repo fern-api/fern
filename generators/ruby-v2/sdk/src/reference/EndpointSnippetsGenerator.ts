@@ -22,7 +22,7 @@ export class EndpointSnippetsGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
 
-    constructor({ context }: { context: SdkGeneratorContext }) {
+    public constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
     }
 

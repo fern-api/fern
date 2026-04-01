@@ -64,7 +64,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly resolveQueryParameterNameConflicts: boolean;
 
-    constructor({
+    public constructor({
         service,
         endpoint,
         wrapperName,

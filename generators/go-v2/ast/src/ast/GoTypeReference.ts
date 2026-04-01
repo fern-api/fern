@@ -19,7 +19,7 @@ export class GoTypeReference extends AstNode {
     public readonly importPath: string | undefined;
     public readonly generics: Type[] | undefined;
 
-    constructor({ name, importPath, generics }: GoTypeReference.Args) {
+    public constructor({ name, importPath, generics }: GoTypeReference.Args) {
         super();
         this.name = name;
         this.importPath = importPath;

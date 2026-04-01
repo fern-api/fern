@@ -14,7 +14,7 @@ export class List extends AstNode {
     private itemType: Type | undefined;
     private entries: AstNode[];
 
-    constructor({ itemType, entries }: List.Args, generation: Generation) {
+    public constructor({ itemType, entries }: List.Args, generation: Generation) {
         super(generation);
         this.itemType = itemType;
         this.entries = entries;

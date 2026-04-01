@@ -19,7 +19,7 @@ export class BaseInvocation extends AstNode {
     private arguments: MethodArgument[];
     private multiline: boolean;
 
-    constructor({ reference, arguments_, multiline }: BaseInvocation.Args) {
+    public constructor({ reference, arguments_, multiline }: BaseInvocation.Args) {
         super();
 
         this.reference = reference;

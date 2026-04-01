@@ -16,7 +16,7 @@ export class Parameter extends AstNode {
     public readonly type: Type;
     public readonly docs: string | undefined;
 
-    constructor({ name, type, docs }: Parameter.Args) {
+    public constructor({ name, type, docs }: Parameter.Args) {
         super();
         this.name = name;
         this.type = type;

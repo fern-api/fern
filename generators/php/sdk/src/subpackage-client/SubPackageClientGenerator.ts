@@ -21,7 +21,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
     private serviceId: FernIr.ServiceId | undefined;
     private service: FernIr.HttpService | undefined;
 
-    constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
+    public constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;

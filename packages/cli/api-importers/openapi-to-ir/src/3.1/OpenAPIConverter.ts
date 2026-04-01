@@ -22,7 +22,7 @@ export declare namespace OpenAPIConverter {
 }
 
 export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
-    constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<OpenAPIConverterContext3_1>) {
+    public constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<OpenAPIConverterContext3_1>) {
         super({ breadcrumbs, context, audiences });
     }
 

@@ -75,7 +75,7 @@ export class XmlDocWriter {
 
     private writer: Writer;
     private wrotePrefixOnCurrentLine: boolean = false;
-    constructor(writer: Writer) {
+    public constructor(writer: Writer) {
         this.writer = writer;
     }
 

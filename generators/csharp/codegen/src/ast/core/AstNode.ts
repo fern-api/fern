@@ -24,7 +24,7 @@ export interface FormattedAstNodeSnippet {
 addGlobalFunctionFilter("AstNode");
 
 export abstract class AstNode extends AbstractAstNode {
-    constructor(public readonly generation: Generation) {
+    public constructor(public readonly generation: Generation) {
         super();
     }
 
@@ -213,7 +213,7 @@ export namespace Node {
 
 export abstract class Node extends AstNode {
     public readonly origin?: Origin;
-    constructor(origin: Origin | undefined, generation: Generation) {
+    public constructor(origin: Origin | undefined, generation: Generation) {
         super(generation);
         this.origin = this.model.origin(origin);
     }
@@ -228,7 +228,7 @@ export namespace MemberNode {
 export abstract class MemberNode extends Node {
     public readonly enclosingType?: Class | Interface | ClassReference;
 
-    constructor(args: MemberNode.Args, origin: Origin | undefined, generation: Generation) {
+    public constructor(args: MemberNode.Args, origin: Origin | undefined, generation: Generation) {
         super(origin, generation);
         this.enclosingType = args.enclosingType;
     }

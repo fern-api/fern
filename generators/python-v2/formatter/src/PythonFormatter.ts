@@ -4,7 +4,7 @@ import init, { Config, format } from "@wasm-fmt/ruff_fmt";
 export class PythonFormatter extends AbstractFormatter {
     private config: Config | undefined;
 
-    constructor({ config }: { config?: Config } = {}) {
+    public constructor({ config }: { config?: Config } = {}) {
         super();
         this.config = config;
     }

@@ -5,7 +5,7 @@ export declare namespace RubyFile {
 }
 
 export class RubyFile extends Writer {
-    constructor({ customConfig, formatter }: RubyFile.Args) {
+    public constructor({ customConfig, formatter }: RubyFile.Args) {
         super({ customConfig, formatter });
     }
 

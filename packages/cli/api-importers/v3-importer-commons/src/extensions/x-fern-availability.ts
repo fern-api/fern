@@ -12,7 +12,7 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
     private readonly node: unknown;
     public readonly key = "x-fern-availability";
 
-    constructor({ breadcrumbs, node, context }: FernAvailabilityExtension.Args) {
+    public constructor({ breadcrumbs, node, context }: FernAvailabilityExtension.Args) {
         super({ breadcrumbs, context });
         this.node = node;
     }

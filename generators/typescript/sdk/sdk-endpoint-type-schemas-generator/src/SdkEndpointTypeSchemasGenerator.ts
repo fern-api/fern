@@ -34,7 +34,7 @@ export class SdkEndpointTypeSchemasGenerator {
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
 
-    constructor({
+    public constructor({
         errorResolver,
         intermediateRepresentation,
         shouldGenerateErrors,

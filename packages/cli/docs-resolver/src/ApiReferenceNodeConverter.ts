@@ -35,7 +35,7 @@ import { toRelativeFilepath } from "./utils/toRelativeFilepath.js";
 const NUM_NEAREST_SUBPACKAGES = 1;
 
 export class ApiReferenceNodeConverter {
-    apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
+    public apiDefinitionId: FernNavigation.V1.ApiDefinitionId;
     #holder: ApiDefinitionHolder;
     #visitedEndpoints = new Set<FernNavigation.V1.EndpointId>();
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
@@ -52,7 +52,7 @@ export class ApiReferenceNodeConverter {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
-    constructor(
+    public constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator,

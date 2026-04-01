@@ -21,7 +21,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     private readonly exampleGenerator: ExampleGenerator;
     private readonly unionMemberTypeMap: Map<FernIr.SingleUnionType, ast.Type>;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
         private readonly unionDeclaration: UnionTypeDeclaration
@@ -469,7 +469,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
 // ReSharper disable InconsistentNaming`
         });
     }
-    getUnionType(type: FernIr.NameAndWireValue) {
+    public getUnionType(type: FernIr.NameAndWireValue) {
         return this.csharp.classReference({
             origin: type,
             enclosingType: this.classReference

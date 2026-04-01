@@ -11,7 +11,7 @@ import {
 } from "./AbstractOpenAPIV3ParserContext.js";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    constructor({
+    public constructor({
         document,
         taskContext,
         options,

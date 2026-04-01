@@ -17,7 +17,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     private useBigInt: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({ example, useBigInt, includeSerdeLayer }: GeneratedTypeReferenceExampleImpl.Init) {
+    public constructor({ example, useBigInt, includeSerdeLayer }: GeneratedTypeReferenceExampleImpl.Init) {
         this.example = example;
         this.useBigInt = useBigInt;
         this.includeSerdeLayer = includeSerdeLayer;

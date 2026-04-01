@@ -42,7 +42,7 @@ export class WorkspaceLoader {
     private readonly logger: Logger;
     private readonly issues: ValidationIssue[] = [];
 
-    constructor({ cwd, logger }: { cwd: AbsoluteFilePath; logger: Logger }) {
+    public constructor({ cwd, logger }: { cwd: AbsoluteFilePath; logger: Logger }) {
         this.cwd = cwd;
         this.logger = logger;
     }

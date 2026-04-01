@@ -31,7 +31,7 @@ export class Writer extends AbstractWriter {
     /* Track indentation level for line wrapping calculations */
     private _indentLevel = 0;
 
-    constructor({ customConfig, formatter }: Writer.Args) {
+    public constructor({ customConfig, formatter }: Writer.Args) {
         super();
         this.customConfig = customConfig;
         this.formatter = formatter ?? new NopFormatter();

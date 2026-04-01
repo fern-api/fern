@@ -13,7 +13,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public customConfig: BaseRubyCustomConfigSchema | undefined;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
 
-    constructor({
+    public constructor({
         ir,
         config
     }: {

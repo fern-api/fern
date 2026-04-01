@@ -20,7 +20,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     private discriminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
     private schemasToExclude: Set<SchemaId> = new Set();
 
-    constructor({
+    public constructor({
         document,
         taskContext,
         authHeaders,

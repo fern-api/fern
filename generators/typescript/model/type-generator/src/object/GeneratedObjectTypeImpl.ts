@@ -39,7 +39,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
 {
     private readonly allObjectProperties: FernIr.ObjectProperty[];
     public readonly type = "object";
-    constructor(init: AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context>) {
+    public constructor(init: AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context>) {
         super(init);
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
     }

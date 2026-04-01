@@ -9,7 +9,7 @@ const STRING_VALUE_PARAM_NAME = "s";
 const TYPE_PARAMETER_NAME = "t";
 
 export class EnumGenerator extends AbstractModelGenerator {
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly enumDeclaration: FernIr.EnumTypeDeclaration

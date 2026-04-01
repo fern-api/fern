@@ -22,7 +22,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     private tokenEndpointReference: FernIr.EndpointReference;
     private tokenEndpoint: FernIr.HttpEndpoint;
 
-    constructor({ context, scheme }: InferredAuthProviderGenerator.Args) {
+    public constructor({ context, scheme }: InferredAuthProviderGenerator.Args) {
         super(context);
         this.scheme = scheme;
         this.tokenEndpointReference = this.scheme.tokenEndpoint.endpoint;

@@ -55,7 +55,7 @@ export class DocsChecker {
     private readonly context: Context;
     private readonly task: Task | undefined;
 
-    constructor(config: DocsChecker.Config) {
+    public constructor(config: DocsChecker.Config) {
         this.context = config.context;
         this.task = config.task;
     }

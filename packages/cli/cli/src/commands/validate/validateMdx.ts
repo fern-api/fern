@@ -23,7 +23,7 @@ function calculateVisualColumn(text: string, charIndex: number, tabWidth = 4): n
 }
 
 class MdxValidationError {
-    constructor(
+    public constructor(
         public readonly filepath: AbsoluteFilePath,
         public readonly message: string,
         public readonly line?: number,
@@ -31,7 +31,7 @@ class MdxValidationError {
         public readonly contextLines?: ContextLine[]
     ) {}
 
-    toString(): string {
+    public toString(): string {
         const relativePath = path.relative(process.cwd(), this.filepath);
         let formatted = chalk.red(` ${relativePath}`);
 

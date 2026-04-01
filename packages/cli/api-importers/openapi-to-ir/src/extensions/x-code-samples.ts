@@ -51,7 +51,7 @@ export class RedoclyCodeSamplesExtension extends AbstractExtension<RedoclyCodeSa
 
     public readonly key = "x-codeSamples";
 
-    constructor({ context, breadcrumbs, operation, baseDir }: RedoclyCodeSamplesExtension.Args) {
+    public constructor({ context, breadcrumbs, operation, baseDir }: RedoclyCodeSamplesExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
         this.baseDir = baseDir;

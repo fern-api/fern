@@ -9,7 +9,7 @@ export abstract class FileGenerator<
     CustomConfig extends BaseGoCustomConfigSchema,
     Context extends AbstractGoGeneratorContext<CustomConfig>
 > {
-    constructor(protected readonly context: Context) {}
+    public constructor(protected readonly context: Context) {}
 
     public generate(): GeneratedFile {
         this.context.logger.debug(`Generating ${this.getFilepath()}`);

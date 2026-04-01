@@ -27,7 +27,7 @@ export declare namespace SdkGeneratorCli {
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private configOverrides: Partial<SdkCustomConfig>;
 
-    constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
+    public constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
         super();
         this.configOverrides = configOverrides ?? {};
     }

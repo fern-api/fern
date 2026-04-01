@@ -19,7 +19,7 @@ export class Alias extends AstNode {
     public readonly type: Type;
     public readonly docs: string | undefined;
 
-    constructor({ name, type, docs }: Alias.Args) {
+    public constructor({ name, type, docs }: Alias.Args) {
         super();
         this.name = name;
         this.type = type;

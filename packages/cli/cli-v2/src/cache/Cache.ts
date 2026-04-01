@@ -66,7 +66,7 @@ export class Cache {
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
 
-    constructor({ logger }: { logger?: Logger } = {}) {
+    public constructor({ logger }: { logger?: Logger } = {}) {
         this.absoluteFilePath = this.resolveAbsoluteFilePath();
         this.ir = new IrCache({
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("ir")),

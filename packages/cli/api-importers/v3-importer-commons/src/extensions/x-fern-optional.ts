@@ -12,7 +12,7 @@ export class FernOptionalExtension extends AbstractExtension<boolean> {
     private readonly parameter: object;
     public readonly key = "x-fern-optional";
 
-    constructor({ breadcrumbs, parameter, context }: FernOptionalExtension.Args) {
+    public constructor({ breadcrumbs, parameter, context }: FernOptionalExtension.Args) {
         super({ breadcrumbs, context });
         this.parameter = parameter;
     }

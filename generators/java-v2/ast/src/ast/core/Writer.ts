@@ -26,7 +26,7 @@ export class Writer extends AbstractWriter {
     /* Import statements */
     protected imports: Set<PackageName> = new Set();
 
-    constructor({ packageName, customConfig, formatter }: Writer.Args) {
+    public constructor({ packageName, customConfig, formatter }: Writer.Args) {
         super();
         this.packageName = packageName;
         this.customConfig = customConfig;

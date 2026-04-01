@@ -10,7 +10,7 @@ export class FernIdempotentExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-idempotent";
 
-    constructor({ breadcrumbs, operation, context }: FernIdempotentExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernIdempotentExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

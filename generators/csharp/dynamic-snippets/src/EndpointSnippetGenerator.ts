@@ -10,7 +10,7 @@ import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         super(context.generation);
         this.context = context;
     }

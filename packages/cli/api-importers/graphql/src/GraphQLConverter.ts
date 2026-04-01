@@ -32,7 +32,7 @@ export class GraphQLConverter {
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
-    constructor({
+    public constructor({
         context,
         filePath,
         namespace

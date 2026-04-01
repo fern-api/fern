@@ -35,7 +35,7 @@ export class ReadmeImporter extends DocsImporter<object> {
     private readonly logger: Logger;
     private readonly absolutePathToFernDirectory: AbsoluteFilePath;
 
-    constructor(args: ReadmeImporter.Args) {
+    public constructor(args: ReadmeImporter.Args) {
         super({ context: args.context });
         this.url = typeof args.url === "string" ? new URL(args.url) : args.url;
         this.logger = args.context.logger;

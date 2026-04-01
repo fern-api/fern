@@ -18,7 +18,7 @@ export declare namespace RubyFile {
 }
 
 export class RubyFile extends File {
-    constructor({ node, directory, filename, customConfig, formatter }: RubyFile.Args) {
+    public constructor({ node, directory, filename, customConfig, formatter }: RubyFile.Args) {
         super(
             filename,
             directory,

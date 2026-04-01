@@ -29,7 +29,7 @@ export class Property extends AstNode {
     public readonly defaultValue?: Expression;
     public readonly docs?: DocComment;
 
-    constructor({
+    public constructor({
         unsafeName,
         accessLevel,
         static_,

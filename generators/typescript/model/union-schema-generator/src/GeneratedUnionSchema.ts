@@ -32,7 +32,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly shape: FernIr.UnionTypeDeclaration | undefined;
 
-    constructor({
+    public constructor({
         shape,
         discriminant,
         singleUnionTypes,

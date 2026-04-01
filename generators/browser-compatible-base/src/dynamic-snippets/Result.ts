@@ -8,7 +8,7 @@ export class Result {
     public snippet: string | undefined;
     public err: Error | undefined;
 
-    constructor() {
+    public constructor() {
         this.snippet = undefined;
         this.reporter = undefined;
         this.err = undefined;

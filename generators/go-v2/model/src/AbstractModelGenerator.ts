@@ -14,7 +14,7 @@ export abstract class AbstractModelGenerator extends FileGenerator<
 > {
     public readonly typeReference: go.TypeReference;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         protected readonly typeDeclaration: FernIr.TypeDeclaration
     ) {

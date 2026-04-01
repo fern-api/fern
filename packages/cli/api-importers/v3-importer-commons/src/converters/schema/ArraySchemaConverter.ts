@@ -25,7 +25,7 @@ export class ArraySchemaConverter extends AbstractConverter<
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
 
-    constructor({ context, breadcrumbs, schema }: ArraySchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schema }: ArraySchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
     }

@@ -41,7 +41,7 @@ export class BaseContextImpl implements BaseContext {
     public readonly includeSerdeLayer: boolean;
     public readonly jsonContext: JsonContext;
 
-    constructor({
+    public constructor({
         logger,
         sourceFile,
         importsManager,

@@ -38,7 +38,7 @@ export class FernParametersExtension extends AbstractExtension<FernParametersExt
     private readonly operation: object;
     public readonly key = "x-fern-parameters";
 
-    constructor({ breadcrumbs, operation, context }: FernParametersExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernParametersExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

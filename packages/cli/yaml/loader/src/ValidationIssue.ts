@@ -15,7 +15,7 @@ export class ValidationIssue {
     /** The suggestion to remediate the issue, if any */
     public readonly suggestion?: string;
 
-    constructor({
+    public constructor({
         message,
         location,
         yamlPath,

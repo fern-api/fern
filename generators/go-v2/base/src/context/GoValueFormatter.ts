@@ -21,7 +21,7 @@ export declare namespace GoValueFormatter {
 export class GoValueFormatter {
     private context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>;
 
-    constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
+    public constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
         this.context = context;
     }
 

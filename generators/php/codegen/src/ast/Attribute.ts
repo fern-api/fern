@@ -15,7 +15,7 @@ export class Attribute extends AstNode {
     private reference: ClassReference;
     private arguments: (string | AstNode)[];
 
-    constructor(args: Attribute.Args) {
+    public constructor(args: Attribute.Args) {
         super();
         this.reference = args.reference;
         this.arguments = args.arguments ?? [];

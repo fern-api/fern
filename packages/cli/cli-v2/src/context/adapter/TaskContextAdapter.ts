@@ -31,7 +31,11 @@ export class TaskContextAdapter implements TaskContext {
 
     public readonly logger: Logger;
 
-    constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
+    public constructor({
+        context,
+        task,
+        logLevel = LogLevel.Warn
+    }: { context: Context; task?: Task; logLevel?: LogLevel }) {
         if (task != null) {
             this.logger = new TaskContextLogger({ context, task, logLevel });
         } else {

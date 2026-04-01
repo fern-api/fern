@@ -18,7 +18,7 @@ export class YamlDocument {
     private readonly document: Document;
     private readonly source: string;
 
-    constructor({
+    public constructor({
         absoluteFilePath,
         relativeFilePath,
         document,

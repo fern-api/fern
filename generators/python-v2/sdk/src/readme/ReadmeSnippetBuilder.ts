@@ -27,7 +27,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly clientClassName: string;
     private readonly asyncClientClassName: string;
 
-    constructor({
+    public constructor({
         context,
         endpointSnippets
     }: {

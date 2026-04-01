@@ -13,7 +13,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 > {
-    constructor({
+    public constructor({
         ir,
         config
     }: {

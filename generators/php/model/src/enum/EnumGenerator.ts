@@ -9,7 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: php.ClassReference;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: FernIr.TypeDeclaration,
         private readonly enumDeclaration: FernIr.EnumTypeDeclaration

@@ -52,7 +52,7 @@ export class ApiDefinitionValidator {
     private readonly taskContext: TaskContextAdapter;
     private readonly cliVersion: string;
 
-    constructor(config: ApiDefinitionValidator.Config) {
+    public constructor(config: ApiDefinitionValidator.Config) {
         this.context = config.context;
         this.taskContext = new TaskContextAdapter({ context: this.context, task: config.task });
         this.cliVersion = config.cliVersion;

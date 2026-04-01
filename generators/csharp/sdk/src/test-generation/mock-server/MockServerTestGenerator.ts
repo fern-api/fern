@@ -25,7 +25,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
 
-    constructor(
+    public constructor(
         context: SdkGeneratorContext,
         private readonly exampleEndpointCalls: ExampleEndpointCall[],
         private readonly endpoint: HttpEndpoint,

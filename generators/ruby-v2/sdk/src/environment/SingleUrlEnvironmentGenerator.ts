@@ -16,7 +16,7 @@ export declare namespace SingleUrlEnvironmentGenerator {
 export class SingleUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private singleUrlEnvironments: FernIr.SingleBaseUrlEnvironments;
 
-    constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
+    public constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
         super(context);
         this.singleUrlEnvironments = singleUrlEnvironments;
     }

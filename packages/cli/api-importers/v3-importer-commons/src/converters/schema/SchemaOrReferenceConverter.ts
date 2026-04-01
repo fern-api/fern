@@ -32,7 +32,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     private readonly wrapAsOptional: boolean;
     private readonly wrapAsNullable: boolean;
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         schemaOrReference,

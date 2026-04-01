@@ -13,7 +13,7 @@ export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    public constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
     }

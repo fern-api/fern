@@ -5,7 +5,7 @@ export declare namespace TypeScriptFile {
 }
 
 export class TypeScriptFile extends Writer {
-    constructor({ customConfig, formatter }: TypeScriptFile.Args) {
+    public constructor({ customConfig, formatter }: TypeScriptFile.Args) {
         super({ customConfig, formatter });
     }
 

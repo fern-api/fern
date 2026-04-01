@@ -16,7 +16,7 @@ const createMockContext = (isExampleWithSummaryFn: (example: unknown) => boolean
     }) as unknown as AbstractConverterContext<object>;
 
 class TestMediaTypeObjectConverter extends AbstractMediaTypeObjectConverter {
-    convert(): AbstractMediaTypeObjectConverter.Output | undefined {
+    public convert(): AbstractMediaTypeObjectConverter.Output | undefined {
         return undefined;
     }
 

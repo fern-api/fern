@@ -4,7 +4,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
  * Extractor for processing code snippets and extracting method calls.
  */
 export class SnippetExtractor {
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Extracts just the client method call from a full Java snippet.

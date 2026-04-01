@@ -9,7 +9,7 @@ export declare namespace ClassInstantiation {
 }
 
 export class ClassInstantiation extends BaseInvocation {
-    constructor({ classReference, ...args }: ClassInstantiation.Args) {
+    public constructor({ classReference, ...args }: ClassInstantiation.Args) {
         super({ reference: classReference, ...args });
     }
 }

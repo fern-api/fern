@@ -14,7 +14,7 @@ export class KeywordArgument extends AstNode {
     public readonly name: string;
     public readonly value: AstNode;
 
-    constructor({ name, value }: KeywordArgument.Args) {
+    public constructor({ name, value }: KeywordArgument.Args) {
         super();
         this.name = name;
         this.value = value;

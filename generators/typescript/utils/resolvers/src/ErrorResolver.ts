@@ -5,7 +5,7 @@ type SimpleErrorName = string;
 export class ErrorResolver {
     private resolvedErrors: Record<FernIr.ErrorId, Record<SimpleErrorName, FernIr.ErrorDeclaration>> = {};
 
-    constructor(intermediateRepresentation: FernIr.IntermediateRepresentation) {
+    public constructor(intermediateRepresentation: FernIr.IntermediateRepresentation) {
         for (const error of Object.values(intermediateRepresentation.errors)) {
             const errorsAtFilepath = (this.resolvedErrors[error.name.errorId] ??= {});
             errorsAtFilepath[getSimpleErrorName(error.name)] = error;

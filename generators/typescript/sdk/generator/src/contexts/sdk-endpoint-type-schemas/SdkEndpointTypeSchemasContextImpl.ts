@@ -27,7 +27,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

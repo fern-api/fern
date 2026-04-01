@@ -9,7 +9,7 @@ import { ValidationIssue } from "@fern-api/yaml-loader";
 export class SourcedValidationError extends Error {
     public readonly issues: ValidationIssue[];
 
-    constructor(issues: ValidationIssue[]) {
+    public constructor(issues: ValidationIssue[]) {
         super(issues.map((issue) => issue.toString()).join("\n"));
         this.issues = issues;
     }

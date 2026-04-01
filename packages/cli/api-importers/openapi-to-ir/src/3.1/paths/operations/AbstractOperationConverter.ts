@@ -51,7 +51,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly path: string;
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+    public constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;

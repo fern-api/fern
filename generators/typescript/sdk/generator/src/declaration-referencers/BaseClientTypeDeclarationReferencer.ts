@@ -24,7 +24,7 @@ const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "BaseIdempotentRequestOptions"
 export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationReferencer {
     private readonly generateIdempotentRequestOptions: boolean;
 
-    constructor({ generateIdempotentRequestOptions, ...superInit }: BaseClientTypeDeclarationReferencer.Init) {
+    public constructor({ generateIdempotentRequestOptions, ...superInit }: BaseClientTypeDeclarationReferencer.Init) {
         super(superInit);
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
     }

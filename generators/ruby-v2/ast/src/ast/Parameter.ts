@@ -21,7 +21,7 @@ export abstract class Parameter extends AstNode {
     public readonly optional: boolean;
     public readonly docs?: string;
 
-    constructor({ name, type, optional, docs }: Parameter.Args) {
+    public constructor({ name, type, optional, docs }: Parameter.Args) {
         super();
         this.name = name;
         this.type = type ?? Type.untyped();

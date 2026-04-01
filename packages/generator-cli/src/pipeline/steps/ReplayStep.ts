@@ -4,9 +4,9 @@ import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../typ
 import { BaseStep } from "./BaseStep";
 
 export class ReplayStep extends BaseStep {
-    readonly name = "replay";
+    public readonly name = "replay";
 
-    constructor(
+    public constructor(
         outputDir: string,
         logger: PipelineLogger,
         private readonly config: ReplayStepConfig,
@@ -17,7 +17,7 @@ export class ReplayStep extends BaseStep {
         super(outputDir, logger);
     }
 
-    async execute(_context: PipelineContext): Promise<ReplayStepResult> {
+    public async execute(_context: PipelineContext): Promise<ReplayStepResult> {
         const result = await replayRun({
             outputDir: this.outputDir,
             cliVersion: this.cliVersion,

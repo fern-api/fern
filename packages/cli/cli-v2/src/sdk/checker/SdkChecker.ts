@@ -45,7 +45,7 @@ export declare namespace SdkChecker {
 export class SdkChecker {
     private readonly versionChecker: SdkChecker.VersionChecker;
 
-    constructor(config: SdkChecker.Config) {
+    public constructor(config: SdkChecker.Config) {
         this.versionChecker = config.versionChecker ?? ((args) => this.checkVersionExists(args));
     }
 

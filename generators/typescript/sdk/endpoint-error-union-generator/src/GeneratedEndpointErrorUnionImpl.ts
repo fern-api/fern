@@ -29,7 +29,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     private endpoint: FernIr.HttpEndpoint;
     private errorUnion: GeneratedUnionImpl<SdkContext>;
 
-    constructor({
+    public constructor({
         packageId,
         endpoint,
         errorResolver,

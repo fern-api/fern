@@ -40,7 +40,7 @@ export class ApiDefinitionConverter {
     private readonly cwd: AbsoluteFilePath;
     private readonly issues: ValidationIssue[] = [];
 
-    constructor({ cwd }: { cwd: AbsoluteFilePath }) {
+    public constructor({ cwd }: { cwd: AbsoluteFilePath }) {
         this.cwd = cwd;
     }
 

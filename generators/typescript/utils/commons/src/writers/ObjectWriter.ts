@@ -31,7 +31,7 @@ export class ObjectWriter {
     private asConst: boolean;
     private newlinesBetweenProperties: boolean;
 
-    static writer(init: ObjectWriter.Init = {}): ObjectWriter {
+    public static writer(init: ObjectWriter.Init = {}): ObjectWriter {
         return new ObjectWriter(init);
     }
 

@@ -471,7 +471,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         return this.#doesIrHaveCustomPagination;
     }
 
-    getChildNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
+    public getChildNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
         const segmentNames = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
         return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
     }

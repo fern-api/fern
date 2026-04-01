@@ -12,7 +12,7 @@ export declare namespace Or {
 export class Or extends AstNode {
     private conditions: AstNode[];
 
-    constructor(args: Or.Args, generation: Generation) {
+    public constructor(args: Or.Args, generation: Generation) {
         super(generation);
         this.conditions = args.conditions;
     }

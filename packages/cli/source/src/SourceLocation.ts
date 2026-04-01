@@ -15,7 +15,7 @@ export class SourceLocation {
      */
     public readonly refFrom?: SourceLocation;
 
-    constructor({
+    public constructor({
         absoluteFilePath,
         relativeFilePath,
         line,

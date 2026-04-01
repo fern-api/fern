@@ -12,7 +12,7 @@ export class ClonedRepository {
     private clonePath: string;
     private git: SimpleGit;
 
-    constructor({ clonePath, git }: { clonePath: string; git: SimpleGit }) {
+    public constructor({ clonePath, git }: { clonePath: string; git: SimpleGit }) {
         this.clonePath = clonePath;
         this.git = git;
     }

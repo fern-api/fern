@@ -16,7 +16,11 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
     private environments: FernIr.SingleBaseUrlEnvironments;
     private defaultEnvironmentId: FernIr.EnvironmentId | undefined;
 
-    constructor({ environments, environmentEnumName, defaultEnvironmentId }: GeneratedSingleUrlEnvironmentsImpl.Init) {
+    public constructor({
+        environments,
+        environmentEnumName,
+        defaultEnvironmentId
+    }: GeneratedSingleUrlEnvironmentsImpl.Init) {
         this.environments = environments;
         this.environmentEnumName = environmentEnumName;
         this.defaultEnvironmentId = defaultEnvironmentId;

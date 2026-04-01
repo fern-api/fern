@@ -7,7 +7,7 @@ export class OpenAPIPruner {
     private matcher: EndpointMatcher;
     private document: OpenAPIV3.Document;
 
-    constructor(options: PruneOptions) {
+    public constructor(options: PruneOptions) {
         this.matcher = new EndpointMatcher(options.endpoints);
         this.document = JSON.parse(JSON.stringify(options.document));
     }

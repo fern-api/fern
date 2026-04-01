@@ -16,7 +16,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     private _ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     private httpEndpointReferenceParser: HttpEndpointReferenceParser;
 
-    constructor({
+    public constructor({
         ir,
         config,
         options = {}

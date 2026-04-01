@@ -17,7 +17,7 @@ const REQUEST_BODY_ARG_NAME = "request";
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

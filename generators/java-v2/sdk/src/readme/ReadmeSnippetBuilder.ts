@@ -31,7 +31,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly isPaginationEnabled: boolean;
     private cachedEnvironmentUrlVariables?: FernIr.ServerVariable[];
 
-    constructor({
+    public constructor({
         context,
         endpointSnippets
     }: {

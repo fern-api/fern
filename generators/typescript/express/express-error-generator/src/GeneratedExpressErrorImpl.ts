@@ -28,7 +28,7 @@ export class GeneratedExpressErrorImpl
 
     private errorDeclaration: FernIr.ErrorDeclaration;
 
-    constructor({ errorClassName, errorDeclaration }: GeneratedExpressErrorImpl.Init) {
+    public constructor({ errorClassName, errorDeclaration }: GeneratedExpressErrorImpl.Init) {
         super({ errorClassName });
         this.errorClassName = errorClassName;
         this.errorDeclaration = errorDeclaration;

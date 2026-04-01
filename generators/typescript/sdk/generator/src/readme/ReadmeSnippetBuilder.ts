@@ -54,7 +54,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly genericAPISdkErrorName: string;
     private readonly fileResponseType: "stream" | "binary-response";
 
-    constructor({
+    public constructor({
         context,
         endpointSnippets,
         fileResponseType,

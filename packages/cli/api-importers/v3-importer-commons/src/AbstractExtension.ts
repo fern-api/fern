@@ -18,7 +18,7 @@ export abstract class AbstractExtension<Output> {
     protected readonly breadcrumbs: string[];
     protected readonly context: AbstractConverterContext<object>;
 
-    constructor(args: AbstractExtension.Args) {
+    public constructor(args: AbstractExtension.Args) {
         this.breadcrumbs = args.breadcrumbs;
         this.context = args.context;
     }

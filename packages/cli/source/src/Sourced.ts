@@ -33,7 +33,7 @@ export type SourcedLiteral<T extends string> = SourcedString & {
  * Use `valueOf()` for implicit conversion, or `.value` for explicit access.
  */
 export class SourcedString implements Locatable {
-    constructor(
+    public constructor(
         private readonly _value: string,
         public readonly $loc: SourceLocation
     ) {}
@@ -84,7 +84,7 @@ export class SourcedString implements Locatable {
 }
 
 export class SourcedNumber implements Locatable {
-    constructor(
+    public constructor(
         private readonly _value: number,
         public readonly $loc: SourceLocation
     ) {}
@@ -107,7 +107,7 @@ export class SourcedNumber implements Locatable {
 }
 
 export class SourcedBoolean implements Locatable {
-    constructor(
+    public constructor(
         private readonly _value: boolean,
         public readonly $loc: SourceLocation
     ) {}
@@ -129,7 +129,7 @@ export class SourcedBoolean implements Locatable {
  * A null/undefined value with source location tracking.
  */
 export class SourcedNullish<T extends null | undefined> implements Locatable {
-    constructor(
+    public constructor(
         private readonly _value: T,
         public readonly $loc: SourceLocation
     ) {}

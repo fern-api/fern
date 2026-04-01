@@ -13,7 +13,7 @@ export class DisplayNameExtension extends AbstractExtension<string> {
     private readonly channel: AsyncAPIV3.ChannelV3 | AsyncAPIV2.ChannelV2;
     public readonly key = "x-fern-display-name";
 
-    constructor({ breadcrumbs, channel, context }: DisplayNameExtension.Args) {
+    public constructor({ breadcrumbs, channel, context }: DisplayNameExtension.Args) {
         super({ breadcrumbs, context });
         this.channel = channel;
     }

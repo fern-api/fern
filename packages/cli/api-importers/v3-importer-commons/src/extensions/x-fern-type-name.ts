@@ -12,7 +12,7 @@ export class FernTypeNameExtension extends AbstractExtension<string> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     public readonly key = "x-fern-type-name";
 
-    constructor({ breadcrumbs, schema, context }: FernTypeNameExtension.Args) {
+    public constructor({ breadcrumbs, schema, context }: FernTypeNameExtension.Args) {
         super({ breadcrumbs, context });
         this.schema = schema;
     }

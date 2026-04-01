@@ -28,7 +28,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
     protected websocketGroup: string[] | undefined;
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         websocketGroup,

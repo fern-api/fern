@@ -24,7 +24,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
 
-    constructor({
+    public constructor({
         packageId,
         endpoint,
         inlinedRequestBody,

@@ -26,7 +26,7 @@ export class Module_ extends AstNode {
     public readonly docstring: string | undefined;
     public readonly statements: AstNode[];
 
-    constructor({ name, namespace, typeParameters, docstring, statements }: Module_.Args) {
+    public constructor({ name, namespace, typeParameters, docstring, statements }: Module_.Args) {
         super();
 
         this.name = name;

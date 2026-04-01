@@ -67,7 +67,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
 class SlugChangeTracker {
     private pageSlugMap = new Map<string, string>(); // pageId -> slug
 
-    constructor(private context: TaskContext) {}
+    public constructor(private context: TaskContext) {}
 
     /**
      * Extract all page slugs using the FernNavigation NodeCollector
@@ -138,7 +138,9 @@ class SlugChangeTracker {
     /**
      * Update the slug mappings from a docs definition and detect changes
      */
-    updateAndDetectChanges(docsDefinition: DocsV1Read.DocsDefinition): Array<{ oldSlug: string; newSlug: string }> {
+    public updateAndDetectChanges(
+        docsDefinition: DocsV1Read.DocsDefinition
+    ): Array<{ oldSlug: string; newSlug: string }> {
         const changes: Array<{ oldSlug: string; newSlug: string }> = [];
 
         // Extract new slug mappings - use the FernNavigation root structure
@@ -176,7 +178,7 @@ class SlugChangeTracker {
     /**
      * Initialize slug mappings from a docs definition
      */
-    initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
+    public initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
         if (docsDefinition.config.root) {
             // Convert V1 navigation root to latest version
             const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
@@ -199,7 +201,7 @@ class SnippetDependencyTracker {
     // Map: page file path -> Set of snippet files it references
     private pageToSnippets = new Map<string, Set<string>>();
 
-    constructor(private context: TaskContext) {}
+    public constructor(private context: TaskContext) {}
 
     /**
      * Extract referenced markdown and code files from a markdown file
@@ -244,7 +246,7 @@ class SnippetDependencyTracker {
     /**
      * Scan all pages in the project and build dependency maps
      */
-    async buildDependencyMap(project: Project): Promise<void> {
+    public async buildDependencyMap(project: Project): Promise<void> {
         this.snippetToPages.clear();
         this.pageToSnippets.clear();
 
@@ -311,7 +313,7 @@ class SnippetDependencyTracker {
     /**
      * Given a list of changed files, return all files that need to be reloaded (including dependent pages)
      */
-    getFilesToReload(changedFiles: AbsoluteFilePath[]): AbsoluteFilePath[] {
+    public getFilesToReload(changedFiles: AbsoluteFilePath[]): AbsoluteFilePath[] {
         const filesToReload = new Set<string>();
 
         // Add all originally changed files
@@ -336,7 +338,7 @@ class SnippetDependencyTracker {
     /**
      * Check if any of the changed files are snippets that affect other pages
      */
-    hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
+    public hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
         for (const file of changedFiles) {
             const pages = this.snippetToPages.get(file);
             if (pages && pages.size > 0) {
@@ -349,7 +351,7 @@ class SnippetDependencyTracker {
     /**
      * Get debug info about current dependencies
      */
-    getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
+    public getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
         let totalDependencies = 0;
         for (const pages of this.snippetToPages.values()) {
             totalDependencies += pages.size;

@@ -8,7 +8,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class AliasGenerator extends AbstractModelGenerator {
     private readonly aliasType: go.Type;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly aliasDeclaration: FernIr.AliasTypeDeclaration

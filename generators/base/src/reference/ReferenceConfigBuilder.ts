@@ -39,7 +39,7 @@ export class ReferenceConfigBuilder {
 export class ReferenceSectionBuilder {
     private endpoints: FernGeneratorCli.EndpointReference[];
 
-    constructor({ endpoints }: { endpoints: FernGeneratorCli.EndpointReference[] }) {
+    public constructor({ endpoints }: { endpoints: FernGeneratorCli.EndpointReference[] }) {
         this.endpoints = endpoints;
     }
 

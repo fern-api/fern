@@ -36,7 +36,7 @@ declare namespace ObjectGenerator {
 export class ObjectGenerator extends AbstractModelGenerator {
     private receiver: string;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly objectDeclaration: FernIr.ObjectTypeDeclaration

@@ -45,7 +45,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
 
     private docs: string | undefined;
 
-    constructor({
+    public constructor({
         getReferenceToSelf,
         typeName,
         shape,

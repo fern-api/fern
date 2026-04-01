@@ -22,7 +22,7 @@ const REQUESTS_DIRECTORY_NAME = "requests";
 export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
     private exportAllRequestsAtRoot: boolean;
 
-    constructor({ exportAllRequestsAtRoot, ...superInit }: RequestWrapperDeclarationReferencer.Init) {
+    public constructor({ exportAllRequestsAtRoot, ...superInit }: RequestWrapperDeclarationReferencer.Init) {
         super(superInit);
         this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
     }

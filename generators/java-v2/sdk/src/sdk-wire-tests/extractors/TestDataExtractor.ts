@@ -7,7 +7,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
  * separate from the code snippet generation. It is used to generate test data for wire tests.
  */
 export class WireTestDataExtractor {
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     public getTestExamples(endpoint: FernIr.HttpEndpoint): WireTestExample[] {
         const examples: WireTestExample[] = [];

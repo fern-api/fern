@@ -45,7 +45,7 @@ export class Method extends AstNode {
     public readonly static_: boolean;
     public readonly noBody: boolean;
 
-    constructor({
+    public constructor({
         name,
         access,
         parameters,

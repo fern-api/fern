@@ -10,7 +10,7 @@ export class FernBasePathExtension extends AbstractExtension<string> {
     private readonly document: object;
     public readonly key = "x-fern-base-path";
 
-    constructor({ breadcrumbs, document, context }: FernBasePathExtension.Args) {
+    public constructor({ breadcrumbs, document, context }: FernBasePathExtension.Args) {
         super({ breadcrumbs, context });
         this.document = document;
     }

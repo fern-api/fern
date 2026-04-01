@@ -31,7 +31,7 @@ export namespace FernRcAccountManager {
 export class FernRcAccountManager {
     private readonly loader: FernRcSchemaLoader;
 
-    constructor({ loader }: { loader: FernRcSchemaLoader }) {
+    public constructor({ loader }: { loader: FernRcSchemaLoader }) {
         this.loader = loader;
     }
 

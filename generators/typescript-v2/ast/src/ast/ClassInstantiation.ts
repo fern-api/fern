@@ -13,7 +13,7 @@ export class ClassInstantiation extends AstNode {
     private class_: Reference;
     private arguments_: AstNode[];
 
-    constructor({ class_, arguments_ }: ClassInstantiation.Args) {
+    public constructor({ class_, arguments_ }: ClassInstantiation.Args) {
         super();
         this.class_ = class_;
         this.arguments_ = arguments_;

@@ -12,7 +12,7 @@ export declare namespace PositionalParameter {
 export class PositionalParameter extends Parameter {
     public readonly initializer: AstNode | undefined;
 
-    constructor({ name, type, optional, initializer }: PositionalParameter.Args) {
+    public constructor({ name, type, optional, initializer }: PositionalParameter.Args) {
         super({ name, type, optional });
 
         this.initializer = initializer;

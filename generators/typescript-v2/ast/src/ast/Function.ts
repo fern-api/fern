@@ -17,14 +17,14 @@ export declare namespace Function {
 }
 
 export class Function extends AstNode {
-    readonly name: string;
-    readonly parameters: Parameter[];
-    readonly ["async"]: boolean;
-    readonly body: CodeBlock;
-    readonly return_: Type | undefined;
-    readonly docs: string | undefined;
+    public readonly name: string;
+    public readonly parameters: Parameter[];
+    public readonly ["async"]: boolean;
+    public readonly body: CodeBlock;
+    public readonly return_: Type | undefined;
+    public readonly docs: string | undefined;
 
-    constructor({ name, parameters, async, body, return_, docs }: Function.Args) {
+    public constructor({ name, parameters, async, body, return_, docs }: Function.Args) {
         super();
         this.name = name;
         this.parameters = parameters;

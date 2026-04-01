@@ -25,7 +25,7 @@ export interface ExtractedDefault {
  * are skipped because they may have lost precision during IR processing.
  */
 export class DefaultValueExtractor {
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Extracts the default value from a FernIr.TypeReference, if one exists.

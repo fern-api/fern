@@ -9,7 +9,7 @@ import type { ValidationViolation } from "./ValidationViolation.js";
 export class ValidationError extends Error {
     public readonly violations: ValidationViolation[];
 
-    constructor(violations: ValidationViolation[]) {
+    public constructor(violations: ValidationViolation[]) {
         super(violations.map((v) => `${v.relativeFilepath}: ${v.message}`).join("\n"));
         this.violations = violations;
     }

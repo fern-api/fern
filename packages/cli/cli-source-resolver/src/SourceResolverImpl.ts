@@ -11,7 +11,7 @@ export class SourceResolverImpl implements SourceResolver {
     private readonly workspace: FernWorkspace;
     private readonly sourceCache: Map<AbsoluteFilePath, ResolvedSource>;
 
-    constructor(context: TaskContext, workspace: FernWorkspace) {
+    public constructor(context: TaskContext, workspace: FernWorkspace) {
         this.context = context;
         this.workspace = workspace;
         this.sourceCache = new Map();

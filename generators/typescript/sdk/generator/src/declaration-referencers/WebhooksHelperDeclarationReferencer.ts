@@ -5,7 +5,7 @@ import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.j
 export class WebhooksHelperDeclarationReferencer extends AbstractDeclarationReferencer {
     private readonly helperName: string;
 
-    constructor(init: AbstractDeclarationReferencer.Init & { helperName?: string }) {
+    public constructor(init: AbstractDeclarationReferencer.Init & { helperName?: string }) {
         super(init);
         this.helperName = init.helperName ?? "WebhooksHelper";
     }

@@ -15,7 +15,7 @@ export class Lambda extends AstNode {
     private readonly parameters: LambdaParameter[];
     private readonly body: AstNode;
 
-    constructor({ parameters, body }: Lambda.Args) {
+    public constructor({ parameters, body }: Lambda.Args) {
         super();
         this.parameters = parameters ?? [];
         this.body = body;

@@ -18,7 +18,7 @@ export class ClassReference extends AstNode {
     public readonly generics?: Type[];
     private fullyQualified: boolean;
 
-    constructor({ name, namespace, generics }: ClassReference.Args) {
+    public constructor({ name, namespace, generics }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

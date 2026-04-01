@@ -32,7 +32,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
     private readonly baseDir: string | undefined;
     public readonly key = "x-fern-examples";
 
-    constructor({ breadcrumbs, channel, context, baseDir }: FernExamplesExtension.Args) {
+    public constructor({ breadcrumbs, channel, context, baseDir }: FernExamplesExtension.Args) {
         super({ breadcrumbs: breadcrumbs ?? [], context });
         this.channel = channel;
         this.baseDir = baseDir;

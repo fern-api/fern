@@ -30,7 +30,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({
+    public constructor({
         packageId,
         service,
         endpoint,

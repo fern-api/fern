@@ -30,7 +30,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
     private retainOriginalCasing: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({
+    public constructor({
         expressInlinedRequestBodyGenerator,
         expressInlinedRequestBodyDeclarationReferencer,
         packageResolver,

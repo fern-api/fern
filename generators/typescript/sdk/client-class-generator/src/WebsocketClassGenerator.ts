@@ -28,7 +28,7 @@ export class WebsocketClassGenerator {
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         retainOriginalCasing,
         omitUndefined,

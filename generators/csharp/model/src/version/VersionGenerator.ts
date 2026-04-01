@@ -7,7 +7,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class VersionGenerator extends FileGenerator<CSharpFile> {
     private classReference: ast.ClassReference;
 
-    constructor(context: ModelGeneratorContext) {
+    public constructor(context: ModelGeneratorContext) {
         super(context);
         this.classReference = this.Types.Version;
     }

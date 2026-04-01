@@ -21,7 +21,7 @@ export class TestMethodBuilder {
     private resourceWriter: TestResourceWriter | undefined;
     private currentTestClassName: string | undefined;
 
-    constructor(private readonly context: SdkGeneratorContext) {
+    public constructor(private readonly context: SdkGeneratorContext) {
         this.headerValidator = new HeaderValidator();
         this.jsonValidator = new JsonValidator(context);
         this.paginationValidator = new PaginationValidator(context);

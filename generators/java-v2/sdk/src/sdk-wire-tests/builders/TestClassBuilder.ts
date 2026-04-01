@@ -10,7 +10,7 @@ interface MultiUrlEnvironment {
  * Builder for generating test class boilerplate including setup/teardown methods.
  */
 export class TestClassBuilder {
-    constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
      * Checks if the API uses OAuth authentication.

@@ -36,7 +36,7 @@ export class RemoteTaskHandler {
     private absolutePathToPreview: AbsoluteFilePath | undefined;
     private lengthOfLastLogs = 0;
 
-    constructor({ interactiveTaskContext, generatorInvocation, absolutePathToPreview }: RemoteTaskHandler.Init) {
+    public constructor({ interactiveTaskContext, generatorInvocation, absolutePathToPreview }: RemoteTaskHandler.Init) {
         this.context = interactiveTaskContext;
         this.generatorInvocation = generatorInvocation;
         this.absolutePathToPreview = absolutePathToPreview;

@@ -17,7 +17,7 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
     private retainOriginalCasing: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({
+    public constructor({
         requestBody,
         typeName,
         retainOriginalCasing,

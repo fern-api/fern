@@ -18,7 +18,7 @@ const mockLogger = {
  * Concrete subclass of AbstractConverterContext for testing purposes.
  */
 class TestConverterContext extends AbstractConverterContext<OpenAPIV3_1.Document> {
-    convertReferenceToTypeReference({
+    public convertReferenceToTypeReference({
         reference
     }: {
         reference: OpenAPIV3_1.ReferenceObject;

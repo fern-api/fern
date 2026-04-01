@@ -34,7 +34,7 @@ export declare namespace ExampleTypeFactory {
 }
 
 export class ExampleTypeFactory {
-    constructor(
+    public constructor(
         private readonly schemas: Record<SchemaId, SchemaWithExample>,
         private readonly nonRequestReferencedSchemas: Set<SchemaId>,
         private readonly context: SchemaParserContext

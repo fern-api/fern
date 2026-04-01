@@ -111,7 +111,7 @@ class ApiSectionCollector {
     private namedApis: Set<string> = new Set();
     private defaultApi = false;
 
-    collect(section: docsYml.DocsNavigationItem.ApiSection): void {
+    public collect(section: docsYml.DocsNavigationItem.ApiSection): void {
         if (section.apiName != null) {
             this.namedApis.add(section.apiName);
         } else {
@@ -119,7 +119,7 @@ class ApiSectionCollector {
         }
     }
 
-    getReferences(): ReferencedApisResponse | undefined {
+    public getReferences(): ReferencedApisResponse | undefined {
         if (this.defaultApi) {
             return {
                 type: "default"

@@ -15,7 +15,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
 > {
     private formatter: AbstractFormatter | undefined;
 
-    constructor({
+    public constructor({
         ir,
         config,
         formatter

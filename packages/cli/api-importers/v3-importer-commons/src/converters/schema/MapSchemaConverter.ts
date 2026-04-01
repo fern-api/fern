@@ -20,7 +20,7 @@ export declare namespace MapSchemaConverter {
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
     private readonly schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
 
-    constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean }: MapSchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schemaOrReferenceOrBoolean = schemaOrReferenceOrBoolean;
     }

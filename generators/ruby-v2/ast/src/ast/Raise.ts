@@ -17,7 +17,7 @@ export class Raise extends AstNode {
     public readonly errorClass?: AstNode;
     public readonly message?: AstNode;
 
-    constructor({ errorClass, message }: Raise.Args) {
+    public constructor({ errorClass, message }: Raise.Args) {
         super();
         this.errorClass = errorClass;
         this.message = message;

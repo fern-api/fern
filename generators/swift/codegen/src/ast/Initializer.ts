@@ -29,7 +29,16 @@ export class Initializer extends AstNode {
     public readonly multiline?: true;
     public readonly docs?: DocComment;
 
-    constructor({ accessLevel, convenience, failable, throws, parameters, body, multiline, docs }: Initializer.Args) {
+    public constructor({
+        accessLevel,
+        convenience,
+        failable,
+        throws,
+        parameters,
+        body,
+        multiline,
+        docs
+    }: Initializer.Args) {
         super();
         this.accessLevel = accessLevel;
         this.convenience = convenience;

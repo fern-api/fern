@@ -1,5 +1,5 @@
 export class FernCliError extends Error {
-    constructor() {
+    public constructor() {
         super();
         Object.setPrototypeOf(this, FernCliError.prototype);
     }

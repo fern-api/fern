@@ -8,7 +8,7 @@ export class TaskStageController {
     private readonly taskId: string;
     private readonly stageId: string;
 
-    constructor({
+    public constructor({
         taskGroup,
         taskId,
         stageId

@@ -19,7 +19,7 @@ export class MockServer {
     private server: Server | undefined = undefined;
     public port: number | undefined = undefined;
 
-    constructor({
+    public constructor({
         context,
         ir,
         port

@@ -19,7 +19,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
     public rootNamespace: string;
-    constructor({
+    public constructor({
         ir,
         config
     }: {

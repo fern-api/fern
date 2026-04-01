@@ -4,7 +4,7 @@ export class Block {
     public id: string;
     public content: string;
 
-    constructor({ id, content }: { id: string; content: string }) {
+    public constructor({ id, content }: { id: string; content: string }) {
         this.id = id;
         this.content = content;
     }

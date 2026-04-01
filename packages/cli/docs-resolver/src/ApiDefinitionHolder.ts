@@ -266,47 +266,47 @@ export class ApiDefinitionHolder {
         });
     }
 
-    get endpoints(): ReadonlyMap<FernNavigation.EndpointId, APIV1Read.EndpointDefinition> {
+    public get endpoints(): ReadonlyMap<FernNavigation.EndpointId, APIV1Read.EndpointDefinition> {
         return this.#endpoints;
     }
 
-    get webSockets(): ReadonlyMap<FernNavigation.WebSocketId, APIV1Read.WebSocketChannel> {
+    public get webSockets(): ReadonlyMap<FernNavigation.WebSocketId, APIV1Read.WebSocketChannel> {
         return this.#webSockets;
     }
 
-    get webhooks(): ReadonlyMap<FernNavigation.WebhookId, APIV1Read.WebhookDefinition> {
+    public get webhooks(): ReadonlyMap<FernNavigation.WebhookId, APIV1Read.WebhookDefinition> {
         return this.#webhooks;
     }
 
-    get grpcs(): ReadonlyMap<FernNavigation.GrpcId, APIV1Read.EndpointDefinition> {
+    public get grpcs(): ReadonlyMap<FernNavigation.GrpcId, APIV1Read.EndpointDefinition> {
         return this.#grpcs;
     }
 
-    get endpointsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
+    public get endpointsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
         return this.#endpointsByLocator;
     }
 
-    get webSocketsByLocator(): ReadonlyMap<string, APIV1Read.WebSocketChannel> {
+    public get webSocketsByLocator(): ReadonlyMap<string, APIV1Read.WebSocketChannel> {
         return this.#webSocketsByLocator;
     }
 
-    get webhooksByLocator(): ReadonlyMap<string, APIV1Read.WebhookDefinition> {
+    public get webhooksByLocator(): ReadonlyMap<string, APIV1Read.WebhookDefinition> {
         return this.#webhooksByLocator;
     }
 
-    get grpcsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
+    public get grpcsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
         return this.#grpcsByLocator;
     }
 
-    get subpackages(): ReadonlyMap<APIV1Read.SubpackageId, SubpackageHolder> {
+    public get subpackages(): ReadonlyMap<APIV1Read.SubpackageId, SubpackageHolder> {
         return this.#subpackages;
     }
 
-    get subpackagesByLocator(): ReadonlyMap<string, APIV1Read.ApiDefinitionPackage> {
+    public get subpackagesByLocator(): ReadonlyMap<string, APIV1Read.ApiDefinitionPackage> {
         return this.#subpackagesByLocator;
     }
 
-    get subpackageLocators(): ReadonlySet<string> {
+    public get subpackageLocators(): ReadonlySet<string> {
         return new Set(this.#subpackagesByLocator.keys());
     }
 

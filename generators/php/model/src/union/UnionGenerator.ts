@@ -9,7 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: php.ClassReference;
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration

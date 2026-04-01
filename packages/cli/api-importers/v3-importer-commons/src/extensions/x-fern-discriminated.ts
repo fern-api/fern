@@ -10,7 +10,7 @@ export class FernDiscriminatedExtension extends AbstractExtension<boolean | unde
     private readonly node: unknown;
     public readonly key = "x-fern-discriminated";
 
-    constructor({ breadcrumbs, node, context }: FernDiscriminatedExtension.Args) {
+    public constructor({ breadcrumbs, node, context }: FernDiscriminatedExtension.Args) {
         super({ breadcrumbs, context });
         this.node = node;
     }

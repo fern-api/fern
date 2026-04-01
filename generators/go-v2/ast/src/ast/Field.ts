@@ -30,7 +30,7 @@ export class Field extends AstNode {
     private docs: string | undefined;
     private tags: Field.Tag[] = [];
 
-    constructor({ name, type, docs, tags }: Field.Args) {
+    public constructor({ name, type, docs, tags }: Field.Args) {
         super();
         this.name = name;
         this.type = type;

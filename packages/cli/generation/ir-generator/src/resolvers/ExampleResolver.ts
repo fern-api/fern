@@ -24,7 +24,7 @@ export interface ExampleResolver {
 }
 
 export class ExampleResolverImpl implements ExampleResolver {
-    constructor(private readonly typeResolver: TypeResolver) {}
+    public constructor(private readonly typeResolver: TypeResolver) {}
 
     public resolveAllReferencesInExample({
         example,

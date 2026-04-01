@@ -134,7 +134,7 @@ type FullyQualifiedName = string;
  * Represents a named entity that is tracked by the NameRegistry.
  */
 class Identifier {
-    constructor(
+    public constructor(
         public readonly registry: NameRegistry,
         public readonly name: string,
         public readonly jsonPath?: JsonPath
@@ -152,7 +152,7 @@ class Scope extends Identifier {
      * Makes a name off-limits within this scope.
      * @param name - The name to forbid
      */
-    forbid(name: string) {
+    public forbid(name: string) {
         this.forbidden.add(name);
     }
 
@@ -161,7 +161,7 @@ class Scope extends Identifier {
      * Two things cannot exist with the same name in the same scope.
      * @param name - The name to create
      */
-    create(name: string) {
+    public create(name: string) {
         //
     }
 
@@ -170,7 +170,7 @@ class Scope extends Identifier {
      * @param name - The requested name
      * @returns The name with an underscore suffix if forbidden, otherwise the original name
      */
-    getName(name: string) {
+    public getName(name: string) {
         if (this.forbidden.has(name)) {
             return `${name}_`;
         }
@@ -183,12 +183,12 @@ class Scope extends Identifier {
  * Maintains lookups by name and JSON path, and handles name redirections for conflict resolution.
  */
 class Members<T extends Member> implements Iterable<T> {
-    constructor(private readonly scope: TypeScope) {}
+    public constructor(private readonly scope: TypeScope) {}
     private readonly byName = new Map<string, T>();
     private readonly byPath = new Map<JsonPath, T>();
     private readonly redirections = new Map<string, string>();
 
-    [Symbol.iterator](): Iterator<T> {
+    public [Symbol.iterator](): Iterator<T> {
         return this.byName.values();
     }
 
@@ -197,7 +197,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param name - The member name to check
      * @returns `true` if a member with this name exists, `false` otherwise
      */
-    has(name: string): boolean {
+    public has(name: string): boolean {
         return this.byName.has(name);
     }
 
@@ -206,7 +206,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param jsonPath - The JSON path identifying the member in the IR
      * @returns The member if found, `undefined` otherwise
      */
-    getByJsonPath(jsonPath: JsonPath): T | undefined {
+    public getByJsonPath(jsonPath: JsonPath): T | undefined {
         return this.byPath.get(jsonPath);
     }
 
@@ -215,7 +215,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param name - The member name to look up
      * @returns The member if found, `undefined` otherwise
      */
-    getByName(name: string): T | undefined {
+    public getByName(name: string): T | undefined {
         return this.byName.get(name);
     }
 
@@ -225,7 +225,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param name - The original member name
      * @returns The redirected name if one exists, `undefined` otherwise
      */
-    getRedirectedName(name: string): string | undefined {
+    public getRedirectedName(name: string): string | undefined {
         return this.redirections.get(name);
     }
 
@@ -235,7 +235,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param member - The member to add
      * @throws Error if the member already exists by name or JSON path
      */
-    set(member: T) {
+    public set(member: T) {
         if (this.byName.has(member.name)) {
             fail(`set: ${member.name} in ${this.scope.fullyQualifiedName} already exists`);
         }
@@ -256,7 +256,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param newName - The redirected name
      * @throws Error if a redirection for this name already exists
      */
-    redirect(name: string, newName: string) {
+    public redirect(name: string, newName: string) {
         if (this.redirections.has(name)) {
             fail(`redirect: ${name} in ${this.scope.fullyQualifiedName} already has a redirect`);
         }
@@ -269,14 +269,14 @@ class Members<T extends Member> implements Iterable<T> {
  * Handles field and method name registration, conflict detection, and name resolution.
  */
 export class TypeScope extends Identifier {
-    readonly fields: Members<Field>;
-    readonly methods: Members<Method>;
+    public readonly fields: Members<Field>;
+    public readonly methods: Members<Method>;
 
-    constructor(
+    public constructor(
         registry: NameRegistry,
         name: string,
-        readonly namespace: string,
-        readonly fullyQualifiedName: FullyQualifiedName
+        public readonly namespace: string,
+        public readonly fullyQualifiedName: FullyQualifiedName
     ) {
         super(registry, name);
         this.fields = new Members<Field>(this);
@@ -288,7 +288,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a C# keyword, `false` otherwise
      */
-    isKeyword(name: string) {
+    public isKeyword(name: string) {
         return keywords.has(name);
     }
 
@@ -297,7 +297,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a built-in member name, `false` otherwise
      */
-    isBuiltinMemberName(name: string) {
+    public isBuiltinMemberName(name: string) {
         return member_names.has(name);
     }
 
@@ -306,7 +306,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name matches this type's name, `false` otherwise
      */
-    isTypeName(name: string) {
+    public isTypeName(name: string) {
         return this.name === name;
     }
 
@@ -315,7 +315,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered field, `false` otherwise
      */
-    isField(name: string) {
+    public isField(name: string) {
         return this.fields.has(name);
     }
 
@@ -324,7 +324,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered method, `false` otherwise
      */
-    isMethod(name: string) {
+    public isMethod(name: string) {
         return this.methods.has(name);
     }
 
@@ -333,7 +333,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered member, `false` otherwise
      */
-    isMember(name: string) {
+    public isMember(name: string) {
         return this.isField(name) || this.isMethod(name);
     }
 
@@ -342,7 +342,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns The reason the name is blocked, or `undefined` if available
      */
-    nameBlocked(name: string): "keyword" | "builtin" | "typeName" | "field" | "method" | undefined {
+    public nameBlocked(name: string): "keyword" | "builtin" | "typeName" | "field" | "method" | undefined {
         if (this.isKeyword(name)) {
             return "keyword";
         }
@@ -367,7 +367,7 @@ export class TypeScope extends Identifier {
      * @param name - The blocked name
      * @returns An available alternative name (e.g., "name_", "name_2", "name_3", etc.)
      */
-    getAlternativeName(name: string): string {
+    public getAlternativeName(name: string): string {
         // first append an underscore.
         let newName = `${name}_`;
 
@@ -385,7 +385,7 @@ export class TypeScope extends Identifier {
      * @param jsonPath - The JSON path identifying the field
      * @returns The field if found, `undefined` otherwise
      */
-    getFieldByJsonPath(jsonPath?: string): Member | undefined {
+    public getFieldByJsonPath(jsonPath?: string): Member | undefined {
         return jsonPath !== undefined ? this.fields.getByJsonPath(jsonPath) : undefined;
     }
 
@@ -394,7 +394,7 @@ export class TypeScope extends Identifier {
      * @param name - The field name to look up
      * @returns The field if found, `undefined` otherwise
      */
-    getFieldByName(name: string): Member | undefined {
+    public getFieldByName(name: string): Member | undefined {
         return this.fields.getByName(name);
     }
 
@@ -403,7 +403,7 @@ export class TypeScope extends Identifier {
      * @param name - The original field name
      * @returns The redirected name if one exists, `undefined` otherwise
      */
-    getRedirectedFieldName(name: string): string | undefined {
+    public getRedirectedFieldName(name: string): string | undefined {
         return this.fields.getRedirectedName(name);
     }
 
@@ -415,7 +415,7 @@ export class TypeScope extends Identifier {
      * @param field - The AST field object
      * @returns The actual field name (may differ from expectedName if conflicts occurred)
      */
-    registerField(expectedName: string, origin?: Origin, field?: AstField): string {
+    public registerField(expectedName: string, origin?: Origin, field?: AstField): string {
         const jsonPath = this.registry.model.jsonPath(origin);
         if (jsonPath) {
             // quick lookup by json paths
@@ -478,7 +478,7 @@ export class TypeScope extends Identifier {
      * @param expectedName - The expected field name
      * @returns The actual field name if found or inferred, `undefined` otherwise
      */
-    getFieldName(node: Origin, expectedName: string): string | undefined {
+    public getFieldName(node: Origin, expectedName: string): string | undefined {
         // if we have already identified this node's name then return that quickly.
         const result = this.getFieldByJsonPath(this.registry.model.jsonPath(node))?.name;
         if (result) {
@@ -560,7 +560,7 @@ export class TypeScope extends Identifier {
  * Base class representing a member (field or method) within a TypeScope.
  */
 class Member extends Identifier {
-    constructor(
+    public constructor(
         registry: NameRegistry,
         name: string,
         public readonly scope: TypeScope,
@@ -574,12 +574,12 @@ class Member extends Identifier {
  * Represents a field member within a type.
  */
 class Field extends Member {
-    constructor(
+    public constructor(
         registry: NameRegistry,
         name: string,
         scope: TypeScope,
         jsonPath?: JsonPath,
-        readonly field?: AstField
+        public readonly field?: AstField
     ) {
         super(registry, name, scope, jsonPath);
     }
@@ -686,7 +686,7 @@ export class NameRegistry {
         "Xml"
     ]);
 
-    constructor(readonly generation: Generation) {
+    public constructor(public readonly generation: Generation) {
         this.initializeBuiltIns();
     }
 
@@ -694,7 +694,7 @@ export class NameRegistry {
      * Gets the CSharp generation context.
      * @returns The CSharp generation context
      */
-    get csharp() {
+    public get csharp() {
         return this.generation.csharp;
     }
 
@@ -702,7 +702,7 @@ export class NameRegistry {
      * Gets the model navigator for accessing the IR.
      * @returns The model navigator
      */
-    get model() {
+    public get model() {
         return this.generation.model;
     }
 
@@ -747,7 +747,7 @@ export class NameRegistry {
      * @param jsonPath - The JSON path from the IR
      * @param name - The field name to associate with this JSON path
      */
-    setFieldNameShortcut(jsonPath: JsonPath | undefined, name: string): void {
+    public setFieldNameShortcut(jsonPath: JsonPath | undefined, name: string): void {
         if (jsonPath) {
             const current = this.shortcuts.get(jsonPath);
             if (current && current !== name) {
@@ -772,7 +772,7 @@ export class NameRegistry {
      * @param origin - The IR origin node for the field
      * @returns The field name if found, `undefined` otherwise
      */
-    getFieldNameByOrigin(origin: Origin | undefined): string | undefined {
+    public getFieldNameByOrigin(origin: Origin | undefined): string | undefined {
         return this.shortcuts.get(this.model.jsonPath(origin) ?? ">ignore<");
     }
 
@@ -919,7 +919,7 @@ export class NameRegistry {
      * @param from - The original namespace name
      * @param to - The canonical namespace name (potentially modified to avoid conflicts)
      */
-    registerNamespace(from: string, to: string): void {
+    public registerNamespace(from: string, to: string): void {
         if (this.namespaceRegistry.has(from) && this.namespaceRegistry.get(from) !== to) {
             return;
         }

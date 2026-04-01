@@ -6,7 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 export class TypeResolver {
     private allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration> = {};
 
-    constructor(intermediateRepresentation: FernIr.IntermediateRepresentation) {
+    public constructor(intermediateRepresentation: FernIr.IntermediateRepresentation) {
         for (const type of Object.values(intermediateRepresentation.types)) {
             this.allTypes[type.name.typeId] = type;
         }

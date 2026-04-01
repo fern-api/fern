@@ -12,7 +12,7 @@ export class WebhooksHelperGenerator {
     private readonly verification: FernIr.WebhookSignatureVerification;
     private readonly className: string;
 
-    constructor(verification: FernIr.WebhookSignatureVerification, className = "WebhooksHelper") {
+    public constructor(verification: FernIr.WebhookSignatureVerification, className = "WebhooksHelper") {
         this.verification = verification;
         this.className = className;
     }

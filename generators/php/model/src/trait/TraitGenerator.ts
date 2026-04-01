@@ -9,7 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: php.ClassReference;
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly objectDeclaration: FernIr.ObjectTypeDeclaration

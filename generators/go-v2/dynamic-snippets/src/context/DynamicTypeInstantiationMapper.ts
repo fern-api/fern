@@ -20,7 +20,7 @@ export declare namespace DynamicTypeInstantiationMapper {
 export class DynamicTypeInstantiationMapper {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

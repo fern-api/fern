@@ -62,7 +62,7 @@ export namespace IntermediateRepresentationChangeDetector {
 export class ErrorCollector {
     private errors: IntermediateRepresentationChangeDetector.Error[];
 
-    constructor() {
+    public constructor() {
         this.errors = [];
     }
 
@@ -88,7 +88,7 @@ export class ErrorCollector {
 export class IntermediateRepresentationChangeDetector {
     private errors: ErrorCollector;
 
-    constructor() {
+    public constructor() {
         this.errors = new ErrorCollector();
     }
 

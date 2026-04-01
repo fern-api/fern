@@ -12,7 +12,7 @@ export class ServerNameExtension extends AbstractExtension<string | undefined> {
     private readonly server: OpenAPIV3_1.ServerObject;
     public readonly key = "x-fern-server-name";
 
-    constructor({ breadcrumbs, server, context }: ServerNameExtension.Args) {
+    public constructor({ breadcrumbs, server, context }: ServerNameExtension.Args) {
         super({ breadcrumbs, context });
         this.server = server;
     }

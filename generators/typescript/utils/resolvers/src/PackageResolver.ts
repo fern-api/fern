@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 
 export class PackageResolver {
-    constructor(private readonly intermediateRepresentation: FernIr.IntermediateRepresentation) {}
+    public constructor(private readonly intermediateRepresentation: FernIr.IntermediateRepresentation) {}
 
     public getAllPackageIds(): PackageId[] {
         return [

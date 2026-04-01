@@ -15,7 +15,7 @@ export class SdkTask {
         readonly output: TaskStageController;
     };
 
-    constructor({ id, taskGroup }: { id: string; taskGroup: TaskGroup }) {
+    public constructor({ id, taskGroup }: { id: string; taskGroup: TaskGroup }) {
         this.id = id;
         this.taskGroup = taskGroup;
 

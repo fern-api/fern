@@ -18,7 +18,7 @@ export declare namespace SingleUrlEnvironmentGenerator {
 export class SingleUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
     private singleUrlEnvironments: SingleBaseUrlEnvironments;
 
-    constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
+    public constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
         super(context);
         this.singleUrlEnvironments = singleUrlEnvironments;
     }

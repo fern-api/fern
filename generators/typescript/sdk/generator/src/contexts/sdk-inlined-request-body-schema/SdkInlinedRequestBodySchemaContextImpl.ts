@@ -27,7 +27,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
 
-    constructor({
+    public constructor({
         importsManager,
         exportsManager,
         packageResolver,

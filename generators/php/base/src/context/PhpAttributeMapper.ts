@@ -17,7 +17,7 @@ export declare namespace PhpAttributeMapper {
 export class PhpAttributeMapper {
     private context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>;
 
-    constructor(context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>) {
+    public constructor(context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>) {
         this.context = context;
     }
 

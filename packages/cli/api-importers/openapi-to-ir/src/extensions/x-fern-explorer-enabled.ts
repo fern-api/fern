@@ -10,7 +10,7 @@ export class FernExplorerEnabledExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-explorer-enabled";
 
-    constructor({ breadcrumbs, operation, context }: FernExplorerEnabledExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernExplorerEnabledExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

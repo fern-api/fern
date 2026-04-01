@@ -30,13 +30,13 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
     protected readonly group: string[];
     protected readonly method: string;
 
-    constructor({ context, breadcrumbs, group, method }: AbstractMediaTypeObjectConverter.Args) {
+    public constructor({ context, breadcrumbs, group, method }: AbstractMediaTypeObjectConverter.Args) {
         super({ context, breadcrumbs });
         this.group = group;
         this.method = method;
     }
 
-    abstract convert(): AbstractMediaTypeObjectConverter.Output | undefined;
+    public abstract convert(): AbstractMediaTypeObjectConverter.Output | undefined;
 
     protected parseMediaTypeObject({
         mediaTypeObject,

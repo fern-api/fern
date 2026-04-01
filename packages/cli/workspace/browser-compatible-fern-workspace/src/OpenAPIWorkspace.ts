@@ -40,7 +40,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
 
     public type = "openapi";
 
-    constructor({ spec, generatorsConfiguration }: OpenAPIWorkspace.Args) {
+    public constructor({ spec, generatorsConfiguration }: OpenAPIWorkspace.Args) {
         super({
             ...DEFAULT_WORKSPACE_ARGS,
             generatorsConfiguration,

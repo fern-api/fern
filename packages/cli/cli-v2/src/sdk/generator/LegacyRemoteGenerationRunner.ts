@@ -86,7 +86,7 @@ export class LegacyRemoteGenerationRunner {
     private readonly cliVersion: string;
     private readonly invocationAdapter: LegacyGeneratorInvocationAdapter;
 
-    constructor(config: LegacyRemoteGenerationRunner.Config) {
+    public constructor(config: LegacyRemoteGenerationRunner.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
         this.invocationAdapter = new LegacyGeneratorInvocationAdapter({ context: this.context });

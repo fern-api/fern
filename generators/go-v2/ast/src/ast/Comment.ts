@@ -11,7 +11,7 @@ export declare namespace Comment {
 export class Comment extends AstNode {
     public readonly docs: string | undefined;
 
-    constructor({ docs }: Comment.Args = {}) {
+    public constructor({ docs }: Comment.Args = {}) {
         super();
         this.docs = docs;
     }

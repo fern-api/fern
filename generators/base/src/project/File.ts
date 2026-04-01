@@ -7,7 +7,7 @@ export class File {
     public directory: RelativeFilePath;
     public fileContents: string | Buffer;
 
-    constructor(filename: string, directory: RelativeFilePath, fileContents: string | Buffer) {
+    public constructor(filename: string, directory: RelativeFilePath, fileContents: string | Buffer) {
         this.filename = filename;
         this.directory = directory;
         this.fileContents = fileContents;

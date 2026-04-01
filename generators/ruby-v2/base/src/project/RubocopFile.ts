@@ -11,7 +11,7 @@ export declare namespace RubocopFile {
 export class RubocopFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
 
-    constructor({ context }: RubocopFile.Args) {
+    public constructor({ context }: RubocopFile.Args) {
         this.context = context;
     }
 

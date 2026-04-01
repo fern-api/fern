@@ -26,7 +26,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
     private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private packageResolver: PackageResolver;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

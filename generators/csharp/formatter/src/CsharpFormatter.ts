@@ -5,7 +5,7 @@ import execa from "execa";
 export class CsharpFormatter extends AbstractFormatter {
     private readonly csharpier: string;
 
-    constructor() {
+    public constructor() {
         super();
         this.csharpier = findDotnetToolPath("csharpier");
     }

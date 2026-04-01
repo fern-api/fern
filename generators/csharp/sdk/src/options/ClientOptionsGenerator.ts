@@ -22,7 +22,7 @@ interface UnifiedField {
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
-    constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
+    public constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
         super(context);
 
         this.baseOptionsGenerator = baseOptionsGenerator;

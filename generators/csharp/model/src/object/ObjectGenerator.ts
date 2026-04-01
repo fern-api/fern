@@ -17,7 +17,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     private readonly typeDeclaration: TypeDeclaration;
     private readonly classReference: ast.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
         private readonly objectDeclaration: ObjectTypeDeclaration

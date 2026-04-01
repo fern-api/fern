@@ -26,7 +26,7 @@ export class ExpressEndpointTypeSchemasGenerator {
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({
+    public constructor({
         includeSerdeLayer,
         allowExtraFields,
         skipRequestValidation,

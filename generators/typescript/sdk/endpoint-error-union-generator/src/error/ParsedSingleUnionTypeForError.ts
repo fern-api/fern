@@ -27,7 +27,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private retainOriginalCasing: boolean;
 
-    constructor({
+    public constructor({
         error,
         errorDiscriminationStrategy,
         errorResolver,

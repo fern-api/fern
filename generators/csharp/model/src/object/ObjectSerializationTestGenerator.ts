@@ -21,7 +21,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<CSharpFile> 
     private classBeingTested: ast.ClassReference;
     private testClass: ast.TestClass;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly testInputs: TestInput[]

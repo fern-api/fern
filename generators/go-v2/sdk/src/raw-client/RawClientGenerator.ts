@@ -20,7 +20,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
     private service: FernIr.HttpService;
     private subpackage: FernIr.Subpackage | undefined;
 
-    constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
+    public constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
         super(context);
         this.serviceId = serviceId;
         this.service = service;

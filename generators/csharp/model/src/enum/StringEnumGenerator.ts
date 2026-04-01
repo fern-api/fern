@@ -11,7 +11,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly classReference: ast.ClassReference;
     private readonly customMethodName: string;
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration

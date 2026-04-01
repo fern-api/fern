@@ -11,7 +11,7 @@ export declare namespace Pointer {
 export class Pointer extends AstNode {
     public readonly node: AstNode;
 
-    constructor({ node }: Pointer.Args) {
+    public constructor({ node }: Pointer.Args) {
         super();
         this.node = node;
     }

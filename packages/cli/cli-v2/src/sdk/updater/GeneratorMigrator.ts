@@ -57,7 +57,7 @@ export class GeneratorMigrator {
     private static readonly LOCK_POLL_MS = 200;
     private static readonly LOCK_STALE_MS = 5 * 60 * 1000; // 5 minutes
 
-    constructor(config: GeneratorMigrator.Config) {
+    public constructor(config: GeneratorMigrator.Config) {
         this.logger = config.logger;
         this.cachePath = config.cachePath;
     }

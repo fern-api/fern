@@ -36,7 +36,7 @@ export class GoFile {
     private formatter?: AbstractFormatter;
     private includeGeneratedCodeHeader: boolean;
 
-    constructor({
+    public constructor({
         node,
         directory,
         filename,

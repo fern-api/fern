@@ -26,7 +26,7 @@ export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private schemas: Record<string, SchemaWithExample>;
 
-    constructor(
+    public constructor(
         schemas: Record<string, SchemaWithExample>,
         context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext
     ) {

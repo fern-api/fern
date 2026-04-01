@@ -42,7 +42,7 @@ export class CliContext {
     private readonly stdoutRedirector = new StdoutRedirector();
     private jsonMode = false;
 
-    constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
+    public constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
         this.isLocal = isLocal ?? false;
 

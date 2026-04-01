@@ -22,7 +22,7 @@ export class GenericAPIExpressErrorContextImpl implements GenericAPIExpressError
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         genericAPIExpressErrorDeclarationReferencer,
         genericAPIExpressErrorGenerator,
         importsManager,

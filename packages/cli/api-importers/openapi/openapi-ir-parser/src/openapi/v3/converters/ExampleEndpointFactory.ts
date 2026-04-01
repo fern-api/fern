@@ -48,7 +48,7 @@ export class ExampleEndpointFactory {
     private logger: Logger;
     private missingExamples: MissingExampleRecord[] = [];
 
-    constructor(
+    public constructor(
         private readonly schemas: Record<string, SchemaWithExample>,
         private readonly context: OpenAPIV3ParserContext,
         private readonly globalHeaders: GlobalHeader[]

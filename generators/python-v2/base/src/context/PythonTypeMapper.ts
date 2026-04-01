@@ -14,7 +14,7 @@ export declare namespace PythonTypeMapper {
 export class PythonTypeMapper {
     private context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>;
 
-    constructor(context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>) {
+    public constructor(context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>) {
         this.context = context;
     }
 

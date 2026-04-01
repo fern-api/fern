@@ -18,7 +18,7 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
 > {
     protected readonly servers?: Record<string, TServer>;
 
-    constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<TServer>) {
+    public constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<TServer>) {
         super({ context, breadcrumbs });
         this.servers = servers;
     }

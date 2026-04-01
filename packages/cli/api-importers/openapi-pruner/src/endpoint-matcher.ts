@@ -2,7 +2,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { EndpointSelector, HttpMethod } from "./types.js";
 
 export class EndpointMatcher {
-    constructor(private selectors: EndpointSelector[]) {}
+    public constructor(private selectors: EndpointSelector[]) {}
 
     public matches(path: string, method: HttpMethod): boolean {
         for (const selector of this.selectors) {

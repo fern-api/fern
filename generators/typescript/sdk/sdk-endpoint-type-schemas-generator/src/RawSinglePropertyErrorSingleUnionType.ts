@@ -15,7 +15,11 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     private errorName: FernIr.DeclaredErrorName;
     private discriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
 
-    constructor({ errorName, discriminationStrategy, ...superInit }: RawSinglePropertyErrorSingleUnionType.Init) {
+    public constructor({
+        errorName,
+        discriminationStrategy,
+        ...superInit
+    }: RawSinglePropertyErrorSingleUnionType.Init) {
         super(superInit);
         this.errorName = errorName;
         this.discriminationStrategy = discriminationStrategy;

@@ -100,7 +100,7 @@ export class CSharp {
      * Now also handles member-level name registration and conflict resolution.
      */
 
-    constructor(private readonly generation: Generation) {}
+    public constructor(private readonly generation: Generation) {}
 
     private get model() {
         return this.generation.model;
@@ -110,14 +110,14 @@ export class CSharp {
      * Indicates whether the class reference registry has been frozen.
      * When frozen, new class references are tracked separately in extraClassReferences.
      */
-    frozen = false;
+    public frozen = false;
 
     /**
      * Map tracking class references that were created after the registry was frozen.
      * Keys are fully qualified class names, values are sets of stack traces showing
      * where these references were used.
      */
-    extraClassReferences = new Map<string, Set<string>>();
+    public extraClassReferences = new Map<string, Set<string>>();
 
     /**
      * Creates a reference to a C# class with the specified name and namespace.
@@ -178,11 +178,11 @@ export class CSharp {
      * After freezing, any new class references will be tracked in extraClassReferences.
      * This is useful for identifying missing dependencies during code generation.
      */
-    freezeClassReferences() {
+    public freezeClassReferences() {
         this.frozen = true;
     }
 
-    getPropertyName(
+    public getPropertyName(
         enclosingType: ClassReference,
         property: (IrNode & { name: Name | dynamic.Name }) | (IrNode & { name: NameAndWireValue })
     ) {
@@ -213,7 +213,7 @@ export class CSharp {
      * @param args - Configuration for the class including name, namespace, fields, methods, etc.
      * @returns A Class object representing the C# class definition
      */
-    class_(args: ClassArgsWithOrigin | ClassArgsWithName | ClassArgsWithReference): Class {
+    public class_(args: ClassArgsWithOrigin | ClassArgsWithName | ClassArgsWithReference): Class {
         let classArgs: Class.Args = args as Class.Args;
         if ("reference" in args) {
             classArgs = { ...args.reference, ...args };
@@ -866,7 +866,7 @@ export class CSharp {
      * Also note that we use the InternalType's type property to determine the type of the Type
      * so that the two always remain in sync.
      */
-    readonly VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
+    public readonly VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
         "int",
         "long",
         "uint",
@@ -886,7 +886,7 @@ export class CSharp {
      *
      * @throws Error if any invalid types are found in the read-only-memory-types configuration
      */
-    validateReadOnlyMemoryTypes(): void {
+    public validateReadOnlyMemoryTypes(): void {
         for (const type of this.generation.settings.readOnlyMemoryTypes) {
             if (!this.VALID_READ_ONLY_MEMORY_TYPES.has(type)) {
                 throw new Error(

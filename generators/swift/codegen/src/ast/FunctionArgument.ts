@@ -12,7 +12,7 @@ export class FunctionArgument extends AstNode {
     public readonly label?: string;
     public readonly value: Expression;
 
-    constructor({ label, value }: FunctionArgument.Args) {
+    public constructor({ label, value }: FunctionArgument.Args) {
         super();
         this.label = label;
         this.value = value;

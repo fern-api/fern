@@ -74,7 +74,7 @@ export namespace Literal {
          * @param value - The boolean value (true or false)
          * @param generation - The generation context for code generation
          */
-        constructor(value: boolean, generation: Generation) {
+        public constructor(value: boolean, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -105,7 +105,7 @@ export namespace Literal {
          * @param fields - The fields to initialize with their values
          * @param generation - The generation context for code generation
          */
-        constructor(reference: ClassReference, fields: ConstructorField[], generation: Generation) {
+        public constructor(reference: ClassReference, fields: ConstructorField[], generation: Generation) {
             super(generation);
             this.reference = reference;
             this.fields = fields;
@@ -137,7 +137,7 @@ export namespace Literal {
          * @param value - The date string (e.g., "2023-01-15")
          * @param generation - The generation context for code generation
          */
-        constructor(value: string, generation: Generation) {
+        public constructor(value: string, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -162,7 +162,7 @@ export namespace Literal {
          * @param value - The datetime string (e.g., "2023-01-15T10:30:00Z")
          * @param generation - The generation context for code generation
          */
-        constructor(value: string, generation: Generation) {
+        public constructor(value: string, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -192,7 +192,7 @@ export namespace Literal {
          * @param value - The decimal value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -217,7 +217,7 @@ export namespace Literal {
          * @param value - The double value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -242,7 +242,7 @@ export namespace Literal {
          * @param value - The float value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -267,7 +267,7 @@ export namespace Literal {
          * @param value - The integer value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -292,7 +292,7 @@ export namespace Literal {
          * @param value - The long value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -317,7 +317,7 @@ export namespace Literal {
          * @param value - The unsigned integer value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -342,7 +342,7 @@ export namespace Literal {
          * @param value - The unsigned long value
          * @param generation - The generation context for code generation
          */
-        constructor(value: number, generation: Generation) {
+        public constructor(value: number, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -367,7 +367,7 @@ export namespace Literal {
          * @param value - The AST node to reference
          * @param generation - The generation context for code generation
          */
-        constructor(value: AstNode, generation: Generation) {
+        public constructor(value: AstNode, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -392,7 +392,7 @@ export namespace Literal {
          * @param value - The string value
          * @param generation - The generation context for code generation
          */
-        constructor(value: string, generation: Generation) {
+        public constructor(value: string, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -443,7 +443,7 @@ export namespace Literal {
          * @param values - The literal values to initialize the list with
          * @param generation - The generation context for code generation
          */
-        constructor(valueType: Type, values: Literal[], generation: Generation) {
+        public constructor(valueType: Type, values: Literal[], generation: Generation) {
             super(generation);
             this.valueType = valueType;
             this.values = values;
@@ -486,7 +486,7 @@ export namespace Literal {
          * @param values - The literal values to initialize the set with
          * @param generation - The generation context for code generation
          */
-        constructor(valueType: Type, values: Literal[], generation: Generation) {
+        public constructor(valueType: Type, values: Literal[], generation: Generation) {
             super(generation);
             this.valueType = valueType;
             this.values = values;
@@ -535,7 +535,7 @@ export namespace Literal {
          * @param entries - The key-value pairs to initialize the dictionary with
          * @param generation - The generation context for code generation
          */
-        constructor(keyType: Type, valueType: Type, entries: DictionaryEntry[], generation: Generation) {
+        public constructor(keyType: Type, valueType: Type, entries: DictionaryEntry[], generation: Generation) {
             super(generation);
             this.keyType = keyType;
             this.valueType = valueType;
@@ -581,7 +581,7 @@ export namespace Literal {
          * @param value - The unknown value (can be primitive, object, or array)
          * @param generation - The generation context for code generation
          */
-        constructor(value: unknown, generation: Generation) {
+        public constructor(value: unknown, generation: Generation) {
             super(generation);
             this.value = value;
         }

@@ -25,7 +25,7 @@ export class Class extends AstNode {
     public readonly docs?: string;
     private statements: AstNode[] = [];
 
-    constructor({ docs, name, extends_, decorators }: Class.Args) {
+    public constructor({ docs, name, extends_, decorators }: Class.Args) {
         super();
         this.name = name;
         this.extends_ = extends_ ?? [];

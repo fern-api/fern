@@ -61,7 +61,7 @@ interface TestEndpointInfo {
 export class InferredAuthWireTestGenerator {
     private readonly context: SdkGeneratorContext;
 
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         this.context = context;
     }
 

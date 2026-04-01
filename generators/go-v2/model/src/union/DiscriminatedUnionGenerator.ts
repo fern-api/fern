@@ -6,7 +6,7 @@ import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly unionDeclaration: FernIr.UnionTypeDeclaration

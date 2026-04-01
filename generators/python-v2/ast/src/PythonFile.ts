@@ -37,7 +37,7 @@ export class PythonFile extends AstNode {
     private readonly statements: AstNode[] = [];
     private readonly comments: Comment[];
 
-    constructor({ path, statements, isInitFile = false, comments, imports }: PythonFile.Args) {
+    public constructor({ path, statements, isInitFile = false, comments, imports }: PythonFile.Args) {
         super();
         this.path = path;
         this.isInitFile = isInitFile;

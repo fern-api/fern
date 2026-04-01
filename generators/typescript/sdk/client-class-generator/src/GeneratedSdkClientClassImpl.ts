@@ -124,7 +124,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
 
-    constructor({
+    public constructor({
         isRoot,
         intermediateRepresentation,
         serviceClassName,

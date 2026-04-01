@@ -130,7 +130,7 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
 
-    constructor({
+    public constructor({
         domain,
         docsWorkspace,
         ossWorkspaces,

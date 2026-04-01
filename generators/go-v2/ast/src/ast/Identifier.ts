@@ -8,7 +8,7 @@ export declare namespace Identifier {
 export class Identifier extends AstNode {
     public readonly name: string;
 
-    constructor(name: Identifier.Args) {
+    public constructor(name: Identifier.Args) {
         super();
         this.name = name;
     }

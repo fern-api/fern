@@ -118,7 +118,13 @@ export class ExpressGenerator {
     private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
     private readonly asIsManager: AsIsManager;
 
-    constructor({ namespaceExport, intermediateRepresentation, context, npmPackage, config }: ExpressGenerator.Init) {
+    public constructor({
+        namespaceExport,
+        intermediateRepresentation,
+        context,
+        npmPackage,
+        config
+    }: ExpressGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.npmPackage = npmPackage;

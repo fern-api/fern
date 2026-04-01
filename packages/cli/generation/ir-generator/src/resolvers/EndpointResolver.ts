@@ -24,7 +24,7 @@ interface RawEndpointInfo {
 }
 
 export class EndpointResolverImpl implements EndpointResolver {
-    constructor(private readonly workspace: FernWorkspace) {}
+    public constructor(private readonly workspace: FernWorkspace) {}
 
     public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
         const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });

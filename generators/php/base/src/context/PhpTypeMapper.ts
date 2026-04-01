@@ -19,7 +19,7 @@ export declare namespace PhpTypeMapper {
 export class PhpTypeMapper {
     private context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>;
 
-    constructor(context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>) {
+    public constructor(context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>) {
         this.context = context;
     }
 

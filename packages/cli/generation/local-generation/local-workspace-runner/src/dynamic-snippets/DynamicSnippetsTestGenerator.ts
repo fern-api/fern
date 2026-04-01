@@ -49,7 +49,7 @@ export class DynamicSnippetsTestGenerator {
         swift: { generator: DynamicSnippetsSwiftTestGenerator }
     };
 
-    constructor(
+    public constructor(
         private readonly context: TaskContext,
         private readonly testSuite: DynamicSnippetsTestSuite
     ) {}

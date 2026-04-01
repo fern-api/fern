@@ -28,7 +28,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
     private rawClient: RawClient;
     private grpcClientInfo: GrpcClientInfo | undefined;
 
-    constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
+    public constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;

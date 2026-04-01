@@ -38,7 +38,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
     private readonly queryParameters: QueryParameter[];
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         contentType,

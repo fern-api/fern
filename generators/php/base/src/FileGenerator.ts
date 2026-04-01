@@ -9,7 +9,7 @@ export abstract class FileGenerator<
     CustomConfig extends BasePhpCustomConfigSchema,
     Context extends AbstractPhpGeneratorContext<CustomConfig>
 > {
-    constructor(protected readonly context: Context) {}
+    public constructor(protected readonly context: Context) {}
 
     public generate(): GeneratedFile {
         this.context.logger.debug(`Generating ${this.getLogLabel()}`);

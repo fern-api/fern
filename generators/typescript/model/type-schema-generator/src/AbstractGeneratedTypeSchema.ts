@@ -24,7 +24,7 @@ export abstract class AbstractGeneratedTypeSchema<
     protected noOptionalProperties: boolean;
     private getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
 
-    constructor({
+    public constructor({
         typeName,
         shape,
         getGeneratedType,

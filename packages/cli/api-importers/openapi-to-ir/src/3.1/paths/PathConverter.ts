@@ -32,7 +32,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private readonly idToAuthScheme?: Record<string, AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
+    public constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;

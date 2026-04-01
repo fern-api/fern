@@ -12,7 +12,7 @@ export class AccessAttribute extends AstNode {
     private readonly lhs: AstNode;
     private readonly rhs: AstNode;
 
-    constructor({ lhs, rhs }: AccessAttribute.Args) {
+    public constructor({ lhs, rhs }: AccessAttribute.Args) {
         super();
 
         this.lhs = lhs;

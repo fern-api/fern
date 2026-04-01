@@ -12,7 +12,7 @@ import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly rootClientGenerator: RootClientGenerator;
-    constructor({ context }: { context: SdkGeneratorContext }) {
+    public constructor({ context }: { context: SdkGeneratorContext }) {
         super(context.generation);
         this.context = context;
         this.rootClientGenerator = new RootClientGenerator(context);

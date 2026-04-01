@@ -61,7 +61,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private directImportedNames: Map<string, string> = new Map();
     private currentSchemaName: string | undefined;
 
-    constructor({
+    public constructor({
         sourceFile,
         coreUtilities,
         importsManager,

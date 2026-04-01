@@ -33,7 +33,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
 
-    constructor({
+    public constructor({
         packageId,
         endpoint,
         inlinedRequestBody,

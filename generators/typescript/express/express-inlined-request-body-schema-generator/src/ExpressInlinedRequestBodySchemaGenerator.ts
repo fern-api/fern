@@ -23,7 +23,7 @@ export class ExpressInlinedRequestBodySchemaGenerator {
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
 
-    constructor({ includeSerdeLayer, skipRequestValidation }: ExpressInlinedRequestBodySchemaGenerator.Init) {
+    public constructor({ includeSerdeLayer, skipRequestValidation }: ExpressInlinedRequestBodySchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.skipRequestValidation = skipRequestValidation;
     }

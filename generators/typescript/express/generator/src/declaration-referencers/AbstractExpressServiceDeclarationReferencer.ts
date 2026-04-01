@@ -22,7 +22,7 @@ export declare namespace AbstractSdkClientClassDeclarationReferencer {
 export abstract class AbstractExpressServiceDeclarationReferencer<Name> extends AbstractDeclarationReferencer<Name> {
     protected packageResolver: PackageResolver;
 
-    constructor({ packageResolver, ...superInit }: AbstractSdkClientClassDeclarationReferencer.Init) {
+    public constructor({ packageResolver, ...superInit }: AbstractSdkClientClassDeclarationReferencer.Init) {
         super(superInit);
         this.packageResolver = packageResolver;
     }

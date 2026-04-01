@@ -34,7 +34,7 @@ export class Dictionary extends AstNode {
     private valueType: Type;
     private values: Dictionary.Values | undefined;
 
-    constructor({ keyType, valueType, values }: Dictionary.Args, generation: Generation) {
+    public constructor({ keyType, valueType, values }: Dictionary.Args, generation: Generation) {
         super(generation);
         this.keyType = keyType;
         this.valueType = valueType;

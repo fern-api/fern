@@ -24,7 +24,7 @@ export class GeneratedSdkErrorSchemaImpl
     private skipValidation: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({
+    public constructor({
         errorName,
         errorDeclaration,
         type,

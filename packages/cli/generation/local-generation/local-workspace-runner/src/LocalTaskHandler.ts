@@ -56,7 +56,7 @@ export class LocalTaskHandler {
     private absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     private skipFernignore: boolean;
 
-    constructor({
+    public constructor({
         context,
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,

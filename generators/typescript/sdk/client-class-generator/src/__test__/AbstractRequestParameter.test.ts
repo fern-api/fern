@@ -13,7 +13,7 @@ class TestRequestParameter extends AbstractRequestParameter {
     private readonly hasQuestionToken: boolean;
     private readonly initializerExpr: ts.Expression | undefined;
 
-    constructor(
+    public constructor(
         init: AbstractRequestParameter.Init & {
             typeNode?: ts.TypeNode;
             hasQuestionToken?: boolean;

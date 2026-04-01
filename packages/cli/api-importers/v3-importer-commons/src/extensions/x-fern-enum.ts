@@ -14,7 +14,7 @@ export class FernEnumExtension extends AbstractExtension<FernEnumExtension.Outpu
     private readonly schema: object;
     public readonly key = "x-fern-enum";
 
-    constructor({ breadcrumbs, schema, context }: FernEnumExtension.Args) {
+    public constructor({ breadcrumbs, schema, context }: FernEnumExtension.Args) {
         super({ breadcrumbs, context });
         this.schema = schema;
     }

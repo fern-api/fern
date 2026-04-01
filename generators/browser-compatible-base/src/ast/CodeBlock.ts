@@ -9,7 +9,7 @@ export declare namespace CodeBlock {
 export class CodeBlock<T extends AbstractWriter> extends AbstractAstNode {
     private value: CodeBlock.Arg<T>;
 
-    constructor(value: CodeBlock.Arg<T>) {
+    public constructor(value: CodeBlock.Arg<T>) {
         super();
         this.value = value;
     }

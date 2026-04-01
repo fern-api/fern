@@ -19,7 +19,7 @@ export class ExpressRegisterGenerator {
     private areImplementationsOptional: boolean;
     private packageResolver: PackageResolver;
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         registerFunctionName,
         areImplementationsOptional,

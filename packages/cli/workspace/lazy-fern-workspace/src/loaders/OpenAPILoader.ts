@@ -10,7 +10,7 @@ import { loadAsyncAPI } from "../utils/loadAsyncAPI.js";
 import { loadOpenAPI } from "../utils/loadOpenAPI.js";
 
 export class OpenAPILoader {
-    constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
+    public constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
 
     public async loadDocuments({
         context,

@@ -7,7 +7,7 @@ import type { FernGeneratorCli } from "../configuration/sdk/index.js";
 export class GitHub {
     private githubConfig: FernGeneratorCli.GitHubConfig;
 
-    constructor({
+    public constructor({
         githubConfig
     }: {
         githubConfig: FernGeneratorCli.GitHubConfig;

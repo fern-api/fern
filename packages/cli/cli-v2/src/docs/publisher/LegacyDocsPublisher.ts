@@ -27,7 +27,7 @@ export class LegacyDocsPublisher {
     private readonly ossWorkspaces: OSSWorkspace[];
     private readonly token: FernToken;
 
-    constructor({
+    public constructor({
         context,
         task,
         project,

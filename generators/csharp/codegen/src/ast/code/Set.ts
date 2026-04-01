@@ -14,7 +14,7 @@ export class Set extends AstNode {
     private itemType: Type;
     private entries: AstNode[];
 
-    constructor({ itemType, entries }: Set.Args, generation: Generation) {
+    public constructor({ itemType, entries }: Set.Args, generation: Generation) {
         super(generation);
         this.itemType = itemType;
         this.entries = entries;

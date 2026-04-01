@@ -58,7 +58,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;
     private readonly authHeaders: FernIr.HeaderAuthScheme[];
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         allowCustomFetcher,
         requireDefaultEnvironment,

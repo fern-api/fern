@@ -15,7 +15,7 @@ class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;
     public count = 0;
 
-    constructor(schema: RawSchemas.HttpHeaderSchema) {
+    public constructor(schema: RawSchemas.HttpHeaderSchema) {
         this.schema = schema;
     }
 

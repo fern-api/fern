@@ -26,7 +26,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
     public sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
     public baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

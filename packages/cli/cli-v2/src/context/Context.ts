@@ -41,7 +41,7 @@ export class Context {
     public readonly tokenService: TokenService;
     public readonly ttyAwareLogger: TtyAwareLogger;
 
-    constructor({
+    public constructor({
         stdout,
         stderr,
         cwd,

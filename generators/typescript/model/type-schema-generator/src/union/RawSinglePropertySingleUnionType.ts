@@ -17,7 +17,11 @@ export class RawSinglePropertySingleUnionType<
     private singleProperty: FernIr.SingleUnionTypeProperty;
     private getGeneratedType: () => GeneratedType<Context>;
 
-    constructor({ singleProperty, getGeneratedType, ...superInit }: RawSinglePropertySingleUnionType.Init<Context>) {
+    public constructor({
+        singleProperty,
+        getGeneratedType,
+        ...superInit
+    }: RawSinglePropertySingleUnionType.Init<Context>) {
         super(superInit);
         this.singleProperty = singleProperty;
         this.getGeneratedType = getGeneratedType;

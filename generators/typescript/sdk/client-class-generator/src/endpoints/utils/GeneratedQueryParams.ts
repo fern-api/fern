@@ -19,7 +19,7 @@ export class GeneratedQueryParams {
     private queryParameters: FernIr.QueryParameter[] | undefined;
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression;
 
-    constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
+    public constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
         this.queryParameters = queryParameters;
         this.referenceToQueryParameterProperty = referenceToQueryParameterProperty;
     }

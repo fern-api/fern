@@ -18,7 +18,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
     private readonly classReference: ruby.ClassReference;
     private readonly unionMembers: UnionMember[];
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: FernIr.TypeDeclaration,
         private readonly unionDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration

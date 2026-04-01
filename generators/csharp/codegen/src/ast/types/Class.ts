@@ -43,7 +43,7 @@ export class Class extends DefinedType {
     private nestedInterfaces: Interface[] = [];
     private rawBodyBlocks: CodeBlock[] = [];
 
-    constructor(
+    public constructor(
         {
             name,
             namespace,
@@ -450,19 +450,19 @@ export namespace Class {
     }
     export class Constructor {
         /** The XML doc block for the constructor */
-        doc?: XmlDocBlock.Like;
+        public doc?: XmlDocBlock.Like;
         /* The body of the constructor */
-        body: Block;
+        public body: Block;
         /* The parameters of the constructor */
-        parameters: Parameter[];
+        public parameters: Parameter[];
         /* The access of the constructor */
-        access: Access;
+        public access: Access;
         /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
-        baseConstructorCall?: MethodInvocation;
+        public baseConstructorCall?: MethodInvocation;
         /* Any annotations on the constructor */
-        annotations: Annotation[];
+        public annotations: Annotation[];
 
-        constructor(
+        public constructor(
             { doc, body, parameters, access, baseConstructorCall, annotations }: Constructor.Args,
             private readonly generation: Generation
         ) {
@@ -478,7 +478,7 @@ export namespace Class {
             this.baseConstructorCall = baseConstructorCall;
         }
 
-        addParameter(args: Parameter.Args) {
+        public addParameter(args: Parameter.Args) {
             const parameter = new Parameter(args, this.generation);
             this.parameters.push(parameter);
             return parameter;

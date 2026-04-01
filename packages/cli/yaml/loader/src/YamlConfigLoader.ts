@@ -35,7 +35,7 @@ export class YamlConfigLoader {
     private readonly cwd: AbsoluteFilePath;
     private readonly referenceResolver: ReferenceResolver;
 
-    constructor({ cwd }: { cwd: AbsoluteFilePath }) {
+    public constructor({ cwd }: { cwd: AbsoluteFilePath }) {
         this.parser = new YamlParser();
         this.cwd = cwd;
         this.referenceResolver = new ReferenceResolver({ cwd });

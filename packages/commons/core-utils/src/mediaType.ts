@@ -3,24 +3,24 @@ import WhatwgMIMEType from "whatwg-mimetype";
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 export class MediaType {
     private constructor(
-        readonly type: string,
-        readonly subtype: string,
-        readonly essence: string,
-        readonly parameters: WhatwgMIMEType.MIMETypeParameters,
+        public readonly type: string,
+        public readonly subtype: string,
+        public readonly essence: string,
+        public readonly parameters: WhatwgMIMEType.MIMETypeParameters,
         private mimeType: WhatwgMIMEType,
         private input: string
     ) {}
 
-    static APPLICATION_JSON = "application/json";
-    static APPLICATION_OCTET_STREAM = "application/octet-stream";
-    static MULTIPART_FORM_DATA = "multipart/form-data";
-    static TEXT_PLAIN = "text/plain";
-    static TEXT_HTML = "text/html";
-    static TEXT_XML = "text/xml";
-    static APPLICATION_XML = "application/xml";
-    static APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
+    public static APPLICATION_JSON = "application/json";
+    public static APPLICATION_OCTET_STREAM = "application/octet-stream";
+    public static MULTIPART_FORM_DATA = "multipart/form-data";
+    public static TEXT_PLAIN = "text/plain";
+    public static TEXT_HTML = "text/html";
+    public static TEXT_XML = "text/xml";
+    public static APPLICATION_XML = "application/xml";
+    public static APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
-    static parse(input: string | null | undefined): MediaType | null {
+    public static parse(input: string | null | undefined): MediaType | null {
         if (input == null || input.trim() === "") {
             return null;
         }

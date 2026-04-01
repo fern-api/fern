@@ -83,7 +83,7 @@ export namespace ReferenceResolver {
 export class ReferenceResolver {
     private readonly cwd: AbsoluteFilePath;
 
-    constructor({ cwd }: { cwd: AbsoluteFilePath }) {
+    public constructor({ cwd }: { cwd: AbsoluteFilePath }) {
         this.cwd = cwd;
     }
 

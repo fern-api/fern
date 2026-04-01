@@ -4,7 +4,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 export class ParameterConverter extends Converters.AbstractConverters
     .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         parameter

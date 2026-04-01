@@ -6,7 +6,7 @@ export class JsonSchemaConverterContext {
     private readonly buildingTypeIds: Set<TypeId> = new Set();
     private readonly definitions: Record<string, JSONSchema4> = {};
 
-    constructor(
+    public constructor(
         private readonly context: TaskContext,
         private readonly ir: IntermediateRepresentation
     ) {}

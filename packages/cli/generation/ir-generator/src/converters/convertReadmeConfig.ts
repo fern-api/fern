@@ -45,7 +45,7 @@ export function convertReadmeConfig({
 class ReadmeEndpointCache {
     private readonly endpoints: Record<string, HttpEndpoint> = {};
 
-    constructor(services: Record<ServiceId, HttpService>) {
+    public constructor(services: Record<ServiceId, HttpService>) {
         this.endpoints = this.buildEndpoints(services);
     }
 

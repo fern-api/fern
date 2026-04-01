@@ -25,7 +25,7 @@ export class Begin extends AstNode {
     public readonly body?: AstNode;
     public readonly rescues: Begin.Rescue[];
 
-    constructor({ body, rescues }: Begin.Args) {
+    public constructor({ body, rescues }: Begin.Args) {
         super();
         this.body = body;
         this.rescues = rescues;

@@ -10,7 +10,7 @@ import {
 import type { YamlDocument, YamlPath } from "./YamlDocument.js";
 
 export class YamlSourceResolver {
-    constructor(private readonly document: YamlDocument) {}
+    public constructor(private readonly document: YamlDocument) {}
 
     public toSourced<T>(value: T): Sourced<T> {
         return this.toSourcedInternal(value, []);

@@ -26,7 +26,7 @@ export declare namespace AuthProvidersGenerator {
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
-    constructor({
+    public constructor({
         ir,
         authScheme,
         neverThrowErrors,

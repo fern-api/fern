@@ -13,7 +13,7 @@ export class SdkMethodNameExtension extends AbstractExtension<string> {
     private readonly operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent | AsyncAPIV3.Operation;
     public readonly key = "x-fern-sdk-method-name";
 
-    constructor({ breadcrumbs, operation, context }: SdkMethodNameExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: SdkMethodNameExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

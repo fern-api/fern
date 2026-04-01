@@ -8,7 +8,7 @@ export class GeneratedVersionImpl implements GeneratedVersion {
     private versionEnumName: string;
     private firstEnumValue: string;
 
-    constructor({
+    public constructor({
         apiVersion,
         versionEnumName,
         firstEnumValue

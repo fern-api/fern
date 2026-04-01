@@ -19,7 +19,7 @@ export declare namespace SdkErrorGenerator {
 export class SdkErrorGenerator {
     private neverThrowErrors: boolean;
 
-    constructor({ neverThrowErrors }: SdkErrorGenerator.Init) {
+    public constructor({ neverThrowErrors }: SdkErrorGenerator.Init) {
         this.neverThrowErrors = neverThrowErrors;
     }
 

@@ -50,7 +50,7 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
     private readonly document: OpenAPIV3.Document;
     public readonly key = "x-fern-pagination";
 
-    constructor({ breadcrumbs, operation, document, context }: FernPaginationExtension.Args) {
+    public constructor({ breadcrumbs, operation, document, context }: FernPaginationExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
         this.document = document;

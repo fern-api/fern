@@ -14,7 +14,7 @@ export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtensi
     private readonly operation: object;
     public readonly key = "x-fern-sdk-group-name";
 
-    constructor({ breadcrumbs, operation, context }: SdkGroupNameExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: SdkGroupNameExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

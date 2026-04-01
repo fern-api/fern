@@ -28,7 +28,7 @@ export class Reference extends AstNode {
     public readonly alias: string | undefined;
     public readonly attribute: AttrPath;
 
-    constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
+    public constructor({ name, modulePath, genericTypes, alias, attribute }: Reference.Args) {
         super();
         this.name = name;
         this.modulePath = modulePath ?? [];

@@ -6,7 +6,7 @@ import { AsyncAPIParameter } from "../sharedTypes.js";
 
 export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<AsyncAPIParameter> {
     private readonly parameterNamePrefix?: string;
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         parameter,

@@ -35,7 +35,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly requestOptionsName: string;
     private readonly isPaginationEnabled: boolean;
 
-    constructor({
+    public constructor({
         context,
         endpointSnippets
     }: {

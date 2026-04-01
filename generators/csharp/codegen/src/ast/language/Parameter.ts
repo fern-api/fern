@@ -27,7 +27,7 @@ export class Parameter extends AstNode {
     private readonly ref: boolean;
     private readonly out: boolean;
 
-    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, generation: Generation) {
+    public constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, generation: Generation) {
         super(generation);
         this.name = name;
         this.type = type;

@@ -26,7 +26,7 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
     private expressErrorGenerator: ExpressErrorGenerator;
     private errorResolver: ErrorResolver;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

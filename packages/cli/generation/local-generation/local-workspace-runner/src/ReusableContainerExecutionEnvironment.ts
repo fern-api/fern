@@ -39,7 +39,11 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
     private readonly runner: ContainerRunner;
     private readonly poolSize: number;
 
-    constructor({ imageName, runner, poolSize }: { imageName: string; runner?: ContainerRunner; poolSize?: number }) {
+    public constructor({
+        imageName,
+        runner,
+        poolSize
+    }: { imageName: string; runner?: ContainerRunner; poolSize?: number }) {
         this.imageName = imageName;
         this.runner = runner ?? "docker";
         this.poolSize = poolSize ?? 1;

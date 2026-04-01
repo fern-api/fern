@@ -20,7 +20,7 @@ export declare namespace PhpFile {
 }
 
 export class PhpFile extends File {
-    constructor({ clazz, directory, rootNamespace, customConfig }: PhpFile.Args) {
+    public constructor({ clazz, directory, rootNamespace, customConfig }: PhpFile.Args) {
         super(
             `${clazz.name}.php`,
             directory,

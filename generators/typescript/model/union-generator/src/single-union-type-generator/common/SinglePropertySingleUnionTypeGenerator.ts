@@ -26,7 +26,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
     private readonly noOptionalProperties: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
 
-    constructor({
+    public constructor({
         propertyName,
         getReferenceToPropertyType,
         getReferenceToPropertyTypeForInlineUnion,

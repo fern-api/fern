@@ -23,7 +23,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
 
-    constructor({
+    public constructor({
         apiVersion,
         relativePackagePath,
         relativeTestPath,

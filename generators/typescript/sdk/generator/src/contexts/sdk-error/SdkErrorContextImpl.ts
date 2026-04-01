@@ -26,7 +26,7 @@ export class SdkErrorContextImpl implements SdkErrorContext {
     private sdkErrorGenerator: SdkErrorGenerator;
     private errorResolver: ErrorResolver;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

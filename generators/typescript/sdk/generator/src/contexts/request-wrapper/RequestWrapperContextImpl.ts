@@ -45,7 +45,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly resolveQueryParameterNameConflicts: boolean;
 
-    constructor({
+    public constructor({
         requestWrapperGenerator,
         requestWrapperDeclarationReferencer,
         packageResolver,

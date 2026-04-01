@@ -26,7 +26,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
     private readonly unionDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly members: UnionMemberInfo[];
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
         unionDeclaration: UndiscriminatedUnionTypeDeclaration

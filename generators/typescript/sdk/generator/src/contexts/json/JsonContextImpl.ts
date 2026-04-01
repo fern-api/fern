@@ -19,7 +19,12 @@ export class JsonContextImpl implements JsonContext {
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({ jsonDeclarationReferencer, importsManager, exportsManager, sourceFile }: JsonContextImpl.Init) {
+    public constructor({
+        jsonDeclarationReferencer,
+        importsManager,
+        exportsManager,
+        sourceFile
+    }: JsonContextImpl.Init) {
         this.jsonDeclarationReferencer = jsonDeclarationReferencer;
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;

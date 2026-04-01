@@ -5,7 +5,7 @@ import { AuthProviderInstance } from "./AuthProviderInstance.js";
 export class AnyAuthProviderInstance implements AuthProviderInstance {
     private readonly providers: AuthProviderInstance[];
 
-    constructor(providers: AuthProviderInstance[]) {
+    public constructor(providers: AuthProviderInstance[]) {
         this.providers = providers;
     }
 

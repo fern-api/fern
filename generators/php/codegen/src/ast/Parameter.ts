@@ -31,7 +31,7 @@ export class Parameter extends AstNode {
     public readonly access: Access | undefined;
     public readonly readonly_: boolean;
 
-    constructor({ name, type, docs, initializer, access, readonly_ }: Parameter.Args) {
+    public constructor({ name, type, docs, initializer, access, readonly_ }: Parameter.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;

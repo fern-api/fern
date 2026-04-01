@@ -256,7 +256,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 }
 
 class PhpProjectFilepaths {
-    constructor(
+    public constructor(
         private readonly packagePathPrefix: string,
         private readonly name: string
     ) {}

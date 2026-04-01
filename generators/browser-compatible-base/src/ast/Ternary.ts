@@ -17,7 +17,7 @@ export class Ternary extends AbstractAstNode {
     private true_: AbstractAstNode;
     private false_: AbstractAstNode;
 
-    constructor({ condition, true_, false_ }: Ternary.Args) {
+    public constructor({ condition, true_, false_ }: Ternary.Args) {
         super();
 
         this.condition = condition;

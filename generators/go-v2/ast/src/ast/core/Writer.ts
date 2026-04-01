@@ -68,7 +68,7 @@ export class Writer extends AbstractWriter {
     /* Import statements */
     protected imports: Record<ImportPath, Alias> = {};
 
-    constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: Writer.Args) {
+    public constructor({ packageName, rootImportPath, importPath, customConfig, formatter }: Writer.Args) {
         super();
         this.packageName = packageName;
         this.rootImportPath = rootImportPath;

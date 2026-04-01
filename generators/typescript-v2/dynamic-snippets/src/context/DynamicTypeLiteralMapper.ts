@@ -27,7 +27,7 @@ export declare namespace DynamicTypeLiteralMapper {
 export class DynamicTypeLiteralMapper {
     private context: DynamicSnippetsGeneratorContext;
 
-    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
+    public constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 

@@ -61,7 +61,7 @@ export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
     public packagePath: string;
 
-    constructor({ packagePath = DEFAULT_PACKAGE_PATH }: { packagePath?: string } = {}) {
+    public constructor({ packagePath = DEFAULT_PACKAGE_PATH }: { packagePath?: string } = {}) {
         this.packagePath = packagePath;
     }
 

@@ -10,7 +10,7 @@ export class FernIgnoreExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-ignore";
 
-    constructor({ breadcrumbs, operation, context }: FernIgnoreExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernIgnoreExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

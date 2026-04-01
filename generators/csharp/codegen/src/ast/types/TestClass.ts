@@ -39,7 +39,7 @@ export class TestClass extends Node {
 
     private testMethods: TestClass.TestMethod[] = [];
 
-    constructor({ name, namespace, parentClassReference, origin }: TestClass.Args, generation: Generation) {
+    public constructor({ name, namespace, parentClassReference, origin }: TestClass.Args, generation: Generation) {
         super(origin, generation);
         this.reference = this.csharp.classReference({
             name: name,

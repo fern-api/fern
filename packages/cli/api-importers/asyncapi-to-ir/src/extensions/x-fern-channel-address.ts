@@ -13,7 +13,7 @@ export class ChannelAddressExtension extends AbstractExtension<string> {
     private readonly channel: AsyncAPIV3.ChannelV3 | AsyncAPIV2.ChannelV2;
     public readonly key = "x-fern-address";
 
-    constructor({ breadcrumbs, channel, context }: ChannelAddressExtension.Args) {
+    public constructor({ breadcrumbs, channel, context }: ChannelAddressExtension.Args) {
         super({ breadcrumbs, context });
         this.channel = channel;
     }

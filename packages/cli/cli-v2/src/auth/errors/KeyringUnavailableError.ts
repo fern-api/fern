@@ -5,7 +5,7 @@ export class KeyringUnavailableError extends Error {
     public readonly platform: NodeJS.Platform;
     public readonly cause?: Error;
 
-    constructor(platform: NodeJS.Platform, cause?: Error) {
+    public constructor(platform: NodeJS.Platform, cause?: Error) {
         super(getKeyringErrorMessage(platform));
         this.platform = platform;
         this.cause = cause;

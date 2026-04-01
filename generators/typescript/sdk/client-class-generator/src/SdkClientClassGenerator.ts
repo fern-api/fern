@@ -69,7 +69,7 @@ export class SdkClientClassGenerator {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
 
-    constructor({
+    public constructor({
         intermediateRepresentation,
         errorResolver,
         packageResolver,

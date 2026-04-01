@@ -56,7 +56,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
 
-    constructor({
+    public constructor({
         useBrandedStringAliases,
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,

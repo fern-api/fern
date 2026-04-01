@@ -15,7 +15,7 @@ export declare namespace GeneratedEndpointTypeSchemaImpl {
 export class GeneratedEndpointTypeSchemaImpl extends AbstractGeneratedEndpointTypeSchema {
     private type: FernIr.TypeReference;
 
-    constructor({ type, ...superInit }: GeneratedEndpointTypeSchemaImpl.Init) {
+    public constructor({ type, ...superInit }: GeneratedEndpointTypeSchemaImpl.Init) {
         super(superInit);
         this.type = type;
     }

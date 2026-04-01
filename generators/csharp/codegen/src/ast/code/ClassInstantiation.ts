@@ -38,7 +38,7 @@ export class ClassInstantiation extends AstNode {
     public readonly multiline: boolean;
 
     /* eslint-disable deprecation/deprecation */
-    constructor(
+    public constructor(
         { classReference, arguments_, forceUseConstructor, properties, multiline }: ClassInstantiation.Args,
         generation: Generation
     ) {

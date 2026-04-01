@@ -829,7 +829,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         };
     }
 
-    precalculate() {
+    public precalculate() {
         this.System.Collections.Generic.KeyValuePair();
         this.System.Collections.Generic.IEnumerable();
         this.System.Collections.Generic.IAsyncEnumerable();

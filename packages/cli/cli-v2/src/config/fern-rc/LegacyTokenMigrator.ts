@@ -31,7 +31,7 @@ export namespace LegacyTokenMigrator {
 export class LegacyTokenMigrator {
     private readonly loader: FernRcSchemaLoader;
 
-    constructor({ loader }: { loader: FernRcSchemaLoader }) {
+    public constructor({ loader }: { loader: FernRcSchemaLoader }) {
         this.loader = loader;
     }
 

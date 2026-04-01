@@ -12,7 +12,7 @@ export class ReferenceCollector {
     private links = new Set<ComponentReference>();
     private callbacks = new Set<ComponentReference>();
 
-    constructor(private document: OpenAPIV3.Document) {}
+    public constructor(private document: OpenAPIV3.Document) {}
 
     public collectFromOperation(operation: OpenAPIV3.OperationObject): void {
         if (operation.parameters) {

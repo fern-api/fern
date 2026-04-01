@@ -15,7 +15,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
 
     private discriminant: string;
 
-    constructor({ discriminant }: UnknownErrorSingleUnionTypeGenerator.Init) {
+    public constructor({ discriminant }: UnknownErrorSingleUnionTypeGenerator.Init) {
         this.discriminant = discriminant;
     }
 

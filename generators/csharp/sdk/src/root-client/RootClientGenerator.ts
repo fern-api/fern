@@ -61,7 +61,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private oauth: OAuthScheme | undefined;
     private inferred: InferredAuthScheme | undefined;
 
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         super(context);
         this.oauth = context.getOauth();
         this.inferred = context.getInferredAuth();

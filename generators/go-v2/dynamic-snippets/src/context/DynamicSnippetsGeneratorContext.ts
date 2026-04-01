@@ -18,7 +18,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public filePropertyMapper: FilePropertyMapper;
     public rootImportPath: string;
 
-    constructor({
+    public constructor({
         ir,
         config
     }: {

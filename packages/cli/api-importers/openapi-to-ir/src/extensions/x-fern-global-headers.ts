@@ -18,7 +18,7 @@ export class FernGlobalHeadersExtension extends AbstractExtension<FernGlobalHead
     private readonly document: object;
     public readonly key = "x-fern-global-headers";
 
-    constructor({ breadcrumbs, document, context }: FernGlobalHeadersExtension.Args) {
+    public constructor({ breadcrumbs, document, context }: FernGlobalHeadersExtension.Args) {
         super({ breadcrumbs, context });
         this.document = document;
     }

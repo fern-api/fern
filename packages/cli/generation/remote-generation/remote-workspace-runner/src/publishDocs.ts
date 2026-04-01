@@ -50,7 +50,7 @@ function sanitizePreviewId(id: string): string {
 }
 
 export class DocsPublishConflictError extends Error {
-    constructor() {
+    public constructor() {
         super("Another docs publish is currently in progress for this domain.");
         this.name = "DocsPublishConflictError";
     }

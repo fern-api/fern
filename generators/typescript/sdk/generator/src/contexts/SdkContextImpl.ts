@@ -206,7 +206,7 @@ export class SdkContextImpl implements SdkContext {
     private _nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContextImpl | undefined;
     private _authProvider: AuthProviderContext | undefined;
 
-    constructor(init: SdkContextImpl.Init) {
+    public constructor(init: SdkContextImpl.Init) {
         this.initParams = init;
         this.logger = init.logger;
         this.ir = init.ir;
@@ -236,18 +236,18 @@ export class SdkContextImpl implements SdkContext {
 
     // Lazy getters for utilities
 
-    get generatorNotificationService(): GeneratorNotificationService {
+    public get generatorNotificationService(): GeneratorNotificationService {
         return (this._generatorNotificationService ??= new GeneratorNotificationService(this.config.environment));
     }
 
-    get externalDependencies(): ExternalDependencies {
+    public get externalDependencies(): ExternalDependencies {
         return (this._externalDependencies ??= createExternalDependencies({
             dependencyManager: this.initParams.dependencyManager,
             importsManager: this.importsManager
         }));
     }
 
-    get coreUtilities(): CoreUtilities {
+    public get coreUtilities(): CoreUtilities {
         return (this._coreUtilities ??= this.initParams.coreUtilitiesManager.getCoreUtilities({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -259,7 +259,7 @@ export class SdkContextImpl implements SdkContext {
 
     // Lazy getters for sub-contexts
 
-    get versionContext(): VersionContextImpl {
+    public get versionContext(): VersionContextImpl {
         return (this._versionContext ??= new VersionContextImpl({
             intermediateRepresentation: this.initParams.intermediateRepresentation,
             versionGenerator: this.initParams.versionGenerator,
@@ -270,7 +270,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get jsonContext(): JsonContext {
+    public get jsonContext(): JsonContext {
         return (this._jsonContext ??= new JsonContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -279,7 +279,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get type(): TypeContextImpl {
+    public get type(): TypeContextImpl {
         return (this._type ??= new TypeContextImpl({
             npmPackage: this.npmPackage,
             isForSnippet: this.initParams.isForSnippet,
@@ -303,7 +303,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get typeSchema(): TypeSchemaContextImpl {
+    public get typeSchema(): TypeSchemaContextImpl {
         return (this._typeSchema ??= new TypeSchemaContextImpl({
             sourceFile: this.sourceFile,
             coreUtilities: this.coreUtilities,
@@ -325,7 +325,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get sdkError(): SdkErrorContextImpl {
+    public get sdkError(): SdkErrorContextImpl {
         return (this._sdkError ??= new SdkErrorContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -336,7 +336,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get sdkErrorSchema(): SdkErrorSchemaContextImpl {
+    public get sdkErrorSchema(): SdkErrorSchemaContextImpl {
         return (this._sdkErrorSchema ??= new SdkErrorSchemaContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -348,7 +348,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get endpointErrorUnion(): EndpointErrorUnionContextImpl {
+    public get endpointErrorUnion(): EndpointErrorUnionContextImpl {
         return (this._endpointErrorUnion ??= new EndpointErrorUnionContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -359,7 +359,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get requestWrapper(): RequestWrapperContextImpl {
+    public get requestWrapper(): RequestWrapperContextImpl {
         return (this._requestWrapper ??= new RequestWrapperContextImpl({
             requestWrapperDeclarationReferencer: this.initParams.requestWrapperDeclarationReferencer,
             requestWrapperGenerator: this.initParams.requestWrapperGenerator,
@@ -379,7 +379,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get sdkInlinedRequestBodySchema(): SdkInlinedRequestBodySchemaContext {
+    public get sdkInlinedRequestBodySchema(): SdkInlinedRequestBodySchemaContext {
         return (this._sdkInlinedRequestBodySchema ??= new SdkInlinedRequestBodySchemaContextImpl({
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
@@ -391,7 +391,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get sdkEndpointTypeSchemas(): SdkEndpointTypeSchemasContextImpl {
+    public get sdkEndpointTypeSchemas(): SdkEndpointTypeSchemasContextImpl {
         return (this._sdkEndpointTypeSchemas ??= new SdkEndpointTypeSchemasContextImpl({
             packageResolver: this.initParams.packageResolver,
             sdkEndpointTypeSchemasGenerator: this.initParams.sdkEndpointTypeSchemasGenerator,
@@ -402,7 +402,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get sdkClientClass(): SdkClientClassContext {
+    public get sdkClientClass(): SdkClientClassContext {
         return (this._sdkClientClass ??= new SdkClientClassContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -414,7 +414,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get websocketTypeSchema(): WebsocketTypeSchemaContext {
+    public get websocketTypeSchema(): WebsocketTypeSchemaContext {
         return (this._websocketTypeSchema ??= new WebsocketTypeSchemaContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -425,7 +425,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get websocket(): WebsocketContextImpl {
+    public get websocket(): WebsocketContextImpl {
         return (this._websocket ??= new WebsocketContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -437,7 +437,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get environments(): EnvironmentsContext {
+    public get environments(): EnvironmentsContext {
         return (this._environments ??= new EnvironmentsContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -448,7 +448,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get genericAPISdkError(): GenericAPISdkErrorContext {
+    public get genericAPISdkError(): GenericAPISdkErrorContext {
         return (this._genericAPISdkError ??= new GenericAPISdkErrorContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -458,7 +458,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get timeoutSdkError(): TimeoutSdkErrorContext {
+    public get timeoutSdkError(): TimeoutSdkErrorContext {
         return (this._timeoutSdkError ??= new TimeoutSdkErrorContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -468,7 +468,7 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get nonStatusCodeErrorHandler(): NonStatusCodeErrorHandlerContext {
+    public get nonStatusCodeErrorHandler(): NonStatusCodeErrorHandlerContext {
         return (this._nonStatusCodeErrorHandler ??= new NonStatusCodeErrorHandlerContextImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
@@ -479,11 +479,11 @@ export class SdkContextImpl implements SdkContext {
         }));
     }
 
-    get authProvider(): AuthProviderContext {
+    public get authProvider(): AuthProviderContext {
         return (this._authProvider ??= new AuthProviderContext({
             context: this
         }));
     }
 
-    version: string | undefined;
+    public version: string | undefined;
 }

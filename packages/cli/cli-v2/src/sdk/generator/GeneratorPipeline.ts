@@ -101,7 +101,7 @@ export class GeneratorPipeline {
     private readonly context: Context;
     private readonly cliVersion: string;
 
-    constructor(config: GeneratorPipeline.Config) {
+    public constructor(config: GeneratorPipeline.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
     }

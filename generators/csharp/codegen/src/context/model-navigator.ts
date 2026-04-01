@@ -140,16 +140,16 @@ export class ModelNavigator {
     private explicitByPath: Map<string, Provenance> = new Map();
 
     /** The root provenance node representing the entire IR tree */
-    readonly root: Provenance;
+    public readonly root: Provenance;
 
     /** The Intermediate Representation being navigated */
-    readonly ir: FernIr.IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
+    public readonly ir: FernIr.IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Provides access to C# code generation utilities.
      * @returns The C# generation context from the generation info
      */
-    get csharp() {
+    public get csharp() {
         return this.generation.csharp;
     }
 
@@ -157,7 +157,7 @@ export class ModelNavigator {
      * Provides access to the type registry for looking up generated type names.
      * @returns The type registry from the generation info
      */
-    get registry() {
+    public get registry() {
         return this.generation.registry;
     }
 
@@ -170,7 +170,7 @@ export class ModelNavigator {
      * @param instance - The root IR node (IntermediateRepresentation or DynamicIntermediateRepresentation)
      * @param generation - The generation context providing access to code generation utilities
      */
-    constructor(
+    public constructor(
         instance: IrNode,
         private readonly generation: Generation
     ) {
@@ -265,7 +265,7 @@ export class ModelNavigator {
      * @param name - The explicit name to create
      * @returns A new Provenance with the explicit flag set
      */
-    staticExplicit(name: string): Provenance {
+    public staticExplicit(name: string): Provenance {
         return this.explicit(this.ir, name);
     }
 
@@ -287,7 +287,7 @@ export class ModelNavigator {
      * @returns A new Provenance representing the explicit member
      * @throws Error if provenance for the parent node cannot be found
      */
-    explicit(node: Origin, member: string): Provenance {
+    public explicit(node: Origin, member: string): Provenance {
         const parentProvenance =
             this.provenance(node) ?? fail(`Provenance not found for node: ${JSON.stringify(node).substring(0, 100)}`);
 
@@ -327,7 +327,7 @@ export class ModelNavigator {
      * @param source - The JsonPath, IrNode, Provenance, or undefined to look up
      * @returns The Provenance for the source, or undefined if not found or source is undefined
      */
-    provenance(source: JsonPath | IrNode | Provenance | undefined): Provenance | undefined {
+    public provenance(source: JsonPath | IrNode | Provenance | undefined): Provenance | undefined {
         if (source === undefined) {
             return undefined;
         }
@@ -356,7 +356,7 @@ export class ModelNavigator {
      * @param source - The IrNode, JsonPath, Provenance, or undefined to look up
      * @returns The Origin (either Provenance or IrNode), or undefined if not found
      */
-    origin(source: IrNode | JsonPath | Provenance | undefined): Origin | undefined {
+    public origin(source: IrNode | JsonPath | Provenance | undefined): Origin | undefined {
         const provenance = this.provenance(source);
         return provenance?.explicit ? provenance : provenance?.node;
     }
@@ -371,7 +371,7 @@ export class ModelNavigator {
      * @param source - The IrNode, JsonPath, Provenance, or undefined to look up
      * @returns The underlying IrNode, or undefined if not found
      */
-    irNode(source: IrNode | JsonPath | Provenance | undefined): IrNode | undefined {
+    public irNode(source: IrNode | JsonPath | Provenance | undefined): IrNode | undefined {
         return this.provenance(source)?.node;
     }
 
@@ -384,7 +384,7 @@ export class ModelNavigator {
      * @param source - The IrNode, JsonPath, Provenance, or undefined to look up
      * @returns The JsonPath string, or undefined if not found
      */
-    jsonPath(source: IrNode | JsonPath | Provenance | undefined): JsonPath | undefined {
+    public jsonPath(source: IrNode | JsonPath | Provenance | undefined): JsonPath | undefined {
         return this.provenance(source)?.jsonPath;
     }
 
@@ -402,7 +402,10 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType): string {
+    public getEnumValueName(
+        typeEnum: FernIr.Type.Enum,
+        valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType
+    ): string {
         // get the name of the enum value
         const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
         // match the name given to the name in the actual type
@@ -430,7 +433,7 @@ export class ModelNavigator {
      * @returns The property name formatted for use in C# code
      * @throws Error if the property type cannot be determined or doesn't have a name
      */
-    getPropertyNameFor(property: Origin): string {
+    public getPropertyNameFor(property: Origin): string {
         const fast = this.registry.getFieldNameByOrigin(property);
         if (fast) {
             return fast;
@@ -475,7 +478,7 @@ export class ModelNavigator {
      * @returns The class name formatted for use in C# code
      * @throws Error if the class type cannot be determined or doesn't have a name
      */
-    getClassNameFor(classDeclaration: Origin): string {
+    public getClassNameFor(classDeclaration: Origin): string {
         if (is.Provenance(classDeclaration)) {
             return classDeclaration.name;
         }
@@ -512,7 +515,7 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
+    public nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
         return name1.camelCase.safeName === name2.camelCase.safeName;
     }
 
@@ -536,7 +539,7 @@ export class ModelNavigator {
      * @returns An object containing the typeId and the resolved TypeDeclaration
      * @throws Error if the typeId cannot be resolved to a TypeDeclaration
      */
-    dereferenceType(
+    public dereferenceType(
         typeIdOrDeclaration:
             | FernIr.TypeDeclaration
             | FernIr.NamedType
@@ -559,7 +562,7 @@ export class ModelNavigator {
      * @returns An object containing the typeId and the resolved TypeDeclaration or dynamic NamedType
      * @throws Error if the typeId cannot be resolved to a type declaration
      */
-    dereferenceType(
+    public dereferenceType(
         typeIdOrDeclaration:
             | FernIr.TypeDeclaration
             | FernIr.NamedType

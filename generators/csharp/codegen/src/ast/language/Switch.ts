@@ -22,7 +22,7 @@ export class Switch extends AstNode {
     private condition: AstNode;
     private cases: Switch.Case[];
 
-    constructor({ condition, cases }: Switch.Args, generation: Generation) {
+    public constructor({ condition, cases }: Switch.Args, generation: Generation) {
         super(generation);
 
         this.condition = condition;

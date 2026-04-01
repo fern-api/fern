@@ -32,7 +32,7 @@ export class WireTestGenerator {
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private snippetGenerator: DynamicSnippetsGenerator;
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    public constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {

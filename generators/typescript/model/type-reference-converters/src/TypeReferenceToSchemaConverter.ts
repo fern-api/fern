@@ -14,7 +14,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     private getSchemaOfNamedType: (typeName: FernIr.DeclaredTypeName) => Zurg.Schema;
     private zurg: Zurg;
 
-    constructor({ getSchemaOfNamedType, zurg, ...superInit }: TypeReferenceToSchemaConverter.Init) {
+    public constructor({ getSchemaOfNamedType, zurg, ...superInit }: TypeReferenceToSchemaConverter.Init) {
         super(superInit);
         this.getSchemaOfNamedType = getSchemaOfNamedType;
         this.zurg = zurg;

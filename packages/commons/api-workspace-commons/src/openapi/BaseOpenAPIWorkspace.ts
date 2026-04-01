@@ -54,7 +54,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private readonly converter: FernDefinitionConverter;
 
-    constructor(args: BaseOpenAPIWorkspace.Args) {
+    public constructor(args: BaseOpenAPIWorkspace.Args) {
         super(args);
         this.inlinePathParameters = args.inlinePathParameters;
         this.objectQueryParameters = args.objectQueryParameters;
@@ -147,7 +147,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     private converter: FernDefinitionConverter;
 
-    constructor(args: BaseOpenAPIWorkspace.Args) {
+    public constructor(args: BaseOpenAPIWorkspace.Args) {
         super(args);
         this.inlinePathParameters = args.inlinePathParameters;
         this.objectQueryParameters = args.objectQueryParameters;

@@ -29,7 +29,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
     private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
     private errorResolver: ErrorResolver;
 
-    constructor({
+    public constructor({
         sourceFile,
         coreUtilities,
         importsManager,

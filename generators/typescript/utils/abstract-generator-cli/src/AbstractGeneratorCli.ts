@@ -379,7 +379,7 @@ function npmPackageInfoFromPublishConfig(
 class GeneratorContextImpl implements GeneratorContext {
     private isSuccess = true;
 
-    constructor(
+    public constructor(
         public readonly logger: Logger,
         public readonly version: string | undefined
     ) {}

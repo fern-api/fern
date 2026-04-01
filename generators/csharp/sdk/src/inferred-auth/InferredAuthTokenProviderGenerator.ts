@@ -37,7 +37,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private requestType: ast.ClassReference;
     private credentialFields = new Map<string, { field: ast.Field; pascalName: string; isOptional: boolean }>();
 
-    constructor({ context, scheme }: InferredAuthTokenProviderGenerator.Args) {
+    public constructor({ context, scheme }: InferredAuthTokenProviderGenerator.Args) {
         super(context);
         this.scheme = scheme;
         this.classReference = this.Types.InferredAuthTokenProvider;

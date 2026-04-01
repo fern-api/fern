@@ -10,7 +10,7 @@ export declare namespace Array_ {
 export class Array_ extends AstNode {
     private entries: AstNode[];
 
-    constructor({ entries }: Array_.Args) {
+    public constructor({ entries }: Array_.Args) {
         super();
         this.entries = entries ?? [];
     }

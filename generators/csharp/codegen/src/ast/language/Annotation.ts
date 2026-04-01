@@ -16,7 +16,7 @@ export class Annotation extends AstNode {
     public readonly reference: ClassReference;
     private argument?: string | AstNode;
 
-    constructor(args: Annotation.Args, generation: Generation) {
+    public constructor(args: Annotation.Args, generation: Generation) {
         super(generation);
         this.reference = args.reference;
         this.argument = args.argument;

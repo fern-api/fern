@@ -9,7 +9,7 @@ import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class WrappedAliasGenerator {
     private readonly className: string;
 
-    constructor(
+    public constructor(
         private readonly typeId: FernIr.TypeId,
         private readonly context: PydanticModelGeneratorContext,
         private readonly typeDeclaration: FernIr.TypeDeclaration,

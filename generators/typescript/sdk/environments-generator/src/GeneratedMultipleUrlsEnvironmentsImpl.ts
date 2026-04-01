@@ -18,7 +18,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
     private environments: FernIr.MultipleBaseUrlsEnvironments;
     private defaultEnvironmentId: FernIr.EnvironmentId | undefined;
 
-    constructor({
+    public constructor({
         environments,
         environmentEnumName,
         environmentUrlsTypeName,

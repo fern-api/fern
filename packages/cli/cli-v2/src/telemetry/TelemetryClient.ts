@@ -19,7 +19,7 @@ export class TelemetryClient {
     private readonly accumulatedTags: Tags = {};
     private cachedDistinctId: string | undefined;
 
-    constructor({ isTTY }: { isTTY: boolean }) {
+    public constructor({ isTTY }: { isTTY: boolean }) {
         const isTelemetryEnabled = this.isTelemetryEnabled();
         const apiKey = process.env.POSTHOG_API_KEY;
         this.baseTags = {

@@ -50,7 +50,15 @@ export class Class extends AstNode {
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, interfaceReferences }: Class.Args) {
+    public constructor({
+        name,
+        namespace,
+        abstract,
+        docs,
+        parentClassReference,
+        traits,
+        interfaceReferences
+    }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

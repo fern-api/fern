@@ -36,7 +36,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
     private readonly securityScheme: OpenAPIV3_1.SecuritySchemeObject;
     private readonly schemeId: string;
 
-    constructor({ context, breadcrumbs, securityScheme, schemeId }: SecuritySchemeConverter.Args) {
+    public constructor({ context, breadcrumbs, securityScheme, schemeId }: SecuritySchemeConverter.Args) {
         super({ context, breadcrumbs });
         this.securityScheme = securityScheme;
         this.schemeId = schemeId;

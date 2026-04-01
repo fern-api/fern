@@ -50,7 +50,7 @@ export class Enum extends Node {
     private generateSerializer = false;
     private serializerClassReference: ClassReference | undefined;
 
-    constructor({ name, namespace, access, annotations, origin }: Enum.Args, generation: Generation) {
+    public constructor({ name, namespace, access, annotations, origin }: Enum.Args, generation: Generation) {
         super(origin, generation);
         this.reference = this.csharp.classReference({
             name: name,

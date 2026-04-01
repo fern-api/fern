@@ -45,7 +45,7 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
     private readonly operation: object;
     public readonly key = "x-fern-streaming";
 
-    constructor({ breadcrumbs, operation, context }: FernStreamingExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: FernStreamingExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

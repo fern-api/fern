@@ -21,7 +21,7 @@ export class SdkWireTestGenerator {
     private readonly snippetExtractor: SnippetExtractor;
     private readonly resourceWriter: TestResourceWriter;
 
-    constructor(private readonly context: SdkGeneratorContext) {
+    public constructor(private readonly context: SdkGeneratorContext) {
         this.testClassBuilder = new TestClassBuilder(context);
         this.testMethodBuilder = new TestMethodBuilder(context);
         this.snippetExtractor = new SnippetExtractor(context);

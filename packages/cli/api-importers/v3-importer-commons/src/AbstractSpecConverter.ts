@@ -38,7 +38,7 @@ export abstract class AbstractSpecConverter<
     protected audiences: Audiences;
     protected irGraph: IrGraph;
 
-    constructor({ breadcrumbs = [], context, audiences }: AbstractSpecConverter.Args<Context>) {
+    public constructor({ breadcrumbs = [], context, audiences }: AbstractSpecConverter.Args<Context>) {
         super({ breadcrumbs, context });
         this.audiences = audiences;
         this.irGraph = new IrGraph(audiences);

@@ -13,7 +13,7 @@ export class FunctionInvocation extends AstNode {
     private function_: Reference;
     private arguments_: AstNode[];
 
-    constructor({ function_, arguments_ }: FunctionInvocation.Args) {
+    public constructor({ function_, arguments_ }: FunctionInvocation.Args) {
         super();
         this.function_ = function_;
         this.arguments_ = arguments_;

@@ -38,7 +38,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     private readonly methodName: string;
     private readonly isWildcardStatusCode?: boolean;
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         responseError,

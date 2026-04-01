@@ -27,7 +27,7 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
 
-    constructor({
+    public constructor({
         importsManager,
         exportsManager,
         packageResolver,

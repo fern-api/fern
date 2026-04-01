@@ -6,7 +6,7 @@ export class BlockMerger {
     private updated: Block[];
     private updatedByID: Record<string, Block> = {};
 
-    constructor({ original, updated }: { original: Block[]; updated: Block[] }) {
+    public constructor({ original, updated }: { original: Block[]; updated: Block[] }) {
         this.original = original;
         this.original.map((block) => {
             this.originalByID[block.id] = block;
@@ -56,7 +56,7 @@ class BlockList {
     private ids: Set<string>;
     private blocks: Block[];
 
-    constructor() {
+    public constructor() {
         this.ids = new Set();
         this.blocks = [];
     }

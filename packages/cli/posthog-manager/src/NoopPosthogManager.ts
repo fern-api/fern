@@ -1,14 +1,14 @@
 import { PosthogManager } from "./PosthogManager.js";
 
 export class NoopPosthogManager implements PosthogManager {
-    async sendEvent(): Promise<void> {
+    public async sendEvent(): Promise<void> {
         // no-op
     }
-    async identify(): Promise<void> {
+    public async identify(): Promise<void> {
         // no-op
     }
 
-    async flush(): Promise<void> {
+    public async flush(): Promise<void> {
         // no-op
     }
 }

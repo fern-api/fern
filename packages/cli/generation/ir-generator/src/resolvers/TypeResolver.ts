@@ -34,7 +34,7 @@ export interface RawTypeDeclarationInfo {
 }
 
 export class TypeResolverImpl implements TypeResolver {
-    constructor(private readonly workspace: FernWorkspace) {}
+    public constructor(private readonly workspace: FernWorkspace) {}
 
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file });

@@ -55,7 +55,7 @@ export class TestResourceWriter {
     private readonly resourceFiles: Map<string, ResourceFile> = new Map();
     private readonly context: SdkGeneratorContext;
 
-    constructor(context: SdkGeneratorContext) {
+    public constructor(context: SdkGeneratorContext) {
         this.context = context;
     }
 

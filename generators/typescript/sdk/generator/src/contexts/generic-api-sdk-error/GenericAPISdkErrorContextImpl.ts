@@ -22,7 +22,7 @@ export class GenericAPISdkErrorContextImpl implements GenericAPISdkErrorContext 
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         genericAPISdkErrorDeclarationReferencer,
         genericAPISdkErrorGenerator,
         importsManager,

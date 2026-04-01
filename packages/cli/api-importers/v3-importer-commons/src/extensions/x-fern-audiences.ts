@@ -14,7 +14,7 @@ export class AudienceExtension extends AbstractExtension<AudienceExtension.Outpu
     private readonly operation: object;
     public readonly key = "x-fern-audiences";
 
-    constructor({ breadcrumbs, operation, context }: AudienceExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: AudienceExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

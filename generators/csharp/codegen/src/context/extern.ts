@@ -8,7 +8,7 @@ import { lazy } from "../utils/lazy.js";
  * and testing frameworks.
  */
 export class Extern {
-    constructor(private readonly generation: Generation) {}
+    public constructor(private readonly generation: Generation) {}
     protected get csharp() {
         return this.generation.csharp;
     }
@@ -19,7 +19,7 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached, functions remain callable.
      */
-    readonly System = lazy({
+    public readonly System = lazy({
         /**
          * Creates a reference to System.Action<T> delegate.
          *
@@ -725,7 +725,7 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly NUnit = lazy({
+    public readonly NUnit = lazy({
         /**
          * NUnit Framework namespace references.
          */
@@ -790,7 +790,7 @@ export class Extern {
      *
      * Functions with parameters remain callable.
      */
-    readonly OneOf = lazy({
+    public readonly OneOf = lazy({
         /**
          * Creates a reference to OneOf<T1, T2, ...>.
          *
@@ -827,7 +827,7 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly Google = lazy({
+    public readonly Google = lazy({
         /**
          * Protocol Buffers namespace references.
          */
@@ -897,7 +897,7 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly WireMock = lazy({
+    public readonly WireMock = lazy({
         /**
          * Reference to WireMock.Server.WireMockServer class.
          */
@@ -931,7 +931,7 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly Grpc = lazy({
+    public readonly Grpc = lazy({
         /**
          * Grpc.Core namespace references.
          */

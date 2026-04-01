@@ -18,7 +18,7 @@ export class MethodInvocation extends AstNode {
     private method: string;
     private arguments_: AstNode[];
 
-    constructor({ method, arguments_, on }: MethodInvocation.Args) {
+    public constructor({ method, arguments_, on }: MethodInvocation.Args) {
         super();
 
         this.on = on;

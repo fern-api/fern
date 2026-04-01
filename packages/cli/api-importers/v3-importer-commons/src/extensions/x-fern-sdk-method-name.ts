@@ -16,7 +16,7 @@ export class SdkMethodNameExtension extends AbstractExtension<SdkMethodNameExten
     private readonly operation: OpenAPIV3_1.OperationObject;
     public readonly key = "x-fern-sdk-method-name";
 
-    constructor({ breadcrumbs, operation, context }: SdkMethodNameExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: SdkMethodNameExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

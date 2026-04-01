@@ -78,7 +78,7 @@ export class ClassReference extends Node implements Type {
     public readonly multipartMethodName: string | null;
     public readonly multipartMethodNameForCollection: string | null;
 
-    constructor(
+    public constructor(
         {
             name,
             namespace,
@@ -94,7 +94,7 @@ export class ClassReference extends Node implements Type {
             multipartMethodNameForCollection,
             isReferenceType
         }: ClassReference.CreationArgs,
-        readonly scope: TypeScope,
+        public readonly scope: TypeScope,
         generation: Generation
     ) {
         super(origin, generation);

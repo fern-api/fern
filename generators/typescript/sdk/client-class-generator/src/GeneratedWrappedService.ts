@@ -19,7 +19,7 @@ export class GeneratedWrappedService {
     private wrappedSubpackageId: FernIr.SubpackageId;
     private wrappedSubpackage: FernIr.Subpackage;
 
-    constructor({ wrapperService, wrappedSubpackageId, wrappedSubpackage }: GeneratedWrappedService.Init) {
+    public constructor({ wrapperService, wrappedSubpackageId, wrappedSubpackage }: GeneratedWrappedService.Init) {
         this.wrapperService = wrapperService;
         this.wrappedSubpackageId = wrappedSubpackageId;
         this.wrappedSubpackage = wrappedSubpackage;

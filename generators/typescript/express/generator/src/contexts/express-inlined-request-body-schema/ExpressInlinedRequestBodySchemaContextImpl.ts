@@ -29,7 +29,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
-    constructor({
+    public constructor({
         importsManager,
         exportsManager,
         packageResolver,

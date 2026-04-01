@@ -41,7 +41,7 @@ export class SdkTaskGroup {
         }
     ];
 
-    constructor({ context }: { context: Context }) {
+    public constructor({ context }: { context: Context }) {
         this.tasks = {};
         this.taskGroup = new TaskGroup({ context });
     }

@@ -70,7 +70,7 @@ export class Generation {
      * @param customConfig - User-provided custom configuration overrides for the generator
      * @param generatorConfig - Core generator configuration including organization and workspace info
      */
-    constructor(
+    public constructor(
         public readonly intermediateRepresentation:
             | IntermediateRepresentation
             | DynamicFernIr.dynamic.DynamicIntermediateRepresentation,

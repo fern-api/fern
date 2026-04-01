@@ -1,7 +1,7 @@
 export class ContributingGenerator {
     private packageManager: "pnpm" | "yarn";
 
-    constructor({ packageManager }: { packageManager: "pnpm" | "yarn" }) {
+    public constructor({ packageManager }: { packageManager: "pnpm" | "yarn" }) {
         this.packageManager = packageManager;
     }
 

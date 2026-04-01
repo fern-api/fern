@@ -11,7 +11,7 @@ export class ApiDefinitionHolderLatest {
     #endpointsByLocator: Record<string, FdrAPI.api.latest.endpoint.EndpointDefinition> = {};
     #websocketsByLocator: Record<string, FdrAPI.api.latest.websocket.WebSocketChannel> = {};
 
-    constructor(api: FdrAPI.api.latest.ApiDefinition) {
+    public constructor(api: FdrAPI.api.latest.ApiDefinition) {
         for (const [subpackageId, subpackage] of Object.entries(api.subpackages)) {
             this.#subpackagesByLocator[camelCase(subpackageId).toLowerCase()] = subpackage;
             this.#subpackagesByLocator[`subpackage_${camelCase(subpackageId).toLowerCase()}`] = subpackage;
@@ -58,7 +58,7 @@ export class ApiDefinitionHolderLatest {
         }
     }
 
-    getSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
+    public getSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
         if (
             ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "CONNECT", "TRACE"].some((method) =>
                 locator.includes(method)
@@ -71,7 +71,7 @@ export class ApiDefinitionHolderLatest {
         return this.#subpackagesByLocator[subpackageId];
     }
 
-    getWebhookByLocator(
+    public getWebhookByLocator(
         locator: string,
         packageId: string | undefined
     ): FdrAPI.api.latest.webhook.WebhookDefinition | undefined {
@@ -82,7 +82,7 @@ export class ApiDefinitionHolderLatest {
         );
     }
 
-    getEndpointByLocator(
+    public getEndpointByLocator(
         locator: string,
         packageId: string | undefined
     ): FdrAPI.api.latest.endpoint.EndpointDefinition | undefined {
@@ -93,7 +93,7 @@ export class ApiDefinitionHolderLatest {
         );
     }
 
-    getWebSocketByLocator(
+    public getWebSocketByLocator(
         locator: string,
         packageId: string | undefined
     ): FdrAPI.api.latest.websocket.WebSocketChannel | undefined {
@@ -104,7 +104,7 @@ export class ApiDefinitionHolderLatest {
         );
     }
 
-    get subpackageLocators(): ReadonlySet<string> {
+    public get subpackageLocators(): ReadonlySet<string> {
         return new Set(Object.keys(this.#subpackagesByLocator));
     }
 }

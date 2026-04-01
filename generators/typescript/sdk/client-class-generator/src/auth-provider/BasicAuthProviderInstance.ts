@@ -7,7 +7,7 @@ import type { AuthProviderInstance } from "./AuthProviderInstance.js";
 export class BasicAuthProviderInstance implements AuthProviderInstance {
     private readonly authScheme: FernIr.BasicAuthScheme;
 
-    constructor(authScheme: FernIr.BasicAuthScheme) {
+    public constructor(authScheme: FernIr.BasicAuthScheme) {
         this.authScheme = authScheme;
     }
 

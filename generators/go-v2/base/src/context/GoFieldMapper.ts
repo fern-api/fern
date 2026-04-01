@@ -25,7 +25,7 @@ export declare namespace GoFieldMapper {
 export class GoFieldMapper {
     private context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>;
 
-    constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
+    public constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
         this.context = context;
     }
 

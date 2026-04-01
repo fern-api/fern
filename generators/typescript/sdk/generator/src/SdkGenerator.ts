@@ -259,7 +259,7 @@ export class SdkGenerator {
         | Omit<SdkContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">
         | undefined;
 
-    constructor({
+    public constructor({
         namespaceExport,
         naming,
         intermediateRepresentation,

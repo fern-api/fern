@@ -39,7 +39,7 @@ export abstract class DefinedType extends Node implements Type {
     protected fields: Field[] = [];
     protected methods: Method[] = [];
 
-    constructor(
+    public constructor(
         { name, namespace, access, partial, interfaceReferences, enclosingType, origin }: DefinedType.Args,
         generation: Generation
     ) {

@@ -12,7 +12,7 @@ export declare namespace GoTypeMapper {
 export class GoTypeMapper {
     private context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>;
 
-    constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
+    public constructor(context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema>) {
         this.context = context;
     }
 

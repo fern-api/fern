@@ -22,7 +22,7 @@ export namespace FernRcSchemaLoader {
 export class FernRcSchemaLoader {
     public readonly absoluteFilePath: AbsoluteFilePath;
 
-    constructor() {
+    public constructor() {
         this.absoluteFilePath = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(FILENAME));
     }
 

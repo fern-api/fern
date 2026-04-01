@@ -4,7 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "./context/GeneratorContext.js";
 
 export abstract class AsyncFileGenerator<GeneratedFile extends File> {
-    constructor(protected readonly context: GeneratorContext) {}
+    public constructor(protected readonly context: GeneratorContext) {}
 
     public async generate(): Promise<GeneratedFile> {
         if (await this.shouldGenerate()) {

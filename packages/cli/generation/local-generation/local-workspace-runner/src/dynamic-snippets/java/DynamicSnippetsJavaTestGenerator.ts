@@ -15,7 +15,7 @@ import { convertIr } from "../utils/convertIr.js";
 export class DynamicSnippetsJavaTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor(
+    public constructor(
         private readonly context: TaskContext,
         private readonly ir: dynamic.DynamicIntermediateRepresentation,
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig

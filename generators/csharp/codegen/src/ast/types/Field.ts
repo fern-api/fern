@@ -122,7 +122,7 @@ export class Field extends MemberNode {
     };
     private readonly override?: boolean;
     private readonly isEvent_: boolean;
-    constructor(
+    public constructor(
         {
             name,
             type,

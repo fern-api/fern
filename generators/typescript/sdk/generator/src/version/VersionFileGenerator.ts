@@ -12,7 +12,7 @@ export class VersionFileGenerator {
     private packagePathDirectory: Directory;
     private version: string;
 
-    constructor({ packagePathDirectory, version }: VersionFileGenerator.Args) {
+    public constructor({ packagePathDirectory, version }: VersionFileGenerator.Args) {
         this.packagePathDirectory = packagePathDirectory;
         this.version = version;
     }

@@ -20,7 +20,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     private wrapper: FernIr.SdkRequestWrapper;
     private endpoint: FernIr.HttpEndpoint;
 
-    constructor({ serviceId, wrapper, context, endpoint }: WrappedRequestGenerator.Args) {
+    public constructor({ serviceId, wrapper, context, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
         this.serviceId = serviceId;
         this.wrapper = wrapper;

@@ -17,7 +17,7 @@ export class TtyAwareLogger {
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timer | undefined;
 
-    constructor(
+    public constructor(
         private readonly stdout: NodeJS.WriteStream,
         private readonly stderr: NodeJS.WriteStream
     ) {

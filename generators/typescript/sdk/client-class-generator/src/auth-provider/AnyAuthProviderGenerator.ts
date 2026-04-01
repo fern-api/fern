@@ -19,7 +19,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(init: AnyAuthProviderGenerator.Init) {
+    public constructor(init: AnyAuthProviderGenerator.Init) {
         this.ir = init.ir;
     }
 

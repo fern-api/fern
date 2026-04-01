@@ -4,7 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "./cli/index.js";
 
 export abstract class FileGenerator<GeneratedFile extends File, Context extends GeneratorContext = GeneratorContext> {
-    constructor(protected readonly context: Context) {}
+    public constructor(protected readonly context: Context) {}
 
     protected get generation(): Generation {
         return this.context.generation;

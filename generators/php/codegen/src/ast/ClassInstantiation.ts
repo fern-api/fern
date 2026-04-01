@@ -21,7 +21,7 @@ export class ClassInstantiation extends AstNode {
     public readonly arguments_: Arguments;
     private multiline: boolean;
 
-    constructor({ classReference, arguments_, multiline }: ClassInstantiation.Args) {
+    public constructor({ classReference, arguments_, multiline }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;

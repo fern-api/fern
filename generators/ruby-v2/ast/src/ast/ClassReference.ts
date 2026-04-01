@@ -17,7 +17,7 @@ export class ClassReference extends AstNode {
     public readonly modules: string[];
     public readonly fullyQualified: boolean;
 
-    constructor({ name, modules, fullyQualified }: ClassReference.Args) {
+    public constructor({ name, modules, fullyQualified }: ClassReference.Args) {
         super();
         this.name = name;
         this.modules = modules ?? [];

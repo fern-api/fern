@@ -204,7 +204,7 @@ export class Optional extends ReferenceType {
      * @param value - The underlying non-nullable type
      * @param generation - The generation context for code generation
      */
-    constructor(value: Type, generation: Generation) {
+    public constructor(value: Type, generation: Generation) {
         super(generation);
         this.value = value;
     }
@@ -259,7 +259,7 @@ export class Nullable extends ReferenceType {
      * @param value - The underlying non-nullable type
      * @param generation - The generation context for code generation
      */
-    constructor(value: Type, generation: Generation) {
+    public constructor(value: Type, generation: Generation) {
         super(generation);
         this.value = value;
     }
@@ -315,7 +315,7 @@ export class OptionalWrapper extends ReferenceType {
      * @param value - The underlying type to wrap
      * @param generation - The generation context for code generation
      */
-    constructor(value: Type, generation: Generation) {
+    public constructor(value: Type, generation: Generation) {
         super(generation);
         this.value = value;
     }
@@ -460,7 +460,7 @@ export namespace Primitive {
     }
 
     export class ArbitraryType extends PrimitiveType {
-        constructor(
+        public constructor(
             public override readonly fullyQualifiedName: string,
             generation: Generation
         ) {
@@ -543,7 +543,7 @@ export namespace Value {
          * @param value - The class reference for the enum
          * @param generation - The generation context for code generation
          */
-        constructor(value: ClassReference, generation: Generation) {
+        public constructor(value: ClassReference, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -572,7 +572,7 @@ export namespace Collection {
          * @param value - The element type of the array
          * @param generation - The generation context for code generation
          */
-        constructor(value: Type, generation: Generation) {
+        public constructor(value: Type, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -610,7 +610,7 @@ export namespace Collection {
          * @param value - The element type of the list
          * @param generation - The generation context for code generation
          */
-        constructor(value: Type, generation: Generation) {
+        public constructor(value: Type, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -662,7 +662,7 @@ export namespace Collection {
          * @param value - The element type of the enumerable
          * @param generation - The generation context for code generation
          */
-        constructor(value: Type, generation: Generation) {
+        public constructor(value: Type, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -713,7 +713,7 @@ export namespace Collection {
          * @param value - The element type of the set
          * @param generation - The generation context for code generation
          */
-        constructor(value: Type, generation: Generation) {
+        public constructor(value: Type, generation: Generation) {
             super(generation);
             this.value = value;
         }
@@ -758,7 +758,12 @@ export namespace Collection {
          * @param generation - The generation context for code generation
          * @param options - Optional configuration (e.g., whether to skip simplification)
          */
-        constructor(keyType: Type, valueType: Type, generation: Generation, options?: { dontSimplify?: boolean }) {
+        public constructor(
+            keyType: Type,
+            valueType: Type,
+            generation: Generation,
+            options?: { dontSimplify?: boolean }
+        ) {
             super(generation);
             this.keyType = keyType;
             this.valueType = valueType;
@@ -818,7 +823,12 @@ export namespace Collection {
          * @param generation - The generation context for code generation
          * @param options - Optional configuration (e.g., whether to skip simplification)
          */
-        constructor(keyType: Type, valueType: Type, generation: Generation, options?: { dontSimplify?: boolean }) {
+        public constructor(
+            keyType: Type,
+            valueType: Type,
+            generation: Generation,
+            options?: { dontSimplify?: boolean }
+        ) {
             super(generation);
             this.keyType = keyType;
             this.valueType = valueType;
@@ -867,7 +877,7 @@ export namespace Collection {
          * @param valueType - The value type
          * @param generation - The generation context for code generation
          */
-        constructor(keyType: Type, valueType: Type, generation: Generation) {
+        public constructor(keyType: Type, valueType: Type, generation: Generation) {
             super(generation);
             this.keyType = keyType;
             this.valueType = valueType;

@@ -46,7 +46,7 @@ export class TypeContextImpl implements TypeContext {
     private retainOriginalCasing: boolean;
     private context: BaseContext;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,
@@ -327,22 +327,22 @@ export class TypeContextImpl implements TypeContext {
         };
     }
 
-    generateGetterForResponsePropertyAsString(): string {
+    public generateGetterForResponsePropertyAsString(): string {
         throw new Error("Method not implemented.");
     }
-    generateGetterForResponseProperty(): ts.Expression {
+    public generateGetterForResponseProperty(): ts.Expression {
         throw new Error("Method not implemented.");
     }
-    generateGetterForRequestProperty(): ts.Expression {
+    public generateGetterForRequestProperty(): ts.Expression {
         throw new Error("Method not implemented.");
     }
-    generateSetterForRequestPropertyAsString(): string {
+    public generateSetterForRequestPropertyAsString(): string {
         throw new Error("Method not implemented.");
     }
-    generateSetterForRequestProperty(): ts.Expression {
+    public generateSetterForRequestProperty(): ts.Expression {
         throw new Error("Method not implemented.");
     }
-    getReferenceToResponsePropertyType(): ts.TypeNode {
+    public getReferenceToResponsePropertyType(): ts.TypeNode {
         throw new Error("Method not implemented.");
     }
 }

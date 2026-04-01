@@ -177,7 +177,7 @@
                 "useAsConstAssertion": "error",
                 "useBlockStatements": "error",
                 "useConsistentMemberAccessibility": {
-                    "level": "warn",
+                    "level": "error",
                     "options": {
                         "accessibility": "explicit"
                     }

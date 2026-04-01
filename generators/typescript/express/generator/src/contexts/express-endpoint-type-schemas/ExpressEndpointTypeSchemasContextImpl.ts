@@ -27,7 +27,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
 
-    constructor({
+    public constructor({
         sourceFile,
         importsManager,
         exportsManager,

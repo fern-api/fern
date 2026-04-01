@@ -20,7 +20,7 @@ export declare namespace AsyncAPIConverter {
 }
 
 export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterContext, IntermediateRepresentation> {
-    constructor({ context, breadcrumbs, audiences }: AsyncAPIConverter.Args) {
+    public constructor({ context, breadcrumbs, audiences }: AsyncAPIConverter.Args) {
         super({ context, breadcrumbs, audiences });
     }
 

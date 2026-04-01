@@ -9,11 +9,11 @@ type ErrorDeclaration = FernIr.ErrorDeclaration;
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
-    readonly classReference;
+    public readonly classReference;
 
-    constructor(
+    public constructor(
         context: SdkGeneratorContext,
-        readonly errorDeclaration: ErrorDeclaration
+        public readonly errorDeclaration: ErrorDeclaration
     ) {
         super(context);
         this.classReference = this.context.getExceptionClassReference(this.errorDeclaration.name);

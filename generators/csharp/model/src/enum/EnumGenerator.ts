@@ -12,7 +12,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly classReference: ast.ClassReference;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration

@@ -54,7 +54,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
-    constructor({
+    public constructor({
         ir,
         packageId,
         service,

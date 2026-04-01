@@ -18,7 +18,7 @@ export class UserPosthogManager implements PosthogManager {
     private userId: string | undefined;
     private token: FernUserToken | undefined;
 
-    constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
+    public constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
         this.posthog = new PostHog(posthogApiKey);
         this.userId = token == null ? undefined : getUserIdFromToken(token);
         this.token = token;

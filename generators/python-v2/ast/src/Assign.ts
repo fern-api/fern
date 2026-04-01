@@ -12,7 +12,7 @@ export class Assign extends AstNode {
     private readonly lhs: AstNode;
     private readonly rhs: AstNode;
 
-    constructor({ lhs, rhs }: Assign.Args) {
+    public constructor({ lhs, rhs }: Assign.Args) {
         super();
 
         this.lhs = lhs;

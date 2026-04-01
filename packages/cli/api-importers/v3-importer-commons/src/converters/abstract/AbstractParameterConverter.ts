@@ -37,7 +37,7 @@ export abstract class AbstractParameterConverter<
 > extends AbstractConverter<AbstractConverterContext<object>, AbstractParameterConverter.Output> {
     protected readonly parameter: TParameter;
 
-    constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
+    public constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
         super({ context, breadcrumbs });
         this.parameter = parameter;
     }

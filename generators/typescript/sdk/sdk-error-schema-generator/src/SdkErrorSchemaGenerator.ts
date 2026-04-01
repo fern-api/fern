@@ -21,7 +21,7 @@ export class SdkErrorSchemaGenerator {
     private skipValidation: boolean;
     private includeSerdeLayer: boolean;
 
-    constructor({ skipValidation, includeSerdeLayer }: SdkErrorSchemaGenerator.Init) {
+    public constructor({ skipValidation, includeSerdeLayer }: SdkErrorSchemaGenerator.Init) {
         this.skipValidation = skipValidation;
         this.includeSerdeLayer = includeSerdeLayer;
     }

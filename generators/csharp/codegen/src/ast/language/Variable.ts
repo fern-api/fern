@@ -18,7 +18,7 @@ export class Variable extends AstNode {
     private type?: ClassReference | Type;
     private initialValue: Expression;
 
-    constructor(name: string, type: ClassReference | Type, initialValue: Expression, generation: Generation) {
+    public constructor(name: string, type: ClassReference | Type, initialValue: Expression, generation: Generation) {
         super(generation);
         this.name = name;
         this.type = type;

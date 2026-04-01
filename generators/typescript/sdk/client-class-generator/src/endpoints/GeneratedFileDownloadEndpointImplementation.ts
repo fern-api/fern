@@ -50,7 +50,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
-    constructor({
+    public constructor({
         endpoint,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,

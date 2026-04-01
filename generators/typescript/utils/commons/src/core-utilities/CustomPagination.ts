@@ -28,7 +28,7 @@ export class CustomPaginationImpl extends CoreUtility implements CustomPaginatio
     public readonly MANIFEST: CoreUtility.Manifest;
     public readonly CustomPager: CustomPagination["CustomPager"];
 
-    constructor({ customPagerName, ...init }: CoreUtility.Init & { customPagerName: string }) {
+    public constructor({ customPagerName, ...init }: CoreUtility.Init & { customPagerName: string }) {
         super(init);
         const createFunctionName = `create${customPagerName}`;
 

@@ -5,7 +5,7 @@ import { SdkContext } from "../SdkContext.js";
 export class AuthProviderContext {
     private readonly context: SdkContext;
 
-    constructor({
+    public constructor({
         context
     }: {
         context: SdkContext;

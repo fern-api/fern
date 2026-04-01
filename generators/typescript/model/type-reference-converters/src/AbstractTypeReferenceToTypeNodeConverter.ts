@@ -29,7 +29,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         responseTypeNode: ts.TypeNode | undefined;
     };
 
-    constructor({
+    public constructor({
         getReferenceToNamedType,
         generateForInlineUnion,
         ...superInit

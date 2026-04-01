@@ -15,7 +15,7 @@ import { ObjectGenerator } from "../object/ObjectGenerator.js";
 import { UnionGenerator } from "../union/UnionGenerator.js";
 
 export class ExampleGenerator extends WithGeneration {
-    constructor(private readonly context: ModelGeneratorContext) {
+    public constructor(private readonly context: ModelGeneratorContext) {
         super(context.generation);
     }
 

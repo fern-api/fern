@@ -313,7 +313,7 @@ export class StackTraces {
     private readonly formatFilename: (filename: string) => string;
     private tracking = new WeakMap<object, Set<StackTraceFrame>>();
 
-    constructor({
+    public constructor({
         maxFrames = 50,
         skip = 0,
         filterPaths = [],
@@ -342,7 +342,7 @@ export class StackTraces {
      *
      * @param obj - The object to tag the stack trace with.
      */
-    tag(obj: object): void {
+    public tag(obj: object): void {
         const current = this.tracking.get(obj) || new Set<StackTraceFrame>();
         stacktrace({
             maxFrames: this.maxFrames,
@@ -362,7 +362,7 @@ export class StackTraces {
      * @param obj - The object to get the stack trace for.
      * @returns A formatted string containing the stack trace information.
      */
-    trace(obj: object): string {
+    public trace(obj: object): string {
         if (!enableStackTracking) {
             return "";
         }
@@ -385,7 +385,7 @@ export class StackTraces {
      * @param obj - The object to get the stack trace frames for.
      * @returns The stack trace frames for the given object.
      */
-    frames(obj: object): StackTraceFrame[] {
+    public frames(obj: object): StackTraceFrame[] {
         const frames = this.tracking.get(obj);
         if (!frames) {
             return [];
@@ -397,14 +397,14 @@ export class StackTraces {
      * Frees the stack trace information for the given object.
      * @param obj - The object to free the stack trace information for.
      */
-    free(obj: object): void {
+    public free(obj: object): void {
         this.tracking.delete(obj);
     }
 
     /**
      * Clears all stack trace information.
      */
-    clear(): void {
+    public clear(): void {
         this.tracking = new WeakMap<object, Set<StackTraceFrame>>();
     }
 }

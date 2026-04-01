@@ -12,7 +12,7 @@ export declare namespace And {
 export class And extends AstNode {
     private conditions: AstNode[];
 
-    constructor(args: And.Args, generation: Generation) {
+    public constructor(args: And.Args, generation: Generation) {
         super(generation);
         this.conditions = args.conditions;
     }

@@ -24,7 +24,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
     private serviceId: FernIr.ServiceId | undefined;
     private service: FernIr.HttpService | undefined;
 
-    constructor({ context, subpackage, serviceId, service }: SubPackageClientInterfaceGenerator.Args) {
+    public constructor({ context, subpackage, serviceId, service }: SubPackageClientInterfaceGenerator.Args) {
         super(context);
         this.subpackage = subpackage;
         this.serviceId = serviceId;

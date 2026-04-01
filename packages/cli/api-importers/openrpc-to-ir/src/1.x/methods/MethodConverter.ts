@@ -47,7 +47,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     private readonly queryParameters: FernIr.QueryParameter[];
     private readonly headers: FernIr.HttpHeader[];
     private readonly topLevelServers: ServerObject[];
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         method,

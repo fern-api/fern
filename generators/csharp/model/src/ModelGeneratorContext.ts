@@ -50,7 +50,7 @@ export class ModelGeneratorContext extends GeneratorContext {
         );
     }
 
-    override getAsyncCoreAsIsFiles(): string[] {
+    public override getAsyncCoreAsIsFiles(): string[] {
         return [];
     }
 

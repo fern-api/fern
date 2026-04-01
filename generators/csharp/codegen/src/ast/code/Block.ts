@@ -11,7 +11,7 @@ export declare namespace Block {
 export class Block extends AstNode {
     private statements: Statement[] = [];
 
-    constructor(args: Block.Args, generation: Generation) {
+    public constructor(args: Block.Args, generation: Generation) {
         super(generation);
     }
 
@@ -31,11 +31,11 @@ export class Block extends AstNode {
         }
     }
 
-    append(codeblock: CodeBlock) {
+    public append(codeblock: CodeBlock) {
         this.statements.push(codeblock);
     }
 
-    assign(to: NamedNode, from: NamedNode | AstNode): this {
+    public assign(to: NamedNode, from: NamedNode | AstNode): this {
         if (is.Ast.NamedNode(from)) {
             this.statements.push([`${to.name} = ${from.name}`]);
         } else {
@@ -54,7 +54,7 @@ export class Block extends AstNode {
         }
     }
     */
-    if(condition: string, block: Block) {
+    public if(condition: string, block: Block) {
         //
     }
 }

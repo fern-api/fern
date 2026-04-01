@@ -22,7 +22,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     private tokenEndpointReference: FernIr.EndpointReference;
     private tokenEndpoint: FernIr.HttpEndpoint;
 
-    constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
+    public constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
         this.scheme = scheme;
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;

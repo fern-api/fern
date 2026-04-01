@@ -28,7 +28,7 @@ export class Trait extends AstNode {
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
 
-    constructor({ name, namespace, docs, traits }: Trait.Args) {
+    public constructor({ name, namespace, docs, traits }: Trait.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

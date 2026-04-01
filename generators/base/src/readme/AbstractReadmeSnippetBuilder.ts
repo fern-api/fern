@@ -4,7 +4,7 @@ import { camelCase } from "lodash-es";
 export abstract class AbstractReadmeSnippetBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
 
-    constructor({ endpointSnippets }: { endpointSnippets: FernGeneratorExec.Endpoint[] }) {
+    public constructor({ endpointSnippets }: { endpointSnippets: FernGeneratorExec.Endpoint[] }) {
         this.endpointSnippets = endpointSnippets;
     }
 

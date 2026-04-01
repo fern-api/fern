@@ -41,7 +41,7 @@ export class Writer extends AbstractWriter {
     /* Whether or not to skip adding global:: qualifier to System namespaces */
     public readonly skipGlobalQualifier: boolean;
 
-    constructor({
+    public constructor({
         namespace,
         allNamespaceSegments,
         allTypeClassReferences,

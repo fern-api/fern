@@ -31,7 +31,7 @@ export class ErrorReporter {
     private errors: ErrorReporter.Error[];
     private path: ErrorReporter.PathItem[];
 
-    constructor() {
+    public constructor() {
         this.errors = [];
         this.path = [];
     }

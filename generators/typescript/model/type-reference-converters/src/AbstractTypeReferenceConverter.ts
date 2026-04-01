@@ -96,7 +96,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected omitUndefined: boolean;
     protected generateReadWriteOnlyTypes: boolean;
 
-    constructor({
+    public constructor({
         context,
         treatUnknownAsAny,
         includeSerdeLayer,

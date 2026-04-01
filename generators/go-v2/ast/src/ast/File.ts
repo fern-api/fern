@@ -11,7 +11,7 @@ export declare namespace File {
 export class File extends AstNode {
     public readonly nodes: AstNode[];
 
-    constructor({ nodes }: File.Args = { nodes: [] }) {
+    public constructor({ nodes }: File.Args = { nodes: [] }) {
         super();
         this.nodes = nodes ?? [];
     }

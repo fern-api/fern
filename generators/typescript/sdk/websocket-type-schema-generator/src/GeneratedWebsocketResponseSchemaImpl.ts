@@ -26,7 +26,7 @@ export class GeneratedWebsocketResponseSchemaImpl
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({
+    public constructor({
         packageId,
         channel,
         receiveMessages,

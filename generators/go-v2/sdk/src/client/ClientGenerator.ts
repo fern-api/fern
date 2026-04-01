@@ -35,7 +35,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private serviceId: FernIr.ServiceId | undefined;
     private service: FernIr.HttpService | undefined;
 
-    constructor({
+    public constructor({
         fernFilepath,
         isRootClient = false,
         subpackage,

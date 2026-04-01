@@ -11,7 +11,7 @@ export declare namespace DocsImporter {
 export abstract class DocsImporter<Args> {
     protected context: TaskContext;
 
-    constructor({ context }: DocsImporter.BaseArgs) {
+    public constructor({ context }: DocsImporter.BaseArgs) {
         this.context = context;
     }
 

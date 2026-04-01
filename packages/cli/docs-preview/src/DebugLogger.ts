@@ -124,14 +124,14 @@ export class DebugLogger {
     private initialized = false;
     private sessionStartTime: number;
 
-    constructor() {
+    public constructor() {
         this.sessionStartTime = Date.now();
     }
 
     /**
      * Initialize the debug logger by creating the log file
      */
-    async initialize(): Promise<void> {
+    public async initialize(): Promise<void> {
         if (this.initialized) {
             return;
         }
@@ -163,7 +163,7 @@ export class DebugLogger {
     /**
      * Get the path to the log file
      */
-    getLogFilePath(): AbsoluteFilePath | null {
+    public getLogFilePath(): AbsoluteFilePath | null {
         return this.logFilePath;
     }
 
@@ -186,7 +186,7 @@ export class DebugLogger {
     /**
      * Log a frontend metrics message
      */
-    async logFrontendMetrics(message: MetricsMessage): Promise<void> {
+    public async logFrontendMetrics(message: MetricsMessage): Promise<void> {
         const entry: DebugLogEntry = {
             timestamp: message.timestamp,
             source: message.source,
@@ -202,7 +202,7 @@ export class DebugLogger {
     /**
      * Log a CLI-side metric event
      */
-    async logCliMetric(event: CliMetricEvent, level: LogLevel = "info"): Promise<void> {
+    public async logCliMetric(event: CliMetricEvent, level: LogLevel = "info"): Promise<void> {
         const entry: DebugLogEntry = {
             timestamp: event.timestamp,
             source: getCliSource(),
@@ -220,7 +220,7 @@ export class DebugLogger {
     /**
      * Log CLI memory usage
      */
-    async logCliMemory(): Promise<void> {
+    public async logCliMemory(): Promise<void> {
         const memUsage = process.memoryUsage();
         const event: CliMetricEvent = {
             type: "cli_memory",
@@ -242,7 +242,7 @@ export class DebugLogger {
     /**
      * Log CLI reload start
      */
-    async logCliReloadStart(): Promise<void> {
+    public async logCliReloadStart(): Promise<void> {
         const event: CliMetricEvent = {
             type: "cli_reload_start",
             timestamp: new Date().toISOString()
@@ -254,7 +254,7 @@ export class DebugLogger {
     /**
      * Log CLI reload finish with duration
      */
-    async logCliReloadFinish(durationMs: number, metadata?: Record<string, unknown>): Promise<void> {
+    public async logCliReloadFinish(durationMs: number, metadata?: Record<string, unknown>): Promise<void> {
         const event: CliMetricEvent = {
             type: "cli_reload_finish",
             timestamp: new Date().toISOString(),
@@ -268,7 +268,7 @@ export class DebugLogger {
     /**
      * Log CLI docs generation time
      */
-    async logCliDocsGeneration(durationMs: number, metadata?: Record<string, unknown>): Promise<void> {
+    public async logCliDocsGeneration(durationMs: number, metadata?: Record<string, unknown>): Promise<void> {
         const event: CliMetricEvent = {
             type: "cli_docs_generation",
             timestamp: new Date().toISOString(),
@@ -282,7 +282,7 @@ export class DebugLogger {
     /**
      * Log CLI validation time
      */
-    async logCliValidation(durationMs: number, success: boolean): Promise<void> {
+    public async logCliValidation(durationMs: number, success: boolean): Promise<void> {
         const event: CliMetricEvent = {
             type: "cli_validation",
             timestamp: new Date().toISOString(),
@@ -306,7 +306,7 @@ export class DebugLogger {
     /**
      * Check if a WebSocket message is a metrics message
      */
-    static isMetricsMessage(data: unknown): data is MetricsMessage {
+    public static isMetricsMessage(data: unknown): data is MetricsMessage {
         if (typeof data !== "object" || data === null) {
             return false;
         }

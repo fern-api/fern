@@ -25,7 +25,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({
+    public constructor({
         expressServiceGenerator,
         expressServiceDeclarationReferencer,
         packageResolver,

@@ -42,7 +42,7 @@ export interface PropertyResolver {
 }
 
 export class PropertyResolverImpl implements PropertyResolver {
-    constructor(
+    public constructor(
         private readonly typeResolver: TypeResolver,
         private readonly endpointResolver: EndpointResolver
     ) {

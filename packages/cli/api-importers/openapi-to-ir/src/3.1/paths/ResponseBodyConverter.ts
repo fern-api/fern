@@ -37,7 +37,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private readonly statusCode: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
-    constructor({
+    public constructor({
         context,
         breadcrumbs,
         responseBody,

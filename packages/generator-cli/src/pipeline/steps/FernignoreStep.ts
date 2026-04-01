@@ -10,9 +10,9 @@ import { BaseStep } from "./BaseStep";
  * packages/cli/generation/local-generation/local-workspace-runner/src/LocalTaskHandler.ts
  */
 export class FernignoreStep extends BaseStep {
-    readonly name = "fernignore";
+    public readonly name = "fernignore";
 
-    async execute(_context: PipelineContext): Promise<FernignoreStepResult> {
+    public async execute(_context: PipelineContext): Promise<FernignoreStepResult> {
         // TODO: Phase 2 - Implement fernignore preservation
         // - Read .fernignore file
         // - Parse glob patterns

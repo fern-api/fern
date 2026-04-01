@@ -24,7 +24,12 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
     private endpoint: FernIr.HttpEndpoint;
     private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<SdkContext>;
 
-    constructor({ packageId, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
+    public constructor({
+        packageId,
+        endpoint,
+        errorResolver,
+        discriminationStrategy
+    }: GeneratedEndpointErrorSchemaImpl.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
 

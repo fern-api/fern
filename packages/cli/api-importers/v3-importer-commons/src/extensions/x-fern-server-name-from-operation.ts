@@ -12,7 +12,7 @@ export class ServerFromOperationNameExtension extends AbstractExtension<string |
     private readonly operation: OpenAPIV3_1.OperationObject;
     public readonly key = "x-fern-server-name";
 
-    constructor({ breadcrumbs, operation, context }: ServerFromOperationNameExtension.Args) {
+    public constructor({ breadcrumbs, operation, context }: ServerFromOperationNameExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }

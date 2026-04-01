@@ -177,7 +177,7 @@ export class InteractiveTaskContextImpl
     private name: string;
     private subtitle: string | undefined;
 
-    constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
+    public constructor({ name, subtitle, ...superArgs }: InteractiveTaskContextImpl.Init) {
         super(superArgs);
         this.name = name;
         this.subtitle = subtitle;

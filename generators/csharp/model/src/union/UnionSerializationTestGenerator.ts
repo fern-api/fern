@@ -20,7 +20,7 @@ export declare namespace TestClass {
 export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
     private classReference: ast.ClassReference;
 
-    constructor(
+    public constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly testInputs: TestInput[]

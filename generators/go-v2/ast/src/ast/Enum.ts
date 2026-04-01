@@ -32,7 +32,7 @@ export class Enum extends AstNode {
 
     private constructor_: Func | undefined;
 
-    constructor({ name, docs }: Enum.Args) {
+    public constructor({ name, docs }: Enum.Args) {
         super();
         this.name = name;
         this.docs = docs;

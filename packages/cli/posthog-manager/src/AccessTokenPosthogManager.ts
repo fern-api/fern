@@ -6,7 +6,7 @@ import { PosthogManager } from "./PosthogManager.js";
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
-    constructor({ posthogApiKey }: { posthogApiKey: string }) {
+    public constructor({ posthogApiKey }: { posthogApiKey: string }) {
         this.posthog = new PostHog(posthogApiKey);
     }
 

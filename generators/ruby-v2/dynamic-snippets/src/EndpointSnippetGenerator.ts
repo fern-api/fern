@@ -12,7 +12,10 @@ export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
 
-    constructor({ context, formatter }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
+    public constructor({
+        context,
+        formatter
+    }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
         this.context = context;
         this.formatter = formatter;
     }

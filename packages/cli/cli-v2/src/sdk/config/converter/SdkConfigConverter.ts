@@ -40,7 +40,7 @@ export class SdkConfigConverter {
     private readonly logger: Logger;
     private readonly issues: ValidationIssue[] = [];
 
-    constructor({ logger }: { logger: Logger }) {
+    public constructor({ logger }: { logger: Logger }) {
         this.logger = logger;
     }
 

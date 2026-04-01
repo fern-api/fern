@@ -69,7 +69,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.generation.Collection;
     }
 
-    constructor({
+    public constructor({
         ir,
         config,
         options,

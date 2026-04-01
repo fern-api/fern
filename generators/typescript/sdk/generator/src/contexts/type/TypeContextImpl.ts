@@ -62,7 +62,7 @@ export class TypeContextImpl implements TypeContext {
     private requestResponseVariantCache: Map<FernIr.TypeId, { request: boolean; response: boolean }> = new Map();
     private requestResponseVariantInProgress: Set<FernIr.TypeId> = new Set();
 
-    constructor({
+    public constructor({
         npmPackage,
         isForSnippet,
         sourceFile,

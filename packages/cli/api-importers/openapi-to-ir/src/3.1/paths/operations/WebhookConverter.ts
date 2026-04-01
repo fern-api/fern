@@ -10,7 +10,7 @@ export declare namespace WebhookConverter {
 }
 
 export class WebhookConverter extends AbstractOperationConverter {
-    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+    public constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
     }
 

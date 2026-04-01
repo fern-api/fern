@@ -21,7 +21,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
     protected singleUnionType: SingleUnionTypeGenerator<Context>;
     private includeUtilsOnUnionMembers: boolean;
 
-    constructor({ singleUnionType, includeUtilsOnUnionMembers }: AbstractParsedSingleUnionType.Init<Context>) {
+    public constructor({ singleUnionType, includeUtilsOnUnionMembers }: AbstractParsedSingleUnionType.Init<Context>) {
         this.singleUnionType = singleUnionType;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }

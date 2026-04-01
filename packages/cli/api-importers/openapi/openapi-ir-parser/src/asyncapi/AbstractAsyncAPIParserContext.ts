@@ -21,7 +21,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
 
     protected static readonly MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
-    constructor({
+    public constructor({
         document,
         taskContext,
         options,

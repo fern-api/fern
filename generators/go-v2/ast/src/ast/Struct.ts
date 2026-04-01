@@ -34,7 +34,7 @@ export class Struct extends AstNode {
     public readonly methods: Method[] = [];
     public constructor_: Struct.Constructor | undefined;
 
-    constructor({ name, embeds, fields, docs }: Struct.Args) {
+    public constructor({ name, embeds, fields, docs }: Struct.Args) {
         super();
         this.name = name;
         this.docs = docs;

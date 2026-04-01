@@ -20,7 +20,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     protected endpoint: FernIr.HttpEndpoint;
     protected sdkRequest: FernIr.SdkRequest;
 
-    constructor({ packageId, service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
+    public constructor({ packageId, service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
         this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;

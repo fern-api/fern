@@ -30,7 +30,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     private readonly relativeTestPath: string;
     private environmentUrlsNamingOverride: string | undefined;
 
-    constructor({
+    public constructor({
         npmPackage,
         environmentsConfig,
         relativePackagePath,

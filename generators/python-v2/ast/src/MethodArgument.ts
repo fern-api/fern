@@ -14,7 +14,7 @@ export class MethodArgument extends AstNode {
     public readonly name: string | undefined;
     public readonly value: AstNode;
 
-    constructor({ name, value }: MethodArgument.Args) {
+    public constructor({ name, value }: MethodArgument.Args) {
         super();
         this.name = name;
         this.value = value;

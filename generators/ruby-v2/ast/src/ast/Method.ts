@@ -63,7 +63,7 @@ export class Method extends AstNode {
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
 
-    constructor({
+    public constructor({
         name,
         docstring,
         kind,
@@ -238,7 +238,7 @@ export class Method extends AstNode {
     NOTE: This returns the parameters in the following order: positional, keyword, positional splat, keyword splat,
     yield. In reality, you can mix and match _some_ of these, but by convention, parameters should be in this order.
     */
-    get parameters(): Parameter[] {
+    public get parameters(): Parameter[] {
         return [
             ...this.positionalParameters,
             ...this.keywordParameters,

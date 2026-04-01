@@ -16,7 +16,7 @@ export declare namespace MultiUrlEnvironmentGenerator {
 export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
 
-    constructor({ context, multiUrlEnvironments }: MultiUrlEnvironmentGenerator.Args) {
+    public constructor({ context, multiUrlEnvironments }: MultiUrlEnvironmentGenerator.Args) {
         super(context);
         this.multiUrlEnvironments = multiUrlEnvironments;
     }

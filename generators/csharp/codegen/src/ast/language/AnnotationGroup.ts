@@ -14,7 +14,7 @@ export declare namespace AnnotationGroup {
 export class AnnotationGroup extends AstNode {
     private items: (Annotation | ClassReference)[];
 
-    constructor(args: AnnotationGroup.Args, generation: Generation) {
+    public constructor(args: AnnotationGroup.Args, generation: Generation) {
         super(generation);
         this.items = args.items;
     }

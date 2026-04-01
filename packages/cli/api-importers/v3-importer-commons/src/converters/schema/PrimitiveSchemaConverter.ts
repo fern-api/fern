@@ -20,7 +20,7 @@ export declare namespace PrimitiveSchemaConverter {
 export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, TypeReference> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
-    constructor({ context, breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
+    public constructor({ context, breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
     }

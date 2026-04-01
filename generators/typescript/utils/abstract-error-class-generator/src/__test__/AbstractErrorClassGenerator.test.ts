@@ -24,7 +24,7 @@ class TestErrorClassGenerator extends AbstractErrorClassGenerator<BaseContext> {
     private readonly customBaseClass: ts.TypeNode | undefined;
     private addToClassFn: ((class_: ClassDeclaration, context: BaseContext) => void) | undefined;
 
-    constructor(opts: {
+    public constructor(opts: {
         errorClassName: string;
         classProperties?: OptionalKind<PropertyDeclarationStructure>[];
         constructorParams?: OptionalKind<ParameterDeclarationStructure>[];

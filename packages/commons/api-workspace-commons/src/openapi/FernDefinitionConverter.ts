@@ -54,7 +54,7 @@ function filterAuthSchemes(
 }
 
 export class FernDefinitionConverter {
-    constructor(private readonly args: BaseOpenAPIWorkspace.Args) {}
+    public constructor(private readonly args: BaseOpenAPIWorkspace.Args) {}
 
     /**
      * Builds the header overrides for a generator, merging top-level headers with

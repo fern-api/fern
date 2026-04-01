@@ -31,7 +31,7 @@ export class GeneratorsYmlMigrator {
     private readonly cwd: AbsoluteFilePath;
     private readonly apiName?: string;
 
-    constructor({ cwd, apiName }: GeneratorsYmlMigrator.Config) {
+    public constructor({ cwd, apiName }: GeneratorsYmlMigrator.Config) {
         this.cwd = cwd;
         this.apiName = apiName;
     }
