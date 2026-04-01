@@ -910,7 +910,9 @@
         "type_:CompletionChunk"
       ]
     },
-    "sharedTypes": []
+    "sharedTypes": [
+      "type_:CreateCompletionRequest"
+    ]
   },
   "webhookGroups": {},
   "websocketChannels": {},
