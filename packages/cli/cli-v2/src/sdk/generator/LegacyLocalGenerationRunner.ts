@@ -216,7 +216,8 @@ export class LegacyLocalGenerationRunner {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
     }): Promise<LegacyLocalGenerationRunner.Result> {
-        const containerImage = `${args.target.image}:${args.target.version}`;
+        const imageRef = args.target.registry ? `${args.target.registry}/${args.target.image}` : args.target.image;
+        const containerImage = `${imageRef}:${args.target.version}`;
         const executionEnvironment = new ContainerExecutionEnvironment({
             containerImage,
             keepContainer: args.keepContainer ?? false,

@@ -189,6 +189,14 @@ function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGene
         output: {}
     };
 
+    // If the generator uses a custom image with registry, set the image field
+    if ("image" in generator) {
+        target.image = {
+            name: generator.image.name,
+            registry: generator.image.registry
+        };
+    }
+
     target.lang = language;
     if (apiName != null) {
         target.api = apiName;
@@ -537,21 +545,22 @@ interface ConvertRawGeneratorOptions {
 function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): ConvertGeneratorResult | undefined {
     const { generator, groupName, languageCounts, apiName, warnings } = options;
 
-    if (generator.name == null) {
+    const generatorName = generator.name ?? generator.image?.name;
+    if (generatorName == null) {
         warnings.push({
             type: "conflict",
-            message: "Generator missing 'name' field"
+            message: "Generator missing 'name' or 'image.name' field"
         });
         return undefined;
     }
 
     // Determine language from generator name (Docker image)
-    const language = getLanguageFromGeneratorName(generator.name);
+    const language = getLanguageFromGeneratorName(generatorName);
 
     if (language == null) {
         warnings.push({
             type: "unsupported",
-            message: `Unknown generator: ${generator.name}`,
+            message: `Unknown generator: ${generatorName}`,
             suggestion: "Manually add this generator to your fern.yml"
         });
         return undefined;
@@ -567,6 +576,14 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
     const target: schemas.SdkTargetSchema = {
         output: {}
     };
+
+    // If the generator uses a custom image with registry, set the image field
+    if (generator.image != null) {
+        target.image = {
+            name: generator.image.name,
+            registry: generator.image.registry
+        };
+    }
 
     target.lang = language;
     if (apiName != null) {

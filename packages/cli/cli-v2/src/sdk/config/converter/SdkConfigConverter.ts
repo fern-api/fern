@@ -15,6 +15,7 @@ export namespace SdkConfigConverter {
         lang: Language;
         image: string;
         version: string;
+        registry: string | undefined;
     }
 
     export type Result = Success | Failure;
@@ -129,6 +130,7 @@ export class SdkConfigConverter {
             name,
             lang: generatorInfo.lang,
             image: generatorInfo.image,
+            registry: generatorInfo.registry,
             version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
             sourceLocation: sourced.$loc,
@@ -181,11 +183,33 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
+
+        // If user specified an explicit image, use it directly
+        if (target.image != null) {
+            if (typeof target.image === "string") {
+                return {
+                    lang,
+                    image: target.image,
+                    version: target.version ?? "latest",
+                    registry: undefined
+                };
+            }
+            // Object form: { name, registry }
+            return {
+                lang,
+                image: target.image.name,
+                version: target.version ?? "latest",
+                registry: target.image.registry
+            };
+        }
+
+        // Default: resolve from language
         const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
-            version: resolvedDockerImage.tag
+            version: resolvedDockerImage.tag,
+            registry: undefined
         };
     }
 

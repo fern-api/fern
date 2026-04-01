@@ -26,7 +26,7 @@ export class LegacyGeneratorInvocationAdapter {
         return {
             raw: this.buildRaw(target),
             name: target.image,
-            containerImage: undefined,
+            containerImage: target.registry ? `${target.registry}/${target.image}` : undefined,
             version: target.version,
             config: target.config,
             language: this.mapLanguage(target.lang),
