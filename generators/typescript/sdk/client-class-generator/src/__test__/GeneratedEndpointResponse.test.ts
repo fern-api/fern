@@ -205,7 +205,7 @@ function createMockContext(): any {
         },
         sdkError: {
             getReferenceToError: (errorName: FernIr.DeclaredErrorName) => ({
-                getExpression: () => ts.factory.createIdentifier(`${caseConverter.pascalSafe(errorName.name)}Error`)
+                getExpression: () => ts.factory.createIdentifier(`${caseConverter.pascalUnsafe(errorName.name)}Error`)
             }),
             getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => ({
                 discriminantValue: {
