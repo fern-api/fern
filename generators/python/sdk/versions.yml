@@ -127,6 +127,14 @@
   createdAt: "2026-03-31"
   irVersion: 65
 
+- version: 5.3.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
 - version: 5.2.0
   changelogEntry:
     - summary: |
