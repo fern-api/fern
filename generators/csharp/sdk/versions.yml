@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.4
+  changelogEntry:
+    - summary: |
+        Relax query-string encoding to allow RFC 3986 sub-delimiters and other
+        characters that are safe in query strings (`! $ ' ( ) * , ; : @ /`).
+        Previously, the `QueryStringBuilder` only left RFC 3986 unreserved
+        characters unencoded, which caused OData-style parameter names like
+        `$filter` to be percent-encoded to `%24filter`. Some HTTP servers and
+        mock frameworks (e.g. WireMock) do not decode parameter names, leading
+        to request mismatches.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 2.55.3
   changelogEntry:
     - summary: |
