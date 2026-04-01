@@ -52,7 +52,7 @@ assert_not_contains() {
   fi
 }
 
-# Test 1: Basic report with matching PR and main results
+# Test 1: Basic report with matching PR and main results (flat baseline, no E2E)
 test_basic_report() {
   echo "Test: Basic report with matching results"
   setup_dirs
@@ -62,8 +62,9 @@ test_basic_report() {
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
   assert_contains "$OUTPUT" "## SDK Generation Benchmark Results" "Has header"
-  assert_contains "$OUTPUT" "| ts-sdk | square | 180s | 200s | +20s (+11.1%) |" "Shows correct delta"
-  assert_contains "$OUTPUT" "generator-only performance" "Has generator-only timing note"
+  assert_contains "$OUTPUT" "| ts-sdk | square | 180s | N/A | 200s | +20s (+11.1%) |" "Shows correct delta with E2E N/A"
+  assert_contains "$OUTPUT" "main (generator)" "Has generator-only column header"
+  assert_contains "$OUTPUT" "main (E2E)" "Has E2E column header"
 }
 
 # Test 2: Negative delta (improvement)
@@ -75,7 +76,7 @@ test_negative_delta() {
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "| python-sdk | square | 100s | 90s | -10s (-10.0%) |" "Shows negative delta"
+  assert_contains "$OUTPUT" "| python-sdk | square | 100s | N/A | 90s | -10s (-10.0%) |" "Shows negative delta"
 }
 
 # Test 3: Non-zero exit code shows warning marker
@@ -99,7 +100,7 @@ test_missing_main() {
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "| java-sdk | square | N/A | 120s | N/A |" "Shows N/A for missing main"
+  assert_contains "$OUTPUT" "| java-sdk | square | N/A | N/A | 120s | N/A |" "Shows N/A for missing main and E2E"
 }
 
 # Test 5: Skipped spec shows skip marker
@@ -223,7 +224,7 @@ test_history_single_run() {
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "| ts-sdk | square | 180s | 200s |" "Shows single-run without n= suffix"
+  assert_contains "$OUTPUT" "| ts-sdk | square | 180s | N/A | 200s |" "Shows single-run without n= suffix, E2E N/A"
   assert_not_contains "$OUTPUT" "n=" "No n= for single history run"
 }
 
@@ -236,7 +237,7 @@ test_history_empty() {
 
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "| ts-sdk | square | N/A | 200s | N/A |" "Shows N/A for empty history"
+  assert_contains "$OUTPUT" "| ts-sdk | square | N/A | N/A | 200s | N/A |" "Shows N/A for empty history (both cols)"
 }
 
 # Test 14: History with partial generator coverage
@@ -255,7 +256,87 @@ test_history_partial_coverage() {
   OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
   assert_contains "$OUTPUT" "| ts-sdk | square | 185s (n=2)" "ts-sdk has median from history"
-  assert_contains "$OUTPUT" "| go-sdk | square | N/A | 150s | N/A |" "go-sdk shows N/A (no history)"
+  assert_contains "$OUTPUT" "| go-sdk | square | N/A | N/A | 150s | N/A |" "go-sdk shows N/A for both columns"
+}
+
+# Test 15: E2E column shows data from history e2e/ subdirectories
+test_e2e_column_with_history() {
+  echo "Test: E2E column populated from history e2e/ subdirectories"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  # Create history with both generator-only and E2E results
+  mkdir -p "$MAIN_DIR/history/2026-03-29_1/e2e"
+  mkdir -p "$MAIN_DIR/history/2026-03-30_2/e2e"
+  # Generator-only: 40, 45 -> median = 42 (rounded from 42.5)
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":40,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_2/ts-sdk.jsonl"
+  # E2E: 200, 210 -> median = 205
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_1/e2e/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":210,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_2/e2e/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "42s (n=2)" "Generator-only median shown"
+  assert_contains "$OUTPUT" "205s (n=2)" "E2E median shown in E2E column"
+}
+
+# Test 16: E2E column shows N/A when no e2e/ subdirectories exist
+test_e2e_column_missing() {
+  echo "Test: E2E column shows N/A when no e2e/ data exists"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  # History with generator-only results but no e2e/
+  mkdir -p "$MAIN_DIR/history/2026-03-30_1"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_1/ts-sdk.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | 45s | N/A | 50s |" "Generator baseline shown, E2E is N/A"
+}
+
+# Test 17: E2E column with partial coverage (some generators have E2E, others don't)
+test_e2e_partial_coverage() {
+  echo "Test: E2E column with partial generator coverage"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+  echo '{"generator":"go-sdk","spec":"square","duration_seconds":100,"exit_code":0}' > "$PR_DIR/go-sdk.jsonl"
+
+  # ts-sdk has both gen + E2E; go-sdk has only gen
+  mkdir -p "$MAIN_DIR/history/2026-03-30_1/e2e"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_1/ts-sdk.jsonl"
+  echo '{"generator":"go-sdk","spec":"square","duration_seconds":95,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_1/go-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_1/e2e/ts-sdk.jsonl"
+  # No e2e/go-sdk.jsonl
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | 45s | 200s | 50s |" "ts-sdk has both gen and E2E"
+  assert_contains "$OUTPUT" "| go-sdk | square | 95s | N/A | 100s |" "go-sdk has gen but E2E is N/A"
+}
+
+# Test 18: E2E median with odd number of runs
+test_e2e_median_odd() {
+  echo "Test: E2E median from 3 history runs (odd)"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  mkdir -p "$MAIN_DIR/history/2026-03-28_1/e2e"
+  mkdir -p "$MAIN_DIR/history/2026-03-29_2/e2e"
+  mkdir -p "$MAIN_DIR/history/2026-03-30_3/e2e"
+  # Generator-only
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-28_1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_2/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_3/ts-sdk.jsonl"
+  # E2E: 190, 200, 210 -> median = 200
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":210,"exit_code":0}' > "$MAIN_DIR/history/2026-03-28_1/e2e/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":190,"exit_code":0}' > "$MAIN_DIR/history/2026-03-29_2/e2e/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$MAIN_DIR/history/2026-03-30_3/e2e/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "200s (n=3)" "E2E shows median with run count"
 }
 
 # Run all tests
@@ -275,6 +356,10 @@ test_history_median_even
 test_history_single_run
 test_history_empty
 test_history_partial_coverage
+test_e2e_column_with_history
+test_e2e_column_missing
+test_e2e_partial_coverage
+test_e2e_median_odd
 
 echo ""
 echo "=== Results: ${PASS} passed, ${FAIL} failed ==="

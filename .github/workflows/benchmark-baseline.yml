@@ -158,9 +158,13 @@ jobs:
           mkdir -p "$RUN_DIR"
 
           # Copy generator-only results (used for PR comparisons)
-          for f in todays-results/*.jsonl; do
-            [ -f "$f" ] && cp "$f" "$RUN_DIR/"
-          done
+          if [ -d todays-results ] && ls todays-results/*.jsonl 1>/dev/null 2>&1; then
+            for f in todays-results/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "$RUN_DIR/"
+            done
+          else
+            echo "::warning::No generator-only baseline results found. Skipping history entry."
+          fi
 
           # Copy full E2E results into a separate subdirectory (informational only)
           if [ -d todays-e2e-results ] && ls todays-e2e-results/*.jsonl 1>/dev/null 2>&1; then
