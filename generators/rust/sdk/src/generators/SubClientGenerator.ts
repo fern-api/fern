@@ -1025,15 +1025,8 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            if (this.isBytesEndpoint(endpoint)) {
-                // BYTES + QUERY: use request struct (like all other endpoint types)
-                this.addRequestBodyParameter(endpoint, params);
-                // Query params are now included in the request body struct
-            } else {
-                // MIXED: Request body contains both body + query fields
-                this.addRequestBodyParameter(endpoint, params);
-                // Query params are now included in the request body struct
-            }
+            // Request body struct contains both body fields and query params
+            this.addRequestBodyParameter(endpoint, params);
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);

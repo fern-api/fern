@@ -996,27 +996,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             return true;
         }
 
-        // Check for inline request bodies
+        // Check for endpoints that generate request types
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     return true;
                 }
-            }
-        }
-
-        // Check for query-only endpoints that generate request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
                 if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
                     return true;
                 }
-            }
-        }
-
-        // Check for bytes endpoints with query parameters that generate request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
                     return true;
                 }

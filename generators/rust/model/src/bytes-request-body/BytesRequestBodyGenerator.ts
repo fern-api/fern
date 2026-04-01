@@ -7,18 +7,16 @@ import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
 
 export class BytesRequestBodyGenerator {
-    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
     public constructor(context: ModelGeneratorContext) {
-        this.ir = context.ir;
         this.context = context;
     }
 
     public generateFiles(): RustFile[] {
         const files: RustFile[] = [];
 
-        for (const service of Object.values(this.ir.services)) {
+        for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (this.isBytesEndpointWithQuery(endpoint)) {
                     const file = this.generateBytesRequestBodyFile(endpoint);
