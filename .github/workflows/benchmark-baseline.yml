@@ -220,6 +220,8 @@ jobs:
     timeout-minutes: 10
     needs: [baseline, baseline-e2e]
     if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    # No repo permissions needed — only makes outbound HTTPS calls to PostHog.
+    permissions: {}
     steps:
       - name: Download generator-only baseline artifacts
         uses: actions/download-artifact@v4
@@ -239,6 +241,9 @@ jobs:
         shell: bash
         env:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          COMMIT_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ -z "$POSTHOG_API_KEY" ]; then
             echo "::warning::POSTHOG_API_KEY not set, skipping metrics"
@@ -251,26 +256,43 @@ jobs:
 
           send_event() {
             local mode="$1" generator="$2" spec="$3" duration="$4" exit_code="$5" skipped="$6"
+            local payload
+            payload=$(jq -n \
+              --arg api_key "$POSTHOG_API_KEY" \
+              --arg event "benchmark-baseline-result" \
+              --arg distinct_id "fern-ci-benchmark" \
+              --arg timestamp "$TIMESTAMP" \
+              --arg generator "$generator" \
+              --arg spec "$spec" \
+              --argjson duration_seconds "$duration" \
+              --argjson exit_code "$exit_code" \
+              --argjson skipped "$skipped" \
+              --arg mode "$mode" \
+              --arg branch "main" \
+              --arg commit_sha "$COMMIT_SHA" \
+              --arg run_id "$RUN_ID" \
+              --arg run_url "$RUN_URL" \
+              '{
+                api_key: $api_key,
+                event: $event,
+                distinct_id: $distinct_id,
+                timestamp: $timestamp,
+                properties: {
+                  generator: $generator,
+                  spec: $spec,
+                  duration_seconds: $duration_seconds,
+                  exit_code: $exit_code,
+                  skipped: $skipped,
+                  mode: $mode,
+                  branch: $branch,
+                  commit_sha: $commit_sha,
+                  run_id: $run_id,
+                  run_url: $run_url
+                }
+              }')
             if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
               -H "Content-Type: application/json" \
-              -d "{
-                \"api_key\": \"${POSTHOG_API_KEY}\",
-                \"event\": \"benchmark-baseline-result\",
-                \"distinct_id\": \"fern-ci-benchmark\",
-                \"timestamp\": \"${TIMESTAMP}\",
-                \"properties\": {
-                  \"generator\": \"${generator}\",
-                  \"spec\": \"${spec}\",
-                  \"duration_seconds\": ${duration},
-                  \"exit_code\": ${exit_code},
-                  \"skipped\": ${skipped},
-                  \"mode\": \"${mode}\",
-                  \"branch\": \"main\",
-                  \"commit_sha\": \"${{ github.sha }}\",
-                  \"run_id\": \"${{ github.run_id }}\",
-                  \"run_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
-                }
-              }" 2>/dev/null; then
+              -d "$payload" 2>/dev/null; then
               echo "::warning::Failed to send PostHog event for ${mode}/${generator}/${spec}"
               FAILED=$((FAILED + 1))
             else

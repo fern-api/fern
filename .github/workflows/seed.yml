@@ -988,51 +988,6 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Send PR benchmark events to PostHog
-        shell: bash
-        env:
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
-        run: |
-          if [ -z "$POSTHOG_API_KEY" ]; then
-            echo "::notice::POSTHOG_API_KEY not set, skipping PR benchmark metrics"
-            exit 0
-          fi
-          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          SENT=0
-          for f in benchmark-pr-results/*.jsonl; do
-            [ -f "$f" ] || continue
-            while IFS= read -r line; do
-              gen=$(echo "$line" | jq -r '.generator')
-              spec=$(echo "$line" | jq -r '.spec')
-              dur=$(echo "$line" | jq -r '.duration_seconds')
-              ec=$(echo "$line" | jq -r '.exit_code // 0')
-              skip=$(echo "$line" | jq -r '.skipped // false')
-              curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
-                -H "Content-Type: application/json" \
-                -d "{
-                  \"api_key\": \"${POSTHOG_API_KEY}\",
-                  \"event\": \"benchmark-pr-result\",
-                  \"distinct_id\": \"fern-ci-benchmark\",
-                  \"timestamp\": \"${TIMESTAMP}\",
-                  \"properties\": {
-                    \"generator\": \"${gen}\",
-                    \"spec\": \"${spec}\",
-                    \"duration_seconds\": ${dur},
-                    \"exit_code\": ${ec},
-                    \"skipped\": ${skip},
-                    \"mode\": \"generator-only\",
-                    \"branch\": \"${{ github.head_ref }}\",
-                    \"pr_number\": ${{ github.event.pull_request.number }},
-                    \"commit_sha\": \"${{ github.event.pull_request.head.sha }}\",
-                    \"run_id\": \"${{ github.run_id }}\",
-                    \"run_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
-                  }
-                }" 2>/dev/null || true
-              SENT=$((SENT + 1))
-            done < "$f"
-          done
-          echo "PostHog PR metrics: ${SENT} events sent"
-
       - name: Restore baseline from nightly cache
         id: baseline-cache
         uses: actions/cache/restore@v4
@@ -1083,6 +1038,79 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-path: benchmark-comment.md
           comment-tag: sdk-benchmark-results
+
+      # PostHog step runs after the PR comment is posted so that comment generation
+      # is never affected by PostHog failures. Fire-and-forget: all errors suppressed.
+      - name: Send PR benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          PR_BRANCH: ${{ github.head_ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::notice::POSTHOG_API_KEY not set, skipping PR benchmark metrics"
+            exit 0
+          fi
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          FAILED=0
+          for f in benchmark-pr-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              payload=$(jq -n \
+                --arg api_key "$POSTHOG_API_KEY" \
+                --arg event "benchmark-pr-result" \
+                --arg distinct_id "fern-ci-benchmark" \
+                --arg timestamp "$TIMESTAMP" \
+                --arg generator "$gen" \
+                --arg spec "$spec" \
+                --argjson duration_seconds "$dur" \
+                --argjson exit_code "$ec" \
+                --argjson skipped "$skip" \
+                --arg mode "generator-only" \
+                --arg branch "$PR_BRANCH" \
+                --argjson pr_number "$PR_NUMBER" \
+                --arg commit_sha "$PR_SHA" \
+                --arg run_id "$RUN_ID" \
+                --arg run_url "$RUN_URL" \
+                '{
+                  api_key: $api_key,
+                  event: $event,
+                  distinct_id: $distinct_id,
+                  timestamp: $timestamp,
+                  properties: {
+                    generator: $generator,
+                    spec: $spec,
+                    duration_seconds: $duration_seconds,
+                    exit_code: $exit_code,
+                    skipped: $skipped,
+                    mode: $mode,
+                    branch: $branch,
+                    pr_number: $pr_number,
+                    commit_sha: $commit_sha,
+                    run_id: $run_id,
+                    run_url: $run_url
+                  }
+                }')
+              if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+                -H "Content-Type: application/json" \
+                -d "$payload" 2>/dev/null; then
+                FAILED=$((FAILED + 1))
+              else
+                SENT=$((SENT + 1))
+              fi
+            done < "$f"
+          done
+          echo "PostHog PR metrics: ${SENT} sent, ${FAILED} failed"
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:

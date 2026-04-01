@@ -339,6 +339,168 @@ test_e2e_median_odd() {
   assert_contains "$OUTPUT" "200s (n=3)" "E2E shows median with run count"
 }
 
+# Test 19: PostHog baseline JSON payload is valid (dry-run, no network call)
+test_posthog_baseline_json() {
+  echo "Test: PostHog baseline event JSON is well-formed"
+  local gen="ts-sdk" spec="square" dur=180 ec=0 skipped=false mode="generator-only"
+  local api_key="phc_test_key" timestamp="2026-03-30T04:00:00Z"
+  local commit_sha="abc123" run_id="12345" run_url="https://github.com/fern-api/fern/actions/runs/12345"
+
+  local payload
+  payload=$(jq -n \
+    --arg api_key "$api_key" \
+    --arg event "benchmark-baseline-result" \
+    --arg distinct_id "fern-ci-benchmark" \
+    --arg timestamp "$timestamp" \
+    --arg generator "$gen" \
+    --arg spec "$spec" \
+    --argjson duration_seconds "$dur" \
+    --argjson exit_code "$ec" \
+    --argjson skipped "$skipped" \
+    --arg mode "$mode" \
+    --arg branch "main" \
+    --arg commit_sha "$commit_sha" \
+    --arg run_id "$run_id" \
+    --arg run_url "$run_url" \
+    '{
+      api_key: $api_key,
+      event: $event,
+      distinct_id: $distinct_id,
+      timestamp: $timestamp,
+      properties: {
+        generator: $generator,
+        spec: $spec,
+        duration_seconds: $duration_seconds,
+        exit_code: $exit_code,
+        skipped: $skipped,
+        mode: $mode,
+        branch: $branch,
+        commit_sha: $commit_sha,
+        run_id: $run_id,
+        run_url: $run_url
+      }
+    }')
+
+  # Validate JSON is parseable
+  if echo "$payload" | jq empty 2>/dev/null; then
+    PASS=$((PASS + 1))
+    echo "  PASS: Baseline JSON is valid"
+  else
+    FAIL=$((FAIL + 1))
+    echo "  FAIL: Baseline JSON is invalid"
+    echo "    Payload: $payload"
+  fi
+
+  # Validate key fields
+  assert_contains "$payload" '"event": "benchmark-baseline-result"' "Has correct event name"
+  assert_contains "$payload" '"generator": "ts-sdk"' "Has generator field"
+  assert_contains "$payload" '"duration_seconds": 180' "Has numeric duration (not string)"
+  assert_contains "$payload" '"skipped": false' "Has boolean skipped (not string)"
+}
+
+# Test 20: PostHog PR JSON payload is valid (dry-run, no network call)
+test_posthog_pr_json() {
+  echo "Test: PostHog PR event JSON is well-formed"
+  local gen="python-sdk" spec="square" dur=95 ec=0 skipped=false
+  local api_key="phc_test_key" timestamp="2026-03-30T04:00:00Z"
+  local pr_branch="feat/my-feature" pr_number=42 pr_sha="def456"
+  local run_id="67890" run_url="https://github.com/fern-api/fern/actions/runs/67890"
+
+  local payload
+  payload=$(jq -n \
+    --arg api_key "$api_key" \
+    --arg event "benchmark-pr-result" \
+    --arg distinct_id "fern-ci-benchmark" \
+    --arg timestamp "$timestamp" \
+    --arg generator "$gen" \
+    --arg spec "$spec" \
+    --argjson duration_seconds "$dur" \
+    --argjson exit_code "$ec" \
+    --argjson skipped "$skipped" \
+    --arg mode "generator-only" \
+    --arg branch "$pr_branch" \
+    --argjson pr_number "$pr_number" \
+    --arg commit_sha "$pr_sha" \
+    --arg run_id "$run_id" \
+    --arg run_url "$run_url" \
+    '{
+      api_key: $api_key,
+      event: $event,
+      distinct_id: $distinct_id,
+      timestamp: $timestamp,
+      properties: {
+        generator: $generator,
+        spec: $spec,
+        duration_seconds: $duration_seconds,
+        exit_code: $exit_code,
+        skipped: $skipped,
+        mode: $mode,
+        branch: $branch,
+        pr_number: $pr_number,
+        commit_sha: $commit_sha,
+        run_id: $run_id,
+        run_url: $run_url
+      }
+    }')
+
+  # Validate JSON is parseable
+  if echo "$payload" | jq empty 2>/dev/null; then
+    PASS=$((PASS + 1))
+    echo "  PASS: PR JSON is valid"
+  else
+    FAIL=$((FAIL + 1))
+    echo "  FAIL: PR JSON is invalid"
+    echo "    Payload: $payload"
+  fi
+
+  # Validate key fields
+  assert_contains "$payload" '"event": "benchmark-pr-result"' "Has correct PR event name"
+  assert_contains "$payload" '"pr_number": 42' "Has numeric pr_number"
+  assert_contains "$payload" '"branch": "feat/my-feature"' "Has branch name"
+  assert_contains "$payload" '"duration_seconds": 95' "Has numeric duration"
+}
+
+# Test 21: PostHog JSON handles special characters in branch names safely
+test_posthog_special_chars() {
+  echo "Test: PostHog JSON handles special characters in branch name"
+  local branch_name='feat/test"branch$(echo pwned)' 
+
+  local payload
+  payload=$(jq -n \
+    --arg api_key "phc_test" \
+    --arg event "benchmark-pr-result" \
+    --arg distinct_id "fern-ci-benchmark" \
+    --arg timestamp "2026-03-30T04:00:00Z" \
+    --arg branch "$branch_name" \
+    '{
+      api_key: $api_key,
+      event: $event,
+      distinct_id: $distinct_id,
+      timestamp: $timestamp,
+      properties: { branch: $branch }
+    }')
+
+  # jq should properly escape the special chars
+  if echo "$payload" | jq empty 2>/dev/null; then
+    PASS=$((PASS + 1))
+    echo "  PASS: JSON with special chars is valid"
+  else
+    FAIL=$((FAIL + 1))
+    echo "  FAIL: JSON with special chars is invalid"
+  fi
+
+  # The branch name should be preserved (with escaping) in the JSON
+  local extracted
+  extracted=$(echo "$payload" | jq -r '.properties.branch')
+  if [ "$extracted" = "$branch_name" ]; then
+    PASS=$((PASS + 1))
+    echo "  PASS: Branch name with special chars round-trips correctly"
+  else
+    FAIL=$((FAIL + 1))
+    echo "  FAIL: Branch name mangled: expected '$branch_name', got '$extracted'"
+  fi
+}
+
 # Run all tests
 echo "=== format-benchmark-report.sh tests ==="
 echo ""
@@ -360,6 +522,12 @@ test_e2e_column_with_history
 test_e2e_column_missing
 test_e2e_partial_coverage
 test_e2e_median_odd
+echo ""
+echo "=== PostHog JSON validation tests ==="
+echo ""
+test_posthog_baseline_json
+test_posthog_pr_json
+test_posthog_special_chars
 
 echo ""
 echo "=== Results: ${PASS} passed, ${FAIL} failed ==="
