@@ -124,15 +124,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
                         // usernameOmit/passwordOmit may exist in newer IR versions
                         const scheme = basicAuthScheme as unknown as Record<string, unknown>;
-                        const eitherOmitted = scheme.usernameOmit === true || scheme.passwordOmit === true;
-                        const conditionOp = eitherOmitted ? "||" : "&&";
-                        const usernameExpr = eitherOmitted ? `${usernameName} || ""` : usernameName;
-                        const passwordExpr = eitherOmitted ? `${passwordName} || ""` : passwordName;
+                        const usernameOmitted = scheme.usernameOmit === true;
+                        const passwordOmitted = scheme.passwordOmit === true;
+                        // Per-field null coalescing: only omittable fields get || "" fallback
+                        const usernameExpr = usernameOmitted ? `${usernameName} || ""` : usernameName;
+                        const passwordExpr = passwordOmitted ? `${passwordName} || ""` : passwordName;
+                        // Per-field condition: required fields must be present, omittable fields are always satisfied
+                        let condition: string;
+                        if (!usernameOmitted && !passwordOmitted) {
+                            condition = `!${usernameName}.nil? && !${passwordName}.nil?`;
+                        } else if (usernameOmitted && passwordOmitted) {
+                            condition = `!${usernameName}.nil? || !${passwordName}.nil?`;
+                        } else if (usernameOmitted) {
+                            condition = `!${passwordName}.nil?`;
+                        } else {
+                            condition = `!${usernameName}.nil?`;
+                        }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
-                                writer.writeLine(`if !${usernameName}.nil? ${conditionOp} !${passwordName}.nil?`);
+                                writer.writeLine(`if ${condition}`);
                             } else {
-                                writer.writeLine(`elsif !${usernameName}.nil? ${conditionOp} !${passwordName}.nil?`);
+                                writer.writeLine(`elsif ${condition}`);
                             }
                             writer.writeLine(
                                 `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
@@ -348,27 +360,37 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     break;
                 }
                 case "basic": {
+                    // Per-field optionality: make parameter nilable when its omit flag is set
+                    const schemeRecord = scheme as unknown as Record<string, unknown>;
+                    const usernameOmitted = schemeRecord.usernameOmit === true;
+                    const passwordOmitted = schemeRecord.passwordOmit === true;
+                    const usernameType = usernameOmitted ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string();
+                    const passwordType = passwordOmitted ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string();
                     const usernameParam = ruby.parameters.keyword({
                         name: scheme.username.snakeCase.safeName,
-                        type: ruby.Type.string(),
+                        type: usernameType,
                         initializer:
-                            scheme.usernameEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                            usernameOmitted
+                                ? ruby.nilValue()
+                                : scheme.usernameEnvVar != null
+                                  ? ruby.codeblock((writer) => {
+                                        writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                    })
+                                  : undefined,
                         docs: undefined
                     });
                     parameters.push(usernameParam);
                     const passwordParam = ruby.parameters.keyword({
                         name: scheme.password.snakeCase.safeName,
-                        type: ruby.Type.string(),
+                        type: passwordType,
                         initializer:
-                            scheme.passwordEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                            passwordOmitted
+                                ? ruby.nilValue()
+                                : scheme.passwordEnvVar != null
+                                  ? ruby.codeblock((writer) => {
+                                        writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                    })
+                                  : undefined,
                         docs: undefined
                     });
                     parameters.push(passwordParam);
