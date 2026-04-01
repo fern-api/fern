@@ -70,7 +70,6 @@
           }
         }
       ],
-      "requestNameOverride": "ChatRequestStreaming",
       "generatedRequestName": "ChatStreamRequest",
       "request": {
         "schema": {

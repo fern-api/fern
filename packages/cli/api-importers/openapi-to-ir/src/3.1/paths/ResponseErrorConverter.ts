@@ -305,7 +305,8 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 valueType,
                 env: undefined,
                 v2Examples,
-                availability: undefined
+                availability: undefined,
+                clientDefault: undefined
             });
         }
 

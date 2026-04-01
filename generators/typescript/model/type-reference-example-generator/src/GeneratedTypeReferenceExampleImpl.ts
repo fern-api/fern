@@ -1,6 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { createNumericLiteralSafe, GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
+import {
+    createNumericLiteralSafe,
+    GetReferenceOpts,
+    getOriginalName,
+    isExpressionUndefined
+} from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -66,6 +71,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) => {
+                        if (!context.includeSerdeLayer && datetimeExample.raw != null) {
+                            return ts.factory.createStringLiteral(datetimeExample.raw);
+                        } else {
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                                ts.factory.createStringLiteral(datetimeExample.datetime.toISOString())
+                            ]);
+                        }
+                    },
+                    datetimeRfc2822: (datetimeExample) => {
                         if (!context.includeSerdeLayer && datetimeExample.raw != null) {
                             return ts.factory.createStringLiteral(datetimeExample.raw);
                         } else {
@@ -181,6 +195,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return `"${primitiveExample.uuid}"`;
             case "datetime":
                 return `"${primitiveExample.datetime.toISOString()}"`;
+            case "datetimeRfc2822":
+                return primitiveExample.raw != null
+                    ? `"${primitiveExample.raw}"`
+                    : `"${primitiveExample.datetime.toISOString()}"`;
             case "date":
                 return `"${primitiveExample.date}"`;
             case "uint":
@@ -237,6 +255,9 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     datetime: () => {
                         throw new Error("Cannot convert datetime to property name");
                     },
+                    datetimeRfc2822: () => {
+                        throw new Error("Cannot convert datetimeRfc2822 to property name");
+                    },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
@@ -265,7 +286,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     case "enum": {
                         const generatedType = context.type.getGeneratedType(typeName);
                         if (generatedType.type !== "enum") {
-                            throw new Error("Type is not an enum: " + typeName.name.originalName);
+                            throw new Error("Type is not an enum: " + getOriginalName(typeName.name));
                         }
                         return ts.factory.createComputedPropertyName(
                             generatedType.buildExample(example, context, opts)

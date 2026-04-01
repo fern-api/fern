@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: streaming
-  version: ''
+  version: ""
 paths:
   /generate-stream:
     post:
@@ -10,8 +10,8 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/jsonl:
               schema:
@@ -39,12 +39,12 @@ paths:
         - Dummy
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StreamResponse'
+                $ref: "#/components/schemas/StreamResponse"
       requestBody:
         required: true
         content:

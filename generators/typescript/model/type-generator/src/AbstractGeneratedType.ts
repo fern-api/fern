@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { deduplicateExamples, GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
@@ -17,6 +18,7 @@ export declare namespace AbstractGeneratedType {
         /** Whether inline types should be inlined */
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
     export namespace getDocs {
         export interface Args<Context> {
@@ -42,6 +44,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     protected readonly retainOriginalCasing: boolean;
     protected readonly enableInlineTypes: boolean;
     protected readonly generateReadWriteOnlyTypes: boolean;
+    protected readonly caseConverter: CaseConverter;
 
     private docs: string | undefined;
 
@@ -56,7 +59,8 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         noOptionalProperties,
         retainOriginalCasing,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -69,6 +73,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.caseConverter = caseConverter;
     }
 
     protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {

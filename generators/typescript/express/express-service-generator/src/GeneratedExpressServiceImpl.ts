@@ -1,8 +1,10 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     convertHttpPathToExpressRoute,
+    getOriginalName,
     getPropertyKey,
     getTextOfTsNode,
+    getWireValue,
     maybeAddDocsNode,
     PackageId
 } from "@fern-typescript/commons";
@@ -179,7 +181,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
 
         methodsInterface.addMethod({
-            name: this.getEndpointMethodName(endpoint),
+            name: this.getEndpointMethodName(endpoint, context),
             parameters: [
                 {
                     name: REQUEST_PARAMETER_NAME,
@@ -210,7 +212,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                               const type = context.type.getReferenceToType(queryParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
-                                                  getPropertyKey(queryParameter.name.wireValue),
+                                                  getPropertyKey(getWireValue(queryParameter.name)),
                                                   type.isOptional
                                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                                                       : undefined,
@@ -350,8 +352,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         });
     }
 
-    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.camelCase.unsafeName;
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint, context: ExpressContext): string {
+        return context.case.camelUnsafe(endpoint.name);
     }
 
     private addRouteToRouter(endpoint: FernIr.HttpEndpoint, context: ExpressContext): ts.Statement {
@@ -606,7 +608,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 ts.factory.createThis(),
                                 GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME
                             ),
-                            this.getEndpointMethodName(endpoint)
+                            this.getEndpointMethodName(endpoint, context)
                         ),
                         undefined,
                         [
@@ -774,7 +776,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         ts.factory.createBinaryExpression(
                             ts.factory.createTemplateExpression(
                                 ts.factory.createTemplateHead(
-                                    `Endpoint '${endpoint.name.originalName}' unexpectedly threw `
+                                    `Endpoint '${getOriginalName(endpoint.name)}' unexpectedly threw `
                                 ),
                                 [
                                     ts.factory.createTemplateSpan(
@@ -847,7 +849,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     }
 
     private getPathParameterName(pathParameter: FernIr.PathParameter): string {
-        return pathParameter.name.originalName;
+        return getOriginalName(pathParameter.name);
     }
 
     private getReferenceToParsedRequestBody({

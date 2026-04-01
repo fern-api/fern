@@ -42,7 +42,9 @@ export function buildQueryParameter({
         type: queryParameterType
     };
 
-    if (queryParameterDefault != null) {
+    if (queryParameter.clientDefault != null) {
+        queryParameterSchema.default = queryParameter.clientDefault;
+    } else if (queryParameterDefault != null) {
         queryParameterSchema.default = queryParameterDefault;
     }
 

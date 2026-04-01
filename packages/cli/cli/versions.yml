@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.54.1
+  changelogEntry:
+    - summary: |
+        Skip the CLI upgrade suggestion when the current version is `0.0.0`,
+        which is the placeholder used for local development builds.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
+- version: 4.54.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-default` OpenAPI extension for path, header, and query parameters.
+        When present on a parameter, the value is carried through the OpenAPI IR
+        and Fern definition into the IR `clientDefault` field (a `Literal`). 
+        Generators can read this field to emit optional parameters that
+        automatically send the default value when the caller omits them.
+        Supports string and boolean literal values.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 4.53.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for cli docs publishing.
+      type: chore
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 4.53.1
   changelogEntry:
     - summary: |
@@ -10,7 +40,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 4.53.0
   changelogEntry:
     - summary: |
@@ -75,6 +104,19 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add IR Name compression (v66). `Name` fields in the IR can now be
+        represented as plain `originalName` strings instead of full objects,
+        reducing IR wire size by ~60-70%. Non-TS generators receive the
+        previous v65 format via automatic migration. A new `CaseConverter`
+        utility class is provided in `@fern-api/base-generator` for
+        generators to transparently handle both forms.
+      type: feat
+  createdAt: "2026-03-25"
+  irVersion: 66
 - version: 4.50.4
   changelogEntry:
     - summary: |
@@ -393,7 +435,6 @@
       type: feat
   createdAt: "2026-03-21"
   irVersion: 65
-
 - version: 4.41.0
   changelogEntry:
     - summary: |

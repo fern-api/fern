@@ -141,6 +141,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -159,8 +160,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -171,6 +171,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "title",
                         "name": {
                             "originalName": "title",
                             "camelCase": {
@@ -189,8 +190,7 @@
                                 "unsafeName": "Title",
                                 "safeName": "Title"
                             }
-                        },
-                        "wireValue": "title"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -201,6 +201,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "rating",
                         "name": {
                             "originalName": "rating",
                             "camelCase": {
@@ -219,8 +220,7 @@
                                 "unsafeName": "Rating",
                                 "safeName": "Rating"
                             }
-                        },
-                        "wireValue": "rating"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -401,6 +401,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "id",
                                 "name": {
                                     "originalName": "id",
                                     "camelCase": {
@@ -419,8 +420,7 @@
                                         "unsafeName": "ID",
                                         "safeName": "ID"
                                     }
-                                },
-                                "wireValue": "id"
+                                }
                             },
                             "typeReference": {
                                 "type": "named",
@@ -431,6 +431,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "movie_title",
                                 "name": {
                                     "originalName": "movie_title",
                                     "camelCase": {
@@ -449,8 +450,7 @@
                                         "unsafeName": "MovieTitle",
                                         "safeName": "MovieTitle"
                                     }
-                                },
-                                "wireValue": "movie_title"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -461,6 +461,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "movie_rating",
                                 "name": {
                                     "originalName": "movie_rating",
                                     "camelCase": {
@@ -479,8 +480,7 @@
                                         "unsafeName": "MovieRating",
                                         "safeName": "MovieRating"
                                     }
-                                },
-                                "wireValue": "movie_rating"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",

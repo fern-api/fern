@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: enum
-  version: ''
+  version: ""
 paths:
   /headers:
     post:
@@ -13,27 +13,27 @@ paths:
           in: header
           required: true
           schema:
-            $ref: '#/components/schemas/Operand'
+            $ref: "#/components/schemas/Operand"
         - name: maybeOperand
           in: header
           required: false
           schema:
-            $ref: '#/components/schemas/Operand'
+            $ref: "#/components/schemas/Operand"
             nullable: true
         - name: operandOrColor
           in: header
           required: true
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: "#/components/schemas/ColorOrOperand"
         - name: maybeOperandOrColor
           in: header
           required: false
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: "#/components/schemas/ColorOrOperand"
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /inlined:
     post:
       operationId: inlinedRequest_send
@@ -41,8 +41,8 @@ paths:
         - InlinedRequest
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -51,14 +51,14 @@ paths:
               type: object
               properties:
                 operand:
-                  $ref: '#/components/schemas/Operand'
+                  $ref: "#/components/schemas/Operand"
                 maybeOperand:
-                  $ref: '#/components/schemas/Operand'
+                  $ref: "#/components/schemas/Operand"
                   nullable: true
                 operandOrColor:
-                  $ref: '#/components/schemas/ColorOrOperand'
+                  $ref: "#/components/schemas/ColorOrOperand"
                 maybeOperandOrColor:
-                  $ref: '#/components/schemas/ColorOrOperand'
+                  $ref: "#/components/schemas/ColorOrOperand"
                   nullable: true
               required:
                 - operand
@@ -70,8 +70,8 @@ paths:
         - MultipartForm
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -80,18 +80,18 @@ paths:
               type: object
               properties:
                 color:
-                  $ref: '#/components/schemas/Color'
+                  $ref: "#/components/schemas/Color"
                 maybeColor:
-                  $ref: '#/components/schemas/Color'
+                  $ref: "#/components/schemas/Color"
                   nullable: true
                 colorList:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Color'
+                    $ref: "#/components/schemas/Color"
                 maybeColorList:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Color'
+                    $ref: "#/components/schemas/Color"
                   nullable: true
   /path/{operand}/{operandOrColor}:
     post:
@@ -103,15 +103,15 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/Operand'
+            $ref: "#/components/schemas/Operand"
         - name: operandOrColor
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: "#/components/schemas/ColorOrOperand"
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /query:
     post:
       operationId: queryParam_send
@@ -122,27 +122,27 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/Operand'
+            $ref: "#/components/schemas/Operand"
         - name: maybeOperand
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Operand'
+            $ref: "#/components/schemas/Operand"
             nullable: true
         - name: operandOrColor
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: "#/components/schemas/ColorOrOperand"
         - name: maybeOperandOrColor
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: "#/components/schemas/ColorOrOperand"
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /query-list:
     post:
       operationId: queryParam_sendList
@@ -155,14 +155,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Operand'
+              $ref: "#/components/schemas/Operand"
         - name: maybeOperand
           in: query
           required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Operand'
+              $ref: "#/components/schemas/Operand"
               nullable: true
         - name: operandOrColor
           in: query
@@ -170,26 +170,26 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/ColorOrOperand'
+              $ref: "#/components/schemas/ColorOrOperand"
         - name: maybeOperandOrColor
           in: query
           required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/ColorOrOperand'
+              $ref: "#/components/schemas/ColorOrOperand"
               nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas:
     Operand:
       title: Operand
       type: string
       enum:
-        - '>'
-        - '='
+        - ">"
+        - "="
         - less_than
       description: |-
         Tests enum name and value can be
@@ -203,8 +203,8 @@ components:
     ColorOrOperand:
       title: ColorOrOperand
       oneOf:
-        - $ref: '#/components/schemas/Color'
-        - $ref: '#/components/schemas/Operand'
+        - $ref: "#/components/schemas/Color"
+        - $ref: "#/components/schemas/Operand"
     ForwardCompatibleEnum:
       title: ForwardCompatibleEnum
       type: string
@@ -230,7 +230,7 @@ components:
       title: SpecialEnum
       type: string
       enum:
-        - ''
+        - ""
         - Hello \"World\"
         - Hello 'World'
         - Hello\\World

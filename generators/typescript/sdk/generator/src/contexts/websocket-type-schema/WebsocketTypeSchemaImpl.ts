@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, WebsocketTypeSchemaContext } from "@fern-typescript/contexts";
@@ -59,10 +60,10 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         });
     }
 
-    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: FernIr.Name): Reference {
+    public getReferenceToWebsocketResponseType(packageId: PackageId, channelName: FernIr.NameOrString): Reference {
         const channel = this.packageResolver.getWebSocketChannelDeclaration(packageId);
         if (channel == null) {
-            throw new Error(`Channel ${channelName.originalName} does not exist`);
+            throw new Error(`Channel ${getOriginalName(channelName)} does not exist`);
         }
         return this.websocketTypeSchemaDeclarationReferencer.getReferenceToWebsocketResponseType({
             name: { packageId, channel },

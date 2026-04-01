@@ -39,6 +39,7 @@ export async function generateAndSnapshotDynamicIR({
 
     const dynamicIntermediateRepresentation = convertIrToDynamicSnippetsIr({
         ir: intermediateRepresentation,
+        smartCasing: true,
         disableExamples: true
     });
 

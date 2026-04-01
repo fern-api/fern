@@ -1,6 +1,7 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { deduplicateExamples, Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
-import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { EndpointSampleCode, FileContext, GeneratedEndpointImplementation } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
@@ -73,7 +74,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.parameterNaming = parameterNaming;
     }
 
-    public isPaginated(context: SdkContext): boolean {
+    public isPaginated(context: FileContext): boolean {
         return this.response.getPaginationInfo(context) != null;
     }
 
@@ -81,7 +82,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+    public getSignature(context: FileContext): GeneratedEndpointImplementation.EndpointSignature {
         const paginationInfo = this.response.getPaginationInfo(context);
         let mainReturnType: ts.TypeNode;
         const parameters = [...this.request.getEndpointParameters(context)];
@@ -114,7 +115,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         };
     }
 
-    public getDocs(context: SdkContext): string | undefined {
+    public getDocs(context: FileContext): string | undefined {
         const groups: string[] = [];
         const availabilityDoc = getAvailabilityDocs(this.endpoint);
         if (availabilityDoc != null) {
@@ -181,7 +182,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getExample(args: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
@@ -207,7 +208,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         this.generatedSdkClientClass.accessFromRootClient({
                             referenceToRootClient: args.clientReference
                         }),
-                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                        ts.factory.createIdentifier(args.context.case.camelUnsafe(this.endpoint.name))
                     ),
                     undefined,
                     exampleParameters
@@ -221,7 +222,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         context
     }: {
         invocation: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Node[] | undefined {
         if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
             return undefined;
@@ -342,7 +343,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         ];
     }
 
-    public getStatements(context: SdkContext): ts.Statement[] {
+    public getStatements(context: FileContext): ts.Statement[] {
         const paginationInfo = this.response.getPaginationInfo(context);
         const responseReturnType = this.response.getReturnType(context);
 
@@ -580,7 +581,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                               omitUndefined: this.omitUndefined,
                               getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                                   return this.request.getReferenceToPathParameter(
-                                      pathParameter.name.originalName,
+                                      getOriginalName(pathParameter.name),
                                       context
                                   );
                               },
@@ -744,7 +745,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return body;
     }
 
-    private buildFetcherArgs(context: SdkContext): ts.Expression {
+    private buildFetcherArgs(context: FileContext): ts.Expression {
         const requestArgs = this.request.getFetcherRequestArgs(context);
         const fetcherArgs: Record<string, ts.Expression> = {
             url: this.getReferenceToBaseUrl(context),
@@ -862,7 +863,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public invokeFetcherAndReturnResponse(
-        context: SdkContext,
+        context: FileContext,
         urlOverride?: ts.Expression,
         options?: { headersOnly?: boolean }
     ): ts.Statement[] {
@@ -872,7 +873,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         ];
     }
 
-    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+    private getReferenceToBaseUrl(context: FileContext): ts.Expression {
         const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
@@ -882,7 +883,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+                return this.request.getReferenceToPathParameter(getOriginalName(pathParameter.name), context);
             },
             parameterNaming: this.parameterNaming
         });
@@ -894,7 +895,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     private invokeFetcher(
-        context: SdkContext,
+        context: FileContext,
         urlOverride?: ts.Expression,
         options?: { headersOnly?: boolean }
     ): ts.Statement[] {

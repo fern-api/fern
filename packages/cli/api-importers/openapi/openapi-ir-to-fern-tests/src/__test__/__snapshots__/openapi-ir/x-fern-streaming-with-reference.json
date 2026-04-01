@@ -19,7 +19,6 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "requestNameOverride": "CreateCompletionRequestStreaming",
       "generatedRequestName": "CreateChatCompletionsStreamRequest",
       "request": {
         "schema": {
@@ -286,12 +285,661 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "resume_stream"
+      },
+      "pathParameters": [
+        {
+          "name": "conversation_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ResumeChatCompletionsStreamRequestConversationId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ResumeChatCompletionsStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "resumeChatCompletionsStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "ResumeChatCompletionsStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "resumeChatCompletionsStreamRequestPrompt",
+              "key": "prompt",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ResumeChatCompletionsStreamRequestPrompt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResumeChatCompletionsStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "ResumeChatCompletionsStreamResponse",
+          "schema": "CompletionChunk",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat/{conversation_id}/resume",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "conversation_id",
+              "value": {
+                "value": {
+                  "value": "conversation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "resume"
+      },
+      "pathParameters": [
+        {
+          "name": "conversation_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ResumeChatCompletionsRequestConversationId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ResumeChatCompletionsRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "resumeChatCompletionsRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "ResumeChatCompletionsRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "resumeChatCompletionsRequestPrompt",
+              "key": "prompt",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ResumeChatCompletionsRequestPrompt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ResumeChatCompletionsRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "ResumeChatCompletionsResponse",
+          "schema": "Completion",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat/{conversation_id}/resume",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "conversation_id",
+              "value": {
+                "value": {
+                  "value": "conversation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "text": {
+                  "value": {
+                    "value": "text",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "chat_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ChatStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "chatStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "ChatStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "chatStreamRequestMessage",
+              "key": "message",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ChatStreamRequestMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ChatStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "ChatStreamResponse",
+          "schema": "CompletionChunk",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/chat",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "chat",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ChatRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "chatRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "ChatRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "chatRequestMessage",
+              "key": "message",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ChatRequestMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ChatRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "ChatResponse",
+          "schema": "Completion",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/chat",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              },
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "text": {
+                  "value": {
+                    "value": "text",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],
   "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
+      "ChatRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "chatRequestStream",
+            "key": "stream",
+            "schema": {
+              "generatedName": "ChatRequestStream",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "ChatRequestStream",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "chatRequestMessage",
+            "key": "message",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ChatRequestMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ChatRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
       "CreateCompletionRequest": {
         "allOf": [],
         "properties": [

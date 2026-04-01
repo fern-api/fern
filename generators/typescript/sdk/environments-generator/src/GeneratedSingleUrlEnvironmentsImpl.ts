@@ -1,6 +1,7 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
@@ -26,11 +27,11 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         this.defaultEnvironmentId = defaultEnvironmentId;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const objectWriter = FernWriters.object.writer({ asConst: true });
         for (const environment of this.environments.environments) {
             objectWriter.addProperty({
-                key: this.getNameOfEnvironment(environment),
+                key: this.getNameOfEnvironment(environment, context.case),
                 value: `"${environment.url}"`,
                 docs: environment.docs ?? undefined
             });
@@ -56,7 +57,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
                         ts.factory.createTypeQueryNode(
                             ts.factory.createQualifiedName(
                                 ts.factory.createIdentifier(this.environmentEnumName),
-                                ts.factory.createIdentifier(this.getNameOfEnvironment(environment))
+                                ts.factory.createIdentifier(this.getNameOfEnvironment(environment, context.case))
                             ),
                             undefined
                         )
@@ -66,7 +67,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         });
     }
 
-    public getReferenceToDefaultEnvironment(context: SdkContext): ts.Expression | undefined {
+    public getReferenceToDefaultEnvironment(context: FileContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
             return undefined;
         }
@@ -78,11 +79,11 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         }
         return ts.factory.createPropertyAccessExpression(
             context.environments.getReferenceToEnvironmentsEnum().getExpression(),
-            this.getNameOfEnvironment(defaultEnvironment)
+            this.getNameOfEnvironment(defaultEnvironment, context.case)
         );
     }
 
-    public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
+    public getTypeForUserSuppliedEnvironment(context: FileContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
@@ -106,7 +107,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         return referenceToEnvironmentValue;
     }
 
-    private getNameOfEnvironment(environment: FernIr.SingleBaseUrlEnvironment): string {
-        return environment.name.pascalCase.unsafeName;
+    private getNameOfEnvironment(environment: FernIr.SingleBaseUrlEnvironment, caseConverter: CaseConverter): string {
+        return caseConverter.pascalUnsafe(environment.name);
     }
 }

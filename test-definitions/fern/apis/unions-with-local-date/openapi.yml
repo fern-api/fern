@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: unions-with-local-date
-  version: ''
+  version: ""
 paths:
   /bigunion/{id}:
     get:
@@ -15,12 +15,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BigUnion'
+                $ref: "#/components/schemas/BigUnion"
   /bigunion:
     patch:
       operationId: bigunion_update
@@ -28,8 +28,8 @@ paths:
         - Bigunion
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -39,7 +39,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BigUnion'
+              $ref: "#/components/schemas/BigUnion"
   /many:
     patch:
       operationId: bigunion_update-many
@@ -47,8 +47,8 @@ paths:
         - Bigunion
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -62,7 +62,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/BigUnion'
+                $ref: "#/components/schemas/BigUnion"
   /time/types/{id}:
     get:
       operationId: types_get
@@ -75,12 +75,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnionWithTime'
+                $ref: "#/components/schemas/UnionWithTime"
   /time/types:
     patch:
       operationId: types_update
@@ -88,8 +88,8 @@ paths:
         - Types
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -99,7 +99,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UnionWithTime'
+              $ref: "#/components/schemas/UnionWithTime"
   /{id}:
     get:
       operationId: union_get
@@ -112,12 +112,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Shape'
+                $ref: "#/components/schemas/Shape"
   /:
     patch:
       operationId: union_update
@@ -125,8 +125,8 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -136,7 +136,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Shape'
+              $ref: "#/components/schemas/Shape"
 components:
   schemas:
     BigUnion:
@@ -150,7 +150,7 @@ components:
                   type: string
                   enum:
                     - normalSweet
-            - $ref: '#/components/schemas/NormalSweet'
+            - $ref: "#/components/schemas/NormalSweet"
           required:
             - type
         - type: object
@@ -161,7 +161,7 @@ components:
                   type: string
                   enum:
                     - thankfulFactor
-            - $ref: '#/components/schemas/ThankfulFactor'
+            - $ref: "#/components/schemas/ThankfulFactor"
           required:
             - type
         - type: object
@@ -172,7 +172,7 @@ components:
                   type: string
                   enum:
                     - jumboEnd
-            - $ref: '#/components/schemas/JumboEnd'
+            - $ref: "#/components/schemas/JumboEnd"
           required:
             - type
         - type: object
@@ -183,7 +183,7 @@ components:
                   type: string
                   enum:
                     - hastyPain
-            - $ref: '#/components/schemas/HastyPain'
+            - $ref: "#/components/schemas/HastyPain"
           required:
             - type
         - type: object
@@ -194,7 +194,7 @@ components:
                   type: string
                   enum:
                     - mistySnow
-            - $ref: '#/components/schemas/MistySnow'
+            - $ref: "#/components/schemas/MistySnow"
           required:
             - type
         - type: object
@@ -205,7 +205,7 @@ components:
                   type: string
                   enum:
                     - distinctFailure
-            - $ref: '#/components/schemas/DistinctFailure'
+            - $ref: "#/components/schemas/DistinctFailure"
           required:
             - type
         - type: object
@@ -216,7 +216,7 @@ components:
                   type: string
                   enum:
                     - practicalPrinciple
-            - $ref: '#/components/schemas/PracticalPrinciple'
+            - $ref: "#/components/schemas/PracticalPrinciple"
           required:
             - type
         - type: object
@@ -227,7 +227,7 @@ components:
                   type: string
                   enum:
                     - limpingStep
-            - $ref: '#/components/schemas/LimpingStep'
+            - $ref: "#/components/schemas/LimpingStep"
           required:
             - type
         - type: object
@@ -238,7 +238,7 @@ components:
                   type: string
                   enum:
                     - vibrantExcitement
-            - $ref: '#/components/schemas/VibrantExcitement'
+            - $ref: "#/components/schemas/VibrantExcitement"
           required:
             - type
         - type: object
@@ -249,7 +249,7 @@ components:
                   type: string
                   enum:
                     - activeDiamond
-            - $ref: '#/components/schemas/ActiveDiamond'
+            - $ref: "#/components/schemas/ActiveDiamond"
           required:
             - type
         - type: object
@@ -260,7 +260,7 @@ components:
                   type: string
                   enum:
                     - popularLimit
-            - $ref: '#/components/schemas/PopularLimit'
+            - $ref: "#/components/schemas/PopularLimit"
           required:
             - type
         - type: object
@@ -271,7 +271,7 @@ components:
                   type: string
                   enum:
                     - falseMirror
-            - $ref: '#/components/schemas/FalseMirror'
+            - $ref: "#/components/schemas/FalseMirror"
           required:
             - type
         - type: object
@@ -282,7 +282,7 @@ components:
                   type: string
                   enum:
                     - primaryBlock
-            - $ref: '#/components/schemas/PrimaryBlock'
+            - $ref: "#/components/schemas/PrimaryBlock"
           required:
             - type
         - type: object
@@ -293,7 +293,7 @@ components:
                   type: string
                   enum:
                     - rotatingRatio
-            - $ref: '#/components/schemas/RotatingRatio'
+            - $ref: "#/components/schemas/RotatingRatio"
           required:
             - type
         - type: object
@@ -304,7 +304,7 @@ components:
                   type: string
                   enum:
                     - colorfulCover
-            - $ref: '#/components/schemas/ColorfulCover'
+            - $ref: "#/components/schemas/ColorfulCover"
           required:
             - type
         - type: object
@@ -315,7 +315,7 @@ components:
                   type: string
                   enum:
                     - disloyalValue
-            - $ref: '#/components/schemas/DisloyalValue'
+            - $ref: "#/components/schemas/DisloyalValue"
           required:
             - type
         - type: object
@@ -326,7 +326,7 @@ components:
                   type: string
                   enum:
                     - gruesomeCoach
-            - $ref: '#/components/schemas/GruesomeCoach'
+            - $ref: "#/components/schemas/GruesomeCoach"
           required:
             - type
         - type: object
@@ -337,7 +337,7 @@ components:
                   type: string
                   enum:
                     - totalWork
-            - $ref: '#/components/schemas/TotalWork'
+            - $ref: "#/components/schemas/TotalWork"
           required:
             - type
         - type: object
@@ -348,7 +348,7 @@ components:
                   type: string
                   enum:
                     - harmoniousPlay
-            - $ref: '#/components/schemas/HarmoniousPlay'
+            - $ref: "#/components/schemas/HarmoniousPlay"
           required:
             - type
         - type: object
@@ -359,7 +359,7 @@ components:
                   type: string
                   enum:
                     - uniqueStress
-            - $ref: '#/components/schemas/UniqueStress'
+            - $ref: "#/components/schemas/UniqueStress"
           required:
             - type
         - type: object
@@ -370,7 +370,7 @@ components:
                   type: string
                   enum:
                     - unwillingSmoke
-            - $ref: '#/components/schemas/UnwillingSmoke'
+            - $ref: "#/components/schemas/UnwillingSmoke"
           required:
             - type
         - type: object
@@ -381,7 +381,7 @@ components:
                   type: string
                   enum:
                     - frozenSleep
-            - $ref: '#/components/schemas/FrozenSleep'
+            - $ref: "#/components/schemas/FrozenSleep"
           required:
             - type
         - type: object
@@ -392,7 +392,7 @@ components:
                   type: string
                   enum:
                     - diligentDeal
-            - $ref: '#/components/schemas/DiligentDeal'
+            - $ref: "#/components/schemas/DiligentDeal"
           required:
             - type
         - type: object
@@ -403,7 +403,7 @@ components:
                   type: string
                   enum:
                     - attractiveScript
-            - $ref: '#/components/schemas/AttractiveScript'
+            - $ref: "#/components/schemas/AttractiveScript"
           required:
             - type
         - type: object
@@ -414,7 +414,7 @@ components:
                   type: string
                   enum:
                     - hoarseMouse
-            - $ref: '#/components/schemas/HoarseMouse'
+            - $ref: "#/components/schemas/HoarseMouse"
           required:
             - type
         - type: object
@@ -425,7 +425,7 @@ components:
                   type: string
                   enum:
                     - circularCard
-            - $ref: '#/components/schemas/CircularCard'
+            - $ref: "#/components/schemas/CircularCard"
           required:
             - type
         - type: object
@@ -436,7 +436,7 @@ components:
                   type: string
                   enum:
                     - potableBad
-            - $ref: '#/components/schemas/PotableBad'
+            - $ref: "#/components/schemas/PotableBad"
           required:
             - type
         - type: object
@@ -447,7 +447,7 @@ components:
                   type: string
                   enum:
                     - triangularRepair
-            - $ref: '#/components/schemas/TriangularRepair'
+            - $ref: "#/components/schemas/TriangularRepair"
           required:
             - type
         - type: object
@@ -458,7 +458,7 @@ components:
                   type: string
                   enum:
                     - gaseousRoad
-            - $ref: '#/components/schemas/GaseousRoad'
+            - $ref: "#/components/schemas/GaseousRoad"
           required:
             - type
       required:
@@ -716,7 +716,7 @@ components:
               enum:
                 - foo
             foo:
-              $ref: '#/components/schemas/Foo'
+              $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -726,7 +726,7 @@ components:
               enum:
                 - bar
             bar:
-              $ref: '#/components/schemas/Bar'
+              $ref: "#/components/schemas/Bar"
           required:
             - type
       description: This is a simple union.
@@ -740,7 +740,7 @@ components:
               enum:
                 - foo
             foo:
-              $ref: '#/components/schemas/Foo'
+              $ref: "#/components/schemas/Foo"
           required:
             - _type
         - type: object
@@ -750,7 +750,7 @@ components:
               enum:
                 - bar
             bar:
-              $ref: '#/components/schemas/Bar'
+              $ref: "#/components/schemas/Bar"
           required:
             - _type
     UnionWithPrimitive:
@@ -830,7 +830,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -841,7 +841,7 @@ components:
                   type: string
                   enum:
                     - bar
-            - $ref: '#/components/schemas/Bar'
+            - $ref: "#/components/schemas/Bar"
           required:
             - type
     UnionWithNoProperties:
@@ -855,7 +855,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -877,7 +877,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -947,7 +947,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
       required:
@@ -1028,7 +1028,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
     UnionWithDuplicateTypes:
@@ -1042,7 +1042,7 @@ components:
                   type: string
                   enum:
                     - foo1
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -1053,7 +1053,7 @@ components:
                   type: string
                   enum:
                     - foo2
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
     UnionWithSubTypes:
@@ -1067,7 +1067,7 @@ components:
                   type: string
                   enum:
                     - foo
-            - $ref: '#/components/schemas/Foo'
+            - $ref: "#/components/schemas/Foo"
           required:
             - type
         - type: object
@@ -1078,7 +1078,7 @@ components:
                   type: string
                   enum:
                     - fooExtended
-            - $ref: '#/components/schemas/FooExtended'
+            - $ref: "#/components/schemas/FooExtended"
           required:
             - type
     Foo:
@@ -1098,7 +1098,7 @@ components:
       required:
         - age
       allOf:
-        - $ref: '#/components/schemas/Foo'
+        - $ref: "#/components/schemas/Foo"
     Bar:
       title: Bar
       type: object
@@ -1201,7 +1201,7 @@ components:
                   type: string
                   enum:
                     - circle
-            - $ref: '#/components/schemas/Circle'
+            - $ref: "#/components/schemas/Circle"
           required:
             - type
         - type: object
@@ -1212,7 +1212,7 @@ components:
                   type: string
                   enum:
                     - square
-            - $ref: '#/components/schemas/Square'
+            - $ref: "#/components/schemas/Square"
           required:
             - type
       required:

@@ -1,7 +1,8 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
-import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { EndpointSampleCode, FileContext, GeneratedEndpointImplementation } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
@@ -79,12 +80,12 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
     }
-    public isPaginated(context: SdkContext): boolean {
+    public isPaginated(context: FileContext): boolean {
         return false;
     }
 
     public getExample(args: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
@@ -110,7 +111,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                         this.generatedSdkClientClass.accessFromRootClient({
                             referenceToRootClient: args.clientReference
                         }),
-                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                        ts.factory.createIdentifier(args.context.case.camelUnsafe(this.endpoint.name))
                     ),
                     undefined,
                     exampleParameters
@@ -124,7 +125,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         context
     }: {
         invocation: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): undefined {
         return undefined;
     }
@@ -133,7 +134,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+    public getSignature(context: FileContext): GeneratedEndpointImplementation.EndpointSignature {
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
@@ -145,7 +146,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         };
     }
 
-    public getDocs(context: SdkContext): string | undefined {
+    public getDocs(context: FileContext): string | undefined {
         const groups: string[] = [];
         const availabilityDoc = getAvailabilityDocs(this.endpoint);
         if (availabilityDoc != null) {
@@ -170,7 +171,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return groups.join("\n\n");
     }
 
-    public getStatements(context: SdkContext): ts.Statement[] {
+    public getStatements(context: FileContext): ts.Statement[] {
         return [
             ...(this.generateEndpointMetadata
                 ? generateEndpointMetadata({
@@ -184,11 +185,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         ];
     }
 
-    public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
+    public getRequestBuilderStatements(context: FileContext): ts.Statement[] {
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+    private getReferenceToBaseUrl(context: FileContext): ts.Expression {
         const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
@@ -198,7 +199,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+                return this.request.getReferenceToPathParameter(getOriginalName(pathParameter.name), context);
             },
             parameterNaming: this.parameterNaming
         });
@@ -210,7 +211,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         }
     }
 
-    public invokeFetcher(context: SdkContext): ts.Statement[] {
+    public invokeFetcher(context: FileContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToBaseUrl(context),

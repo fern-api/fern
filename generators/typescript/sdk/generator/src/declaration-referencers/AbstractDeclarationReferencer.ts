@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import {
     ExportedDirectory,
@@ -16,6 +17,7 @@ export declare namespace AbstractDeclarationReferencer {
         containingDirectory: ExportedDirectory[];
         consolidateTypeFiles?: boolean;
         namingOverride?: string;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -23,6 +25,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
     protected consolidateTypeFiles: boolean;
+    protected readonly caseConverter: CaseConverter;
 
     protected namingOverride: string | undefined;
 
@@ -30,12 +33,14 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
         namespaceExport,
         containingDirectory,
         consolidateTypeFiles = false,
-        namingOverride
+        namingOverride,
+        caseConverter
     }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
         this.consolidateTypeFiles = consolidateTypeFiles;
         this.namingOverride = namingOverride;
+        this.caseConverter = caseConverter;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

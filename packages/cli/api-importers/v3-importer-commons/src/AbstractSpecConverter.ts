@@ -89,7 +89,8 @@ export abstract class AbstractSpecConverter<
             },
             audiences: undefined,
             generationMetadata: undefined,
-            apiPlayground: undefined
+            apiPlayground: undefined,
+            casingsConfig: undefined
         };
     }
 
@@ -157,7 +158,7 @@ export abstract class AbstractSpecConverter<
             hasFileDownloadEndpoints
         };
 
-        let ir = {
+        let ir: IntermediateRepresentation = {
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {
@@ -507,8 +508,8 @@ export abstract class AbstractSpecConverter<
         finalpart,
         endpointGroupDisplayName
     }: {
-        allParts: FernIr.Name[];
-        finalpart: FernIr.Name | undefined;
+        allParts: FernIr.NameOrString[];
+        finalpart: FernIr.NameOrString | undefined;
         endpointGroupDisplayName?: string;
     }): FernIr.HttpService {
         return {

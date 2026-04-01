@@ -215,7 +215,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         singleBaseUrlEnvironments: FernIr.SingleBaseUrlEnvironments
     ): string | undefined {
         for (const environment of singleBaseUrlEnvironments.environments) {
-            return environment.name.pascalCase.unsafeName;
+            return this.caseConverter.pascalUnsafe(environment.name);
         }
         return undefined;
     }
@@ -224,7 +224,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         multiBaseUrlsEnvironments: FernIr.MultipleBaseUrlsEnvironments
     ): string | undefined {
         for (const environment of multiBaseUrlsEnvironments.environments) {
-            return environment.name.pascalCase.unsafeName;
+            return this.caseConverter.pascalUnsafe(environment.name);
         }
         return undefined;
     }

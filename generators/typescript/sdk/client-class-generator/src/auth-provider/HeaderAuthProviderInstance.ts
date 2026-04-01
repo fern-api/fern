@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AuthProviderInstance } from "./AuthProviderInstance.js";
 
@@ -11,7 +11,7 @@ export class HeaderAuthProviderInstance implements AuthProviderInstance {
         this.authScheme = authScheme;
     }
 
-    public instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression {
+    public instantiate({ context, params }: { context: FileContext; params: ts.Expression[] }): ts.Expression {
         context.importsManager.addImportFromRoot("auth/HeaderAuthProvider", {
             namedImports: ["HeaderAuthProvider"]
         });
@@ -19,11 +19,11 @@ export class HeaderAuthProviderInstance implements AuthProviderInstance {
         return ts.factory.createNewExpression(ts.factory.createIdentifier("HeaderAuthProvider"), undefined, params);
     }
 
-    public getSnippetProperties(_context: SdkContext): ts.ObjectLiteralElementLike[] {
+    public getSnippetProperties(context: FileContext): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createPropertyAssignment(
-                getPropertyKey(this.authScheme.name.name.camelCase.safeName),
-                ts.factory.createStringLiteral(`YOUR_${this.authScheme.name.name.screamingSnakeCase.unsafeName}`)
+                getPropertyKey(context.case.camelSafe(this.authScheme.name)),
+                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.name)}`)
             )
         ];
     }

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: content-type
-  version: ''
+  version: ""
 paths:
   /:
     patch:
@@ -10,8 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -45,8 +45,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -106,8 +106,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -143,8 +143,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -182,8 +182,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: accept-header
-  version: ''
+  version: ""
 paths:
   /container/:
     delete:
@@ -10,10 +10,10 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
-        '404':
-          description: ''
+        "204":
+          description: ""
+        "404":
+          description: ""
           content:
             application/json:
               schema: {}

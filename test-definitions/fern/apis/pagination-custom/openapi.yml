@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: pagination-custom
-  version: ''
+  version: ""
 paths:
   /users:
     get:
@@ -19,12 +19,12 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsernameCursor'
+                $ref: "#/components/schemas/UsernameCursor"
 components:
   schemas:
     UsernameCursor:
@@ -32,7 +32,7 @@ components:
       type: object
       properties:
         cursor:
-          $ref: '#/components/schemas/UsernamePage'
+          $ref: "#/components/schemas/UsernamePage"
       required:
         - cursor
     UsernamePage:

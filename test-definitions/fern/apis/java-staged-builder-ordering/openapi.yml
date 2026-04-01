@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-staged-builder-ordering
-  version: ''
+  version: ""
 paths:
   /staged-builder/simple:
     post:
@@ -10,8 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -21,7 +21,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SimpleStaged'
+              $ref: "#/components/schemas/SimpleStaged"
   /staged-builder/medium:
     post:
       operationId: service_createMedium
@@ -29,8 +29,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -40,7 +40,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediumStaged'
+              $ref: "#/components/schemas/MediumStaged"
   /staged-builder/complex:
     post:
       operationId: service_createComplex
@@ -48,8 +48,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -59,7 +59,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ComplexStaged'
+              $ref: "#/components/schemas/ComplexStaged"
   /staged-builder/mixed:
     post:
       operationId: service_createMixed
@@ -67,8 +67,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -78,7 +78,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MixedStaged'
+              $ref: "#/components/schemas/MixedStaged"
   /staged-builder/parent:
     post:
       operationId: service_createParent
@@ -86,8 +86,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -97,7 +97,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Parent'
+              $ref: "#/components/schemas/Parent"
 components:
   schemas:
     SimpleStaged:
@@ -177,7 +177,7 @@ components:
           type: string
           format: date-time
         nested:
-          $ref: '#/components/schemas/SimpleStaged'
+          $ref: "#/components/schemas/SimpleStaged"
         count:
           type: integer
       required:
@@ -204,7 +204,7 @@ components:
         parentId:
           type: string
         child:
-          $ref: '#/components/schemas/Child'
+          $ref: "#/components/schemas/Child"
         parentName:
           type: string
       required:
