@@ -1,0 +1,3 @@
+rootProject.name = 'x-fern-default'
+
+include 'sample-app'

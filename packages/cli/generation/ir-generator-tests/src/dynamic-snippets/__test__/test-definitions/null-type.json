@@ -70,7 +70,6 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "conversation_id",
                         "name": {
                             "originalName": "conversation_id",
                             "camelCase": {
@@ -89,7 +88,8 @@
                                 "unsafeName": "ConversationID",
                                 "safeName": "ConversationID"
                             }
-                        }
+                        },
+                        "wireValue": "conversation_id"
                     },
                     "typeReference": {
                         "type": "nullable",
@@ -102,7 +102,6 @@
                 },
                 {
                     "name": {
-                        "wireValue": "dry_run",
                         "name": {
                             "originalName": "dry_run",
                             "camelCase": {
@@ -121,7 +120,8 @@
                                 "unsafeName": "DryRun",
                                 "safeName": "DryRun"
                             }
-                        }
+                        },
+                        "wireValue": "dry_run"
                     },
                     "typeReference": {
                         "type": "literal",
@@ -168,7 +168,6 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -187,7 +186,8 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        }
+                        },
+                        "wireValue": "id"
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -198,7 +198,6 @@
                 },
                 {
                     "name": {
-                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -217,7 +216,8 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        }
+                        },
+                        "wireValue": "name"
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -228,7 +228,6 @@
                 },
                 {
                     "name": {
-                        "wireValue": "deleted_at",
                         "name": {
                             "originalName": "deleted_at",
                             "camelCase": {
@@ -247,7 +246,8 @@
                                 "unsafeName": "DeletedAt",
                                 "safeName": "DeletedAt"
                             }
-                        }
+                        },
+                        "wireValue": "deleted_at"
                     },
                     "typeReference": {
                         "type": "nullable",
@@ -409,7 +409,6 @@
                     "value": [
                         {
                             "name": {
-                                "wireValue": "to_phone_number",
                                 "name": {
                                     "originalName": "to_phone_number",
                                     "camelCase": {
@@ -428,7 +427,8 @@
                                         "unsafeName": "ToPhoneNumber",
                                         "safeName": "ToPhoneNumber"
                                     }
-                                }
+                                },
+                                "wireValue": "to_phone_number"
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -439,7 +439,6 @@
                         },
                         {
                             "name": {
-                                "wireValue": "dry_run",
                                 "name": {
                                     "originalName": "dry_run",
                                     "camelCase": {
@@ -458,7 +457,8 @@
                                         "unsafeName": "DryRun",
                                         "safeName": "DryRun"
                                     }
-                                }
+                                },
+                                "wireValue": "dry_run"
                             },
                             "typeReference": {
                                 "type": "optional",
