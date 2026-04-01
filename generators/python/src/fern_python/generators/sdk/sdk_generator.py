@@ -118,7 +118,14 @@ class SdkGenerator(AbstractGenerator):
                     )
                 )
 
-        project.add_extra(custom_config.extras)
+        # Merge user-defined extras with the built-in aiohttp extra
+        extras = dict(custom_config.extras)
+        extras["aiohttp"] = ["aiohttp", "httpx-aiohttp"]
+        project.add_extra(extras)
+
+        # Add optional dependencies for aiohttp support
+        project.add_dependency(dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True))
+        project.add_dependency(dependency=AST.Dependency(name="aiohttp", version="3.0", optional=True))
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
@@ -278,6 +285,18 @@ class SdkGenerator(AbstractGenerator):
                     ],
                 )
             ],
+        )
+
+        # Generate _default_clients.py with aiohttp auto-detection convenience classes
+        self._generate_default_clients(
+            context=context,
+            project=project,
+        )
+
+        # Generate test_aiohttp_autodetect.py test file
+        self._generate_aiohttp_test(
+            context=context,
+            project=project,
         )
 
         for subpackage_id in ir.subpackages.keys():
@@ -687,6 +706,179 @@ class SdkGenerator(AbstractGenerator):
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
+
+    def _generate_aiohttp_test(
+        self,
+        context: SdkGeneratorContext,
+        project: Project,
+    ) -> None:
+        package_name = project._project_config.package_name if project._project_config is not None else "package"
+        contents = f'''import importlib
+import sys
+import unittest
+from unittest import mock
+
+import httpx
+import pytest
+
+
+class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
+    """Tests for _make_default_async_client when httpx_aiohttp is NOT installed."""
+
+    def test_returns_httpx_async_client(self) -> None:
+        """When httpx_aiohttp is not installed, returns plain httpx.AsyncClient."""
+        with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
+            from {package_name}.client import _make_default_async_client
+
+            client = _make_default_async_client(timeout=60, follow_redirects=True)
+            self.assertIsInstance(client, httpx.AsyncClient)
+            self.assertEqual(client.timeout.read, 60)
+            self.assertTrue(client.follow_redirects)
+
+    def test_follow_redirects_none(self) -> None:
+        """When follow_redirects is None, omits it from httpx.AsyncClient."""
+        with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
+            from {package_name}.client import _make_default_async_client
+
+            client = _make_default_async_client(timeout=60, follow_redirects=None)
+            self.assertIsInstance(client, httpx.AsyncClient)
+            self.assertFalse(client.follow_redirects)
+
+    def test_explicit_httpx_client_bypasses_autodetect(self) -> None:
+        """When user passes httpx_client explicitly, auto-detect is not used."""
+        explicit_client = httpx.AsyncClient(timeout=60)
+        result = explicit_client if explicit_client is not None else None
+        self.assertIs(result, explicit_client)
+        self.assertEqual(result.timeout.read, 60)
+
+
+@pytest.mark.aiohttp
+class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
+    """Tests for _make_default_async_client when httpx_aiohttp IS installed."""
+
+    def test_returns_aiohttp_client(self) -> None:
+        """When httpx_aiohttp is installed, returns HttpxAiohttpClient."""
+        import httpx_aiohttp  # type: ignore[import-not-found]
+
+        from {package_name}.client import _make_default_async_client
+
+        client = _make_default_async_client(timeout=60, follow_redirects=True)
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertEqual(client.timeout.read, 60)
+        self.assertTrue(client.follow_redirects)
+
+    def test_follow_redirects_none(self) -> None:
+        """When httpx_aiohttp is installed and follow_redirects is None, omits it."""
+        import httpx_aiohttp  # type: ignore[import-not-found]
+
+        from {package_name}.client import _make_default_async_client
+
+        client = _make_default_async_client(timeout=60, follow_redirects=None)
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertFalse(client.follow_redirects)
+
+
+class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
+    """Tests for _default_clients.py convenience classes (no aiohttp)."""
+
+    def test_default_async_httpx_client_defaults(self) -> None:
+        """DefaultAsyncHttpxClient applies SDK defaults."""
+        from {package_name}._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAsyncHttpxClient
+
+        client = DefaultAsyncHttpxClient()
+        self.assertIsInstance(client, httpx.AsyncClient)
+        self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
+        self.assertTrue(client.follow_redirects)
+
+    def test_default_async_httpx_client_overrides(self) -> None:
+        """DefaultAsyncHttpxClient allows overriding defaults."""
+        from {package_name}._default_clients import DefaultAsyncHttpxClient
+
+        client = DefaultAsyncHttpxClient(timeout=30, follow_redirects=False)
+        self.assertEqual(client.timeout.read, 30)
+        self.assertFalse(client.follow_redirects)
+
+    def test_default_aiohttp_client_raises_without_package(self) -> None:
+        """DefaultAioHttpClient raises RuntimeError when httpx_aiohttp not installed."""
+        import {package_name}._default_clients
+
+        with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
+            importlib.reload({package_name}._default_clients)
+
+            with self.assertRaises(RuntimeError) as ctx:
+                {package_name}._default_clients.DefaultAioHttpClient()
+            self.assertIn("pip install {package_name}[aiohttp]", str(ctx.exception))
+
+        importlib.reload({package_name}._default_clients)
+
+
+@pytest.mark.aiohttp
+class TestDefaultClientsWithAiohttp(unittest.TestCase):
+    """Tests for _default_clients.py when httpx_aiohttp IS installed."""
+
+    def test_default_aiohttp_client_defaults(self) -> None:
+        """DefaultAioHttpClient works when httpx_aiohttp is installed."""
+        import httpx_aiohttp  # type: ignore[import-not-found]
+
+        from {package_name}._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAioHttpClient
+
+        client = DefaultAioHttpClient()
+        self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
+        self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
+        self.assertTrue(client.follow_redirects)
+'''
+        project.add_source_file("tests/test_aiohttp_autodetect.py", contents)
+
+    def _generate_default_clients(
+        self,
+        context: SdkGeneratorContext,
+        project: Project,
+    ) -> None:
+        package_name = project._project_config.package_name if project._project_config is not None else "package"
+        filepath = Filepath(
+            directories=(),
+            file=Filepath.FilepathPart(module_name="_default_clients"),
+        )
+        filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
+        contents = f"""# This file was auto-generated by Fern from our API Definition.
+
+import typing
+
+import httpx
+
+SDK_DEFAULT_TIMEOUT = 60
+
+try:
+    import httpx_aiohttp  # type: ignore[import-not-found]
+except ImportError:
+
+    class DefaultAioHttpClient(httpx.AsyncClient):  # type: ignore
+        def __init__(self, **kwargs: typing.Any) -> None:
+            raise RuntimeError(
+                "To use the aiohttp client, install the aiohttp extra: "
+                "pip install {package_name}[aiohttp]"
+            )
+
+else:
+
+    class DefaultAioHttpClient(httpx_aiohttp.HttpxAiohttpClient):  # type: ignore
+        def __init__(self, **kwargs: typing.Any) -> None:
+            kwargs.setdefault("timeout", SDK_DEFAULT_TIMEOUT)
+            kwargs.setdefault("follow_redirects", True)
+            super().__init__(**kwargs)
+
+
+class DefaultAsyncHttpxClient(httpx.AsyncClient):
+    def __init__(self, **kwargs: typing.Any) -> None:
+        kwargs.setdefault("timeout", SDK_DEFAULT_TIMEOUT)
+        kwargs.setdefault("follow_redirects", True)
+        super().__init__(**kwargs)
+"""
+        project.add_file(filepath_nested, contents)
+        project.register_export_in_project(
+            filepath_in_project=filepath,
+            exports={"DefaultAioHttpClient", "DefaultAsyncHttpxClient"},
+        )
 
     def _generate_version(
         self,
