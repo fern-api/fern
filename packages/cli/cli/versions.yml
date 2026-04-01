@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Send `X-Deployer-Author` and `X-Deployer-Author-Email` headers on docs
+        registration requests so CI-triggered deployments can be attributed to
+        the user who initiated the deploy.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 4.54.1
   changelogEntry:
     - summary: |
