@@ -5,7 +5,112 @@
     "__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "chat": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "message": "message",
+                    "stream": false,
+                  },
+                  "response": {
+                    "body": {
+                      "text": "text",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/chat",
+              "request": {
+                "body": {
+                  "properties": {
+                    "message": "string",
+                    "stream": "literal<false>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ChatRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "Completion",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "chat_stream": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "message": "message",
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "text": "text",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/chat",
+              "request": {
+                "body": {
+                  "properties": {
+                    "message": "string",
+                    "stream": "literal<true>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ChatStreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "CompletionChunk",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
         "types": {
+          "ChatRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": "string",
+              "stream": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Completion": {
             "docs": undefined,
             "inline": undefined,
@@ -39,7 +144,65 @@
           },
         },
       },
-      "rawContents": "types:
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    chat_stream:
+      path: /v2/chat
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ChatStreamRequest
+        body:
+          properties:
+            stream: literal<true>
+            message: string
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: CompletionChunk
+        format: json
+      examples:
+        - request:
+            stream: true
+            message: message
+          response:
+            stream:
+              - text: text
+    chat:
+      path: /v2/chat
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ChatRequest
+        body:
+          properties:
+            stream: literal<false>
+            message: string
+        content-type: application/json
+      response:
+        docs: ''
+        type: Completion
+        status-code: 200
+      examples:
+        - request:
+            stream: false
+            message: message
+          response:
+            body:
+              text: text
+  source:
+    openapi: ../openapi.yml
+types:
+  ChatRequest:
+    properties:
+      stream: optional<boolean>
+      message: string
+    source:
+      openapi: ../openapi.yml
   CreateCompletionRequest:
     properties:
       stream: optional<boolean>
@@ -139,8 +302,103 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "CreateCompletionRequestStreaming",
+                "name": "CreateChatCompletionsStreamRequest",
                 "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "root.CompletionChunk",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "resume": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "conversation_id": "conversation_id",
+                  },
+                  "request": {
+                    "prompt": "prompt",
+                    "stream": false,
+                  },
+                  "response": {
+                    "body": {
+                      "text": "text",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/completions/chat/{conversation_id}/resume",
+              "request": {
+                "body": {
+                  "properties": {
+                    "prompt": "string",
+                    "stream": "literal<false>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ResumeChatCompletionsRequest",
+                "path-parameters": {
+                  "conversation_id": "string",
+                },
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "root.Completion",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "resume_stream": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "conversation_id": "conversation_id",
+                  },
+                  "request": {
+                    "prompt": "prompt",
+                    "stream": true,
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "text": "text",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/completions/chat/{conversation_id}/resume",
+              "request": {
+                "body": {
+                  "properties": {
+                    "prompt": "string",
+                    "stream": "literal<true>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ResumeChatCompletionsStreamRequest",
+                "path-parameters": {
+                  "conversation_id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -171,7 +429,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: CreateCompletionRequestStreaming
+        name: CreateChatCompletionsStreamRequest
         body:
           properties:
             stream: literal<true>
@@ -206,6 +464,60 @@ service:
         status-code: 200
       examples:
         - request:
+            stream: false
+            prompt: prompt
+          response:
+            body:
+              text: text
+    resume_stream:
+      path: /completions/chat/{conversation_id}/resume
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ResumeChatCompletionsStreamRequest
+        path-parameters:
+          conversation_id: string
+        body:
+          properties:
+            stream: literal<true>
+            prompt: string
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: root.CompletionChunk
+        format: json
+      examples:
+        - path-parameters:
+            conversation_id: conversation_id
+          request:
+            stream: true
+            prompt: prompt
+          response:
+            stream:
+              - text: text
+    resume:
+      path: /completions/chat/{conversation_id}/resume
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ResumeChatCompletionsRequest
+        path-parameters:
+          conversation_id: string
+        body:
+          properties:
+            stream: literal<false>
+            prompt: string
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Completion
+        status-code: 200
+      examples:
+        - path-parameters:
+            conversation_id: conversation_id
+          request:
             stream: false
             prompt: prompt
           response:

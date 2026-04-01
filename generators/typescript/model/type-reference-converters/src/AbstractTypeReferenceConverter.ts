@@ -169,6 +169,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             string: this.string.bind(this),
             uuid: this.string.bind(this),
             dateTime: () => this.dateTime(params),
+            dateTimeRfc2822: () => this.dateTime(params),
             date: this.string.bind(this),
             base64: this.string.bind(this),
             bigInteger: () => this.bigInteger(params),

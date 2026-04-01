@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: request-parameters
-  version: ''
+  version: ""
 paths:
   /user/username:
     post:
@@ -17,8 +17,8 @@ paths:
             items:
               type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -50,14 +50,14 @@ paths:
             items:
               type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUsernameBody'
+              $ref: "#/components/schemas/CreateUsernameBody"
   /user/username-optional:
     post:
       operationId: user_createUsernameOptional
@@ -65,14 +65,14 @@ paths:
         - User
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUsernameBodyOptionalProperties'
+              $ref: "#/components/schemas/CreateUsernameBodyOptionalProperties"
               nullable: true
   /user:
     get:
@@ -113,14 +113,14 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
         - name: userList
           in: query
           required: true
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         - name: optionalDeadline
           in: query
           required: false
@@ -145,12 +145,12 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/NestedUser'
+            $ref: "#/components/schemas/NestedUser"
         - name: optionalUser
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
             nullable: true
         - name: excludeUser
           in: query
@@ -158,7 +158,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         - name: filter
           in: query
           required: true
@@ -179,12 +179,12 @@ paths:
             type: integer
             format: bigint
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     User:
@@ -207,7 +207,7 @@ components:
         name:
           type: string
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
       required:
         - name
         - user

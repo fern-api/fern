@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { createNameAndWireValue } from "@fern-typescript/test-utils";
+import { caseConverter, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { describe, expect, it } from "vitest";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile.js";
 
@@ -17,6 +17,7 @@ describe("getParameterNameForFile", () => {
         const property = createFileProperty("myFile");
         const result = getParameterNameForFile({
             property,
+            caseConverter,
             wrapperName: "request",
             includeSerdeLayer: true,
             retainOriginalCasing: false,
@@ -29,6 +30,7 @@ describe("getParameterNameForFile", () => {
         const property = createFileProperty("myFile");
         const result = getParameterNameForFile({
             property,
+            caseConverter,
             wrapperName: "request",
             includeSerdeLayer: false,
             retainOriginalCasing: false,
@@ -41,6 +43,7 @@ describe("getParameterNameForFile", () => {
         const property = createFileProperty("myFile");
         const result = getParameterNameForFile({
             property,
+            caseConverter,
             wrapperName: "request",
             includeSerdeLayer: true,
             retainOriginalCasing: true,
@@ -53,6 +56,7 @@ describe("getParameterNameForFile", () => {
         const property = createFileProperty("myFile");
         const result = getParameterNameForFile({
             property,
+            caseConverter,
             wrapperName: "request",
             includeSerdeLayer: true,
             retainOriginalCasing: false,
@@ -65,6 +69,7 @@ describe("getParameterNameForFile", () => {
         const property = createFileProperty("myFile");
         const result = getParameterNameForFile({
             property,
+            caseConverter,
             wrapperName: "req",
             includeSerdeLayer: true,
             retainOriginalCasing: true,

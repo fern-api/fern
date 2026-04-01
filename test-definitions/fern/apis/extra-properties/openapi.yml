@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: extra-properties
-  version: ''
+  version: ""
 paths:
   /user:
     post:
@@ -10,12 +10,12 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:

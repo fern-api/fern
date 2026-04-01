@@ -4,5 +4,5 @@ import type * as FernIr from "../../../index.js";
 
 export interface NameAndWireValue {
     wireValue: string;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
 }

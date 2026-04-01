@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: http-head
-  version: ''
+  version: ""
 paths:
   /users:
     head:
@@ -10,8 +10,8 @@ paths:
         - User
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
     get:
       operationId: user_list
       tags:
@@ -23,14 +23,14 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
 components:
   schemas:
     User:

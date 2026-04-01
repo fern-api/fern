@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: any-auth
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -45,14 +45,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: &ref_0
         - BearerAuth: []
         - ApiKeyAuth: []
@@ -66,14 +66,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
 components:
   schemas:

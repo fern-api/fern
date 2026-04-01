@@ -8,6 +8,6 @@ import type * as FernIr from "../../../index.js";
  * (e.g. headers).
  */
 export interface ExampleWebhookCall extends FernIr.WithDocs {
-    name: FernIr.Name | undefined;
+    name: FernIr.NameOrString | undefined;
     payload: FernIr.ExampleTypeReference;
 }

@@ -1,7 +1,13 @@
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
-
-import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer.js";
+import {
+    AbstractExpressServiceDeclarationReferencer,
+    AbstractSdkClientClassDeclarationReferencer
+} from "./AbstractExpressServiceDeclarationReferencer.js";
 import { DeclarationReferencer } from "./DeclarationReferencer.js";
+
+export declare namespace ExpressServiceDeclarationReferencer {
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
+}
 
 export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<PackageId> {
     public getExportedFilepath(name: PackageId): ExportedFilePath {
@@ -22,7 +28,7 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
             return "RootService";
         }
         const subpackage = this.packageResolver.resolveSubpackage(name.subpackageId);
-        return `${subpackage.name.pascalCase.unsafeName}Service`;
+        return `${this.caseConverter.pascalUnsafe(subpackage.name)}Service`;
     }
 
     public getReferenceToService(args: DeclarationReferencer.getReferenceTo.Options<PackageId>): Reference {

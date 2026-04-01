@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createMockTypeContext, createMockTypeSchemaContext, createQueryParameter } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    createMockTypeContext,
+    createMockTypeSchemaContext,
+    createQueryParameter
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -16,7 +21,8 @@ function createMockContext(opts?: {
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
         type: createMockTypeContext(),
-        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true })
+        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true }),
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

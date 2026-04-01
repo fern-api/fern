@@ -2,14 +2,18 @@ import { resolve } from "node:path";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createSampleIr } from "@fern-api/test-utils";
+import { createMigratedSampleIr, getIrVersionFromPackageJson } from "@fern-api/test-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "../../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));
-    const ir = await createSampleIr(absolutePathToWorkspace);
+    const ir = await createMigratedSampleIr<FernIr.IntermediateRepresentation>(
+        absolutePathToWorkspace,
+        await getIrVersionFromPackageJson(__dirname)
+    );
     const generatorConfig = createSampleGeneratorConfig();
     const customConfig: ModelCustomConfigSchema = ModelCustomConfigSchema.parse({
         generateBuilders: false,
@@ -20,8 +24,7 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
         type: "local",
         _visit: (visitor) => visitor.local()
     });
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    return new ModelGeneratorContext(ir as any, generatorConfig, customConfig, notificationService);
+    return new ModelGeneratorContext(ir, generatorConfig, customConfig, notificationService);
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {

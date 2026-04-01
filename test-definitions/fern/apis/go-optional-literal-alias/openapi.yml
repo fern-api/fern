@@ -1,27 +1,27 @@
 openapi: 3.0.1
 info:
   title: go-optional-literal-alias
-  version: ''
+  version: ""
 paths:
   /search:
     post:
       operationId: search
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: "#/components/schemas/SearchResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchRequest'
+              $ref: "#/components/schemas/SearchRequest"
 components:
   schemas:
     SortField:
@@ -34,7 +34,7 @@ components:
       type: object
       properties:
         sortField:
-          $ref: '#/components/schemas/SortField'
+          $ref: "#/components/schemas/SortField"
           nullable: true
           description: The sort field to use
         query:

@@ -11,7 +11,7 @@ import {
     TypeReference,
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { constructHttpPath, getWireValue } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
@@ -201,7 +201,8 @@ export class OperationConverter extends AbstractOperationConverter {
             pathParameters,
             queryParameters,
             headers: headers.filter(
-                (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
+                (header, index, self) =>
+                    index === self.findIndex((h) => getWireValue(h.name) === getWireValue(header.name))
             ),
             responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,

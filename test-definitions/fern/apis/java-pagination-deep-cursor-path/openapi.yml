@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-pagination-deep-cursor-path
-  version: ''
+  version: ""
 paths:
   /do-thing:
     post:
@@ -10,19 +10,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/A'
+              $ref: "#/components/schemas/A"
   /do-thing-required:
     post:
       operationId: deepCursorPath_do-thing-required
@@ -30,19 +30,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MainRequired'
+              $ref: "#/components/schemas/MainRequired"
   /do-thing-inline:
     post:
       operationId: deepCursorPath_do-thing-inline
@@ -50,19 +50,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InlineA'
+              $ref: "#/components/schemas/InlineA"
 components:
   schemas:
     D:
@@ -77,14 +77,14 @@ components:
       type: object
       properties:
         d:
-          $ref: '#/components/schemas/D'
+          $ref: "#/components/schemas/D"
           nullable: true
     B:
       title: B
       type: object
       properties:
         c:
-          $ref: '#/components/schemas/C'
+          $ref: "#/components/schemas/C"
       required:
         - c
     A:
@@ -92,7 +92,7 @@ components:
       type: object
       properties:
         b:
-          $ref: '#/components/schemas/B'
+          $ref: "#/components/schemas/B"
           nullable: true
     Response:
       title: Response
@@ -125,7 +125,7 @@ components:
       type: object
       properties:
         indirection:
-          $ref: '#/components/schemas/IndirectionRequired'
+          $ref: "#/components/schemas/IndirectionRequired"
       required:
         - indirection
     InlineD:
@@ -140,14 +140,14 @@ components:
       type: object
       properties:
         b:
-          $ref: '#/components/schemas/InlineD'
+          $ref: "#/components/schemas/InlineD"
           nullable: true
     InlineB:
       title: InlineB
       type: object
       properties:
         c:
-          $ref: '#/components/schemas/InlineC'
+          $ref: "#/components/schemas/InlineC"
       required:
         - c
     InlineA:
@@ -155,6 +155,6 @@ components:
       type: object
       properties:
         b:
-          $ref: '#/components/schemas/InlineB'
+          $ref: "#/components/schemas/InlineB"
           nullable: true
   securitySchemes: {}
