@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
+  title: Test streaming request name collision when x-fern-type-name is set on a shared $ref schema.
   version: 1.0.0
 paths:
   "/completions/chat":
@@ -85,6 +85,7 @@ components:
           type: string
       required:
         - message
+      x-fern-type-name: ChatRequest
     CreateCompletionRequest:
       type: object
       properties:
