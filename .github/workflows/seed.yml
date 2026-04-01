@@ -988,6 +988,51 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
+      - name: Send PR benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::notice::POSTHOG_API_KEY not set, skipping PR benchmark metrics"
+            exit 0
+          fi
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          for f in benchmark-pr-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+                -H "Content-Type: application/json" \
+                -d "{
+                  \"api_key\": \"${POSTHOG_API_KEY}\",
+                  \"event\": \"benchmark-pr-result\",
+                  \"distinct_id\": \"fern-ci-benchmark\",
+                  \"timestamp\": \"${TIMESTAMP}\",
+                  \"properties\": {
+                    \"generator\": \"${gen}\",
+                    \"spec\": \"${spec}\",
+                    \"duration_seconds\": ${dur},
+                    \"exit_code\": ${ec},
+                    \"skipped\": ${skip},
+                    \"mode\": \"generator-only\",
+                    \"branch\": \"${{ github.head_ref }}\",
+                    \"pr_number\": ${{ github.event.pull_request.number }},
+                    \"commit_sha\": \"${{ github.event.pull_request.head.sha }}\",
+                    \"run_id\": \"${{ github.run_id }}\",
+                    \"run_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+                  }
+                }" 2>/dev/null || true
+              SENT=$((SENT + 1))
+            done < "$f"
+          done
+          echo "PostHog PR metrics: ${SENT} events sent"
+
       - name: Restore baseline from nightly cache
         id: baseline-cache
         uses: actions/cache/restore@v4

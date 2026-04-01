@@ -212,6 +212,100 @@ jobs:
           path: benchmark-baseline-results
           key: benchmark-baseline-${{ github.run_id }}
 
+  # Send benchmark results to PostHog for long-term trend analysis and dashboards.
+  # Uses the same PostHog project + API key as seed test metrics (seed.yml).
+  # Fire-and-forget: failures here never affect cache save or downstream jobs.
+  post-metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [baseline, baseline-e2e]
+    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    steps:
+      - name: Download generator-only baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-baseline-*
+          path: baseline-results
+          merge-multiple: true
+
+      - name: Download E2E baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-e2e-*
+          path: e2e-results
+          merge-multiple: true
+
+      - name: Send benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::warning::POSTHOG_API_KEY not set, skipping metrics"
+            exit 0
+          fi
+
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          FAILED=0
+
+          send_event() {
+            local mode="$1" generator="$2" spec="$3" duration="$4" exit_code="$5" skipped="$6"
+            if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"api_key\": \"${POSTHOG_API_KEY}\",
+                \"event\": \"benchmark-baseline-result\",
+                \"distinct_id\": \"fern-ci-benchmark\",
+                \"timestamp\": \"${TIMESTAMP}\",
+                \"properties\": {
+                  \"generator\": \"${generator}\",
+                  \"spec\": \"${spec}\",
+                  \"duration_seconds\": ${duration},
+                  \"exit_code\": ${exit_code},
+                  \"skipped\": ${skipped},
+                  \"mode\": \"${mode}\",
+                  \"branch\": \"main\",
+                  \"commit_sha\": \"${{ github.sha }}\",
+                  \"run_id\": \"${{ github.run_id }}\",
+                  \"run_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+                }
+              }" 2>/dev/null; then
+              echo "::warning::Failed to send PostHog event for ${mode}/${generator}/${spec}"
+              FAILED=$((FAILED + 1))
+            else
+              SENT=$((SENT + 1))
+            fi
+          }
+
+          # Send generator-only results
+          for f in baseline-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              send_event "generator-only" "$gen" "$spec" "$dur" "$ec" "$skip"
+            done < "$f"
+          done
+
+          # Send E2E results
+          for f in e2e-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              send_event "e2e" "$gen" "$spec" "$dur" "$ec" "$skip"
+            done < "$f"
+          done
+
+          echo "PostHog metrics: ${SENT} sent, ${FAILED} failed"
+
   log-rejection:
     runs-on: ubuntu-latest
     timeout-minutes: 3
