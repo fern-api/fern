@@ -126,7 +126,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.registry.allNamespacesOf(this.classReference.namespace),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.classReference.namespace,
             generation: this.generation
