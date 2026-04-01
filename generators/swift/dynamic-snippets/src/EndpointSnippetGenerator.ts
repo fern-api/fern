@@ -444,11 +444,17 @@ export class EndpointSnippetGenerator {
                 snippetObject: snippet.pathParameters ?? {}
             })
             .map((parameter) => {
+                // Path parameters are always typed as String in the Swift SDK,
+                // so we must convert their values as STRING primitives regardless
+                // of the original type reference (e.g. enum types should emit
+                // string wire values, not enum case shorthand).
+                const pathParameterTypeReference: FernIr.dynamic.TypeReference =
+                    FernIr.dynamic.TypeReference.primitive("STRING");
                 return swift.functionArgument({
                     label: parameter.name.name.camelCase.unsafeName,
                     value: this.context.dynamicTypeLiteralMapper.convert({
                         fromSymbol: moduleSymbol,
-                        typeReference: parameter.typeReference,
+                        typeReference: pathParameterTypeReference,
                         value: parameter.value
                     })
                 });
