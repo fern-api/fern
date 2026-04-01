@@ -251,19 +251,15 @@ benefiting from SDK-level configuration like authentication, retries, timeouts, 
 This is useful for calling API endpoints not yet supported in the SDK.
 
 ```typescript
-const response = await client.fetch(
-    "/v1/custom/endpoint",
-    {
-        method: "GET",
+const response = await client.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
     },
-    {
-        timeoutInSeconds: 30,
-        maxRetries: 3,
-        headers: {
-            "X-Custom-Header": "custom-value",
-        },
-    },
-);
+});
 
 const data = await response.json();
 ```

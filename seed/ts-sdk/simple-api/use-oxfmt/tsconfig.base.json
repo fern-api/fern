@@ -10,8 +10,8 @@
         "outDir": "dist",
         "rootDir": "src",
         "isolatedModules": true,
-        "isolatedDeclarations": true
+        "isolatedDeclarations": true,
     },
     "include": ["src"],
-    "exclude": []
+    "exclude": [],
 }
