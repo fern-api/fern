@@ -257,9 +257,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
         const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
 
-        // When either field is omitted, use || so providing just one credential is enough
-        const combiner = usernameOmit || passwordOmit ? "||" : "&&";
-        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) ${combiner} (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+        // Per-field checks: omittable fields are always satisfied, required fields must be present
+        const usernameCheck = usernameOmit
+            ? "true"
+            : `options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}`;
+        const passwordCheck = passwordOmit
+            ? "true"
+            : `options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck}`;
+        return `return (${usernameCheck}) && (${passwordCheck});`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -326,110 +331,62 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
 
         const usernameOmit = this.authScheme.usernameOmit === true;
         const passwordOmit = this.authScheme.passwordOmit === true;
-        const eitherOmitted = usernameOmit || passwordOmit;
+
+        // Build per-field null checks based on individual omit flags
+        const buildNullChecks = (errorAction: string): string => {
+            const lines: string[] = [];
+            lines.push(`const ${usernameVar} = ${usernameEnvFallback};`);
+            lines.push(`const ${passwordVar} = ${passwordEnvFallback};`);
+
+            if (!usernameOmit && !passwordOmit) {
+                // Both required (default) - check each individually
+                lines.push(`if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`);
+                lines.push(`if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`);
+            } else if (usernameOmit && passwordOmit) {
+                // Both optional - need at least one
+                lines.push(`if (${usernameVar} == null && ${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE`)} }`);
+            } else if (usernameOmit) {
+                // Only password is required
+                lines.push(`if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`);
+            } else {
+                // Only username is required
+                lines.push(`if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`);
+            }
+            return lines.map((l) => `        ${l}`).join("\n");
+        };
+
+        const authHeaderCode = getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        );
 
         if (this.neverThrowErrors) {
-            if (eitherOmitted) {
-                // When a field is omitted, return empty headers if neither credential is provided
-                return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${usernameVar} == null && ${passwordVar} == null) {
-            return { headers: {} };
-        }
+            const errorAction = "return { headers: {} };";
+            return `
+${buildNullChecks(errorAction)}
 
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createIdentifier(usernameVar),
-                ts.factory.createIdentifier(passwordVar)
-            )
-        )};
+        const authHeader = ${authHeaderCode};
 
         return {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
-            } else {
-                // Default: return empty headers if credentials are missing
-                return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            return { headers: {} };
-        }
-
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
-            return { headers: {} };
-        }
-
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createIdentifier(usernameVar),
-                ts.factory.createIdentifier(passwordVar)
-            )
-        )};
-
-        return {
-            headers: authHeader != null ? { Authorization: authHeader } : {},
-        };
-        `;
-            }
         } else {
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
+            const errorAction = `throw new ${errorConstructor}({ message: __MSG__ });`;
+            return `
+${buildNullChecks(errorAction)}
 
-            if (eitherOmitted) {
-                // When a field is omitted, throw only if neither credential is provided
-                return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${usernameVar} == null && ${passwordVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
-            });
-        }
-
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createIdentifier(usernameVar),
-                ts.factory.createIdentifier(passwordVar)
-            )
-        )};
+        const authHeader = ${authHeaderCode};
 
         return {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
-            } else {
-                // Default: throw if either credential is missing
-                return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
-            });
-        }
-
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
-            });
-        }
-
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createIdentifier(usernameVar),
-                ts.factory.createIdentifier(passwordVar)
-            )
-        )};
-
-        return {
-            headers: authHeader != null ? { Authorization: authHeader } : {},
-        };
-        `;
-            }
         }
     }
 
