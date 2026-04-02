@@ -493,13 +493,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             reference: () => undefined,
             inlinedRequestBody: (request) => {
                 for (const prop of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    names.add(prop.name.name.pascalCase.safeName);
+                    names.add(caseConverter.pascalSafe(prop.name));
                 }
             },
             fileUpload: (request) => {
                 for (const prop of request.properties) {
                     if (prop.type === "bodyProperty") {
-                        names.add(prop.name.name.pascalCase.safeName);
+                        names.add(caseConverter.pascalSafe(prop.name));
                     }
                 }
             },
