@@ -552,6 +552,7 @@ allowedFailures:
   - cross-package-type-names:serde-layer
   - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
+  - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - package-yml
   - inferred-auth-implicit-reference

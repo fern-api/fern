@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add an `agents` config block to `docs.yml` for agent-serving endpoints.
+        `agents.page-directive` prepends custom instructions to each page served
+        through agent endpoints.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 4.55.0
   changelogEntry:
     - summary: |

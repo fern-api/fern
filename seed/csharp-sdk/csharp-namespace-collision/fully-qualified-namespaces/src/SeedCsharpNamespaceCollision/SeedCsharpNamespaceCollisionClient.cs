@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.ScimConfiguration;
 using SeedCsharpNamespaceCollision.System;
 
 namespace SeedCsharpNamespaceCollision;
@@ -28,8 +29,11 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             }
         }
         _client = new RawClient(clientOptions);
+        ScimConfiguration = new ScimConfigurationClient(_client);
         System = new SystemClient(_client);
     }
+
+    public IScimConfigurationClient ScimConfiguration { get; }
 
     public ISystemClient System { get; }
 

@@ -2241,12 +2241,31 @@ function paginationGeneratesPageObject(
         case "offset":
         case "uri":
         case "path":
-            return true;
+            return resultsPropertyIsListType(pagination.results.property.valueType);
         case "custom":
             return false;
         default:
             assertNever(pagination);
     }
+}
+
+/**
+ * Checks whether the results property's value type is a list (or optional/nullable
+ * wrapping a list). This mirrors the client generator's getItemTypeFromListOrOptionalList
+ * check so that the test generator only emits pagination assertions when the client
+ * will actually generate a Page object.
+ */
+function resultsPropertyIsListType(typeReference: FernIr.TypeReference): boolean {
+    if (typeReference.type === "container" && typeReference.container.type === "list") {
+        return true;
+    }
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
+        return resultsPropertyIsListType(typeReference.container.optional);
+    }
+    if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+        return resultsPropertyIsListType(typeReference.container.nullable);
+    }
+    return false;
 }
 
 function isPaginationResultsPathMissingInExample({
