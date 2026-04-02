@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: mixed-file-directory
-  version: ''
+  version: ""
 paths:
   /organizations/:
     post:
@@ -11,18 +11,18 @@ paths:
         - Organization
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateOrganizationRequest'
+              $ref: "#/components/schemas/CreateOrganizationRequest"
   /users/:
     get:
       description: List all users.
@@ -38,14 +38,14 @@ paths:
             type: integer
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
   /users/events/:
     get:
       description: List all user events.
@@ -61,14 +61,14 @@ paths:
             type: integer
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/userEvent'
+                  $ref: "#/components/schemas/userEvent"
   /users/events/metadata/:
     get:
       description: Get event metadata.
@@ -80,14 +80,14 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/Id'
+            $ref: "#/components/schemas/Id"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/usereventsMetadata'
+                $ref: "#/components/schemas/usereventsMetadata"
 components:
   schemas:
     Id:
@@ -98,13 +98,13 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/Id'
+          $ref: "#/components/schemas/Id"
         name:
           type: string
         users:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
       required:
         - id
         - name
@@ -122,7 +122,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/Id'
+          $ref: "#/components/schemas/Id"
         name:
           type: string
         age:
@@ -136,7 +136,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/Id'
+          $ref: "#/components/schemas/Id"
         name:
           type: string
       required:
@@ -147,7 +147,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/Id'
+          $ref: "#/components/schemas/Id"
         value: {}
       required:
         - id

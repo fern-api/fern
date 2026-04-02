@@ -7,6 +7,7 @@ import {
     OAuthConfiguration,
     RequestPropertyValue
 } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 
 const HTTP_METHOD_MAP: Record<string, HttpMethod | undefined> = {
     GET: HttpMethod.Get,
@@ -249,7 +250,7 @@ function findObjectPropertyByWireValue(
     properties: FernIr.ObjectProperty[],
     wireValue: string
 ): FernIr.ObjectProperty | undefined {
-    return properties.find((prop) => prop.name.wireValue === wireValue);
+    return properties.find((prop) => getWireValue(prop.name) === wireValue);
 }
 
 /** Resolves object properties from a named type in the IR. */

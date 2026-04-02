@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface PropertyPathItem {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     type: FernIr.TypeReference;
 }

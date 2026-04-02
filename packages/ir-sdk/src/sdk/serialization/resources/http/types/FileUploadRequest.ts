@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithContentType } from "../../commons/types/WithContentType.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { WithV2Examples } from "../../examples/types/WithV2Examples.js";
@@ -14,7 +14,7 @@ export const FileUploadRequest: core.serialization.ObjectSchema<
     FernIr.FileUploadRequest
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: Name,
+        name: NameOrString,
         properties: core.serialization.list(FileUploadRequestProperty),
     })
     .extend(WithDocs)
@@ -23,7 +23,7 @@ export const FileUploadRequest: core.serialization.ObjectSchema<
 
 export declare namespace FileUploadRequest {
     export interface Raw extends WithDocs.Raw, WithV2Examples.Raw, WithContentType.Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         properties: FileUploadRequestProperty.Raw[];
     }
 }

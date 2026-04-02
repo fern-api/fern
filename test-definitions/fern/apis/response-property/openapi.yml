@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: response-property
-  version: ''
+  version: ""
 paths:
   /movie:
     post:
@@ -10,12 +10,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       requestBody:
         required: true
         content:
@@ -29,12 +29,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       requestBody:
         required: true
         content:
@@ -48,12 +48,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StringResponse'
+                $ref: "#/components/schemas/StringResponse"
       requestBody:
         required: true
         content:
@@ -67,12 +67,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       requestBody:
         required: true
         content:
@@ -86,12 +86,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
                 nullable: true
       requestBody:
         required: true
@@ -106,12 +106,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OptionalWithDocs'
+                $ref: "#/components/schemas/OptionalWithDocs"
       requestBody:
         required: true
         content:
@@ -125,12 +125,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OptionalStringResponse'
+                $ref: "#/components/schemas/OptionalStringResponse"
       requestBody:
         required: true
         content:
@@ -149,7 +149,7 @@ components:
         - data
     OptionalStringResponse:
       title: OptionalStringResponse
-      $ref: '#/components/schemas/StringResponse'
+      $ref: "#/components/schemas/StringResponse"
       nullable: true
     WithMetadata:
       title: WithMetadata
@@ -171,7 +171,7 @@ components:
         - docs
     OptionalWithDocs:
       title: OptionalWithDocs
-      $ref: '#/components/schemas/WithDocs'
+      $ref: "#/components/schemas/WithDocs"
       nullable: true
     Movie:
       title: Movie
@@ -189,10 +189,10 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/Movie'
+          $ref: "#/components/schemas/Movie"
       required:
         - data
       allOf:
-        - $ref: '#/components/schemas/WithMetadata'
-        - $ref: '#/components/schemas/WithDocs'
+        - $ref: "#/components/schemas/WithMetadata"
+        - $ref: "#/components/schemas/WithDocs"
   securitySchemes: {}

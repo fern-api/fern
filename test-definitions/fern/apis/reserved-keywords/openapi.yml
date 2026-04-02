@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: reserved-keywords
-  version: ''
+  version: ""
 paths:
   /:
     post:
@@ -15,8 +15,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas:
     Package:

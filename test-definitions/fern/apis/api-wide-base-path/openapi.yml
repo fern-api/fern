@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: api-wide-base-path
-  version: ''
+  version: ""
 paths:
   /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}:
     post:
@@ -30,8 +30,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas: {}
   securitySchemes: {}

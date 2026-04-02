@@ -17,6 +17,7 @@ export const PathParameterWithExample: core.serialization.ObjectSchema<
         variableReference: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
         explode: core.serialization.boolean().optional(),
+        clientDefault: core.serialization.unknown().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -29,5 +30,6 @@ export declare namespace PathParameterWithExample {
         variableReference?: string | null;
         parameterNameOverride?: string | null;
         explode?: boolean | null;
+        clientDefault?: unknown | null;
     }
 }

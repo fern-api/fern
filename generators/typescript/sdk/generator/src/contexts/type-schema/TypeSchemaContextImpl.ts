@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CoreUtilities,
@@ -185,7 +186,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
      */
     private wouldCauseDirectImportCollision(typeName: FernIr.DeclaredTypeName): boolean {
         const exportedName = this.typeSchemaDeclarationReferencer.getExportedName(typeName);
-        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => p.originalName).join("/");
+        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => getOriginalName(p)).join("/");
 
         // Check if the exported name collides with the schema name itself
         if (this.currentSchemaName != null && exportedName === this.currentSchemaName) {
@@ -207,7 +208,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
      */
     private recordDirectImport(typeName: FernIr.DeclaredTypeName): void {
         const exportedName = this.typeSchemaDeclarationReferencer.getExportedName(typeName);
-        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => p.originalName).join("/");
+        const fernFilepathKey = typeName.fernFilepath.allParts.map((p) => getOriginalName(p)).join("/");
         this.directImportedNames.set(exportedName, fernFilepathKey);
     }
 

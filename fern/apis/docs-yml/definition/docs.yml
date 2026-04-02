@@ -145,6 +145,13 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  AgentsConfig:
+    properties:
+      page-directive:
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through agent endpoints.
+
   CheckRuleSeverity:
     enum:
       - warn
@@ -245,6 +252,11 @@ types:
         type: optional<AiExamplesConfig>
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+      agents:
+        type: optional<AgentsConfig>
+        docs: |
+          Configuration for agent-serving endpoints.
 
       # seo
       metadata: optional<MetadataConfig>

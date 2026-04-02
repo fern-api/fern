@@ -453,6 +453,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             (s): s is typeof s & { type: "basic" } => s.type === "basic"
                         );
                         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        let isFirstBlock = true;
                         for (let i = 0; i < basicSchemes.length; i++) {
                             const basicScheme = basicSchemes[i];
                             if (basicScheme == null) {
@@ -481,9 +482,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 continue;
                             }
                             if (isAuthOptional || basicSchemes.length > 1) {
-                                const controlFlowKeyword = i === 0 ? "if" : "else if";
+                                const controlFlowKeyword = isFirstBlock ? "if" : "else if";
                                 innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
                             }
+                            isFirstBlock = false;
                             // Omitted fields use empty string directly
                             const usernameExpr = usernameOmitted ? `""` : `${usernameAccess}`;
                             const passwordExpr = passwordOmitted ? `""` : `${passwordAccess}`;

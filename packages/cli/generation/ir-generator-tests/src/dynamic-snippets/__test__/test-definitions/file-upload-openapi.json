@@ -182,6 +182,7 @@
                         {
                             "type": "bodyProperty",
                             "name": {
+                                "wireValue": "name",
                                 "name": {
                                     "originalName": "name",
                                     "camelCase": {
@@ -200,8 +201,7 @@
                                         "unsafeName": "Name",
                                         "safeName": "Name"
                                     }
-                                },
-                                "wireValue": "name"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -212,6 +212,7 @@
                         },
                         {
                             "type": "file",
+                            "wireValue": "file",
                             "name": {
                                 "originalName": "file",
                                 "camelCase": {
@@ -230,8 +231,7 @@
                                     "unsafeName": "File",
                                     "safeName": "File"
                                 }
-                            },
-                            "wireValue": "file"
+                            }
                         }
                     ]
                 },

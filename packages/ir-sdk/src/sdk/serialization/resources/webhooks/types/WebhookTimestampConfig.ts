@@ -3,21 +3,21 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WebhookTimestampFormat } from "./WebhookTimestampFormat.js";
 
 export const WebhookTimestampConfig: core.serialization.ObjectSchema<
     serializers.WebhookTimestampConfig.Raw,
     FernIr.WebhookTimestampConfig
 > = core.serialization.objectWithoutOptionalProperties({
-    headerName: NameAndWireValue,
+    headerName: NameAndWireValueOrString,
     format: WebhookTimestampFormat,
     tolerance: core.serialization.number().optional(),
 });
 
 export declare namespace WebhookTimestampConfig {
     export interface Raw {
-        headerName: NameAndWireValue.Raw;
+        headerName: NameAndWireValueOrString.Raw;
         format: WebhookTimestampFormat.Raw;
         tolerance?: number | null;
     }

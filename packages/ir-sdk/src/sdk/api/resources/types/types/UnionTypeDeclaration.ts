@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface UnionTypeDeclaration {
-    discriminant: FernIr.NameAndWireValue;
+    discriminant: FernIr.NameAndWireValueOrString;
     /** A list of other types to inherit from */
     extends: FernIr.DeclaredTypeName[];
     types: FernIr.SingleUnionType[];

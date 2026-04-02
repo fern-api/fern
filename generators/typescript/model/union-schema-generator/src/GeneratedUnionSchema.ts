@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
@@ -9,13 +10,14 @@ import { RawSingleUnionType } from "./RawSingleUnionType.js";
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
         shape: FernIr.UnionTypeDeclaration | undefined;
-        discriminant: FernIr.NameAndWireValue;
+        discriminant: FernIr.NameAndWireValueOrString;
         singleUnionTypes: RawSingleUnionType<Context>[];
         baseProperties?: FernIr.ObjectProperty[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
         shouldIncludeDefaultCaseInTransform: boolean;
         includeUtilsOnUnionMembers: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -23,7 +25,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private static readonly VALUE_PARAMETER_NAME = "value";
     private static readonly BASE_SCHEMA_NAME = "_Base";
 
-    private readonly discriminant: FernIr.NameAndWireValue;
+    private readonly discriminant: FernIr.NameAndWireValueOrString;
     private readonly singleUnionTypes: RawSingleUnionType<Context>[];
     private readonly baseProperties: FernIr.ObjectProperty[];
     private readonly getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
@@ -31,6 +33,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private readonly shouldIncludeDefaultCaseInTransform: boolean;
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly shape: FernIr.UnionTypeDeclaration | undefined;
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         shape,
@@ -41,11 +44,13 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         getReferenceToSchema,
         shouldIncludeDefaultCaseInTransform,
         includeUtilsOnUnionMembers,
+        caseConverter,
         ...superInit
     }: GeneratedUnionSchema.Init<Context>) {
         super(superInit);
         this.shape = shape;
         this.discriminant = discriminant;
+        this.caseConverter = caseConverter;
         this.singleUnionTypes = singleUnionTypes;
         this.baseProperties = baseProperties;
         this.getGeneratedUnion = getGeneratedUnion;
@@ -87,7 +92,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                 properties: this.baseProperties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: getPropertyKey(property.name.wireValue),
+                        name: getPropertyKey(getWireValue(property.name)),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };
@@ -108,7 +113,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     public buildSchema(context: Context): Zurg.Schema {
         let schema: Zurg.Schema = context.coreUtilities.zurg.union({
             parsedDiscriminant: this.getParsedDiscriminant(context),
-            rawDiscriminant: this.discriminant.wireValue,
+            rawDiscriminant: getWireValue(this.discriminant),
             singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
                 const singleUnionTypeSchema = singleUnionType.getSchema(context);
                 if (this.hasBaseInterface()) {
@@ -211,9 +216,9 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                                 .object(
                                     this.baseProperties.map((baseProperty) => ({
                                         key: {
-                                            raw: baseProperty.name.wireValue,
+                                            raw: getWireValue(baseProperty.name),
                                             parsed: this.getGeneratedUnion(context).getBasePropertyKey(
-                                                baseProperty.name.wireValue
+                                                getWireValue(baseProperty.name)
                                             )
                                         },
                                         value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)

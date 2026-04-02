@@ -1,6 +1,7 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
@@ -87,7 +88,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return undefined;
@@ -148,14 +149,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeConstants(context);
         this.writeClass(context);
         this.writeTokenOverrideClass(context);
         this.writeOptions(context);
     }
 
-    private writeConstants(context: SdkContext): void {
+    private writeConstants(context: FileContext): void {
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
@@ -210,7 +211,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         context.sourceFile.addStatements(""); // blank line
     }
 
-    private writeClass(context: SdkContext): void {
+    private writeClass(context: FileContext): void {
         const oauthConfig = this.authScheme.configuration;
 
         if (oauthConfig.type !== "clientCredentials") {
@@ -241,9 +242,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
         const responseProperties = oauthConfig.tokenEndpoint.responseProperties;
 
-        const clientIdProperty = this.getName(requestProperties.clientId.property.name);
-        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name);
-        const endpointName = this.getName(endpoint.name);
+        const clientIdProperty = this.getName(requestProperties.clientId.property.name, context);
+        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name, context);
+        const endpointName = this.getName(endpoint.name, context);
 
         const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
             property: responseProperties.accessToken,
@@ -594,7 +595,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private writeTokenOverrideClass(context: SdkContext): void {
+    private writeTokenOverrideClass(context: FileContext): void {
         const oauthConfig = this.authScheme.configuration;
 
         if (oauthConfig.type !== "clientCredentials") {
@@ -711,7 +712,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private getNeverThrowErrorsHandler(context: SdkContext): string {
+    private getNeverThrowErrorsHandler(context: FileContext): string {
         if (!this.neverThrowErrors) {
             return "";
         }
@@ -738,7 +739,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return `return (${clientIdCheck}) && (${clientSecretCheck});`;
     }
 
-    private generateClientIdSupplierStatements(clientIdEnvVar: string | undefined, context: SdkContext): string {
+    private generateClientIdSupplierStatements(clientIdEnvVar: string | undefined, context: FileContext): string {
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
         if (this.neverThrowErrors) {
@@ -800,7 +801,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private generateClientSecretSupplierStatements(
         clientSecretEnvVar: string | undefined,
-        context: SdkContext
+        context: FileContext
     ): string {
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
@@ -861,20 +862,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
     }
 
-    private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
+    private getName(name: FernIr.Name | FernIr.NameAndWireValue | string, context: FileContext): string {
         if (this.includeSerdeLayer) {
-            if ("name" in name) {
-                return name.name.camelCase.unsafeName;
-            }
-            return name.camelCase.unsafeName;
+            return context.case.camelUnsafe(name);
         }
-        if ("name" in name) {
-            return name.name.originalName;
-        }
-        return name.originalName;
+        return getOriginalName(name);
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
