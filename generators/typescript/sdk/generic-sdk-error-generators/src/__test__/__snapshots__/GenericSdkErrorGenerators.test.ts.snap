@@ -61,11 +61,12 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
     public readonly body?: unknown;
     public readonly rawResponse?: RawResponse;
 
-    constructor({ message, statusCode, body, rawResponse }: {
+    constructor({ message, statusCode, body, rawResponse, cause }: {
             message?: string;
             statusCode?: number;
             body?: unknown;
             rawResponse?: RawResponse;
+            cause?: unknown;
         }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
@@ -77,6 +78,9 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 
@@ -109,11 +113,12 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
     public readonly body?: unknown;
     public readonly rawResponse?: RawResponse;
 
-    constructor({ message, statusCode, body, rawResponse }: {
+    constructor({ message, statusCode, body, rawResponse, cause }: {
             message?: string;
             statusCode?: number;
             body?: unknown;
             rawResponse?: RawResponse;
+            cause?: unknown;
         }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
@@ -125,6 +130,9 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 
