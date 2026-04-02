@@ -43,7 +43,10 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     }
 
     private getDiscriminantField(): go.Field {
-        const discName = typeof this.unionDeclaration.discriminant === "string" ? this.unionDeclaration.discriminant : this.unionDeclaration.discriminant.name;
+        const discName =
+            typeof this.unionDeclaration.discriminant === "string"
+                ? this.unionDeclaration.discriminant
+                : this.unionDeclaration.discriminant.name;
         return go.field({
             name: this.context.getFieldName(discName),
             type: go.Type.string(),
@@ -56,7 +59,10 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
         switch (shape.propertiesType) {
             case "samePropertiesAsObject": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(shape.typeId);
-                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
+                const dvName =
+                    typeof unionType.discriminantValue === "string"
+                        ? unionType.discriminantValue
+                        : unionType.discriminantValue.name;
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: go.Type.reference(this.context.goTypeMapper.convertToTypeReference(typeDeclaration.name)),
@@ -64,14 +70,20 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
                 });
             }
             case "singleProperty": {
-                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
+                const dvName =
+                    typeof unionType.discriminantValue === "string"
+                        ? unionType.discriminantValue
+                        : unionType.discriminantValue.name;
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: this.context.goTypeMapper.convert({ reference: shape.type })
                 });
             }
             case "noProperties": {
-                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
+                const dvName =
+                    typeof unionType.discriminantValue === "string"
+                        ? unionType.discriminantValue
+                        : unionType.discriminantValue.name;
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: go.Type.any(),

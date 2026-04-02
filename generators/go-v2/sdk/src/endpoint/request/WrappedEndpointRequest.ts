@@ -123,9 +123,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 this.writeFileUploadField({
                     writer,
                     key: getWireValue(fileProperty.key),
-                    value: go.codeblock(
-                        this.getRequestPropertyReference({ fieldName: fileKeyName, isFile: true })
-                    ),
+                    value: go.codeblock(this.getRequestPropertyReference({ fieldName: fileKeyName, isFile: true })),
                     contentType: fileProperty.contentType,
                     format: "file"
                 });

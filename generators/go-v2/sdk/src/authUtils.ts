@@ -51,11 +51,17 @@ export function getRequestPropertyFieldName(
     requestProperty: FernIr.RequestProperty
 ): string {
     if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
-        const nameVal = typeof requestProperty.property.name === "string" ? requestProperty.property.name : requestProperty.property.name.name;
+        const nameVal =
+            typeof requestProperty.property.name === "string"
+                ? requestProperty.property.name
+                : requestProperty.property.name.name;
         return context.getFieldName(nameVal);
     }
     if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
-        const nameVal = typeof requestProperty.property.name === "string" ? requestProperty.property.name : requestProperty.property.name.name;
+        const nameVal =
+            typeof requestProperty.property.name === "string"
+                ? requestProperty.property.name
+                : requestProperty.property.name.name;
         return context.getFieldName(nameVal);
     }
     // Fallback to default names if we can't extract from IR

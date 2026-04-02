@@ -850,7 +850,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("}");
                     continue;
                 }
-                writer.writeNode(this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted }));
+                writer.writeNode(
+                    this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
+                );
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint });
             if (acceptHeader != null) {
@@ -1034,7 +1036,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (responseProperty == null) {
                     return go.codeblock("response");
                 }
-                const rpNameVal = typeof responseProperty.name === "string" ? responseProperty.name : responseProperty.name.name;
+                const rpNameVal =
+                    typeof responseProperty.name === "string" ? responseProperty.name : responseProperty.name.name;
                 return go.codeblock(`response.${this.context.getFieldName(rpNameVal)}`);
             }
             default:

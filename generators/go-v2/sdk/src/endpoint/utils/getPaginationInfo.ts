@@ -456,7 +456,10 @@ function getResponsePropertySetter({
                 getPropertyReference({
                     variableName: "response",
                     propertyPath: responsePropertyPath.map((item) => item.name),
-                    name: typeof responseProperty.property.name === "string" ? responseProperty.property.name : responseProperty.property.name.name,
+                    name:
+                        typeof responseProperty.property.name === "string"
+                            ? responseProperty.property.name
+                            : responseProperty.property.name.name,
                     dereference
                 })
             );
@@ -828,7 +831,10 @@ function getPagePropertyReference({
             return getPropertyReference({
                 variableName,
                 propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
-                name: typeof pagination.page.property.name === "string" ? pagination.page.property.name : pagination.page.property.name.name,
+                name:
+                    typeof pagination.page.property.name === "string"
+                        ? pagination.page.property.name
+                        : pagination.page.property.name.name,
                 withGetter
             });
         }
@@ -862,7 +868,7 @@ function getPropertyReference({
     dereference
 }: {
     variableName: string;
-    propertyPath: (FernIr.Name)[] | undefined;
+    propertyPath: FernIr.Name[] | undefined;
     name: FernIr.Name;
     withGetter?: boolean;
     dereference?: boolean;
@@ -881,7 +887,7 @@ function getPropertyNilCheckCondition({
     propertyPath
 }: {
     variableName: string;
-    propertyPath: (FernIr.Name)[];
+    propertyPath: FernIr.Name[];
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath

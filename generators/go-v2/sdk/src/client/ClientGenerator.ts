@@ -236,7 +236,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(typeof header.name === "string" ? header.name : header.name.name),
+                propertyReference: this.getOptionsPropertyReference(
+                    typeof header.name === "string" ? header.name : header.name.name
+                ),
                 env: header.env
             });
         }
@@ -316,7 +318,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(typeof scheme.name === "string" ? scheme.name : scheme.name.name),
+                propertyReference: this.getOptionsPropertyReference(
+                    typeof scheme.name === "string" ? scheme.name : scheme.name.name
+                ),
                 env: scheme.headerEnvVar
             });
         }
@@ -720,7 +724,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 let accessTokenField = "AccessToken";
                 const firstAuthHeader = authHeaders[0];
                 if (firstAuthHeader != null && firstAuthHeader.responseProperty != null) {
-                    const rpNameVal = typeof firstAuthHeader.responseProperty.property.name === "string" ? firstAuthHeader.responseProperty.property.name : firstAuthHeader.responseProperty.property.name.name;
+                    const rpNameVal =
+                        typeof firstAuthHeader.responseProperty.property.name === "string"
+                            ? firstAuthHeader.responseProperty.property.name
+                            : firstAuthHeader.responseProperty.property.name.name;
                     accessTokenField = this.context.getFieldName(rpNameVal);
                 }
 
@@ -744,7 +751,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Handle ExpiresIn with fallback to default
                 const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
-                    const epNameVal = typeof expiryProperty.property.name === "string" ? expiryProperty.property.name : expiryProperty.property.name.name;
+                    const epNameVal =
+                        typeof expiryProperty.property.name === "string"
+                            ? expiryProperty.property.name
+                            : expiryProperty.property.name.name;
                     const expiryField = this.context.getFieldName(epNameVal);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 

@@ -5,6 +5,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
@@ -253,5 +254,8 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
+    return (
+        service.displayName ??
+        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+    );
 }

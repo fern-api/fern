@@ -7,6 +7,7 @@ import { WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
