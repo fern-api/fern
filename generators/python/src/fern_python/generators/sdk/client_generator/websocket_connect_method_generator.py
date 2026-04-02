@@ -457,8 +457,11 @@ class WebsocketConnectMethodGenerator:
             return None
 
         # Consolidate the named parameters and path parameters in a single list.
+        # Filter out path params with client_default since they're already in named_parameters
+        # (added by _get_overridden_parameter_types)
+        non_default_path_params = [p for p in path_parameters if p.client_default is None]
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(path_parameters)
+        parameters = self._named_parameters_from_path_parameters(non_default_path_params)
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
@@ -782,7 +785,7 @@ class WebsocketConnectMethodGenerator:
         if client_default is None:
             return None
         return client_default.visit(
-            string=lambda value: AST.Expression(f'"{value}"'),
+            string=lambda value: AST.Expression(repr(value)),
             boolean=lambda value: AST.Expression(f"{value}"),
         )
 

@@ -1641,7 +1641,7 @@ class EndpointFunctionGenerator:
         if client_default is None:
             return None
         return client_default.visit(
-            string=lambda value: AST.Expression(f'"{value}"'),
+            string=lambda value: AST.Expression(repr(value)),
             boolean=lambda value: AST.Expression(f"{value}"),
         )
 
