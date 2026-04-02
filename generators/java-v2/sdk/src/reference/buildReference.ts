@@ -1,10 +1,12 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -105,12 +107,12 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.camelSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
 function getEndpointMethodName({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
-    return endpoint.name.camelCase.safeName;
+    return caseConverter.camelSafe(endpoint.name);
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -123,7 +125,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(pathParam.name.camelCase.safeName);
+        parameters.push(caseConverter.camelSafe(pathParam.name));
     });
 
     if (endpoint.requestBody != null) {
@@ -196,7 +198,7 @@ function getEndpointParameters({
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.camelCase.safeName,
+            name: caseConverter.camelSafe(pathParam.name),
             type: getJavaTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -205,7 +207,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: queryParam.name.name.camelCase.safeName,
+            name: caseConverter.camelSafe(queryParam.name.name),
             type: getJavaTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -214,7 +216,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: header.name.name.camelCase.safeName,
+            name: caseConverter.camelSafe(header.name.name),
             type: getJavaTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -224,7 +226,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: property.name.name.camelCase.safeName,
+                name: caseConverter.camelSafe(property.name.name),
                 type: getJavaTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
@@ -290,5 +292,5 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
 }

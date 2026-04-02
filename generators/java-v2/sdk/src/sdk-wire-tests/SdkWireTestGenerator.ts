@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
@@ -12,6 +12,8 @@ import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
  */
@@ -189,7 +191,7 @@ export class SdkWireTestGenerator {
                         // Use the same fallback strategy as IR service resolution
                         const dynamicServiceName = (
                             dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName ||
-                            dynamicEndpoint.declaration.name.originalName ||
+                            getOriginalName(dynamicEndpoint.declaration.name) ||
                             "Service"
                         ).toLowerCase();
 
@@ -219,7 +221,7 @@ export class SdkWireTestGenerator {
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -245,7 +247,7 @@ export class SdkWireTestGenerator {
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -270,7 +272,7 @@ export class SdkWireTestGenerator {
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from default snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -293,7 +295,7 @@ export class SdkWireTestGenerator {
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Default snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -358,7 +360,7 @@ export class SdkWireTestGenerator {
         testExample: WireTestExample
     ): string {
         const serviceNameLower = serviceName.toLowerCase();
-        const methodName = endpoint.name.camelCase.safeName;
+        const methodName = caseConverter.camelSafe(endpoint.name);
 
         let pathParamsStr = "";
         if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
@@ -386,7 +388,7 @@ export class SdkWireTestGenerator {
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => part.pascalCase.safeName).join("") || "Service";
+                service.name?.fernFilepath?.allParts?.map((part) => caseConverter.pascalSafe(part)).join("") || "Service";
 
             endpointsByService.set(serviceName, service.endpoints);
         }
