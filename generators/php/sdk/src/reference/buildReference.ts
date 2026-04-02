@@ -217,7 +217,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: `$${caseConverter.camelSafe(queryParam.name.name)}`,
+            name: `$${caseConverter.camelSafe(queryParam.name)}`,
             type: getPhpTypeStringFromTypeReference({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -226,7 +226,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: `$${caseConverter.camelSafe(header.name.name)}`,
+            name: `$${caseConverter.camelSafe(header.name)}`,
             type: getPhpTypeStringFromTypeReference({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -236,7 +236,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: `$${caseConverter.camelSafe(property.name.name)}`,
+                name: `$${caseConverter.camelSafe(property.name)}`,
                 type: getPhpTypeStringFromTypeReference({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true

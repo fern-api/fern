@@ -303,7 +303,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
-                camelName: caseConverter.camelUnsafe(query.name.name),
+                camelName: caseConverter.camelUnsafe(query.name),
                 isOptional: this.context.isOptional(query.valueType),
                 literal: this.context.maybeLiteral(query.valueType)
             });
@@ -312,7 +312,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
-                camelName: caseConverter.camelUnsafe(header.name.name),
+                camelName: caseConverter.camelUnsafe(header.name),
                 isOptional: this.context.isOptional(header.valueType),
                 literal: this.context.maybeLiteral(header.valueType)
             });
@@ -326,7 +326,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                        camelName: caseConverter.camelUnsafe(property.name.name),
+                        camelName: caseConverter.camelUnsafe(property.name),
                         isOptional: this.context.isOptional(property.valueType),
                         literal: this.context.maybeLiteral(property.valueType)
                     });
@@ -336,7 +336,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 for (const property of fileUpload.properties) {
                     if (property.type === "bodyProperty") {
                         properties.push({
-                            camelName: caseConverter.camelUnsafe(property.name.name),
+                            camelName: caseConverter.camelUnsafe(property.name),
                             isOptional: this.context.isOptional(property.valueType),
                             literal: this.context.maybeLiteral(property.valueType)
                         });
@@ -463,6 +463,6 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `->${caseConverter.camelSafe(property.name.name)}`;
+        return `->${caseConverter.camelSafe(property.name)}`;
     }
 }

@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -27,7 +27,7 @@ export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchem
             backing: "string"
         });
         this.enumDeclaration.values.forEach((member) =>
-            enum_.addMember({ name: caseConverter.pascalSafe(member.name.name), value: member.name.wireValue })
+            enum_.addMember({ name: caseConverter.pascalSafe(member.name), value: getWireValue(member.name) })
         );
         return new PhpFile({
             clazz: enum_,

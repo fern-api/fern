@@ -2,7 +2,8 @@ import {
     AbstractGeneratorContext,
     CaseConverter,
     FernGeneratorExec,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    NameInput
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -135,27 +136,27 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreTestsNamespace()}\\Types`;
     }
 
-    public getParameterName(name: FernIr.Name): string {
+    public getParameterName(name: NameInput): string {
         return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
     }
 
-    public getFieldName(name: FernIr.Name): string {
+    public getFieldName(name: NameInput): string {
         return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
     }
 
-    public getPropertyName(name: FernIr.Name): string {
+    public getPropertyName(name: NameInput): string {
         return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
     }
 
-    public getVariableName(name: FernIr.Name): string {
+    public getVariableName(name: NameInput): string {
         return "$" + this.getPropertyName(name);
     }
 
-    public getPropertyGetterName(name: FernIr.Name): string {
+    public getPropertyGetterName(name: NameInput): string {
         return `get${caseConverter.pascalUnsafe(name)}`;
     }
 
-    public getPropertySetterName(name: FernIr.Name): string {
+    public getPropertySetterName(name: NameInput): string {
         return `set${caseConverter.pascalUnsafe(name)}`;
     }
 

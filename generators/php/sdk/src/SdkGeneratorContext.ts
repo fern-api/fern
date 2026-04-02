@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -481,7 +481,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return undefined;
     }
 
-    public getTypeGetter(propertyName: FernIr.Name): php.AstNode {
+    public getTypeGetter(propertyName: NameInput): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertyGetterName(propertyName)}()`);
@@ -491,7 +491,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getTypeSetter(propertyName: FernIr.Name, valueVarToSet: php.AstNode): php.AstNode {
+    public getTypeSetter(propertyName: NameInput, valueVarToSet: php.AstNode): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertySetterName(propertyName)}`);
@@ -510,8 +510,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: FernIr.Name;
-        propertyName: FernIr.Name;
+        requestParameterName: NameInput;
+        propertyName: NameInput;
     }): string {
         const requestParameter = this.getRequestParameterVar({ requestParameterName });
         if (this.shouldGenerateGetterMethods()) {
@@ -520,7 +520,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return `${requestParameter}->${this.getPropertyName(propertyName)}`;
     }
 
-    public getRequestParameterVar({ requestParameterName }: { requestParameterName: FernIr.Name }): string {
+    public getRequestParameterVar({ requestParameterName }: { requestParameterName: NameInput }): string {
         return `$${this.getParameterName(requestParameterName)}`;
     }
 

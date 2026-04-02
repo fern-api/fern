@@ -298,7 +298,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getRequestPropertyName(requestProperty: FernIr.RequestProperty): string {
-        return caseConverter.camelUnsafe(requestProperty.property.name.name);
+        return caseConverter.camelUnsafe(requestProperty.property.name);
     }
 
     private getExpiresAtMethod(): php.Method {
@@ -369,6 +369,6 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `->${caseConverter.camelSafe(property.name.name)}`;
+        return `->${caseConverter.camelSafe(property.name)}`;
     }
 }

@@ -543,7 +543,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): FernIr.Name[] {
-        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name.name];
+        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name];
     }
 
     private nullableGet(
@@ -559,7 +559,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
             }
             writer.write("?");
-            writer.writeNode(this.context.getTypeGetter(property.name.name));
+            writer.writeNode(this.context.getTypeGetter(property.name));
         });
     }
 

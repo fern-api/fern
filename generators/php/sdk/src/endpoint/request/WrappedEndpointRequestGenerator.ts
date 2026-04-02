@@ -80,9 +80,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     : undefined;
             this.addFieldWithMethods({
                 clazz,
-                name: query.name.name,
+                name: query.name,
                 field: php.field({
-                    name: this.context.getPropertyName(query.name.name),
+                    name: this.context.getPropertyName(query.name),
                     type: this.getQueryParameterType(query),
                     access: this.context.getPropertyAccess(),
                     docs: query.docs,
@@ -97,9 +97,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             const initializer = defaultExtractor?.extractDefaultCodeBlock(header.valueType);
             this.addFieldWithMethods({
                 clazz,
-                name: header.name.name,
+                name: header.name,
                 field: php.field({
-                    name: this.context.getPropertyName(header.name.name),
+                    name: this.context.getPropertyName(header.name),
                     type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
                     access: this.context.getPropertyAccess(),
                     docs: header.docs,
@@ -129,7 +129,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 for (const property of request.properties) {
                     this.addFieldWithMethods({
                         clazz,
-                        name: property.name.name,
+                        name: property.name,
                         field: this.inlinePropertyToField({ property }),
                         includeGetters,
                         includeSetters
@@ -158,7 +158,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                         case "bodyProperty": {
                             this.addFieldWithMethods({
                                 clazz,
-                                name: property.name.name,
+                                name: property.name,
                                 field: this.inlinePropertyToField({ property }),
                                 includeGetters,
                                 includeSetters
@@ -215,7 +215,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,
-            name: this.context.getPropertyName(property.name.name),
+            name: this.context.getPropertyName(property.name),
             access: this.context.getPropertyAccess(),
             docs: property.docs,
             attributes: this.context.phpAttributeMapper.convert({

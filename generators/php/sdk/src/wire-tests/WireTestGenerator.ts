@@ -494,7 +494,7 @@ export class WireTestGenerator {
                     authParams.push("password: 'test-password'");
                 },
                 header: (header) => {
-                    const paramName = caseConverter.camelSafe(header.name.name);
+                    const paramName = caseConverter.camelSafe(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 },
                 oauth: () => {
@@ -544,7 +544,7 @@ export class WireTestGenerator {
                 for (const property of requestBody.properties) {
                     const literal = this.context.maybeLiteral(property.valueType);
                     if (literal == null) {
-                        const paramName = this.context.getParameterName(property.name.name);
+                        const paramName = this.context.getParameterName(property.name);
                         authParams.push(`${paramName}: 'test-${paramName}'`);
                     }
                 }
@@ -554,7 +554,7 @@ export class WireTestGenerator {
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal == null) {
-                    const paramName = this.context.getParameterName(header.name.name);
+                    const paramName = this.context.getParameterName(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 }
             }
