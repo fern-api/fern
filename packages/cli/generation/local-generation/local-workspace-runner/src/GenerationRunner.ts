@@ -26,6 +26,7 @@ export declare namespace GenerationRunner {
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
         skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }
 }
 
@@ -46,7 +47,8 @@ export class GenerationRunner {
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
         inspect,
-        skipFernignore
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -71,7 +73,8 @@ export class GenerationRunner {
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
                                 inspect,
-                                skipFernignore
+                                skipFernignore,
+                                skipAutogenerationIfManualExamplesExist
                             });
 
                             interactiveTaskContext.logger.info(
@@ -123,7 +126,8 @@ export class GenerationRunner {
         outputVersionOverride,
         absolutePathToFernConfig,
         inspect,
-        skipFernignore
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -135,6 +139,7 @@ export class GenerationRunner {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
         skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -159,7 +164,8 @@ export class GenerationRunner {
             smartCasing: generatorInvocation.smartCasing,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
-                disabled: generatorInvocation.disableExamples
+                disabled: generatorInvocation.disableExamples,
+                skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
             },
             readme: generatorInvocation.readme,
             version: outputVersionOverride,

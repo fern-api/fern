@@ -52,4 +52,4 @@ jobs:
           cd packages/snippets/core
           pnpm turbo run dist --filter=${{ env.PACKAGE_NAME }} -- ${{ inputs.version }}
           cd dist
-          npx -y npm@latest publish --access public --tag latest
+          npx -y npm@11 publish --access public --tag latest
