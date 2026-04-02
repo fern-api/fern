@@ -199,6 +199,9 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        maxRetries: 5
+      outputFolder: max-retries-five
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
