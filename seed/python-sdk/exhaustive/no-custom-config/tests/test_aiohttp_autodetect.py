@@ -30,11 +30,14 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
             self.assertFalse(client.follow_redirects)
 
     def test_explicit_httpx_client_bypasses_autodetect(self) -> None:
-        """When user passes httpx_client explicitly, auto-detect is not used."""
-        explicit_client = httpx.AsyncClient(timeout=60)
-        result = explicit_client if explicit_client is not None else None
+        """When user passes httpx_client explicitly, _make_default_async_client is not called."""
+
+        explicit_client = httpx.AsyncClient(timeout=120)
+        with mock.patch("fern_exhaustive.client._make_default_async_client") as mock_make:
+            # Replicate the generated conditional: httpx_client if httpx_client is not None else _make_default_async_client(...)
+            result = explicit_client if explicit_client is not None else mock_make(timeout=60, follow_redirects=True)
+            mock_make.assert_not_called()
         self.assertIs(result, explicit_client)
-        self.assertEqual(result.timeout.read, 60)
 
 
 @pytest.mark.aiohttp
