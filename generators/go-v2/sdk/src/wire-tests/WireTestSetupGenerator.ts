@@ -26,7 +26,7 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir);
+        return new WireMock().convertToWireMock(ir as any);
     }
 
     private generateWireMockConfigFile(): void {

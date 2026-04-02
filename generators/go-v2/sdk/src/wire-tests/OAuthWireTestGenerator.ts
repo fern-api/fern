@@ -199,7 +199,7 @@ export class OAuthWireTestGenerator {
 
         if (requestWrapperName != null) {
             // Use the context helper to get the proper type reference for wrapped requests
-            const typeRef = this.context.getRequestWrapperTypeReference(serviceInfo.serviceId, requestWrapperName);
+            const typeRef = this.context.getRequestWrapperTypeReference(serviceInfo.serviceId, requestWrapperName as FernIr.Name);
             return {
                 name: typeRef.name,
                 // importPath should always be defined for wrapped requests, but fall back to root if not

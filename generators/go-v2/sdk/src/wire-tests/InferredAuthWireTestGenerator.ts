@@ -194,7 +194,7 @@ export class InferredAuthWireTestGenerator {
         if (requestName == null) {
             return {};
         }
-        const typeRef = this.context.getRequestWrapperTypeReference(serviceId, requestName);
+        const typeRef = this.context.getRequestWrapperTypeReference(serviceId, requestName as FernIr.Name);
         return {
             requestTypeName: typeRef.name,
             requestTypeImportPath: typeRef.importPath ?? this.context.getRootImportPath()

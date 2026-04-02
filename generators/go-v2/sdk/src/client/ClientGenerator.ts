@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -235,7 +236,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(header.name.name),
+                propertyReference: this.getOptionsPropertyReference(typeof header.name === "string" ? header.name : header.name.name),
                 env: header.env
             });
         }
@@ -276,14 +277,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.usernameEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.username),
+                propertyReference: this.getOptionsPropertyReference(typeof scheme.username === "string" ? scheme.username : scheme.username),
                 env: scheme.usernameEnvVar
             });
         }
         if (scheme.passwordEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.password),
+                propertyReference: this.getOptionsPropertyReference(typeof scheme.password === "string" ? scheme.password : scheme.password),
                 env: scheme.passwordEnvVar
             });
         }
@@ -299,7 +300,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.tokenEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.token),
+                propertyReference: this.getOptionsPropertyReference(typeof scheme.token === "string" ? scheme.token : scheme.token),
                 env: scheme.tokenEnvVar
             });
         }
@@ -315,7 +316,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.name.name),
+                propertyReference: this.getOptionsPropertyReference(typeof scheme.name === "string" ? scheme.name : scheme.name.name),
                 env: scheme.headerEnvVar
             });
         }
@@ -719,7 +720,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 let accessTokenField = "AccessToken";
                 const firstAuthHeader = authHeaders[0];
                 if (firstAuthHeader != null && firstAuthHeader.responseProperty != null) {
-                    accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name.name);
+                    const rpNameVal = typeof firstAuthHeader.responseProperty.property.name === "string" ? firstAuthHeader.responseProperty.property.name : firstAuthHeader.responseProperty.property.name.name;
+                    accessTokenField = this.context.getFieldName(rpNameVal);
                 }
 
                 // Check for empty access token
@@ -742,7 +744,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Handle ExpiresIn with fallback to default
                 const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
-                    const expiryField = this.context.getFieldName(expiryProperty.property.name.name);
+                    const epNameVal = typeof expiryProperty.property.name === "string" ? expiryProperty.property.name : expiryProperty.property.name.name;
+                    const expiryField = this.context.getFieldName(epNameVal);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 
                     w.writeLine("expiresIn := core.DefaultExpirySeconds");
@@ -816,7 +819,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const headerEnvVars = new Map<string, string>();
         for (const header of tokenEndpoint.headers) {
             if (header.env != null) {
-                headerEnvVars.set(this.context.getFieldName(header.name.name), header.env);
+                const hNameVal = typeof header.name === "string" ? header.name : header.name.name;
+                headerEnvVars.set(this.context.getFieldName(hNameVal), header.env);
             }
         }
 
@@ -835,7 +839,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         tokenEndpoint: FernIr.HttpEndpoint
     ): go.TypeReference {
         if (tokenEndpoint.sdkRequest?.shape.type === "wrapper") {
-            return this.context.getRequestWrapperTypeReference(serviceId, tokenEndpoint.sdkRequest.shape.wrapperName);
+            return this.context.getRequestWrapperTypeReference(serviceId, tokenEndpoint.sdkRequest.shape.wrapperName as FernIr.Name);
         }
         if (
             tokenEndpoint.sdkRequest?.shape.type === "justRequestBody" &&
@@ -852,7 +856,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (tokenEndpoint.sdkRequest?.requestParameterName != null) {
             return this.context.getRequestWrapperTypeReference(
                 serviceId,
-                tokenEndpoint.sdkRequest.requestParameterName
+                tokenEndpoint.sdkRequest.requestParameterName as FernIr.Name
             );
         }
         return go.typeReference({
@@ -868,7 +872,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
     ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
-        return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
+        return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types) as Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }>;
     }
 
     private writeEnvConditional({
@@ -892,7 +896,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
+    private getOptionsPropertyReference(name: FernIr.Name | FernIr.NameOrString): go.Selector {
         return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
     }
 

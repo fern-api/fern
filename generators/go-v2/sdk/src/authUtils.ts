@@ -1,12 +1,15 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 /**
  * Gets the client accessor path for a service (e.g., "Auth" or "Nested.Api").
  * Builds the dot-separated path from the service's fernFilepath parts using PascalCase.
  */
 export function getClientAccessPath(service: FernIr.HttpService): string {
-    const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+    const parts = service.name.fernFilepath.allParts.map((part) => caseConverter.pascalUnsafe(part));
     return parts.join(".");
 }
 
@@ -48,10 +51,12 @@ export function getRequestPropertyFieldName(
     requestProperty: FernIr.RequestProperty
 ): string {
     if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
-        return context.getFieldName(requestProperty.property.name.name);
+        const nameVal = typeof requestProperty.property.name === "string" ? requestProperty.property.name : requestProperty.property.name.name;
+        return context.getFieldName(nameVal);
     }
     if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
-        return context.getFieldName(requestProperty.property.name.name);
+        const nameVal = typeof requestProperty.property.name === "string" ? requestProperty.property.name : requestProperty.property.name.name;
+        return context.getFieldName(nameVal);
     }
     // Fallback to default names if we can't extract from IR
     return "ClientId";
@@ -111,7 +116,7 @@ export function getEndpointPath(endpoint: FernIr.HttpEndpoint): string {
 export function resolveTokenEndpointBodyProperties(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>
-): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+): Array<{ name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
     if (tokenEndpoint.requestBody == null) {
         return [];
     }
@@ -137,7 +142,7 @@ export function resolveTokenEndpointBodyProperties(
 export function getInferredAuthCredentialParams(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>,
-    context: { getFieldName(name: FernIr.Name): string }
+    context: { getFieldName(name: FernIr.Name | FernIr.NameOrString): string }
 ): Array<{ fieldName: string; isOptional: boolean }> {
     const params: Array<{ fieldName: string; isOptional: boolean }> = [];
 
@@ -146,8 +151,9 @@ export function getInferredAuthCredentialParams(
         if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
             continue;
         }
+        const nameVal = typeof header.name === "string" ? header.name : header.name.name;
         params.push({
-            fieldName: context.getFieldName(header.name.name),
+            fieldName: context.getFieldName(nameVal),
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
         });
     }
@@ -163,8 +169,9 @@ export function getInferredAuthCredentialParams(
         if (isOptional) {
             continue;
         }
+        const propNameVal = typeof prop.name === "string" ? prop.name : prop.name.name;
         params.push({
-            fieldName: context.getFieldName(prop.name.name),
+            fieldName: context.getFieldName(propNameVal),
             isOptional: false
         });
     }

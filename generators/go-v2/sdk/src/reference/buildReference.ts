@@ -1,8 +1,10 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
@@ -99,12 +101,12 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
 function getEndpointMethodName({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
-    return endpoint.name.pascalCase.safeName;
+    return caseConverter.pascalSafe(endpoint.name);
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -117,7 +119,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(pathParam.name.pascalCase.safeName);
+        parameters.push(caseConverter.pascalSafe(pathParam.name));
     });
 
     if (endpoint.requestBody != null) {
@@ -191,7 +193,7 @@ function getEndpointParameters({
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.camelCase.safeName,
+            name: caseConverter.camelSafe(pathParam.name),
             type: getGoTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -199,8 +201,9 @@ function getEndpointParameters({
     });
 
     endpoint.queryParameters.forEach((queryParam) => {
+        const qpNameVal = typeof queryParam.name === "string" ? queryParam.name : queryParam.name.name;
         parameters.push({
-            name: queryParam.name.name.camelCase.safeName,
+            name: caseConverter.camelSafe(qpNameVal),
             type: getGoTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -208,8 +211,9 @@ function getEndpointParameters({
     });
 
     endpoint.headers.forEach((header) => {
+        const hNameVal = typeof header.name === "string" ? header.name : header.name.name;
         parameters.push({
-            name: header.name.name.camelCase.safeName,
+            name: caseConverter.camelSafe(hNameVal),
             type: getGoTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -218,8 +222,9 @@ function getEndpointParameters({
 
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
+            const propNameVal = typeof property.name === "string" ? property.name : property.name.name;
             parameters.push({
-                name: property.name.name.camelCase.safeName,
+                name: caseConverter.camelSafe(propNameVal),
                 type: getGoTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
@@ -248,5 +253,5 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
 }

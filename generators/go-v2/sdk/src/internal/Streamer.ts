@@ -275,6 +275,7 @@ export class Streamer {
         ) {
             return undefined;
         }
-        return go.TypeInstantiation.string(union.discriminant.wireValue);
+        const discWireValue = typeof union.discriminant === "string" ? union.discriminant : union.discriminant.wireValue;
+        return go.TypeInstantiation.string(discWireValue);
     }
 }

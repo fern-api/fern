@@ -134,6 +134,7 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
             case "DATE":
                 return "Date";
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return "DateTime";
             case "BASE_64":
                 return "Base64";

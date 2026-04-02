@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -139,11 +140,11 @@ function getLinkTypeFromResponse({
     const allProperties = [...(typeDeclaration.shape.extendedProperties ?? []), ...typeDeclaration.shape.properties];
 
     // Find the "links" property (case-insensitive, try multiple variations)
-    const propertyNames = allProperties.map((p) => p.name.name.originalName);
+    const propertyNames = allProperties.map((p) => getOriginalName(typeof p.name === "string" ? p.name : p.name.name));
     const linksProperty =
-        allProperties.find((prop) => prop.name.name.originalName.toLowerCase() === "links") ??
-        allProperties.find((prop) => prop.name.name.originalName.toLowerCase() === "link") ??
-        allProperties.find((prop) => prop.name.name.originalName.toLowerCase() === "_links");
+        allProperties.find((prop) => getOriginalName(typeof prop.name === "string" ? prop.name : prop.name.name).toLowerCase() === "links") ??
+        allProperties.find((prop) => getOriginalName(typeof prop.name === "string" ? prop.name : prop.name.name).toLowerCase() === "link") ??
+        allProperties.find((prop) => getOriginalName(typeof prop.name === "string" ? prop.name : prop.name.name).toLowerCase() === "_links");
 
     if (linksProperty == null) {
         const availableProperties = propertyNames.join(", ");

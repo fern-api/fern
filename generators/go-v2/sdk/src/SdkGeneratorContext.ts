@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
@@ -15,6 +15,8 @@ import { Streamer } from "./internal/Streamer.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly caller: Caller;
@@ -128,12 +130,12 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "raw_client.go";
     }
 
-    public getMethodName(name: FernIr.Name): string {
-        return name.pascalCase.unsafeName;
+    public getMethodName(name: FernIr.Name | FernIr.NameOrString): string {
+        return caseConverter.pascalUnsafe(name);
     }
 
-    public getReceiverName(name: FernIr.Name): string {
-        return name.camelCase.unsafeName.charAt(0);
+    public getReceiverName(name: FernIr.Name | FernIr.NameOrString): string {
+        return caseConverter.camelUnsafe(name).charAt(0);
     }
 
     public getRootClientReceiverName(): string {
@@ -201,7 +203,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
         for (const baseUrl of environments.baseUrls) {
             if (baseUrl.id === baseUrlId) {
-                return baseUrl.name.pascalCase.unsafeName;
+                return caseConverter.pascalUnsafe(baseUrl.name);
             }
         }
         return undefined;
@@ -592,6 +594,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             case "offset":
                 return pagination.page.property.type === "body";
             case "custom":
+            case "uri":
+            case "path":
                 return false;
             default:
                 assertNever(pagination);
@@ -754,11 +758,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage != null && subpackage.subpackages.length > 0 && subpackage.fernFilepath.file != null) {
             // This represents a nested root package, so we need to deposit
             // the client in a 'client' subpackage (e.g. user/client).
-            parts.push(...fernFilepath.allParts.map((part) => part.camelCase.safeName.toLowerCase()));
+            parts.push(...fernFilepath.allParts.map((part) => caseConverter.camelSafe(part).toLowerCase()));
             parts.push("client");
         } else {
-            parts.push(...fernFilepath.packagePath.map((part) => part.camelCase.safeName.toLowerCase()));
-            parts.push(fernFilepath.file?.camelCase.safeName.toLowerCase() ?? "client");
+            parts.push(...fernFilepath.packagePath.map((part) => caseConverter.camelSafe(part).toLowerCase()));
+            parts.push(fernFilepath.file != null ? caseConverter.camelSafe(fernFilepath.file).toLowerCase() : "client");
         }
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
@@ -849,7 +853,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
                     throw new Error(
-                        `Unable to parse streaming response for endpoint ${httpEndpoint.name.camelCase.safeName}`
+                        `Unable to parse streaming response for endpoint ${caseConverter.camelSafe(httpEndpoint.name)}`
                     );
                 }
                 return this.getStreamPayload(streamingResponse);

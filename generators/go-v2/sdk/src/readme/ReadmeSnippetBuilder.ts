@@ -1,8 +1,10 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
+
+const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -395,14 +397,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => caseConverter.pascalUnsafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
+        return caseConverter.pascalUnsafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
@@ -434,7 +436,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageName}.Environments.${caseConverter.pascalUnsafe(defaultEnvironment.name)}`;
     }
 
     private getRootPackageClientName(): string {

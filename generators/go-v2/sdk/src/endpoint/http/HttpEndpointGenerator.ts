@@ -1,6 +1,9 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
@@ -626,7 +629,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
             const pathParameterReferences: go.AstNode[] = [];
             for (const pathParameter of endpoint.allPathParameters) {
-                const pathParameterReference = signature.pathParameterReferences[pathParameter.name.originalName];
+                const pathParameterReference = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
                 if (pathParameterReference == null) {
                     continue;
                 }
@@ -695,6 +698,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     float: () => undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     bigInteger: () => undefined,
@@ -732,7 +736,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue;
                 }
                 defaults.push({
-                    key: go.TypeInstantiation.string(queryParameter.name.wireValue),
+                    key: go.TypeInstantiation.string(getWireValue(queryParameter.name)),
                     value: defaultValue
                 });
             }
@@ -769,7 +773,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (literal != null) {
                     writer.writeNode(
                         this.addQueryValue({
-                            wireValue: queryParameter.name.wireValue,
+                            wireValue: getWireValue(queryParameter.name),
                             value: this.context.getLiteralAsString(literal)
                         })
                     );
@@ -823,13 +827,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (literal != null) {
                     writer.writeNode(
                         this.addHeaderValue({
-                            wireValue: header.name.wireValue,
+                            wireValue: getWireValue(header.name),
                             value: go.codeblock(this.context.getLiteralAsString(literal))
                         })
                     );
                     continue;
                 }
-                const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`;
+                const headerNameVal = typeof header.name === "string" ? header.name : header.name.name;
+                const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(headerNameVal)}`;
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)
@@ -839,14 +844,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine(`if ${headerField} != nil {`);
                     writer.indent();
                     writer.writeNode(
-                        this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
                     );
                     writer.newLine();
                     writer.dedent();
                     writer.writeLine("}");
                     continue;
                 }
-                writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }));
+                writer.writeNode(this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted }));
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint });
             if (acceptHeader != null) {
@@ -1030,7 +1035,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (responseProperty == null) {
                     return go.codeblock("response");
                 }
-                return go.codeblock(`response.${this.context.getFieldName(responseProperty.name.name)}`);
+                const rpNameVal = typeof responseProperty.name === "string" ? responseProperty.name : responseProperty.name.name;
+                return go.codeblock(`response.${this.context.getFieldName(rpNameVal)}`);
             }
             default:
                 assertNever(jsonResponse);

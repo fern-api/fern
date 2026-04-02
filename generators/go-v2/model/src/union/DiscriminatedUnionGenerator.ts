@@ -27,9 +27,10 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     private getFields(): go.Field[] {
         const fields: go.Field[] = [this.getDiscriminantField()];
         for (const property of this.getAllObjectProperties()) {
+            const nameVal = typeof property.name === "string" ? property.name : property.name.name;
             fields.push(
                 go.field({
-                    name: this.context.getFieldName(property.name.name),
+                    name: this.context.getFieldName(nameVal),
                     type: this.context.goTypeMapper.convert({ reference: property.valueType }),
                     docs: property.docs
                 })
@@ -42,8 +43,9 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     }
 
     private getDiscriminantField(): go.Field {
+        const discName = typeof this.unionDeclaration.discriminant === "string" ? this.unionDeclaration.discriminant : this.unionDeclaration.discriminant.name;
         return go.field({
-            name: this.context.getFieldName(this.unionDeclaration.discriminant.name),
+            name: this.context.getFieldName(discName),
             type: go.Type.string(),
             docs: this.typeDeclaration.docs
         });
@@ -54,23 +56,28 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
         switch (shape.propertiesType) {
             case "samePropertiesAsObject": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(shape.typeId);
+                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: go.Type.reference(this.context.goTypeMapper.convertToTypeReference(typeDeclaration.name)),
                     docs: typeDeclaration.docs
                 });
             }
-            case "singleProperty":
+            case "singleProperty": {
+                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: this.context.goTypeMapper.convert({ reference: shape.type })
                 });
-            case "noProperties":
+            }
+            case "noProperties": {
+                const dvName = typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.name;
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: go.Type.any(),
                     docs: unionType.docs
                 });
+            }
             default:
                 assertNever(shape);
         }

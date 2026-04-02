@@ -25,7 +25,7 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
+            ir: convertIr(dynamicIr) as any,
             config: this.context.config
         });
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -768,7 +768,8 @@ export class WireTestGenerator {
         for (const qp of endpoint.queryParameters) {
             const primitive = this.context.maybePrimitive(qp.valueType);
             if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
-                datetimeQueryParams.add(qp.name.wireValue);
+                const qpWireValue = typeof qp.name === "string" ? qp.name : qp.name.wireValue;
+                datetimeQueryParams.add(qpWireValue);
             }
         }
 
@@ -930,7 +931,10 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => {
+            if (typeof part === "string") return part;
+            return part.snakeCase.safeName;
+        }).join("_") || "root";
     }
 
     /**
