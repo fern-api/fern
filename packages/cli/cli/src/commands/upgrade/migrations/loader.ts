@@ -477,8 +477,8 @@ export async function loadAndRunMigrations(params: {
     if (!isValidGeneratorConfig(config)) {
         throw new Error(
             `Invalid generator configuration for ${generatorName}.\n\n` +
-                `The generator configuration must be an object with a 'name' property, but the current configuration ` +
-                `does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
+                `The generator configuration must be an object with either a 'name' property or an 'image' property, ` +
+                `but the current configuration does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
                 `Please check your generators.yml file and ensure the generator is properly configured.`
         );
     }
