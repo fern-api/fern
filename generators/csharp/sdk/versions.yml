@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.4
+  changelogEntry:
+    - summary: |
+        Fix C# compilation errors (CS0118) in generated subpackage clients
+        where a type name collides with a namespace segment. Type references
+        are now fully qualified to avoid ambiguity.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 65
+
 - version: 2.55.3
   changelogEntry:
     - summary: |
