@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
+import { cp, readdir, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -456,12 +456,14 @@ export class PersistedTypescriptProject {
         logger,
         publishInfo,
         dryRun,
-        shouldTolerateRepublish
+        shouldTolerateRepublish,
+        version
     }: {
         logger: Logger;
         publishInfo: PublishInfo;
         dryRun: boolean;
         shouldTolerateRepublish: boolean;
+        version?: string;
     }): Promise<void> {
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
@@ -477,11 +479,8 @@ export class PersistedTypescriptProject {
 
         const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
 
-        // npm requires --tag when publishing prerelease versions (e.g. 0.0.1-preview.123)
-        const packageJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
-        const packageJsonContents = JSON.parse(await readFile(packageJsonPath, "utf-8"));
-        const packageVersion: string = packageJsonContents.version ?? "";
-        if (packageVersion.includes("-")) {
+        // npm 10.9+ requires --tag when publishing prerelease versions (e.g. 0.0.1-preview.123)
+        if (version != null && version.includes("-")) {
             publishCommand.push("--tag", "preview");
         }
 
