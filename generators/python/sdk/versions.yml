@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 5.2.1
+- version: 5.2.2
   changelogEntry:
     - summary: |
         Support optional username and password in basic auth when configured in IR.
@@ -9,6 +9,16 @@
         (e.g., username-only encodes `username:`, password-only encodes `:password`).
         When neither is provided, the Authorization header is omitted entirely.
       type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 5.2.1
+  changelogEntry:
+    - summary: |
+        Fix an issue where a user-provided `httpx_client` was ignored when instantiating the OAuth token
+        provider's internal HTTP client, causing custom transports, SSL certificates, and proxies to not
+        apply to token-refresh requests.
+      type: fix
   createdAt: "2026-03-31"
   irVersion: 65
 

@@ -7,6 +7,20 @@
   createdAt: "2026-03-31"
   irVersion: 66
 
+- version: 3.60.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generator emitting pagination assertions (hasNextPage, getNextPage)
+        for endpoints whose results property type is a named alias to a list rather than
+        a direct list type. The client generator does not produce a Page object in this case,
+        so the test was calling methods that don't exist on the response. The test generator
+        now checks that the results property value type is a concrete list (or optional/nullable
+        wrapping a list) before emitting Page-specific assertions, matching the client
+        generator's behavior.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 3.60.8
   changelogEntry:
     - summary: |
