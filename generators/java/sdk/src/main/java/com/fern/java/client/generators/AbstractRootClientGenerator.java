@@ -1400,19 +1400,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 } else if (!usernameOmitted && passwordOmitted) {
                     this.configureAuthMethod.beginControlFlow("if (this.$L != null)", usernameFieldName);
                 } else {
-                    // Both omitted - always set the header
-                    this.configureAuthMethod.beginControlFlow("if (true)");
+                    // Both fields omitted — skip auth header entirely when auth is optional
                 }
-                // Use empty string for omitted fields in token construction
-                String usernameRef = usernameOmitted ? "\"\"" : "this." + usernameFieldName;
-                String passwordRef = passwordOmitted ? "\"\"" : "this." + passwordFieldName;
-                this.configureAuthMethod
-                        .addStatement("String unencodedToken = " + usernameRef + " + \":\" + " + passwordRef)
-                        .addStatement(
-                                "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
-                                Base64.class)
-                        .addStatement("builder.addHeader($S, $S + encodedToken)", "Authorization", "Basic ")
-                        .endControlFlow();
+                if (!usernameOmitted || !passwordOmitted) {
+                    // Use empty string for omitted fields in token construction
+                    String usernameRef = usernameOmitted ? "\"\"" : "this." + usernameFieldName;
+                    String passwordRef = passwordOmitted ? "\"\"" : "this." + passwordFieldName;
+                    this.configureAuthMethod
+                            .addStatement("String unencodedToken = " + usernameRef + " + \":\" + " + passwordRef)
+                            .addStatement(
+                                    "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
+                                    Base64.class)
+                            .addStatement("builder.addHeader($S, $S + encodedToken)", "Authorization", "Basic ")
+                            .endControlFlow();
+                }
             }
             return null;
         }
@@ -2399,28 +2400,31 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     } else if (!usernameOmit && passwordOmit) {
                         condition = "this." + usernameField + " != null";
                     } else {
-                        condition = "true";
+                        // Both fields omitted — skip auth provider entirely
+                        condition = null;
                     }
-                    // Build constructor args: only pass args for non-omitted fields
-                    // to match BasicAuthProvider's constructor signature
-                    StringBuilder constructorArgs = new StringBuilder();
-                    if (!usernameOmit) {
-                        constructorArgs.append("() -> this.").append(usernameField);
-                    }
-                    if (!passwordOmit) {
-                        if (constructorArgs.length() > 0) {
-                            constructorArgs.append(", ");
+                    if (condition != null) {
+                        // Build constructor args: only pass args for non-omitted fields
+                        // to match BasicAuthProvider's constructor signature
+                        StringBuilder constructorArgs = new StringBuilder();
+                        if (!usernameOmit) {
+                            constructorArgs.append("() -> this.").append(usernameField);
                         }
-                        constructorArgs.append("() -> this.").append(passwordField);
+                        if (!passwordOmit) {
+                            if (constructorArgs.length() > 0) {
+                                constructorArgs.append(", ");
+                            }
+                            constructorArgs.append("() -> this.").append(passwordField);
+                        }
+                        this.configureAuthMethod
+                                .beginControlFlow("if (" + condition + ")")
+                                .addStatement(
+                                        "routingBuilder.addAuthProvider($S, new $T(" + constructorArgs + "), $S)",
+                                        info.schemeKey,
+                                        providerClassName,
+                                        info.envVarHint)
+                                .endControlFlow();
                     }
-                    this.configureAuthMethod
-                            .beginControlFlow("if (" + condition + ")")
-                            .addStatement(
-                                    "routingBuilder.addAuthProvider($S, new $T(" + constructorArgs + "), $S)",
-                                    info.schemeKey,
-                                    providerClassName,
-                                    info.envVarHint)
-                            .endControlFlow();
                 } else if (info.isOAuth) {
                     // OAuth requires creating an auth client and using OAuthAuthProvider
                     ClassName clientOptionsClassName = generatedClientOptions.getClassName();
