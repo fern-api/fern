@@ -1886,6 +1886,62 @@ await client.Endpoints.Params.UploadWithPathAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithDollarSignQueryAsync</a>(GetWithDollarSignQuery { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with query param containing dollar sign
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Params.GetWithDollarSignQueryAsync(
+    new GetWithDollarSignQuery { Query = "$query" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetWithDollarSignQuery` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAndErrorsAsync</a>(param) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>

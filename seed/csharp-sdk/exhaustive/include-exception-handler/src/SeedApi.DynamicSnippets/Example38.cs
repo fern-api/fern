@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,8 +13,10 @@ public class Example38
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
-            "param"
+        await client.Endpoints.Params.GetWithDollarSignQueryAsync(
+            new GetWithDollarSignQuery {
+                Query = "$query"
+            }
         );
     }
 

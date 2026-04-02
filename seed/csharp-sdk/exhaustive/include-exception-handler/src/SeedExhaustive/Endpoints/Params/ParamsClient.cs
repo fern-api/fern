@@ -826,6 +826,64 @@ public partial class ParamsClient : IParamsClient
     }
 
     /// <summary>
+    /// GET with query param containing dollar sign
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Params.GetWithDollarSignQueryAsync(
+    ///     new GetWithDollarSignQuery { Query = "$query" }
+    /// );
+    /// </code></example>
+    public async Task GetWithDollarSignQueryAsync(
+        GetWithDollarSignQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("$query", request.Query)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Get,
+                            Path = "/params",
+                            QueryString = _queryString,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// GET with path param that can throw errors
     /// </summary>
     /// <example><code>

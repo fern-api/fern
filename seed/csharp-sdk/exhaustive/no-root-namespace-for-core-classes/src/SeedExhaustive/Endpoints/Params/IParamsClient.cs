@@ -91,6 +91,15 @@ public partial interface IParamsClient
     );
 
     /// <summary>
+    /// GET with query param containing dollar sign
+    /// </summary>
+    Task GetWithDollarSignQueryAsync(
+        GetWithDollarSignQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// GET with path param that can throw errors
     /// </summary>
     WithRawResponseTask<string> GetWithPathAndErrorsAsync(

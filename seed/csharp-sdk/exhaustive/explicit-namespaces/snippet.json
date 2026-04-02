@@ -436,6 +436,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithDollarSignQuery"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Endpoints.Params;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithDollarSignQueryAsync(\n    new GetWithDollarSignQuery { Query = \"$query\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
