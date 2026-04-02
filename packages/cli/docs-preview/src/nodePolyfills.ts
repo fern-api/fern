@@ -158,7 +158,7 @@ if (typeof Array.fromAsync !== "function") {
             var k = 0;
             if (Symbol.asyncIterator in Object(arrayLike) || Symbol.iterator in Object(arrayLike)) {
                 for await (var item of arrayLike) {
-                    result.push(mapFn ? mapFn.call(thisArg, item, k) : item);
+                    result.push(mapFn ? await mapFn.call(thisArg, item, k) : item);
                     k++;
                 }
             } else {
