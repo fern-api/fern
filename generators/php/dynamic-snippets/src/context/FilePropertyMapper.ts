@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -65,7 +64,7 @@ export class FilePropertyMapper {
     }): php.TypeLiteral {
         let fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            fileValue = `example_${getWireValue(property) ?? "file"}`;
+            fileValue = `example_${property.wireValue ?? "file"}`;
         }
         return php.TypeLiteral.file(fileValue, this.context.rootNamespace);
     }
@@ -79,7 +78,7 @@ export class FilePropertyMapper {
     }): php.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            const fallback = `example_${getWireValue(property) ?? "files"}`;
+            const fallback = `example_${property.wireValue ?? "files"}`;
             return php.TypeLiteral.list({ values: [php.TypeLiteral.file(fallback, this.context.rootNamespace)] });
         }
         return php.TypeLiteral.list({
@@ -94,7 +93,7 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): php.TypeLiteral {
-        const bodyPropertyValue = record[getWireValue(property.name)];
+        const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
             return php.TypeLiteral.nop();
         }
