@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -4355,6 +4365,22 @@
           ]
         },
         "style": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
           "oneOf": [
             {
               "type": "string"
