@@ -11,6 +11,7 @@ interface GlobalHeaderExtension {
     optional: boolean | undefined;
     env: string | undefined;
     type: string | undefined;
+    "x-fern-default": unknown | undefined;
 }
 
 export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
