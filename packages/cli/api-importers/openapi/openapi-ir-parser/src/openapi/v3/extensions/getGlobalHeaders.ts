@@ -19,7 +19,11 @@ export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
     const result: GlobalHeader[] = [];
     for (const header of globalHeaders ?? []) {
         result.push({
-            ...header,
+            header: header.header,
+            name: header.name,
+            optional: header.optional,
+            env: header.env,
+            clientDefault: header["x-fern-default"],
             schema:
                 header.type != null
                     ? getSchemaFromFernType({
