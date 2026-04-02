@@ -218,8 +218,6 @@ function instantiatePager({
                 arguments_
             });
         case "custom":
-        case "uri":
-        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -267,8 +265,6 @@ function invokeGetPage({
                 multiline: false
             });
         case "custom":
-        case "uri":
-        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -306,8 +302,6 @@ function getReadPageResponseBody({
                 responseType
             });
         case "custom":
-        case "uri":
-        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -519,8 +513,6 @@ function getPagePropertySetter({
                 writer.newLine();
             });
         case "custom":
-        case "uri":
-        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -571,8 +563,6 @@ function getPagePropertyInitializer({
         }
         case "cursor":
         case "custom":
-        case "uri":
-        case "path":
             return undefined;
         default:
             assertNever(pagination);
@@ -713,8 +703,6 @@ export function getPageType({
         case "offset":
             return context.goTypeMapper.convert({ reference: pagination.page.property.valueType });
         case "custom":
-        case "uri":
-        case "path":
             return go.Type.any();
         default:
             assertNever(pagination);
@@ -735,8 +723,6 @@ function getNextPageType({
             return context.goTypeMapper.convert({ reference: pagination.page.property.valueType });
         }
         case "custom":
-        case "uri":
-        case "path":
             return undefined;
         default:
             assertNever(pagination);
@@ -806,8 +792,6 @@ function getPageValueFormat({
             return value.formatted;
         }
         case "custom":
-        case "uri":
-        case "path":
             return go.Type.any();
         default:
             assertNever(pagination);
@@ -849,8 +833,6 @@ function getPagePropertyReference({
             });
         }
         case "custom":
-        case "uri":
-        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);

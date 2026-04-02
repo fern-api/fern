@@ -594,8 +594,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             case "offset":
                 return pagination.page.property.type === "body";
             case "custom":
-            case "uri":
-            case "path":
                 return false;
             default:
                 assertNever(pagination);
