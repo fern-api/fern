@@ -1,4 +1,5 @@
 import { schemas } from "@fern-api/config";
+import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
@@ -184,12 +185,14 @@ export class SdkConfigConverter {
             return undefined;
         }
 
-        // If user specified an explicit image, use it directly
+        // If user specified an explicit image, normalize with the fernapi/ Docker Hub
+        // org prefix so that IR version resolution (which expects fully-qualified names
+        // like "fernapi/fern-typescript-sdk") works correctly.
         if (target.image != null) {
             if (typeof target.image === "string") {
                 return {
                     lang,
-                    image: target.image,
+                    image: addDefaultDockerOrgIfNotPresent(target.image),
                     version: target.version ?? "latest",
                     registry: undefined
                 };
@@ -197,7 +200,7 @@ export class SdkConfigConverter {
             // Object form: { name, registry }
             return {
                 lang,
-                image: target.image.name,
+                image: addDefaultDockerOrgIfNotPresent(target.image.name),
                 version: target.version ?? "latest",
                 registry: target.image.registry
             };
@@ -233,7 +236,7 @@ export class SdkConfigConverter {
         }
         if (target.image != null) {
             const imageName = typeof target.image === "string" ? target.image : target.image.name;
-            return getLanguageFromImage({ image: imageName });
+            return getLanguageFromImage({ image: addDefaultDockerOrgIfNotPresent(imageName) });
         }
         const lang: Language = name as Language;
         if (LANGUAGES.includes(lang)) {
