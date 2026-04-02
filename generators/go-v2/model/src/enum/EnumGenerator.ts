@@ -87,7 +87,7 @@ export class EnumGenerator extends AbstractModelGenerator {
     }
 
     private getPtrMethod(): go.Method {
-        const receiver = this.context.getReceiverName(this.typeDeclaration.name);
+        const receiver = this.context.getReceiverName(this.typeDeclaration.name.name);
         return go.method({
             typeReference: this.typeReference,
             name: "Ptr",

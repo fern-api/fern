@@ -133,7 +133,7 @@ export class InternalFilesGenerator {
                     typeReference: this.context.getErrorCodesTypeReference(),
                     fields: errors.map((errorDeclaration) => {
                         const errorTypeReference = go.typeReference({
-                            name: this.context.getClassName(errorDeclaration.name),
+                            name: this.context.getClassName(errorDeclaration.name.name),
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
                         return {
