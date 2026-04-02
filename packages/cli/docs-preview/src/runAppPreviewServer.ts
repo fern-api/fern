@@ -10,7 +10,7 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm, writeFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -19,6 +19,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -840,20 +841,11 @@ export async function runAppPreviewServer({
     // Clean Fern Docs cache from previous runs before starting the server
     await cleanFernDocsCache(bundleRoot, context);
 
-    // Now start Next.js after backend is ready
+    // Write Node.js polyfills for older runtimes (e.g. Node 20) so the
+    // pre-built Next.js bundle can use APIs introduced in Node 22+.
+    const polyfillPath = writeNodePolyfillScript(bundleRoot);
 
-    // Polyfill `navigator` for Node.js < 21, where it doesn't exist as a global.
-    // Some bundled dependencies (e.g. JSPM browser process polyfills) access
-    // `navigator.language` without a typeof guard, causing a ReferenceError on
-    // older Node versions. Node 21+ / 22+ provide `navigator` natively.
-    const navigatorPolyfillPath = path.join(bundleRoot, "navigator-polyfill.cjs");
-    await writeFile(
-        navigatorPolyfillPath,
-        `if (typeof globalThis.navigator === "undefined") {
-  globalThis.navigator = { language: "en-US", userAgent: "node", platform: "linux" };
-}
-`
-    );
+    // Now start Next.js after backend is ready
 
     const env = {
         ...process.env,
@@ -866,7 +858,7 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${navigatorPolyfillPath}`
+        NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${polyfillPath}`
     };
 
     // Track the current server process and the port it actually bound to
