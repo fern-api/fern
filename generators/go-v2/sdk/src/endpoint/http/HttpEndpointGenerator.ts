@@ -832,7 +832,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     );
                     continue;
                 }
-                const headerNameVal = typeof header.name === "string" ? header.name : header.name.name;
+                const headerNameVal = header.name;
                 const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(headerNameVal)}`;
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
@@ -877,7 +877,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     fields: endpoint.errors.map((error) => {
                         const errorDeclaration = this.context.getErrorDeclarationOrThrow(error.error.errorId);
                         const errorTypeReference = go.typeReference({
-                            name: this.context.getClassName(errorDeclaration.name.name),
+                            name: this.context.getClassName(errorDeclaration.name),
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
                         return {
@@ -1037,7 +1037,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     return go.codeblock("response");
                 }
                 const rpNameVal =
-                    typeof responseProperty.name === "string" ? responseProperty.name : responseProperty.name.name;
+                    responseProperty.name;
                 return go.codeblock(`response.${this.context.getFieldName(rpNameVal)}`);
             }
             default:

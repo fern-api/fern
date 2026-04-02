@@ -43,7 +43,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context, typeDeclaration);
-        this.receiver = this.context.getReceiverName(this.typeDeclaration.name.name);
+        this.receiver = this.context.getReceiverName(this.typeDeclaration.name);
     }
 
     protected doGenerate(): GoFile {
@@ -150,7 +150,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
                         name: EMBED_TYPE_NAME,
                         type: go.Type.reference(
                             go.typeReference({
-                                name: this.context.getClassName(this.typeDeclaration.name.name)
+                                name: this.context.getClassName(this.typeDeclaration.name)
                             })
                         )
                     })
@@ -196,7 +196,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
     private getCustomUnmarshalJsonMethodBody(fields: ObjectGenerator.Field[]): go.AstNode {
         const typeName = go.Type.reference(
             go.typeReference({
-                name: this.context.getClassName(this.typeDeclaration.name.name)
+                name: this.context.getClassName(this.typeDeclaration.name)
             })
         );
         const unmarshalerType = go.struct({
@@ -258,7 +258,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
     private getDefaultUnmarshalJsonMethodBody(fields: ObjectGenerator.Field[]): go.AstNode {
         const typeName = go.Type.reference(
             go.typeReference({
-                name: this.context.getClassName(this.typeDeclaration.name.name)
+                name: this.context.getClassName(this.typeDeclaration.name)
             })
         );
         return go.codeblock((writer) => {

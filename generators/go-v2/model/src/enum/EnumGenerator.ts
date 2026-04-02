@@ -34,7 +34,7 @@ export class EnumGenerator extends AbstractModelGenerator {
 
     private getMembers(): go.Enum.Member[] {
         return this.enumDeclaration.values.map((value) => {
-            const nameVal = typeof value.name === "string" ? value.name : value.name.name;
+            const nameVal = value.name;
             return {
                 name: this.context.getClassName(nameVal),
                 value: getWireValue(value.name),
@@ -87,7 +87,7 @@ export class EnumGenerator extends AbstractModelGenerator {
     }
 
     private getPtrMethod(): go.Method {
-        const receiver = this.context.getReceiverName(this.typeDeclaration.name.name);
+        const receiver = this.context.getReceiverName(this.typeDeclaration.name);
         return go.method({
             typeReference: this.typeReference,
             name: "Ptr",

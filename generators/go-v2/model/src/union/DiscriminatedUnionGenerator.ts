@@ -27,7 +27,7 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     private getFields(): go.Field[] {
         const fields: go.Field[] = [this.getDiscriminantField()];
         for (const property of this.getAllObjectProperties()) {
-            const nameVal = typeof property.name === "string" ? property.name : property.name.name;
+            const nameVal = property.name;
             fields.push(
                 go.field({
                     name: this.context.getFieldName(nameVal),

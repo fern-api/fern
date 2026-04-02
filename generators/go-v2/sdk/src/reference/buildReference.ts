@@ -202,7 +202,7 @@ function getEndpointParameters({
     });
 
     endpoint.queryParameters.forEach((queryParam) => {
-        const qpNameVal = typeof queryParam.name === "string" ? queryParam.name : queryParam.name.name;
+        const qpNameVal = queryParam.name;
         parameters.push({
             name: caseConverter.camelSafe(qpNameVal),
             type: getGoTypeString({ context, typeReference: queryParam.valueType }),
@@ -212,7 +212,7 @@ function getEndpointParameters({
     });
 
     endpoint.headers.forEach((header) => {
-        const hNameVal = typeof header.name === "string" ? header.name : header.name.name;
+        const hNameVal = header.name;
         parameters.push({
             name: caseConverter.camelSafe(hNameVal),
             type: getGoTypeString({ context, typeReference: header.valueType }),
@@ -223,7 +223,7 @@ function getEndpointParameters({
 
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
-            const propNameVal = typeof property.name === "string" ? property.name : property.name.name;
+            const propNameVal = property.name;
             parameters.push({
                 name: caseConverter.camelSafe(propNameVal),
                 type: getGoTypeString({ context, typeReference: property.valueType }),

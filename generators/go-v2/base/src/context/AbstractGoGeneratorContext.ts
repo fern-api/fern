@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
@@ -73,19 +73,19 @@ export abstract class AbstractGoGeneratorContext<
         return errorDeclaration;
     }
 
-    public getClassName(name: FernIr.Name): string {
+    public getClassName(name: NameInput): string {
         return caseConverter.pascalUnsafe(name);
     }
 
-    public getPackageName(name: FernIr.Name): string {
+    public getPackageName(name: NameInput): string {
         return caseConverter.snakeUnsafe(name).toLowerCase();
     }
 
-    public getFilename(name: FernIr.Name): string {
+    public getFilename(name: NameInput): string {
         return caseConverter.snakeUnsafe(name);
     }
 
-    public getReceiverName(name: FernIr.Name): string {
+    public getReceiverName(name: NameInput): string {
         return caseConverter.camelUnsafe(name).charAt(0).toLowerCase();
     }
 
@@ -112,15 +112,15 @@ export abstract class AbstractGoGeneratorContext<
         return `${this.rootImportPath}/option`;
     }
 
-    public getFieldName(name: FernIr.Name): string {
+    public getFieldName(name: NameInput): string {
         return goExportedFieldName(caseConverter.pascalUnsafe(name));
     }
 
-    public getLiteralFieldName(name: FernIr.Name): string {
+    public getLiteralFieldName(name: NameInput): string {
         return caseConverter.camelSafe(name);
     }
 
-    public getParameterName(name: FernIr.Name): string {
+    public getParameterName(name: NameInput): string {
         return caseConverter.camelSafe(name);
     }
 

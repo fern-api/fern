@@ -54,14 +54,14 @@ export function getRequestPropertyFieldName(
         const nameVal =
             typeof requestProperty.property.name === "string"
                 ? requestProperty.property.name
-                : requestProperty.property.name.name;
+                : requestProperty.property.name;
         return context.getFieldName(nameVal);
     }
     if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
         const nameVal =
             typeof requestProperty.property.name === "string"
                 ? requestProperty.property.name
-                : requestProperty.property.name.name;
+                : requestProperty.property.name;
         return context.getFieldName(nameVal);
     }
     // Fallback to default names if we can't extract from IR
@@ -157,7 +157,7 @@ export function getInferredAuthCredentialParams(
         if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
             continue;
         }
-        const nameVal = typeof header.name === "string" ? header.name : header.name.name;
+        const nameVal = header.name;
         params.push({
             fieldName: context.getFieldName(nameVal),
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
@@ -175,7 +175,7 @@ export function getInferredAuthCredentialParams(
         if (isOptional) {
             continue;
         }
-        const propNameVal = typeof prop.name === "string" ? prop.name : prop.name.name;
+        const propNameVal = prop.name;
         params.push({
             fieldName: context.getFieldName(propNameVal),
             isOptional: false

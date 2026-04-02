@@ -169,7 +169,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             });
             return;
         }
-        const bpNameVal = typeof bodyProperty.name === "string" ? bodyProperty.name : bodyProperty.name.name;
+        const bpNameVal = bodyProperty.name;
         const field = this.getRequestPropertyReference({ fieldName: bpNameVal });
         const format = this.context.goValueFormatter.convert({
             reference: bodyProperty.valueType,

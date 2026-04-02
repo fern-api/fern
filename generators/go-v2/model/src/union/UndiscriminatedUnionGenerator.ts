@@ -51,7 +51,7 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
 
     private getMemberFieldNameForNamed({ named }: { named: FernIr.NamedType }): string {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
-        return this.context.getFieldName(typeDeclaration.name.name);
+        return this.context.getFieldName(typeDeclaration.name);
     }
 
     private getMemberFieldNameForContainer({ container }: { container: FernIr.ContainerType }): string {

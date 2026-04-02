@@ -459,7 +459,7 @@ function getResponsePropertySetter({
                     name:
                         typeof responseProperty.property.name === "string"
                             ? responseProperty.property.name
-                            : responseProperty.property.name.name,
+                            : responseProperty.property.name,
                     dereference
                 })
             );
@@ -834,7 +834,7 @@ function getPagePropertyReference({
                 name:
                     typeof pagination.page.property.name === "string"
                         ? pagination.page.property.name
-                        : pagination.page.property.name.name,
+                        : pagination.page.property.name,
                 withGetter
             });
         }
@@ -855,7 +855,7 @@ function getResponsePropertyReference({
     return getPropertyReference({
         variableName: "response",
         propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
-        name: typeof results.property.name === "string" ? results.property.name : results.property.name.name,
+        name: results.property.name,
         withGetter
     });
 }

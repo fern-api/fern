@@ -237,7 +237,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             this.writeEnvConditional({
                 writer,
                 propertyReference: this.getOptionsPropertyReference(
-                    typeof header.name === "string" ? header.name : header.name.name
+                    header.name
                 ),
                 env: header.env
             });
@@ -319,7 +319,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             this.writeEnvConditional({
                 writer,
                 propertyReference: this.getOptionsPropertyReference(
-                    typeof scheme.name === "string" ? scheme.name : scheme.name.name
+                    scheme.name
                 ),
                 env: scheme.headerEnvVar
             });
@@ -727,7 +727,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     const rpNameVal =
                         typeof firstAuthHeader.responseProperty.property.name === "string"
                             ? firstAuthHeader.responseProperty.property.name
-                            : firstAuthHeader.responseProperty.property.name.name;
+                            : firstAuthHeader.responseProperty.property.name;
                     accessTokenField = this.context.getFieldName(rpNameVal);
                 }
 
@@ -754,7 +754,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     const epNameVal =
                         typeof expiryProperty.property.name === "string"
                             ? expiryProperty.property.name
-                            : expiryProperty.property.name.name;
+                            : expiryProperty.property.name;
                     const expiryField = this.context.getFieldName(epNameVal);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 
@@ -829,7 +829,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const headerEnvVars = new Map<string, string>();
         for (const header of tokenEndpoint.headers) {
             if (header.env != null) {
-                const hNameVal = typeof header.name === "string" ? header.name : header.name.name;
+                const hNameVal = header.name;
                 headerEnvVars.set(this.context.getFieldName(hNameVal), header.env);
             }
         }
