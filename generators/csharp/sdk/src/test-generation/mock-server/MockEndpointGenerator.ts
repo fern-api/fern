@@ -128,7 +128,8 @@ export class MockEndpointGenerator extends WithGeneration {
                             }
                             case "header": {
                                 const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
-                                const headerValue = scheme.name != null ? caseConverter.screamingSnakeSafe(scheme.name) : undefined;
+                                const headerValue =
+                                    scheme.name != null ? caseConverter.screamingSnakeSafe(scheme.name) : undefined;
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
@@ -305,7 +306,10 @@ export class MockEndpointGenerator extends WithGeneration {
         type: "named";
         typeName: { typeId: TypeId };
         shape:
-            | { type: "object"; properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }> }
+            | {
+                  type: "object";
+                  properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+              }
             | { type: "union"; discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown }
             | { type: "enum"; value: FernIr.NameAndWireValue | string }
             | { type: "alias"; value: ExampleTypeReference }
@@ -393,7 +397,10 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (getWireValue(prop.name) === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+                if (
+                    getWireValue(prop.name) === wireValue &&
+                    prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
+                ) {
                     return true;
                 }
             }
@@ -613,7 +620,9 @@ export class MockEndpointGenerator extends WithGeneration {
                 | {
                       type: "samePropertiesAsObject";
                       typeId: TypeId;
-                      object: { properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }> };
+                      object: {
+                          properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+                      };
                   }
                 | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
