@@ -731,7 +731,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
 
         const baseUrl = multiUrlEnvs.baseUrls.find((url) => url.id === baseUrlId);
-        return caseConverter.camelSafe(baseUrl?.name) ?? "";
+        return baseUrl?.name != null ? caseConverter.camelSafe(baseUrl.name) : "";
     }
 
     private getComputedClientName(): string {

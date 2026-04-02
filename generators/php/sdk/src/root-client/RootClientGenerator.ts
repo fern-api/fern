@@ -282,7 +282,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             });
             const headerValue = apiVersion._visit({
                 header: (header) => {
-                    return getWireValue(header.value.default?.name);
+                    return header.value.default?.name != null ? getWireValue(header.value.default.name) : undefined;
                 },
                 _other: () => {
                     return undefined;
