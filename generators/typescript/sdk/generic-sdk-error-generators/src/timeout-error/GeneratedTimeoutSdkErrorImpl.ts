@@ -1,22 +1,28 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
+import { getTextOfTsKeyword } from "@fern-typescript/commons";
 import { FileContext, GeneratedTimeoutSdkError } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
 
 export class GeneratedTimeoutSdkErrorImpl
     extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedTimeoutSdkError
 {
     private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
+    private static readonly CAUSE_CONSTRUCTOR_PARAMETER_NAME = "cause";
 
     public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
     }
 
-    public build(context: FileContext, message: string): ts.NewExpression {
+    public build(context: FileContext, message: string, cause?: ts.Expression): ts.NewExpression {
+        const args: ts.Expression[] = [ts.factory.createStringLiteral(message)];
+        if (cause != null) {
+            args.push(cause);
+        }
         return ts.factory.createNewExpression(
             context.timeoutSdkError.getReferenceToTimeoutSdkError().getExpression(),
             undefined,
-            [ts.factory.createStringLiteral(message)]
+            args
         );
     }
 
@@ -35,7 +41,15 @@ export class GeneratedTimeoutSdkErrorImpl
     }
 
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
-        return [];
+        return [
+            {
+                name: GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                isReadonly: true,
+                hasQuestionToken: true,
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
+                scope: Scope.Public
+            }
+        ];
     }
 
     protected getConstructorParameters(): OptionalKind<ParameterDeclarationStructure>[] {
@@ -44,6 +58,11 @@ export class GeneratedTimeoutSdkErrorImpl
                 name: GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
                 type: "string",
                 hasQuestionToken: false
+            },
+            {
+                name: GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
+                hasQuestionToken: true
             }
         ];
     }
@@ -53,7 +72,35 @@ export class GeneratedTimeoutSdkErrorImpl
     }
 
     protected getConstructorStatements(): ts.Statement[] {
-        return [];
+        return [
+            ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(
+                                        GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                    )
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createIdentifier(
+                                    GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                )
+                            )
+                        )
+                    ],
+                    true
+                ),
+                undefined
+            )
+        ];
     }
 
     protected addToClass(): void {

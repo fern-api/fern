@@ -22,7 +22,10 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedMixedFileDirectoryTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedMixedFileDirectoryTimeoutError(
+                `Timeout exceeded when calling ${method} ${path}.`,
+                error.cause,
+            );
         case "unknown":
             throw new errors.SeedMixedFileDirectoryError({
                 message: error.errorMessage,

@@ -50,7 +50,7 @@ function handleNonStatusCodeError(error, rawResponse, method, path) {
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedExhaustiveTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedExhaustiveTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, error.cause);
         case "unknown":
             throw new errors.SeedExhaustiveError({
                 message: error.errorMessage,

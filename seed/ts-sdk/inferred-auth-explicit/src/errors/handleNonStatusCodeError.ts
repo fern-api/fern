@@ -22,7 +22,10 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedInferredAuthExplicitTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedInferredAuthExplicitTimeoutError(
+                `Timeout exceeded when calling ${method} ${path}.`,
+                error.cause,
+            );
         case "unknown":
             throw new errors.SeedInferredAuthExplicitError({
                 message: error.errorMessage,

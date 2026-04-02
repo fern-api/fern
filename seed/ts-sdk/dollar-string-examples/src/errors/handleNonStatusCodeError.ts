@@ -22,7 +22,10 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedDollarStringExamplesTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedDollarStringExamplesTimeoutError(
+                `Timeout exceeded when calling ${method} ${path}.`,
+                error.cause,
+            );
         case "unknown":
             throw new errors.SeedDollarStringExamplesError({
                 message: error.errorMessage,

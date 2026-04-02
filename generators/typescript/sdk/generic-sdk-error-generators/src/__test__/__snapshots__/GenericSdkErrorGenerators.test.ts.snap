@@ -171,7 +171,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > buildConstructorArguments > wraps messag
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class 1`] = `
 "export class TimeoutError extends Error {
-    constructor(message: string) {
+    public readonly cause?: unknown;
+
+    constructor(message: string, cause?: unknown) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -179,6 +181,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 "
@@ -186,7 +191,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class with custom name 1`] = `
 "export class CustomTimeoutError extends Error {
-    constructor(message: string) {
+    public readonly cause?: unknown;
+
+    constructor(message: string, cause?: unknown) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -194,6 +201,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 "

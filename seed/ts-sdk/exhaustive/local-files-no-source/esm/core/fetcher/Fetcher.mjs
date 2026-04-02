@@ -275,6 +275,7 @@ export function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };

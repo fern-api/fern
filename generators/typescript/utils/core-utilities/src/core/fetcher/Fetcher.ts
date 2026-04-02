@@ -56,6 +56,7 @@ export declare namespace Fetcher {
 
     export interface TimeoutError {
         reason: "timeout";
+        cause?: unknown;
     }
 
     export interface UnknownError {
@@ -356,6 +357,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "timeout",
+                    cause: error,
                 },
                 rawResponse: abortRawResponse,
             };

@@ -29,7 +29,8 @@ function createMockFileContext() {
                         statusCode: "statusCode"
                     },
                     TimeoutSdkError: {
-                        _reasonLiteralValue: "timeout"
+                        _reasonLiteralValue: "timeout",
+                        cause: "cause"
                     },
                     UnknownError: {
                         _reasonLiteralValue: "unknown",

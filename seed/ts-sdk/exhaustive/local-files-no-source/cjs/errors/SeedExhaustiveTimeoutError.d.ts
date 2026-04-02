@@ -1,3 +1,4 @@
 export declare class SeedExhaustiveTimeoutError extends Error {
-    constructor(message: string);
+    readonly cause?: unknown;
+    constructor(message: string, cause?: unknown);
 }

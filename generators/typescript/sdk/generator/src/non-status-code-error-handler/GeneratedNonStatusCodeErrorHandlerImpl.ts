@@ -106,6 +106,10 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
                                                 ts.factory.createTemplateTail(".")
                                             )
                                         ]
+                                    ),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier("error"),
+                                        context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause
                                     )
                                 ]
                             )

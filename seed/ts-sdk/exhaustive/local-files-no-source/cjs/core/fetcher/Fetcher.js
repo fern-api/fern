@@ -279,6 +279,7 @@ function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };

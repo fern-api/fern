@@ -22,7 +22,7 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedLicenseTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedLicenseTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, error.cause);
         case "unknown":
             throw new errors.SeedLicenseError({
                 message: error.errorMessage,

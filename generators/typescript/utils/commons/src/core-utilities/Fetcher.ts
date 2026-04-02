@@ -54,6 +54,7 @@ export interface Fetcher {
         TimeoutSdkError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "timeout";
+            cause: "cause";
         };
         UnknownError: {
             _getReferenceToType: () => ts.TypeNode;
@@ -262,7 +263,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
-            _reasonLiteralValue: "timeout"
+            _reasonLiteralValue: "timeout",
+            cause: "cause"
         },
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),

@@ -22,7 +22,7 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedHttpHeadTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedHttpHeadTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, error.cause);
         case "unknown":
             throw new errors.SeedHttpHeadError({
                 message: error.errorMessage,
