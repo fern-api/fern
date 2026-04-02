@@ -83,10 +83,7 @@ export class RootClientGenerator {
             argumentLabel: "maxRetries",
             unsafeName: "maxRetries",
             type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
-            defaultValue:
-                configuredMaxRetries != null
-                    ? swift.Expression.rawValue(String(configuredMaxRetries))
-                    : swift.Expression.rawValue("nil"),
+            defaultValue: swift.Expression.rawValue("nil"),
             docsContent: `Maximum number of retries for failed requests. Defaults to ${configuredMaxRetries ?? 2}.`
         });
     }
@@ -415,7 +412,10 @@ export class RootClientGenerator {
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "HeaderAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "HeaderAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -423,7 +423,10 @@ export class RootClientGenerator {
                 argumentLabel: "bearerAuth",
                 unsafeName: "bearerAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BearerAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "BearerAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -431,7 +434,10 @@ export class RootClientGenerator {
                 argumentLabel: "basicAuth",
                 unsafeName: "basicAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BasicAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "BasicAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -456,10 +462,7 @@ export class RootClientGenerator {
                 argumentLabel: "maxRetries",
                 unsafeName: "maxRetries",
                 type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
-                defaultValue:
-                    this.sdkGeneratorContext.customConfig.maxRetries != null
-                        ? swift.Expression.rawValue(String(this.sdkGeneratorContext.customConfig.maxRetries))
-                        : swift.Expression.nil()
+                defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "urlSession",
@@ -607,12 +610,12 @@ export class RootClientGenerator {
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
                             ? swift.TypeReference.memberAccess(
-                                  this.referencer.referenceAsIsType("ClientConfig"),
+                                  this.referencer.referenceSourceTemplateType("ClientConfig"),
                                   "CredentialProvider"
                               )
                             : swift.TypeReference.optional(
                                   swift.TypeReference.memberAccess(
-                                      this.referencer.referenceAsIsType("ClientConfig"),
+                                      this.referencer.referenceSourceTemplateType("ClientConfig"),
                                       "CredentialProvider"
                                   )
                               ),

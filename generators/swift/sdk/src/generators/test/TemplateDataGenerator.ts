@@ -41,6 +41,8 @@ export class TemplateDataGenerator {
                 return this.generateTemplateDataForClientError();
             case "HTTPClient":
                 return this.generateTemplateDataForHTTPClient();
+            case "ClientConfig":
+                return this.generateTemplateDataForClientConfig();
             default:
                 assertNever(templateId);
         }
@@ -57,6 +59,12 @@ export class TemplateDataGenerator {
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         return {
             errorEnumName: errorEnumSymbol.name
+        };
+    }
+
+    private generateTemplateDataForClientConfig() {
+        return {
+            defaultMaxRetries: this.context.customConfig.maxRetries ?? 2
         };
     }
 

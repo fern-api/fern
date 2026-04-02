@@ -18,7 +18,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
         token: String,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
-        maxRetries: Int? = 5,
+        maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
         self.init(
@@ -46,7 +46,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
         token: @escaping ClientConfig.CredentialProvider,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
-        maxRetries: Int? = 5,
+        maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
         self.init(
@@ -68,7 +68,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
         basicAuth: ClientConfig.BasicAuth? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
-        maxRetries: Int? = 5,
+        maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
