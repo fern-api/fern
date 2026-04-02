@@ -785,8 +785,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     def _get_root_client_param_initializer(self, param: ConstructorParameter) -> Optional[AST.Expression]:
         if param.environment_variable is not None:
             getenv_args = [AST.Expression(f'"{param.environment_variable}"')]
-            if param.initializer is not None:
-                getenv_args.append(param.initializer)
+            # Only use client_default as os.getenv fallback, NOT the generic initializer
+            # (which may be a snippet placeholder like token="YOUR_TOKEN")
+            if param.client_default is not None:
+                getenv_args.append(param.client_default)
             return AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
@@ -796,8 +798,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     args=getenv_args,
                 )
             )
-        if param.initializer is not None:
-            return param.initializer
+        if param.client_default is not None:
+            return param.client_default
         return None
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:

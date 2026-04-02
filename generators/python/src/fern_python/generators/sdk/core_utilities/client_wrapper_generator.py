@@ -28,6 +28,7 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     is_basic: bool = False
     docs: typing.Optional[str] = None
     template: typing.Optional[Template] = None
+    client_default: typing.Optional[AST.Expression] = None
 
 
 @dataclass
@@ -700,6 +701,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=header.name.wire_value,
                     environment_variable=header.env,
+                    client_default=client_default_initializer,
                 )
             )
 
