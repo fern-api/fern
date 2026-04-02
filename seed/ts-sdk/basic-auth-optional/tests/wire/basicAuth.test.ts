@@ -10,7 +10,6 @@ describe("BasicAuthClient", () => {
         const client = new SeedBasicAuthOptionalClient({
             maxRetries: 0,
             username: "test",
-            password: "test",
             environment: server.baseUrl,
         });
 
@@ -27,7 +26,6 @@ describe("BasicAuthClient", () => {
         const client = new SeedBasicAuthOptionalClient({
             maxRetries: 0,
             username: "test",
-            password: "test",
             environment: server.baseUrl,
         });
 
@@ -45,7 +43,6 @@ describe("BasicAuthClient", () => {
         const client = new SeedBasicAuthOptionalClient({
             maxRetries: 0,
             username: "test",
-            password: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { key: "value" };
@@ -71,7 +68,6 @@ describe("BasicAuthClient", () => {
         const client = new SeedBasicAuthOptionalClient({
             maxRetries: 0,
             username: "test",
-            password: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { key: "value" };
@@ -98,7 +94,6 @@ describe("BasicAuthClient", () => {
         const client = new SeedBasicAuthOptionalClient({
             maxRetries: 0,
             username: "test",
-            password: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { key: "value" };
