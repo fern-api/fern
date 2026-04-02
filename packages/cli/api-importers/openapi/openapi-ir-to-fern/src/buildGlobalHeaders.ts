@@ -50,7 +50,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         let schema: RawSchemas.HttpHeaderSchema = defaultType;
 
         // x-fern-default is passed through from the extension via spread but isn't on the GlobalHeader type
-        const clientDefault = (header as Record<string, unknown>)["x-fern-default"];
+        const clientDefault = (header as unknown as Record<string, unknown>)["x-fern-default"];
 
         if (header.name == null && header.env == null && clientDefault == null && typeof header.schema === "string") {
             schema = header.schema;
