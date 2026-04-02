@@ -402,6 +402,16 @@ export function generateFieldForFileProperty(
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
 
+    if (typeof property.key === "string") {
+        return cls.addField({
+            name: caseConverter.pascalSafe(property.key),
+            type: fieldType,
+            access: ast.Access.Public,
+            get: true,
+            set: true,
+            useRequired: !property.isOptional
+        });
+    }
     return cls.addField({
         origin: property.key,
         type: fieldType,

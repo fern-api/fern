@@ -110,7 +110,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
 
     private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
-        let defaultEnvironment: FernIr.Name | undefined = undefined;
+        let defaultEnvironment: FernIr.NameOrString | undefined = undefined;
         if (defaultEnvironmentId != null) {
             defaultEnvironment = this.context.ir.environments?.environments._visit({
                 singleBaseUrl: (value) => {

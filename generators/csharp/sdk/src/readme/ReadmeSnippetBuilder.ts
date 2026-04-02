@@ -445,7 +445,7 @@ var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.na
         const defaultEnvId = envConfig.defaultEnvironment;
         const envs = envConfig.environments.environments;
 
-        const getEnvName = (env: { name: FernIr.Name }): string => {
+        const getEnvName = (env: { name: FernIr.NameOrString }): string => {
             return this.context.settings.pascalCaseEnvironments
                 ? caseConverter.pascalSafe(env.name)
                 : caseConverter.screamingSnakeSafe(env.name);

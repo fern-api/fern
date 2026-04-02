@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -80,7 +80,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 case "uri":
                 case "path":
                     this.context.logger.warn(
-                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
                     );
                     return;
                 default:
@@ -1591,7 +1591,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         if (!propertyPath || propertyPath.length === 0) {
             return {
-                code: this.csharp.getPropertyName(enclosingType, property),
+                code: caseConverter.pascalSafe(property.name),
                 enclosingType
             };
         }
@@ -1601,7 +1601,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             code: propertyPath
                 .map((val) => {
                     // get the property name for the current property
-                    const propertyName = this.csharp.getPropertyName(enclosingType, val);
+                    const propertyName = caseConverter.pascalSafe(val.name);
 
                     // get the type of the current property
                     let typeOfValue = this.context.csharpTypeMapper.convert({
@@ -1634,10 +1634,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
 
         if (!property.propertyPath || property.propertyPath.length === 0) {
-            return `${variableName}.${this.csharp.getPropertyName(enclosingType, property.property)}`;
+            return `${variableName}.${caseConverter.pascalSafe(property.property.name)}`;
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
-        return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
+        return `${variableName}.${dotAccess.code}.${caseConverter.pascalSafe(property.property.name)}`;
     }
 
     private getPropertyWithDefault(

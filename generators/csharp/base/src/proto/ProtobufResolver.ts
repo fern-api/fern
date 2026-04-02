@@ -122,7 +122,8 @@ export class ProtobufResolver extends WithGeneration {
         // Fallback: match on the type's declared name for cases where
         // proto source may not be fully resolved.
         const typeDeclaration = this.generation.ir.types[typeId];
-        const typeName = typeDeclaration?.name?.name?.originalName;
+        const nameOrString = typeDeclaration?.name?.name;
+        const typeName = nameOrString != null ? getOriginalName(nameOrString) : undefined;
         return typeName != null && EXTERNAL_PROTO_TYPE_NAMES.has(typeName);
     }
 
@@ -132,7 +133,8 @@ export class ProtobufResolver extends WithGeneration {
      */
     public getExternalProtobufClassReference(typeId: TypeId): ast.ClassReference {
         const typeDeclaration = this.generation.ir.types[typeId];
-        const typeName = typeDeclaration?.name?.name?.originalName;
+        const nameOrString = typeDeclaration?.name?.name;
+        const typeName = nameOrString != null ? getOriginalName(nameOrString) : undefined;
         const mapping = EXTERNAL_PROTO_TYPE_CLASS_REFERENCES[typeName ?? ""];
         if (mapping != null) {
             return this.csharp.classReference({

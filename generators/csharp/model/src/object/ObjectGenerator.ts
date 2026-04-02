@@ -7,7 +7,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleObjectType = FernIr.ExampleObjectType;
-type NameAndWireValue = FernIr.NameAndWireValue;
+type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
 type ObjectProperty = FernIr.ObjectProperty;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
@@ -186,7 +186,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         extraProperties,
         parseDatetimes
     }: {
-        extraProperties: { name: NameAndWireValue; value: FernIr.ExampleTypeReference }[];
+        extraProperties: FernIr.ExampleExtraObjectProperty[];
         parseDatetimes: boolean;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
@@ -240,9 +240,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         objectProperty
     }: {
         className: string;
-        objectProperty: NameAndWireValue;
+        objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = caseConverter.pascalSafe(objectProperty.name);
+        const propertyName = caseConverter.pascalSafe(objectProperty);
         if (propertyName === className) {
             return `${propertyName}_`;
         }

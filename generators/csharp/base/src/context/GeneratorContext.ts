@@ -805,9 +805,15 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ast.ClassReference {
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: FernIr.NameOrString): ast.ClassReference {
+        if (typeof requestName !== "string") {
+            return this.csharp.classReference({
+                origin: requestName,
+                namespace: this.getNamespaceForServiceId(serviceId)
+            });
+        }
         return this.csharp.classReference({
-            origin: requestName,
+            name: caseConverter.pascalSafe(requestName),
             namespace: this.getNamespaceForServiceId(serviceId)
         });
     }
@@ -962,12 +968,19 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                         utd.types.map((type) => {
-                            caseConverter.pascalSafe(type.discriminantValue.name);
+                            caseConverter.pascalSafe(type.discriminantValue);
 
-                            this.csharp.classReference({
-                                origin: type.discriminantValue,
-                                enclosingType
-                            });
+                            if (typeof type.discriminantValue !== "string") {
+                                this.csharp.classReference({
+                                    origin: type.discriminantValue,
+                                    enclosingType
+                                });
+                            } else {
+                                this.csharp.classReference({
+                                    name: caseConverter.pascalSafe(type.discriminantValue),
+                                    enclosingType
+                                });
+                            }
                         });
 
                         this.csharp.classReference({

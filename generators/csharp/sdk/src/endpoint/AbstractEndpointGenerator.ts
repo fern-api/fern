@@ -168,7 +168,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             return listItemType.getCollectionItemType();
         }
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.fullyQualifiedName}.`
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
 
@@ -218,7 +218,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({

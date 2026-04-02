@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -765,7 +765,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 // collect each part (parameter, then tail)
                 for (const each of this.websocketChannel.path.parts) {
                     const pp = this.websocketChannel.pathParameters.find(
-                        (p) => p.name.originalName === each.pathParameter
+                        (p) => getOriginalName(p.name) === each.pathParameter
                     );
                     if (pp) {
                         parts.push(

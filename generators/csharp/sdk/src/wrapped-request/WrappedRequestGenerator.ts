@@ -175,16 +175,29 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     reference: reference.requestBodyType
                 });
                 const useRequired = !type.isOptional;
-                class_.addField({
-                    origin: this.wrapper.bodyKey,
-                    type,
-                    access: ast.Access.Public,
-                    get: true,
-                    set: true,
-                    summary: reference.docs,
-                    useRequired,
-                    annotations: [this.System.Text.Json.Serialization.JsonIgnore]
-                });
+                if (typeof this.wrapper.bodyKey === "string") {
+                    class_.addField({
+                        name: caseConverter.pascalSafe(this.wrapper.bodyKey),
+                        type,
+                        access: ast.Access.Public,
+                        get: true,
+                        set: true,
+                        summary: reference.docs,
+                        useRequired,
+                        annotations: [this.System.Text.Json.Serialization.JsonIgnore]
+                    });
+                } else {
+                    class_.addField({
+                        origin: this.wrapper.bodyKey,
+                        type,
+                        access: ast.Access.Public,
+                        get: true,
+                        set: true,
+                        summary: reference.docs,
+                        useRequired,
+                        annotations: [this.System.Text.Json.Serialization.JsonIgnore]
+                    });
+                }
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];

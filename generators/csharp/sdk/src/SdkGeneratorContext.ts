@@ -93,9 +93,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path: FernIr.Name) =>
-                    caseConverter.pascalSafe(path)
-                ),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path)),
                 this.constants.folders.types
             ].join("/")
         );

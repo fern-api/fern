@@ -61,16 +61,27 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             type: ast.Class.ClassType.Record
         });
 
-        const discriminant = class_.addField({
-            origin: this.unionDeclaration.discriminant,
-            enclosingType: class_,
-            summary: "Discriminant value",
-            jsonPropertyName: getOriginalName(this.unionDeclaration.discriminant.name),
-            access: ast.Access.Public,
-            type: this.Primitive.string,
-            get: "public",
-            set: "internal"
-        });
+        const discriminant = typeof this.unionDeclaration.discriminant === "string"
+            ? class_.addField({
+                  name: caseConverter.pascalSafe(this.unionDeclaration.discriminant),
+                  enclosingType: class_,
+                  summary: "Discriminant value",
+                  jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
+                  access: ast.Access.Public,
+                  type: this.Primitive.string,
+                  get: "public",
+                  set: "internal"
+              })
+            : class_.addField({
+                  origin: this.unionDeclaration.discriminant,
+                  enclosingType: class_,
+                  summary: "Discriminant value",
+                  jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
+                  access: ast.Access.Public,
+                  type: this.Primitive.string,
+                  get: "public",
+                  set: "internal"
+              });
 
         const value = class_.addField({
             enclosingType: class_,
@@ -129,7 +140,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
 
         this.unionDeclaration.types.forEach((type) => {
             const innerClassType = this.getUnionTypeClassReferenceByTypeName(
-                caseConverter.pascalSafe(type.discriminantValue.name)
+                caseConverter.pascalSafe(type.discriminantValue)
             );
             class_.addConstructor({
                 doc: {
@@ -166,7 +177,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 },
                 access: ast.Access.Public,
                 type: this.Primitive.boolean,
-                origin: class_.explicit(`Is${caseConverter.pascalUnsafe(type.discriminantValue.name)}`),
+                origin: class_.explicit(`Is${caseConverter.pascalUnsafe(type.discriminantValue)}`),
                 get: true,
                 initializer: this.csharp.codeblock(`${discriminant.name} == "${getWireValue(type.discriminantValue)}"`)
             });
@@ -198,10 +209,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 },
                 access: ast.Access.Public,
                 return_: memberType,
-                name: `As${caseConverter.pascalUnsafe(type.discriminantValue.name)}`,
+                name: `As${caseConverter.pascalUnsafe(type.discriminantValue)}`,
                 bodyType: ast.Method.BodyType.Expression,
                 body: this.csharp.codeblock((writer: Writer) => {
-                    writer.write(`Is${caseConverter.pascalUnsafe(type.discriminantValue.name)} ? `);
+                    writer.write(`Is${caseConverter.pascalUnsafe(type.discriminantValue)} ? `);
                     if (!is.Primitive.object(memberType.asNonOptional())) {
                         writer.write("(", memberType, ")");
                     }
@@ -227,7 +238,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 ...this.unionDeclaration.types.map((type) => {
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
-                        name: `on${caseConverter.pascalUnsafe(type.discriminantValue.name)}`,
+                        name: `on${caseConverter.pascalUnsafe(type.discriminantValue)}`,
                         type: this.System.Func([memberType], tType)
                     });
                 }),
@@ -243,7 +254,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     writer.writeNode(this.csharp.string_({ string: getWireValue(type.discriminantValue) }));
                     writer.write(" => ");
                     writer.writeLine(
-                        `on${caseConverter.pascalUnsafe(type.discriminantValue.name)}(As${caseConverter.pascalUnsafe(type.discriminantValue.name)}()),`
+                        `on${caseConverter.pascalUnsafe(type.discriminantValue)}(As${caseConverter.pascalUnsafe(type.discriminantValue)}()),`
                     );
                 });
                 writer.writeLine(`_ => onUnknown_(${discriminant.name}, ${value.name})`);
@@ -259,7 +270,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 ...this.unionDeclaration.types.map((type) => {
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
-                        name: `on${caseConverter.pascalUnsafe(type.discriminantValue.name)}`,
+                        name: `on${caseConverter.pascalUnsafe(type.discriminantValue)}`,
                         type: this.System.Action([memberType])
                     });
                 }),
@@ -275,7 +286,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     writer.writeLine(`case "${getWireValue(type.discriminantValue)}":`);
                     writer.indent();
                     writer.writeTextStatement(
-                        `on${caseConverter.pascalUnsafe(type.discriminantValue.name)}(As${caseConverter.pascalUnsafe(type.discriminantValue.name)}())`
+                        `on${caseConverter.pascalUnsafe(type.discriminantValue)}(As${caseConverter.pascalUnsafe(type.discriminantValue)}())`
                     );
                     writer.writeTextStatement("break");
                     writer.dedent();
@@ -320,7 +331,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 },
                 access: ast.Access.Public,
                 return_: this.Primitive.boolean,
-                name: `TryAs${caseConverter.pascalUnsafe(type.discriminantValue.name)}`,
+                name: `TryAs${caseConverter.pascalUnsafe(type.discriminantValue)}`,
                 body: this.csharp.codeblock((writer: Writer) => {
                     writer.writeLine(`if(${discriminant.name} == "${getWireValue(type.discriminantValue)}")`);
                     writer.pushScope();
@@ -359,7 +370,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                             parameter: this.csharp.parameter({
                                 name: "value",
                                 type: this.getUnionTypeClassReferenceByTypeName(
-                                    caseConverter.pascalSafe(type.discriminantValue.name)
+                                    caseConverter.pascalSafe(type.discriminantValue)
                                 )
                             }),
                             useExpressionBody: true,
@@ -375,16 +386,30 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             this.unionDeclaration.types.map((type) => {
                 const isNoProperties = type.shape.propertiesType === "noProperties";
                 const memberType = this.getCsharpType(type);
-                const unionTypeClass = this.csharp.class_({
-                    origin: this.model.explicit(type.discriminantValue, "Inner"),
-                    reference: this.getUnionTypeClassReferenceByTypeName(
-                        caseConverter.pascalSafe(type.discriminantValue.name)
-                    ),
-                    summary: `Discriminated union type for ${getOriginalName(type.discriminantValue)}`,
-                    access: ast.Access.Public,
-                    type: memberType.isReferenceType ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
-                    annotations: [this.System.Serializable]
-                });
+                const unionTypeRef = this.getUnionTypeClassReferenceByTypeName(
+                    caseConverter.pascalSafe(type.discriminantValue)
+                );
+                const unionTypeSummary = `Discriminated union type for ${getOriginalName(type.discriminantValue)}`;
+                const unionClassType = memberType.isReferenceType
+                    ? ast.Class.ClassType.Record
+                    : ast.Class.ClassType.Struct;
+                const unionTypeClass =
+                    typeof type.discriminantValue !== "string"
+                        ? this.csharp.class_({
+                              origin: this.model.explicit(type.discriminantValue, "Inner"),
+                              reference: unionTypeRef,
+                              summary: unionTypeSummary,
+                              access: ast.Access.Public,
+                              type: unionClassType,
+                              annotations: [this.System.Serializable]
+                          })
+                        : this.csharp.class_({
+                              reference: unionTypeRef,
+                              summary: unionTypeSummary,
+                              access: ast.Access.Public,
+                              type: unionClassType,
+                              annotations: [this.System.Serializable]
+                          });
                 if (isNoProperties) {
                     unionTypeClass.addField({
                         origin: unionTypeClass.explicit("Value"),
@@ -438,7 +463,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 // e.g., for `optional<Foo>`, the inner class `Foo` wrapping `Foo?` would generate
                 // `implicit operator Foo(Foo? value)` which is a self-conversion.
                 const innerClassName = this.getUnionTypeClassReferenceByTypeName(
-                    caseConverter.pascalSafe(type.discriminantValue.name)
+                    caseConverter.pascalSafe(type.discriminantValue)
                 ).name;
                 const isSelfConversion =
                     memberType.isOptional &&
@@ -872,7 +897,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         // todo - this should really be dereferencing the type and looking it up...
         return this.csharp.instantiateClass({
             classReference: this.getUnionTypeClassReferenceByTypeName(
-                caseConverter.pascalSafe(exampleUnion.singleUnionType.wireDiscriminantValue.name)
+                caseConverter.pascalSafe(exampleUnion.singleUnionType.wireDiscriminantValue)
             ),
             arguments_: [innerValue]
         });

@@ -405,13 +405,13 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType): string {
-        // get the name of the enum value
-        const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
+    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValueOrString | FernIr.ExampleEnumType): string {
+        // get the name of the enum value - ExampleEnumType.value is NameAndWireValueOrString
+        const name: NameInput = is.IR.ExampleEnumType(valueName) ? valueName.value : valueName;
         // match the name given to the name in the actual type
         const member = typeEnum.values.find((v) => this.nameEquals(v.name, name));
         // return the property name for that value
-        return member ? this.getPropertyNameFor(member) : fail(`Unexpected - can't find enum value ${name} in enum`);
+        return member ? this.getPropertyNameFor(member) : fail(`Unexpected - can't find enum value ${JSON.stringify(name)} in enum`);
     }
 
     /**
