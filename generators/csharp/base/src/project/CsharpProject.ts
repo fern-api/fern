@@ -329,8 +329,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
 dotnet_diagnostic.IDE0005.severity = error          
           `
             );
-            // Re-format files modified by dotnet format
+            // Re-format files modified by dotnet format (covers both library and test projects)
             await this.formatCsFilesOnDisk(absolutePathToProjectDirectory);
+            await this.formatCsFilesOnDisk(absolutePathToTestProjectDirectory);
         }
         this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
