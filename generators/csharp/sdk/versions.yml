@@ -2,15 +2,9 @@
 - version: 2.55.4
   changelogEntry:
     - summary: |
-        Fix namespace conflict detection in generated subpackage client and
-        WebSocket client files. `SubPackageClientGenerator`,
-        `SubPackageClientInterfaceGenerator`, and `WebsocketClientGenerator`
-        were using `allNamespacesOf()` (fully-qualified prefix paths) instead
-        of `getAllNamespaceSegments()` (individual segment names) for the
-        `allNamespaceSegments` parameter. This caused `hasProjectNamespaceConflict()`
-        to miss conflicts where a type name matches a namespace segment, leading
-        to C# compilation errors (e.g., CS0118 namespace-vs-type ambiguity)
-        when `explicit-namespaces` is enabled.
+        Fix C# compilation errors (CS0118) in generated subpackage clients
+        where a type name collides with a namespace segment. Type references
+        are now fully qualified to avoid ambiguity.
       type: fix
   createdAt: "2026-04-01"
   irVersion: 65
