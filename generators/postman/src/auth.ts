@@ -1,6 +1,9 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
 import { getReferenceToVariable } from "./utils.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: undefined, keywords: undefined, smartCasing: true });
 
 const BASIC_AUTH_USERNAME_VARIABLE = "username";
 const BASIC_AUTH_PASSWORD_VARIABLE = "password";
@@ -55,7 +58,7 @@ export function convertAuth(schemes: FernIr.AuthScheme[]): PostmanRequestAuth | 
                         },
                         {
                             key: "key",
-                            value: header.name.wireValue,
+                            value: getWireValue(header.name),
                             type: "string"
                         },
                         {
@@ -66,6 +69,16 @@ export function convertAuth(schemes: FernIr.AuthScheme[]): PostmanRequestAuth | 
                     ]
                 };
             },
+            inferred: () => ({
+                type: "bearer",
+                bearer: [
+                    {
+                        key: "token",
+                        value: getReferenceToVariable(BEARER_AUTH_TOKEN_VARIABLE),
+                        type: "string"
+                    }
+                ]
+            }),
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
             }
@@ -87,12 +100,13 @@ export function getAuthHeaders(schemes: FernIr.AuthScheme[]): PostmanHeader[] {
             oauth: () => [],
             header: (header): PostmanHeader[] => [
                 {
-                    key: header.name.wireValue,
+                    key: getWireValue(header.name),
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
                     type: "string",
                     description: header.docs ?? undefined
                 }
             ],
+            inferred: () => [],
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
             }
@@ -135,6 +149,13 @@ export function getVariablesForAuthScheme(scheme: FernIr.AuthScheme): PostmanVar
                 type: "string"
             }
         ],
+        inferred: () => [
+            {
+                key: BEARER_AUTH_TOKEN_VARIABLE,
+                value: "",
+                type: "string"
+            }
+        ],
         _other: () => {
             throw new Error("Unknown auth scheme: " + scheme.type);
         }
@@ -142,5 +163,6 @@ export function getVariablesForAuthScheme(scheme: FernIr.AuthScheme): PostmanVar
 }
 
 function getVariableForAuthHeader(header: FernIr.HeaderAuthScheme): string {
-    return header.name.name.camelCase.unsafeName;
+    const nameValue = typeof header.name === "string" ? header.name : header.name.name;
+    return caseConverter.camelUnsafe(nameValue);
 }

@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest.js";
@@ -19,10 +20,10 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     protected getQueryParams(): PostmanUrlVariable[] {
         return this.example.queryParameters.map((exampleQueryParameter) => {
             const queryParameterDeclaration = this.httpEndpoint.queryParameters.find(
-                (param) => param.name.wireValue === exampleQueryParameter.name.wireValue
+                (param) => getWireValue(param.name) === getWireValue(exampleQueryParameter.name)
             );
             if (queryParameterDeclaration == null) {
-                throw new Error(`Cannot find query parameter ${exampleQueryParameter.name.wireValue}`);
+                throw new Error(`Cannot find query parameter ${getWireValue(exampleQueryParameter.name)}`);
             }
 
             // Optional parameters should be disabled by default in Postman UI
@@ -31,7 +32,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 queryParameterDeclaration.valueType.container.type === "optional";
 
             return {
-                key: exampleQueryParameter.name.wireValue,
+                key: getWireValue(exampleQueryParameter.name),
                 description: queryParameterDeclaration.docs ?? undefined,
                 value:
                     typeof exampleQueryParameter.value.jsonExample !== "string"
@@ -68,13 +69,13 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     }) {
         return examples.map((examplePathParameter) => {
             const pathParameterDeclaration = pathParameters.find(
-                (param) => param.name.originalName === examplePathParameter.name.originalName
+                (param) => getOriginalName(param.name) === getOriginalName(examplePathParameter.name)
             );
             if (pathParameterDeclaration == null) {
-                throw new Error(`Cannot find path parameter ${examplePathParameter.name.originalName}`);
+                throw new Error(`Cannot find path parameter ${getOriginalName(examplePathParameter.name)}`);
             }
             return {
-                key: examplePathParameter.name.originalName,
+                key: getOriginalName(examplePathParameter.name),
                 description: pathParameterDeclaration.docs ?? undefined,
                 value:
                     typeof examplePathParameter.value.jsonExample !== "string"
@@ -112,9 +113,9 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         examples: FernIr.ExampleHeader[];
     }): PostmanHeader[] {
         return examples.map((exampleHeader) => {
-            const headerDeclaration = headers.find((header) => header.name.wireValue === exampleHeader.name.wireValue);
+            const headerDeclaration = headers.find((header) => getWireValue(header.name) === getWireValue(exampleHeader.name));
             if (headerDeclaration == null) {
-                throw new Error(`Cannot find header ${exampleHeader.name.wireValue}`);
+                throw new Error(`Cannot find header ${getWireValue(exampleHeader.name)}`);
             }
             return this.convertHeader({
                 header: headerDeclaration,

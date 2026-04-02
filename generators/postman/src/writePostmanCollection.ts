@@ -4,7 +4,8 @@ import {
     GeneratorUpdate,
     LogLevel,
     parseGeneratorConfig,
-    parseIR
+    parseIR,
+    getOriginalName
 } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -61,7 +62,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 collectionName:
                     postmanGeneratorConfig?.["collection-name"] ??
                     ir.apiDisplayName ??
-                    startCase(ir.apiName.originalName),
+                    startCase(getOriginalName(ir.apiName)),
                 collectionDescription: postmanGeneratorConfig?.["collection-description"]
             });
             const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition, {
@@ -90,16 +91,20 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 await publishConfig._visit({
                     _other: () => undefined,
                     direct: async () => {
-                        await publishCollection({
-                            publishConfig: {
-                                apiKey: publishConfig.target.apiKey,
-                                workspaceId: publishConfig.target.workspaceId,
-                                collectionId: publishConfig.target.collectionId
-                            },
-                            collection: rawCollectionDefinition
-                        });
+                        const target = publishConfig.target;
+                        if (target.type === "postman") {
+                            await publishCollection({
+                                publishConfig: {
+                                    apiKey: target.apiKey,
+                                    workspaceId: target.workspaceId,
+                                    collectionId: target.collectionId
+                                },
+                                collection: rawCollectionDefinition
+                            });
+                        }
                     },
-                    github: () => undefined
+                    github: () => undefined,
+                    filesystem: () => undefined
                 });
             } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
