@@ -115,6 +115,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
+                    let isFirstBlock = true;
+                    let emittedAnyBlock = false;
                     for (let i = 0; i < basicAuthSchemes.length; i++) {
                         const basicAuthScheme = basicAuthSchemes[i];
                         if (basicAuthScheme == null) {
@@ -142,22 +144,24 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             continue;
                         }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
-                            if (i === 0) {
+                            if (isFirstBlock) {
                                 writer.writeLine(`if ${condition}`);
                             } else {
                                 writer.writeLine(`elsif ${condition}`);
                             }
+                            isFirstBlock = false;
+                            emittedAnyBlock = true;
                             writer.writeLine(
                                 `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
                             );
-                            if (i === basicAuthSchemes.length - 1) {
-                                writer.writeLine(`end`);
-                            }
                         } else {
                             writer.writeLine(
                                 `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
                             );
                         }
+                    }
+                    if (emittedAnyBlock && (isAuthOptional || basicAuthSchemes.length > 1)) {
+                        writer.writeLine(`end`);
                     }
                 }
                 writer.write(`@raw_client = `);
