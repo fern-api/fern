@@ -1,4 +1,3 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     PostmanHeader,
@@ -10,8 +9,6 @@ import {
 } from "@fern-fern/postman-sdk/api";
 import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils.js";
 import { GeneratedRequest } from "./GeneratedRequest.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: undefined, keywords: undefined, smartCasing: true });
 
 export declare namespace AbstractGeneratedRequest {
     export interface Init {
@@ -82,10 +79,9 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     }
 
     protected convertHeader({ header, value }: { header: FernIr.HttpHeader; value?: unknown }): PostmanHeader {
-        const nameValue = typeof header.name === "string" ? header.name : header.name.name;
-        const valueOrDefault = value ?? `YOUR_${caseConverter.screamingSnakeUnsafe(nameValue)}`;
+        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
-            key: getWireValue(header.name),
+            key: header.name.wireValue,
             description: header.docs ?? undefined,
             type: "text",
             value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : ""
@@ -99,8 +95,6 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             put: () => PostmanMethod.Put,
             patch: () => PostmanMethod.Patch,
             delete: () => PostmanMethod.Delete,
-            // PostmanMethod enum lacks HEAD; mapping to GET as closest equivalent
-            head: () => PostmanMethod.Get,
             _other: () => {
                 throw new Error("Unexpected httpMethod: " + httpMethod);
             }

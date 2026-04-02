@@ -1,4 +1,3 @@
-import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
 import { isEqual, startCase } from "lodash";
@@ -35,13 +34,12 @@ export function convertExampleEndpointCall({
         ...getNameAndStatus({ example, allErrors }),
         originalRequest: generatedRequest,
         description:
-            httpEndpoint.response?.body?._visit<string | undefined>({
+            httpEndpoint.response?.body?._visit({
                 fileDownload: (value) => value.docs,
                 json: (value) => value.docs,
                 streamParameter: (value) => value.streamResponse.docs,
                 streaming: (value) => value.docs,
                 text: (value) => value.docs,
-                bytes: () => undefined,
                 _other: () => undefined
             }) ?? undefined,
         body: example.response._visit({
@@ -86,10 +84,10 @@ function getNameAndStatus({
         const errorName = example.response.error;
         const errorDeclaration = allErrors.find((error) => isEqual(error.name, errorName));
         if (errorDeclaration == null) {
-            throw new Error("Cannot find error: " + getOriginalName(errorName.name));
+            throw new Error("Cannot find error: " + errorName.name.originalName);
         }
 
-        const errorDisplayName = startCase(getOriginalName(errorName.name));
+        const errorDisplayName = startCase(errorName.name.originalName);
         return {
             name: errorDisplayName,
             status: errorDisplayName,
