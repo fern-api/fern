@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Schema-less Response Examples API",
   "auth": {
     "requirement": "ALL",
@@ -30,53 +12,14 @@
   "errors": {
     "error_:BadRequestError": {
       "name": {
-        "name": {
-          "originalName": "BadRequestError",
-          "camelCase": {
-            "unsafeName": "badRequestError",
-            "safeName": "badRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "bad_request_error",
-            "safeName": "bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BAD_REQUEST_ERROR",
-            "safeName": "BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "BadRequestError",
-            "safeName": "BadRequestError"
-          }
-        },
+        "name": "BadRequestError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "errorId": "error_:BadRequestError"
       },
-      "discriminantValue": {
-        "name": {
-          "originalName": "BadRequestError",
-          "camelCase": {
-            "unsafeName": "badRequestError",
-            "safeName": "badRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "bad_request_error",
-            "safeName": "bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BAD_REQUEST_ERROR",
-            "safeName": "BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "BadRequestError",
-            "safeName": "BadRequestError"
-          }
-        },
-        "wireValue": "BadRequestError"
-      },
+      "discriminantValue": "BadRequestError",
       "docs": "Bad request",
       "statusCode": 400,
       "type": {
@@ -109,25 +52,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createPlant",
-          "name": {
-            "originalName": "createPlant",
-            "camelCase": {
-              "unsafeName": "createPlant",
-              "safeName": "createPlant"
-            },
-            "snakeCase": {
-              "unsafeName": "create_plant",
-              "safeName": "create_plant"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_PLANT",
-              "safeName": "CREATE_PLANT"
-            },
-            "pascalCase": {
-              "unsafeName": "CreatePlant",
-              "safeName": "CreatePlant"
-            }
-          },
+          "name": "createPlant",
           "displayName": "Create a Plant",
           "auth": false,
           "idempotent": false,
@@ -145,51 +70,12 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreatePlant",
-              "camelCase": {
-                "unsafeName": "createPlant",
-                "safeName": "createPlant"
-              },
-              "snakeCase": {
-                "unsafeName": "create_plant",
-                "safeName": "create_plant"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CREATE_PLANT",
-                "safeName": "CREATE_PLANT"
-              },
-              "pascalCase": {
-                "unsafeName": "CreatePlant",
-                "safeName": "CreatePlant"
-              }
-            },
+            "name": "CreatePlant",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "originalName": "name",
-                    "camelCase": {
-                      "unsafeName": "name",
-                      "safeName": "name"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "name",
-                      "safeName": "name"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "NAME",
-                      "safeName": "NAME"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Name",
-                      "safeName": "Name"
-                    }
-                  },
-                  "wireValue": "name"
-                },
+                "name": "name",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -205,28 +91,7 @@
                 }
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "species",
-                    "camelCase": {
-                      "unsafeName": "species",
-                      "safeName": "species"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "species",
-                      "safeName": "species"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SPECIES",
-                      "safeName": "SPECIES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Species",
-                      "safeName": "Species"
-                    }
-                  },
-                  "wireValue": "species"
-                },
+                "name": "species",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -248,67 +113,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreatePlant",
-                "camelCase": {
-                  "unsafeName": "createPlant",
-                  "safeName": "createPlant"
-                },
-                "snakeCase": {
-                  "unsafeName": "create_plant",
-                  "safeName": "create_plant"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATE_PLANT",
-                  "safeName": "CREATE_PLANT"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreatePlant",
-                  "safeName": "CreatePlant"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "CreatePlant",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -327,25 +138,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "BadRequestError",
-                  "camelCase": {
-                    "unsafeName": "badRequestError",
-                    "safeName": "badRequestError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bad_request_error",
-                    "safeName": "bad_request_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BAD_REQUEST_ERROR",
-                    "safeName": "BAD_REQUEST_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BadRequestError",
-                    "safeName": "BadRequestError"
-                  }
-                },
+                "name": "BadRequestError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -362,28 +155,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -464,6 +236,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "name",
                   "name": {
                     "originalName": "name",
                     "camelCase": {
@@ -482,8 +255,7 @@
                       "unsafeName": "Name",
                       "safeName": "Name"
                     }
-                  },
-                  "wireValue": "name"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -492,6 +264,7 @@
               },
               {
                 "name": {
+                  "wireValue": "species",
                   "name": {
                     "originalName": "species",
                     "camelCase": {
@@ -510,8 +283,7 @@
                       "unsafeName": "Species",
                       "safeName": "Species"
                     }
-                  },
-                  "wireValue": "species"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -536,6 +308,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

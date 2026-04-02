@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "objects-with-imports",
-        "camelCase": {
-            "unsafeName": "objectsWithImports",
-            "safeName": "objectsWithImports"
-        },
-        "snakeCase": {
-            "unsafeName": "objects_with_imports",
-            "safeName": "objects_with_imports"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "OBJECTS_WITH_IMPORTS",
-            "safeName": "OBJECTS_WITH_IMPORTS"
-        },
-        "pascalCase": {
-            "unsafeName": "ObjectsWithImports",
-            "safeName": "ObjectsWithImports"
-        }
-    },
+    "apiName": "objects-with-imports",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -34,67 +16,13 @@
         "type_optional:SendOptionalBodyRequest": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "SendOptionalBodyRequest",
-                    "camelCase": {
-                        "unsafeName": "sendOptionalBodyRequest",
-                        "safeName": "sendOptionalBodyRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "send_optional_body_request",
-                        "safeName": "send_optional_body_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SEND_OPTIONAL_BODY_REQUEST",
-                        "safeName": "SEND_OPTIONAL_BODY_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SendOptionalBodyRequest",
-                        "safeName": "SendOptionalBodyRequest"
-                    }
-                },
+                "name": "SendOptionalBodyRequest",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "optional",
-                            "camelCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OPTIONAL",
-                                "safeName": "OPTIONAL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Optional",
-                                "safeName": "Optional"
-                            }
-                        }
+                        "optional"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "file": "optional"
                 },
                 "displayName": null,
                 "typeId": "type_optional:SendOptionalBodyRequest"
@@ -104,28 +32,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
-                            "wireValue": "message"
-                        },
+                        "name": "message",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -164,67 +71,13 @@
         "type_optional:DeployParams": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DeployParams",
-                    "camelCase": {
-                        "unsafeName": "deployParams",
-                        "safeName": "deployParams"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "deploy_params",
-                        "safeName": "deploy_params"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DEPLOY_PARAMS",
-                        "safeName": "DEPLOY_PARAMS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DeployParams",
-                        "safeName": "DeployParams"
-                    }
-                },
+                "name": "DeployParams",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "optional",
-                            "camelCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OPTIONAL",
-                                "safeName": "OPTIONAL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Optional",
-                                "safeName": "Optional"
-                            }
-                        }
+                        "optional"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "file": "optional"
                 },
                 "displayName": null,
                 "typeId": "type_optional:DeployParams"
@@ -234,28 +87,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "updateDraft",
-                                "camelCase": {
-                                    "unsafeName": "updateDraft",
-                                    "safeName": "updateDraft"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "update_draft",
-                                    "safeName": "update_draft"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "UPDATE_DRAFT",
-                                    "safeName": "UPDATE_DRAFT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "UpdateDraft",
-                                    "safeName": "UpdateDraft"
-                                }
-                            },
-                            "wireValue": "updateDraft"
-                        },
+                        "name": "updateDraft",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -299,67 +131,13 @@
         "type_optional:DeployResponse": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DeployResponse",
-                    "camelCase": {
-                        "unsafeName": "deployResponse",
-                        "safeName": "deployResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "deploy_response",
-                        "safeName": "deploy_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DEPLOY_RESPONSE",
-                        "safeName": "DEPLOY_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DeployResponse",
-                        "safeName": "DeployResponse"
-                    }
-                },
+                "name": "DeployResponse",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "optional",
-                            "camelCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OPTIONAL",
-                                "safeName": "OPTIONAL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Optional",
-                                "safeName": "Optional"
-                            }
-                        }
+                        "optional"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "file": "optional"
                 },
                 "displayName": null,
                 "typeId": "type_optional:DeployResponse"
@@ -369,28 +147,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "success",
-                                "camelCase": {
-                                    "unsafeName": "success",
-                                    "safeName": "success"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "success",
-                                    "safeName": "success"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SUCCESS",
-                                    "safeName": "SUCCESS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Success",
-                                    "safeName": "Success"
-                                }
-                            },
-                            "wireValue": "success"
-                        },
+                        "name": "success",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -433,46 +190,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "optional",
-                            "camelCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OPTIONAL",
-                                "safeName": "OPTIONAL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Optional",
-                                "safeName": "Optional"
-                            }
-                        }
+                        "optional"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "file": "optional"
                 }
             },
             "displayName": null,
@@ -492,25 +213,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_optional.sendOptionalBody",
-                    "name": {
-                        "originalName": "sendOptionalBody",
-                        "camelCase": {
-                            "unsafeName": "sendOptionalBody",
-                            "safeName": "sendOptionalBody"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "send_optional_body",
-                            "safeName": "send_optional_body"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SEND_OPTIONAL_BODY",
-                            "safeName": "SEND_OPTIONAL_BODY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "SendOptionalBody",
-                            "safeName": "SendOptionalBody"
-                        }
-                    },
+                    "name": "sendOptionalBody",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -600,25 +303,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -725,25 +410,7 @@
                 },
                 {
                     "id": "endpoint_optional.sendOptionalTypedBody",
-                    "name": {
-                        "originalName": "sendOptionalTypedBody",
-                        "camelCase": {
-                            "unsafeName": "sendOptionalTypedBody",
-                            "safeName": "sendOptionalTypedBody"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "send_optional_typed_body",
-                            "safeName": "send_optional_typed_body"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SEND_OPTIONAL_TYPED_BODY",
-                            "safeName": "SEND_OPTIONAL_TYPED_BODY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "SendOptionalTypedBody",
-                            "safeName": "SendOptionalTypedBody"
-                        }
-                    },
+                    "name": "sendOptionalTypedBody",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -772,67 +439,13 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "SendOptionalBodyRequest",
-                                        "camelCase": {
-                                            "unsafeName": "sendOptionalBodyRequest",
-                                            "safeName": "sendOptionalBodyRequest"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "send_optional_body_request",
-                                            "safeName": "send_optional_body_request"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SEND_OPTIONAL_BODY_REQUEST",
-                                            "safeName": "SEND_OPTIONAL_BODY_REQUEST"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "SendOptionalBodyRequest",
-                                            "safeName": "SendOptionalBodyRequest"
-                                        }
-                                    },
+                                    "name": "SendOptionalBodyRequest",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "optional",
-                                                "camelCase": {
-                                                    "unsafeName": "optional",
-                                                    "safeName": "optional"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "optional",
-                                                    "safeName": "optional"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OPTIONAL",
-                                                    "safeName": "OPTIONAL"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Optional",
-                                                    "safeName": "Optional"
-                                                }
-                                            }
+                                            "optional"
                                         ],
                                         "packagePath": [],
-                                        "file": {
-                                            "originalName": "optional",
-                                            "camelCase": {
-                                                "unsafeName": "optional",
-                                                "safeName": "optional"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "optional",
-                                                "safeName": "optional"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "OPTIONAL",
-                                                "safeName": "OPTIONAL"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Optional",
-                                                "safeName": "Optional"
-                                            }
-                                        }
+                                        "file": "optional"
                                     },
                                     "displayName": null,
                                     "typeId": "type_optional:SendOptionalBodyRequest",
@@ -857,67 +470,13 @@
                                         "_type": "optional",
                                         "optional": {
                                             "_type": "named",
-                                            "name": {
-                                                "originalName": "SendOptionalBodyRequest",
-                                                "camelCase": {
-                                                    "unsafeName": "sendOptionalBodyRequest",
-                                                    "safeName": "sendOptionalBodyRequest"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "send_optional_body_request",
-                                                    "safeName": "send_optional_body_request"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "SEND_OPTIONAL_BODY_REQUEST",
-                                                    "safeName": "SEND_OPTIONAL_BODY_REQUEST"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "SendOptionalBodyRequest",
-                                                    "safeName": "SendOptionalBodyRequest"
-                                                }
-                                            },
+                                            "name": "SendOptionalBodyRequest",
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    {
-                                                        "originalName": "optional",
-                                                        "camelCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "OPTIONAL",
-                                                            "safeName": "OPTIONAL"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Optional",
-                                                            "safeName": "Optional"
-                                                        }
-                                                    }
+                                                    "optional"
                                                 ],
                                                 "packagePath": [],
-                                                "file": {
-                                                    "originalName": "optional",
-                                                    "camelCase": {
-                                                        "unsafeName": "optional",
-                                                        "safeName": "optional"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "optional",
-                                                        "safeName": "optional"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "OPTIONAL",
-                                                        "safeName": "OPTIONAL"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Optional",
-                                                        "safeName": "Optional"
-                                                    }
-                                                }
+                                                "file": "optional"
                                             },
                                             "displayName": null,
                                             "typeId": "type_optional:SendOptionalBodyRequest",
@@ -931,25 +490,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -982,7 +523,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "95f46eab",
+                                "id": "e547ae70",
                                 "url": "/send-optional-typed-body",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1000,67 +541,13 @@
                                             "optional": null,
                                             "valueType": {
                                                 "_type": "named",
-                                                "name": {
-                                                    "originalName": "SendOptionalBodyRequest",
-                                                    "camelCase": {
-                                                        "unsafeName": "sendOptionalBodyRequest",
-                                                        "safeName": "sendOptionalBodyRequest"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "send_optional_body_request",
-                                                        "safeName": "send_optional_body_request"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "SEND_OPTIONAL_BODY_REQUEST",
-                                                        "safeName": "SEND_OPTIONAL_BODY_REQUEST"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "SendOptionalBodyRequest",
-                                                        "safeName": "SendOptionalBodyRequest"
-                                                    }
-                                                },
+                                                "name": "SendOptionalBodyRequest",
                                                 "fernFilepath": {
                                                     "allParts": [
-                                                        {
-                                                            "originalName": "optional",
-                                                            "camelCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "OPTIONAL",
-                                                                "safeName": "OPTIONAL"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Optional",
-                                                                "safeName": "Optional"
-                                                            }
-                                                        }
+                                                        "optional"
                                                     ],
                                                     "packagePath": [],
-                                                    "file": {
-                                                        "originalName": "optional",
-                                                        "camelCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "OPTIONAL",
-                                                            "safeName": "OPTIONAL"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Optional",
-                                                            "safeName": "Optional"
-                                                        }
-                                                    }
+                                                    "file": "optional"
                                                 },
                                                 "displayName": null,
                                                 "typeId": "type_optional:SendOptionalBodyRequest",
@@ -1105,25 +592,7 @@
                 },
                 {
                     "id": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties",
-                    "name": {
-                        "originalName": "sendOptionalNullableWithAllOptionalProperties",
-                        "camelCase": {
-                            "unsafeName": "sendOptionalNullableWithAllOptionalProperties",
-                            "safeName": "sendOptionalNullableWithAllOptionalProperties"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "send_optional_nullable_with_all_optional_properties",
-                            "safeName": "send_optional_nullable_with_all_optional_properties"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SEND_OPTIONAL_NULLABLE_WITH_ALL_OPTIONAL_PROPERTIES",
-                            "safeName": "SEND_OPTIONAL_NULLABLE_WITH_ALL_OPTIONAL_PROPERTIES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "SendOptionalNullableWithAllOptionalProperties",
-                            "safeName": "SendOptionalNullableWithAllOptionalProperties"
-                        }
-                    },
+                    "name": "sendOptionalNullableWithAllOptionalProperties",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -1160,25 +629,7 @@
                     },
                     "pathParameters": [
                         {
-                            "name": {
-                                "originalName": "actionId",
-                                "camelCase": {
-                                    "unsafeName": "actionID",
-                                    "safeName": "actionID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "action_id",
-                                    "safeName": "action_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ACTION_ID",
-                                    "safeName": "ACTION_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ActionID",
-                                    "safeName": "ActionID"
-                                }
-                            },
+                            "name": "actionId",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1201,25 +652,7 @@
                             "docs": null
                         },
                         {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
+                            "name": "id",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1244,25 +677,7 @@
                     ],
                     "allPathParameters": [
                         {
-                            "name": {
-                                "originalName": "actionId",
-                                "camelCase": {
-                                    "unsafeName": "actionID",
-                                    "safeName": "actionID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "action_id",
-                                    "safeName": "action_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ACTION_ID",
-                                    "safeName": "ACTION_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ActionID",
-                                    "safeName": "ActionID"
-                                }
-                            },
+                            "name": "actionId",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1285,25 +700,7 @@
                             "docs": null
                         },
                         {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
+                            "name": "id",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1340,67 +737,13 @@
                                         "_type": "nullable",
                                         "nullable": {
                                             "_type": "named",
-                                            "name": {
-                                                "originalName": "DeployParams",
-                                                "camelCase": {
-                                                    "unsafeName": "deployParams",
-                                                    "safeName": "deployParams"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "deploy_params",
-                                                    "safeName": "deploy_params"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "DEPLOY_PARAMS",
-                                                    "safeName": "DEPLOY_PARAMS"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "DeployParams",
-                                                    "safeName": "DeployParams"
-                                                }
-                                            },
+                                            "name": "DeployParams",
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    {
-                                                        "originalName": "optional",
-                                                        "camelCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "optional",
-                                                            "safeName": "optional"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "OPTIONAL",
-                                                            "safeName": "OPTIONAL"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Optional",
-                                                            "safeName": "Optional"
-                                                        }
-                                                    }
+                                                    "optional"
                                                 ],
                                                 "packagePath": [],
-                                                "file": {
-                                                    "originalName": "optional",
-                                                    "camelCase": {
-                                                        "unsafeName": "optional",
-                                                        "safeName": "optional"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "optional",
-                                                        "safeName": "optional"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "OPTIONAL",
-                                                        "safeName": "OPTIONAL"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Optional",
-                                                        "safeName": "Optional"
-                                                    }
-                                                }
+                                                "file": "optional"
                                             },
                                             "displayName": null,
                                             "typeId": "type_optional:DeployParams",
@@ -1431,67 +774,13 @@
                                                 "_type": "nullable",
                                                 "nullable": {
                                                     "_type": "named",
-                                                    "name": {
-                                                        "originalName": "DeployParams",
-                                                        "camelCase": {
-                                                            "unsafeName": "deployParams",
-                                                            "safeName": "deployParams"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "deploy_params",
-                                                            "safeName": "deploy_params"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "DEPLOY_PARAMS",
-                                                            "safeName": "DEPLOY_PARAMS"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "DeployParams",
-                                                            "safeName": "DeployParams"
-                                                        }
-                                                    },
+                                                    "name": "DeployParams",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            {
-                                                                "originalName": "optional",
-                                                                "camelCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPTIONAL",
-                                                                    "safeName": "OPTIONAL"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Optional",
-                                                                    "safeName": "Optional"
-                                                                }
-                                                            }
+                                                            "optional"
                                                         ],
                                                         "packagePath": [],
-                                                        "file": {
-                                                            "originalName": "optional",
-                                                            "camelCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "OPTIONAL",
-                                                                "safeName": "OPTIONAL"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Optional",
-                                                                "safeName": "Optional"
-                                                            }
-                                                        }
+                                                        "file": "optional"
                                                     },
                                                     "displayName": null,
                                                     "typeId": "type_optional:DeployParams",
@@ -1507,25 +796,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -1535,67 +806,13 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "DeployResponse",
-                                        "camelCase": {
-                                            "unsafeName": "deployResponse",
-                                            "safeName": "deployResponse"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "deploy_response",
-                                            "safeName": "deploy_response"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DEPLOY_RESPONSE",
-                                            "safeName": "DEPLOY_RESPONSE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "DeployResponse",
-                                            "safeName": "DeployResponse"
-                                        }
-                                    },
+                                    "name": "DeployResponse",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "optional",
-                                                "camelCase": {
-                                                    "unsafeName": "optional",
-                                                    "safeName": "optional"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "optional",
-                                                    "safeName": "optional"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OPTIONAL",
-                                                    "safeName": "OPTIONAL"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Optional",
-                                                    "safeName": "Optional"
-                                                }
-                                            }
+                                            "optional"
                                         ],
                                         "packagePath": [],
-                                        "file": {
-                                            "originalName": "optional",
-                                            "camelCase": {
-                                                "unsafeName": "optional",
-                                                "safeName": "optional"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "optional",
-                                                "safeName": "optional"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "OPTIONAL",
-                                                "safeName": "OPTIONAL"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Optional",
-                                                "safeName": "Optional"
-                                            }
-                                        }
+                                        "file": "optional"
                                     },
                                     "displayName": null,
                                     "typeId": "type_optional:DeployResponse",
@@ -1616,31 +833,13 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a36b11fb",
+                                "id": "382d5a1f",
                                 "url": "/deploy/actionId/versions/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "actionId",
-                                            "camelCase": {
-                                                "unsafeName": "actionID",
-                                                "safeName": "actionID"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "action_id",
-                                                "safeName": "action_id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ACTION_ID",
-                                                "safeName": "ACTION_ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ActionID",
-                                                "safeName": "ActionID"
-                                            }
-                                        },
+                                        "name": "actionId",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -1655,25 +854,7 @@
                                         }
                                     },
                                     {
-                                        "name": {
-                                            "originalName": "id",
-                                            "camelCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "id",
-                                                "safeName": "id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ID",
-                                                "safeName": "ID"
-                                            }
-                                        },
+                                        "name": "id",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -1705,67 +886,13 @@
                                                     "_type": "nullable",
                                                     "nullable": {
                                                         "_type": "named",
-                                                        "name": {
-                                                            "originalName": "DeployParams",
-                                                            "camelCase": {
-                                                                "unsafeName": "deployParams",
-                                                                "safeName": "deployParams"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "deploy_params",
-                                                                "safeName": "deploy_params"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "DEPLOY_PARAMS",
-                                                                "safeName": "DEPLOY_PARAMS"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "DeployParams",
-                                                                "safeName": "DeployParams"
-                                                            }
-                                                        },
+                                                        "name": "DeployParams",
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                {
-                                                                    "originalName": "optional",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "optional",
-                                                                        "safeName": "optional"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "optional",
-                                                                        "safeName": "optional"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "OPTIONAL",
-                                                                        "safeName": "OPTIONAL"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Optional",
-                                                                        "safeName": "Optional"
-                                                                    }
-                                                                }
+                                                                "optional"
                                                             ],
                                                             "packagePath": [],
-                                                            "file": {
-                                                                "originalName": "optional",
-                                                                "camelCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPTIONAL",
-                                                                    "safeName": "OPTIONAL"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Optional",
-                                                                    "safeName": "Optional"
-                                                                }
-                                                            }
+                                                            "file": "optional"
                                                         },
                                                         "displayName": null,
                                                         "typeId": "type_optional:DeployParams",
@@ -1788,90 +915,15 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "DeployResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "deployResponse",
-                                                                        "safeName": "deployResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "deploy_response",
-                                                                        "safeName": "deploy_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DEPLOY_RESPONSE",
-                                                                        "safeName": "DEPLOY_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DeployResponse",
-                                                                        "safeName": "DeployResponse"
-                                                                    }
-                                                                },
+                                                                "name": "DeployResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        {
-                                                                            "originalName": "optional",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "optional",
-                                                                                "safeName": "optional"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "optional",
-                                                                                "safeName": "optional"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "OPTIONAL",
-                                                                                "safeName": "OPTIONAL"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Optional",
-                                                                                "safeName": "Optional"
-                                                                            }
-                                                                        }
+                                                                        "optional"
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "optional",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "optional",
-                                                                            "safeName": "optional"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "optional",
-                                                                            "safeName": "optional"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "OPTIONAL",
-                                                                            "safeName": "OPTIONAL"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Optional",
-                                                                            "safeName": "Optional"
-                                                                        }
-                                                                    }
+                                                                    "file": "optional"
                                                                 },
                                                                 "displayName": null,
                                                                 "typeId": "type_optional:DeployResponse"
@@ -1892,67 +944,13 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "DeployResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "deployResponse",
-                                                            "safeName": "deployResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "deploy_response",
-                                                            "safeName": "deploy_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "DEPLOY_RESPONSE",
-                                                            "safeName": "DEPLOY_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "DeployResponse",
-                                                            "safeName": "DeployResponse"
-                                                        }
-                                                    },
+                                                    "name": "DeployResponse",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            {
-                                                                "originalName": "optional",
-                                                                "camelCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "optional",
-                                                                    "safeName": "optional"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OPTIONAL",
-                                                                    "safeName": "OPTIONAL"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Optional",
-                                                                    "safeName": "Optional"
-                                                                }
-                                                            }
+                                                            "optional"
                                                         ],
                                                         "packagePath": [],
-                                                        "file": {
-                                                            "originalName": "optional",
-                                                            "camelCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "optional",
-                                                                "safeName": "optional"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "OPTIONAL",
-                                                                "safeName": "OPTIONAL"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Optional",
-                                                                "safeName": "Optional"
-                                                            }
-                                                        }
+                                                        "file": "optional"
                                                     },
                                                     "displayName": null,
                                                     "typeId": "type_optional:DeployResponse"
@@ -1984,28 +982,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -2101,6 +1078,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "message",
                             "name": {
                                 "originalName": "message",
                                 "camelCase": {
@@ -2119,8 +1097,7 @@
                                     "unsafeName": "Message",
                                     "safeName": "Message"
                                 }
-                            },
-                            "wireValue": "message"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2202,6 +1179,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "updateDraft",
                             "name": {
                                 "originalName": "updateDraft",
                                 "camelCase": {
@@ -2220,8 +1198,7 @@
                                     "unsafeName": "UpdateDraft",
                                     "safeName": "UpdateDraft"
                                 }
-                            },
-                            "wireValue": "updateDraft"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -2306,6 +1283,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "success",
                             "name": {
                                 "originalName": "success",
                                 "camelCase": {
@@ -2324,8 +1302,7 @@
                                     "unsafeName": "Success",
                                     "safeName": "Success"
                                 }
-                            },
-                            "wireValue": "success"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -2687,70 +1664,21 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {
         "subpackage_optional": {
-            "name": {
-                "originalName": "optional",
-                "camelCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "snakeCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "OPTIONAL",
-                    "safeName": "OPTIONAL"
-                },
-                "pascalCase": {
-                    "unsafeName": "Optional",
-                    "safeName": "Optional"
-                }
-            },
+            "name": "optional",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "optional"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "optional",
-                    "camelCase": {
-                        "unsafeName": "optional",
-                        "safeName": "optional"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "optional",
-                        "safeName": "optional"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "OPTIONAL",
-                        "safeName": "OPTIONAL"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Optional",
-                        "safeName": "Optional"
-                    }
-                }
+                "file": "optional"
             },
             "service": "service_optional",
             "types": [

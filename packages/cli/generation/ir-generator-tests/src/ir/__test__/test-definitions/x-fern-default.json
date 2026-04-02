@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "x-fern-default test",
     "apiDocs": null,
     "auth": {
@@ -31,26 +13,8 @@
     "headers": [
         {
             "name": {
-                "name": {
-                    "originalName": "apiVersion",
-                    "camelCase": {
-                        "unsafeName": "apiVersion",
-                        "safeName": "apiVersion"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "api_version",
-                        "safeName": "api_version"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "API_VERSION",
-                        "safeName": "API_VERSION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "APIVersion",
-                        "safeName": "APIVersion"
-                    }
-                },
-                "wireValue": "X-API-Version"
+                "wireValue": "X-API-Version",
+                "name": "apiVersion"
             },
             "valueType": {
                 "_type": "container",
@@ -87,25 +51,7 @@
         "type_:TestGetResponse": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "TestGetResponse",
-                    "camelCase": {
-                        "unsafeName": "testGetResponse",
-                        "safeName": "testGetResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "test_get_response",
-                        "safeName": "test_get_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TEST_GET_RESPONSE",
-                        "safeName": "TEST_GET_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "TestGetResponse",
-                        "safeName": "TestGetResponse"
-                    }
-                },
+                "name": "TestGetResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -119,28 +65,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
-                            "wireValue": "message"
-                        },
+                        "name": "message",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -211,25 +136,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_.test_get",
-                    "name": {
-                        "originalName": "test_get",
-                        "camelCase": {
-                            "unsafeName": "testGet",
-                            "safeName": "testGet"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "test_get",
-                            "safeName": "test_get"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TEST_GET",
-                            "safeName": "TEST_GET"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "TestGet",
-                            "safeName": "TestGet"
-                        }
-                    },
+                    "name": "test_get",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -258,25 +165,7 @@
                     },
                     "pathParameters": [
                         {
-                            "name": {
-                                "originalName": "region",
-                                "camelCase": {
-                                    "unsafeName": "region",
-                                    "safeName": "region"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "region",
-                                    "safeName": "region"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REGION",
-                                    "safeName": "REGION"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Region",
-                                    "safeName": "Region"
-                                }
-                            },
+                            "name": "region",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -304,25 +193,7 @@
                     ],
                     "allPathParameters": [
                         {
-                            "name": {
-                                "originalName": "region",
-                                "camelCase": {
-                                    "unsafeName": "region",
-                                    "safeName": "region"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "region",
-                                    "safeName": "region"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REGION",
-                                    "safeName": "REGION"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Region",
-                                    "safeName": "Region"
-                                }
-                            },
+                            "name": "region",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -350,28 +221,7 @@
                     ],
                     "queryParameters": [
                         {
-                            "name": {
-                                "name": {
-                                    "originalName": "limit",
-                                    "camelCase": {
-                                        "unsafeName": "limit",
-                                        "safeName": "limit"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "limit",
-                                        "safeName": "limit"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "LIMIT",
-                                        "safeName": "LIMIT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Limit",
-                                        "safeName": "Limit"
-                                    }
-                                },
-                                "wireValue": "limit"
-                            },
+                            "name": "limit",
                             "valueType": {
                                 "_type": "container",
                                 "container": {
@@ -409,66 +259,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "TestGetRequest",
-                                "camelCase": {
-                                    "unsafeName": "testGetRequest",
-                                    "safeName": "testGetRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "test_get_request",
-                                    "safeName": "test_get_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TEST_GET_REQUEST",
-                                    "safeName": "TEST_GET_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TestGetRequest",
-                                    "safeName": "TestGetRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "TestGetRequest",
+                            "bodyKey": "body",
                             "includePathParameters": true,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -478,25 +274,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "TestGetResponse",
-                                        "camelCase": {
-                                            "unsafeName": "testGetResponse",
-                                            "safeName": "testGetResponse"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "test_get_response",
-                                            "safeName": "test_get_response"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TEST_GET_RESPONSE",
-                                            "safeName": "TEST_GET_RESPONSE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "TestGetResponse",
-                                            "safeName": "TestGetResponse"
-                                        }
-                                    },
+                                    "name": "TestGetResponse",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -526,25 +304,7 @@
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "region",
-                                            "camelCase": {
-                                                "unsafeName": "region",
-                                                "safeName": "region"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "region",
-                                                "safeName": "region"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "REGION",
-                                                "safeName": "REGION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Region",
-                                                "safeName": "Region"
-                                            }
-                                        },
+                                        "name": "region",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -578,53 +338,14 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "TestGetResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "testGetResponse",
-                                                            "safeName": "testGetResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "test_get_response",
-                                                            "safeName": "test_get_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "TEST_GET_RESPONSE",
-                                                            "safeName": "TEST_GET_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "TestGetResponse",
-                                                            "safeName": "TestGetResponse"
-                                                        }
-                                                    },
+                                                    "name": "TestGetResponse",
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -664,25 +385,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "TestGetResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "testGetResponse",
-                                                                        "safeName": "testGetResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "test_get_response",
-                                                                        "safeName": "test_get_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "TEST_GET_RESPONSE",
-                                                                        "safeName": "TEST_GET_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "TestGetResponse",
-                                                                        "safeName": "TestGetResponse"
-                                                                    }
-                                                                },
+                                                                "name": "TestGetResponse",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -705,31 +408,13 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "7dfb1d48",
+                                "id": "d03fefbe",
                                 "url": "/test/region/resource",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": {
-                                            "originalName": "region",
-                                            "camelCase": {
-                                                "unsafeName": "region",
-                                                "safeName": "region"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "region",
-                                                "safeName": "region"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "REGION",
-                                                "safeName": "REGION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Region",
-                                                "safeName": "Region"
-                                            }
-                                        },
+                                        "name": "region",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -760,48 +445,9 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "TestGetResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "testGetResponse",
-                                                                        "safeName": "testGetResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "test_get_response",
-                                                                        "safeName": "test_get_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "TEST_GET_RESPONSE",
-                                                                        "safeName": "TEST_GET_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "TestGetResponse",
-                                                                        "safeName": "TestGetResponse"
-                                                                    }
-                                                                },
+                                                                "name": "TestGetResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -848,25 +494,7 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "TestGetResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "testGetResponse",
-                                                            "safeName": "testGetResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "test_get_response",
-                                                            "safeName": "test_get_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "TEST_GET_RESPONSE",
-                                                            "safeName": "TEST_GET_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "TestGetResponse",
-                                                            "safeName": "TestGetResponse"
-                                                        }
-                                                    },
+                                                    "name": "TestGetResponse",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -902,28 +530,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -979,6 +586,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "message",
                             "name": {
                                 "originalName": "message",
                                 "camelCase": {
@@ -997,8 +605,7 @@
                                     "unsafeName": "Message",
                                     "safeName": "Message"
                                 }
-                            },
-                            "wireValue": "message"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1018,6 +625,7 @@
         "headers": [
             {
                 "name": {
+                    "wireValue": "X-API-Version",
                     "name": {
                         "originalName": "apiVersion",
                         "camelCase": {
@@ -1036,8 +644,7 @@
                             "unsafeName": "APIVersion",
                             "safeName": "APIVersion"
                         }
-                    },
-                    "wireValue": "X-API-Version"
+                    }
                 },
                 "typeReference": {
                     "type": "optional",
@@ -1146,6 +753,7 @@
                     "queryParameters": [
                         {
                             "name": {
+                                "wireValue": "limit",
                                 "name": {
                                     "originalName": "limit",
                                     "camelCase": {
@@ -1164,8 +772,7 @@
                                         "unsafeName": "Limit",
                                         "safeName": "Limit"
                                     }
-                                },
-                                "wireValue": "limit"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -1199,6 +806,11 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

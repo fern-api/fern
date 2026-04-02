@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface HeaderAuthScheme extends FernIr.BaseAuthScheme {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     prefix: string | undefined;
     /** The environment variable the SDK should use to read the header. */

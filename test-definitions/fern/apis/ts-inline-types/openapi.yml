@@ -1,21 +1,21 @@
 openapi: 3.0.1
 info:
   title: ts-inline-types
-  version: ''
+  version: ""
 paths:
   /root/root:
     post:
       operationId: getRoot
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RootType1'
+                $ref: "#/components/schemas/RootType1"
       requestBody:
         required: true
         content:
@@ -24,7 +24,7 @@ paths:
               type: object
               properties:
                 bar:
-                  $ref: '#/components/schemas/RequestTypeInlineType1'
+                  $ref: "#/components/schemas/RequestTypeInlineType1"
                 foo:
                   type: string
               required:
@@ -34,11 +34,11 @@ paths:
     post:
       operationId: getDiscriminatedUnion
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -47,7 +47,7 @@ paths:
               type: object
               properties:
                 bar:
-                  $ref: '#/components/schemas/DiscriminatedUnion1'
+                  $ref: "#/components/schemas/DiscriminatedUnion1"
                 foo:
                   type: string
               required:
@@ -57,11 +57,11 @@ paths:
     post:
       operationId: getUndiscriminatedUnion
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -70,7 +70,7 @@ paths:
               type: object
               properties:
                 bar:
-                  $ref: '#/components/schemas/UndiscriminatedUnion1'
+                  $ref: "#/components/schemas/UndiscriminatedUnion1"
                 foo:
                   type: string
               required:
@@ -82,17 +82,17 @@ components:
       title: AliasMapInline
       type: object
       additionalProperties:
-        $ref: '#/components/schemas/AliasInlineValue'
+        $ref: "#/components/schemas/AliasInlineValue"
     AliasSetInline:
       title: AliasSetInline
       type: array
       items:
-        $ref: '#/components/schemas/AliasInlineValue'
+        $ref: "#/components/schemas/AliasInlineValue"
     AliasListInline:
       title: AliasListInline
       type: array
       items:
-        $ref: '#/components/schemas/AliasInlineValue'
+        $ref: "#/components/schemas/AliasInlineValue"
     AliasInlineValue:
       title: AliasInlineValue
       type: object
@@ -123,25 +123,25 @@ components:
           type: string
           description: lorem ipsum
         bar:
-          $ref: '#/components/schemas/RootType1InlineType1'
+          $ref: "#/components/schemas/RootType1InlineType1"
           description: lorem ipsum
         fooMap:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/RootType1FooMapValue'
+            $ref: "#/components/schemas/RootType1FooMapValue"
           description: lorem ipsum
         fooList:
           type: array
           items:
-            $ref: '#/components/schemas/RootType1FooListItem'
+            $ref: "#/components/schemas/RootType1FooListItem"
           description: lorem ipsum
         fooSet:
           type: array
           items:
-            $ref: '#/components/schemas/RootType1FooSetItem'
+            $ref: "#/components/schemas/RootType1FooSetItem"
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -159,7 +159,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -173,7 +173,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -187,7 +187,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -201,10 +201,10 @@ components:
           type: string
           description: lorem ipsum
         bar:
-          $ref: '#/components/schemas/RootType1InlineType1NestedInlineType1'
+          $ref: "#/components/schemas/RootType1InlineType1NestedInlineType1"
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -222,10 +222,10 @@ components:
           type: string
           description: lorem ipsum
         myEnum:
-          $ref: '#/components/schemas/InlineEnum1'
+          $ref: "#/components/schemas/InlineEnum1"
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -243,7 +243,7 @@ components:
                   type: string
                   enum:
                     - type1
-            - $ref: '#/components/schemas/DiscriminatedUnion1InlineType1'
+            - $ref: "#/components/schemas/DiscriminatedUnion1InlineType1"
           required:
             - type
         - type: object
@@ -254,7 +254,7 @@ components:
                   type: string
                   enum:
                     - type2
-            - $ref: '#/components/schemas/DiscriminatedUnion1InlineType2'
+            - $ref: "#/components/schemas/DiscriminatedUnion1InlineType2"
           required:
             - type
         - type: object
@@ -265,7 +265,7 @@ components:
                   type: string
                   enum:
                     - ref
-            - $ref: '#/components/schemas/ReferenceType'
+            - $ref: "#/components/schemas/ReferenceType"
           required:
             - type
       description: lorem ipsum
@@ -278,10 +278,10 @@ components:
           type: string
           description: lorem ipsum
         bar:
-          $ref: '#/components/schemas/DiscriminatedUnion1InlineType1InlineType1'
+          $ref: "#/components/schemas/DiscriminatedUnion1InlineType1InlineType1"
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -296,7 +296,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -310,7 +310,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - baz
@@ -319,29 +319,29 @@ components:
       title: UndiscriminatedUnion1
       oneOf:
         - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineType1'
+          $ref: "#/components/schemas/UndiscriminatedUnion1InlineType1"
         - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineType2'
+          $ref: "#/components/schemas/UndiscriminatedUnion1InlineType2"
         - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1'
+          $ref: "#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1"
         - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineEnum1'
+          $ref: "#/components/schemas/UndiscriminatedUnion1InlineEnum1"
         - description: lorem ipsum
-          $ref: '#/components/schemas/UserId'
-        - description: lorem ipsum
-          type: array
-          items:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineListItem1'
+          $ref: "#/components/schemas/UserId"
         - description: lorem ipsum
           type: array
           items:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineSetItem1'
+            $ref: "#/components/schemas/UndiscriminatedUnion1InlineListItem1"
+        - description: lorem ipsum
+          type: array
+          items:
+            $ref: "#/components/schemas/UndiscriminatedUnion1InlineSetItem1"
         - description: lorem ipsum
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineMapItem1'
+            $ref: "#/components/schemas/UndiscriminatedUnion1InlineMapItem1"
         - description: lorem ipsum
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
       description: lorem ipsum
     UndiscriminatedUnion1InlineType1:
       title: UndiscriminatedUnion1InlineType1
@@ -352,10 +352,10 @@ components:
           type: string
           description: lorem ipsum
         bar:
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineType1InlineType1'
+          $ref: "#/components/schemas/UndiscriminatedUnion1InlineType1InlineType1"
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -370,7 +370,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -384,7 +384,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - baz
@@ -433,7 +433,7 @@ components:
                   type: string
                   enum:
                     - ref
-            - $ref: '#/components/schemas/ReferenceType'
+            - $ref: "#/components/schemas/ReferenceType"
           required:
             - type
       description: lorem ipsum
@@ -450,7 +450,7 @@ components:
             #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -465,7 +465,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -479,7 +479,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - baz
@@ -506,7 +506,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -520,7 +520,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo
@@ -534,7 +534,7 @@ components:
           type: string
           description: lorem ipsum
         ref:
-          $ref: '#/components/schemas/ReferenceType'
+          $ref: "#/components/schemas/ReferenceType"
           description: lorem ipsum
       required:
         - foo

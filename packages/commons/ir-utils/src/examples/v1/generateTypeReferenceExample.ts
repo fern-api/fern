@@ -9,6 +9,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
+import { getWireValue } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample.js";
 import { generatePrimitiveExample } from "./generatePrimitiveExample.js";
@@ -214,7 +215,7 @@ function generateMinimalNamedExample({
             ]) {
                 if (isLeafTypeReference(property.valueType, typeDeclarations)) {
                     const propertyExample = generateTypeReferenceExample({
-                        fieldName: property.name.wireValue,
+                        fieldName: getWireValue(property.name),
                         typeReference: property.valueType,
                         typeDeclarations,
                         currentDepth: 0,
@@ -230,7 +231,7 @@ function generateMinimalNamedExample({
                         value: propertyExample.example,
                         propertyAccess: property.propertyAccess
                     });
-                    jsonExample[property.name.wireValue] = propertyExample.jsonExample;
+                    jsonExample[getWireValue(property.name)] = propertyExample.jsonExample;
                 } else if (property.valueType.type === "named" && !visited.has(property.valueType.typeId)) {
                     // For non-leaf named types, try to generate a minimal example recursively.
                     // This ensures required object properties (like `memo`) are included in stubs.
@@ -248,7 +249,7 @@ function generateMinimalNamedExample({
                                 value: nestedExample.example,
                                 propertyAccess: property.propertyAccess
                             });
-                            jsonExample[property.name.wireValue] = nestedExample.jsonExample;
+                            jsonExample[getWireValue(property.name)] = nestedExample.jsonExample;
                         }
                     }
                 } else if (property.valueType.type === "container") {
@@ -266,7 +267,7 @@ function generateMinimalNamedExample({
                         },
                         propertyAccess: property.propertyAccess
                     });
-                    jsonExample[property.name.wireValue] = emptyJson;
+                    jsonExample[getWireValue(property.name)] = emptyJson;
                 }
             }
             const example = ExampleTypeShape.object({
@@ -290,7 +291,7 @@ function generateMinimalNamedExample({
             if (enumValue == null) {
                 return { type: "failure", message: "No enum values present for recursive type stub" };
             }
-            const jsonExample = enumValue.name.wireValue;
+            const jsonExample = getWireValue(enumValue.name);
             const example = ExampleTypeShape.enum({ value: enumValue.name });
             return {
                 type: "success",
@@ -360,7 +361,7 @@ function generateMinimalNamedExample({
                     _other: () => false
                 });
                 if (isNoProperties) {
-                    const jsonExample = { [discriminant.wireValue]: variant.discriminantValue.wireValue };
+                    const jsonExample = { [getWireValue(discriminant)]: getWireValue(variant.discriminantValue) };
                     return {
                         type: "success",
                         example: {

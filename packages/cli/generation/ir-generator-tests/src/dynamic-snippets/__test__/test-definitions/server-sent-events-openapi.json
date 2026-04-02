@@ -30,6 +30,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -48,14 +49,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -74,8 +75,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -83,6 +83,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolStringEvent",
                     "discriminantValue": {
+                        "wireValue": "string_data",
                         "name": {
                             "originalName": "string_data",
                             "camelCase": {
@@ -101,8 +102,7 @@
                                 "unsafeName": "StringData",
                                 "safeName": "StringData"
                             }
-                        },
-                        "wireValue": "string_data"
+                        }
                     },
                     "properties": []
                 },
@@ -110,6 +110,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolNumberEvent",
                     "discriminantValue": {
+                        "wireValue": "number_data",
                         "name": {
                             "originalName": "number_data",
                             "camelCase": {
@@ -128,8 +129,7 @@
                                 "unsafeName": "NumberData",
                                 "safeName": "NumberData"
                             }
-                        },
-                        "wireValue": "number_data"
+                        }
                     },
                     "properties": []
                 },
@@ -137,6 +137,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolObjectEvent",
                     "discriminantValue": {
+                        "wireValue": "object_data",
                         "name": {
                             "originalName": "object_data",
                             "camelCase": {
@@ -155,8 +156,7 @@
                                 "unsafeName": "ObjectData",
                                 "safeName": "ObjectData"
                             }
-                        },
-                        "wireValue": "object_data"
+                        }
                     },
                     "properties": []
                 }
@@ -191,6 +191,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -209,14 +210,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -235,8 +236,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -244,6 +244,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolStringEvent",
                     "discriminantValue": {
+                        "wireValue": "string_data",
                         "name": {
                             "originalName": "string_data",
                             "camelCase": {
@@ -262,8 +263,7 @@
                                 "unsafeName": "StringData",
                                 "safeName": "StringData"
                             }
-                        },
-                        "wireValue": "string_data"
+                        }
                     },
                     "properties": []
                 },
@@ -271,6 +271,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolNumberEvent",
                     "discriminantValue": {
+                        "wireValue": "number_data",
                         "name": {
                             "originalName": "number_data",
                             "camelCase": {
@@ -289,8 +290,7 @@
                                 "unsafeName": "NumberData",
                                 "safeName": "NumberData"
                             }
-                        },
-                        "wireValue": "number_data"
+                        }
                     },
                     "properties": []
                 },
@@ -298,6 +298,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolCollisionObjectEvent",
                     "discriminantValue": {
+                        "wireValue": "object_data",
                         "name": {
                             "originalName": "object_data",
                             "camelCase": {
@@ -316,8 +317,7 @@
                                 "unsafeName": "ObjectData",
                                 "safeName": "ObjectData"
                             }
-                        },
-                        "wireValue": "object_data"
+                        }
                     },
                     "properties": []
                 }
@@ -352,6 +352,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -370,14 +371,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -396,8 +397,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -405,6 +405,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextEntityEvent",
                     "discriminantValue": {
+                        "wireValue": "entity",
                         "name": {
                             "originalName": "entity",
                             "camelCase": {
@@ -423,8 +424,7 @@
                                 "unsafeName": "Entity",
                                 "safeName": "Entity"
                             }
-                        },
-                        "wireValue": "entity"
+                        }
                     },
                     "properties": []
                 }
@@ -459,6 +459,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -477,14 +478,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -503,8 +504,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -512,6 +512,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextEntityEvent",
                     "discriminantValue": {
+                        "wireValue": "entity",
                         "name": {
                             "originalName": "entity",
                             "camelCase": {
@@ -530,8 +531,7 @@
                                 "unsafeName": "Entity",
                                 "safeName": "Entity"
                             }
-                        },
-                        "wireValue": "entity"
+                        }
                     },
                     "properties": []
                 }
@@ -566,6 +566,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -584,14 +585,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -610,8 +611,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -619,6 +619,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:DataContextEntityEvent",
                     "discriminantValue": {
+                        "wireValue": "entity",
                         "name": {
                             "originalName": "entity",
                             "camelCase": {
@@ -637,8 +638,7 @@
                                 "unsafeName": "Entity",
                                 "safeName": "Entity"
                             }
-                        },
-                        "wireValue": "entity"
+                        }
                     },
                     "properties": []
                 }
@@ -673,6 +673,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -691,14 +692,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolHeartbeat",
                     "discriminantValue": {
+                        "wireValue": "heartbeat",
                         "name": {
                             "originalName": "heartbeat",
                             "camelCase": {
@@ -717,8 +718,7 @@
                                 "unsafeName": "Heartbeat",
                                 "safeName": "Heartbeat"
                             }
-                        },
-                        "wireValue": "heartbeat"
+                        }
                     },
                     "properties": []
                 },
@@ -726,6 +726,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolStringEvent",
                     "discriminantValue": {
+                        "wireValue": "string_data",
                         "name": {
                             "originalName": "string_data",
                             "camelCase": {
@@ -744,8 +745,7 @@
                                 "unsafeName": "StringData",
                                 "safeName": "StringData"
                             }
-                        },
-                        "wireValue": "string_data"
+                        }
                     },
                     "properties": []
                 },
@@ -753,6 +753,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolNumberEvent",
                     "discriminantValue": {
+                        "wireValue": "number_data",
                         "name": {
                             "originalName": "number_data",
                             "camelCase": {
@@ -771,8 +772,7 @@
                                 "unsafeName": "NumberData",
                                 "safeName": "NumberData"
                             }
-                        },
-                        "wireValue": "number_data"
+                        }
                     },
                     "properties": []
                 },
@@ -780,6 +780,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_:ProtocolObjectEvent",
                     "discriminantValue": {
+                        "wireValue": "object_data",
                         "name": {
                             "originalName": "object_data",
                             "camelCase": {
@@ -798,8 +799,7 @@
                                 "unsafeName": "ObjectData",
                                 "safeName": "ObjectData"
                             }
-                        },
-                        "wireValue": "object_data"
+                        }
                     },
                     "properties": []
                 }
@@ -836,6 +836,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "query",
                         "name": {
                             "originalName": "query",
                             "camelCase": {
@@ -854,8 +855,7 @@
                                 "unsafeName": "Query",
                                 "safeName": "Query"
                             }
-                        },
-                        "wireValue": "query"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -902,6 +902,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -920,8 +921,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -932,6 +932,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -950,8 +951,7 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
-                        },
-                        "wireValue": "event"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -965,6 +965,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -983,8 +984,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -998,6 +998,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "retry",
                         "name": {
                             "originalName": "retry",
                             "camelCase": {
@@ -1016,8 +1017,7 @@
                                 "unsafeName": "Retry",
                                 "safeName": "Retry"
                             }
-                        },
-                        "wireValue": "retry"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1064,6 +1064,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -1082,8 +1083,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1094,6 +1094,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "timestamp",
                         "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -1112,8 +1113,7 @@
                                 "unsafeName": "Timestamp",
                                 "safeName": "Timestamp"
                             }
-                        },
-                        "wireValue": "timestamp"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1157,6 +1157,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -1175,8 +1176,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1187,6 +1187,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -1205,8 +1206,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1217,6 +1217,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -1235,8 +1236,7 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
-                        },
-                        "wireValue": "event"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1280,6 +1280,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "timestamp",
                         "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -1298,8 +1299,7 @@
                                 "unsafeName": "Timestamp",
                                 "safeName": "Timestamp"
                             }
-                        },
-                        "wireValue": "timestamp"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1345,6 +1345,7 @@
             },
             "values": [
                 {
+                    "wireValue": "CREATED",
                     "name": {
                         "originalName": "CREATED",
                         "camelCase": {
@@ -1363,10 +1364,10 @@
                             "unsafeName": "Created",
                             "safeName": "Created"
                         }
-                    },
-                    "wireValue": "CREATED"
+                    }
                 },
                 {
+                    "wireValue": "UPDATED",
                     "name": {
                         "originalName": "UPDATED",
                         "camelCase": {
@@ -1385,10 +1386,10 @@
                             "unsafeName": "Updated",
                             "safeName": "Updated"
                         }
-                    },
-                    "wireValue": "UPDATED"
+                    }
                 },
                 {
+                    "wireValue": "DELETED",
                     "name": {
                         "originalName": "DELETED",
                         "camelCase": {
@@ -1407,10 +1408,10 @@
                             "unsafeName": "Deleted",
                             "safeName": "Deleted"
                         }
-                    },
-                    "wireValue": "DELETED"
+                    }
                 },
                 {
+                    "wireValue": "PREEXISTING",
                     "name": {
                         "originalName": "PREEXISTING",
                         "camelCase": {
@@ -1429,8 +1430,7 @@
                             "unsafeName": "Preexisting",
                             "safeName": "Preexisting"
                         }
-                    },
-                    "wireValue": "PREEXISTING"
+                    }
                 }
             ]
         },
@@ -1465,6 +1465,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "entityId",
                         "name": {
                             "originalName": "entityId",
                             "camelCase": {
@@ -1483,8 +1484,7 @@
                                 "unsafeName": "EntityID",
                                 "safeName": "EntityID"
                             }
-                        },
-                        "wireValue": "entityId"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1498,6 +1498,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "eventType",
                         "name": {
                             "originalName": "eventType",
                             "camelCase": {
@@ -1516,8 +1517,7 @@
                                 "unsafeName": "EventType",
                                 "safeName": "EventType"
                             }
-                        },
-                        "wireValue": "eventType"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1531,6 +1531,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "updatedTime",
                         "name": {
                             "originalName": "updatedTime",
                             "camelCase": {
@@ -1549,8 +1550,7 @@
                                 "unsafeName": "UpdatedTime",
                                 "safeName": "UpdatedTime"
                             }
-                        },
-                        "wireValue": "updatedTime"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1629,6 +1629,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -1647,8 +1648,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1692,6 +1692,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -1710,8 +1711,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1755,6 +1755,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -1773,8 +1774,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -1818,6 +1818,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -1836,8 +1837,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -1881,6 +1881,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "timestamp",
                         "name": {
                             "originalName": "timestamp",
                             "camelCase": {
@@ -1899,8 +1900,7 @@
                                 "unsafeName": "Timestamp",
                                 "safeName": "Timestamp"
                             }
-                        },
-                        "wireValue": "timestamp"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1949,6 +1949,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "entityId",
                         "name": {
                             "originalName": "entityId",
                             "camelCase": {
@@ -1967,8 +1968,7 @@
                                 "unsafeName": "EntityID",
                                 "safeName": "EntityID"
                             }
-                        },
-                        "wireValue": "entityId"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1982,6 +1982,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "eventType",
                         "name": {
                             "originalName": "eventType",
                             "camelCase": {
@@ -2000,8 +2001,7 @@
                                 "unsafeName": "EventType",
                                 "safeName": "EventType"
                             }
-                        },
-                        "wireValue": "eventType"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -2015,6 +2015,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "updatedTime",
                         "name": {
                             "originalName": "updatedTime",
                             "camelCase": {
@@ -2033,8 +2034,7 @@
                                 "unsafeName": "UpdatedTime",
                                 "safeName": "UpdatedTime"
                             }
-                        },
-                        "wireValue": "updatedTime"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",

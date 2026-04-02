@@ -35,25 +35,7 @@ describe("convertResponseErrors", () => {
                         relativeFilepath: RelativeFilePath.of("path/to/commons"),
                         casingsGenerator
                     }),
-                    name: {
-                        originalName: "UnauthorizedError",
-                        camelCase: {
-                            safeName: "unauthorizedError",
-                            unsafeName: "unauthorizedError"
-                        },
-                        pascalCase: {
-                            safeName: "UnauthorizedError",
-                            unsafeName: "UnauthorizedError"
-                        },
-                        snakeCase: {
-                            safeName: "unauthorized_error",
-                            unsafeName: "unauthorized_error"
-                        },
-                        screamingSnakeCase: {
-                            safeName: "UNAUTHORIZED_ERROR",
-                            unsafeName: "UNAUTHORIZED_ERROR"
-                        }
-                    }
+                    name: "UnauthorizedError"
                 }
             }
         ];

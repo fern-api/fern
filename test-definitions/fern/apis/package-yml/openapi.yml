@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
   title: package-yml
-  version: ''
+  version: ""
 paths:
   /{id}/:
     post:
       operationId: echo
       tags:
-        - ''
+        - ""
       parameters:
         - name: id
           in: path
@@ -15,8 +15,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -26,7 +26,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EchoRequest'
+              $ref: "#/components/schemas/EchoRequest"
   /{id}//{nestedId}:
     get:
       operationId: service_nop
@@ -44,8 +44,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
 components:
   schemas:
     EchoRequest:

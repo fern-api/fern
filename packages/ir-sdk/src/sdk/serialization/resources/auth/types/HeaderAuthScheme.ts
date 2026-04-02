@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { BaseAuthScheme } from "./BaseAuthScheme.js";
 import { EnvironmentVariable } from "./EnvironmentVariable.js";
 
@@ -12,7 +12,7 @@ export const HeaderAuthScheme: core.serialization.ObjectSchema<
     FernIr.HeaderAuthScheme
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: NameAndWireValue,
+        name: NameAndWireValueOrString,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
         prefix: core.serialization.string().optional(),
         headerEnvVar: EnvironmentVariable.optional(),
@@ -21,7 +21,7 @@ export const HeaderAuthScheme: core.serialization.ObjectSchema<
 
 export declare namespace HeaderAuthScheme {
     export interface Raw extends BaseAuthScheme.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         prefix?: string | null;
         headerEnvVar?: EnvironmentVariable.Raw | null;

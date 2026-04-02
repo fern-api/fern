@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
@@ -70,7 +71,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         responseTypeNode: ts.TypeNode | undefined;
     } {
         const enumLiteralTypes = this.shape.values.map((value) =>
-            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(getWireValue(value.name)))
         );
 
         const shouldWidenType = this.enableForwardCompatibleEnums;
@@ -116,7 +117,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(this.printDocs(value.docs) + getPropertyKey(this.getEnumValueName(value))),
-                ts.factory.createStringLiteral(value.name.wireValue)
+                ts.factory.createStringLiteral(getWireValue(value.name))
             )
         );
     }
@@ -314,7 +315,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(this.printDocs(value.docs) + getPropertyKey(this.getEnumValueName(value))),
-                ts.factory.createStringLiteral(value.name.wireValue)
+                ts.factory.createStringLiteral(getWireValue(value.name))
             )
         );
         if (this.includeEnumUtils) {
@@ -484,7 +485,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an enum");
         }
 
-        let enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
+        let enumValue = this.shape.values.find(
+            (enumValue) => getWireValue(enumValue.name) === getWireValue(example.value)
+        );
         if (enumValue == null) {
             const defaultEnumValue = this.shape.values[0];
             // If no matching enum value, pick the first value from the enum definition
@@ -501,15 +504,15 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                 this.getEnumValueName(enumValue)
             );
         } else {
-            return ts.factory.createStringLiteral(example.value.wireValue);
+            return ts.factory.createStringLiteral(getWireValue(example.value));
         }
     }
 
     private getEnumValueName(enumValue: FernIr.EnumValue): string {
-        return enumValue.name.name.pascalCase.unsafeName;
+        return this.caseConverter.pascalUnsafe(enumValue.name);
     }
 
     private getEnumValueVisitPropertyName(enumValue: FernIr.EnumValue): string {
-        return enumValue.name.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(enumValue.name);
     }
 }

@@ -1,10 +1,10 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedGenericAPISdkError, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedGenericAPISdkError } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
 
 export class GeneratedGenericAPISdkErrorImpl
-    extends AbstractErrorClassGenerator<SdkContext>
+    extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedGenericAPISdkError
 {
     private static readonly STATUS_CODE_PROPERTY_NAME = "statusCode";
@@ -21,13 +21,13 @@ export class GeneratedGenericAPISdkErrorImpl
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
         this.writeBuildMessageFunctionToFile(context);
     }
 
     public build(
-        context: SdkContext,
+        context: FileContext,
         {
             message,
             statusCode,
@@ -95,7 +95,7 @@ export class GeneratedGenericAPISdkErrorImpl
         return [ts.factory.createObjectLiteralExpression(properties, true)];
     }
 
-    protected getClassProperties(context: SdkContext): OptionalKind<PropertyDeclarationStructure>[] {
+    protected getClassProperties(context: FileContext): OptionalKind<PropertyDeclarationStructure>[] {
         return [
             {
                 name: GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME,
@@ -121,7 +121,7 @@ export class GeneratedGenericAPISdkErrorImpl
         ];
     }
 
-    protected getConstructorParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+    protected getConstructorParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure>[] {
         return [
             {
                 name: getTextOfTsNode(
@@ -269,7 +269,7 @@ export class GeneratedGenericAPISdkErrorImpl
         return false;
     }
 
-    private writeBuildMessageFunctionToFile(context: SdkContext): void {
+    private writeBuildMessageFunctionToFile(context: FileContext): void {
         const LINES_VARIABLE_NAME = "lines";
 
         context.sourceFile.addFunction({

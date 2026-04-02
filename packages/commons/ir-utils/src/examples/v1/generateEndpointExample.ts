@@ -20,6 +20,7 @@ import {
 
 import { hashJSON } from "../../hashJSON.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { getOriginalName, getWireValue } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import {
     generateHeaderExamples,
@@ -181,7 +182,7 @@ export function generateEndpointExample({
                     ...(endpoint.requestBody.extendedProperties ?? [])
                 ]) {
                     const propertyExample = generateTypeReferenceExample({
-                        fieldName: property.name.wireValue,
+                        fieldName: getWireValue(property.name),
                         typeReference: property.valueType,
                         typeDeclarations,
                         currentDepth: 1,
@@ -194,7 +195,7 @@ export function generateEndpointExample({
                     ) {
                         return {
                             type: "failure",
-                            message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
+                            message: `Failed to generate required property ${getWireValue(property.name)} b/c ${propertyExample.message}`
                         };
                     } else if (propertyExample.type === "failure") {
                         continue;
@@ -205,7 +206,7 @@ export function generateEndpointExample({
                         originalTypeDeclaration: undefined,
                         value: example
                     });
-                    jsonExample[property.name.wireValue] = propertyJsonExample;
+                    jsonExample[getWireValue(property.name)] = propertyJsonExample;
                 }
                 result.request = ExampleRequestBody.inlinedRequestBody({
                     jsonExample,
@@ -316,7 +317,7 @@ export function generateEndpointExample({
                             ) {
                                 const firstVariant = typeDecl.shape.types[0];
                                 if (firstVariant != null) {
-                                    sseEventType = firstVariant.discriminantValue.wireValue;
+                                    sseEventType = getWireValue(firstVariant.discriminantValue);
                                 }
                             }
                         }
@@ -434,7 +435,7 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
         (examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
             const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
+            pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
         }
     );
     const url =

@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -8,7 +9,7 @@ import {
     getTextOfTsNode,
     PackageId
 } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
@@ -30,6 +31,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        caseConverter: CaseConverter;
     }
 }
 
@@ -52,6 +54,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         ir,
@@ -62,7 +65,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         requestBody,
         generatedSdkClientClass,
         retainOriginalCasing,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -72,6 +76,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
+        this.caseConverter = caseConverter;
         this.requestParameter =
             sdkRequest != null
                 ? FernIr.SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -84,10 +89,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                               requestBodyReference,
                               service,
                               endpoint,
-                              sdkRequest
+                              sdkRequest,
+                              caseConverter
                           });
                       },
-                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
+                      wrapper: () =>
+                          new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest, caseConverter }),
                       _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       }
@@ -95,12 +102,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 : undefined;
     }
 
-    public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
+    public getRequestParameter(context: FileContext): ts.TypeNode | undefined {
         return this.requestParameter?.getType(context);
     }
 
     public getEndpointParameters(
-        context: SdkContext
+        context: FileContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature({
@@ -112,7 +119,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 name: getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing,
-                    parameterNaming: this.parameterNaming
+                    parameterNaming: this.parameterNaming,
+                    caseConverter: this.caseConverter
                 }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                 docs: pathParameter.docs
@@ -133,7 +141,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         example,
         opts
     }: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
@@ -145,7 +153,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             context
         })) {
             const exampleParameter = exampleParameters.find(
-                (param) => param.name.originalName === pathParameter.name.originalName
+                (param) => getOriginalName(param.name) === getOriginalName(pathParameter.name)
             );
             if (exampleParameter == null) {
                 result.push(ts.factory.createIdentifier("undefined"));
@@ -171,7 +179,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return result;
     }
 
-    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+    public getBuildRequestStatements(context: FileContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -189,12 +197,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return statements;
     }
 
-    public getBuildHeaderStatements(context: SdkContext): ts.Statement[] {
+    public getBuildHeaderStatements(context: FileContext): ts.Statement[] {
         return this.initializeHeaders(context);
     }
 
     public getFetcherRequestArgs(
-        context: SdkContext
+        context: FileContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
@@ -238,7 +246,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
     }
 
-    private initializeHeaders(context: SdkContext): ts.Statement[] {
+    private initializeHeaders(context: FileContext): ts.Statement[] {
         return generateHeaders({
             context,
             intermediateRepresentation: this.ir,
@@ -250,7 +258,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
-    private getSerializedRequestBodyWithNullCheck(context: SdkContext): ts.Expression | undefined {
+    private getSerializedRequestBodyWithNullCheck(context: FileContext): ts.Expression | undefined {
         if (this.requestParameter == null || this.requestBody == null) {
             return undefined;
         }
@@ -265,7 +273,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private getSerializedRequestBodyWithoutNullCheck(
         requestBody: FernIr.HttpRequestBody.InlinedRequestBody | FernIr.HttpRequestBody.Reference,
         referenceToRequestBody: ts.Expression,
-        context: SdkContext
+        context: FileContext
     ): ts.Expression {
         switch (requestBody.type) {
             case "inlinedRequestBody": {
@@ -294,7 +302,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }: {
         inlinedRequestBody: FernIr.InlinedRequestBody;
         serializeExpression: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Expression {
         const literalProperties = this.getLiteralProperties({ inlinedRequestBody, context });
         if (literalProperties.length > 0) {
@@ -321,7 +329,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context
     }: {
         inlinedRequestBody: FernIr.InlinedRequestBody;
-        context: SdkContext;
+        context: FileContext;
     }): LiteralPropertyValue[] {
         const result: LiteralPropertyValue[] = [];
         for (const property of inlinedRequestBody.properties) {
@@ -335,32 +343,32 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                             throw new Error("Encountered non-boolean, non-string literal");
                         }
                     }),
-                    propertyWireKey: property.name.wireValue
+                    propertyWireKey: getWireValue(property.name)
                 });
             }
         }
         return result;
     }
 
-    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody(context);
     }
 
-    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToPathParameter(pathParameterKey: string, context: FileContext): ts.Expression {
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
         }
         return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
     }
 
-    public getQueryParams(context: SdkContext): GeneratedQueryParams {
+    public getQueryParams(context: FileContext): GeneratedQueryParams {
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),

@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Session API",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "sessionApi",
-      "unsafeName": "sessionApi",
-    },
-    "originalName": "Session API",
-    "pascalCase": {
-      "safeName": "SessionApi",
-      "unsafeName": "SessionApi",
-    },
-    "screamingSnakeCase": {
-      "safeName": "SESSION_API",
-      "unsafeName": "SESSION_API",
-    },
-    "snakeCase": {
-      "safeName": "session_api",
-      "unsafeName": "session_api",
-    },
-  },
+  "apiName": "Session API",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -29,29 +11,9 @@
     "schemes": [],
   },
   "basePath": undefined,
+  "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
-      "wireValue": "errorInstanceId",
-    },
+    "errorInstanceIdKey": "errorInstanceId",
   },
   "dynamic": undefined,
   "environments": undefined,
@@ -62,25 +24,7 @@
   "errors": {
     "CreateSessionRequestBadRequestError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestBadRequestError",
-            "unsafeName": "createSessionRequestBadRequestError",
-          },
-          "originalName": "CreateSessionRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestBadRequestError",
-            "unsafeName": "CreateSessionRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_bad_request_error",
-            "unsafeName": "create_session_request_bad_request_error",
-          },
-        },
+        "name": "CreateSessionRequestBadRequestError",
         "wireValue": "CreateSessionRequestBadRequestError",
       },
       "displayName": "BadRequestError",
@@ -95,25 +39,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestBadRequestError",
-            "unsafeName": "createSessionRequestBadRequestError",
-          },
-          "originalName": "CreateSessionRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestBadRequestError",
-            "unsafeName": "CreateSessionRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_bad_request_error",
-            "unsafeName": "create_session_request_bad_request_error",
-          },
-        },
+        "name": "CreateSessionRequestBadRequestError",
       },
       "statusCode": 400,
       "type": {
@@ -126,25 +52,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "errorResponse",
-            "unsafeName": "errorResponse",
-          },
-          "originalName": "ErrorResponse",
-          "pascalCase": {
-            "safeName": "ErrorResponse",
-            "unsafeName": "ErrorResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR_RESPONSE",
-            "unsafeName": "ERROR_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "error_response",
-            "unsafeName": "error_response",
-          },
-        },
+        "name": "ErrorResponse",
         "type": "named",
         "typeId": "ErrorResponse",
       },
@@ -160,25 +68,7 @@
     },
     "CreateSessionRequestInternalServerError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestInternalServerError",
-            "unsafeName": "createSessionRequestInternalServerError",
-          },
-          "originalName": "CreateSessionRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestInternalServerError",
-            "unsafeName": "CreateSessionRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_internal_server_error",
-            "unsafeName": "create_session_request_internal_server_error",
-          },
-        },
+        "name": "CreateSessionRequestInternalServerError",
         "wireValue": "CreateSessionRequestInternalServerError",
       },
       "displayName": "InternalServerError",
@@ -193,25 +83,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestInternalServerError",
-            "unsafeName": "createSessionRequestInternalServerError",
-          },
-          "originalName": "CreateSessionRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestInternalServerError",
-            "unsafeName": "CreateSessionRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_internal_server_error",
-            "unsafeName": "create_session_request_internal_server_error",
-          },
-        },
+        "name": "CreateSessionRequestInternalServerError",
       },
       "statusCode": 500,
       "type": {
@@ -224,25 +96,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "errorResponse",
-            "unsafeName": "errorResponse",
-          },
-          "originalName": "ErrorResponse",
-          "pascalCase": {
-            "safeName": "ErrorResponse",
-            "unsafeName": "ErrorResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR_RESPONSE",
-            "unsafeName": "ERROR_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "error_response",
-            "unsafeName": "error_response",
-          },
-        },
+        "name": "ErrorResponse",
         "type": "named",
         "typeId": "ErrorResponse",
       },
@@ -258,25 +112,7 @@
     },
     "CreateSessionRequestMethodNotAllowedError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestMethodNotAllowedError",
-            "unsafeName": "createSessionRequestMethodNotAllowedError",
-          },
-          "originalName": "CreateSessionRequestMethodNotAllowedError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestMethodNotAllowedError",
-            "unsafeName": "CreateSessionRequestMethodNotAllowedError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_method_not_allowed_error",
-            "unsafeName": "create_session_request_method_not_allowed_error",
-          },
-        },
+        "name": "CreateSessionRequestMethodNotAllowedError",
         "wireValue": "CreateSessionRequestMethodNotAllowedError",
       },
       "displayName": "MethodNotAllowedError",
@@ -291,25 +127,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestMethodNotAllowedError",
-            "unsafeName": "createSessionRequestMethodNotAllowedError",
-          },
-          "originalName": "CreateSessionRequestMethodNotAllowedError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestMethodNotAllowedError",
-            "unsafeName": "CreateSessionRequestMethodNotAllowedError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_method_not_allowed_error",
-            "unsafeName": "create_session_request_method_not_allowed_error",
-          },
-        },
+        "name": "CreateSessionRequestMethodNotAllowedError",
       },
       "statusCode": 405,
       "type": {
@@ -322,25 +140,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "errorResponse",
-            "unsafeName": "errorResponse",
-          },
-          "originalName": "ErrorResponse",
-          "pascalCase": {
-            "safeName": "ErrorResponse",
-            "unsafeName": "ErrorResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR_RESPONSE",
-            "unsafeName": "ERROR_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "error_response",
-            "unsafeName": "error_response",
-          },
-        },
+        "name": "ErrorResponse",
         "type": "named",
         "typeId": "ErrorResponse",
       },
@@ -356,25 +156,7 @@
     },
     "CreateSessionRequestNotFoundError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestNotFoundError",
-            "unsafeName": "createSessionRequestNotFoundError",
-          },
-          "originalName": "CreateSessionRequestNotFoundError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestNotFoundError",
-            "unsafeName": "CreateSessionRequestNotFoundError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_not_found_error",
-            "unsafeName": "create_session_request_not_found_error",
-          },
-        },
+        "name": "CreateSessionRequestNotFoundError",
         "wireValue": "CreateSessionRequestNotFoundError",
       },
       "displayName": "NotFoundError",
@@ -389,25 +171,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequestNotFoundError",
-            "unsafeName": "createSessionRequestNotFoundError",
-          },
-          "originalName": "CreateSessionRequestNotFoundError",
-          "pascalCase": {
-            "safeName": "CreateSessionRequestNotFoundError",
-            "unsafeName": "CreateSessionRequestNotFoundError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-            "unsafeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request_not_found_error",
-            "unsafeName": "create_session_request_not_found_error",
-          },
-        },
+        "name": "CreateSessionRequestNotFoundError",
       },
       "statusCode": 404,
       "type": {
@@ -420,25 +184,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "errorResponse",
-            "unsafeName": "errorResponse",
-          },
-          "originalName": "ErrorResponse",
-          "pascalCase": {
-            "safeName": "ErrorResponse",
-            "unsafeName": "ErrorResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR_RESPONSE",
-            "unsafeName": "ERROR_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "error_response",
-            "unsafeName": "error_response",
-          },
-        },
+        "name": "ErrorResponse",
         "type": "named",
         "typeId": "ErrorResponse",
       },
@@ -531,25 +277,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "createSessionRequestBadRequestError",
-                    "unsafeName": "createSessionRequestBadRequestError",
-                  },
-                  "originalName": "CreateSessionRequestBadRequestError",
-                  "pascalCase": {
-                    "safeName": "CreateSessionRequestBadRequestError",
-                    "unsafeName": "CreateSessionRequestBadRequestError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-                    "unsafeName": "CREATE_SESSION_REQUEST_BAD_REQUEST_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_session_request_bad_request_error",
-                    "unsafeName": "create_session_request_bad_request_error",
-                  },
-                },
+                "name": "CreateSessionRequestBadRequestError",
               },
             },
             {
@@ -561,25 +289,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "createSessionRequestNotFoundError",
-                    "unsafeName": "createSessionRequestNotFoundError",
-                  },
-                  "originalName": "CreateSessionRequestNotFoundError",
-                  "pascalCase": {
-                    "safeName": "CreateSessionRequestNotFoundError",
-                    "unsafeName": "CreateSessionRequestNotFoundError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-                    "unsafeName": "CREATE_SESSION_REQUEST_NOT_FOUND_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_session_request_not_found_error",
-                    "unsafeName": "create_session_request_not_found_error",
-                  },
-                },
+                "name": "CreateSessionRequestNotFoundError",
               },
             },
             {
@@ -591,25 +301,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "createSessionRequestMethodNotAllowedError",
-                    "unsafeName": "createSessionRequestMethodNotAllowedError",
-                  },
-                  "originalName": "CreateSessionRequestMethodNotAllowedError",
-                  "pascalCase": {
-                    "safeName": "CreateSessionRequestMethodNotAllowedError",
-                    "unsafeName": "CreateSessionRequestMethodNotAllowedError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-                    "unsafeName": "CREATE_SESSION_REQUEST_METHOD_NOT_ALLOWED_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_session_request_method_not_allowed_error",
-                    "unsafeName": "create_session_request_method_not_allowed_error",
-                  },
-                },
+                "name": "CreateSessionRequestMethodNotAllowedError",
               },
             },
             {
@@ -621,25 +313,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "createSessionRequestInternalServerError",
-                    "unsafeName": "createSessionRequestInternalServerError",
-                  },
-                  "originalName": "CreateSessionRequestInternalServerError",
-                  "pascalCase": {
-                    "safeName": "CreateSessionRequestInternalServerError",
-                    "unsafeName": "CreateSessionRequestInternalServerError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-                    "unsafeName": "CREATE_SESSION_REQUEST_INTERNAL_SERVER_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_session_request_internal_server_error",
-                    "unsafeName": "create_session_request_internal_server_error",
-                  },
-                },
+                "name": "CreateSessionRequestInternalServerError",
               },
             },
           ],
@@ -651,25 +325,7 @@
           "id": "endpoint_sessions.createSession",
           "idempotent": false,
           "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "createSession",
-              "unsafeName": "createSession",
-            },
-            "originalName": "createSession",
-            "pascalCase": {
-              "safeName": "CreateSession",
-              "unsafeName": "CreateSession",
-            },
-            "screamingSnakeCase": {
-              "safeName": "CREATE_SESSION",
-              "unsafeName": "CREATE_SESSION",
-            },
-            "snakeCase": {
-              "safeName": "create_session",
-              "unsafeName": "create_session",
-            },
-          },
+          "name": "createSession",
           "pagination": undefined,
           "path": {
             "head": "/sessions/create",
@@ -691,25 +347,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "createSessionRequest",
-                  "unsafeName": "createSessionRequest",
-                },
-                "originalName": "CreateSessionRequest",
-                "pascalCase": {
-                  "safeName": "CreateSessionRequest",
-                  "unsafeName": "CreateSessionRequest",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CREATE_SESSION_REQUEST",
-                  "unsafeName": "CREATE_SESSION_REQUEST",
-                },
-                "snakeCase": {
-                  "safeName": "create_session_request",
-                  "unsafeName": "create_session_request",
-                },
-              },
+              "name": "CreateSessionRequest",
               "type": "named",
               "typeId": "CreateSessionRequest",
             },
@@ -740,25 +378,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "createSessionResponse",
-                      "unsafeName": "createSessionResponse",
-                    },
-                    "originalName": "CreateSessionResponse",
-                    "pascalCase": {
-                      "safeName": "CreateSessionResponse",
-                      "unsafeName": "CreateSessionResponse",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CREATE_SESSION_RESPONSE",
-                      "unsafeName": "CREATE_SESSION_RESPONSE",
-                    },
-                    "snakeCase": {
-                      "safeName": "create_session_response",
-                      "unsafeName": "create_session_response",
-                    },
-                  },
+                  "name": "CreateSessionResponse",
                   "type": "named",
                   "typeId": "CreateSessionResponse",
                 },
@@ -842,25 +462,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "createSessionRequest",
-                      "unsafeName": "createSessionRequest",
-                    },
-                    "originalName": "CreateSessionRequest",
-                    "pascalCase": {
-                      "safeName": "CreateSessionRequest",
-                      "unsafeName": "CreateSessionRequest",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CREATE_SESSION_REQUEST",
-                      "unsafeName": "CREATE_SESSION_REQUEST",
-                    },
-                    "snakeCase": {
-                      "safeName": "create_session_request",
-                      "unsafeName": "create_session_request",
-                    },
-                  },
+                  "name": "CreateSessionRequest",
                   "type": "named",
                   "typeId": "CreateSessionRequest",
                 },
@@ -895,25 +497,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "createSessionResponse",
-                          "unsafeName": "createSessionResponse",
-                        },
-                        "originalName": "CreateSessionResponse",
-                        "pascalCase": {
-                          "safeName": "CreateSessionResponse",
-                          "unsafeName": "CreateSessionResponse",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "CREATE_SESSION_RESPONSE",
-                          "unsafeName": "CREATE_SESSION_RESPONSE",
-                        },
-                        "snakeCase": {
-                          "safeName": "create_session_response",
-                          "unsafeName": "create_session_response",
-                        },
-                      },
+                      "name": "CreateSessionResponse",
                       "type": "named",
                       "typeId": "CreateSessionResponse",
                     },
@@ -941,45 +525,9 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "camelCase": {
-                "safeName": "sessions",
-                "unsafeName": "sessions",
-              },
-              "originalName": "Sessions",
-              "pascalCase": {
-                "safeName": "Sessions",
-                "unsafeName": "Sessions",
-              },
-              "screamingSnakeCase": {
-                "safeName": "SESSIONS",
-                "unsafeName": "SESSIONS",
-              },
-              "snakeCase": {
-                "safeName": "sessions",
-                "unsafeName": "sessions",
-              },
-            },
+            "Sessions",
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "sessions",
-              "unsafeName": "sessions",
-            },
-            "originalName": "Sessions",
-            "pascalCase": {
-              "safeName": "Sessions",
-              "unsafeName": "Sessions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SESSIONS",
-              "unsafeName": "SESSIONS",
-            },
-            "snakeCase": {
-              "safeName": "sessions",
-              "unsafeName": "sessions",
-            },
-          },
+          "file": "Sessions",
           "packagePath": [],
         },
       },
@@ -995,67 +543,13 @@
       "errors": [],
       "fernFilepath": {
         "allParts": [
-          {
-            "camelCase": {
-              "safeName": "sessions",
-              "unsafeName": "sessions",
-            },
-            "originalName": "sessions",
-            "pascalCase": {
-              "safeName": "Sessions",
-              "unsafeName": "Sessions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SESSIONS",
-              "unsafeName": "SESSIONS",
-            },
-            "snakeCase": {
-              "safeName": "sessions",
-              "unsafeName": "sessions",
-            },
-          },
+          "sessions",
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "sessions",
-            "unsafeName": "sessions",
-          },
-          "originalName": "sessions",
-          "pascalCase": {
-            "safeName": "Sessions",
-            "unsafeName": "Sessions",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SESSIONS",
-            "unsafeName": "SESSIONS",
-          },
-          "snakeCase": {
-            "safeName": "sessions",
-            "unsafeName": "sessions",
-          },
-        },
+        "file": "sessions",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
-      "name": {
-        "camelCase": {
-          "safeName": "sessions",
-          "unsafeName": "sessions",
-        },
-        "originalName": "sessions",
-        "pascalCase": {
-          "safeName": "Sessions",
-          "unsafeName": "Sessions",
-        },
-        "screamingSnakeCase": {
-          "safeName": "SESSIONS",
-          "unsafeName": "SESSIONS",
-        },
-        "snakeCase": {
-          "safeName": "sessions",
-          "unsafeName": "sessions",
-        },
-      },
+      "name": "sessions",
       "navigationConfig": undefined,
       "service": "service_sessions",
       "subpackages": [],
@@ -1078,25 +572,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionRequest",
-            "unsafeName": "createSessionRequest",
-          },
-          "originalName": "CreateSessionRequest",
-          "pascalCase": {
-            "safeName": "CreateSessionRequest",
-            "unsafeName": "CreateSessionRequest",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_REQUEST",
-            "unsafeName": "CREATE_SESSION_REQUEST",
-          },
-          "snakeCase": {
-            "safeName": "create_session_request",
-            "unsafeName": "create_session_request",
-          },
-        },
+        "name": "CreateSessionRequest",
         "typeId": "CreateSessionRequest",
       },
       "referencedTypes": Set {},
@@ -1109,28 +585,7 @@
           {
             "availability": undefined,
             "docs": "The amount in cents",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-                "originalName": "amount",
-                "pascalCase": {
-                  "safeName": "Amount",
-                  "unsafeName": "Amount",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "AMOUNT",
-                  "unsafeName": "AMOUNT",
-                },
-                "snakeCase": {
-                  "safeName": "amount",
-                  "unsafeName": "amount",
-                },
-              },
-              "wireValue": "amount",
-            },
+            "name": "amount",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1185,25 +640,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createSessionResponse",
-            "unsafeName": "createSessionResponse",
-          },
-          "originalName": "CreateSessionResponse",
-          "pascalCase": {
-            "safeName": "CreateSessionResponse",
-            "unsafeName": "CreateSessionResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_SESSION_RESPONSE",
-            "unsafeName": "CREATE_SESSION_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "create_session_response",
-            "unsafeName": "create_session_response",
-          },
-        },
+        "name": "CreateSessionResponse",
         "typeId": "CreateSessionResponse",
       },
       "referencedTypes": Set {},
@@ -1216,28 +653,7 @@
           {
             "availability": undefined,
             "docs": "The unique ID for this session",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
-              "wireValue": "id",
-            },
+            "name": "id",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1267,28 +683,7 @@
           {
             "availability": undefined,
             "docs": "The URL to redirect the user to",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "redirectUrl",
-                  "unsafeName": "redirectUrl",
-                },
-                "originalName": "redirect_url",
-                "pascalCase": {
-                  "safeName": "RedirectUrl",
-                  "unsafeName": "RedirectUrl",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "REDIRECT_URL",
-                  "unsafeName": "REDIRECT_URL",
-                },
-                "snakeCase": {
-                  "safeName": "redirect_url",
-                  "unsafeName": "redirect_url",
-                },
-              },
-              "wireValue": "redirect_url",
-            },
+            "name": "redirect_url",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1343,25 +738,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "errorResponse",
-            "unsafeName": "errorResponse",
-          },
-          "originalName": "ErrorResponse",
-          "pascalCase": {
-            "safeName": "ErrorResponse",
-            "unsafeName": "ErrorResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR_RESPONSE",
-            "unsafeName": "ERROR_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "error_response",
-            "unsafeName": "error_response",
-          },
-        },
+        "name": "ErrorResponse",
         "typeId": "ErrorResponse",
       },
       "referencedTypes": Set {},
@@ -1374,28 +751,7 @@
           {
             "availability": undefined,
             "docs": "The error code",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
-              "wireValue": "error",
-            },
+            "name": "error",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1425,28 +781,7 @@
           {
             "availability": undefined,
             "docs": "The error message",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-                "originalName": "message",
-                "pascalCase": {
-                  "safeName": "Message",
-                  "unsafeName": "Message",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MESSAGE",
-                  "unsafeName": "MESSAGE",
-                },
-                "snakeCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-              },
-              "wireValue": "message",
-            },
+            "name": "message",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {

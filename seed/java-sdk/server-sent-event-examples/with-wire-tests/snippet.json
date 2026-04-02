@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "3ba8b3b6",
+            "example_identifier": "6080af03",
             "id": {
                 "method": "POST",
                 "path": "/stream",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "309ecbb2",
+            "example_identifier": "95b7c867",
             "id": {
                 "method": "POST",
                 "path": "/stream",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "9852495",
+            "example_identifier": "40c16ae2",
             "id": {
                 "method": "POST",
                 "path": "/stream-events",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "309ecbb2",
+            "example_identifier": "95b7c867",
             "id": {
                 "method": "POST",
                 "path": "/stream-events",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "63d5fe9f",
+            "example_identifier": "f518a80",
             "id": {
                 "method": "POST",
                 "path": "/stream-events-context-protocol",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "309ecbb2",
+            "example_identifier": "95b7c867",
             "id": {
                 "method": "POST",
                 "path": "/stream-events-context-protocol",

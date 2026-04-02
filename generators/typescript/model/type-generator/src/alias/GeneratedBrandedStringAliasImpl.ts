@@ -118,6 +118,9 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     }
 
     private getStringBrand(): string {
-        return [...this.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName), this.typeName].join("_");
+        return [
+            ...this.fernFilepath.packagePath.map((part) => this.caseConverter.camelUnsafe(part)),
+            this.typeName
+        ].join("_");
     }
 }

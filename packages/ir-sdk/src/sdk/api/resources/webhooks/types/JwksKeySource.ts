@@ -6,5 +6,5 @@ export interface JwksKeySource {
     /** The JWKS endpoint URL. */
     url: string;
     /** Optional HTTP header containing the key ID to select from the JWKS set. */
-    keyIdHeader: FernIr.NameAndWireValue | undefined;
+    keyIdHeader: FernIr.NameAndWireValueOrString | undefined;
 }

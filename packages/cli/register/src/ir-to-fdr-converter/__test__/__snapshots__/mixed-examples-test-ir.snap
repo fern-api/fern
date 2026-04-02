@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Mixed Examples Test - AI Overrides vs Human Examples",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "mixedExamplesTestAiOverridesVsHumanExamples",
-      "unsafeName": "mixedExamplesTestAiOverridesVsHumanExamples",
-    },
-    "originalName": "Mixed Examples Test - AI Overrides vs Human Examples",
-    "pascalCase": {
-      "safeName": "MixedExamplesTestAiOverridesVsHumanExamples",
-      "unsafeName": "MixedExamplesTestAiOverridesVsHumanExamples",
-    },
-    "screamingSnakeCase": {
-      "safeName": "MIXED_EXAMPLES_TEST_AI_OVERRIDES_VS_HUMAN_EXAMPLES",
-      "unsafeName": "MIXED_EXAMPLES_TEST_AI_OVERRIDES_VS_HUMAN_EXAMPLES",
-    },
-    "snakeCase": {
-      "safeName": "mixed_examples_test_ai_overrides_vs_human_examples",
-      "unsafeName": "mixed_examples_test_ai_overrides_vs_human_examples",
-    },
-  },
+  "apiName": "Mixed Examples Test - AI Overrides vs Human Examples",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -29,29 +11,9 @@
     "schemes": [],
   },
   "basePath": undefined,
+  "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
-      "wireValue": "errorInstanceId",
-    },
+    "errorInstanceIdKey": "errorInstanceId",
   },
   "dynamic": undefined,
   "environments": undefined,
@@ -125,7 +87,7 @@
                 "docs": undefined,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "2bcdf0c7",
+                "id": "d6f304c3",
                 "name": undefined,
                 "queryParameters": [],
                 "request": {
@@ -145,28 +107,7 @@
                       "extraProperties": undefined,
                       "properties": [
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "id",
-                                "unsafeName": "id",
-                              },
-                              "originalName": "id",
-                              "pascalCase": {
-                                "safeName": "Id",
-                                "unsafeName": "Id",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "ID",
-                                "unsafeName": "ID",
-                              },
-                              "snakeCase": {
-                                "safeName": "id",
-                                "unsafeName": "id",
-                              },
-                            },
-                            "wireValue": "id",
-                          },
+                          "name": "id",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -174,25 +115,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -228,28 +151,7 @@
                           },
                         },
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "email",
-                                "unsafeName": "email",
-                              },
-                              "originalName": "email",
-                              "pascalCase": {
-                                "safeName": "Email",
-                                "unsafeName": "Email",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "EMAIL",
-                                "unsafeName": "EMAIL",
-                              },
-                              "snakeCase": {
-                                "safeName": "email",
-                                "unsafeName": "email",
-                              },
-                            },
-                            "wireValue": "email",
-                          },
+                          "name": "email",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -257,25 +159,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -295,28 +179,7 @@
                           },
                         },
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "name",
-                                "unsafeName": "name",
-                              },
-                              "originalName": "name",
-                              "pascalCase": {
-                                "safeName": "Name",
-                                "unsafeName": "Name",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "NAME",
-                                "unsafeName": "NAME",
-                              },
-                              "snakeCase": {
-                                "safeName": "name",
-                                "unsafeName": "name",
-                              },
-                            },
-                            "wireValue": "name",
-                          },
+                          "name": "name",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -324,25 +187,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -362,28 +207,7 @@
                           },
                         },
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "role",
-                                "unsafeName": "role",
-                              },
-                              "originalName": "role",
-                              "pascalCase": {
-                                "safeName": "Role",
-                                "unsafeName": "Role",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "ROLE",
-                                "unsafeName": "ROLE",
-                              },
-                              "snakeCase": {
-                                "safeName": "role",
-                                "unsafeName": "role",
-                              },
-                            },
-                            "wireValue": "role",
-                          },
+                          "name": "role",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -391,25 +215,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -420,28 +226,7 @@
                               "shape": {
                                 "_visit": [Function],
                                 "type": "enum",
-                                "value": {
-                                  "name": {
-                                    "camelCase": {
-                                      "safeName": "user",
-                                      "unsafeName": "user",
-                                    },
-                                    "originalName": "user",
-                                    "pascalCase": {
-                                      "safeName": "User",
-                                      "unsafeName": "User",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "USER",
-                                      "unsafeName": "USER",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "user",
-                                      "unsafeName": "user",
-                                    },
-                                  },
-                                  "wireValue": "user",
-                                },
+                                "value": "user",
                               },
                               "type": "named",
                               "typeName": {
@@ -451,53 +236,14 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "userRole",
-                                    "unsafeName": "userRole",
-                                  },
-                                  "originalName": "UserRole",
-                                  "pascalCase": {
-                                    "safeName": "UserRole",
-                                    "unsafeName": "UserRole",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER_ROLE",
-                                    "unsafeName": "USER_ROLE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user_role",
-                                    "unsafeName": "user_role",
-                                  },
-                                },
+                                "name": "UserRole",
                                 "typeId": "UserRole",
                               },
                             },
                           },
                         },
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "bio",
-                                "unsafeName": "bio",
-                              },
-                              "originalName": "bio",
-                              "pascalCase": {
-                                "safeName": "Bio",
-                                "unsafeName": "Bio",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "BIO",
-                                "unsafeName": "BIO",
-                              },
-                              "snakeCase": {
-                                "safeName": "bio",
-                                "unsafeName": "bio",
-                              },
-                            },
-                            "wireValue": "bio",
-                          },
+                          "name": "bio",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -505,25 +251,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -567,28 +295,7 @@
                           },
                         },
                         {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "avatar",
-                                "unsafeName": "avatar",
-                              },
-                              "originalName": "avatar",
-                              "pascalCase": {
-                                "safeName": "Avatar",
-                                "unsafeName": "Avatar",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AVATAR",
-                                "unsafeName": "AVATAR",
-                              },
-                              "snakeCase": {
-                                "safeName": "avatar",
-                                "unsafeName": "avatar",
-                              },
-                            },
-                            "wireValue": "avatar",
-                          },
+                          "name": "avatar",
                           "originalTypeDeclaration": {
                             "displayName": undefined,
                             "fernFilepath": {
@@ -596,25 +303,7 @@
                               "file": undefined,
                               "packagePath": [],
                             },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                              "originalName": "User",
-                              "pascalCase": {
-                                "safeName": "User",
-                                "unsafeName": "User",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "USER",
-                                "unsafeName": "USER",
-                              },
-                              "snakeCase": {
-                                "safeName": "user",
-                                "unsafeName": "user",
-                              },
-                            },
+                            "name": "User",
                             "typeId": "User",
                           },
                           "propertyAccess": undefined,
@@ -668,25 +357,7 @@
                         "file": undefined,
                         "packagePath": [],
                       },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                        "originalName": "User",
-                        "pascalCase": {
-                          "safeName": "User",
-                          "unsafeName": "User",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "USER",
-                          "unsafeName": "USER",
-                        },
-                        "snakeCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                      },
+                      "name": "User",
                       "typeId": "User",
                     },
                   },
@@ -714,28 +385,7 @@
                           "extraProperties": undefined,
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                  "originalName": "id",
-                                  "pascalCase": {
-                                    "safeName": "Id",
-                                    "unsafeName": "Id",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "ID",
-                                    "unsafeName": "ID",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                },
-                                "wireValue": "id",
-                              },
+                              "name": "id",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -743,25 +393,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -810,28 +442,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "email",
-                                    "unsafeName": "email",
-                                  },
-                                  "originalName": "email",
-                                  "pascalCase": {
-                                    "safeName": "Email",
-                                    "unsafeName": "Email",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "EMAIL",
-                                    "unsafeName": "EMAIL",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "email",
-                                    "unsafeName": "email",
-                                  },
-                                },
-                                "wireValue": "email",
-                              },
+                              "name": "email",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -839,25 +450,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -877,28 +470,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                  "originalName": "name",
-                                  "pascalCase": {
-                                    "safeName": "Name",
-                                    "unsafeName": "Name",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "NAME",
-                                    "unsafeName": "NAME",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                },
-                                "wireValue": "name",
-                              },
+                              "name": "name",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -906,25 +478,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -944,28 +498,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "role",
-                                    "unsafeName": "role",
-                                  },
-                                  "originalName": "role",
-                                  "pascalCase": {
-                                    "safeName": "Role",
-                                    "unsafeName": "Role",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "ROLE",
-                                    "unsafeName": "ROLE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "role",
-                                    "unsafeName": "role",
-                                  },
-                                },
-                                "wireValue": "role",
-                              },
+                              "name": "role",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -973,25 +506,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -1002,28 +517,7 @@
                                   "shape": {
                                     "_visit": [Function],
                                     "type": "enum",
-                                    "value": {
-                                      "name": {
-                                        "camelCase": {
-                                          "safeName": "user",
-                                          "unsafeName": "user",
-                                        },
-                                        "originalName": "user",
-                                        "pascalCase": {
-                                          "safeName": "User",
-                                          "unsafeName": "User",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "USER",
-                                          "unsafeName": "USER",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "user",
-                                          "unsafeName": "user",
-                                        },
-                                      },
-                                      "wireValue": "user",
-                                    },
+                                    "value": "user",
                                   },
                                   "type": "named",
                                   "typeName": {
@@ -1033,53 +527,14 @@
                                       "file": undefined,
                                       "packagePath": [],
                                     },
-                                    "name": {
-                                      "camelCase": {
-                                        "safeName": "userRole",
-                                        "unsafeName": "userRole",
-                                      },
-                                      "originalName": "UserRole",
-                                      "pascalCase": {
-                                        "safeName": "UserRole",
-                                        "unsafeName": "UserRole",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "USER_ROLE",
-                                        "unsafeName": "USER_ROLE",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "user_role",
-                                        "unsafeName": "user_role",
-                                      },
-                                    },
+                                    "name": "UserRole",
                                     "typeId": "UserRole",
                                   },
                                 },
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "bio",
-                                    "unsafeName": "bio",
-                                  },
-                                  "originalName": "bio",
-                                  "pascalCase": {
-                                    "safeName": "Bio",
-                                    "unsafeName": "Bio",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "BIO",
-                                    "unsafeName": "BIO",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "bio",
-                                    "unsafeName": "bio",
-                                  },
-                                },
-                                "wireValue": "bio",
-                              },
+                              "name": "bio",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -1087,25 +542,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -1191,28 +628,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "avatar",
-                                    "unsafeName": "avatar",
-                                  },
-                                  "originalName": "avatar",
-                                  "pascalCase": {
-                                    "safeName": "Avatar",
-                                    "unsafeName": "Avatar",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "AVATAR",
-                                    "unsafeName": "AVATAR",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "avatar",
-                                    "unsafeName": "avatar",
-                                  },
-                                },
-                                "wireValue": "avatar",
-                              },
+                              "name": "avatar",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -1220,25 +636,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                  "originalName": "User",
-                                  "pascalCase": {
-                                    "safeName": "User",
-                                    "unsafeName": "User",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "USER",
-                                    "unsafeName": "USER",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "user",
-                                    "unsafeName": "user",
-                                  },
-                                },
+                                "name": "User",
                                 "typeId": "User",
                               },
                               "propertyAccess": undefined,
@@ -1334,25 +732,7 @@
                             "file": undefined,
                             "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "user",
-                              "unsafeName": "user",
-                            },
-                            "originalName": "User",
-                            "pascalCase": {
-                              "safeName": "User",
-                              "unsafeName": "User",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "USER",
-                              "unsafeName": "USER",
-                            },
-                            "snakeCase": {
-                              "safeName": "user",
-                              "unsafeName": "user",
-                            },
-                          },
+                          "name": "User",
                           "typeId": "User",
                         },
                       },
@@ -1380,25 +760,7 @@
           "id": "endpoint_.createUser",
           "idempotent": false,
           "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "createUser",
-              "unsafeName": "createUser",
-            },
-            "originalName": "createUser",
-            "pascalCase": {
-              "safeName": "CreateUser",
-              "unsafeName": "CreateUser",
-            },
-            "screamingSnakeCase": {
-              "safeName": "CREATE_USER",
-              "unsafeName": "CREATE_USER",
-            },
-            "snakeCase": {
-              "safeName": "create_user",
-              "unsafeName": "create_user",
-            },
-          },
+          "name": "createUser",
           "pagination": undefined,
           "path": {
             "head": "/user",
@@ -1420,25 +782,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-                "originalName": "User",
-                "pascalCase": {
-                  "safeName": "User",
-                  "unsafeName": "User",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER",
-                  "unsafeName": "USER",
-                },
-                "snakeCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-              },
+              "name": "User",
               "type": "named",
               "typeId": "User",
             },
@@ -1471,25 +815,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                    "originalName": "User",
-                    "pascalCase": {
-                      "safeName": "User",
-                      "unsafeName": "User",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "USER",
-                      "unsafeName": "USER",
-                    },
-                    "snakeCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                  },
+                  "name": "User",
                   "type": "named",
                   "typeId": "User",
                 },
@@ -1579,25 +905,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                    "originalName": "User",
-                    "pascalCase": {
-                      "safeName": "User",
-                      "unsafeName": "User",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "USER",
-                      "unsafeName": "USER",
-                    },
-                    "snakeCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                  },
+                  "name": "User",
                   "type": "named",
                   "typeId": "User",
                 },
@@ -1634,25 +942,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                        "originalName": "User",
-                        "pascalCase": {
-                          "safeName": "User",
-                          "unsafeName": "User",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "USER",
-                          "unsafeName": "USER",
-                        },
-                        "snakeCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                      },
+                      "name": "User",
                       "type": "named",
                       "typeId": "User",
                     },
@@ -1684,25 +974,7 @@
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": {
-                "camelCase": {
-                  "safeName": "productId",
-                  "unsafeName": "productId",
-                },
-                "originalName": "productId",
-                "pascalCase": {
-                  "safeName": "ProductId",
-                  "unsafeName": "ProductId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PRODUCT_ID",
-                  "unsafeName": "PRODUCT_ID",
-                },
-                "snakeCase": {
-                  "safeName": "product_id",
-                  "unsafeName": "product_id",
-                },
-              },
+              "name": "productId",
               "v2Examples": {
                 "autogeneratedExamples": {
                   "productId_example": "productId",
@@ -1740,25 +1012,7 @@
                 "endpointHeaders": [],
                 "endpointPathParameters": [
                   {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "productId",
-                        "unsafeName": "productId",
-                      },
-                      "originalName": "productId",
-                      "pascalCase": {
-                        "safeName": "ProductId",
-                        "unsafeName": "ProductId",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "PRODUCT_ID",
-                        "unsafeName": "PRODUCT_ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "product_id",
-                        "unsafeName": "product_id",
-                      },
-                    },
+                    "name": "productId",
                     "value": {
                       "jsonExample": "productId",
                       "shape": {
@@ -1775,7 +1029,7 @@
                     },
                   },
                 ],
-                "id": "5aa2d649",
+                "id": "cce0f43f",
                 "name": undefined,
                 "queryParameters": [],
                 "request": undefined,
@@ -1800,28 +1054,7 @@
                           "extraProperties": undefined,
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                  "originalName": "id",
-                                  "pascalCase": {
-                                    "safeName": "Id",
-                                    "unsafeName": "Id",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "ID",
-                                    "unsafeName": "ID",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "id",
-                                    "unsafeName": "id",
-                                  },
-                                },
-                                "wireValue": "id",
-                              },
+                              "name": "id",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -1829,25 +1062,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
+                                "name": "Product",
                                 "typeId": "Product",
                               },
                               "propertyAccess": undefined,
@@ -1867,28 +1082,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                  "originalName": "name",
-                                  "pascalCase": {
-                                    "safeName": "Name",
-                                    "unsafeName": "Name",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "NAME",
-                                    "unsafeName": "NAME",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                },
-                                "wireValue": "name",
-                              },
+                              "name": "name",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -1896,25 +1090,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
+                                "name": "Product",
                                 "typeId": "Product",
                               },
                               "propertyAccess": undefined,
@@ -1934,28 +1110,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
-                                  "originalName": "price",
-                                  "pascalCase": {
-                                    "safeName": "Price",
-                                    "unsafeName": "Price",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRICE",
-                                    "unsafeName": "PRICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "price",
-                                    "unsafeName": "price",
-                                  },
-                                },
-                                "wireValue": "price",
-                              },
+                              "name": "price",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -1963,25 +1118,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
+                                "name": "Product",
                                 "typeId": "Product",
                               },
                               "propertyAccess": undefined,
@@ -1999,28 +1136,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                  "originalName": "description",
-                                  "pascalCase": {
-                                    "safeName": "Description",
-                                    "unsafeName": "Description",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "DESCRIPTION",
-                                    "unsafeName": "DESCRIPTION",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "description",
-                                    "unsafeName": "description",
-                                  },
-                                },
-                                "wireValue": "description",
-                              },
+                              "name": "description",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -2028,25 +1144,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
+                                "name": "Product",
                                 "typeId": "Product",
                               },
                               "propertyAccess": undefined,
@@ -2132,28 +1230,7 @@
                               },
                             },
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "category",
-                                    "unsafeName": "category",
-                                  },
-                                  "originalName": "category",
-                                  "pascalCase": {
-                                    "safeName": "Category",
-                                    "unsafeName": "Category",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "CATEGORY",
-                                    "unsafeName": "CATEGORY",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "category",
-                                    "unsafeName": "category",
-                                  },
-                                },
-                                "wireValue": "category",
-                              },
+                              "name": "category",
                               "originalTypeDeclaration": {
                                 "displayName": undefined,
                                 "fernFilepath": {
@@ -2161,25 +1238,7 @@
                                   "file": undefined,
                                   "packagePath": [],
                                 },
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                  "originalName": "Product",
-                                  "pascalCase": {
-                                    "safeName": "Product",
-                                    "unsafeName": "Product",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "PRODUCT",
-                                    "unsafeName": "PRODUCT",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "product",
-                                    "unsafeName": "product",
-                                  },
-                                },
+                                "name": "Product",
                                 "typeId": "Product",
                               },
                               "propertyAccess": undefined,
@@ -2275,25 +1334,7 @@
                             "file": undefined,
                             "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                            "originalName": "Product",
-                            "pascalCase": {
-                              "safeName": "Product",
-                              "unsafeName": "Product",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PRODUCT",
-                              "unsafeName": "PRODUCT",
-                            },
-                            "snakeCase": {
-                              "safeName": "product",
-                              "unsafeName": "product",
-                            },
-                          },
+                          "name": "Product",
                           "typeId": "Product",
                         },
                       },
@@ -2326,25 +1367,7 @@
           "id": "endpoint_.getProduct",
           "idempotent": false,
           "method": "GET",
-          "name": {
-            "camelCase": {
-              "safeName": "getProduct",
-              "unsafeName": "getProduct",
-            },
-            "originalName": "getProduct",
-            "pascalCase": {
-              "safeName": "GetProduct",
-              "unsafeName": "GetProduct",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_PRODUCT",
-              "unsafeName": "GET_PRODUCT",
-            },
-            "snakeCase": {
-              "safeName": "get_product",
-              "unsafeName": "get_product",
-            },
-          },
+          "name": "getProduct",
           "pagination": undefined,
           "path": {
             "head": "/product/",
@@ -2361,25 +1384,7 @@
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": {
-                "camelCase": {
-                  "safeName": "productId",
-                  "unsafeName": "productId",
-                },
-                "originalName": "productId",
-                "pascalCase": {
-                  "safeName": "ProductId",
-                  "unsafeName": "ProductId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PRODUCT_ID",
-                  "unsafeName": "PRODUCT_ID",
-                },
-                "snakeCase": {
-                  "safeName": "product_id",
-                  "unsafeName": "product_id",
-                },
-              },
+              "name": "productId",
               "v2Examples": {
                 "autogeneratedExamples": {
                   "productId_example": "productId",
@@ -2426,25 +1431,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "product",
-                      "unsafeName": "product",
-                    },
-                    "originalName": "Product",
-                    "pascalCase": {
-                      "safeName": "Product",
-                      "unsafeName": "Product",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "PRODUCT",
-                      "unsafeName": "PRODUCT",
-                    },
-                    "snakeCase": {
-                      "safeName": "product",
-                      "unsafeName": "product",
-                    },
-                  },
+                  "name": "Product",
                   "type": "named",
                   "typeId": "Product",
                 },
@@ -2540,25 +1527,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "product",
-                          "unsafeName": "product",
-                        },
-                        "originalName": "Product",
-                        "pascalCase": {
-                          "safeName": "Product",
-                          "unsafeName": "Product",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "PRODUCT",
-                          "unsafeName": "PRODUCT",
-                        },
-                        "snakeCase": {
-                          "safeName": "product",
-                          "unsafeName": "product",
-                        },
-                      },
+                      "name": "Product",
                       "type": "named",
                       "typeId": "Product",
                     },
@@ -2613,25 +1582,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "product",
-            "unsafeName": "product",
-          },
-          "originalName": "Product",
-          "pascalCase": {
-            "safeName": "Product",
-            "unsafeName": "Product",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PRODUCT",
-            "unsafeName": "PRODUCT",
-          },
-          "snakeCase": {
-            "safeName": "product",
-            "unsafeName": "product",
-          },
-        },
+        "name": "Product",
         "typeId": "Product",
       },
       "referencedTypes": Set {},
@@ -2644,28 +1595,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
-              "wireValue": "id",
-            },
+            "name": "id",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -2695,28 +1625,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-                "originalName": "name",
-                "pascalCase": {
-                  "safeName": "Name",
-                  "unsafeName": "Name",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NAME",
-                  "unsafeName": "NAME",
-                },
-                "snakeCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-              },
-              "wireValue": "name",
-            },
+            "name": "name",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -2746,28 +1655,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "price",
-                  "unsafeName": "price",
-                },
-                "originalName": "price",
-                "pascalCase": {
-                  "safeName": "Price",
-                  "unsafeName": "Price",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PRICE",
-                  "unsafeName": "PRICE",
-                },
-                "snakeCase": {
-                  "safeName": "price",
-                  "unsafeName": "price",
-                },
-              },
-              "wireValue": "price",
-            },
+            "name": "price",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -2798,28 +1686,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "description",
-                  "unsafeName": "description",
-                },
-                "originalName": "description",
-                "pascalCase": {
-                  "safeName": "Description",
-                  "unsafeName": "Description",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DESCRIPTION",
-                  "unsafeName": "DESCRIPTION",
-                },
-                "snakeCase": {
-                  "safeName": "description",
-                  "unsafeName": "description",
-                },
-              },
-              "wireValue": "description",
-            },
+            "name": "description",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -2865,28 +1732,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "category",
-                  "unsafeName": "category",
-                },
-                "originalName": "category",
-                "pascalCase": {
-                  "safeName": "Category",
-                  "unsafeName": "Category",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CATEGORY",
-                  "unsafeName": "CATEGORY",
-                },
-                "snakeCase": {
-                  "safeName": "category",
-                  "unsafeName": "category",
-                },
-              },
-              "wireValue": "category",
-            },
+            "name": "category",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -2958,25 +1804,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-          "originalName": "User",
-          "pascalCase": {
-            "safeName": "User",
-            "unsafeName": "User",
-          },
-          "screamingSnakeCase": {
-            "safeName": "USER",
-            "unsafeName": "USER",
-          },
-          "snakeCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-        },
+        "name": "User",
         "typeId": "User",
       },
       "referencedTypes": Set {
@@ -2991,28 +1819,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
-              "wireValue": "id",
-            },
+            "name": "id",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3050,28 +1857,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-                "originalName": "email",
-                "pascalCase": {
-                  "safeName": "Email",
-                  "unsafeName": "Email",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "EMAIL",
-                  "unsafeName": "EMAIL",
-                },
-                "snakeCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-              },
-              "wireValue": "email",
-            },
+            "name": "email",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3101,28 +1887,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-                "originalName": "name",
-                "pascalCase": {
-                  "safeName": "Name",
-                  "unsafeName": "Name",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NAME",
-                  "unsafeName": "NAME",
-                },
-                "snakeCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-              },
-              "wireValue": "name",
-            },
+            "name": "name",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3152,28 +1917,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "role",
-                  "unsafeName": "role",
-                },
-                "originalName": "role",
-                "pascalCase": {
-                  "safeName": "Role",
-                  "unsafeName": "Role",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ROLE",
-                  "unsafeName": "ROLE",
-                },
-                "snakeCase": {
-                  "safeName": "role",
-                  "unsafeName": "role",
-                },
-              },
-              "wireValue": "role",
-            },
+            "name": "role",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3191,25 +1935,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "userRole",
-                  "unsafeName": "userRole",
-                },
-                "originalName": "UserRole",
-                "pascalCase": {
-                  "safeName": "UserRole",
-                  "unsafeName": "UserRole",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER_ROLE",
-                  "unsafeName": "USER_ROLE",
-                },
-                "snakeCase": {
-                  "safeName": "user_role",
-                  "unsafeName": "user_role",
-                },
-              },
+              "name": "UserRole",
               "type": "named",
               "typeId": "UserRole",
             },
@@ -3217,28 +1943,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "bio",
-                  "unsafeName": "bio",
-                },
-                "originalName": "bio",
-                "pascalCase": {
-                  "safeName": "Bio",
-                  "unsafeName": "Bio",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "BIO",
-                  "unsafeName": "BIO",
-                },
-                "snakeCase": {
-                  "safeName": "bio",
-                  "unsafeName": "bio",
-                },
-              },
-              "wireValue": "bio",
-            },
+            "name": "bio",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3284,28 +1989,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "avatar",
-                  "unsafeName": "avatar",
-                },
-                "originalName": "avatar",
-                "pascalCase": {
-                  "safeName": "Avatar",
-                  "unsafeName": "Avatar",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "AVATAR",
-                  "unsafeName": "AVATAR",
-                },
-                "snakeCase": {
-                  "safeName": "avatar",
-                  "unsafeName": "avatar",
-                },
-              },
-              "wireValue": "avatar",
-            },
+            "name": "avatar",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -3377,25 +2061,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "userRole",
-            "unsafeName": "userRole",
-          },
-          "originalName": "UserRole",
-          "pascalCase": {
-            "safeName": "UserRole",
-            "unsafeName": "UserRole",
-          },
-          "screamingSnakeCase": {
-            "safeName": "USER_ROLE",
-            "unsafeName": "USER_ROLE",
-          },
-          "snakeCase": {
-            "safeName": "user_role",
-            "unsafeName": "user_role",
-          },
-        },
+        "name": "UserRole",
         "typeId": "UserRole",
       },
       "referencedTypes": Set {},
@@ -3409,82 +2075,19 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-                "originalName": "user",
-                "pascalCase": {
-                  "safeName": "User",
-                  "unsafeName": "User",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER",
-                  "unsafeName": "USER",
-                },
-                "snakeCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-              },
-              "wireValue": "user",
-            },
+            "name": "user",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "admin",
-                  "unsafeName": "admin",
-                },
-                "originalName": "admin",
-                "pascalCase": {
-                  "safeName": "Admin",
-                  "unsafeName": "Admin",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ADMIN",
-                  "unsafeName": "ADMIN",
-                },
-                "snakeCase": {
-                  "safeName": "admin",
-                  "unsafeName": "admin",
-                },
-              },
-              "wireValue": "admin",
-            },
+            "name": "admin",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "moderator",
-                  "unsafeName": "moderator",
-                },
-                "originalName": "moderator",
-                "pascalCase": {
-                  "safeName": "Moderator",
-                  "unsafeName": "Moderator",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MODERATOR",
-                  "unsafeName": "MODERATOR",
-                },
-                "snakeCase": {
-                  "safeName": "moderator",
-                  "unsafeName": "moderator",
-                },
-              },
-              "wireValue": "moderator",
-            },
+            "name": "moderator",
           },
         ],
       },

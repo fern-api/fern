@@ -7,6 +7,10 @@ import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export const ERRORS_DIRECTORY_NAME = "errors";
 
+export declare namespace SdkErrorDeclarationReferencer {
+    export type Init = AbstractDeclarationReferencer.Init;
+}
+
 export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer<FernIr.DeclaredErrorName> {
     public getExportedFilepath(errorName: FernIr.DeclaredErrorName): ExportedFilePath {
         return {
@@ -14,6 +18,7 @@ export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: errorName.fernFilepath,
+                    caseConverter: this.caseConverter,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -37,7 +42,7 @@ export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer
     }
 
     public getExportedName(errorName: FernIr.DeclaredErrorName): string {
-        return errorName.name.pascalCase.unsafeName;
+        return this.caseConverter.pascalUnsafe(errorName.name);
     }
 
     public getReferenceToError(

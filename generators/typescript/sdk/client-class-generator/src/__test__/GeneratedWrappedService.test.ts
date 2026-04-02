@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { casingsGenerator } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator } from "@fern-typescript/test-utils";
 import { ClassDeclarationStructure, Scope, StructureKind, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -58,8 +58,9 @@ function createMockContext(opts?: { wrappedClassName?: string; serviceClassName?
                     ts.factory.createTypeReferenceNode(importOpts?.importAlias ?? wrappedClassName),
                 getExpression: () => ts.factory.createIdentifier(importOpts?.importAlias ?? wrappedClassName)
             })
-        }
-        // biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+        },
+        case: caseConverter
+        // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
     } as any;
 }
 
