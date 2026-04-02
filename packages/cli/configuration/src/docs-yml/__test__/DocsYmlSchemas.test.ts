@@ -37,6 +37,7 @@ describe("DocsYmlSchemas", () => {
         expect(properties["typography"]).toBeDefined();
         expect(properties["layout"]).toBeDefined();
         expect(properties["ai-search"]).toBeDefined();
+        expect(properties["agents"]).toBeDefined();
         expect(properties["check"]).toBeDefined();
     });
 

@@ -320,6 +320,16 @@ fixtures:
         explicit-namespaces: true
         experimental-fully-qualified-namespaces: true
       outputFolder: namespace-client-collision
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "Contoso"
+        explicit-namespaces: true
+      outputFolder: explicit-namespaces
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "ContosoClient"
+        explicit-namespaces: true
+      outputFolder: no-client-namespace-match
   csharp-namespace-conflict:
     - customConfig:
         namespace: Seed.CsharpNamespaceConflict
