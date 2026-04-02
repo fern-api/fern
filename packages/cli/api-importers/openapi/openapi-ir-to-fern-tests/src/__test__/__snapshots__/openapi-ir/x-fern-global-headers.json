@@ -722,7 +722,6 @@
       "header": "version",
       "name": "Square-Version",
       "env": "SQUARE_VERSION",
-      "type": "literal<\"2024-06-04\">",
       "schema": {
         "generatedName": "Square-Version",
         "value": {

@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.58.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` on `x-fern-global-headers` entries. When a
+        global header includes `x-fern-default`, the value is carried through
+        to the IR `clientDefault` field so generators can emit optional
+        parameters with a default value (e.g. `version: Optional[str] = '2024-02-08'`).
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
 - version: 4.57.0
   changelogEntry:
     - summary: |
@@ -12,6 +23,7 @@
       type: feat
   createdAt: "2026-04-02"
   irVersion: 66
+
 
 - version: 4.56.0
   changelogEntry:
