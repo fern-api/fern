@@ -53,7 +53,15 @@ function getCodeFromDashboard({
     origin: string;
     port: number;
 }) {
-    return new Promise<{ code: string }>((resolve) => {
+    return new Promise<{ code: string }>((resolve, reject) => {
+        const timeout = setTimeout(
+            () => {
+                server.close();
+                reject(new Error("Login timeout: no response received after 5 minutes"));
+            },
+            5 * 60 * 1000
+        );
+
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         server.addListener("request", async (request, response) => {
             const code = parseCodeFromUrl(request, origin);
@@ -61,6 +69,7 @@ function getCodeFromDashboard({
                 request.socket.end();
             } else {
                 response.end(SUCCESS_PAGE);
+                clearTimeout(timeout);
                 resolve({ code });
             }
         });
@@ -91,7 +100,11 @@ async function exchangeCodeForToken({
             headers: { "Content-Type": "application/json" }
         }
     );
-    const { access_token: accessToken } = response.data;
+    const responseData = response.data;
+    if (typeof responseData !== "object" || responseData == null) {
+        throw new Error("Invalid response format from exchange endpoint");
+    }
+    const { access_token: accessToken } = responseData;
     if (accessToken == null) {
         throw new Error("Access token is not defined in exchange response");
     }
