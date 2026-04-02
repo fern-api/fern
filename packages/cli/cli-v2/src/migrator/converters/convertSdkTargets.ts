@@ -134,10 +134,6 @@ export function convertSdkTargets(options: ConvertSdkTargetsOptions): ConvertSdk
 
     const sdks: schemas.SdksSchema = { targets };
 
-    if (defaultGroup != null) {
-        sdks.defaultGroup = defaultGroup;
-    }
-
     if (autorelease != null) {
         sdks.autorelease = autorelease;
     }
@@ -207,7 +203,6 @@ function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGene
     if (generator.config != null) {
         target.config = generator.config as Record<string, unknown>;
     }
-    target.group = [groupName];
 
     // Convert output configuration
     const outputResult = convertOutputConfig(generator, warnings);
@@ -518,9 +513,6 @@ export function convertSdkTargetsFromRaw(options: ConvertSdkTargetsFromRawOption
     }
 
     const sdks: schemas.SdksSchema = { targets };
-    if (defaultGroup != null) {
-        sdks.defaultGroup = defaultGroup;
-    }
     if (autorelease != null) {
         sdks.autorelease = autorelease;
     }
@@ -595,7 +587,6 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
     if (generator.config != null) {
         target.config = generator.config as Record<string, unknown>;
     }
-    target.group = [groupName];
 
     const outputResult = convertRawOutputConfig(generator, warnings);
     target.output = outputResult.output;

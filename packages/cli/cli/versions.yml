@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Polish `fern config migrate` command: point the `docs` key at the
+        existing `docs.yml` file via `$ref` syntax instead of inlining, drop
+        legacy `defaultGroup` and `group` fields from SDK target output, and
+        automatically update GitHub Actions workflow files to use the v2 CLI
+        syntax (`fern sdk generate`, `--target` instead of `--group`).
+      type: feat
+  createdAt: "2026-04-07"
+  irVersion: 66
+
 - version: 4.62.6
   changelogEntry:
     - summary: |
@@ -7,7 +19,6 @@
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.5
   changelogEntry:
     - summary: |
@@ -15,7 +26,6 @@
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.4
   changelogEntry:
     - summary: |
@@ -23,7 +33,6 @@
       type: chore
   createdAt: "2026-04-06"
   irVersion: 66
-
 - version: 4.62.3
   changelogEntry:
     - summary: |
@@ -113,7 +122,6 @@
       type: feat
   createdAt: "2026-04-02"
   irVersion: 66
-
 - version: 4.56.0
   changelogEntry:
     - summary: |

@@ -6,8 +6,10 @@ import { readdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { FERN_YML_FILENAME } from "../config/fern-yml/constants.js";
 import { convertMultiApi, convertSingleApi } from "./converters/index.js";
+import { DocsYmlMigrator } from "./docs-yml/index.js";
 import { FernConfigJsonMigrator } from "./fern-config-json/index.js";
 import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
+import { GithubWorkflowMigrator } from "./github-workflows/index.js";
 import type { MigratorResult, MigratorWarning } from "./types/index.js";
 
 export interface MigratorConfig {
@@ -112,6 +114,20 @@ export class Migrator {
             fernYml = singleApiResult.fernYml;
         }
 
+        // Migrate docs.yml if present.
+        const docsMigrator = new DocsYmlMigrator({ cwd: fernDir });
+        const docsResult = await docsMigrator.migrate();
+        warnings.push(...docsResult.warnings);
+        if (docsResult.docs != null) {
+            fernYml.docs = docsResult.docs as schemas.FernYmlSchema["docs"];
+        }
+        if (docsResult.absoluteFilePath != null) {
+            migratedFiles.push(docsResult.absoluteFilePath);
+        }
+        for (const refFile of docsResult.referencedFiles) {
+            migratedFiles.push(refFile);
+        }
+
         // Write fern.yml in the current working directory.
         const fernYmlPath = join(this.cwd, RelativeFilePath.of(FERN_YML_FILENAME));
         const yamlContent = this.serializeFernYml(fernYml);
@@ -132,6 +148,11 @@ export class Migrator {
         }
 
         this.logger.info(`Created ${fernYmlPath}`);
+
+        // Migrate GitHub Actions workflow files if present.
+        const workflowMigrator = new GithubWorkflowMigrator({ cwd: this.cwd });
+        const workflowResult = await workflowMigrator.migrate();
+        warnings.push(...workflowResult.warnings);
 
         return {
             success: true,
@@ -199,7 +220,6 @@ export class Migrator {
         // Collect generators.yml API configs and SDK results for each API.
         const generatorsYmlApis: Record<string, generatorsYml.ApiConfigurationSchema | undefined> = {};
         let combinedSdks: schemas.SdksSchema = { targets: {} };
-        let defaultGroup: string | undefined;
         let autorelease: boolean | undefined;
 
         for (const apiName of apiNames) {
@@ -218,9 +238,6 @@ export class Migrator {
             if (generatorsResult.sdks != null) {
                 for (const [targetName, target] of Object.entries(generatorsResult.sdks.targets)) {
                     combinedSdks.targets[targetName] = target;
-                }
-                if (generatorsResult.sdks.defaultGroup != null && defaultGroup == null) {
-                    defaultGroup = generatorsResult.sdks.defaultGroup;
                 }
                 if (generatorsResult.sdks.autorelease != null && autorelease == null) {
                     autorelease = generatorsResult.sdks.autorelease;
@@ -242,9 +259,6 @@ export class Migrator {
         };
 
         if (Object.keys(combinedSdks.targets).length > 0) {
-            if (defaultGroup != null) {
-                combinedSdks.defaultGroup = defaultGroup;
-            }
             if (autorelease != null) {
                 combinedSdks.autorelease = autorelease;
             }
@@ -295,6 +309,9 @@ export class Migrator {
         }
         if (fernYml.cli != null) {
             doc.cli = fernYml.cli;
+        }
+        if (fernYml.docs != null) {
+            doc.docs = fernYml.docs;
         }
         if (fernYml.sdks != null) {
             doc.sdks = this.simplifySdks(fernYml.sdks);
