@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
@@ -96,7 +95,7 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): rust.Expression {
-        const bodyPropertyValue = record[getWireValue(property.name)];
+        const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
             // Check if it's an optional type
             if (property.typeReference.type === "optional" || property.typeReference.type === "nullable") {

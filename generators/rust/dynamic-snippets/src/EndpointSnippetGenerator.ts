@@ -1,12 +1,10 @@
-import { AbstractAstNode, Options, Scope, Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 const CLIENT_VAR_NAME = "client";
 
@@ -278,7 +276,7 @@ export class EndpointSnippetGenerator {
         imports: Set<string>,
         visited: Set<string> = new Set()
     ): void {
-        const typeName = caseConverter.pascalSafe(namedType.declaration.name);
+        const typeName = namedType.declaration.name.pascalCase.safeName;
 
         // Prevent infinite recursion by tracking visited types
         if (visited.has(typeName)) {
@@ -534,7 +532,7 @@ export class EndpointSnippetGenerator {
                     });
                     return undefined;
                 }
-                return caseConverter.snakeSafe(envName);
+                return envName.snakeCase.safeName;
             }
             if (this.context.isMultiEnvironmentValues(environment)) {
                 this.context.errors.add({
@@ -713,7 +711,7 @@ export class EndpointSnippetGenerator {
                 values: snippet.queryParameters ?? {}
             });
             for (const queryParameter of queryParameters) {
-                this.context.scopeError(getWireValue(queryParameter.name));
+                this.context.scopeError(queryParameter.name.wireValue);
                 try {
                     const fieldName = this.context.getPropertyName(queryParameter.name.name);
                     structFields.push({
@@ -875,7 +873,7 @@ export class EndpointSnippetGenerator {
                         if (namedType.values.length > 0) {
                             const firstVariant = namedType.values[0];
                             if (firstVariant) {
-                                const rawVariantName = caseConverter.pascalUnsafe(firstVariant.name);
+                                const rawVariantName = firstVariant.name.pascalCase.unsafeName;
                                 const variantName = this.context.escapeRustReservedType(rawVariantName);
                                 return rust.Expression.raw(`${typeName}::${variantName}`);
                             }
@@ -1065,7 +1063,7 @@ export class EndpointSnippetGenerator {
         let optionsExpr = rust.Expression.functionCall("RequestOptions::new", []);
 
         for (const header of headers) {
-            this.context.scopeError(getWireValue(header.name));
+            this.context.scopeError(header.name.wireValue);
             try {
                 // Headers should always be passed as plain strings to additional_header,
                 // regardless of their type reference (e.g., optional, named types like IdempotencyKey).
@@ -1074,7 +1072,7 @@ export class EndpointSnippetGenerator {
                 optionsExpr = rust.Expression.methodCall({
                     target: optionsExpr,
                     method: "additional_header",
-                    args: [rust.Expression.stringLiteral(getWireValue(header.name)), headerValue]
+                    args: [rust.Expression.stringLiteral(header.name.wireValue), headerValue]
                 });
             } finally {
                 this.context.unscopeError();
@@ -1167,7 +1165,7 @@ export class EndpointSnippetGenerator {
     ): string {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
-        const methodName = caseConverter.pascalSafe(endpoint.declaration.name);
+        const methodName = endpoint.declaration.name.pascalCase.safeName;
 
         if (hasQueryParams && !hasBody) {
             // Query-only: look up the pre-registered deduplicated name from the context
