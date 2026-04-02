@@ -349,6 +349,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 );
                 if (basicAuthSchemes.length > 0) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                    let isFirstBlock = true;
                     for (let i = 0; i < basicAuthSchemes.length; i++) {
                         const basicAuthScheme = basicAuthSchemes[i];
                         if (basicAuthScheme == null) {
@@ -360,22 +361,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         const scheme = basicAuthScheme as unknown as Record<string, unknown>;
                         const usernameOmitted = scheme.usernameOmit === true;
                         const passwordOmitted = scheme.passwordOmit === true;
+                        // Condition: only require non-omitted fields to be present
+                        let condition: string;
+                        if (!usernameOmitted && !passwordOmitted) {
+                            condition = `$${usernameName} !== null && $${passwordName} !== null`;
+                        } else if (usernameOmitted && !passwordOmitted) {
+                            condition = `$${passwordName} !== null`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            condition = `$${usernameName} !== null`;
+                        } else {
+                            // Both fields omitted — skip auth header entirely when auth is optional
+                            continue;
+                        }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
-                            const controlFlowKeyword = i === 0 ? "if" : "else if";
-                            // Condition: only require non-omitted fields to be present
-                            let condition: string;
-                            if (!usernameOmitted && !passwordOmitted) {
-                                condition = `$${usernameName} !== null && $${passwordName} !== null`;
-                            } else if (usernameOmitted && !passwordOmitted) {
-                                condition = `$${passwordName} !== null`;
-                            } else if (!usernameOmitted && passwordOmitted) {
-                                condition = `$${usernameName} !== null`;
-                            } else {
-                                // Both fields omitted — skip auth header entirely when auth is optional
-                                continue;
-                            }
+                            const controlFlowKeyword = isFirstBlock ? "if" : "else if";
                             writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
                         }
+                        isFirstBlock = false;
                         // Omitted fields use empty string directly
                         const usernameExpr = usernameOmitted ? `""` : `$${usernameName}`;
                         const passwordExpr = passwordOmitted ? `""` : `$${passwordName}`;
