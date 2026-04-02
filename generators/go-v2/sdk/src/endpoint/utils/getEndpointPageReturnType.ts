@@ -142,18 +142,9 @@ function getLinkTypeFromResponse({
     // Find the "links" property (case-insensitive, try multiple variations)
     const propertyNames = allProperties.map((p) => getOriginalName(p.name));
     const linksProperty =
-        allProperties.find(
-            (prop) =>
-                getOriginalName(prop.name).toLowerCase() === "links"
-        ) ??
-        allProperties.find(
-            (prop) =>
-                getOriginalName(prop.name).toLowerCase() === "link"
-        ) ??
-        allProperties.find(
-            (prop) =>
-                getOriginalName(prop.name).toLowerCase() === "_links"
-        );
+        allProperties.find((prop) => getOriginalName(prop.name).toLowerCase() === "links") ??
+        allProperties.find((prop) => getOriginalName(prop.name).toLowerCase() === "link") ??
+        allProperties.find((prop) => getOriginalName(prop.name).toLowerCase() === "_links");
 
     if (linksProperty == null) {
         const availableProperties = propertyNames.join(", ");

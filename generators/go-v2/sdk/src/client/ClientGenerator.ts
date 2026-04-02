@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -236,9 +235,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(
-                    header.name
-                ),
+                propertyReference: this.getOptionsPropertyReference(header.name),
                 env: header.env
             });
         }
@@ -318,9 +315,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(
-                    scheme.name
-                ),
+                propertyReference: this.getOptionsPropertyReference(scheme.name),
                 env: scheme.headerEnvVar
             });
         }

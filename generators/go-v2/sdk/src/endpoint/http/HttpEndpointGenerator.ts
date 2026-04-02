@@ -1036,8 +1036,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (responseProperty == null) {
                     return go.codeblock("response");
                 }
-                const rpNameVal =
-                    responseProperty.name;
+                const rpNameVal = responseProperty.name;
                 return go.codeblock(`response.${this.context.getFieldName(rpNameVal)}`);
             }
             default:
