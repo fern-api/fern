@@ -65,6 +65,10 @@ export class SdkGeneratorContext extends GeneratorContext {
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
+    public getDefaultMaxRetries(): number {
+        return this.customConfig["max-retries"] ?? 2;
+    }
+
     public getAdditionalQueryParametersType(): ast.Type {
         return this.Collection.list(
             this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string)
