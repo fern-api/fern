@@ -468,24 +468,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 : passwordName;
                             const usernameOmitted = basicScheme.usernameOmit === true;
                             const passwordOmitted = basicScheme.passwordOmit === true;
-                            // Per-field condition: required fields must be present, omittable fields are always satisfied
+                            // Condition: only require non-omitted fields to be present
                             let condition: string;
                             if (!usernameOmitted && !passwordOmitted) {
                                 condition = `${usernameAccess} != null && ${passwordAccess} != null`;
-                            } else if (usernameOmitted && passwordOmitted) {
-                                condition = `${usernameAccess} != null || ${passwordAccess} != null`;
-                            } else if (usernameOmitted) {
+                            } else if (usernameOmitted && !passwordOmitted) {
                                 condition = `${passwordAccess} != null`;
-                            } else {
+                            } else if (!usernameOmitted && passwordOmitted) {
                                 condition = `${usernameAccess} != null`;
+                            } else {
+                                condition = "true";
                             }
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 const controlFlowKeyword = i === 0 ? "if" : "else if";
                                 innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
                             }
-                            // Per-field null coalescing: only omittable fields get ?? "" fallback
-                            const usernameExpr = usernameOmitted ? `${usernameAccess} ?? ""` : `${usernameAccess}`;
-                            const passwordExpr = passwordOmitted ? `${passwordAccess} ?? ""` : `${passwordAccess}`;
+                            // Omitted fields use empty string directly
+                            const usernameExpr = usernameOmitted ? `""` : `${usernameAccess}`;
+                            const passwordExpr = passwordOmitted ? `""` : `${passwordAccess}`;
                             innerWriter.writeTextStatement(
                                 `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameExpr}}:{${passwordExpr}}"))}"`
                             );
@@ -814,13 +814,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             {
                 const usernameName = scheme.username.camelCase.safeName;
                 const passwordName = scheme.password.camelCase.safeName;
-                const usernameIsOptional = isOptional || scheme.usernameOmit === true;
-                const passwordIsOptional = isOptional || scheme.passwordOmit === true;
-                return [
-                    {
+                const usernameOmitted = scheme.usernameOmit === true;
+                const passwordOmitted = scheme.passwordOmit === true;
+                // When omit is true, the field is completely removed from the end-user API.
+                const params: ConstructorParameter[] = [];
+                if (!usernameOmitted) {
+                    params.push({
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
-                        isOptional: usernameIsOptional,
+                        isOptional,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
@@ -831,11 +833,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar,
                         exampleValue: scheme.username.screamingSnakeCase.safeName
-                    },
-                    {
+                    });
+                }
+                if (!passwordOmitted) {
+                    params.push({
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
-                        isOptional: passwordIsOptional,
+                        isOptional,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
@@ -846,8 +850,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar,
                         exampleValue: scheme.password.screamingSnakeCase.safeName
-                    }
-                ];
+                    });
+                }
+                return params;
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
