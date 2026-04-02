@@ -989,7 +989,7 @@ export abstract class AbstractRustGeneratorContext<
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]?)
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 );
 
             return nameMatches && pathMatches;
@@ -1080,7 +1080,7 @@ export abstract class AbstractRustGeneratorContext<
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]?)
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 )
         );
 
@@ -1310,7 +1310,7 @@ export abstract class AbstractRustGeneratorContext<
                 sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
                 sp.fernFilepath.allParts.every(
                     (part, index) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(subpackage.fernFilepath.allParts[index]?)
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(subpackage.fernFilepath.allParts[index]!)
                 )
             );
         })?.[0];
