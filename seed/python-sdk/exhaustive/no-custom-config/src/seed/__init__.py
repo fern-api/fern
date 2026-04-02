@@ -7,8 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
-    from .client import AsyncSeedExhaustive, SeedExhaustive
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedExhaustive, SeedExhaustive
     from .general_errors import BadObjectRequestInfo, BadRequestBody
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {

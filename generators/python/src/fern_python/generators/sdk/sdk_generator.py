@@ -125,7 +125,7 @@ class SdkGenerator(AbstractGenerator):
 
         # Add optional dependencies for aiohttp support
         project.add_dependency(dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True))
-        project.add_dependency(dependency=AST.Dependency(name="aiohttp", version="3.0", optional=True))
+        project.add_dependency(dependency=AST.Dependency(name="aiohttp", version=">=3.10.0,<4", optional=True))
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:

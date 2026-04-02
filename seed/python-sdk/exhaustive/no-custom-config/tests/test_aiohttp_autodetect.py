@@ -13,7 +13,7 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
     def test_returns_httpx_async_client(self) -> None:
         """When httpx_aiohttp is not installed, returns plain httpx.AsyncClient."""
         with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
-            from seed.client import _make_default_async_client
+            from fern_exhaustive.client import _make_default_async_client
 
             client = _make_default_async_client(timeout=60, follow_redirects=True)
             self.assertIsInstance(client, httpx.AsyncClient)
@@ -23,7 +23,7 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
     def test_follow_redirects_none(self) -> None:
         """When follow_redirects is None, omits it from httpx.AsyncClient."""
         with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
-            from seed.client import _make_default_async_client
+            from fern_exhaustive.client import _make_default_async_client
 
             client = _make_default_async_client(timeout=60, follow_redirects=None)
             self.assertIsInstance(client, httpx.AsyncClient)
@@ -44,8 +44,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
     def test_returns_aiohttp_client(self) -> None:
         """When httpx_aiohttp is installed, returns HttpxAiohttpClient."""
         import httpx_aiohttp  # type: ignore[import-not-found]
-
-        from seed.client import _make_default_async_client
+        from fern_exhaustive.client import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=True)
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
@@ -55,8 +54,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
     def test_follow_redirects_none(self) -> None:
         """When httpx_aiohttp is installed and follow_redirects is None, omits it."""
         import httpx_aiohttp  # type: ignore[import-not-found]
-
-        from seed.client import _make_default_async_client
+        from fern_exhaustive.client import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=None)
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
@@ -68,7 +66,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
     def test_default_async_httpx_client_defaults(self) -> None:
         """DefaultAsyncHttpxClient applies SDK defaults."""
-        from seed._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAsyncHttpxClient
+        from fern_exhaustive._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAsyncHttpxClient
 
         client = DefaultAsyncHttpxClient()
         self.assertIsInstance(client, httpx.AsyncClient)
@@ -77,7 +75,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
     def test_default_async_httpx_client_overrides(self) -> None:
         """DefaultAsyncHttpxClient allows overriding defaults."""
-        from seed._default_clients import DefaultAsyncHttpxClient
+        from fern_exhaustive._default_clients import DefaultAsyncHttpxClient
 
         client = DefaultAsyncHttpxClient(timeout=30, follow_redirects=False)
         self.assertEqual(client.timeout.read, 30)
@@ -85,16 +83,16 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
     def test_default_aiohttp_client_raises_without_package(self) -> None:
         """DefaultAioHttpClient raises RuntimeError when httpx_aiohttp not installed."""
-        import seed._default_clients
+        import fern_exhaustive._default_clients
 
         with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
-            importlib.reload(seed._default_clients)
+            importlib.reload(fern_exhaustive._default_clients)
 
             with self.assertRaises(RuntimeError) as ctx:
-                seed._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install seed[aiohttp]", str(ctx.exception))
+                fern_exhaustive._default_clients.DefaultAioHttpClient()
+            self.assertIn("pip install fern_exhaustive[aiohttp]", str(ctx.exception))
 
-        importlib.reload(seed._default_clients)
+        importlib.reload(fern_exhaustive._default_clients)
 
 
 @pytest.mark.aiohttp
@@ -104,8 +102,7 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
     def test_default_aiohttp_client_defaults(self) -> None:
         """DefaultAioHttpClient works when httpx_aiohttp is installed."""
         import httpx_aiohttp  # type: ignore[import-not-found]
-
-        from seed._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAioHttpClient
+        from fern_exhaustive._default_clients import SDK_DEFAULT_TIMEOUT, DefaultAioHttpClient
 
         client = DefaultAioHttpClient()
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
