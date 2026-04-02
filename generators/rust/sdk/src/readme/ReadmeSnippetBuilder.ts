@@ -627,17 +627,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
         for (const header of channel.headers) {
             // Skip authorization header — the connector auto-injects it from the stored token
-            if (caseConverter.snakeSafe(header.name.name) === "authorization") {
+            if (caseConverter.snakeSafe(header.name) === "authorization") {
                 continue;
             }
-            connectParams.push(`"${caseConverter.snakeSafe(header.name.name)}"`);
+            connectParams.push(`"${caseConverter.snakeSafe(header.name)}"`);
         }
         for (const qp of channel.queryParameters) {
             const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
             if (isOptional) {
                 connectParams.push("None");
             } else {
-                connectParams.push(`"${caseConverter.snakeSafe(qp.name.name)}"`);
+                connectParams.push(`"${caseConverter.snakeSafe(qp.name)}"`);
             }
         }
 

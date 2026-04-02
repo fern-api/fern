@@ -479,7 +479,7 @@ ${methods.join("\n\n")}
             // skip the header entirely when no token is configured, rather
             // than sending an empty `Authorization: ""` header.
             params.push({
-                name: caseConverter.snakeSafe(header.name.name),
+                name: caseConverter.snakeSafe(header.name),
                 type: this.isAuthorizationHeader(header) ? "Option<&str>" : "&str"
             });
         }
@@ -527,7 +527,7 @@ ${methods.join("\n\n")}
             if (this.isWebSocketProtocolHeader(header)) {
                 continue;
             }
-            const paramName = caseConverter.snakeSafe(header.name.name);
+            const paramName = caseConverter.snakeSafe(header.name);
             const wireValue = getWireValue(header.name);
             const isAuthHeader = this.isAuthorizationHeader(header);
             if (isAuthHeader) {
@@ -799,7 +799,7 @@ impl ${connectorName} {
         const fields: string[] = [];
 
         for (const qp of channel.queryParameters) {
-            const fieldName = caseConverter.snakeSafe(qp.name.name);
+            const fieldName = caseConverter.snakeSafe(qp.name);
             const wireValue = getWireValue(qp.name);
             const isAlreadyOptional = isOptionalType(qp.valueType);
 
@@ -948,7 +948,7 @@ ${fields.join("\n")}
     private buildQueryBuilderChain(queryParams: FernIr.QueryParameter[]): string {
         const lines = queryParams.map((qp) => {
             const wireValue = getWireValue(qp.name);
-            const fieldName = caseConverter.snakeSafe(qp.name.name);
+            const fieldName = caseConverter.snakeSafe(qp.name);
             const method = this.getQueryBuilderMethodForParam(qp);
 
             // All fields in the options struct are Option<T> (or Vec<T> for allowMultiple),

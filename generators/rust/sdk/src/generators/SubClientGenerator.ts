@@ -1044,7 +1044,7 @@ export class SubClientGenerator {
 
     private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name.name));
+            const paramName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name));
             params.push({
                 name: paramName,
                 type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
@@ -1057,7 +1057,7 @@ export class SubClientGenerator {
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
                     const paramName = this.context.escapeRustKeyword(caseConverter.snakeSafe(pathParam.name));
                     params.push({
@@ -1165,7 +1165,7 @@ export class SubClientGenerator {
         }
 
         // Check for structured query parameter by name (only for non-array queries)
-        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
+        if (getWireValue(queryParam.name) === "query" && this.isStringType(valueType)) {
             return "structured_query";
         }
 
@@ -1400,7 +1400,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
-        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name.name));
+        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name));
 
         if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
@@ -1518,7 +1518,7 @@ export class SubClientGenerator {
 
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
                     const escapedName = this.context.escapeRustKeyword(caseConverter.snakeSafe(pathParam.name));
@@ -2010,7 +2010,8 @@ export class SubClientGenerator {
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
             .join("\n            ");
 
-        const pageParamName = offset.page?.property?.name?.wireValue || "page";
+        const pageProperty = offset.page?.property?.name;
+        const pageParamName = pageProperty != null ? getWireValue(pageProperty) : "page";
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -2338,7 +2339,7 @@ export class SubClientGenerator {
         endpoint.queryParameters.forEach((queryParam) => {
             if (queryParam.docs) {
                 paramDocs.push({
-                    name: caseConverter.snakeSafe(queryParam.name.name),
+                    name: caseConverter.snakeSafe(queryParam.name),
                     description: queryParam.docs
                 });
             }

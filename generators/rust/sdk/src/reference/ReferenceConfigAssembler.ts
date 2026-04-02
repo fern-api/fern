@@ -180,7 +180,7 @@ export class ReferenceConfigAssembler {
             .forEach((qp) => {
                 const rustType = this.getRustTypeForTypeReference(qp.valueType);
                 const optional = qp.allowMultiple ? rustType : `Option<${rustType}>`;
-                params.push(`${caseConverter.snakeSafe(qp.name.name)}: ${optional}`);
+                params.push(`${caseConverter.snakeSafe(qp.name)}: ${optional}`);
             });
 
         return `(${params.join(", ")})`;
@@ -221,7 +221,7 @@ export class ReferenceConfigAssembler {
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             endpoint.requestBody.properties.forEach((prop) => {
                 params.push({
-                    name: caseConverter.snakeSafe(prop.name.name),
+                    name: caseConverter.snakeSafe(prop.name),
                     type: this.getRustTypeForTypeReference(prop.valueType),
                     required: !this.isOptionalType(prop.valueType),
                     description: prop.docs
@@ -232,7 +232,7 @@ export class ReferenceConfigAssembler {
         // Query parameters
         endpoint.queryParameters.forEach((qp) => {
             params.push({
-                name: caseConverter.snakeSafe(qp.name.name),
+                name: caseConverter.snakeSafe(qp.name),
                 type: this.getRustTypeForTypeReference(qp.valueType),
                 required: !qp.allowMultiple,
                 description: qp.docs

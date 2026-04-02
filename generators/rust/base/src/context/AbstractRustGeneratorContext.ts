@@ -1266,11 +1266,11 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "nested_no_auth_api.rs")
      */
     public getUniqueFilenameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Use the full fernFilepath to create unique filenames to prevent collisions
         // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
         return `${pathParts.join("_")}.rs`;
     }
 
@@ -1282,7 +1282,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique client name (e.g., "NestedNoAuthApiClient" or "BasicAuthClient2" if collision)
      */
     public getUniqueClientNameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Find the subpackage ID by matching fernFilepath
         const subpackageId = Object.entries(this.ir.subpackages).find(([, sp]) => {
@@ -1290,7 +1290,7 @@ export abstract class AbstractRustGeneratorContext<
                 sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
                 sp.fernFilepath.allParts.every(
                     (part, index) =>
-                        caseConverter.pascalSafe(part) === subpackage.fernFilepath.allParts[index]!.pascalCase.safeName
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(subpackage.fernFilepath.allParts[index]!)
                 )
             );
         })?.[0];
@@ -1304,7 +1304,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
         return pathParts.join("") + "Client";
     }
 
