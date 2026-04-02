@@ -2,6 +2,7 @@ import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
@@ -102,7 +103,17 @@ export class GeneratedQueryParams {
             context
         });
 
+        // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        const clientDefaultVal = getClientDefaultValue(queryParameter.clientDefault);
+
         if (!queryParameter.allowMultiple) {
+            if (clientDefaultVal != null) {
+                return ts.factory.createBinaryExpression(
+                    scalarExpression,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
+            }
             return scalarExpression;
         }
 

@@ -6,6 +6,7 @@ import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) => ts.Expression;
 
@@ -61,6 +62,16 @@ export function buildUrl({
                     forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
             });
+
+            // If clientDefault is set, add a fallback: value ?? "clientDefault"
+            const clientDefaultVal = getClientDefaultValue(pathParameter.clientDefault);
+            if (clientDefaultVal != null) {
+                referenceToPathParameterValue = ts.factory.createBinaryExpression(
+                    referenceToPathParameterValue,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
+            }
 
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
