@@ -3,6 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Audiences } from "../commons/index.js";
 import {
+    AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
     Availability,
@@ -10,7 +11,6 @@ import {
     ExperimentalConfig,
     Language,
     LibraryLanguage,
-    AgentsConfig,
     PlaygroundSettings,
     Target,
     ThemeConfig,
