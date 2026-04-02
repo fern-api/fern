@@ -121,10 +121,10 @@ export class ParamsClient {
     __getWithQuery(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { query, number } = request;
+            const { query, number: number_ } = request;
             const _queryParams = {
                 query,
-                number,
+                number: number_,
             };
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
@@ -170,10 +170,10 @@ export class ParamsClient {
     __getWithAllowMultipleQuery(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { query, number } = request;
+            const { query, number: number_ } = request;
             const _queryParams = {
                 query,
-                number,
+                number: number_,
             };
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);

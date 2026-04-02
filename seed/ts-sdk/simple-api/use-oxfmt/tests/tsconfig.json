@@ -3,8 +3,8 @@
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
-        "types": ["vitest/globals"],
+        "types": ["vitest/globals"]
     },
     "include": ["../src", "../tests"],
-    "exclude": [],
+    "exclude": []
 }
