@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "../utils/fail.js";
@@ -515,7 +515,7 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: FernIr.NameOrString | FernIr.NameAndWireValueOrString, name2: FernIr.NameOrString | FernIr.NameAndWireValueOrString): boolean {
+    nameEquals(name1: NameInput, name2: NameInput): boolean {
         return caseConverter.camelSafe(name1) === caseConverter.camelSafe(name2);
     }
 
