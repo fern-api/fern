@@ -89,15 +89,26 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.offsetSemantics = offsetSemantics;
     }
 
-    private getItemTypeFromListOrOptionalList(typeReference: FernIr.TypeReference): FernIr.TypeReference | undefined {
+    private getItemTypeFromListOrOptionalList(
+        typeReference: FernIr.TypeReference,
+        context?: FileContext
+    ): FernIr.TypeReference | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "list") {
             return typeReference.container.list;
         }
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
-            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional, context);
         }
         if (typeReference.type === "container" && typeReference.container.type === "nullable") {
-            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable);
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable, context);
+        }
+        // Handle named type aliases (e.g., `type AgreementsList = Agreement[]`).
+        // The IR stores these as a named reference; resolve to check if the underlying type is a list.
+        if (typeReference.type === "named" && context != null) {
+            const resolved = context.type.resolveTypeReference(typeReference);
+            if (resolved.type === "container" && resolved.container.type === "list") {
+                return resolved.container.list;
+            }
         }
         return undefined;
     }
@@ -158,7 +169,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }): PaginationResponseInfo | undefined {
         const itemValueType = cursor.results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType, context);
         if (itemTypeReference == null) {
             return undefined;
         }
@@ -262,7 +273,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }): PaginationResponseInfo | undefined {
         const itemValueType = offset.results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType, context);
         if (itemTypeReference == null) {
             return undefined;
         }
@@ -471,7 +482,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }): PaginationResponseInfo | undefined {
         const itemValueType = custom.results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType, context);
         if (itemTypeReference == null) {
             return undefined;
         }
@@ -573,7 +584,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }): PaginationResponseInfo | undefined {
         const itemValueType = results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType, context);
         if (itemTypeReference == null) {
             return undefined;
         }
