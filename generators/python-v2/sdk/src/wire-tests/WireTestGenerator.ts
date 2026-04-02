@@ -595,11 +595,12 @@ export class WireTestGenerator {
             }
             const fileValue = property.value;
             const key = fileValue.key;
-            if (key.wireValue == null || fileValue.isOptional || record[getWireValue(key)] != null) {
+            const wireValue = getWireValue(key);
+            if (wireValue == null || fileValue.isOptional || record[wireValue] != null) {
                 continue;
             }
-            const placeholder = `example_${key.wireValue}`;
-            record[getWireValue(key)] = fileValue.type === "fileArray" ? [placeholder] : placeholder;
+            const placeholder = `example_${wireValue}`;
+            record[wireValue] = fileValue.type === "fileArray" ? [placeholder] : placeholder;
         }
         snippetRequest.requestBody = record;
     }
@@ -627,7 +628,7 @@ export class WireTestGenerator {
      * String-typed parameters that happen to contain datetime-looking values return false.
      */
     private isDatetimeTypedQueryParam(endpoint: FernIr.HttpEndpoint, wireKey: string): boolean {
-        const queryParam = endpoint.queryParameters.find((qp) => qp.name.wireValue === wireKey);
+        const queryParam = endpoint.queryParameters.find((qp) => getWireValue(qp.name) === wireKey);
         if (!queryParam) {
             return false;
         }
