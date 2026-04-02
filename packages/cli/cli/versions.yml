@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add support for pulling generator Docker images from custom container registries
+        during `fern generate --local` via a new `image: { name, registry }` field in
+        `generators.yml`. Custom image generators are blocked for remote generation and
+        skipped during auto-upgrade.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 4.56.0
   changelogEntry:
     - summary: |
