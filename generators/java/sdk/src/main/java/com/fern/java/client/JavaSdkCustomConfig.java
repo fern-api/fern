@@ -73,6 +73,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
 
+    @JsonProperty("max-retries")
+    Optional<Integer> maxRetries();
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")

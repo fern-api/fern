@@ -149,10 +149,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     }
 
     private async writeInternalFiles(): Promise<void> {
+        // Map maxRetries (number of retries) to defaultRetryAttempts (total attempts including initial).
+        // When maxRetries is not configured, preserve the current default of 2 total attempts (1 retry).
+        const maxRetries = this.context.customConfig.maxRetries;
+        const defaultRetryAttempts = maxRetries != null ? maxRetries + 1 : 2;
         await this.writeAsIsFiles({
             filenames: this.context.getInternalAsIsFiles(),
             getPackageName: () => "internal",
-            getImportPath: (dirname) => this.getImportPath(dirname)
+            getImportPath: (dirname) => this.getImportPath(dirname),
+            templateVariables: {
+                DefaultRetryAttempts: String(defaultRetryAttempts)
+            }
         });
     }
 

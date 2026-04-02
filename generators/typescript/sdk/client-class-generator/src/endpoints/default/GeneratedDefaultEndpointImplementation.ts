@@ -23,6 +23,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultMaxRetries: number | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -41,6 +42,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
     private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultMaxRetries: number | undefined;
     private readonly request: GeneratedEndpointRequest;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -54,6 +56,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
         defaultTimeoutInSeconds,
+        defaultMaxRetries,
         request,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -65,6 +68,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultMaxRetries = defaultMaxRetries;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -787,7 +791,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                 this.generatedSdkClientClass
             ),
-            referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
+            referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions(),
+            defaultMaxRetries: this.defaultMaxRetries
         });
         if (maxRetriesExpression != null) {
             fetcherArgs.maxRetries = maxRetriesExpression;
@@ -920,7 +925,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),
-                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
+                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions(),
+                defaultMaxRetries: this.defaultMaxRetries
             }),
             abortSignal: getAbortSignalExpression({
                 abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(

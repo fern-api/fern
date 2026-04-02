@@ -24,6 +24,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultMaxRetries: number | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -42,6 +43,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
     private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultMaxRetries: number | undefined;
     private readonly request: GeneratedEndpointRequest;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -56,6 +58,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
         defaultTimeoutInSeconds,
+        defaultMaxRetries,
         request,
         response,
         includeSerdeLayer,
@@ -70,6 +73,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultMaxRetries = defaultMaxRetries;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -227,7 +231,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),
-                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
+                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions(),
+                defaultMaxRetries: this.defaultMaxRetries
             }),
             abortSignal: getAbortSignalExpression({
                 abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(

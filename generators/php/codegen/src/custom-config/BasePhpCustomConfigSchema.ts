@@ -11,6 +11,7 @@ export const BasePhpCustomConfigSchema = z.object({
     composerJson: z.optional(z.record(z.any())),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     omitFernHeaders: z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional(),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
 });

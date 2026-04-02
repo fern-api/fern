@@ -80,13 +80,14 @@ export class BaseOptionsGenerator extends WithGeneration {
         { optional, includeInitializer }: OptionArgs
     ) {
         const type = this.Primitive.integer;
+        const defaultMaxRetries = this.context.customConfig["max-retries"] ?? 2;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxRetries"),
             access: ast.Access.Public,
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.csharp.codeblock("2") : undefined,
+            initializer: includeInitializer ? this.csharp.codeblock(String(defaultMaxRetries)) : undefined,
             summary: "The max number of retries to attempt."
         });
     }

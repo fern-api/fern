@@ -171,6 +171,7 @@ export declare namespace SdkGenerator {
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
+        defaultMaxRetries: number | undefined;
     }
 }
 
@@ -538,7 +539,8 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
-            offsetSemantics: config.offsetSemantics
+            offsetSemantics: config.offsetSemantics,
+            defaultMaxRetries: config.defaultMaxRetries
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,

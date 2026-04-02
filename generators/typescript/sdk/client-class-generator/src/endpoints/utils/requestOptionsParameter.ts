@@ -102,10 +102,12 @@ export const getTimeoutExpression = ({
 
 export const getMaxRetriesExpression = ({
     maxRetriesReference,
-    referenceToOptions
+    referenceToOptions,
+    defaultMaxRetries
 }: {
     maxRetriesReference: (args: { referenceToRequestOptions: ts.Expression; isNullable: boolean }) => ts.Expression;
     referenceToOptions: ts.Expression;
+    defaultMaxRetries: number | undefined;
 }): ts.Expression => {
     const requestOptionsMaxRetries = maxRetriesReference({
         referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
@@ -120,11 +122,22 @@ export const getMaxRetriesExpression = ({
     );
 
     // requestOptions?.maxRetries ?? this._options?.maxRetries
-    return ts.factory.createBinaryExpression(
+    const baseExpression = ts.factory.createBinaryExpression(
         requestOptionsMaxRetries,
         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
         referenceToDefaultMaxRetries
     );
+
+    if (defaultMaxRetries != null) {
+        // requestOptions?.maxRetries ?? this._options?.maxRetries ?? <defaultMaxRetries>
+        return ts.factory.createBinaryExpression(
+            baseExpression,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createNumericLiteral(defaultMaxRetries)
+        );
+    }
+
+    return baseExpression;
 };
 
 export const getAbortSignalExpression = ({

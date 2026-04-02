@@ -140,7 +140,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
-                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    defaultMaxRetries: this.rubyContext.customConfig.maxRetries
                 })
             );
         }
@@ -151,13 +152,15 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         gemNamespace,
         rootFolderName,
         customPagerClassName,
-        omitFernHeaders
+        omitFernHeaders,
+        defaultMaxRetries
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        defaultMaxRetries?: number;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -169,7 +172,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     gemNamespace,
                     rootFolderName,
                     customPagerClassName,
-                    omitFernHeaders
+                    omitFernHeaders,
+                    defaultMaxRetries
                 })
             })
         );
@@ -221,12 +225,14 @@ function getTemplateVariables({
     gemNamespace,
     rootFolderName,
     customPagerClassName,
-    omitFernHeaders
+    omitFernHeaders,
+    defaultMaxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    defaultMaxRetries?: number;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -235,7 +241,8 @@ function getTemplateVariables({
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
-        omitFernHeaders: omitFernHeaders ?? false
+        omitFernHeaders: omitFernHeaders ?? false,
+        defaultMaxRetries: defaultMaxRetries ?? 2
     };
 }
 

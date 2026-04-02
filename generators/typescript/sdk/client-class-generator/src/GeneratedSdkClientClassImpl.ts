@@ -82,6 +82,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        defaultMaxRetries: number | undefined;
     }
 }
 
@@ -126,6 +127,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly defaultMaxRetries: number | undefined;
 
     constructor({
         caseConverter,
@@ -153,7 +155,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        defaultMaxRetries
     }: GeneratedSdkClientClassImpl.Init) {
         this.caseConverter = caseConverter;
         this.isRoot = isRoot;
@@ -174,6 +177,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.defaultMaxRetries = defaultMaxRetries;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -254,6 +258,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         defaultTimeoutInSeconds,
+                        defaultMaxRetries,
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
@@ -273,6 +278,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             defaultTimeoutInSeconds,
+                            defaultMaxRetries,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.fileDownload(fileDownload)
@@ -299,6 +305,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 response: FernIr.HttpResponseBody.streaming(streamingResponse)
                             }),
                             defaultTimeoutInSeconds,
+                            defaultMaxRetries,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -319,6 +326,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 response: FernIr.HttpResponseBody.streaming(streamParameter.streamResponse)
                             }),
                             defaultTimeoutInSeconds,
+                            defaultMaxRetries,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -338,6 +346,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             defaultTimeoutInSeconds,
+                            defaultMaxRetries,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.bytes(bytesResponse)

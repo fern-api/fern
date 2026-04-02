@@ -640,6 +640,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 customPagerClassName: this.getCustomPagerClassName()
             };
         }
+        if (filename === AsIsFiles.RetryDecoratingClient) {
+            return {
+                defaultMaxRetries: String(this.customConfig.maxRetries ?? 2)
+            };
+        }
         return undefined;
     }
 
