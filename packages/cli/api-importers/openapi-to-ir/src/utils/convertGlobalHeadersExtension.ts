@@ -13,6 +13,8 @@ function convertDefaultToLiteral(defaultValue: unknown): FernIr.Literal | undefi
     if (typeof defaultValue === "boolean") {
         return FernIr.Literal.boolean(defaultValue);
     }
+    // Non-string/non-boolean defaults (e.g., numbers) are not representable as
+    // Literal values, so we silently skip them here.
     return undefined;
 }
 
