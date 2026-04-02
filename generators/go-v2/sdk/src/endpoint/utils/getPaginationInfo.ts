@@ -452,7 +452,7 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyNilCheckCondition({
                     variableName: "response",
-                    propertyPath: responsePropertyPath.map((item) => item.name) as FernIr.Name[]
+                    propertyPath: responsePropertyPath.map((item) => item.name)
                 })
             );
             writer.writeLine(" {");
@@ -461,8 +461,8 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyReference({
                     variableName: "response",
-                    propertyPath: responsePropertyPath.map((item) => item.name) as FernIr.Name[],
-                    name: (typeof responseProperty.property.name === "string" ? responseProperty.property.name : responseProperty.property.name.name) as FernIr.Name,
+                    propertyPath: responsePropertyPath.map((item) => item.name),
+                    name: typeof responseProperty.property.name === "string" ? responseProperty.property.name : responseProperty.property.name.name,
                     dereference
                 })
             );
@@ -843,8 +843,8 @@ function getPagePropertyReference({
         case "offset": {
             return getPropertyReference({
                 variableName,
-                propertyPath: (pagination.page.propertyPath?.map((item) => item.name) ?? []) as FernIr.Name[],
-                name: (typeof pagination.page.property.name === "string" ? pagination.page.property.name : pagination.page.property.name.name) as FernIr.Name,
+                propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
+                name: typeof pagination.page.property.name === "string" ? pagination.page.property.name : pagination.page.property.name.name,
                 withGetter
             });
         }
@@ -866,8 +866,8 @@ function getResponsePropertyReference({
 }): go.AstNode {
     return getPropertyReference({
         variableName: "response",
-        propertyPath: (results.propertyPath?.map((item) => item.name) ?? []) as FernIr.Name[],
-        name: (typeof results.property.name === "string" ? results.property.name : results.property.name.name) as FernIr.Name,
+        propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
+        name: typeof results.property.name === "string" ? results.property.name : results.property.name.name,
         withGetter
     });
 }
@@ -880,8 +880,8 @@ function getPropertyReference({
     dereference
 }: {
     variableName: string;
-    propertyPath: FernIr.Name[] | undefined;
-    name: FernIr.Name;
+    propertyPath: (FernIr.Name | FernIr.NameOrString)[] | undefined;
+    name: FernIr.Name | FernIr.NameOrString;
     withGetter?: boolean;
     dereference?: boolean;
 }): go.AstNode {
@@ -899,7 +899,7 @@ function getPropertyNilCheckCondition({
     propertyPath
 }: {
     variableName: string;
-    propertyPath: FernIr.Name[];
+    propertyPath: (FernIr.Name | FernIr.NameOrString)[];
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath

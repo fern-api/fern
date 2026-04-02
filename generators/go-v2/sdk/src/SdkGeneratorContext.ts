@@ -646,7 +646,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): go.TypeReference {
+    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name | FernIr.NameOrString): go.TypeReference {
         return go.typeReference({
             name: this.getClassName(requestName),
             importPath: this.getLocationForWrappedRequest(serviceId).importPath
@@ -726,8 +726,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: FernIr.Name;
-        propertyName: FernIr.Name;
+        requestParameterName: FernIr.Name | FernIr.NameOrString;
+        propertyName: FernIr.Name | FernIr.NameOrString;
     }): string {
         const requestParameter = this.getParameterName(requestParameterName);
         return `${requestParameter}.${this.getFieldName(propertyName)}`;

@@ -839,7 +839,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         tokenEndpoint: FernIr.HttpEndpoint
     ): go.TypeReference {
         if (tokenEndpoint.sdkRequest?.shape.type === "wrapper") {
-            return this.context.getRequestWrapperTypeReference(serviceId, tokenEndpoint.sdkRequest.shape.wrapperName as FernIr.Name);
+            return this.context.getRequestWrapperTypeReference(serviceId, tokenEndpoint.sdkRequest.shape.wrapperName);
         }
         if (
             tokenEndpoint.sdkRequest?.shape.type === "justRequestBody" &&
@@ -856,7 +856,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (tokenEndpoint.sdkRequest?.requestParameterName != null) {
             return this.context.getRequestWrapperTypeReference(
                 serviceId,
-                tokenEndpoint.sdkRequest.requestParameterName as FernIr.Name
+                tokenEndpoint.sdkRequest.requestParameterName
             );
         }
         return go.typeReference({

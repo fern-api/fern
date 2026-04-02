@@ -226,8 +226,8 @@ export abstract class AbstractEndpointGenerator {
             return this.context.getParameterName(pathParameter.name);
         }
         return this.context.accessRequestProperty({
-            requestParameterName: sdkRequest.requestParameterName as FernIr.Name,
-            propertyName: pathParameter.name as FernIr.Name
+            requestParameterName: sdkRequest.requestParameterName,
+            propertyName: pathParameter.name
         });
     }
 }

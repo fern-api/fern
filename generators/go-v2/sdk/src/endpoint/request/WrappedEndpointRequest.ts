@@ -29,7 +29,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getRequestParameterType(): go.Type {
         return go.Type.pointer(
-            go.Type.reference(this.context.getRequestWrapperTypeReference(this.serviceId, this.wrapper.wrapperName as FernIr.Name))
+            go.Type.reference(this.context.getRequestWrapperTypeReference(this.serviceId, this.wrapper.wrapperName))
         );
     }
 
