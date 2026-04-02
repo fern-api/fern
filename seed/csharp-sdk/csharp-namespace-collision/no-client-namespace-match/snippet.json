@@ -52,6 +52,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/scim-configuration/users",
+                "method": "GET",
+                "identifier_override": "endpoint_ScimConfiguration.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using Contoso.Net;\n\nvar client = new ContosoClient();\nawait client.ScimConfiguration.ListUsersAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/users",
                 "method": "POST",
                 "identifier_override": "endpoint_System.createUser"

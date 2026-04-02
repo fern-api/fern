@@ -1,3 +1,6 @@
+imports:
+  root: ../__package__.yml
+
 types:
   ScimConfiguration:
     properties:
@@ -26,3 +29,7 @@ service:
       path: /tokens
       request: ScimToken
       response: ScimToken
+    listUsers:
+      method: GET
+      path: /users
+      response: list<root.User>

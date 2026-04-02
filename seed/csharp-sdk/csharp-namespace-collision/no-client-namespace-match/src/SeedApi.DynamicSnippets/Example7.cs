@@ -2,16 +2,18 @@ using Contoso.Net;
 
 namespace Usage;
 
-public class Example4
+public class Example7
 {
     public async System.Threading.Tasks.Task Do() {
-        var client = new Contoso.Net.Contoso(
+        var client = new ContosoClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.ScimConfiguration.ListUsersAsync();
+        await client.System.GetUserAsync(
+            "userId"
+        );
     }
 
 }

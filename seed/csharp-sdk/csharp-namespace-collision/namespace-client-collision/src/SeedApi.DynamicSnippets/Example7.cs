@@ -2,7 +2,7 @@ using Contoso.Net;
 
 namespace Usage;
 
-public class Example4
+public class Example7
 {
     public async System.Threading.Tasks.Task Do() {
         var client = new Contoso.Net.Contoso(
@@ -11,7 +11,9 @@ public class Example4
             }
         );
 
-        await client.ScimConfiguration.ListUsersAsync();
+        await client.System.GetUserAsync(
+            "userId"
+        );
     }
 
 }

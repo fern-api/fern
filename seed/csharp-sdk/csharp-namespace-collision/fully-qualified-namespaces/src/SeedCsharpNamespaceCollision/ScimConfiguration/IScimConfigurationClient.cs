@@ -12,4 +12,9 @@ public partial interface IScimConfigurationClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    WithRawResponseTask<IEnumerable<User>> ListUsersAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

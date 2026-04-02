@@ -11,25 +11,14 @@ public class Example5
             }
         );
 
-        await client.System.CreateTaskAsync(
-            new SeedCsharpNamespaceCollision.System.Task {
-                Name = "name",
-                User = new SeedCsharpNamespaceCollision.System.User {
-                    Line1 = "line1",
-                    Line2 = "line2",
-                    City = "city",
-                    State = "state",
-                    Zip = "zip",
-                    Country = "USA"
-                },
-                Owner = new SeedCsharpNamespaceCollision.System.User {
-                    Line1 = "line1",
-                    Line2 = "line2",
-                    City = "city",
-                    State = "state",
-                    Zip = "zip",
-                    Country = "USA"
-                }
+        await client.System.CreateUserAsync(
+            new SeedCsharpNamespaceCollision.System.User {
+                Line1 = "line1",
+                Line2 = "line2",
+                City = "city",
+                State = "state",
+                Zip = "zip",
+                Country = "USA"
             }
         );
     }

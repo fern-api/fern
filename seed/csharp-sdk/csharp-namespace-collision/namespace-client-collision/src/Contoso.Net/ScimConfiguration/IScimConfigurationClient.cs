@@ -14,4 +14,9 @@ public partial interface IScimConfigurationClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    WithRawResponseTask<IEnumerable<global::Contoso.Net.User>> ListUsersAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

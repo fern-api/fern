@@ -169,6 +169,31 @@ await client.ScimConfiguration.CreateTokenAsync(
 </dl>
 </details>
 
+<details><summary><code>client.ScimConfiguration.<a href="/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs">ListUsersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.ScimConfiguration.ListUsersAsync();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## System
 <details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
