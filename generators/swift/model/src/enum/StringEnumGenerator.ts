@@ -56,7 +56,7 @@ export class StringEnumGenerator {
             cases: visitDiscriminatedUnion(this.source, "type")._visit({
                 ir: (info) => {
                     return info.enumTypeDeclaration.values.map((val) => ({
-                        unsafeName: caseConverter.camelUnsafe(val.name.name),
+                        unsafeName: caseConverter.camelUnsafe(val.name),
                         rawValue: getWireValue(val.name),
                         docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
                     }));

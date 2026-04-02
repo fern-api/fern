@@ -359,7 +359,7 @@ export class WireTestFunctionGenerator {
                                     }
                                     const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
-                                        label: caseConverter.camelUnsafe(property.name.name),
+                                        label: caseConverter.camelUnsafe(property.name),
                                         value: exampleResponse
                                     });
                                 })
@@ -369,7 +369,7 @@ export class WireTestFunctionGenerator {
                     },
                     union: (exampleUnionType) => {
                         const caseName = caseConverter.camelUnsafe(
-                            exampleUnionType.singleUnionType.wireDiscriminantValue.name
+                            exampleUnionType.singleUnionType.wireDiscriminantValue
                         );
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
@@ -401,7 +401,7 @@ export class WireTestFunctionGenerator {
                                         }
                                         const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                         return swift.functionArgument({
-                                            label: caseConverter.camelUnsafe(property.name.name),
+                                            label: caseConverter.camelUnsafe(property.name),
                                             value: exampleResponse
                                         });
                                     })

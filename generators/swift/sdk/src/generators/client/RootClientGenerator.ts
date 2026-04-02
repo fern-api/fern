@@ -316,7 +316,7 @@ export class RootClientGenerator {
                 })
             );
             for (const header of globalHeaders) {
-                const paramName = caseConverter.camelUnsafe(header.name.name);
+                const paramName = caseConverter.camelUnsafe(header.name);
                 const wireValue = getWireValue(header.name);
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
                 if (swiftType.variant.type === "optional") {
@@ -574,8 +574,8 @@ export class RootClientGenerator {
             if (scheme.type === "header") {
                 paramsByScheme.header = {
                     param: swift.functionParameter({
-                        argumentLabel: caseConverter.camelUnsafe(scheme.name.name),
-                        unsafeName: caseConverter.camelUnsafe(scheme.name.name),
+                        argumentLabel: caseConverter.camelUnsafe(scheme.name),
+                        unsafeName: caseConverter.camelUnsafe(scheme.name),
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -660,8 +660,8 @@ export class RootClientGenerator {
             .map((header) => {
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
                 return swift.functionParameter({
-                    argumentLabel: caseConverter.camelUnsafe(header.name.name),
-                    unsafeName: caseConverter.camelUnsafe(header.name.name),
+                    argumentLabel: caseConverter.camelUnsafe(header.name),
+                    unsafeName: caseConverter.camelUnsafe(header.name),
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs

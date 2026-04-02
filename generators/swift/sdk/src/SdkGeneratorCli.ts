@@ -279,7 +279,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.key.name)),
+                                                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.key)),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: referencerFromRequestType.referenceAsIsType("FormFile"),
@@ -290,7 +290,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.key.name)),
+                                                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.key)),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: swift.TypeReference.array(
@@ -306,7 +306,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.name.name)),
+                                        unsafeName: sanitizeSelf(caseConverter.camelUnsafe(property.name)),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
@@ -370,7 +370,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            caseConverter.camelUnsafe(property.key.name)
+                                                            caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
@@ -388,7 +388,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            caseConverter.camelUnsafe(property.key.name)
+                                                            caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
@@ -409,7 +409,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.reference(
-                                                    caseConverter.camelUnsafe(property.name.name)
+                                                    caseConverter.camelUnsafe(property.name)
                                                 )
                                             }),
                                             swift.functionArgument({

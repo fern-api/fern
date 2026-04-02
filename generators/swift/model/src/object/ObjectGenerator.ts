@@ -42,7 +42,7 @@ export class ObjectGenerator {
             symbol: this.symbol,
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
-                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(p.name.name)),
+                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(p.name)),
                 rawName: getWireValue(p.name),
                 type: p.valueType,
                 indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, getWireValue(p.name)),
