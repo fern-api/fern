@@ -1418,15 +1418,21 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
                     AST.Expression(
                         AST.ConditionalExpression(
-                            left=AST.ClassInstantiation(
-                                HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=httpx_client_kwargs_with_redirects,
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.ConditionalExpression(
+                                left=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_with_redirects,
+                                ),
+                                right=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=httpx_client_kwargs_without_redirects,
+                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                             ),
-                            right=AST.ClassInstantiation(
-                                HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=httpx_client_kwargs_without_redirects,
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
                             ),
-                            test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                         ),
                     ),
                 ),

@@ -3,6 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Audiences } from "../commons/index.js";
 import {
+    AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
     Availability,
@@ -84,6 +85,8 @@ export interface ParsedDocsConfiguration {
     js: JavascriptConfig | undefined;
 
     aiChatConfig: AiChatConfig | undefined;
+
+    agents: AgentsConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 

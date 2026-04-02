@@ -236,6 +236,10 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional()
+});
+
 export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
@@ -570,7 +574,8 @@ export const CheckRulesConfig = z.object({
     "no-non-component-refs": CheckRuleSeverity.optional(),
     "valid-local-references": CheckRuleSeverity.optional(),
     "no-circular-redirects": CheckRuleSeverity.optional(),
-    "valid-docs-endpoints": CheckRuleSeverity.optional()
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
@@ -947,6 +952,7 @@ export const DocsConfiguration = z.object({
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
     check: CheckConfig.optional(),

@@ -113,7 +113,8 @@ export const CsharpConfigSchema = z.object({
     // "sln" generates both .sln and .slnx files for compatibility with older
     // .NET tooling or CI systems that do not yet support .slnx.
     // "slnx" (default) generates only the modern .slnx format.
-    "sln-format": z.enum(["sln", "slnx"]).optional()
+    "sln-format": z.enum(["sln", "slnx"]).optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;
