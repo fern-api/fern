@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Pass `domain`, `basepath`, and `apiName` to the AI example enhancement
+        Lambda so that analytics events in PostHog include these fields.
+      type: feat
+  createdAt: "2026-04-04"
+  irVersion: 66
+
 - version: 4.62.2
   changelogEntry:
     - summary: |

@@ -18,6 +18,9 @@ export interface ExampleEnhancementRequest {
     endpointPath: string;
     method: string;
     organizationId: string;
+    domain?: string;
+    basepath?: string;
+    apiName?: string;
     operationSummary?: string;
     operationDescription?: string;
     requestSchema?: unknown;

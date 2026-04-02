@@ -23,7 +23,9 @@ export async function registerApi({
     playgroundConfig,
     graphqlOperations = {},
     graphqlTypes = {},
-    aiEnhancerConfig
+    aiEnhancerConfig,
+    domain,
+    basepath
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -35,6 +37,8 @@ export async function registerApi({
     graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
     graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     aiEnhancerConfig?: AIExampleEnhancerConfig;
+    domain?: string;
+    basepath?: string;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -79,7 +83,9 @@ export async function registerApi({
             token,
             organization,
             openApiSources.length > 0 ? openApiSources : undefined,
-            getOriginalName(ir.apiName)
+            getOriginalName(ir.apiName),
+            domain,
+            basepath
         );
     }
 

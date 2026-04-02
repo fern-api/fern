@@ -467,7 +467,10 @@ export async function publishDocs({
                             context,
                             token,
                             organization,
-                            openApiSources
+                            openApiSources,
+                            apiName,
+                            domain,
+                            basePath
                         );
                     }
                 }

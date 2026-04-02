@@ -485,7 +485,9 @@ export async function enhanceExamplesWithAI(
     token: FernToken,
     organizationId: string,
     sourceSpecs?: OpenAPISourceSpec[],
-    apiName?: string
+    apiName?: string,
+    domain?: string,
+    basepath?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
         context.logger.debug("AI example enhancement is disabled");
@@ -494,7 +496,17 @@ export async function enhanceExamplesWithAI(
 
     // Wrap the entire AI enhancement pipeline in try-catch to prevent CLI crashes
     try {
-        return await performAIEnhancement(apiDefinition, config, context, token, organizationId, sourceSpecs, apiName);
+        return await performAIEnhancement(
+            apiDefinition,
+            config,
+            context,
+            token,
+            organizationId,
+            sourceSpecs,
+            apiName,
+            domain,
+            basepath
+        );
     } catch (error) {
         context.logger.debug(
             `AI example enhancement failed with error: ${error}. Continuing with original API definition to prevent CLI crash.`
@@ -515,7 +527,9 @@ async function performAIEnhancement(
     token: FernToken,
     organizationId: string,
     sourceSpecs?: OpenAPISourceSpec[],
-    apiName?: string
+    apiName?: string,
+    domain?: string,
+    basepath?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
     const circuitBreaker = new CircuitBreaker();
@@ -653,7 +667,9 @@ async function performAIEnhancement(
         openApiSpec,
         primarySourceFilePath,
         apiName,
-        circuitBreaker
+        circuitBreaker,
+        domain,
+        basepath
     );
 
     if (enhancedExampleRecords.length > 0 && primarySourceFilePath != null) {
@@ -689,7 +705,9 @@ async function enhancePackageExamples(
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
     apiName?: string,
-    circuitBreaker?: CircuitBreaker
+    circuitBreaker?: CircuitBreaker,
+    domain?: string,
+    basepath?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     // Collect all work items from all packages first
     const allWorkItems: (EndpointWorkItem & { packageId?: string })[] = [];
@@ -739,7 +757,10 @@ async function enhancePackageExamples(
         sourceFilePath,
         statusId,
         apiStats,
-        circuitBreaker
+        circuitBreaker,
+        domain,
+        basepath,
+        apiName
     );
 
     coordinator.finish(statusId);
@@ -902,7 +923,10 @@ async function processEndpointsConcurrently(
     sourceFilePath?: AbsoluteFilePath,
     statusId?: string,
     apiStats?: { count: number; total: number },
-    circuitBreaker?: CircuitBreaker
+    circuitBreaker?: CircuitBreaker,
+    domain?: string,
+    basepath?: string,
+    apiName?: string
 ): Promise<
     Map<
         string,
@@ -996,7 +1020,10 @@ async function processEndpointsConcurrently(
                     statusId,
                     apiStats,
                     index + 1,
-                    circuitBreaker
+                    circuitBreaker,
+                    domain,
+                    basepath,
+                    apiName
                 );
 
                 if (result) {
@@ -1065,7 +1092,10 @@ async function processEndpoint(
     statusId?: string,
     apiStats?: { count: number; total: number },
     endpointNumber?: number,
-    circuitBreaker?: CircuitBreaker
+    circuitBreaker?: CircuitBreaker,
+    domain?: string,
+    basepath?: string,
+    apiName?: string
 ): Promise<{
     endpointKey: string;
     enhancedReq?: unknown;
@@ -1101,6 +1131,9 @@ async function processEndpoint(
         method: workItem.endpoint.method,
         endpointPath: workItem.example.path,
         organizationId,
+        domain,
+        basepath,
+        apiName,
         operationSummary: workItem.endpoint.summary,
         operationDescription: workItem.endpoint.description,
         originalRequestExample: extractExampleValue(workItem.example.requestBodyV3),
