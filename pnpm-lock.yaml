@@ -7576,6 +7576,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../commons/api-workspace-commons
+      '@fern-api/auth':
+        specifier: workspace:*
+        version: link:../../auth
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli-source-resolver
