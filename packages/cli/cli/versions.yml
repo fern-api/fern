@@ -9,7 +9,7 @@
         skipped during auto-upgrade.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.57.0
   changelogEntry:
