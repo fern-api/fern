@@ -1,4 +1,4 @@
-import { AbstractAstNode, Scope, Severity, getWireValue } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -378,7 +378,7 @@ export class EndpointSnippetGenerator {
 
         const fields: python.NamedValue[] = [];
         for (const parameter of parameters) {
-            const wireValue = getWireValue(parameter.name);
+            const wireValue = parameter.name.wireValue;
             if (!Object.hasOwn(authValues, wireValue)) {
                 this.addWarning(`Missing inferred auth value for ${wireValue}`);
                 continue;
@@ -408,7 +408,7 @@ export class EndpointSnippetGenerator {
     }): python.NamedValue[] {
         const fields: python.NamedValue[] = [];
         for (const header of headers) {
-            const value = values[getWireValue(header.name)];
+            const value = values[header.name.wireValue];
             const field = this.getConstructorHeaderArg({ header, value });
             if (field != null) {
                 fields.push(field);
