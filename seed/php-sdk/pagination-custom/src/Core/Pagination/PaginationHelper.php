@@ -59,7 +59,7 @@ class PaginationHelper
                 if ($next === null) {
                     $propertyType = $reflectionProperty->getType();
                     if ($propertyType === null) {
-                        throw new RuntimeException("Property type is null for property '$part' in class '" . $reflectionClass->getName() . "'");
+                        throw new RuntimeException("Property type is null for property '$part' in class '{$reflectionClass->getName()}'");
                     }
 
                     /** @var class-string<object> $nextTypeName */

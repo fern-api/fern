@@ -3,7 +3,8 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
     "generatorConfig": {
-        "useBrandedStringAliases": true
+        "useBrandedStringAliases": true,
+        "maxRetries": 5
     },
     "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
