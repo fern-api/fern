@@ -261,6 +261,7 @@ function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: "The user aborted a request",
+                        cause: error,
                     },
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };
@@ -278,6 +279,7 @@ function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };
@@ -296,6 +298,7 @@ function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: error.message,
+                        cause: error,
                     },
                     rawResponse: RawResponse_js_1.unknownRawResponse,
                 };
@@ -313,6 +316,7 @@ function fetcherImpl(args) {
                 error: {
                     reason: "unknown",
                     errorMessage: (0, json_js_1.toJson)(error),
+                    cause: error,
                 },
                 rawResponse: RawResponse_js_1.unknownRawResponse,
             };
