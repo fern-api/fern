@@ -54,6 +54,7 @@ export class CoreUtilitiesManager {
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
     private readonly customPagerName: string;
+    private readonly maxRetries: number | undefined;
 
     constructor({
         streamType,
@@ -62,7 +63,8 @@ export class CoreUtilitiesManager {
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
         generateEndpointMetadata,
-        customPagerName
+        customPagerName,
+        maxRetries
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -71,6 +73,7 @@ export class CoreUtilitiesManager {
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
         customPagerName: string;
+        maxRetries?: number;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -79,6 +82,7 @@ export class CoreUtilitiesManager {
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.customPagerName = customPagerName;
+        this.maxRetries = maxRetries;
     }
 
     public getCoreUtilities({
@@ -233,6 +237,27 @@ export class CoreUtilitiesManager {
                 }
             })
         );
+
+        // Handle maxRetries override in requestWithRetries.ts
+        if (this.maxRetries != null && this.referencedCoreUtilities["fetcher"] != null) {
+            const requestWithRetriesPath = path.join(
+                pathToRoot,
+                this.relativePackagePath,
+                "core",
+                "fetcher",
+                "requestWithRetries.ts"
+            );
+            try {
+                let contents = await readFile(requestWithRetriesPath, "utf8");
+                contents = contents.replace(
+                    /const DEFAULT_MAX_RETRIES = \d+;/,
+                    `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
+                );
+                await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
+            } catch (_error) {
+                // File may not exist if fetcher utility doesn't include requestWithRetries
+            }
+        }
 
         // Handle auth overrides
         if (this.referencedCoreUtilities["auth"] != null) {

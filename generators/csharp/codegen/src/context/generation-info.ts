@@ -222,6 +222,8 @@ export class Generation {
         slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /** Override the default max retries for the SDK client. Default: 2. */
+        maxRetries: () => this.customConfig.maxRetries,
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.

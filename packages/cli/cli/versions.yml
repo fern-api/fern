@@ -6,7 +6,7 @@
         Add `--email` flag to `fern login` for enterprise SSO support.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.57.0
   changelogEntry:
@@ -19,7 +19,8 @@
         scenarios gracefully based on the configured check severity.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 65
+  irVersion: 66
+
 - version: 4.56.0
   changelogEntry:
     - summary: |
@@ -28,7 +29,7 @@
         through agent endpoints.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.55.0
   changelogEntry:
@@ -60,7 +61,7 @@
         Supports string and boolean literal values.
       type: feat
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.53.2
   changelogEntry:
@@ -68,7 +69,7 @@
         Improve error messages for cli docs publishing.
       type: chore
   createdAt: "2026-04-01"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.53.1
   changelogEntry:
@@ -80,7 +81,7 @@
         `[object Object]` from appearing in generated wire test URLs.
       type: fix
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 - version: 4.53.0
   changelogEntry:
     - summary: |
@@ -89,7 +90,7 @@
         group is running even when `--group` is not explicitly passed.
       type: feat
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 - version: 4.52.2
   changelogEntry:
     - summary: |
@@ -99,7 +100,7 @@
         OpenAPI overrides, without needing to duplicate it in `generators.yml`.
       type: chore
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 - version: 4.52.1
   changelogEntry:
     - summary: |
@@ -111,7 +112,7 @@
         `typing.Literal[True]` in Python).
       type: fix
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.52.0
   changelogEntry:
@@ -120,7 +121,7 @@
         `context7.json` verification file for docs sites.
       type: feat
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.51.0
   changelogEntry:
@@ -130,7 +131,7 @@
         `launch: dashboard` explicitly.
       type: feat
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.50.5
   changelogEntry:
@@ -144,7 +145,7 @@
         allowed it via anyOf/oneOf).
       type: fix
   createdAt: "2026-03-31"
-  irVersion: 65
+  irVersion: 66
 
 - version: 4.44.0
   changelogEntry:
