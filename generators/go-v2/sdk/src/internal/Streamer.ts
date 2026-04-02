@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -275,7 +276,6 @@ export class Streamer {
         ) {
             return undefined;
         }
-        const discWireValue = typeof union.discriminant === "string" ? union.discriminant : union.discriminant.wireValue;
-        return go.TypeInstantiation.string(discWireValue);
+        return go.TypeInstantiation.string(getWireValue(union.discriminant));
     }
 }

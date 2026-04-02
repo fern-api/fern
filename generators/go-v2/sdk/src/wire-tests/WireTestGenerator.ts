@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -28,7 +28,7 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr) as any,
+            ir: convertIr(dynamicIr),
             config: this.context.config
         });
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -771,7 +771,7 @@ export class WireTestGenerator {
         for (const qp of endpoint.queryParameters) {
             const primitive = this.context.maybePrimitive(qp.valueType);
             if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
-                const qpWireValue = typeof qp.name === "string" ? qp.name : qp.name.wireValue;
+                const qpWireValue = getWireValue(qp.name);
                 datetimeQueryParams.add(qpWireValue);
             }
         }

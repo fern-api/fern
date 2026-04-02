@@ -178,7 +178,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr) as any,
+            ir: convertIr(dynamicIr),
             config: context.config
         });
 
