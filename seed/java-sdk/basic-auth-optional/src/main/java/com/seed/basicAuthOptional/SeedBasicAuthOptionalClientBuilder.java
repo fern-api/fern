@@ -21,17 +21,14 @@ public class SeedBasicAuthOptionalClientBuilder {
 
     private String username = null;
 
-    private String password = null;
-
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
 
-    public SeedBasicAuthOptionalClientBuilder credentials(String username, String password) {
+    public SeedBasicAuthOptionalClientBuilder credentials(String username) {
         this.username = username;
-        this.password = password;
         return this;
     }
 
@@ -127,8 +124,7 @@ public class SeedBasicAuthOptionalClientBuilder {
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
         if (this.username != null) {
-            String unencodedToken =
-                    this.username + ":" + (this.password != null ? this.password : "");
+            String unencodedToken = this.username + ":" + "";
             String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
             builder.addHeader("Authorization", "Basic " + encodedToken);
         }

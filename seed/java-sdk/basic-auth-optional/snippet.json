@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "adda2170",
+            "example_identifier": "870016e8",
             "id": {
                 "method": "GET",
                 "path": "/basic-auth",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "aabdeee5",
+            "example_identifier": "f39df15b",
             "id": {
                 "method": "POST",
                 "path": "/basic-auth",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "7eabe5c4",
+            "example_identifier": "3fd3da91",
             "id": {
                 "method": "POST",
                 "path": "/basic-auth",
