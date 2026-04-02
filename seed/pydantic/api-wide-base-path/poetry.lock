@@ -466,13 +466,13 @@ files = [
 
 [[package]]
 name = "types-python-dateutil"
-version = "2.9.0.20260323"
+version = "2.9.0.20260402"
 description = "Typing stubs for python-dateutil"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "types_python_dateutil-2.9.0.20260323-py3-none-any.whl", hash = "sha256:a23a50a07f6eb87e729d4cb0c2eb511c81761eeb3f505db2c1413be94aae8335"},
-    {file = "types_python_dateutil-2.9.0.20260323.tar.gz", hash = "sha256:a107aef5841db41ace381dbbbd7e4945220fc940f7a72172a0be5a92d9ab7164"},
+    {file = "types_python_dateutil-2.9.0.20260402-py3-none-any.whl", hash = "sha256:7827e6a9c93587cc18e766944254d1351a2396262e4abe1510cbbd7601c5e01f"},
+    {file = "types_python_dateutil-2.9.0.20260402.tar.gz", hash = "sha256:a980142b9966713acb382c467e35c5cc4208a2f91b10b8d785a0ae6765df6c0b"},
 ]
 
 [[package]]

@@ -171,6 +171,7 @@ export declare namespace SdkGenerator {
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
+        maxRetries: number | undefined;
     }
 }
 
@@ -323,7 +324,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             generateEndpointMetadata: config.generateEndpointMetadata,
-            customPagerName: config.customPagerName
+            customPagerName: config.customPagerName,
+            maxRetries: config.maxRetries ?? undefined
         });
 
         const apiDirectory: ExportedDirectory[] = [
