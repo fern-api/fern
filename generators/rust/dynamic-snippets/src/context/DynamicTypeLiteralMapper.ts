@@ -897,7 +897,7 @@ export class DynamicTypeLiteralMapper {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
-                return caseConverter.pascalSafe(namedType?.declaration.name);
+                return namedType != null ? caseConverter.pascalSafe(namedType.declaration.name) : undefined;
             }
             case "primitive":
                 switch (typeReference.value) {

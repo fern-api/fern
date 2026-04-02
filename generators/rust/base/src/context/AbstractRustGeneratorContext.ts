@@ -972,7 +972,7 @@ export abstract class AbstractRustGeneratorContext<
         // Extract the type name - can be from pascalCase or snakeCase
         const typeName =
             declaredTypeName.name.snakeCase?.unsafeName ||
-            getOriginalName(declaredTypeName.name) ||
+            declaredTypeName.name.originalName ||
             declaredTypeName.name.pascalCase?.safeName ||
             "";
 
@@ -982,14 +982,14 @@ export abstract class AbstractRustGeneratorContext<
             const nameMatches =
                 caseConverter.snakeUnsafe(type.name.name) === typeName ||
                 caseConverter.pascalSafe(type.name.name) === typeName ||
-                type.name.name.originalName === typeName;
+                getOriginalName(type.name.name) === typeName;
 
             // Match by fernFilepath
             const pathMatches =
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
+                        caseConverter.pascalSafe(part) === declaredTypeName.fernFilepath.allParts[idx]!.pascalCase.safeName
                 );
 
             return nameMatches && pathMatches;
@@ -1026,7 +1026,7 @@ export abstract class AbstractRustGeneratorContext<
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${caseConverter.pascalSafe(typeDeclaration.name.name)}. ` +
+                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1052,7 +1052,7 @@ export abstract class AbstractRustGeneratorContext<
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${caseConverter.pascalSafe(typeDeclaration.name.name)}. ` +
+                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1071,7 +1071,7 @@ export abstract class AbstractRustGeneratorContext<
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string {
-        const baseTypeName = caseConverter.pascalSafe(declaredTypeName.name);
+        const baseTypeName = declaredTypeName.name.pascalCase.safeName;
 
         // Try to find the type declaration in IR
         const typeDeclaration = Object.values(this.ir.types).find(
@@ -1080,7 +1080,7 @@ export abstract class AbstractRustGeneratorContext<
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
+                        caseConverter.pascalSafe(part) === declaredTypeName.fernFilepath.allParts[idx]!.pascalCase.safeName
                 )
         );
 
@@ -1290,7 +1290,7 @@ export abstract class AbstractRustGeneratorContext<
     }): string {
         // Use the full fernFilepath to create unique filenames to prevent collisions
         // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         return `${pathParts.join("_")}.rs`;
     }
 
@@ -1310,7 +1310,7 @@ export abstract class AbstractRustGeneratorContext<
                 sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
                 sp.fernFilepath.allParts.every(
                     (part, index) =>
-                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(subpackage.fernFilepath.allParts[index]!)
+                        caseConverter.pascalSafe(part) === subpackage.fernFilepath.allParts[index]!.pascalCase.safeName
                 )
             );
         })?.[0];
@@ -1324,7 +1324,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
         return pathParts.join("") + "Client";
     }
 
