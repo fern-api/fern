@@ -1,5 +1,12 @@
 import { fail } from "node:assert";
-import { AbstractFormatter, AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    getOriginalName
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";

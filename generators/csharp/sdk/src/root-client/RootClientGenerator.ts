@@ -1,5 +1,5 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { fail } from "node:assert";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";

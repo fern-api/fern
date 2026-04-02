@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { AbstractFormatter, GeneratorNotificationService, NopFormatter, CaseConverter } from "@fern-api/base-generator";
+import { AbstractFormatter, CaseConverter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 
@@ -93,7 +93,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path: FernIr.Name) => caseConverter.pascalSafe(path)),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path: FernIr.Name) =>
+                    caseConverter.pascalSafe(path)
+                ),
                 this.constants.folders.types
             ].join("/")
         );

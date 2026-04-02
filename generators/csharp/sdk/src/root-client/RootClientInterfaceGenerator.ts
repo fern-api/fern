@@ -1,5 +1,5 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { fail } from "node:assert";
+import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";

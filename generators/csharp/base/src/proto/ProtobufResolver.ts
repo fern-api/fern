@@ -1,5 +1,5 @@
-import { getOriginalName } from "@fern-api/base-generator";
 import { fail } from "node:assert";
+import { getOriginalName } from "@fern-api/base-generator";
 import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 

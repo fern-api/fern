@@ -1,4 +1,4 @@
-import { NamedArgument, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";

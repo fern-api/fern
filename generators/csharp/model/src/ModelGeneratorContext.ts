@@ -1,4 +1,9 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";

@@ -1,4 +1,4 @@
-import { File, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
