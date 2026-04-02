@@ -838,9 +838,8 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
 
         # Generate a minimal tests/conftest.py with aiohttp skip logic when wire tests
         # are not enabled (wire-test projects get this from WireTestSetupGenerator).
-        wire_tests_enabled = (
-            context.custom_config.enable_wire_tests
-            or (context.custom_config.wire_tests is not None and context.custom_config.wire_tests.enabled)
+        wire_tests_enabled = context.custom_config.enable_wire_tests or (
+            context.custom_config.wire_tests is not None and context.custom_config.wire_tests.enabled
         )
         if not wire_tests_enabled:
             conftest_contents = '''import pytest
