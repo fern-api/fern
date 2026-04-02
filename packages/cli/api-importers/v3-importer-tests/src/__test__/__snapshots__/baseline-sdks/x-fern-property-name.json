@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-property-name`",
   "auth": {
     "requirement": "ALL",
@@ -29,25 +11,7 @@
   "types": {
     "type_:BaseUser": {
       "name": {
-        "name": {
-          "originalName": "BaseUser",
-          "camelCase": {
-            "unsafeName": "baseUser",
-            "safeName": "baseUser"
-          },
-          "snakeCase": {
-            "unsafeName": "base_user",
-            "safeName": "base_user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BASE_USER",
-            "safeName": "BASE_USER"
-          },
-          "pascalCase": {
-            "unsafeName": "BaseUser",
-            "safeName": "BaseUser"
-          }
-        },
+        "name": "BaseUser",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,26 +23,8 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "renamed_id",
-                "camelCase": {
-                  "unsafeName": "renamedID",
-                  "safeName": "renamedID"
-                },
-                "snakeCase": {
-                  "unsafeName": "renamed_id",
-                  "safeName": "renamed_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RENAMED_ID",
-                  "safeName": "RENAMED_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "RenamedID",
-                  "safeName": "RenamedID"
-                }
-              },
-              "wireValue": "id"
+              "wireValue": "id",
+              "name": "renamed_id"
             },
             "valueType": {
               "container": {
@@ -119,28 +65,7 @@
   "errors": {},
   "services": {},
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -187,6 +112,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "renamed_id",
                 "camelCase": {
@@ -205,8 +131,7 @@
                   "unsafeName": "RenamedID",
                   "safeName": "RenamedID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -226,6 +151,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

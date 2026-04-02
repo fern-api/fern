@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { VariableId } from "./VariableId.js";
 
@@ -13,7 +13,7 @@ export const VariableDeclaration: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         id: VariableId,
-        name: Name,
+        name: NameOrString,
         type: core.serialization.lazy(() => serializers.TypeReference),
     })
     .extend(WithDocs);
@@ -21,7 +21,7 @@ export const VariableDeclaration: core.serialization.ObjectSchema<
 export declare namespace VariableDeclaration {
     export interface Raw extends WithDocs.Raw {
         id: VariableId.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
         type: serializers.TypeReference.Raw;
     }
 }

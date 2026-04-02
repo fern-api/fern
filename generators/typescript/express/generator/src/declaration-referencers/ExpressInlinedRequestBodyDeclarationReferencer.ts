@@ -2,7 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer.js";
+import {
+    AbstractExpressServiceDeclarationReferencer,
+    AbstractSdkClientClassDeclarationReferencer
+} from "./AbstractExpressServiceDeclarationReferencer.js";
 import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
@@ -10,6 +13,7 @@ export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
         packageId: PackageId;
         endpoint: FernIr.HttpEndpoint;
     }
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
 }
 
 const REQUESTS_DIRECTORY_NAME = "requests";
@@ -45,7 +49,7 @@ export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpr
         if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
             throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined");
         }
-        return name.endpoint.requestBody.name.pascalCase.unsafeName;
+        return this.caseConverter.pascalUnsafe(name.endpoint.requestBody.name);
     }
 
     public getReferenceToInlinedRequestBody(

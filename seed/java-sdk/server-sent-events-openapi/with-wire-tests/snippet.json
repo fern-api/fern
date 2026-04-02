@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "270b334c",
+            "example_identifier": "7c53a38f",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-no-collision",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "6a3c5550",
+            "example_identifier": "8a023c69",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-collision",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "5beb110a",
+            "example_identifier": "86a1528e",
             "id": {
                 "method": "POST",
                 "path": "/stream/data-context",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "3cdde04e",
+            "example_identifier": "c051714c",
             "id": {
                 "method": "POST",
                 "path": "/stream/no-context",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "93f79da0",
+            "example_identifier": "385b3530",
             "id": {
                 "method": "POST",
                 "path": "/stream/protocol-with-flat-schema",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "e37612ce",
+            "example_identifier": "93dbe021",
             "id": {
                 "method": "POST",
                 "path": "/stream/data-context-with-envelope-schema",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "60428da3",
+            "example_identifier": "f795957b",
             "id": {
                 "method": "POST",
                 "path": "/stream/oas-spec-native",

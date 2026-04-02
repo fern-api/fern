@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: literals-unions
-  version: ''
+  version: ""
 paths: {}
 components:
   schemas:
@@ -14,6 +14,6 @@ components:
       title: UnionOverLiteral
       oneOf:
         - type: string
-        - $ref: '#/components/schemas/LiteralString'
+        - $ref: "#/components/schemas/LiteralString"
       description: An undiscriminated union over a literal.
   securitySchemes: {}

@@ -1,7 +1,8 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
+import type { BaseClientContext, FileContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
@@ -21,6 +22,7 @@ export declare namespace BaseClientContextImpl {
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        caseConverter: CaseConverter;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -41,6 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly caseConverter: CaseConverter;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -65,7 +68,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
-        baseClientTypeDeclarationReferencer
+        baseClientTypeDeclarationReferencer,
+        caseConverter
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -74,6 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.caseConverter = caseConverter;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -100,7 +105,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         }
     }
 
-    public anyRequiredBaseClientOptions(context: SdkContext): boolean {
+    public anyRequiredBaseClientOptions(context: FileContext): boolean {
         // Check base properties
         if (this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired)) {
             return true;
@@ -162,7 +167,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     public generateBaseClientOptionsInterface(
-        context: SdkContext
+        context: FileContext
     ): SetRequired<InterfaceDeclarationStructure, "properties"> {
         const properties: PropertySignatureStructure[] = [];
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
@@ -212,7 +217,8 @@ export class BaseClientContextImpl implements BaseClientContext {
                     getParameterNameForRootPathParameter({
                         pathParameter,
                         retainOriginalCasing: this.retainOriginalCasing,
-                        parameterNaming: this.parameterNaming
+                        parameterNaming: this.parameterNaming,
+                        caseConverter: this.caseConverter
                     })
                 ),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
@@ -230,7 +236,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                     hasQuestionToken: true,
-                    docs: [`Override the ${header.name.wireValue} header`]
+                    docs: [`Override the ${getWireValue(header.name)} header`]
                 });
             } else {
                 properties.push({
@@ -238,7 +244,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
                     hasQuestionToken: type.isOptional,
-                    docs: [`Override the ${header.name.wireValue} header`]
+                    docs: [`Override the ${getWireValue(header.name)} header`]
                 });
             }
         }
@@ -251,7 +257,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                 name: getPropertyKey(this.getOptionKeyForHeader(header)),
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: generatedVersion.hasDefaultVersion(),
-                docs: [`Override the ${header.name.wireValue} header`]
+                docs: [`Override the ${getWireValue(header.name)} header`]
             });
         }
 
@@ -320,18 +326,18 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: FernIr.BearerAuthScheme): string {
-        return bearerAuthScheme.token.camelCase.safeName;
+        return this.caseConverter.camelSafe(bearerAuthScheme.token);
     }
 
     private getBasicAuthUsernameOptionKey(basicAuthScheme: FernIr.BasicAuthScheme): string {
-        return basicAuthScheme.username.camelCase.safeName;
+        return this.caseConverter.camelSafe(basicAuthScheme.username);
     }
 
     private getBasicAuthPasswordOptionKey(basicAuthScheme: FernIr.BasicAuthScheme): string {
-        return basicAuthScheme.password.camelCase.safeName;
+        return this.caseConverter.camelSafe(basicAuthScheme.password);
     }
 
-    public anyRequiredBaseRequestOptions(context: SdkContext): boolean {
+    public anyRequiredBaseRequestOptions(context: FileContext): boolean {
         return (
             this.generateBaseRequestOptionsInterface(context).properties.some(isPropertyRequired) ||
             (this.generateIdempotentRequestOptions &&
@@ -340,7 +346,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     public generateBaseRequestOptionsInterface(
-        context: SdkContext
+        context: FileContext
     ): SetRequired<InterfaceDeclarationStructure, "properties"> {
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
         const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
@@ -370,7 +376,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         name: getPropertyKey(this.getOptionKeyForHeader(header)),
                         type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                         hasQuestionToken: true,
-                        docs: [`Override the ${header.name.wireValue} header`]
+                        docs: [`Override the ${getWireValue(header.name)} header`]
                     };
                 }),
                 {
@@ -396,14 +402,14 @@ export class BaseClientContextImpl implements BaseClientContext {
                 name: getPropertyKey(this.getOptionKeyForHeader(header)),
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: true,
-                docs: [`Override the ${header.name.wireValue} header`]
+                docs: [`Override the ${getWireValue(header.name)} header`]
             });
         }
         return requestOptions;
     }
 
     public generateBaseIdempotentRequestOptionsInterface(
-        context: SdkContext
+        context: FileContext
     ): SetRequired<InterfaceDeclarationStructure, "properties"> {
         const properties: PropertySignatureStructure[] = [];
         for (const header of this.intermediateRepresentation.idempotencyHeaders) {
@@ -426,14 +432,14 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-        return header.name.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(header.name);
     }
 
     private getOptionKeyForAuthHeader(header: FernIr.HeaderAuthScheme): string {
-        return header.name.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(header.name);
     }
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
-        return variable.name.camelCase.unsafeName;
+        return this.caseConverter.camelUnsafe(variable.name);
     }
 }
 

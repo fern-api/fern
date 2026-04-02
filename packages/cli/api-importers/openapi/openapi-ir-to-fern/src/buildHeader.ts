@@ -33,7 +33,8 @@ export function buildHeader({
         header.description == null &&
         header.name === headerVariableName &&
         header.env == null &&
-        header.availability == null
+        header.availability == null &&
+        header.clientDefault == null
     ) {
         return headerType;
     }
@@ -51,6 +52,9 @@ export function buildHeader({
     }
     if (header.availability != null) {
         headerSchema.availability = convertAvailability(header.availability);
+    }
+    if (header.clientDefault != null) {
+        headerSchema.default = header.clientDefault;
     }
 
     return headerSchema;

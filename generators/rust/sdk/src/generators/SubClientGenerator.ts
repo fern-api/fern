@@ -906,10 +906,13 @@ export class SubClientGenerator {
         } else if (isBytesRequest) {
             // Use bytes request for octet-stream endpoints
             executeMethod = "execute_bytes_request";
+            const bytesBody = endpoint.queryParameters.length > 0
+                ? "Some(request.body.to_vec())"
+                : "Some(request.to_vec())";
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
-            Some(request.to_vec()),
+            ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
             options,`;
         } else {
@@ -1022,15 +1025,8 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            if (this.isBytesEndpoint(endpoint)) {
-                // BYTES + QUERY: bytes body can't hold query fields, add them separately
-                this.addRequestBodyParameter(endpoint, params);
-                this.addIndividualQueryParameters(endpoint, params);
-            } else {
-                // MIXED: Request body contains both body + query fields
-                this.addRequestBodyParameter(endpoint, params);
-                // Query params are now included in the request body struct
-            }
+            // Request body struct contains both body fields and query params
+            this.addRequestBodyParameter(endpoint, params);
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);
@@ -1106,7 +1102,15 @@ export class SubClientGenerator {
                     const requestTypeName = this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                bytes: () => {
+                    // If there are query parameters, use the generated request struct
+                    if (endpoint.queryParameters.length > 0) {
+                        const requestTypeName = this.context.getBytesRequestTypeName(endpoint.id);
+                        return rust.Type.reference(rust.reference({ name: requestTypeName }));
+                    }
+                    // No query params — use raw Vec<u8>
+                    return rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8));
+                },
                 _other: () => {
                     // Generate proper request type for unknown cases too
                     const requestTypeName = this.getRequestTypeName(endpoint);
@@ -1395,14 +1399,7 @@ export class SubClientGenerator {
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
         const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
-        if (endpoint && this.isBytesEndpoint(endpoint)) {
-            // BYTES body: query params are individual method parameters
-            // For required string params (&str), use .to_string() since &str doesn't impl Into<Option<String>>
-            if (!this.isOptionalType(queryParam.valueType)) {
-                return `${fieldName}.to_string()`;
-            }
-            return `${fieldName}.clone()`;
-        } else if (endpoint?.requestBody) {
+        if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
         } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {

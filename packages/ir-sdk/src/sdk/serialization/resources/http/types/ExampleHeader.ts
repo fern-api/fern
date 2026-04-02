@@ -3,17 +3,17 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ExampleHeader: core.serialization.ObjectSchema<serializers.ExampleHeader.Raw, FernIr.ExampleHeader> =
     core.serialization.objectWithoutOptionalProperties({
-        name: NameAndWireValue,
+        name: NameAndWireValueOrString,
         value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
     });
 
 export declare namespace ExampleHeader {
     export interface Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         value: serializers.ExampleTypeReference.Raw;
     }
 }

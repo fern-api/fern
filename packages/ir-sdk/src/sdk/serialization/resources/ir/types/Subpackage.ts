@@ -4,20 +4,20 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DisplayName } from "../../commons/types/DisplayName.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { Package } from "./Package.js";
 
 export const Subpackage: core.serialization.ObjectSchema<serializers.Subpackage.Raw, FernIr.Subpackage> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: Name,
+            name: NameOrString,
             displayName: DisplayName.optional(),
         })
         .extend(Package);
 
 export declare namespace Subpackage {
     export interface Raw extends Package.Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         displayName?: DisplayName.Raw | null;
     }
 }

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: path-parameters
-  version: ''
+  version: ""
 paths:
   /{tenant_id}/organizations/{organization_id}/:
     get:
@@ -20,12 +20,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
   /{tenant_id}/organizations/{organization_id}/users/{user_id}:
     get:
       operationId: organizations_getOrganizationUser
@@ -48,12 +48,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
   /{tenant_id}/organizations/{organization_id}/search:
     get:
       operationId: organizations_searchOrganizations
@@ -77,14 +77,14 @@ paths:
             type: integer
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Organization'
+                  $ref: "#/components/schemas/Organization"
   /{tenant_id}/user/{user_id}:
     get:
       operationId: user_getUser
@@ -102,12 +102,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
     patch:
       operationId: user_updateUser
       tags:
@@ -124,18 +124,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
   /{tenant_id}/user/:
     post:
       operationId: user_createUser
@@ -148,18 +148,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
   /{tenant_id}/user/{user_id}/search:
     get:
       operationId: user_searchUsers
@@ -183,14 +183,14 @@ paths:
             type: integer
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
   /{tenant_id}/user/{user_id}/metadata/v{version}:
     get:
       description: Test endpoint with path parameter that has a text prefix (v{version})
@@ -214,12 +214,12 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
   /{tenant_id}/user/{user_id}/specifics/{version}/{thought}:
     get:
       description: >-
@@ -250,12 +250,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     Organization:

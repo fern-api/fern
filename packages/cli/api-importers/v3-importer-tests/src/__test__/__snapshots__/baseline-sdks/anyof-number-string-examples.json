@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for anyOf [number, string] with string examples",
   "auth": {
     "requirement": "ALL",
@@ -31,25 +13,7 @@
       "docs": "The payment amount. Can be a number or string.\nWhen examples are provided as strings, the string variant should be preferred.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PaymentRequestAmount",
-          "camelCase": {
-            "unsafeName": "paymentRequestAmount",
-            "safeName": "paymentRequestAmount"
-          },
-          "snakeCase": {
-            "unsafeName": "payment_request_amount",
-            "safeName": "payment_request_amount"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PAYMENT_REQUEST_AMOUNT",
-            "safeName": "PAYMENT_REQUEST_AMOUNT"
-          },
-          "pascalCase": {
-            "unsafeName": "PaymentRequestAmount",
-            "safeName": "PaymentRequestAmount"
-          }
-        },
+        "name": "PaymentRequestAmount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -94,25 +58,7 @@
       "docs": "The payment amount echoed back",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PaymentResponseAmount",
-          "camelCase": {
-            "unsafeName": "paymentResponseAmount",
-            "safeName": "paymentResponseAmount"
-          },
-          "snakeCase": {
-            "unsafeName": "payment_response_amount",
-            "safeName": "payment_response_amount"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PAYMENT_RESPONSE_AMOUNT",
-            "safeName": "PAYMENT_RESPONSE_AMOUNT"
-          },
-          "pascalCase": {
-            "unsafeName": "PaymentResponseAmount",
-            "safeName": "PaymentResponseAmount"
-          }
-        },
+        "name": "PaymentResponseAmount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -155,25 +101,7 @@
     },
     "type_:PaymentResponse": {
       "name": {
-        "name": {
-          "originalName": "PaymentResponse",
-          "camelCase": {
-            "unsafeName": "paymentResponse",
-            "safeName": "paymentResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "payment_response",
-            "safeName": "payment_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PAYMENT_RESPONSE",
-            "safeName": "PAYMENT_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "PaymentResponse",
-            "safeName": "PaymentResponse"
-          }
-        },
+        "name": "PaymentResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -184,28 +112,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -228,50 +135,11 @@
           },
           {
             "docs": "The payment amount echoed back",
-            "name": {
-              "name": {
-                "originalName": "amount",
-                "camelCase": {
-                  "unsafeName": "amount",
-                  "safeName": "amount"
-                },
-                "snakeCase": {
-                  "unsafeName": "amount",
-                  "safeName": "amount"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AMOUNT",
-                  "safeName": "AMOUNT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Amount",
-                  "safeName": "Amount"
-                }
-              },
-              "wireValue": "amount"
-            },
+            "name": "amount",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PaymentResponseAmount",
-                    "camelCase": {
-                      "unsafeName": "paymentResponseAmount",
-                      "safeName": "paymentResponseAmount"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "payment_response_amount",
-                      "safeName": "payment_response_amount"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PAYMENT_RESPONSE_AMOUNT",
-                      "safeName": "PAYMENT_RESPONSE_AMOUNT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PaymentResponseAmount",
-                      "safeName": "PaymentResponseAmount"
-                    }
-                  },
+                  "name": "PaymentResponseAmount",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -289,28 +157,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
-              "wireValue": "status"
-            },
+            "name": "status",
             "valueType": {
               "container": {
                 "optional": {
@@ -368,25 +215,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createPayment",
-          "name": {
-            "originalName": "createPayment",
-            "camelCase": {
-              "unsafeName": "createPayment",
-              "safeName": "createPayment"
-            },
-            "snakeCase": {
-              "unsafeName": "create_payment",
-              "safeName": "create_payment"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_PAYMENT",
-              "safeName": "CREATE_PAYMENT"
-            },
-            "pascalCase": {
-              "unsafeName": "CreatePayment",
-              "safeName": "CreatePayment"
-            }
-          },
+          "name": "createPayment",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -403,72 +232,15 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PaymentRequest",
-              "camelCase": {
-                "unsafeName": "paymentRequest",
-                "safeName": "paymentRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "payment_request",
-                "safeName": "payment_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PAYMENT_REQUEST",
-                "safeName": "PAYMENT_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PaymentRequest",
-                "safeName": "PaymentRequest"
-              }
-            },
+            "name": "PaymentRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The payment amount. Can be a number or string.\nWhen examples are provided as strings, the string variant should be preferred.",
-                "name": {
-                  "name": {
-                    "originalName": "amount",
-                    "camelCase": {
-                      "unsafeName": "amount",
-                      "safeName": "amount"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "amount",
-                      "safeName": "amount"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "AMOUNT",
-                      "safeName": "AMOUNT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Amount",
-                      "safeName": "Amount"
-                    }
-                  },
-                  "wireValue": "amount"
-                },
+                "name": "amount",
                 "valueType": {
-                  "name": {
-                    "originalName": "PaymentRequestAmount",
-                    "camelCase": {
-                      "unsafeName": "paymentRequestAmount",
-                      "safeName": "paymentRequestAmount"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "payment_request_amount",
-                      "safeName": "payment_request_amount"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PAYMENT_REQUEST_AMOUNT",
-                      "safeName": "PAYMENT_REQUEST_AMOUNT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PaymentRequestAmount",
-                      "safeName": "PaymentRequestAmount"
-                    }
-                  },
+                  "name": "PaymentRequestAmount",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -482,28 +254,7 @@
                 }
               },
               {
-                "name": {
-                  "name": {
-                    "originalName": "currency",
-                    "camelCase": {
-                      "unsafeName": "currency",
-                      "safeName": "currency"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "currency",
-                      "safeName": "currency"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CURRENCY",
-                      "safeName": "CURRENCY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Currency",
-                      "safeName": "Currency"
-                    }
-                  },
-                  "wireValue": "currency"
-                },
+                "name": "currency",
                 "valueType": {
                   "container": {
                     "optional": {
@@ -531,92 +282,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PaymentRequest",
-                "camelCase": {
-                  "unsafeName": "paymentRequest",
-                  "safeName": "paymentRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "payment_request",
-                  "safeName": "payment_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PAYMENT_REQUEST",
-                  "safeName": "PAYMENT_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "PaymentRequest",
-                  "safeName": "PaymentRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "PaymentRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Payment created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PaymentResponse",
-                    "camelCase": {
-                      "unsafeName": "paymentResponse",
-                      "safeName": "paymentResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "payment_response",
-                      "safeName": "payment_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PAYMENT_RESPONSE",
-                      "safeName": "PAYMENT_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PaymentResponse",
-                      "safeName": "PaymentResponse"
-                    }
-                  },
+                  "name": "PaymentResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -640,28 +319,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -788,6 +446,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -806,8 +465,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -819,6 +477,7 @@
           },
           {
             "name": {
+              "wireValue": "amount",
               "name": {
                 "originalName": "amount",
                 "camelCase": {
@@ -837,8 +496,7 @@
                   "unsafeName": "Amount",
                   "safeName": "Amount"
                 }
-              },
-              "wireValue": "amount"
+              }
             },
             "typeReference": {
               "value": {
@@ -850,6 +508,7 @@
           },
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -868,8 +527,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -949,6 +607,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "amount",
                   "name": {
                     "originalName": "amount",
                     "camelCase": {
@@ -967,8 +626,7 @@
                       "unsafeName": "Amount",
                       "safeName": "Amount"
                     }
-                  },
-                  "wireValue": "amount"
+                  }
                 },
                 "typeReference": {
                   "value": "type_:PaymentRequestAmount",
@@ -977,6 +635,7 @@
               },
               {
                 "name": {
+                  "wireValue": "currency",
                   "name": {
                     "originalName": "currency",
                     "camelCase": {
@@ -995,8 +654,7 @@
                       "unsafeName": "Currency",
                       "safeName": "Currency"
                     }
-                  },
-                  "wireValue": "currency"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -1024,6 +682,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

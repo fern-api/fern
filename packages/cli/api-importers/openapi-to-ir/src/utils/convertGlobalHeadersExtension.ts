@@ -19,7 +19,8 @@ export function convertGlobalHeadersExtension({
         env: header.env,
         v2Examples: header.optional ? undefined : constructGlobalHeaderExample({ header, context }),
         availability: undefined,
-        docs: undefined
+        docs: undefined,
+        clientDefault: undefined
     }));
 }
 

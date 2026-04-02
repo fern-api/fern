@@ -34,9 +34,6 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
@@ -63,9 +60,6 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
-
-      - name: Update npm
-        run: npm install -g npm@latest
 
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
@@ -94,9 +88,6 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
@@ -123,9 +114,6 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
-
-      - name: Update npm
-        run: npm install -g npm@latest
 
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
@@ -154,9 +142,6 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
@@ -183,9 +168,6 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
-
-      - name: Update npm
-        run: npm install -g npm@latest
 
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
@@ -214,9 +196,6 @@ jobs:
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
@@ -243,9 +222,6 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
-
-      - name: Update npm
-        run: npm install -g npm@latest
 
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:

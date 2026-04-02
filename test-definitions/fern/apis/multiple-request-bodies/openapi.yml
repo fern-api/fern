@@ -1,21 +1,21 @@
 openapi: 3.0.1
 info:
   title: Sample API
-  version: ''
+  version: ""
 paths:
   /documents/upload/json:
     post:
       operationId: uploadJsonDocument
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentResponse'
+                $ref: "#/components/schemas/UploadDocumentResponse"
       summary: Upload document metadata (JSON) or document file
       security: &ref_0
         - BearerAuth: []
@@ -41,15 +41,15 @@ paths:
     post:
       operationId: uploadPdfDocument
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadDocumentResponse'
+                $ref: "#/components/schemas/UploadDocumentResponse"
       summary: Upload document metadata (JSON) or document file
       security: *ref_0
       requestBody:
@@ -91,8 +91,8 @@ components:
     UploadDocumentResponse:
       title: UploadDocumentResponse
       oneOf:
-        - $ref: '#/components/schemas/DocumentMetadata'
-        - $ref: '#/components/schemas/DocumentUploadResult'
+        - $ref: "#/components/schemas/DocumentMetadata"
+        - $ref: "#/components/schemas/DocumentUploadResult"
   securitySchemes:
     BearerAuth:
       type: http

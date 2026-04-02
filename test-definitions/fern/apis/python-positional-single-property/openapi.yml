@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: python-positional-single-property
-  version: ''
+  version: ""
   description: |-
     Test definition for positional single-property constructors in Python SDK.
     This tests the ability to use positional arguments for types with a single
@@ -11,11 +11,11 @@ paths:
     post:
       operationId: create
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -28,9 +28,9 @@ paths:
               type: object
               properties:
                 instrument:
-                  $ref: '#/components/schemas/BondSingleLeg'
+                  $ref: "#/components/schemas/BondSingleLeg"
                 taker:
-                  $ref: '#/components/schemas/TakerParty'
+                  $ref: "#/components/schemas/TakerParty"
               required:
                 - instrument
                 - taker
@@ -120,7 +120,7 @@ components:
       type: object
       properties:
         trader:
-          $ref: '#/components/schemas/Trader'
+          $ref: "#/components/schemas/Trader"
       required:
         - trader
     BondSingleLeg:
@@ -128,9 +128,9 @@ components:
       type: object
       properties:
         identifier:
-          $ref: '#/components/schemas/Isin'
+          $ref: "#/components/schemas/Isin"
         quantity:
-          $ref: '#/components/schemas/Quantity'
+          $ref: "#/components/schemas/Quantity"
       required:
         - identifier
         - quantity
@@ -145,7 +145,7 @@ components:
                   type: string
                   enum:
                     - isin
-            - $ref: '#/components/schemas/Isin'
+            - $ref: "#/components/schemas/Isin"
           required:
             - identifier_type
         - type: object
@@ -156,7 +156,7 @@ components:
                   type: string
                   enum:
                     - cusip
-            - $ref: '#/components/schemas/Cusip'
+            - $ref: "#/components/schemas/Cusip"
           required:
             - identifier_type
     Cusip:

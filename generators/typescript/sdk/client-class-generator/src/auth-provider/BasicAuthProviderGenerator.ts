@@ -1,6 +1,6 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import {
     type OptionalKind,
     type PropertySignatureStructure,
@@ -88,7 +88,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
         const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv;
@@ -117,14 +117,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         return [
             {
                 kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.authScheme.username.camelCase.safeName),
+                name: getPropertyKey(context.case.camelSafe(this.authScheme.username)),
                 hasQuestionToken: isUsernameOptional,
                 type: getTextOfTsNode(usernamePropertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
             },
             {
                 kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.authScheme.password.camelCase.safeName),
+                name: getPropertyKey(context.case.camelSafe(this.authScheme.password)),
                 hasQuestionToken: isPasswordOptional,
                 type: getTextOfTsNode(passwordPropertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
@@ -140,15 +140,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeConstants(context);
         this.writeClass(context);
         this.writeOptions(context);
     }
 
-    private writeConstants(context: SdkContext): void {
-        const usernameFieldName = this.authScheme.username.camelCase.safeName;
-        const passwordFieldName = this.authScheme.password.camelCase.safeName;
+    private writeConstants(context: FileContext): void {
+        const usernameFieldName = context.case.camelSafe(this.authScheme.username);
+        const passwordFieldName = context.case.camelSafe(this.authScheme.password);
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
         const wrapperPropertyName = this.getWrapperPropertyName();
@@ -173,7 +173,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         context.sourceFile.addStatements(""); // blank line
     }
 
-    private writeClass(context: SdkContext): void {
+    private writeClass(context: FileContext): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -256,9 +256,9 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) && (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
     }
 
-    private generateGetAuthRequestStatements(context: SdkContext): string {
-        const usernameVar = this.authScheme.username.camelCase.unsafeName;
-        const passwordVar = this.authScheme.password.camelCase.unsafeName;
+    private generateGetAuthRequestStatements(context: FileContext): string {
+        const usernameVar = context.case.camelUnsafe(this.authScheme.username);
+        const passwordVar = context.case.camelUnsafe(this.authScheme.password);
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
 
@@ -377,7 +377,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         }
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
         const authSchemeKey =
             this.ir.auth.schemes.find((scheme) => scheme.type === "basic" && scheme === this.authScheme)?.key ??

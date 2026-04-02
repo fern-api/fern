@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
   title: Required nullable example
-  version: ''
+  version: ""
 paths:
   /foo:
     get:
       operationId: getFoo
       tags:
-        - ''
+        - ""
       parameters:
         - name: optional_baz
           in: query
@@ -37,18 +37,18 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Foo'
+                $ref: "#/components/schemas/Foo"
       summary: Get foo
   /foo/{id}:
     patch:
       operationId: updateFoo
       tags:
-        - ''
+        - ""
       parameters:
         - name: id
           in: path
@@ -61,12 +61,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Foo'
+                $ref: "#/components/schemas/Foo"
       summary: Update foo
       requestBody:
         required: true

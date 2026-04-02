@@ -12,7 +12,8 @@ export const SdkCustomConfigSchema = z
         // Apply IR-defined default values to query parameters and headers in request wrappers
         useDefaultRequestParameterValues: z.boolean().optional(),
         // Generate interfaces for all SDK client classes to enable mocking and DI
-        generateClientInterfaces: z.boolean().optional()
+        generateClientInterfaces: z.boolean().optional(),
+        maxRetries: z.number().int().min(0).optional()
     })
     .extend(BasePhpCustomConfigSchema.shape)
     .transform((config) => ({
