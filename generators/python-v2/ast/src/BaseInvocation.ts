@@ -2,6 +2,7 @@ import { AstNode } from "./core/AstNode.js";
 import { Writer } from "./core/Writer.js";
 import { MethodArgument } from "./MethodArgument.js";
 import { Reference } from "./Reference.js";
+import { TypeInstantiation } from "./TypeInstantiation.js";
 
 export declare namespace BaseInvocation {
     interface Args {
@@ -35,7 +36,10 @@ export class BaseInvocation extends AstNode {
     public write(writer: Writer): void {
         this.reference.write(writer);
 
-        if (this.arguments.length === 0) {
+        // Filter out nop arguments to prevent rendering empty values (e.g. `strategy=,`)
+        const filteredArguments = this.arguments.filter((arg) => !TypeInstantiation.isNop(arg.value));
+
+        if (filteredArguments.length === 0) {
             writer.write("()");
             return;
         }
@@ -45,9 +49,9 @@ export class BaseInvocation extends AstNode {
             writer.newLine();
             writer.indent();
         }
-        this.arguments.forEach((arg, idx) => {
+        filteredArguments.forEach((arg, idx) => {
             arg.write(writer);
-            if (idx < this.arguments.length - 1) {
+            if (idx < filteredArguments.length - 1) {
                 writer.write(",");
                 if (this.multiline) {
                     writer.newLine();

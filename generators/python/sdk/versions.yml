@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.2.1
+  changelogEntry:
+    - summary: |
+        Fix wire test generation producing invalid Python syntax (e.g. `strategy=,`) when
+        an enum value from the static IR example is not found in the dynamic IR. The AST
+        now filters out nop (no-operation) arguments in class instantiations and method
+        invocations, consistent with the existing filtering in typed dicts, lists, and dicts.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 5.2.0
   changelogEntry:
     - summary: |
