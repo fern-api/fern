@@ -10,7 +10,7 @@ export class CsharpFormatter extends AbstractFormatter {
     private process: ChildProcessWithoutNullStreams | undefined;
     private callbacks: ((result: string) => void)[] = [];
     private buffer: string = "";
-    private processFailedToStart = false;
+    private processDead = false;
     private fileCounter = 0;
 
     constructor() {
@@ -28,14 +28,22 @@ export class CsharpFormatter extends AbstractFormatter {
             env: { ...process.env, DOTNET_NOLOGO: "1" }
         });
 
-        csharpierProcess.on("error", () => {
-            this.processFailedToStart = true;
-            while (this.callbacks.length > 0) {
-                const callback = this.callbacks.shift();
-                if (callback) {
-                    callback("");
-                }
+        csharpierProcess.on("error", (error: Error) => {
+            process.stderr.write(`CSharpier process failed to start: ${error.message}\n`);
+            this.processDead = true;
+            this.drainCallbacks();
+        });
+
+        csharpierProcess.on("close", (code: number | null) => {
+            if (code != null && code !== 0) {
+                process.stderr.write(`CSharpier process exited unexpectedly with code ${code}\n`);
             }
+            this.process = undefined;
+            this.drainCallbacks();
+        });
+
+        csharpierProcess.stdin.on("error", () => {
+            // EPIPE errors are expected if the process exits while we're writing
         });
 
         csharpierProcess.stderr.on("data", () => {
@@ -64,8 +72,17 @@ export class CsharpFormatter extends AbstractFormatter {
         return content.endsWith(";") ? content : `${content};`;
     }
 
+    private drainCallbacks(): void {
+        while (this.callbacks.length > 0) {
+            const callback = this.callbacks.shift();
+            if (callback) {
+                callback("");
+            }
+        }
+    }
+
     private pipeFile(content: string): Promise<string> {
-        if (this.processFailedToStart) {
+        if (this.processDead) {
             return Promise.resolve("");
         }
 
