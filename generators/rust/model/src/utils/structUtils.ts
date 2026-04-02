@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -187,14 +187,8 @@ export function hasFloatingPointSets(properties: (FernIr.ObjectProperty | FernIr
 export function getCustomTypesUsedInFields(
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[],
     currentTypeName?: string
-): {
-    snakeCase: { unsafeName: string };
-    pascalCase: { unsafeName: string };
-}[] {
-    const customTypeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] = [];
+): NameInput[] {
+    const customTypeNames: NameInput[] = [];
     const visited = new Set<string>();
 
     properties.forEach((property) => {
@@ -228,7 +222,7 @@ export function generateFieldAttributes(
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
-    if (caseConverter.snakeUnsafe(property.name.name) !== getWireValue(property.name)) {
+    if (caseConverter.snakeUnsafe(property.name) !== getWireValue(property.name)) {
         attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
@@ -403,7 +397,7 @@ export function convertQueryParametersToProperties(
         if (queryParam.allowMultiple) {
             valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
         }
-        fieldNames.add(context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name.name)));
+        fieldNames.add(context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name)));
         return {
             name: queryParam.name,
             valueType,

@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -168,7 +168,7 @@ export class StructGenerator {
         // When struct is transparent, skip field-level serde attributes (rename, default, etc.)
         // as they are incompatible with #[serde(transparent)]
         const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name.name));
+        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
 
         return rust.field({
             name: fieldName,
@@ -235,7 +235,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 this.context
             );
@@ -258,7 +258,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 this.context
             );

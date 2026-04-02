@@ -73,7 +73,7 @@ export function collectBuilderFieldsFromProperties(
         // Check if the bare type is String for impl Into usage
         const useImplInto = isStringType(bareTypeRef);
 
-        const name = context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name.name));
+        const name = context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
 
         return {
             name,

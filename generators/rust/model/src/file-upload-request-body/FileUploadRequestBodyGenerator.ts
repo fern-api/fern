@@ -122,7 +122,7 @@ export class FileUploadRequestBodyGenerator {
 
                             allProperties.push(prop);
                             fileProperties.push({
-                                name: getOriginalName(fileSingle.key.name),
+                                name: getOriginalName(fileSingle.key),
                                 isArray: false,
                                 isOptional: fileSingle.isOptional
                             });
@@ -149,7 +149,7 @@ export class FileUploadRequestBodyGenerator {
 
                             allProperties.push(prop);
                             fileProperties.push({
-                                name: getOriginalName(fileArray.key.name),
+                                name: getOriginalName(fileArray.key),
                                 isArray: true,
                                 isOptional: fileArray.isOptional
                             });

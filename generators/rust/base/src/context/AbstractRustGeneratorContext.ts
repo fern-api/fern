@@ -965,20 +965,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique module path (fernFilepath parts + type name joined with underscores)
      */
-    public getModulePathForDeclaredType(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase?: { safeName: string }; snakeCase?: { unsafeName: string }; originalName?: string };
-    }): string {
-        // Extract the type name - can be from pascalCase or snakeCase
-        const typeName =
-            declaredTypeName.name.snakeCase?.unsafeName ||
-            declaredTypeName.name.originalName ||
-            declaredTypeName.name.pascalCase?.safeName ||
-            "";
+    public getModulePathForDeclaredType(declaredTypeName: FernIr.DeclaredTypeName): string {
+        // Extract the type name using caseConverter
+        const typeName = caseConverter.snakeUnsafe(declaredTypeName.name);
 
         // Try to find the exact type declaration in IR that matches both name and fernFilepath
         const typeDeclaration = Object.values(this.ir.types).find((type) => {
-            // Match by name (try different formats)
+            // Match by name
             const nameMatches =
                 caseConverter.snakeUnsafe(type.name.name) === typeName ||
                 caseConverter.pascalSafe(type.name.name) === typeName ||
@@ -989,7 +982,7 @@ export abstract class AbstractRustGeneratorContext<
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === declaredTypeName.fernFilepath.allParts[idx]!.pascalCase.safeName
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 );
 
             return nameMatches && pathMatches;
@@ -1015,18 +1008,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a filename for
      * @returns The unique filename (e.g., "foo_importing_type.rs")
      */
-    public getUniqueFilenameForType(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
-            name: { snakeCase: { safeName: string }; pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueFilenameForType(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${caseConverter.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1041,18 +1029,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a type name for
      * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
-    public getUniqueTypeNameForDeclaration(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-            name: { pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueTypeNameForDeclaration(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${caseConverter.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1067,11 +1050,8 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique type name, or the base name if not found in IR
      */
-    public getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase: { safeName: string } };
-    }): string {
-        const baseTypeName = declaredTypeName.name.pascalCase.safeName;
+    public getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string {
+        const baseTypeName = caseConverter.pascalSafe(declaredTypeName.name);
 
         // Try to find the type declaration in IR
         const typeDeclaration = Object.values(this.ir.types).find(
@@ -1080,7 +1060,7 @@ export abstract class AbstractRustGeneratorContext<
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        caseConverter.pascalSafe(part) === declaredTypeName.fernFilepath.allParts[idx]!.pascalCase.safeName
+                        caseConverter.pascalSafe(part) === caseConverter.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 )
         );
 

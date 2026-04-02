@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -513,7 +513,7 @@ export function namedTypeSupportsPartialEq(
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 context,
                 analysisStack
@@ -576,7 +576,7 @@ export function namedTypeSupportsHashAndEq(
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 context,
                 analysisStack
@@ -601,20 +601,14 @@ export function namedTypeSupportsHashAndEq(
 
 export function extractNamedTypesFromTypeReference(
     typeRef: FernIr.TypeReference,
-    typeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[],
+    typeNames: NameInput[],
     visited: Set<string>
 ): void {
     if (typeRef.type === "named") {
         const typeName = getOriginalName(typeRef.name);
         if (!visited.has(typeName)) {
             visited.add(typeName);
-            typeNames.push({
-                snakeCase: { unsafeName: caseConverter.snakeUnsafe(typeRef.name) },
-                pascalCase: { unsafeName: caseConverter.pascalUnsafe(typeRef.name) }
-            });
+            typeNames.push(typeRef.name);
         }
     } else if (typeRef.type === "container") {
         typeRef.container._visit({

@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -127,12 +127,12 @@ export class EnumGenerator {
         const variantAttributes: rust.Attribute[] = [];
 
         // Only add serde rename for non-forward-compatible enums (forward-compatible enums use custom serde impls)
-        if (!this.isForwardCompatible() && caseConverter.pascalUnsafe(enumValue.name.name) !== getWireValue(enumValue.name)) {
+        if (!this.isForwardCompatible() && caseConverter.pascalUnsafe(enumValue.name) !== getWireValue(enumValue.name)) {
             variantAttributes.push(Attribute.serde.rename(getWireValue(enumValue.name)));
         }
 
         return rust.enumVariant({
-            name: caseConverter.pascalUnsafe(enumValue.name.name),
+            name: caseConverter.pascalUnsafe(enumValue.name),
             attributes: variantAttributes.length > 0 ? variantAttributes : undefined,
             docs: enumValue.docs
                 ? rust.docComment({
@@ -153,7 +153,7 @@ export class EnumGenerator {
         writer.indent();
 
         this.enumTypeDeclaration.values.forEach((enumValue) => {
-            const variantName = caseConverter.pascalUnsafe(enumValue.name.name);
+            const variantName = caseConverter.pascalUnsafe(enumValue.name);
             const wireValue = getWireValue(enumValue.name);
             writer.writeLine(`Self::${variantName} => serializer.serialize_str(${JSON.stringify(wireValue)}),`);
         });
@@ -182,7 +182,7 @@ export class EnumGenerator {
         writer.indent();
 
         this.enumTypeDeclaration.values.forEach((enumValue) => {
-            const variantName = caseConverter.pascalUnsafe(enumValue.name.name);
+            const variantName = caseConverter.pascalUnsafe(enumValue.name);
             const wireValue = getWireValue(enumValue.name);
             writer.writeLine(`${JSON.stringify(wireValue)} => Ok(Self::${variantName}),`);
         });
@@ -210,7 +210,7 @@ export class EnumGenerator {
             writer.indent();
 
             this.enumTypeDeclaration.values.forEach((enumValue) => {
-                const variantName = caseConverter.pascalUnsafe(enumValue.name.name);
+                const variantName = caseConverter.pascalUnsafe(enumValue.name);
                 const wireValue = getWireValue(enumValue.name);
                 writer.writeLine(`Self::${variantName} => write!(f, ${JSON.stringify(wireValue)}),`);
             });
@@ -224,7 +224,7 @@ export class EnumGenerator {
             writer.indent();
 
             this.enumTypeDeclaration.values.forEach((enumValue) => {
-                const variantName = caseConverter.pascalUnsafe(enumValue.name.name);
+                const variantName = caseConverter.pascalUnsafe(enumValue.name);
                 const wireValue = getWireValue(enumValue.name);
                 writer.writeLine(`Self::${variantName} => ${JSON.stringify(wireValue)},`);
             });
