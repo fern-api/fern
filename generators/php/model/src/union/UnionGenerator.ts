@@ -37,10 +37,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         for (const property of this.unionTypeDeclaration.baseProperties) {
             const field = this.toField({ property });
             if (includeGetter) {
-                clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
             }
             if (includeSetter) {
-                clazz.addMethod(this.context.getSetterMethod({ name: property.name, field }));
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
             }
             clazz.addField(field);
         }
