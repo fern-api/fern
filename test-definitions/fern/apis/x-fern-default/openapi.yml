@@ -2,6 +2,11 @@ openapi: 3.0.3
 info:
   title: x-fern-default test
   version: 1.0.0
+x-fern-global-headers:
+  - header: X-API-Version
+    name: api_version
+    optional: true
+    x-fern-default: "2024-02-08"
 paths:
   /test/{region}/resource:
     get:

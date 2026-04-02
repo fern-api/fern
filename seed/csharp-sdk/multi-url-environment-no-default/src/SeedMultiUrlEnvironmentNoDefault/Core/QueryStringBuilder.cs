@@ -7,18 +7,51 @@ using global::System.Text;
 namespace SeedMultiUrlEnvironmentNoDefault.Core;
 
 /// <summary>
-/// High-performance query string builder with cross-platform optimizations.
+/// High-performance query string builder with RFC 3986 compliant percent-encoding.
 /// Uses span-based APIs on .NET 6+ and StringBuilder fallback for older targets.
+///
+/// RFC 3986 defines the following relevant productions:
+///   pchar       = unreserved / pct-encoded / sub-delims / ":" / "@"
+///   query       = *( pchar / "/" / "?" )
+///   unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+///   sub-delims  = "!" / "$" / "&amp;" / "'" / "(" / ")" / "*" / "+" / "," / ";" / "="
+///
+/// Three encoding contexts are distinguished:
+///   Path segment (pchar): unreserved + sub-delims + ":" + "@"
+///   Query key:   query chars minus "&amp;", "=", "+", "#"
+///   Query value: query chars minus "&amp;", "+", "#"
 /// </summary>
 internal static class QueryStringBuilder
 {
+    // ──────────────────────────────────────────────────────────────────────
+    // RFC 3986 character sets
+    //
+    // Query key safe:    unreserved + (sub-delims \ {& = +}) + : @ / ?
+    // Query value safe:  unreserved + (sub-delims \ {& +})   + : @ / ?
+    // Path segment safe: unreserved + sub-delims + : @
+    // ──────────────────────────────────────────────────────────────────────
+
 #if NET8_0_OR_GREATER
-    private static readonly SearchValues<char> UnreservedChars = SearchValues.Create(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~"
+    private static readonly SearchValues<char> SafeQueryKeyChars = SearchValues.Create(
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?"
+    );
+
+    private static readonly SearchValues<char> SafeQueryValueChars = SearchValues.Create(
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;=:@/?"
+    );
+
+    private static readonly SearchValues<char> SafePathChars = SearchValues.Create(
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$&'()*+,;=:@"
     );
 #else
-    private const string UnreservedChars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+    private const string SafeQueryKeyChars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?";
+
+    private const string SafeQueryValueChars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;=:@/?";
+
+    private const string SafePathChars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$&'()*+,;=:@";
 #endif
 
 #if NET7_0_OR_GREATER
@@ -44,6 +77,43 @@ internal static class QueryStringBuilder
         (byte)'F',
     };
 #endif
+
+    private enum EncodingContext
+    {
+        QueryKey,
+        QueryValue,
+        Path,
+    }
+
+    /// <summary>
+    /// Percent-encodes a path segment value per RFC 3986 section 3.3 (pchar).
+    /// Allowed unencoded: unreserved / sub-delims / ":" / "@"
+    /// </summary>
+    public static string EncodePathSegment(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return value;
+
+#if NET6_0_OR_GREATER
+        if (!NeedsEncoding(value.AsSpan(), EncodingContext.Path))
+            return value;
+
+        var buffer = ArrayPool<char>.Shared.Rent(value.Length * 3);
+        try
+        {
+            var written = EncodeSlow(value.AsSpan(), buffer.AsSpan(), EncodingContext.Path);
+            return new string(buffer.AsSpan(0, written));
+        }
+        finally
+        {
+            ArrayPool<char>.Shared.Return(buffer);
+        }
+#else
+        var sb = new StringBuilder(value.Length);
+        AppendEncoded(sb, value, EncodingContext.Path);
+        return sb.ToString();
+#endif
+    }
 
     /// <summary>
     /// Builds a query string from the provided parameters.
@@ -135,9 +205,17 @@ internal static class QueryStringBuilder
                 buffer[position++] = first ? '?' : '&';
                 first = false;
 
-                position += EncodeComponent(kvp.Key.AsSpan(), buffer.AsSpan(position));
+                position += EncodeWithCharSet(
+                    kvp.Key.AsSpan(),
+                    buffer.AsSpan(position),
+                    EncodingContext.QueryKey
+                );
                 buffer[position++] = '=';
-                position += EncodeComponent(kvp.Value.AsSpan(), buffer.AsSpan(position));
+                position += EncodeWithCharSet(
+                    kvp.Value.AsSpan(),
+                    buffer.AsSpan(position),
+                    EncodingContext.QueryValue
+                );
             } while (enumerator.MoveNext());
 
             return first ? string.Empty : new string(buffer.AsSpan(0, position));
@@ -156,9 +234,9 @@ internal static class QueryStringBuilder
             sb.Append(first ? '?' : '&');
             first = false;
 
-            AppendEncoded(sb, kvp.Key);
+            AppendEncoded(sb, kvp.Key, EncodingContext.QueryKey);
             sb.Append('=');
-            AppendEncoded(sb, kvp.Value);
+            AppendEncoded(sb, kvp.Value, EncodingContext.QueryValue);
         }
 
         return sb.ToString();
@@ -179,39 +257,61 @@ internal static class QueryStringBuilder
             buffer[position++] = first ? '?' : '&';
             first = false;
 
-            position += EncodeComponent(kvp.Key.AsSpan(), buffer.Slice(position));
+            position += EncodeWithCharSet(
+                kvp.Key.AsSpan(),
+                buffer.Slice(position),
+                EncodingContext.QueryKey
+            );
             buffer[position++] = '=';
-            position += EncodeComponent(kvp.Value.AsSpan(), buffer.Slice(position));
+            position += EncodeWithCharSet(
+                kvp.Value.AsSpan(),
+                buffer.Slice(position),
+                EncodingContext.QueryValue
+            );
         }
 
         return position;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int EncodeComponent(ReadOnlySpan<char> input, Span<char> output)
+    private static int EncodeWithCharSet(
+        ReadOnlySpan<char> input,
+        Span<char> output,
+        EncodingContext context
+    )
     {
-        if (!NeedsEncoding(input))
+        if (!NeedsEncoding(input, context))
         {
             input.CopyTo(output);
             return input.Length;
         }
 
-        return EncodeSlow(input, output);
+        return EncodeSlow(input, output, context);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool NeedsEncoding(ReadOnlySpan<char> value)
+    private static bool NeedsEncoding(ReadOnlySpan<char> value, EncodingContext context)
     {
-        return value.ContainsAnyExcept(UnreservedChars);
+        return context switch
+        {
+            EncodingContext.QueryKey => value.ContainsAnyExcept(SafeQueryKeyChars),
+            EncodingContext.QueryValue => value.ContainsAnyExcept(SafeQueryValueChars),
+            EncodingContext.Path => value.ContainsAnyExcept(SafePathChars),
+            _ => true,
+        };
     }
 
-    private static int EncodeSlow(ReadOnlySpan<char> input, Span<char> output)
+    private static int EncodeSlow(
+        ReadOnlySpan<char> input,
+        Span<char> output,
+        EncodingContext context
+    )
     {
         var position = 0;
 
         foreach (var c in input)
         {
-            if (IsUnreserved(c))
+            if (IsSafeChar(c, context))
             {
                 output[position++] = c;
             }
@@ -261,11 +361,11 @@ internal static class QueryStringBuilder
     }
 #else
     // netstandard2.0 / net462 StringBuilder-based encoding
-    private static void AppendEncoded(StringBuilder sb, string value)
+    private static void AppendEncoded(StringBuilder sb, string value, EncodingContext context)
     {
         foreach (var c in value)
         {
-            if (IsUnreserved(c))
+            if (IsSafeChar(c, context))
             {
                 sb.Append(c);
             }
@@ -298,18 +398,103 @@ internal static class QueryStringBuilder
 #endif
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsUnreserved(char c)
+    private static bool IsSafeChar(char c, EncodingContext context)
+    {
+        return context switch
+        {
+            EncodingContext.QueryKey => IsSafeQueryKeyChar(c),
+            EncodingContext.QueryValue => IsSafeQueryValueChar(c),
+            EncodingContext.Path => IsSafePathChar(c),
+            _ => false,
+        };
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsSafeQueryKeyChar(char c)
     {
 #if NET8_0_OR_GREATER
-        return UnreservedChars.Contains(c);
+        return SafeQueryKeyChars.Contains(c);
 #else
+        // query = *( pchar / "/" / "?" )  minus "&", "=", "+", "#"
         return (c >= 'A' && c <= 'Z')
             || (c >= 'a' && c <= 'z')
             || (c >= '0' && c <= '9')
             || c == '-'
             || c == '_'
             || c == '.'
-            || c == '~';
+            || c == '~'
+            || c == '!'
+            || c == '$'
+            || c == (char)39 // single quote
+            || c == '('
+            || c == ')'
+            || c == '*'
+            || c == ','
+            || c == ';'
+            || c == ':'
+            || c == '@'
+            || c == '/'
+            || c == '?';
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsSafeQueryValueChar(char c)
+    {
+#if NET8_0_OR_GREATER
+        return SafeQueryValueChars.Contains(c);
+#else
+        // query = *( pchar / "/" / "?" )  minus "&", "+", "#"
+        return (c >= 'A' && c <= 'Z')
+            || (c >= 'a' && c <= 'z')
+            || (c >= '0' && c <= '9')
+            || c == '-'
+            || c == '_'
+            || c == '.'
+            || c == '~'
+            || c == '!'
+            || c == '$'
+            || c == (char)39 // single quote
+            || c == '('
+            || c == ')'
+            || c == '*'
+            || c == ','
+            || c == ';'
+            || c == '='
+            || c == ':'
+            || c == '@'
+            || c == '/'
+            || c == '?';
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsSafePathChar(char c)
+    {
+#if NET8_0_OR_GREATER
+        return SafePathChars.Contains(c);
+#else
+        // pchar = unreserved / sub-delims / ":" / "@"
+        return (c >= 'A' && c <= 'Z')
+            || (c >= 'a' && c <= 'z')
+            || (c >= '0' && c <= '9')
+            || c == '-'
+            || c == '_'
+            || c == '.'
+            || c == '~'
+            || c == '!'
+            || c == '$'
+            || c == '&'
+            || c == (char)39 // single quote
+            || c == '('
+            || c == ')'
+            || c == '*'
+            || c == '+'
+            || c == ','
+            || c == ';'
+            || c == '='
+            || c == ':'
+            || c == '@';
 #endif
     }
 
@@ -354,21 +539,14 @@ internal static class QueryStringBuilder
             }
 
             // Handle collections (arrays, lists, etc.) - add each element as a separate key-value pair
-            if (
-                value
-                is global::System.Collections.IEnumerable enumerable
-                    and not global::System.Collections.IDictionary
-            )
+            if (value is global::System.Collections.IEnumerable enumerable and not global::System.Collections.IDictionary)
             {
                 foreach (var item in enumerable)
                 {
                     if (item is not null)
                     {
                         _params.Add(
-                            new KeyValuePair<string, string>(
-                                key,
-                                ValueConvert.ToQueryStringValue(item)
-                            )
+                            new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(item))
                         );
                     }
                 }
@@ -404,12 +582,7 @@ internal static class QueryStringBuilder
         /// - If a key appears multiple times, all values are added as an array
         /// - All parameters override any existing parameters with the same key
         /// </summary>
-        public Builder MergeAdditional(
-            global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<
-                string,
-                string
-            >>? additionalParameters
-        )
+        public Builder MergeAdditional(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<string, string>>? additionalParameters)
         {
             if (additionalParameters is null)
             {
