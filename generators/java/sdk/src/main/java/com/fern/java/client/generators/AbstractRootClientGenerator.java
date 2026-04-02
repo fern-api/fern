@@ -2401,14 +2401,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     } else {
                         condition = "true";
                     }
-                    // Build supplier args: omitted fields use empty string
-                    String usernameArg = usernameOmit ? "() -> \"\"" : "() -> this." + usernameField;
-                    String passwordArg = passwordOmit ? "() -> \"\"" : "() -> this." + passwordField;
+                    // Build constructor args: only pass args for non-omitted fields
+                    // to match BasicAuthProvider's constructor signature
+                    StringBuilder constructorArgs = new StringBuilder();
+                    if (!usernameOmit) {
+                        constructorArgs.append("() -> this.").append(usernameField);
+                    }
+                    if (!passwordOmit) {
+                        if (constructorArgs.length() > 0) {
+                            constructorArgs.append(", ");
+                        }
+                        constructorArgs.append("() -> this.").append(passwordField);
+                    }
                     this.configureAuthMethod
                             .beginControlFlow("if (" + condition + ")")
                             .addStatement(
-                                    "routingBuilder.addAuthProvider($S, new $T(" + usernameArg + ", " + passwordArg
-                                            + "), $S)",
+                                    "routingBuilder.addAuthProvider($S, new $T(" + constructorArgs + "), $S)",
                                     info.schemeKey,
                                     providerClassName,
                                     info.envVarHint)
