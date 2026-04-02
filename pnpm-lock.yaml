@@ -1998,6 +1998,9 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
+      eta:
+        specifier: ^4.5.1
+        version: 4.5.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
