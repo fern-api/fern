@@ -126,19 +126,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const scheme = basicAuthScheme as unknown as Record<string, unknown>;
                         const usernameOmitted = scheme.usernameOmit === true;
                         const passwordOmitted = scheme.passwordOmit === true;
-                        // Per-field null coalescing: only omittable fields get || "" fallback
-                        const usernameExpr = usernameOmitted ? `${usernameName} || ""` : usernameName;
-                        const passwordExpr = passwordOmitted ? `${passwordName} || ""` : passwordName;
-                        // Per-field condition: required fields must be present, omittable fields are always satisfied
+                        // Omitted fields use empty string directly
+                        const usernameExpr = usernameOmitted ? `""` : usernameName;
+                        const passwordExpr = passwordOmitted ? `""` : passwordName;
+                        // Condition: only require non-omitted fields to be present
                         let condition: string;
                         if (!usernameOmitted && !passwordOmitted) {
                             condition = `!${usernameName}.nil? && !${passwordName}.nil?`;
-                        } else if (usernameOmitted && passwordOmitted) {
-                            condition = `!${usernameName}.nil? || !${passwordName}.nil?`;
-                        } else if (usernameOmitted) {
+                        } else if (usernameOmitted && !passwordOmitted) {
                             condition = `!${passwordName}.nil?`;
-                        } else {
+                        } else if (!usernameOmitted && passwordOmitted) {
                             condition = `!${usernameName}.nil?`;
+                        } else {
+                            condition = `true`;
                         }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
@@ -360,38 +360,38 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     break;
                 }
                 case "basic": {
-                    // Per-field optionality: make parameter nilable when its omit flag is set
+                    // When omit is true, the field is completely removed from the end-user API.
                     const schemeRecord = scheme as unknown as Record<string, unknown>;
                     const usernameOmitted = schemeRecord.usernameOmit === true;
                     const passwordOmitted = schemeRecord.passwordOmit === true;
-                    const usernameType = usernameOmitted ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string();
-                    const passwordType = passwordOmitted ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string();
-                    const usernameParam = ruby.parameters.keyword({
-                        name: scheme.username.snakeCase.safeName,
-                        type: usernameType,
-                        initializer: usernameOmitted
-                            ? ruby.nilValue()
-                            : scheme.usernameEnvVar != null
-                              ? ruby.codeblock((writer) => {
-                                    writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                })
-                              : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(usernameParam);
-                    const passwordParam = ruby.parameters.keyword({
-                        name: scheme.password.snakeCase.safeName,
-                        type: passwordType,
-                        initializer: passwordOmitted
-                            ? ruby.nilValue()
-                            : scheme.passwordEnvVar != null
-                              ? ruby.codeblock((writer) => {
-                                    writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                })
-                              : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(passwordParam);
+                    if (!usernameOmitted) {
+                        const usernameParam = ruby.parameters.keyword({
+                            name: scheme.username.snakeCase.safeName,
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.usernameEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(usernameParam);
+                    }
+                    if (!passwordOmitted) {
+                        const passwordParam = ruby.parameters.keyword({
+                            name: scheme.password.snakeCase.safeName,
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.passwordEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(passwordParam);
+                    }
                     break;
                 }
                 case "inferred": {
