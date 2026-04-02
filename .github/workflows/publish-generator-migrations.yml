@@ -94,6 +94,10 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: "@fern-api"
 
+      # npm >= 11.5.1 is required for OIDC trusted publishing
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@latest
+
       - name: Build and publish generator-migrations
         env:
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
