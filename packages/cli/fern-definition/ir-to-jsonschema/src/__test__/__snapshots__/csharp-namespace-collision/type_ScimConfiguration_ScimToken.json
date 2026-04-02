@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "tokenId": {
+      "type": "string"
+    },
+    "token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scopes": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tokenId",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

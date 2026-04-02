@@ -4693,6 +4693,16 @@
               "type": "null"
             }
           ]
+        },
+        "missing-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

@@ -105,7 +105,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     shouldGenerateWebsocketClients: z.optional(z.boolean()),
 
     // internal - license name extracted from custom license file
-    _fernLicenseName: z.optional(z.string())
+    _fernLicenseName: z.optional(z.string()),
+    maxRetries: z.optional(z.number().int().min(0))
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
