@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-php-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "clientName": "FernClient"
+    "clientName": "FernClient",
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
