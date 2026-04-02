@@ -8,6 +8,7 @@ import { mkdir, readdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
+import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
@@ -164,6 +165,19 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await unlink(editorConfigPath);
 
         await writeFile(csprojPath, csprojContents);
+    }
+
+    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
+        const csharpier = findDotnetToolPath("csharpier");
+        await loggingExeca(
+            this.context.logger,
+            csharpier,
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                doNotPipeOutput: false,
+                cwd: absolutePathToSrcDirectory
+            }
+        );
     }
 
     public async persist(): Promise<void> {
@@ -334,6 +348,11 @@ dotnet_diagnostic.IDE0005.severity = error
             await this.formatCsFilesOnDisk(absolutePathToTestProjectDirectory);
         }
         this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
+
+        // format the code cleanly using csharpier on the full output directory
+        const csharpierStartTime = Date.now();
+        await this.csharpier(this.absolutePathToOutputDirectory);
+        this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
 
         this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
