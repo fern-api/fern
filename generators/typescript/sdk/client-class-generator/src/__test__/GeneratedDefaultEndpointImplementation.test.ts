@@ -225,7 +225,8 @@ function createImpl(opts?: {
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
-        parameterNaming: opts?.parameterNaming ?? "default"
+        parameterNaming: opts?.parameterNaming ?? "default",
+        defaultMaxRetries: undefined
     });
 }
 

@@ -124,7 +124,8 @@ describe("requestOptionsParameter", () => {
 
             const result = getMaxRetriesExpression({
                 maxRetriesReference,
-                referenceToOptions
+                referenceToOptions,
+                defaultMaxRetries: undefined
             });
 
             const text = getTextOfTsNode(result);

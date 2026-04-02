@@ -1234,9 +1234,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private int getDefaultMaxRetries() {
-        return clientGeneratorContext
-                .getCustomConfig()
-                .maxRetries()
-                .orElse(2);
+        return clientGeneratorContext.getCustomConfig().maxRetries().orElse(2);
     }
 }

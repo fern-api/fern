@@ -75,6 +75,7 @@ function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClien
         generateEndpointMetadata: false,
         parameterNaming: "default",
         offsetSemantics: "item-index",
+        defaultMaxRetries: undefined,
         ...opts
     });
 }

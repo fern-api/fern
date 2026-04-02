@@ -194,7 +194,8 @@ function createImpl(opts?: {
         omitUndefined: opts?.omitUndefined ?? false,
         streamType: opts?.streamType ?? "wrapper",
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
-        parameterNaming: opts?.parameterNaming ?? "default"
+        parameterNaming: opts?.parameterNaming ?? "default",
+        defaultMaxRetries: undefined
     });
 }
 

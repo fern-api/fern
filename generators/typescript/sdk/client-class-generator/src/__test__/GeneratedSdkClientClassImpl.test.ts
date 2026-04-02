@@ -154,7 +154,8 @@ function createClientClass(opts?: {
         useDefaultRequestParameterValues: opts?.useDefaultRequestParameterValues ?? false,
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
         parameterNaming: opts?.parameterNaming ?? "default",
-        offsetSemantics: opts?.offsetSemantics ?? "item-index"
+        offsetSemantics: opts?.offsetSemantics ?? "item-index",
+        defaultMaxRetries: undefined
     });
 }
 

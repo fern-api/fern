@@ -7,7 +7,7 @@
         When not specified, the existing default of 2 retries is preserved.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 65
+  irVersion: 66
 
 - version: 3.61.0-rc.0
   changelogEntry:

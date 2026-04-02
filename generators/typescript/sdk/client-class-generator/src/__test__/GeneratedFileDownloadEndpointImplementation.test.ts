@@ -189,7 +189,8 @@ function createImpl(opts?: {
         streamType: opts?.streamType ?? "wrapper",
         fileResponseType: opts?.fileResponseType ?? "stream",
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
-        parameterNaming: opts?.parameterNaming ?? "default"
+        parameterNaming: opts?.parameterNaming ?? "default",
+        defaultMaxRetries: undefined
     });
 }
 
