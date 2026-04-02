@@ -97,13 +97,13 @@ export class MockEndpointGenerator extends WithGeneration {
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
                     if (maybeParameterValue != null) {
-                        writer.write(`.WithParam("${parameter.name.wireValue}", "${maybeParameterValue}")`);
+                        writer.write(`.WithParam("${getWireValue(parameter.name)}", "${maybeParameterValue}")`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
                     const maybeHeaderValue = this.exampleToQueryOrHeaderValue(header);
                     if (maybeHeaderValue != null) {
-                        writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
+                        writer.write(`.WithHeader("${getWireValue(header.name)}", "${maybeHeaderValue}")`);
                     }
                 }
                 // Add auth header matching for endpoints that require authentication.
@@ -127,8 +127,8 @@ export class MockEndpointGenerator extends WithGeneration {
                                 break;
                             }
                             case "header": {
-                                const headerName = scheme.name?.wireValue;
-                                const headerValue = scheme.name?.name?.screamingSnakeCase?.safeName;
+                                const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
+                                const headerValue = scheme.name != null ? caseConverter.screamingSnakeSafe(scheme.name) : undefined;
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
@@ -385,7 +385,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         // Check properties
         for (const prop of typeDeclaration.shape.properties) {
-            if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+            if (getWireValue(prop.name) === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 return true;
             }
         }
@@ -393,7 +393,7 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+                if (getWireValue(prop.name) === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     return true;
                 }
             }
@@ -655,7 +655,7 @@ export class MockEndpointGenerator extends WithGeneration {
             const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
             if (typeDeclaration.shape.type === "union") {
                 const matchingType = typeDeclaration.shape.types.find(
-                    (t) => t.discriminantValue.wireValue === discriminantWireValue
+                    (t) => getWireValue(t.discriminantValue) === discriminantWireValue
                 );
                 if (matchingType?.shape.propertiesType === "singleProperty") {
                     return getWireValue(matchingType.shape.name);

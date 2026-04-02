@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -197,7 +197,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                     exampleTypeReference: extraProperty.value,
                     parseDatetimes
                 });
-                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.write(`["${getWireValue(extraProperty.name)}"] = `);
                 writer.writeNode(valueSnippet);
                 writer.writeLine(",");
             }

@@ -756,7 +756,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
         if (scheme.type === "header") {
             {
-                const name = caseConverter.camelSafe(scheme.name.name);
+                const name = caseConverter.camelSafe(scheme.name);
                 return [
                     {
                         name,
@@ -771,7 +771,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             reference: scheme.valueType
                         }),
                         environmentVariable: scheme.headerEnvVar,
-                        exampleValue: caseConverter.screamingSnakeSafe(scheme.name.name)
+                        exampleValue: caseConverter.screamingSnakeSafe(scheme.name)
                     }
                 ];
             }
@@ -927,10 +927,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return {
             name:
                 header.valueType.type === "container" && header.valueType.container.type === "literal"
-                    ? caseConverter.pascalSafe(header.name.name)
-                    : caseConverter.camelSafe(header.name.name),
+                    ? caseConverter.pascalSafe(header.name)
+                    : caseConverter.camelSafe(header.name),
             header: {
-                name: header.name.wireValue
+                name: getWireValue(header.name)
             },
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
@@ -938,7 +938,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            exampleValue: caseConverter.screamingSnakeSafe(header.name.name)
+            exampleValue: caseConverter.screamingSnakeSafe(header.name)
         };
     }
 
@@ -986,7 +986,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             if (typeRef.isOptional) {
                 continue;
             }
-            const name = caseConverter.camelSafe(customProperty.property.name.name);
+            const name = caseConverter.camelSafe(customProperty.property.name);
             params.push({
                 name,
                 docs: `The ${name} for OAuth authentication.`,
@@ -1002,7 +1002,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 reference: scopes.property.valueType
             });
             if (!typeRef.isOptional) {
-                const name = caseConverter.camelSafe(scopes.property.name.name);
+                const name = caseConverter.camelSafe(scopes.property.name);
                 params.push({
                     name,
                     docs: `The ${name} for OAuth authentication.`,
