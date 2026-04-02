@@ -31,14 +31,13 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/base-generator": "workspace:*"
+    "@fern-api/base-generator": "workspace:*",
+    "execa": "^5.1.1"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@fern-api/csharp-base": "workspace:*",
     "@types/node": "catalog:",
-    "execa": "^5.1.1",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

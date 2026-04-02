@@ -31,6 +31,8 @@
       "rustup component add rustfmt 2>/dev/null || true",
       "bash scripts/setup-dotnet.sh 2>/dev/null || true",
       "export PATH=\"$HOME/.dotnet:$PATH\"",
+      "dotnet tool install --tool-path generators/csharp/.tools csharpier --version 1.2.6 2>/dev/null || dotnet tool update --tool-path generators/csharp/.tools csharpier --version 1.2.6 2>/dev/null || true",
+      "export PATH=\"$(pwd)/generators/csharp/.tools:$PATH\"",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version 2>/dev/null || echo 'not available')",
       "echo 'Go:' $(go version)",

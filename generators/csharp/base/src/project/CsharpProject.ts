@@ -8,7 +8,6 @@ import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
-import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
@@ -168,10 +167,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
-        const csharpier = findDotnetToolPath("csharpier");
         await loggingExeca(
             this.context.logger,
-            csharpier,
+            "csharpier",
             ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
             {
                 doNotPipeOutput: false,

@@ -37,6 +37,14 @@ pnpm turbo run compile --filter @fern-api/fern-csharp-sdk
 pnpm turbo run compile --filter @fern-api/fern-csharp-model
 ```
 
+### Local csharpier setup
+
+The C# generator uses csharpier for formatting. The required version (`1.2.6`) is installed to `generators/csharp/.tools/` (not globally) so it doesn't affect your system.
+
+When running `devbox shell`, this is done automatically and `generators/csharp/.tools/` is added to your PATH.
+
+When running `pnpm seed test --local`, the `preInstallScript` in `seed/csharp-sdk/seed.yml` installs it, and the `env.PATH` in the same config prepends the tools directory for the generator process.
+
 ### Configuration Options
 
 You can find the configuration options for `generators.yml` in _generators/csharp/codegen/src/custom-config/CsharpConfigSchema.ts_:

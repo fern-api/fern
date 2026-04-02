@@ -8,14 +8,33 @@ import { LocalBuildInfo } from "../../../config/api/index.js";
 import { runScript } from "../../../runScript.js";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
+import { resolveEnv } from "./resolveEnv.js";
 import { TestRunner } from "./TestRunner.js";
 
 export class LocalTestRunner extends TestRunner {
+    private get repoRoot(): AbsoluteFilePath {
+        return AbsoluteFilePath.of(path.join(__dirname, RelativeFilePath.of("../../..")));
+    }
+
     public async build(): Promise<void> {
         const localConfig = await this.getLocalConfigOrthrow();
-        const workingDir = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
-        );
+        const repoRoot = this.repoRoot;
+        const workingDir = AbsoluteFilePath.of(path.join(repoRoot, RelativeFilePath.of(localConfig.workingDirectory)));
+
+        const rawPreInstallCommands = this.generator.workspaceConfig.buildScripts?.preInstallScript?.commands;
+        const preInstallCommands = Array.isArray(rawPreInstallCommands) ? rawPreInstallCommands : undefined;
+        if (preInstallCommands != null && preInstallCommands.length > 0) {
+            const preInstallResult = await runScript({
+                commands: preInstallCommands,
+                doNotPipeOutput: !this.shouldPipeOutput(),
+                logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
+                workingDir: repoRoot
+            });
+            if (preInstallResult.exitCode !== 0) {
+                throw new Error(`Failed to run preInstallScript for ${this.generator.workspaceName}.`);
+            }
+        }
+
         const result = await runScript({
             commands: localConfig.buildCommand,
             doNotPipeOutput: !this.shouldPipeOutput(),
@@ -99,7 +118,7 @@ export class LocalTestRunner extends TestRunner {
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,
-            this.generator.workspaceConfig.test.local?.env
+            resolveEnv(this.generator.workspaceConfig.test.local?.env, this.repoRoot)
         );
     }
 

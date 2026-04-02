@@ -6,7 +6,7 @@ changelogLocation: ../../generators/csharp/sdk/versions.yml
 buildScripts:
   preInstallScript:
     commands:
-      - dotnet tool restore
+      - dotnet tool install --tool-path generators/csharp/.tools csharpier --version 1.2.6 || dotnet tool update --tool-path generators/csharp/.tools csharpier --version 1.2.6
   compileScript:
     commands:
       - |
@@ -45,6 +45,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
+    env:
+      PATH: "{REPO_ROOT}/generators/csharp/.tools:{PATH}"
 
 language: csharp
 generatorType: SDK

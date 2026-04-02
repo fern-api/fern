@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.4
+  changelogEntry:
+    - summary: |
+        The generator now requires csharpier to be available on PATH rather than
+        discovering it via dotnet tool manifests. In Docker (the default), this
+        is unchanged. For local development, csharpier 1.2.6 is installed to
+        `generators/csharp/.tools/` and prepended to PATH automatically.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 2.55.3
   changelogEntry:
     - summary: |

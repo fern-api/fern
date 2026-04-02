@@ -5,7 +5,6 @@ export { AbstractCsharpGeneratorCli } from "./cli/AbstractCsharpGeneratorCli.js"
 export { convertExampleTypeReferenceToTypeReference } from "./context/convertExampleTypeReferenceToTypeReference.js";
 export { GeneratorContext } from "./context/GeneratorContext.js";
 export { FileGenerator } from "./FileGenerator.js";
-export { findDotnetToolPath } from "./findDotNetToolPath.js";
 export { type GrpcClientInfo } from "./grpc/GrpcClientInfo.js";
 export { CsharpProject } from "./project/CsharpProject.js";
 export * from "./project/index.js";

@@ -30,13 +30,15 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
+  "dependencies": {
+    "@fern-api/logging-execa": "workspace:*"
+  },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/csharp-codegen": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/ir-sdk": "^65.4.0",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
