@@ -1,8 +1,11 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export interface FilePropertyInfo {
     fileFields: swift.FunctionArgument[];
@@ -34,7 +37,7 @@ export class FilePropertyMapper {
             switch (property.type) {
                 case "file": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.camelCase.unsafeName),
+                        label: sanitizeSelf(caseConverter.camelUnsafe(property.name)),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
@@ -42,7 +45,7 @@ export class FilePropertyMapper {
                 }
                 case "fileArray": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.camelCase.unsafeName),
+                        label: sanitizeSelf(caseConverter.camelUnsafe(property.name)),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
@@ -50,7 +53,7 @@ export class FilePropertyMapper {
                 }
                 case "bodyProperty": {
                     const arg = swift.functionArgument({
-                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
+                        label: sanitizeSelf(caseConverter.camelUnsafe(property.name.name)),
                         value: this.getBodyProperty({ fromSymbol, property, record })
                     });
                     result.bodyPropertyFields.push(arg);
@@ -115,7 +118,7 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): swift.Expression {
-        const bodyPropertyValue = record[property.name.wireValue];
+        const bodyPropertyValue = record[getWireValue(property.name)];
         if (bodyPropertyValue == null) {
             return swift.Expression.nop();
         }

@@ -1,9 +1,11 @@
-import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Options, Scope, Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext, FilePropertyInfo } from "./context/index.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 const CLIENT_CONST_NAME = "client";
 
@@ -146,7 +148,7 @@ export class EndpointSnippetGenerator {
         const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const args: swift.FunctionArgument[] = [];
         for (const header of headers) {
-            const value = values[header.name.wireValue];
+            const value = values[getWireValue(header.name)];
             const arg = this.getRootClientHeaderArg({ moduleSymbol, header, value });
             if (arg != null) {
                 args.push(arg);
@@ -178,7 +180,7 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
         return swift.functionArgument({
-            label: header.name.name.camelCase.unsafeName,
+            label: caseConverter.camelUnsafe(header.name.name),
             value: expression
         });
     }
@@ -233,11 +235,11 @@ export class EndpointSnippetGenerator {
                 }
                 args.push(
                     swift.functionArgument({
-                        label: auth.username.camelCase.unsafeName,
+                        label: caseConverter.camelUnsafe(auth.username),
                         value: swift.Expression.stringLiteral(values.username)
                     }),
                     swift.functionArgument({
-                        label: auth.password.camelCase.unsafeName,
+                        label: caseConverter.camelUnsafe(auth.password),
                         value: swift.Expression.stringLiteral(values.password)
                     })
                 );
@@ -252,7 +254,7 @@ export class EndpointSnippetGenerator {
                 }
                 args.push(
                     swift.functionArgument({
-                        label: auth.token.camelCase.unsafeName,
+                        label: caseConverter.camelUnsafe(auth.token),
                         value: swift.Expression.stringLiteral(values.token)
                     })
                 );
@@ -267,7 +269,7 @@ export class EndpointSnippetGenerator {
                 }
                 args.push(
                     swift.functionArgument({
-                        label: auth.header.name.name.camelCase.unsafeName,
+                        label: caseConverter.camelUnsafe(auth.header.name.name),
                         value: this.context.dynamicTypeLiteralMapper.convert({
                             fromSymbol: moduleSymbol,
                             typeReference: auth.header.typeReference,
@@ -356,10 +358,10 @@ export class EndpointSnippetGenerator {
 
     private getEndpointMethodName({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
-            const pathToMethod = `${endpoint.declaration.fernFilepath.allParts.map((p) => p.camelCase.unsafeName).join(".")}`;
-            return `${pathToMethod}.${endpoint.declaration.name.camelCase.unsafeName}`;
+            const pathToMethod = `${endpoint.declaration.fernFilepath.allParts.map((p) => caseConverter.camelUnsafe(p)).join(".")}`;
+            return `${pathToMethod}.${caseConverter.camelUnsafe(endpoint.declaration.name)}`;
         }
-        return endpoint.declaration.name.camelCase.unsafeName;
+        return caseConverter.camelUnsafe(endpoint.declaration.name);
     }
 
     private getEndpointMethodArguments({
@@ -445,7 +447,7 @@ export class EndpointSnippetGenerator {
             })
             .map((parameter) => {
                 return swift.functionArgument({
-                    label: parameter.name.name.camelCase.unsafeName,
+                    label: caseConverter.camelUnsafe(parameter.name.name),
                     value: this.context.dynamicTypeLiteralMapper.convert({
                         fromSymbol: moduleSymbol,
                         typeReference: parameter.typeReference,
@@ -470,7 +472,7 @@ export class EndpointSnippetGenerator {
             })
             .map((parameter) => {
                 return swift.functionArgument({
-                    label: parameter.name.name.camelCase.unsafeName,
+                    label: caseConverter.camelUnsafe(parameter.name.name),
                     value: this.context.dynamicTypeLiteralMapper.convert({
                         fromSymbol: moduleSymbol,
                         typeReference: parameter.typeReference,
@@ -566,7 +568,7 @@ export class EndpointSnippetGenerator {
             })
             .map((typeInstance) => {
                 return swift.functionArgument({
-                    label: typeInstance.name.name.camelCase.unsafeName,
+                    label: caseConverter.camelUnsafe(typeInstance.name.name),
                     value: this.context.dynamicTypeLiteralMapper.convert({
                         fromSymbol: moduleSymbol,
                         typeReference: typeInstance.typeReference,
@@ -584,7 +586,7 @@ export class EndpointSnippetGenerator {
         value: unknown;
     }): swift.FunctionArgument {
         return swift.functionArgument({
-            label: body.bodyKey.camelCase.unsafeName,
+            label: caseConverter.camelUnsafe(body.bodyKey),
             value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
         });
     }

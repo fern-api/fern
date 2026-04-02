@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -5,6 +6,8 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
 import { parseEndpointPath } from "./util/parse-endpoint-path.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
@@ -38,7 +41,7 @@ export class EndpointMethodGenerator {
     public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
         return swift.method({
-            unsafeName: endpoint.name.camelCase.unsafeName,
+            unsafeName: caseConverter.camelUnsafe(endpoint.name),
             accessLevel: swift.AccessLevel.Public,
             parameters,
             async: true,
@@ -84,8 +87,8 @@ export class EndpointMethodGenerator {
             }
             params.push(
                 swift.functionParameter({
-                    argumentLabel: header.name.name.camelCase.unsafeName,
-                    unsafeName: header.name.name.camelCase.unsafeName,
+                    argumentLabel: caseConverter.camelUnsafe(header.name.name),
+                    unsafeName: caseConverter.camelUnsafe(header.name.name),
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
@@ -100,8 +103,8 @@ export class EndpointMethodGenerator {
             );
             params.push(
                 swift.functionParameter({
-                    argumentLabel: queryParam.name.name.camelCase.unsafeName,
-                    unsafeName: queryParam.name.name.camelCase.unsafeName,
+                    argumentLabel: caseConverter.camelUnsafe(queryParam.name.name),
+                    unsafeName: caseConverter.camelUnsafe(queryParam.name.name),
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: queryParam.docs
@@ -125,7 +128,7 @@ export class EndpointMethodGenerator {
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
                 const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
-                    endpoint.requestBody.name.pascalCase.unsafeName
+                    caseConverter.pascalUnsafe(endpoint.requestBody.name)
                 );
                 params.push(
                     swift.functionParameter({
@@ -147,7 +150,7 @@ export class EndpointMethodGenerator {
             } else if (endpoint.requestBody.type === "fileUpload") {
                 const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
-                    endpoint.requestBody.name.pascalCase.unsafeName
+                    caseConverter.pascalUnsafe(endpoint.requestBody.name)
                 );
                 params.push(
                     swift.functionParameter({
@@ -256,8 +259,8 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: validHeaders.map((header) => {
                             return [
-                                swift.Expression.stringLiteral(header.name.wireValue),
-                                swift.Expression.reference(header.name.name.camelCase.unsafeName)
+                                swift.Expression.stringLiteral(getWireValue(header.name)),
+                                swift.Expression.reference(caseConverter.camelUnsafe(header.name.name))
                             ];
                         }),
                         multiline: true
@@ -272,7 +275,7 @@ export class EndpointMethodGenerator {
                     label: "queryParams",
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
-                            const key = swift.Expression.stringLiteral(queryParam.name.name.originalName);
+                            const key = swift.Expression.stringLiteral(getOriginalName(queryParam.name.name));
                             const swiftType = this.getResolvedSwiftTypeForTypeReference(queryParam.valueType);
                             if (swiftType.variant.type === "optional") {
                                 return [
@@ -282,12 +285,12 @@ export class EndpointMethodGenerator {
                                             swiftType.nonOptional().variant.type === "nullable"
                                                 ? swift.Expression.memberAccess({
                                                       target: swift.Expression.reference(
-                                                          queryParam.name.name.camelCase.unsafeName
+                                                          caseConverter.camelUnsafe(queryParam.name.name)
                                                       ),
                                                       optionalChain: true,
                                                       memberName: "wrappedValue"
                                                   })
-                                                : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                                : swift.Expression.reference(caseConverter.camelUnsafe(queryParam.name.name)),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
                                             methodName: this.inferQueryParamCaseName(swiftType),
@@ -313,7 +316,7 @@ export class EndpointMethodGenerator {
                                         ? swift.Expression.methodCallWithTrailingClosure({
                                               target: swift.Expression.memberAccess({
                                                   target: swift.Expression.reference(
-                                                      queryParam.name.name.camelCase.unsafeName
+                                                      caseConverter.camelUnsafe(queryParam.name.name)
                                                   ),
                                                   memberName: "wrappedValue"
                                               }),
@@ -336,12 +339,12 @@ export class EndpointMethodGenerator {
                                                       )
                                                           ? swift.Expression.memberAccess({
                                                                 target: swift.Expression.reference(
-                                                                    queryParam.name.name.camelCase.unsafeName
+                                                                    caseConverter.camelUnsafe(queryParam.name.name)
                                                                 ),
                                                                 memberName: "rawValue"
                                                             })
                                                           : swift.Expression.reference(
-                                                                queryParam.name.name.camelCase.unsafeName
+                                                                caseConverter.camelUnsafe(queryParam.name.name)
                                                             )
                                                   })
                                               ]
@@ -417,9 +420,9 @@ export class EndpointMethodGenerator {
     }
 
     private getAllHeaders(endpoint: FernIr.HttpEndpoint): FernIr.HttpHeader[] {
-        const endpointHeaderWireValues = new Set(endpoint.headers.map((h) => h.name.wireValue));
+        const endpointHeaderWireValues = new Set(endpoint.headers.map((h) => getWireValue(h.name)));
         const filteredServiceHeaders = this.serviceHeaders.filter(
-            (header) => !endpointHeaderWireValues.has(header.name.wireValue)
+            (header) => !endpointHeaderWireValues.has(getWireValue(header.name))
         );
         return [...filteredServiceHeaders, ...endpoint.headers];
     }

@@ -1,9 +1,12 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertDefined } from "@fern-api/core-utils";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
@@ -132,7 +135,7 @@ export class WireTestFunctionGenerator {
                 ];
                 return swift.method({
                     attributes: [{ name: "Test" }],
-                    unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
+                    unsafeName: `${caseConverter.camelUnsafe(this.endpoint.name)}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
                     returnType: this.referencer.referenceSwiftType("Void"),
@@ -338,7 +341,7 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
+                        return swift.Expression.enumCaseShorthand(caseConverter.camelUnsafe(exampleEnumType.value.name));
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -354,7 +357,7 @@ export class WireTestFunctionGenerator {
                                     }
                                     const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
-                                        label: property.name.name.camelCase.unsafeName,
+                                        label: caseConverter.camelUnsafe(property.name.name),
                                         value: exampleResponse
                                     });
                                 })
@@ -364,7 +367,7 @@ export class WireTestFunctionGenerator {
                     },
                     union: (exampleUnionType) => {
                         const caseName =
-                            exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase.unsafeName;
+                            caseConverter.camelUnsafe(exampleUnionType.singleUnionType.wireDiscriminantValue.name);
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
                                 swift.Expression.memberAccess({
@@ -373,7 +376,7 @@ export class WireTestFunctionGenerator {
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) => {
                                 const declaredWireNames = new Set(
-                                    exampleObjectTypeWithId.object.properties.map((p) => p.name.wireValue)
+                                    exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
                                 );
                                 const jsonObj =
                                     exampleTypeRef.jsonExample != null &&
@@ -395,7 +398,7 @@ export class WireTestFunctionGenerator {
                                         }
                                         const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                         return swift.functionArgument({
-                                            label: property.name.name.camelCase.unsafeName,
+                                            label: caseConverter.camelUnsafe(property.name.name),
                                             value: exampleResponse
                                         });
                                     })

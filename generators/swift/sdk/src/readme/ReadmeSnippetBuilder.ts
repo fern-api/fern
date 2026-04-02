@@ -1,10 +1,12 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
@@ -361,10 +363,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
             if (defaultEnv != null) {
-                return defaultEnv.name.camelCase.unsafeName;
+                return caseConverter.camelUnsafe(defaultEnv.name);
             }
         }
-        return envs[0]?.name.camelCase.unsafeName;
+        const firstName = envs[0]?.name;
+        return firstName != null ? caseConverter.camelUnsafe(firstName) : undefined;
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

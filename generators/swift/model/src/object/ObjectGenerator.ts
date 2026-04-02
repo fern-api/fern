@@ -1,7 +1,10 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace ObjectGenerator {
     interface Args {
@@ -39,10 +42,10 @@ export class ObjectGenerator {
             symbol: this.symbol,
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
-                unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
-                rawName: p.name.wireValue,
+                unsafeName: sanitizeSelf(caseConverter.camelUnsafe(p.name.name)),
+                rawName: getWireValue(p.name),
                 type: p.valueType,
-                indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, p.name.wireValue),
+                indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, getWireValue(p.name)),
                 docsContent: p.docs
             })),
             additionalProperties: true,

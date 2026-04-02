@@ -1,8 +1,11 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { EnumWithAssociatedValues, Referencer, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { LiteralEnumGenerator } from "../literal/index.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace DiscriminatedUnionGenerator {
     interface Args {
@@ -38,9 +41,9 @@ export class DiscriminatedUnionGenerator {
         this.resolvedVariants = unionTypeDeclaration.types
             .map((singleUnionType) => ({
                 caseName: EnumWithAssociatedValues.sanitizeToCamelCase(
-                    singleUnionType.discriminantValue.name.camelCase.unsafeName
+                    caseConverter.camelUnsafe(singleUnionType.discriminantValue.name)
                 ),
-                discriminantWireValue: singleUnionType.discriminantValue.wireValue,
+                discriminantWireValue: getWireValue(singleUnionType.discriminantValue),
                 docsContent: singleUnionType.docs,
                 shape: singleUnionType.shape
             }))
@@ -81,7 +84,7 @@ export class DiscriminatedUnionGenerator {
             case "noProperties":
                 return false;
             case "singleProperty":
-                return this.unionTypeDeclaration.discriminant.wireValue !== variant.shape.name.wireValue;
+                return getWireValue(this.unionTypeDeclaration.discriminant) !== getWireValue(variant.shape.name);
             case "samePropertiesAsObject":
                 return true;
             default:
@@ -148,7 +151,7 @@ export class DiscriminatedUnionGenerator {
                             swift.functionArgument({
                                 label: "forKey",
                                 value: swift.Expression.enumCaseShorthand(
-                                    this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName
+                                    caseConverter.camelUnsafe(this.unionTypeDeclaration.discriminant.name)
                                 )
                             })
                         ]
@@ -246,7 +249,7 @@ export class DiscriminatedUnionGenerator {
                 if (typeRef == null) {
                     return this.generateNoPropertiesDecoding(variant);
                 }
-                const propertyKey = sanitizeSelf(variant.shape.name.name.camelCase.unsafeName);
+                const propertyKey = sanitizeSelf(caseConverter.camelUnsafe(variant.shape.name.name));
                 return swift.Statement.selfAssignment(
                     swift.Expression.contextualMethodCall({
                         methodName: variant.caseName,
@@ -341,7 +344,7 @@ export class DiscriminatedUnionGenerator {
                         swift.functionArgument({
                             label: "forKey",
                             value: swift.Expression.enumCaseShorthand(
-                                this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName
+                                caseConverter.camelUnsafe(this.unionTypeDeclaration.discriminant.name)
                             )
                         })
                     ]
@@ -382,7 +385,7 @@ export class DiscriminatedUnionGenerator {
                         body: [discriminantEncode]
                     };
                 }
-                const propertyKey = sanitizeSelf(variant.shape.name.name.camelCase.unsafeName);
+                const propertyKey = sanitizeSelf(caseConverter.camelUnsafe(variant.shape.name.name));
                 return {
                     pattern: swift.Pattern.enumCaseValueBinding({
                         caseName: variant.caseName,
@@ -440,19 +443,19 @@ export class DiscriminatedUnionGenerator {
     private generateCodingKeysEnum(): swift.EnumWithRawValues {
         const cases: { unsafeName: string; rawValue: string }[] = [
             {
-                unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                unsafeName: caseConverter.camelUnsafe(this.unionTypeDeclaration.discriminant.name),
                 rawValue: this.unionTypeDeclaration.discriminant.wireValue
             }
         ];
 
-        const seenRawValues = new Set<string>([this.unionTypeDeclaration.discriminant.wireValue]);
+        const seenRawValues = new Set<string>([getWireValue(this.unionTypeDeclaration.discriminant)]);
         for (const variant of this.resolvedVariants) {
             if (variant.shape.propertiesType === "singleProperty") {
-                const rawValue = variant.shape.name.wireValue;
+                const rawValue = getWireValue(variant.shape.name);
                 if (!seenRawValues.has(rawValue)) {
                     seenRawValues.add(rawValue);
                     cases.push({
-                        unsafeName: sanitizeSelf(variant.shape.name.name.camelCase.unsafeName),
+                        unsafeName: sanitizeSelf(caseConverter.camelUnsafe(variant.shape.name.name)),
                         rawValue
                     });
                 }
