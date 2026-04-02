@@ -61,8 +61,8 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         })
                     );
                 } else {
-                                        const snakeCaseName = caseConverter.snakeSafe(property.name);
-                                        writer.writeNode(
+                    const snakeCaseName = caseConverter.snakeSafe(property.name);
+                    writer.writeNode(
                         ruby.ifElse({
                             if: {
                                 condition: ruby.codeblock((writer) => {
@@ -114,8 +114,8 @@ export class FileUploadEndpointRequest extends EndpointRequest {
     }
 
     private getFormDataPartForNonFileProperty(property: FernIr.FileUploadBodyProperty): ruby.CodeBlock | undefined {
-                const snakeCaseName = caseConverter.snakeSafe(property.name);
-                switch (property.style) {
+        const snakeCaseName = caseConverter.snakeSafe(property.name);
+        switch (property.style) {
             case "json":
                 return ruby.codeblock((writer) => {
                     writer.write("JSON.generate(");

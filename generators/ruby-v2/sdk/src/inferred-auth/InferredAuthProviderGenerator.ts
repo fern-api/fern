@@ -253,17 +253,17 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                                    snakeName: caseConverter.snakeUnsafe(property.name),
-                                    isOptional: this.isOptional(property.valueType),
-                                    literal: this.maybeLiteral(property.valueType)
-                                });
-                            }
-                        },
-                        fileUpload: (fileUpload) => {
-                            for (const property of fileUpload.properties) {
-                                if (property.type === "bodyProperty") {
-                                    properties.push({
-                                        snakeName: caseConverter.snakeUnsafe(property.name),
+                        snakeName: caseConverter.snakeUnsafe(property.name),
+                        isOptional: this.isOptional(property.valueType),
+                        literal: this.maybeLiteral(property.valueType)
+                    });
+                }
+            },
+            fileUpload: (fileUpload) => {
+                for (const property of fileUpload.properties) {
+                    if (property.type === "bodyProperty") {
+                        properties.push({
+                            snakeName: caseConverter.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType),
                             literal: this.maybeLiteral(property.valueType)
                         });

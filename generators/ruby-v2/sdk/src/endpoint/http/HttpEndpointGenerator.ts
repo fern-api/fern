@@ -159,11 +159,11 @@ export class HttpEndpointGenerator {
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
-                                                                    )
-                                                                }),
-                                                                ruby.keywordArgument({
-                                                                    name: "initial_cursor",
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
+                                    )
+                                }),
+                                ruby.keywordArgument({
+                                    name: "initial_cursor",
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
@@ -201,11 +201,11 @@ export class HttpEndpointGenerator {
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
-                                                                    )
-                                                                }),
-                                                                ruby.keywordArgument({
-                                                                    name: "has_next_field",
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
+                                    )
+                                }),
+                                ruby.keywordArgument({
+                                    name: "has_next_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(

@@ -35,7 +35,11 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly typeMapper: RubyTypeMapper;
     public readonly typesDirName: string = "types";
     public readonly typesModuleName: string = "Types";
-    protected readonly caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
+    protected readonly caseConverter = new CaseConverter({
+        generationLanguage: "ruby",
+        keywords: undefined,
+        smartCasing: true
+    });
 
     public constructor(
         ir: FernIr.IntermediateRepresentation,

@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 
@@ -317,5 +317,8 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
+    return (
+        service.displayName ??
+        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+    );
 }
