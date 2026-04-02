@@ -22,10 +22,9 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedPropertyAccessTimeoutError(
-                `Timeout exceeded when calling ${method} ${path}.`,
-                error.cause,
-            );
+            throw new errors.SeedPropertyAccessTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                cause: error.cause,
+            });
         case "unknown":
             throw new errors.SeedPropertyAccessError({
                 message: error.errorMessage,

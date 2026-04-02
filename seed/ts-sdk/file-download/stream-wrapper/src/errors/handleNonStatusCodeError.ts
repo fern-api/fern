@@ -22,10 +22,9 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedFileDownloadTimeoutError(
-                `Timeout exceeded when calling ${method} ${path}.`,
-                error.cause,
-            );
+            throw new errors.SeedFileDownloadTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                cause: error.cause,
+            });
         case "unknown":
             throw new errors.SeedFileDownloadError({
                 message: error.errorMessage,

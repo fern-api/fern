@@ -3,7 +3,7 @@
 export class SeedUndiscriminatedUnionWithResponsePropertyTimeoutError extends Error {
     public readonly cause?: unknown;
 
-    constructor(message: string, cause?: unknown) {
+    constructor(message: string, opts?: { cause?: unknown }) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -11,8 +11,8 @@ export class SeedUndiscriminatedUnionWithResponsePropertyTimeoutError extends Er
         }
 
         this.name = this.constructor.name;
-        if (cause != null) {
-            this.cause = cause;
+        if (opts?.cause) {
+            this.cause = opts.cause;
         }
     }
 }

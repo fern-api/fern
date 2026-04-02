@@ -107,9 +107,17 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
                                             )
                                         ]
                                     ),
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier("error"),
-                                        context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause
+                                    ts.factory.createObjectLiteralExpression(
+                                        [
+                                            ts.factory.createPropertyAssignment(
+                                                context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause,
+                                                ts.factory.createPropertyAccessExpression(
+                                                    ts.factory.createIdentifier("error"),
+                                                    context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause
+                                                )
+                                            )
+                                        ],
+                                        true
                                     )
                                 ]
                             )

@@ -22,10 +22,9 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedApiWideBasePathTimeoutError(
-                `Timeout exceeded when calling ${method} ${path}.`,
-                error.cause,
-            );
+            throw new errors.SeedApiWideBasePathTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                cause: error.cause,
+            });
         case "unknown":
             throw new errors.SeedApiWideBasePathError({
                 message: error.errorMessage,

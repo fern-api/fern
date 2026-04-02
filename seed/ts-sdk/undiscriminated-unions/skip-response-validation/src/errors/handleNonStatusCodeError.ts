@@ -22,10 +22,9 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-                `Timeout exceeded when calling ${method} ${path}.`,
-                error.cause,
-            );
+            throw new errors.SeedUndiscriminatedUnionsTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                cause: error.cause,
+            });
         case "unknown":
             throw new errors.SeedUndiscriminatedUnionsError({
                 message: error.errorMessage,

@@ -8,7 +8,8 @@ export class GeneratedTimeoutSdkErrorImpl
     implements GeneratedTimeoutSdkError
 {
     private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
-    private static readonly CAUSE_CONSTRUCTOR_PARAMETER_NAME = "cause";
+    private static readonly OPTIONS_CONSTRUCTOR_PARAMETER_NAME = "opts";
+    private static readonly CAUSE_PROPERTY_NAME = "cause";
 
     public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
@@ -17,7 +18,12 @@ export class GeneratedTimeoutSdkErrorImpl
     public build(context: FileContext, message: string, cause?: ts.Expression): ts.NewExpression {
         const args: ts.Expression[] = [ts.factory.createStringLiteral(message)];
         if (cause != null) {
-            args.push(cause);
+            args.push(
+                ts.factory.createObjectLiteralExpression(
+                    [ts.factory.createPropertyAssignment(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME, cause)],
+                    true
+                )
+            );
         }
         return ts.factory.createNewExpression(
             context.timeoutSdkError.getReferenceToTimeoutSdkError().getExpression(),
@@ -43,7 +49,7 @@ export class GeneratedTimeoutSdkErrorImpl
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
         return [
             {
-                name: GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                name: GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME,
                 isReadonly: true,
                 hasQuestionToken: true,
                 type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
@@ -60,8 +66,8 @@ export class GeneratedTimeoutSdkErrorImpl
                 hasQuestionToken: false
             },
             {
-                name: GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
-                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
+                name: GeneratedTimeoutSdkErrorImpl.OPTIONS_CONSTRUCTOR_PARAMETER_NAME,
+                type: `{ ${GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME}?: ${getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword)} }`,
                 hasQuestionToken: true
             }
         ];
@@ -74,10 +80,10 @@ export class GeneratedTimeoutSdkErrorImpl
     protected getConstructorStatements(): ts.Statement[] {
         return [
             ts.factory.createIfStatement(
-                ts.factory.createBinaryExpression(
-                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME),
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.OPTIONS_CONSTRUCTOR_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME)
                 ),
                 ts.factory.createBlock(
                     [
@@ -85,13 +91,14 @@ export class GeneratedTimeoutSdkErrorImpl
                             ts.factory.createBinaryExpression(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createThis(),
-                                    ts.factory.createIdentifier(
-                                        GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
-                                    )
+                                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME)
                                 ),
                                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createIdentifier(
-                                    GeneratedTimeoutSdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier(
+                                        GeneratedTimeoutSdkErrorImpl.OPTIONS_CONSTRUCTOR_PARAMETER_NAME
+                                    ),
+                                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME)
                                 )
                             )
                         )

@@ -22,7 +22,9 @@ export function handleNonStatusCodeError(
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedNoRetriesTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, error.cause);
+            throw new errors.SeedNoRetriesTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                cause: error.cause,
+            });
         case "unknown":
             throw new errors.SeedNoRetriesError({
                 message: error.errorMessage,

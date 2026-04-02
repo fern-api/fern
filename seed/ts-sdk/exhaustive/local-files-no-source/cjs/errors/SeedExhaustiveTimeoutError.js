@@ -3,15 +3,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeedExhaustiveTimeoutError = void 0;
 class SeedExhaustiveTimeoutError extends Error {
-    constructor(message, cause) {
+    constructor(message, opts) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
         this.name = this.constructor.name;
-        if (cause != null) {
-            this.cause = cause;
+        if (opts === null || opts === void 0 ? void 0 : opts.cause) {
+            this.cause = opts.cause;
         }
     }
 }
