@@ -343,8 +343,13 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterInlinedRequestBody(
         exampleRequest: FernIr.ExampleRequestBody.InlinedRequestBody,
-        _endpoint: HttpEndpoint
+        endpoint: HttpEndpoint
     ): Record<string, unknown> {
+        // Build the set of nullable property wire names so we can distinguish
+        // optional-but-not-nullable (null is omitted by WhenWritingNull) from
+        // nullable (null is explicitly serialized via [Nullable] attribute).
+        const nullableNames = this.getNullablePropertyNamesFromEndpoint(endpoint);
+
         // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
@@ -354,7 +359,14 @@ export class MockEndpointGenerator extends WithGeneration {
                 continue;
             }
             // Recursively filter the property value (also normalizes datetime values)
-            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+            const filteredValue = this.filterExampleTypeReference(prop.value);
+
+            // Omit null values for properties that are optional-but-not-nullable
+            // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
+            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+                continue;
+            }
+            result[prop.name.wireValue] = filteredValue;
         }
 
         // Also include extra properties if present
@@ -771,6 +783,32 @@ export class MockEndpointGenerator extends WithGeneration {
      * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
      * Returns a string like: "key1=value1", "key2=value2"
      */
+    /**
+     * Gets the set of nullable property wire names from an endpoint's inlined request body.
+     * Used to determine which null properties should be kept in the expected request JSON
+     * (nullable properties serialize null explicitly via [Nullable] attribute) vs omitted
+     * (optional-but-not-nullable properties are skipped by JsonIgnoreCondition.WhenWritingNull).
+     */
+    private getNullablePropertyNamesFromEndpoint(endpoint: HttpEndpoint): Set<string> {
+        const nullableNames = new Set<string>();
+        if (endpoint.requestBody?.type !== "inlinedRequestBody") {
+            return nullableNames;
+        }
+        for (const prop of endpoint.requestBody.properties) {
+            if (this.context.isNullable(prop.valueType)) {
+                nullableNames.add(prop.name.wireValue);
+            }
+        }
+        if (endpoint.requestBody.extendedProperties) {
+            for (const prop of endpoint.requestBody.extendedProperties) {
+                if (this.context.isNullable(prop.valueType)) {
+                    nullableNames.add(prop.name.wireValue);
+                }
+            }
+        }
+        return nullableNames;
+    }
+
     private convertToFormUrlEncodedPairs(json: unknown): string {
         if (typeof json !== "object" || json === null) {
             return "";
