@@ -31,6 +31,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^64.0.0",
