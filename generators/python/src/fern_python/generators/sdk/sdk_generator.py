@@ -715,8 +715,6 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         module_path = project.get_module_path_for_imports()
-        if not all(part.replace("_", "").isalnum() and not part[0].isdigit() for part in module_path.split(".")):
-            raise RuntimeError(f"Invalid module_path for generated test: {module_path!r}")
         dist_name = project._project_config.package_name if project._project_config is not None else module_path
         contents = f'''import importlib
 import sys
@@ -837,6 +835,37 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
         self.assertTrue(client.follow_redirects)
 '''
         project.add_source_file("tests/test_aiohttp_autodetect.py", contents)
+
+        # Generate a minimal tests/conftest.py with aiohttp skip logic when wire tests
+        # are not enabled (wire-test projects get this from WireTestSetupGenerator).
+        wire_tests_enabled = (
+            context.custom_config.enable_wire_tests
+            or (context.custom_config.wire_tests is not None and context.custom_config.wire_tests.enabled)
+        )
+        if not wire_tests_enabled:
+            conftest_contents = '''import pytest
+
+
+def _has_httpx_aiohttp() -> bool:
+    """Check if httpx_aiohttp is importable."""
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+    """Auto-skip @pytest.mark.aiohttp tests when httpx_aiohttp is not installed."""
+    if _has_httpx_aiohttp():
+        return
+    skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")
+    for item in items:
+        if "aiohttp" in item.keywords:
+            item.add_marker(skip_aiohttp)
+'''
+            project.add_source_file("tests/conftest.py", conftest_contents)
 
     def _generate_default_clients(
         self,
