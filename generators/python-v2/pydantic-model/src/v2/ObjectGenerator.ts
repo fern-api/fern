@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
@@ -41,7 +42,7 @@ export class ObjectGenerator {
                 ? python.codeBlock("None")
                 : undefined;
 
-            const wireValue = propertyName === property.name.wireValue ? undefined : property.name.wireValue;
+            const wireValue = propertyName === getWireValue(property.name) ? undefined : getWireValue(property.name);
 
             let initializer = undefined;
 

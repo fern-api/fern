@@ -1,4 +1,4 @@
-import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, getWireValue, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -275,7 +275,7 @@ export class DynamicTypeLiteralMapper {
             }
             case "singleProperty": {
                 try {
-                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    this.context.errors.scope(getWireValue(unionVariant.discriminantValue));
                     const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                     if (record == null) {
                         return [
@@ -295,7 +295,7 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
+                                value: record[getWireValue(unionVariant.discriminantValue)]
                             })
                         }
                     ];
@@ -326,7 +326,7 @@ export class DynamicTypeLiteralMapper {
             ignoreMissingParameters: true
         });
         return properties.map((property) => {
-            this.context.errors.scope(property.name.wireValue);
+            this.context.errors.scope(getWireValue(property.name));
             try {
                 return {
                     name: this.context.getPropertyName(property.name.name),
@@ -355,7 +355,7 @@ export class DynamicTypeLiteralMapper {
         const providedWireValues = new Set<string>(Object.keys(record));
 
         const result = properties.map((property) => {
-            this.context.errors.scope(property.name.wireValue);
+            this.context.errors.scope(getWireValue(property.name));
             try {
                 return {
                     name: this.context.getPropertyName(property.name.name),
@@ -369,7 +369,7 @@ export class DynamicTypeLiteralMapper {
         // Synthesize default values for required properties missing from the example.
         // This prevents generating invalid code like ClassName() when required fields are omitted.
         for (const property of object_.properties) {
-            if (providedWireValues.has(property.name.wireValue)) {
+            if (providedWireValues.has(getWireValue(property.name))) {
                 continue;
             }
             if (this.context.isOptional(property.typeReference) || this.context.isNullable(property.typeReference)) {
@@ -617,7 +617,7 @@ export class DynamicTypeLiteralMapper {
                         })
                     );
                 }
-                return python.TypeInstantiation.str(firstValue.wireValue);
+                return python.TypeInstantiation.str(getWireValue(firstValue));
             }
             case "object": {
                 const entries: python.NamedValue[] = [];

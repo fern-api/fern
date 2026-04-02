@@ -1,9 +1,12 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 export class EnumGenerator {
     constructor(
@@ -25,8 +28,8 @@ export class EnumGenerator {
 
         // Add enum members
         for (const enumValue of this.enumDeclaration.values) {
-            const memberName = enumValue.name.name.screamingSnakeCase.safeName;
-            const wireValue = this.escapeStringForPython(enumValue.name.wireValue);
+            const memberName = caseConverter.screamingSnakeSafe(enumValue.name.name);
+            const wireValue = this.escapeStringForPython(getWireValue(enumValue.name));
 
             enumClass.addField(
                 python.field({
@@ -65,7 +68,7 @@ export class EnumGenerator {
                     type: undefined
                 }),
                 ...this.enumDeclaration.values.map((enumValue) => {
-                    const parameterName = enumValue.name.name.snakeCase.safeName;
+                    const parameterName = caseConverter.snakeSafe(enumValue.name.name);
                     return python.parameter({
                         name: parameterName,
                         type: python.Type.reference(
@@ -85,8 +88,8 @@ export class EnumGenerator {
 
         // Add if statements for each enum value
         for (const enumValue of this.enumDeclaration.values) {
-            const memberName = enumValue.name.name.screamingSnakeCase.safeName;
-            const parameterName = enumValue.name.name.snakeCase.safeName;
+            const memberName = caseConverter.screamingSnakeSafe(enumValue.name.name);
+            const parameterName = caseConverter.snakeSafe(enumValue.name.name);
 
             visitMethod.addStatement(
                 python.codeBlock((writer) => {

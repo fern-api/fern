@@ -1,8 +1,10 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 export function buildReference({
     context,
@@ -87,7 +89,7 @@ function getEndpointReference({
     endpoint: FernIr.HttpEndpoint;
     endpointSnippets: Record<string, string>;
 }): FernGeneratorCli.EndpointReference | undefined {
-    const methodName = endpoint.name.snakeCase.unsafeName;
+    const methodName = caseConverter.snakeUnsafe(endpoint.name);
     const accessPath = getAccessFromRootClient({ service });
     const parameters = getEndpointParameters({ endpoint });
     const sourceFilePath = getSourceFilePath({ context, service });
@@ -133,7 +135,7 @@ function getEndpointReference({
 
 function getAccessFromRootClient({ service }: { service: FernIr.HttpService }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
@@ -142,7 +144,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.snakeCase.unsafeName,
+            name: caseConverter.snakeUnsafe(pathParam.name),
             type: getTypeString(pathParam.valueType),
             description: pathParam.docs,
             required: !isTypeOptional(pathParam.valueType)
@@ -162,7 +164,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
             type = getTypeString(queryParam.valueType);
         }
         parameters.push({
-            name: queryParam.name.name.snakeCase.unsafeName,
+            name: caseConverter.snakeUnsafe(queryParam.name.name),
             type,
             description: queryParam.docs,
             required: !isOptional
@@ -171,7 +173,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: header.name.name.snakeCase.unsafeName,
+            name: caseConverter.snakeUnsafe(header.name.name),
             type: getTypeString(header.valueType),
             description: header.docs,
             required: !isTypeOptional(header.valueType)
@@ -183,7 +185,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         if (endpoint.requestBody.extendedProperties != null) {
             endpoint.requestBody.extendedProperties.forEach((property) => {
                 parameters.push({
-                    name: property.name.name.snakeCase.unsafeName,
+                    name: caseConverter.snakeUnsafe(property.name.name),
                     type: getTypeString(property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
@@ -192,7 +194,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         }
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: property.name.name.snakeCase.unsafeName,
+                name: caseConverter.snakeUnsafe(property.name.name),
                 type: getTypeString(property.valueType),
                 description: property.docs,
                 required: !isTypeOptional(property.valueType)
@@ -213,14 +215,14 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
                 const fileType = fileProperty.type === "fileArray" ? "typing.List[core.File]" : "core.File";
                 const type = isOptional ? `typing.Optional[${fileType}]` : fileType;
                 parameters.push({
-                    name: fileProperty.key.name.snakeCase.unsafeName,
+                    name: caseConverter.snakeUnsafe(fileProperty.key.name),
                     type,
                     description: fileProperty.docs,
                     required: !isOptional
                 });
             } else if (property.type === "bodyProperty") {
                 parameters.push({
-                    name: property.name.name.snakeCase.unsafeName,
+                    name: caseConverter.snakeUnsafe(property.name.name),
                     type: getTypeString(property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
@@ -302,7 +304,7 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
             }
         }
         case "named":
-            return typeReference.name.pascalCase.unsafeName;
+            return caseConverter.pascalUnsafe(typeReference.name);
         case "unknown":
             return "typing.Any";
         default:
@@ -318,7 +320,7 @@ function getSourceFilePath({
     service: FernIr.HttpService;
 }): string | undefined {
     const modulePath = context.getModulePath().replace(/-/g, "_");
-    const pathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const pathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
     if (pathParts.length === 0) {
         return `src/${modulePath}/client.py`;
     }
@@ -359,7 +361,7 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
 }
 
 function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
@@ -491,20 +493,24 @@ function getEnvironmentInfo({
         const envs = envConfig.environments.environments;
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+            if (defaultEnv?.name != null) {
+                firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
+            }
         }
         if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+            firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
         }
     } else if (envConfig.environments.type === "multipleBaseUrls") {
         const defaultEnvId = envConfig.defaultEnvironment;
         const envs = envConfig.environments.environments;
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+            if (defaultEnv?.name != null) {
+                firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
+            }
         }
         if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+            firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
         }
     }
 

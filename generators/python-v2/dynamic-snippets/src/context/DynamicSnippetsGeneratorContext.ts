@@ -1,7 +1,4 @@
-import {
-    AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
-} from "@fern-api/browser-compatible-base-generator";
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, CaseConverter } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -10,6 +7,8 @@ import { camelCase, snakeCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
 
@@ -41,7 +40,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        const result = name.pascalCase.safeName;
+        const result = caseConverter.pascalSafe(name);
         const rootClientName = this.getRootClientClassName();
         if (result === rootClientName) {
             return `${rootClientName}Model`;
@@ -54,7 +53,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        const snakeCase = name.snakeCase.safeName;
+        const snakeCase = caseConverter.snakeSafe(name);
         if (snakeCase.startsWith("_")) {
             // These are public fields so they should not start with an underscore.
             //
@@ -71,10 +70,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMethodName(name: FernIr.Name): string {
-        if (ALLOWED_RESERVED_METHOD_NAMES.includes(name.snakeCase.unsafeName)) {
-            return name.snakeCase.unsafeName;
+        if (ALLOWED_RESERVED_METHOD_NAMES.includes(caseConverter.snakeUnsafe(name))) {
+            return caseConverter.snakeUnsafe(name);
         }
-        return name.snakeCase.safeName;
+        return caseConverter.snakeSafe(name);
     }
 
     public getRootClientClassReference(): python.Reference {
@@ -88,7 +87,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const className = this.getClassName(declaration.name);
         const modulePath = [
             ...this.getRootModulePath(),
-            ...declaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+            ...declaration.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part))
         ];
         return python.reference({ name: className, modulePath });
     }
@@ -149,7 +148,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnvironmentEnumName(name: FernIr.Name): string {
-        return name.screamingSnakeCase.safeName;
+        return caseConverter.screamingSnakeSafe(name);
     }
 
     public isPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
