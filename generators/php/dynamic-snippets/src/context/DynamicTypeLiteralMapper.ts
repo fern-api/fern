@@ -1,4 +1,4 @@
-import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, Severity, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -237,7 +237,7 @@ export class DynamicTypeLiteralMapper {
             }
             case "singleProperty": {
                 try {
-                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    this.context.errors.scope(getWireValue(unionVariant.discriminantValue));
                     const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                     if (record == null) {
                         return [
@@ -255,7 +255,7 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
+                                value: record[getWireValue(unionVariant.discriminantValue)]
                             })
                         }
                     ];
@@ -333,7 +333,7 @@ export class DynamicTypeLiteralMapper {
             ignoreMissingParameters: true
         });
         return properties.map((property) => {
-            this.context.errors.scope(property.name.wireValue);
+            this.context.errors.scope(getWireValue(property.name));
             try {
                 return this.convert(property);
             } finally {
@@ -349,7 +349,7 @@ export class DynamicTypeLiteralMapper {
             values: record
         });
         const fields: php.ConstructorField[] = properties.map((property) => {
-            this.context.errors.scope(property.name.wireValue);
+            this.context.errors.scope(getWireValue(property.name));
             try {
                 return {
                     name: this.context.getPropertyName(property.name.name),
@@ -362,7 +362,7 @@ export class DynamicTypeLiteralMapper {
 
         const providedKeys = new Set(Object.keys(record));
         for (const param of object_.properties) {
-            if (!providedKeys.has(param.name.wireValue) && !this.isOptionalOrNullable(param.typeReference)) {
+            if (!providedKeys.has(getWireValue(param.name)) && !this.isOptionalOrNullable(param.typeReference)) {
                 const placeholder = this.generatePlaceholderValue(param.typeReference);
                 if (!php.TypeLiteral.isNop(placeholder)) {
                     fields.push({

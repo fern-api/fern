@@ -1,10 +1,12 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -442,14 +444,14 @@ ${environmentsList}
 
         const baseUrlsList = baseUrls
             .map((baseUrl) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = caseConverter.camelSafe(baseUrl.name);
                 return `  - \`${propertyName}\`: The ${propertyName} base URL`;
             })
             .join("\n");
 
         const customEnvParams = baseUrls
             .map((baseUrl, index) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = caseConverter.camelSafe(baseUrl.name);
                 const indent = index === 0 ? "" : "    ";
                 return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
             })

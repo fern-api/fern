@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, CaseConverter } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -8,6 +8,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 /**
  * Generates WireMock-based integration tests for PHP SDK.
@@ -328,7 +330,7 @@ export class WireTestGenerator {
 
     private getTestMethodName(endpoint: FernIr.HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name
-        const endpointName = endpoint.name.camelCase.safeName;
+        const endpointName = caseConverter.camelSafe(endpoint.name);
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
@@ -337,8 +339,8 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const endpointName = caseConverter.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -459,7 +461,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+        return service.name.fernFilepath.allParts.map((part) => caseConverter.camelUnsafe(part)).join("_");
     }
 
     private isMultiUrlEnvironment(): boolean {
@@ -492,7 +494,7 @@ export class WireTestGenerator {
                     authParams.push("password: 'test-password'");
                 },
                 header: (header) => {
-                    const paramName = header.name.name.camelCase.safeName;
+                    const paramName = caseConverter.camelSafe(header.name.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 },
                 oauth: () => {

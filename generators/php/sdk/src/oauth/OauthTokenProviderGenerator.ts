@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -5,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -287,7 +290,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         }
         if (sdkRequest.shape.type === "wrapper") {
             return php.classReference({
-                name: sdkRequest.shape.wrapperName.pascalCase.safeName,
+                name: caseConverter.pascalSafe(sdkRequest.shape.wrapperName),
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
@@ -295,7 +298,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getRequestPropertyName(requestProperty: FernIr.RequestProperty): string {
-        return requestProperty.property.name.name.camelCase.unsafeName;
+        return caseConverter.camelUnsafe(requestProperty.property.name.name);
     }
 
     private getExpiresAtMethod(): php.Method {
@@ -349,7 +352,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return name.name.camelCase.unsafeName;
+        return caseConverter.camelUnsafe(name.name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -362,10 +365,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
-        return `->${pathItem.name.camelCase.safeName}`;
+        return `->${caseConverter.camelSafe(pathItem.name)}`;
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `->${property.name.name.camelCase.safeName}`;
+        return `->${caseConverter.camelSafe(property.name.name)}`;
     }
 }

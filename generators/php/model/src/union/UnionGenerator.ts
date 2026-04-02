@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
@@ -5,6 +6,8 @@ import { php, STATIC } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -120,7 +123,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getDiscriminantField(): php.Field {
         const discriminantValues = [];
         this.unionTypeDeclaration.types.forEach((variant) =>
-            discriminantValues.push(variant.discriminantValue.wireValue)
+            discriminantValues.push(getWireValue(variant.discriminantValue))
         );
         discriminantValues.push("_unknown");
         return php.field({
@@ -141,7 +144,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         types.push(php.Type.mixed());
 
         return php.field({
-            name: this.getValueName().camelCase.safeName,
+            name: caseConverter.camelSafe(this.getValueName()),
             type: php.Type.union(types),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -250,7 +253,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private isMethod(variant: FernIr.SingleUnionType): php.Method {
-        const methodName = "is" + variant.discriminantValue.name.pascalCase.safeName;
+        const methodName = "is" + caseConverter.pascalSafe(variant.discriminantValue.name);
 
         return php.method({
             name: methodName,
@@ -269,7 +272,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             return null;
         }
 
-        const methodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
+        const methodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
         const returnType = this.getReturnType(variant);
 
         const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter());
@@ -363,7 +366,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock((writer) => {
             writer.write('"');
             writer.write("Expected ");
-            writer.write(variant.discriminantValue.wireValue);
+            writer.write(getWireValue(variant.discriminantValue));
             writer.write("; got ");
             writer.write('"');
             writer.write(" . ");
@@ -641,7 +644,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         php.codeblock((_writer) => {
                             _writer.write("$result");
                             _writer.write("['");
-                            _writer.write(variant.discriminantValue.wireValue);
+                            _writer.write(getWireValue(variant.discriminantValue));
                             _writer.write("']");
                             _writer.write(" = $value");
                         })
@@ -659,7 +662,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMaybeArrayMerge(variant: FernIr.SingleUnionType, type: php.Type): php.CodeBlock {
-        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
+        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
         switch (type.internalType.type) {
             case "reference":
             case "object":
@@ -697,7 +700,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     );
                     writer.write("$result");
                     writer.write("['");
-                    writer.write(variant.discriminantValue.wireValue);
+                    writer.write(getWireValue(variant.discriminantValue));
                     writer.write("']");
                     writer.write(" = ");
                     writer.writeTextStatement(asCastMethodName);
@@ -720,7 +723,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 return php.codeblock((writer) => {
                     writer.write("$result");
                     writer.write("['");
-                    writer.write(variant.discriminantValue.wireValue);
+                    writer.write(getWireValue(variant.discriminantValue));
                     writer.write("']");
                     writer.writeTextStatement(" = $value");
                 });
@@ -738,7 +741,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         variant: FernIr.SingleUnionType;
         type: php.Type;
     }): php.CodeBlock {
-        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName;
+        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
         let argument: php.AstNode = php.invokeMethod({
             method: asCastMethodName,
             arguments_: [],

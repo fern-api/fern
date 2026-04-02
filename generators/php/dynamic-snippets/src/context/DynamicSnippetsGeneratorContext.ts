@@ -1,13 +1,12 @@
-import {
-    AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
-} from "@fern-api/browser-compatible-base-generator";
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, CaseConverter } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BasePhpCustomConfigSchema, getSafeClassName, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 const RESERVED_METHOD_NAMES = ["use", "clone", "list"];
 const REQUEST_NAMESPACE = "Requests";
@@ -46,24 +45,24 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getParameterName(name: FernIr.Name): string {
-        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+        return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+        return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
     }
 
     public getMethodName(name: FernIr.Name): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
-        const unsafeName = name.camelCase.unsafeName;
+        const unsafeName = caseConverter.camelUnsafe(name);
         if (RESERVED_METHOD_NAMES.includes(unsafeName)) {
             return unsafeName;
         }
-        return name.camelCase.safeName;
+        return caseConverter.camelSafe(name);
     }
 
     public getClassName(name: FernIr.Name): string {
-        return getSafeClassName(name.pascalCase.safeName);
+        return getSafeClassName(caseConverter.pascalSafe(name));
     }
 
     public getRootClientClassName(): string {
@@ -92,7 +91,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getNamespace(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
-        let parts = fernFilepath.allParts.map((path) => path.pascalCase.safeName);
+        let parts = fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path));
         parts = suffix != null ? [...parts, suffix] : parts;
         return [this.rootNamespace, ...parts].join("\\");
     }

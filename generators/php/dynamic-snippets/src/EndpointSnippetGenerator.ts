@@ -1,10 +1,12 @@
-import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Options, Scope, Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 const CLIENT_VAR_NAME = "$client";
 const SNIPPET_NAMESPACE = "Example";
@@ -167,14 +169,14 @@ export class EndpointSnippetGenerator {
         // Add global headers from IR
         if (this.context.ir.headers != null) {
             for (const header of this.context.ir.headers) {
-                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+                mappedHeaderNames.add(getWireValue(header.name).toLowerCase());
             }
         }
 
         // Add endpoint-level headers from inlined request
         if (endpoint.request.type === "inlined" && endpoint.request.headers != null) {
             for (const header of endpoint.request.headers) {
-                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+                mappedHeaderNames.add(getWireValue(header.name).toLowerCase());
             }
         }
 
@@ -528,7 +530,7 @@ export class EndpointSnippetGenerator {
             return baseUrlId;
         }
 
-        return baseUrl.name.camelCase.safeName;
+        return caseConverter.camelSafe(baseUrl.name);
     }
 
     private getConstructorBaseUrlArgs({
@@ -665,7 +667,7 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
         for (const header of headers) {
-            const value = values[header.name.wireValue];
+            const value = values[getWireValue(header.name)];
             const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push({

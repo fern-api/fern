@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
@@ -6,6 +7,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 interface ConstructorParameters {
     all: ConstructorParameter[];
@@ -271,7 +274,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             const apiVersion = this.context.ir.apiVersion;
             const headerKey = apiVersion._visit({
                 header: (header) => {
-                    return header.header.name.wireValue;
+                    return getWireValue(header.header.name);
                 },
                 _other: () => {
                     return undefined;
@@ -279,7 +282,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             });
             const headerValue = apiVersion._visit({
                 header: (header) => {
-                    return header.value.default?.name.wireValue;
+                    return getWireValue(header.value.default?.name);
                 },
                 _other: () => {
                     return undefined;
@@ -474,7 +477,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${caseConverter.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
@@ -504,7 +507,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             parameters: [],
             return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
             body: php.codeblock((writer) => {
-                writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+                writer.writeTextStatement(`return $this->${caseConverter.camelSafe(subpackage.name)}`);
             })
         });
     }
@@ -630,7 +633,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name }),
                         isOptional,
                         header: {
-                            name: scheme.name.wireValue,
+                            name: getWireValue(scheme.name),
                             prefix: scheme.prefix
                         },
                         typeReference: this.getAuthParameterTypeReference({

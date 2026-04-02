@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -5,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -85,7 +88,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         parameters: [],
                         return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
                         body: php.codeblock((writer) => {
-                            writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+                            writer.writeTextStatement(`return $this->${caseConverter.camelSafe(subpackage.name)}`);
                         })
                     })
                 );
@@ -150,7 +153,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${caseConverter.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)

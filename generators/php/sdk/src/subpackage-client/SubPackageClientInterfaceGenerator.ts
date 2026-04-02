@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -5,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
@@ -32,7 +35,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
     }
 
     protected getFilepath(): RelativeFilePath {
-        const interfaceName = `${this.subpackage.name.pascalCase.unsafeName}ClientInterface`;
+        const interfaceName = `${caseConverter.pascalUnsafe(this.subpackage.name)}ClientInterface`;
         return join(
             this.context.getLocationForSubpackage(this.subpackage).directory,
             RelativeFilePath.of(interfaceName + ".php")
@@ -40,7 +43,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
     }
 
     public doGenerate(): PhpFile {
-        const interfaceName = `${this.subpackage.name.pascalCase.unsafeName}ClientInterface`;
+        const interfaceName = `${caseConverter.pascalUnsafe(this.subpackage.name)}ClientInterface`;
         const interface_ = php.interface_({
             name: interfaceName,
             namespace: this.context.getLocationForSubpackage(this.subpackage).namespace
