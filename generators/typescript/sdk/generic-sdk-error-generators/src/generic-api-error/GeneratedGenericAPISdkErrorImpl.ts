@@ -248,15 +248,6 @@ export class GeneratedGenericAPISdkErrorImpl
                         false
                     )
                 ]
-            ),
-            ts.factory.createObjectLiteralExpression(
-                [
-                    ts.factory.createShorthandPropertyAssignment(
-                        GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
-                        undefined
-                    )
-                ],
-                false
             )
         ];
     }
@@ -294,6 +285,29 @@ export class GeneratedGenericAPISdkErrorImpl
                     ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                     ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME)
                 )
+            ),
+            ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME)
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME)
+                            )
+                        )
+                    ],
+                    true
+                ),
+                undefined
             )
         ];
     }

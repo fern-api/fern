@@ -21,7 +21,7 @@ export class SeedPropertyAccessError extends Error {
         rawResponse?: core.RawResponse;
         cause?: unknown;
     }) {
-        super(buildMessage({ message, statusCode, body }), { cause });
+        super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
@@ -31,6 +31,9 @@ export class SeedPropertyAccessError extends Error {
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 
