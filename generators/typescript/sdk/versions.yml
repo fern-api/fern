@@ -9,7 +9,7 @@
         encodes `:password`). When neither is provided, the Authorization header is
         omitted entirely.
       type: feat
-  createdAt: "2026-04-01"
+  createdAt: "2026-04-02"
   irVersion: 66
 
 - version: 3.61.1
