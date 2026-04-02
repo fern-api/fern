@@ -906,8 +906,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
-        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
+    private getOptionsPropertyReference(name: FernIr.Name | FernIr.NameAndWireValue): go.Selector {
+        const nameObj = "wireValue" in name ? name.name : name;
+        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(nameObj)) });
     }
 
     private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {

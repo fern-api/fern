@@ -159,7 +159,7 @@ export function getInferredAuthCredentialParams(
         }
         const nameVal = header.name;
         params.push({
-            fieldName: context.getFieldName(nameVal),
+            fieldName: context.getFieldName(nameVal.name),
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
         });
     }
@@ -177,7 +177,7 @@ export function getInferredAuthCredentialParams(
         }
         const propNameVal = prop.name;
         params.push({
-            fieldName: context.getFieldName(propNameVal),
+            fieldName: context.getFieldName(propNameVal.name),
             isOptional: false
         });
     }

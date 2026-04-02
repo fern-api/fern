@@ -214,11 +214,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
     }
 
-    private getRequestPropertyReference({ fieldName, isFile }: { fieldName: FernIr.Name; isFile?: boolean }): string {
+    private getRequestPropertyReference({ fieldName, isFile }: { fieldName: FernIr.Name | FernIr.NameAndWireValue; isFile?: boolean }): string {
+        const nameObj = "wireValue" in fieldName ? fieldName.name : fieldName;
         if (isFile && !this.context.customConfig.inlineFileProperties) {
-            return this.context.getParameterName(fieldName);
+            return this.context.getParameterName(nameObj);
         }
-        return `${this.getRequestParameterName()}.${this.context.getFieldName(fieldName)}`;
+        return `${this.getRequestParameterName()}.${this.context.getFieldName(nameObj)}`;
     }
 
     // TODO: Add support for custom Content-Type header values.

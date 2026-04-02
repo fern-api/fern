@@ -456,10 +456,7 @@ function getResponsePropertySetter({
                 getPropertyReference({
                     variableName: "response",
                     propertyPath: responsePropertyPath.map((item) => item.name),
-                    name:
-                        typeof responseProperty.property.name === "string"
-                            ? responseProperty.property.name
-                            : responseProperty.property.name,
+                    name: responseProperty.property.name.name,
                     dereference
                 })
             );
@@ -831,10 +828,7 @@ function getPagePropertyReference({
             return getPropertyReference({
                 variableName,
                 propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
-                name:
-                    typeof pagination.page.property.name === "string"
-                        ? pagination.page.property.name
-                        : pagination.page.property.name,
+                name: pagination.page.property.name.name,
                 withGetter
             });
         }
@@ -855,7 +849,7 @@ function getResponsePropertyReference({
     return getPropertyReference({
         variableName: "response",
         propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
-        name: results.property.name,
+        name: results.property.name.name,
         withGetter
     });
 }
