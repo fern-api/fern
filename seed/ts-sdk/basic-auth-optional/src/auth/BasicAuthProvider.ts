@@ -23,12 +23,12 @@ export class BasicAuthProvider implements core.AuthProvider {
         endpointMetadata?: core.EndpointMetadata;
     } = {}): Promise<core.AuthRequest> {
         const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
-        const password = "";
         if (username == null) {
             throw new errors.SeedBasicAuthOptionalError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
+        const password = "";
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({
             username: username,
