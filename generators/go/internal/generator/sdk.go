@@ -1333,7 +1333,7 @@ func (f *fileWriter) WriteClient(
 		}
 		if header.ClientDefault != nil {
 			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
-			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = `, literalToValue(header.ClientDefault))
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
 			f.P("}")
 		}
 	}
@@ -1428,9 +1428,9 @@ func (f *fileWriter) WriteClient(
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
-		for _, ppd := range endpoint.PathParameterDefaults {
+			for _, ppd := range endpoint.PathParameterDefaults {
 			f.P("if ", ppd.VarExpr, ` == "" {`)
-			f.P(ppd.VarExpr, " = ", ppd.DefaultVal)
+			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
 			f.P("}")
 		}
 		if len(endpoint.PathParameterNames) > 0 {

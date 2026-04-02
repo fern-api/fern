@@ -63,16 +63,6 @@ export function buildUrl({
                 getReferenceToPathParameterVariableFromRequest
             });
 
-            // If clientDefault is set, add a fallback: value ?? "clientDefault"
-            const clientDefaultVal = getClientDefaultValue(pathParameter.clientDefault);
-            if (clientDefaultVal != null) {
-                referenceToPathParameterValue = ts.factory.createBinaryExpression(
-                    referenceToPathParameterValue,
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createStringLiteral(clientDefaultVal.toString())
-                );
-            }
-
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
@@ -86,6 +76,17 @@ export function buildUrl({
                         breadcrumbsPrefix: [],
                         omitUndefined
                     });
+            }
+
+            // Apply clientDefault fallback AFTER serialization so the serializer
+            // only operates on properly-typed values.
+            const clientDefaultVal = getClientDefaultValue(pathParameter.clientDefault);
+            if (clientDefaultVal != null) {
+                referenceToPathParameterValue = ts.factory.createBinaryExpression(
+                    referenceToPathParameterValue,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
             }
 
             return ts.factory.createTemplateSpan(
