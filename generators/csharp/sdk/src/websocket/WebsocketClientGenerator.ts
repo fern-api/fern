@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -743,11 +743,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
                         if (isComplexType) {
                             writer.write(
-                                `\n        .AddDeepObject("${queryParameter.name.wireValue}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
+                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
                             );
                         } else {
                             writer.write(
-                                `\n        .Add("${queryParameter.name.wireValue}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
+                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
                             );
                         }
                     }
