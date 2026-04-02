@@ -126,9 +126,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 _other: () => undefined
             });
         }
-        const defaultEnvironmentName = this.settings.pascalCaseEnvironments
-            ? caseConverter.pascalSafe(defaultEnvironment?)
-            : caseConverter.screamingSnakeSafe(defaultEnvironment?);
+        const defaultEnvironmentName = defaultEnvironment != null
+            ? (this.settings.pascalCaseEnvironments
+                ? caseConverter.pascalSafe(defaultEnvironment)
+                : caseConverter.screamingSnakeSafe(defaultEnvironment))
+            : undefined;
 
         const hasDefault = defaultEnvironment != null;
         // In unified mode, when there's no default environment, make BaseUrl/Environment
