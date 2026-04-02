@@ -7,6 +7,7 @@ export class SeedBytesDownloadError extends Error {
     public readonly statusCode?: number;
     public readonly body?: unknown;
     public readonly rawResponse?: core.RawResponse;
+    public readonly cause?: unknown;
 
     constructor({
         message,

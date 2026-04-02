@@ -55,6 +55,7 @@ function handleNonStatusCodeError(error, rawResponse, method, path) {
             throw new errors.SeedExhaustiveError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedExhaustiveError({

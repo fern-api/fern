@@ -130,6 +130,13 @@ export class GeneratedGenericAPISdkErrorImpl
                 hasQuestionToken: true,
                 type: getTextOfTsNode(context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType()),
                 scope: Scope.Public
+            },
+            {
+                name: GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                isReadonly: true,
+                hasQuestionToken: true,
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
+                scope: Scope.Public
             }
         ];
     }
