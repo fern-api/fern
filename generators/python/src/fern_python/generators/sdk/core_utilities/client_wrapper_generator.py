@@ -531,11 +531,15 @@ class ClientWrapperGenerator:
                     conditions = []
                     if not username_omitted:
                         username_var = names.get_username_constructor_parameter_name(basic_auth_scheme)
-                        writer.write_line(f"{username_var} = self.{names.get_username_getter_name(basic_auth_scheme)}()")
+                        writer.write_line(
+                            f"{username_var} = self.{names.get_username_getter_name(basic_auth_scheme)}()"
+                        )
                         conditions.append(f"{username_var} is not None")
                     if not password_omitted:
                         password_var = names.get_password_constructor_parameter_name(basic_auth_scheme)
-                        writer.write_line(f"{password_var} = self.{names.get_password_getter_name(basic_auth_scheme)}()")
+                        writer.write_line(
+                            f"{password_var} = self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                        )
                         conditions.append(f"{password_var} is not None")
 
                     # Omitted fields use empty string directly
@@ -567,8 +571,12 @@ class ClientWrapperGenerator:
                         writer.write_newline_if_last_line_not()
                 else:
                     # Auth is mandatory - omitted fields use empty string
-                    username_getter = '""' if username_omitted else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
-                    password_getter = '""' if password_omitted else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                    username_getter = (
+                        '""' if username_omitted else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
+                    )
+                    password_getter = (
+                        '""' if password_omitted else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                    )
                     writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
                     writer.write_node(
                         AST.ClassInstantiation(
