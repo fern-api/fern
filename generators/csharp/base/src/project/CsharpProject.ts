@@ -758,11 +758,6 @@ dotnet_diagnostic.IDE0005.severity = error
     private static readonly FILE_WRITE_BATCH_SIZE = 100;
 
     /**
-     * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
-     * while still being significantly faster than sequential writes.
-     * Formats .cs files JIT using the persistent CSharpier process before writing.
-     */
-    /**
      * Recursively finds all .cs files in a directory, formats them using the persistent
      * CSharpier process, and writes the formatted content back to disk.
      * Used after dotnet format modifies files on disk.
