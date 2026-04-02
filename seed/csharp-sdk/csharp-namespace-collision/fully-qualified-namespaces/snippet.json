@@ -28,6 +28,42 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/scim-configuration",
+                "method": "GET",
+                "identifier_override": "endpoint_ScimConfiguration.getConfiguration"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.GetConfigurationAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/scim-configuration/tokens",
+                "method": "POST",
+                "identifier_override": "endpoint_ScimConfiguration.createToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision.ScimConfiguration;\nusing SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.CreateTokenAsync(\n    new ScimToken\n    {\n        TokenId = \"tokenId\",\n        Token = \"token\",\n        Scopes = new List<string>() { \"scopes\", \"scopes\" },\n        CreatedAt = \"createdAt\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/scim-configuration/users",
+                "method": "GET",
+                "identifier_override": "endpoint_ScimConfiguration.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.ListUsersAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/users",
                 "method": "POST",
                 "identifier_override": "endpoint_System.createUser"

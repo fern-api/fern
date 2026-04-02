@@ -177,6 +177,9 @@ types:
       valid-docs-endpoints:
         type: optional<CheckRuleSeverity>
         docs: Severity for docs endpoint URL validation. Default is warn.
+      missing-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
 
   CheckConfig:
     docs: |
