@@ -126,8 +126,6 @@ export * from "./TabId.js";
 export * from "./TabsAlignment.js";
 export * from "./TabsPlacement.js";
 export * from "./TabsThemeConfig.js";
-export * from "./TabsThemeObjectConfig.js";
-export * from "./TabsThemeStyle.js";
 export * from "./TabVariant.js";
 export * from "./Target.js";
 export * from "./ThemeConfig.js";
