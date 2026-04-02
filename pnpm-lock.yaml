@@ -1402,8 +1402,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.9.0
-        version: 53.9.0
+        specifier: 66.0.0-alpha.1
+        version: 66.0.0-alpha.1
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
