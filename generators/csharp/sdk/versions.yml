@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.56.3
+  changelogEntry:
+    - summary: |
+        Remove legacy backslash escape in generated CI workflow's NuGet publish
+        step now that Eta template engine does not interpret `${}` syntax.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 2.56.2
   changelogEntry:
     - summary: |
@@ -14,7 +23,6 @@
       type: fix
   createdAt: "2026-04-02"
   irVersion: 65
-
 - version: 2.56.1
   changelogEntry:
     - summary: |
