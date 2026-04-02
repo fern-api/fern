@@ -1464,6 +1464,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      eta:
+        specifier: ^4.5.1
+        version: 4.5.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
