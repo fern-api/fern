@@ -2,8 +2,6 @@ import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
-
 const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -307,9 +305,9 @@ export class MockEndpointGenerator extends WithGeneration {
         type: "named";
         typeName: { typeId: TypeId };
         shape:
-            | { type: "object"; properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }> }
-            | { type: "union"; discriminant: NameAndWireValueOrString; singleUnionType: unknown }
-            | { type: "enum"; value: NameAndWireValueOrString }
+            | { type: "object"; properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }> }
+            | { type: "union"; discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown }
+            | { type: "enum"; value: FernIr.NameAndWireValue | string }
             | { type: "alias"; value: ExampleTypeReference }
             | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
     }): boolean {
@@ -520,11 +518,11 @@ export class MockEndpointGenerator extends WithGeneration {
             shape:
                 | {
                       type: "object";
-                      properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>;
-                      extraProperties?: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>;
+                      properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+                      extraProperties?: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
                   }
-                | { type: "union"; discriminant: NameAndWireValueOrString; singleUnionType: unknown }
-                | { type: "enum"; value: NameAndWireValueOrString }
+                | { type: "union"; discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown }
+                | { type: "enum"; value: FernIr.NameAndWireValue | string }
                 | { type: "alias"; value: ExampleTypeReference }
                 | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
         },
@@ -562,9 +560,9 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterObjectExample(
         typeId: TypeId,
-        properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>,
+        properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>,
         options: { filterWriteOnly?: boolean } = {},
-        extraProperties?: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>
+        extraProperties?: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
@@ -604,18 +602,18 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterUnionExample(
         typeId: TypeId,
-        unionShape: { discriminant: NameAndWireValueOrString; singleUnionType: unknown },
+        unionShape: { discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
         // Union examples have a complex structure
         // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
-            wireDiscriminantValue: NameAndWireValueOrString;
+            wireDiscriminantValue: FernIr.NameAndWireValue | string;
             shape:
                 | {
                       type: "samePropertiesAsObject";
                       typeId: TypeId;
-                      object: { properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }> };
+                      object: { properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }> };
                   }
                 | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
@@ -675,8 +673,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getReadOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
         };
     }): Set<string> {
         const readOnlyNames = new Set<string>();
@@ -709,8 +707,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getWriteOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
         };
     }): Set<string> {
         const writeOnlyNames = new Set<string>();
@@ -744,8 +742,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getNullablePropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: NameAndWireValueOrString; valueType: TypeReference }>;
-            extendedProperties?: Array<{ name: NameAndWireValueOrString; valueType: TypeReference }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; valueType: TypeReference }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; valueType: TypeReference }>;
         };
     }): Set<string> {
         const nullableNames = new Set<string>();
