@@ -46,7 +46,7 @@ public class QueryStringBuilderTests
         Assert.That(
             result,
             Is.EqualTo(
-                "?email=test%40example.com&url=https%3A%2F%2Fexample.com%2Fpath%3Fquery%3Dvalue&special=a%2Bb%3Dc%26d"
+                "?email=test@example.com&url=https://example.com/path?query%3Dvalue&special=a%2Bb%3Dc%26d"
             )
         );
     }
