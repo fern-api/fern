@@ -298,10 +298,14 @@ export class GeneratedGenericAPISdkErrorImpl
                             ts.factory.createBinaryExpression(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createThis(),
-                                    ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME)
+                                    ts.factory.createIdentifier(
+                                        GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                    )
                                 ),
                                 ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME)
+                                ts.factory.createIdentifier(
+                                    GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                )
                             )
                         )
                     ],
