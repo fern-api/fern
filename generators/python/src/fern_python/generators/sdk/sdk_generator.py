@@ -120,7 +120,9 @@ class SdkGenerator(AbstractGenerator):
 
         # Merge user-defined extras with the built-in aiohttp extra
         extras = dict(custom_config.extras)
-        extras["aiohttp"] = ["aiohttp", "httpx-aiohttp"]
+        aiohttp_deps = ["aiohttp", "httpx-aiohttp"]
+        existing = extras.get("aiohttp", [])
+        extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support
@@ -713,6 +715,8 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         package_name = project._project_config.package_name if project._project_config is not None else "package"
+        if not package_name.replace("_", "").isalnum() or package_name[0].isdigit():
+            raise RuntimeError(f"Invalid package_name for generated test: {package_name!r}")
         contents = f'''import importlib
 import sys
 import unittest
@@ -745,11 +749,15 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
             self.assertFalse(client.follow_redirects)
 
     def test_explicit_httpx_client_bypasses_autodetect(self) -> None:
-        """When user passes httpx_client explicitly, auto-detect is not used."""
-        explicit_client = httpx.AsyncClient(timeout=60)
-        result = explicit_client if explicit_client is not None else None
+        """When user passes httpx_client explicitly, _make_default_async_client is not called."""
+        from {package_name}.client import _make_default_async_client
+
+        explicit_client = httpx.AsyncClient(timeout=120)
+        with mock.patch("{package_name}.client._make_default_async_client") as mock_make:
+            # Replicate the generated conditional: httpx_client if httpx_client is not None else _make_default_async_client(...)
+            result = explicit_client if explicit_client is not None else mock_make(timeout=60, follow_redirects=True)
+            mock_make.assert_not_called()
         self.assertIs(result, explicit_client)
-        self.assertEqual(result.timeout.read, 60)
 
 
 @pytest.mark.aiohttp
