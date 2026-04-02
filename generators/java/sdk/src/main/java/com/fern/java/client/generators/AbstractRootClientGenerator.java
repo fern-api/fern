@@ -1255,44 +1255,57 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             boolean usernameOmitted = basic.getUsernameOmit().orElse(false);
             boolean passwordOmitted = basic.getPasswordOmit().orElse(false);
 
-            // username
+            // When omit is true, the field is completely removed from the end-user API.
+            // Only add non-omitted fields as builder fields.
             String usernameFieldName = basic.getUsername().getCamelCase().getSafeName();
-            FieldSpec.Builder usernameField =
-                    FieldSpec.builder(String.class, usernameFieldName).addModifiers(Modifier.PRIVATE);
-            if (basic.getUsernameEnvVar().isPresent()) {
-                usernameField.initializer(
-                        "System.getenv($S)", basic.getUsernameEnvVar().get().get());
-            } else {
-                usernameField.initializer("null");
-            }
-            this.clientBuilder.addField(usernameField.build());
-
             String passwordFieldName = basic.getPassword().getCamelCase().getSafeName();
-            FieldSpec.Builder passwordField =
-                    FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
-            if (basic.getPasswordEnvVar().isPresent()) {
-                passwordField.initializer(
-                        "System.getenv($S)", basic.getPasswordEnvVar().get().get());
-            } else {
-                passwordField.initializer("null");
+
+            if (!usernameOmitted) {
+                FieldSpec.Builder usernameField =
+                        FieldSpec.builder(String.class, usernameFieldName).addModifiers(Modifier.PRIVATE);
+                if (basic.getUsernameEnvVar().isPresent()) {
+                    usernameField.initializer(
+                            "System.getenv($S)", basic.getUsernameEnvVar().get().get());
+                } else {
+                    usernameField.initializer("null");
+                }
+                this.clientBuilder.addField(usernameField.build());
             }
-            this.clientBuilder.addField(passwordField.build());
 
-            ParameterSpec usernameParam =
-                    ParameterSpec.builder(String.class, usernameFieldName).build();
-            ParameterSpec passwordParam =
-                    ParameterSpec.builder(String.class, passwordFieldName).build();
-            this.clientBuilder.addMethod(MethodSpec.methodBuilder("credentials")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(usernameParam)
-                    .addParameter(passwordParam)
-                    .addStatement("this.$L = $L", usernameFieldName, usernameFieldName)
-                    .addStatement("this.$L = $L", passwordFieldName, passwordFieldName)
-                    .addStatement(isExtensible ? "return self()" : "return this")
-                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
-                    .build());
+            if (!passwordOmitted) {
+                FieldSpec.Builder passwordField =
+                        FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
+                if (basic.getPasswordEnvVar().isPresent()) {
+                    passwordField.initializer(
+                            "System.getenv($S)", basic.getPasswordEnvVar().get().get());
+                } else {
+                    passwordField.initializer("null");
+                }
+                this.clientBuilder.addField(passwordField.build());
+            }
 
-            // Per-field build() validation: skip null check for fields with omit=true
+            // Only add credentials() method with non-omitted fields as parameters
+            MethodSpec.Builder credentialsMethodBuilder = MethodSpec.methodBuilder("credentials")
+                    .addModifiers(Modifier.PUBLIC);
+            if (!usernameOmitted) {
+                credentialsMethodBuilder.addParameter(
+                        ParameterSpec.builder(String.class, usernameFieldName).build());
+                credentialsMethodBuilder.addStatement("this.$L = $L", usernameFieldName, usernameFieldName);
+            }
+            if (!passwordOmitted) {
+                credentialsMethodBuilder.addParameter(
+                        ParameterSpec.builder(String.class, passwordFieldName).build());
+                credentialsMethodBuilder.addStatement("this.$L = $L", passwordFieldName, passwordFieldName);
+            }
+            // Only add credentials() method if at least one field is present
+            if (!usernameOmitted || !passwordOmitted) {
+                credentialsMethodBuilder
+                        .addStatement(isExtensible ? "return self()" : "return this")
+                        .returns(isExtensible ? TypeVariableName.get("T") : builderName);
+                this.clientBuilder.addMethod(credentialsMethodBuilder.build());
+            }
+
+            // build() validation: only check non-omitted fields
             if (isMandatory) {
                 if (!usernameOmitted) {
                     this.buildMethod
@@ -1331,27 +1344,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 authProviderInfos.add(new AuthProviderInfo(
                         "Basic", "BasicAuthProvider", usernameFieldName, passwordFieldName, envVarHint, true));
             } else if (this.configureAuthMethod != null) {
-                // Per-field condition for setAuthentication: only require non-omitted fields
+                // Condition: only require non-omitted fields to be present
                 if (!usernameOmitted && !passwordOmitted) {
                     this.configureAuthMethod.beginControlFlow(
                             "if (this.$L != null && this.$L != null)", usernameFieldName, passwordFieldName);
-                } else if (usernameOmitted && passwordOmitted) {
-                    this.configureAuthMethod.beginControlFlow(
-                            "if (this.$L != null || this.$L != null)", usernameFieldName, passwordFieldName);
-                } else if (usernameOmitted) {
-                    // Only password is required
+                } else if (usernameOmitted && !passwordOmitted) {
                     this.configureAuthMethod.beginControlFlow("if (this.$L != null)", passwordFieldName);
-                } else {
-                    // Only username is required
+                } else if (!usernameOmitted && passwordOmitted) {
                     this.configureAuthMethod.beginControlFlow("if (this.$L != null)", usernameFieldName);
+                } else {
+                    // Both omitted - always set the header
+                    this.configureAuthMethod.beginControlFlow("if (true)");
                 }
-                // Per-field token construction: use empty string fallback for omittable fields
-                String usernameRef = usernameOmitted
-                        ? "(this." + usernameFieldName + " != null ? this." + usernameFieldName + " : \"\")"
-                        : "this." + usernameFieldName;
-                String passwordRef = passwordOmitted
-                        ? "(this." + passwordFieldName + " != null ? this." + passwordFieldName + " : \"\")"
-                        : "this." + passwordFieldName;
+                // Use empty string for omitted fields in token construction
+                String usernameRef = usernameOmitted ? "\"\"" : "this." + usernameFieldName;
+                String passwordRef = passwordOmitted ? "\"\"" : "this." + passwordFieldName;
                 this.configureAuthMethod
                         .addStatement("String unencodedToken = " + usernameRef + " + \":\" + " + passwordRef)
                         .addStatement(
