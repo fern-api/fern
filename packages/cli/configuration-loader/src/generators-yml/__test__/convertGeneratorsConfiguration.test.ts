@@ -1275,6 +1275,6 @@ describe("convertGeneratorsConfiguration", () => {
 
         const generator = converted.groups[0]?.generators[0];
         const expectedDockerImage = `${generator?.containerImage}:${generator?.version}`;
-        expect(expectedDockerImage).toBe("localhost:5000/fern-typescript-sdk:1.2.3");
+        expect(expectedDockerImage).toBe("localhost:5000/fernapi/fern-typescript-sdk:1.2.3");
     });
 });
