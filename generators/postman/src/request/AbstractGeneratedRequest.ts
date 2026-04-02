@@ -99,6 +99,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             put: () => PostmanMethod.Put,
             patch: () => PostmanMethod.Patch,
             delete: () => PostmanMethod.Delete,
+            // PostmanMethod enum lacks HEAD; mapping to GET as closest equivalent
             head: () => PostmanMethod.Get,
             _other: () => {
                 throw new Error("Unexpected httpMethod: " + httpMethod);
