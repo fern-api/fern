@@ -11,7 +11,6 @@ export declare namespace FernGlobalHeadersExtension {
         optional: boolean | undefined;
         env: string | undefined;
         type: string | undefined;
-        "x-fern-default": string | boolean | undefined;
     }
 }
 
