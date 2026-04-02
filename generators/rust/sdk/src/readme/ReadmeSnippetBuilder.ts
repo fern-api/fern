@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
 import { CodeBlock, Expression, rust, Statement, UseStatement, Writer } from "@fern-api/rust-codegen";
 
@@ -6,6 +6,8 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -261,12 +263,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
         const clientAccess = this.getAccessFromRootClient(endpoint.fernFilepath);
-        const methodName = endpoint.endpoint.name.snakeCase.safeName;
+        const methodName = caseConverter.snakeSafe(endpoint.endpoint.name);
         return `${clientAccess}.${methodName}`;
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
@@ -343,7 +345,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const requestBody = endpoint.endpoint.requestBody;
 
         // Use the name property which gives us the proper PascalCase name
-        return requestBody.name.pascalCase.safeName;
+        return caseConverter.pascalSafe(requestBody.name);
     }
 
     private getClientConfigStruct(
@@ -616,26 +618,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const serverMessages = channel.messages.filter((m) => m.origin === "server");
 
         // Get the subpackage access path (e.g., "market_data" or "realtime")
-        const subpackageName = subpackage.name.snakeCase.safeName;
+        const subpackageName = caseConverter.snakeSafe(subpackage.name);
 
         // Build connect params from IR (without the url, since connectors provide it from config)
         const connectParams: string[] = [];
         for (const pathParam of channel.pathParameters) {
-            connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
+            connectParams.push(`"${caseConverter.snakeSafe(pathParam.name)}"`);
         }
         for (const header of channel.headers) {
             // Skip authorization header — the connector auto-injects it from the stored token
-            if (header.name.name.snakeCase.safeName === "authorization") {
+            if (caseConverter.snakeSafe(header.name.name) === "authorization") {
                 continue;
             }
-            connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
+            connectParams.push(`"${caseConverter.snakeSafe(header.name.name)}"`);
         }
         for (const qp of channel.queryParameters) {
             const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
             if (isOptional) {
                 connectParams.push("None");
             } else {
-                connectParams.push(`"${qp.name.name.snakeCase.safeName}"`);
+                connectParams.push(`"${caseConverter.snakeSafe(qp.name.name)}"`);
             }
         }
 
@@ -765,12 +767,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Detect name collisions
         const nameCount = new Map<string, number>();
         for (const channel of Object.values(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = caseConverter.snakeSafe(channel.name);
             nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
         }
 
         for (const [channelId, channel] of Object.entries(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = caseConverter.snakeSafe(channel.name);
 
             if ((nameCount.get(baseName) ?? 0) > 1) {
                 // Derive unique name from channel ID
@@ -785,8 +787,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 });
             } else {
                 nameMap.set(channelId, {
-                    moduleName: channel.name.snakeCase.safeName,
-                    clientName: `${channel.name.pascalCase.safeName}Client`
+                    moduleName: caseConverter.snakeSafe(channel.name),
+                    clientName: `${caseConverter.pascalSafe(channel.name)}Client`
                 });
             }
         }
@@ -796,7 +798,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getWebSocketMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {
         const name = msg.body.type === "inlinedBody"
-            ? msg.body.name.snakeCase.safeName
+            ? caseConverter.snakeSafe(msg.body.name)
             : msg.type
                 .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
                 .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
@@ -815,7 +817,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         }
         if (msg.body.type === "inlinedBody") {
-            return msg.body.name.pascalCase.safeName;
+            return caseConverter.pascalSafe(msg.body.name);
         }
         return undefined;
     }
@@ -864,10 +866,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
             if (defaultEnv != null) {
-                return defaultEnv.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(defaultEnv.name);
             }
         }
-        return envs[0]?.name.pascalCase.safeName;
+        const firstName = envs[0]?.name;
+        return firstName != null ? caseConverter.pascalSafe(firstName) : undefined;
     }
 
     private writeCode(code: string): string {

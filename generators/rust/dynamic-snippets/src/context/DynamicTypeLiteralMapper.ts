@@ -1,8 +1,10 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -439,10 +441,10 @@ export class DynamicTypeLiteralMapper {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
         for (const property of objectType.properties) {
-            this.context.scopeError(property.name.wireValue);
+            this.context.scopeError(getWireValue(property.name));
             try {
                 const propertyName = this.context.getPropertyName(property.name.name);
-                const wireValue = property.name.wireValue;
+                const wireValue = getWireValue(property.name);
 
                 let propertyValue: rust.Expression | undefined;
 
@@ -536,7 +538,7 @@ export class DynamicTypeLiteralMapper {
         // Fallback: Check if this object has properties that suggest it extends another object
         // Look for properties that might be flattened base objects
         const potentialBaseFieldProperty = objectType.properties.find((prop) => {
-            const propertyName = prop.name.name.snakeCase.safeName;
+            const propertyName = caseConverter.snakeSafe(prop.name.name);
             return propertyName.endsWith("_fields") && prop.typeReference.type === "named";
         });
 
@@ -548,7 +550,7 @@ export class DynamicTypeLiteralMapper {
                 return {
                     baseObjectTypeId: baseTypeId,
                     baseObjectType: baseType,
-                    baseFieldName: potentialBaseFieldProperty.name.name.snakeCase.safeName
+                    baseFieldName: caseConverter.snakeSafe(potentialBaseFieldProperty.name.name)
                 };
             }
         }
@@ -584,9 +586,9 @@ export class DynamicTypeLiteralMapper {
         // When useDefault is true, skip optional fields without values (they'll be covered by ..Default::default())
         const baseStructFields: Array<{ name: string; value: rust.Expression }> = [];
         for (const property of extendsInfo.baseObjectType.properties) {
-            this.context.scopeError(property.name.wireValue);
+            this.context.scopeError(getWireValue(property.name));
             try {
-                const propertyValue = value[property.name.wireValue];
+                const propertyValue = value[getWireValue(property.name)];
 
                 if (propertyValue !== undefined) {
                     // Value is provided in the example
@@ -633,7 +635,7 @@ export class DynamicTypeLiteralMapper {
         const extendedProperties = objectType.properties.filter(
             (prop) =>
                 !extendsInfo.baseObjectType.properties.some(
-                    (baseProp) => baseProp.name.wireValue === prop.name.wireValue
+                    (baseProp) => baseProp.name.wireValue === getWireValue(prop.name)
                 )
         );
 
@@ -643,7 +645,7 @@ export class DynamicTypeLiteralMapper {
         });
 
         extendedPropsAssociated.forEach((property) => {
-            this.context.scopeError(property.name.wireValue);
+            this.context.scopeError(getWireValue(property.name));
             try {
                 structFields.push({
                     name: this.context.getPropertyName(property.name.name),
@@ -669,7 +671,7 @@ export class DynamicTypeLiteralMapper {
     // Generate the field name for the flattened base object
     private getBaseFieldName(baseName: FernIr.Name): string {
         // Convert "Movie" -> "movie_fields" (common Rust pattern)
-        return `${baseName.snakeCase.safeName}_fields`;
+        return `${caseConverter.snakeSafe(baseName)}_fields`;
     }
 
     private convertEnumType({
@@ -691,7 +693,7 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw(`todo!("Unknown enum variant: ${value}")`);
         }
 
-        const rawVariantName = enumVariant.name.pascalCase.unsafeName;
+        const rawVariantName = caseConverter.pascalUnsafe(enumVariant.name);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
         return rust.Expression.reference(`${enumName}::${variantName}`);
     }
@@ -715,7 +717,7 @@ export class DynamicTypeLiteralMapper {
 
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionName = this.context.getStructNameByDeclaration(unionType.declaration);
-        const rawVariantName = unionVariant.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = caseConverter.pascalUnsafe(unionVariant.discriminantValue.name);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
 
         // Handle different union variant types with correct Rust syntax
@@ -727,12 +729,12 @@ export class DynamicTypeLiteralMapper {
                     return rust.Expression.reference(`${unionName}::${variantName}`);
                 }
 
-                this.context.scopeError(unionVariant.discriminantValue.wireValue);
+                this.context.scopeError(getWireValue(unionVariant.discriminantValue));
                 try {
                     // Get the variant's main property value
                     const propertyValue = this.convert({
                         typeReference: unionVariant.typeReference,
-                        value: record[unionVariant.discriminantValue.wireValue]
+                        value: record[getWireValue(unionVariant.discriminantValue)]
                     });
 
                     // Build all struct fields: variant value + base properties
@@ -746,8 +748,8 @@ export class DynamicTypeLiteralMapper {
                     // Add base/extended properties from the union
                     if (unionVariant.properties && unionVariant.properties.length > 0) {
                         for (const property of unionVariant.properties) {
-                            const wireValue = property.name.wireValue;
-                            const fieldName = property.name.name.snakeCase.safeName;
+                            const wireValue = getWireValue(property.name);
+                            const fieldName = caseConverter.snakeSafe(property.name.name);
                             const fieldValue = record[wireValue];
 
                             this.context.scopeError(wireValue);
@@ -895,7 +897,7 @@ export class DynamicTypeLiteralMapper {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
-                return namedType?.declaration.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(namedType?.declaration.name);
             }
             case "primitive":
                 switch (typeReference.value) {

@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -19,6 +20,8 @@ import {
     generateFieldAttributes,
     generateFieldType
 } from "../utils/structUtils.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export declare namespace FileUploadRequestGenerator {
     interface Args {
@@ -193,7 +196,7 @@ export class FileUploadRequestGenerator {
 
         // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
-            const propName = bodyProp.name.name.originalName;
+            const propName = getOriginalName(bodyProp.name.name);
             const fieldName = this.getFieldName(propName);
             const isOptional = isOptionalType(bodyProp.valueType);
 
@@ -246,7 +249,7 @@ export class FileUploadRequestGenerator {
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name.name));
         const fieldType = generateFieldType(property, this.context);
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const attributes = generateFieldAttributes(property, this.context, { skipSerialization });

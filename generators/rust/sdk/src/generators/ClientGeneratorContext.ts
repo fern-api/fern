@@ -1,5 +1,8 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export declare namespace ClientGeneratorContext {
     interface Args {
@@ -28,7 +31,7 @@ export class ClientGeneratorContext {
             .filter(([, subpackage]) => subpackage.service != null || subpackage.hasEndpointsInTree)
             .map(([, subpackage]) => {
                 const clientName = this.sdkGeneratorContext.getUniqueClientNameForSubpackage(subpackage);
-                const fieldName = subpackage.name.snakeCase.safeName;
+                const fieldName = caseConverter.snakeSafe(subpackage.name);
                 return {
                     fieldName,
                     clientName,

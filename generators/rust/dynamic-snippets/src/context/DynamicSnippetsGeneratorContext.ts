@@ -1,10 +1,4 @@
-import {
-    AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec,
-    Options,
-    Severity,
-    TypeInstance
-} from "@fern-api/browser-compatible-base-generator";
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, Options, Severity, TypeInstance, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import {
     convertToPascalCase,
@@ -19,6 +13,8 @@ import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -59,7 +55,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     private preregisterTypeNames(): void {
         // Register all IR types to ensure consistent naming with model generator
         for (const [typeId, type] of Object.entries(this.ir.types)) {
-            const baseName = type.declaration.name.pascalCase.safeName;
+            const baseName = caseConverter.pascalSafe(type.declaration.name);
             this.registry.registerSchemaTypeTypeName(typeId, baseName);
 
             // Create a lookup key for this declaration
@@ -90,7 +86,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             const hasBody = request.body != null;
 
             if (hasQueryParams && !hasBody) {
-                const methodName = endpoint.declaration.name.pascalCase.safeName;
+                const methodName = caseConverter.pascalSafe(endpoint.declaration.name);
                 queryEndpoints.push({ endpointId, endpoint, methodName });
             }
         }
@@ -109,7 +105,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             if (hasCollision) {
                 // Include full subpackage path to make it unique, matching SDK generator behavior
                 const pathParts = endpoint.declaration.fernFilepath.allParts.map(
-                    (part) => part.pascalCase.safeName
+                    (part) => caseConverter.pascalSafe(part)
                 );
                 const subpackagePrefix = pathParts.join("");
                 baseQueryRequestName = `${subpackagePrefix}${methodName}QueryRequest`;
@@ -136,9 +132,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      */
     private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
         const fernFilepath = declaration.fernFilepath.packagePath
-            .map((part) => part.pascalCase.safeName)
+            .map((part) => caseConverter.pascalSafe(part))
             .join("/");
-        const name = declaration.name.pascalCase.safeName;
+        const name = caseConverter.pascalSafe(declaration.name);
         return `${fernFilepath}::${name}`;
     }
 
@@ -148,9 +144,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      */
     private getEndpointDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
         const fernFilepath = declaration.fernFilepath.allParts
-            .map((part) => part.pascalCase.safeName)
+            .map((part) => caseConverter.pascalSafe(part))
             .join("/");
-        const name = declaration.name.pascalCase.safeName;
+        const name = caseConverter.pascalSafe(declaration.name);
         return `${fernFilepath}::${name}`;
     }
 
@@ -178,7 +174,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
         }
         // Fallback to basic name if not found in registry
-        return getName(declaration.name.pascalCase.safeName);
+        return getName(caseConverter.pascalSafe(declaration.name));
     }
 
     /**
@@ -204,12 +200,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private getTypeName(name: FernIr.Name): string {
-        return getName(name.pascalCase.safeName);
+        return getName(caseConverter.pascalSafe(name));
     }
 
     public getPropertyName(name: FernIr.Name): string {
         // For struct fields, use raw identifier syntax for reserved keywords
-        const input = name.snakeCase.safeName;
+        const input = caseConverter.snakeSafe(name);
         // If the field name ends with "_", check if it's a Rust keyword that was escaped
         // Convert it back to raw identifier syntax (e.g., "type_" -> "r#type")
         if (input.endsWith("_")) {
@@ -221,7 +217,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return getName(name.snakeCase.safeName);
+        return getName(caseConverter.snakeSafe(name));
     }
 
     /**
@@ -410,7 +406,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
 
         const record = value as Record<string, unknown>;
-        const discriminantValue = record[union.discriminant.wireValue];
+        const discriminantValue = record[getWireValue(union.discriminant)];
 
         return typeof discriminantValue === "string" && Object.keys(union.types).includes(discriminantValue);
     }
@@ -442,7 +438,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const instances: TypeInstance[] = [];
         // Iterate over parameters (schema order) to preserve argument order
         for (const parameter of parameters) {
-            const key = parameter.name.wireValue;
+            const key = getWireValue(parameter.name);
             const value = values[key];
             // Skip parameters not provided in values
             if (value == null) {

@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -9,6 +10,8 @@ import {
     generateFieldAttributes,
     generateFieldType
 } from "../utils/structUtils.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export declare namespace RequestGenerator {
     interface Args {
@@ -158,7 +161,7 @@ export class RequestGenerator {
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name.name));
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const fieldAttributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
@@ -191,7 +194,7 @@ export class RequestGenerator {
 
                 fields.push(
                     rust.field({
-                        name: `${property.name.name.snakeCase.unsafeName}_fields`,
+                        name: `${caseConverter.snakeUnsafe(property.name.name)}_fields`,
                         type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                         visibility: PUBLIC,
                         attributes: [Attribute.serde.flatten()]

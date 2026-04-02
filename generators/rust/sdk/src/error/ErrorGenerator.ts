@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -19,6 +20,8 @@ import {
 } from "@fern-api/rust-codegen";
 import { BUILD_ERROR_RS } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -510,7 +513,7 @@ export class ErrorGenerator {
 
     // Helper methods
     private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
-        const safeName = errorDeclaration.name.name.pascalCase.safeName;
+        const safeName = caseConverter.pascalSafe(errorDeclaration.name.name);
         if (!safeName) {
             throw new Error(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
         }

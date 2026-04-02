@@ -1,5 +1,8 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 /**
  * Utility functions to check primitive types without repeating the visitor pattern
@@ -605,12 +608,12 @@ export function extractNamedTypesFromTypeReference(
     visited: Set<string>
 ): void {
     if (typeRef.type === "named") {
-        const typeName = typeRef.name.originalName;
+        const typeName = getOriginalName(typeRef.name);
         if (!visited.has(typeName)) {
             visited.add(typeName);
             typeNames.push({
-                snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
-                pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
+                snakeCase: { unsafeName: caseConverter.snakeUnsafe(typeRef.name) },
+                pascalCase: { unsafeName: caseConverter.pascalUnsafe(typeRef.name) }
             });
         }
     } else if (typeRef.type === "container") {

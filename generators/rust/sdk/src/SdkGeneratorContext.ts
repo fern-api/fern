@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -6,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { RustGeneratorAgent } from "./RustGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: RustGeneratorAgent;
@@ -109,7 +111,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
+        return fernFilepath.allParts.map((path) => caseConverter.snakeSafe(path)).join("/");
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {

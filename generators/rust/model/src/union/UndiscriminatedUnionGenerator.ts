@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -6,6 +7,8 @@ import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTy
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 /**
  * Represents a deduplicated variant in an undiscriminated union enum.
@@ -179,8 +182,8 @@ export class UndiscriminatedUnionGenerator {
         switch (typeRef.type) {
             case "named":
                 return {
-                    variantName: typeRef.name.pascalCase.unsafeName,
-                    methodSuffix: typeRef.name.snakeCase.unsafeName
+                    variantName: caseConverter.pascalUnsafe(typeRef.name),
+                    methodSuffix: caseConverter.snakeUnsafe(typeRef.name)
                 };
             case "primitive":
                 return this.getPrimitiveNames(typeRef.primitive.v1);

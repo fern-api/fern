@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -19,6 +20,8 @@ import {
     typeSupportsHashAndEq,
     typeSupportsPartialEq
 } from "./primitiveTypeUtils.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 /**
  * Struct and Request generation utility functions
@@ -199,7 +202,7 @@ export function getCustomTypesUsedInFields(
     });
 
     // Filter out the current type itself to prevent self-imports
-    return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    return customTypeNames.filter((typeName) => caseConverter.pascalUnsafe(typeName) !== currentTypeName);
 }
 
 export function generateFieldType(
@@ -225,8 +228,8 @@ export function generateFieldAttributes(
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
-    if (property.name.name.snakeCase.unsafeName !== property.name.wireValue) {
-        attributes.push(Attribute.serde.rename(property.name.wireValue));
+    if (caseConverter.snakeUnsafe(property.name.name) !== getWireValue(property.name)) {
+        attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
     // If the field is entirely skipped during serialization (e.g. query params sent
@@ -329,9 +332,9 @@ export function writeStructUseStatements(
 ): void {
     const customTypes = getCustomTypesUsedInFields(properties, currentTypeName);
     customTypes.forEach((typeName) => {
-        const modulePath = context.getModulePathForType(typeName.snakeCase.unsafeName);
+        const modulePath = context.getModulePathForType(caseConverter.snakeUnsafe(typeName));
         const moduleNameEscaped = context.escapeRustKeyword(modulePath);
-        writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        writer.writeLine(`use crate::${moduleNameEscaped}::${caseConverter.pascalUnsafe(typeName)};`);
     });
 
     // Add chrono imports based on specific types needed
@@ -400,7 +403,7 @@ export function convertQueryParametersToProperties(
         if (queryParam.allowMultiple) {
             valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
         }
-        fieldNames.add(context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName));
+        fieldNames.add(context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name.name)));
         return {
             name: queryParam.name,
             valueType,
