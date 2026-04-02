@@ -76,6 +76,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             typeReference: TypeReference;
         }[] = [];
 
+        // Collect body property PascalCase names so we can detect collisions with path parameters.
+        // When a path param and body property share the same PascalCase name, we keep the body
+        // property (which has [JsonPropertyName]) and skip adding a separate [JsonIgnore] path
+        // param field. The single property then serializes to both the URL path and the JSON body.
+        const bodyPropertyPascalNames = this.getBodyPropertyPascalNames();
         const pathParameterPascalNames = new Set<string>();
         if (
             this.context.includePathParametersInWrappedRequest({
@@ -84,7 +89,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             })
         ) {
             for (const pathParameter of this.endpoint.allPathParameters) {
-                const field = class_.addField({
+                const pascalName = pathParameter.name.pascalCase.safeName;
+                pathParameterPascalNames.add(pascalName);
+                // Skip adding a [JsonIgnore] field for this path param if a body property
+                // with the same PascalCase name exists — the body property will serve both roles.
+                if (bodyPropertyPascalNames.has(pascalName)) {
+                    continue;
+                }
+                class_.addField({
                     origin: pathParameter,
                     type: this.context.csharpTypeMapper.convert({
                         reference: pathParameter.valueType
@@ -99,7 +111,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     }),
                     annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
-                pathParameterPascalNames.add(pathParameter.name.pascalCase.safeName);
             }
         }
 
@@ -187,9 +198,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 });
             },
             inlinedRequestBody: (request) => {
-                const allProps = [...request.properties, ...(request.extendedProperties ?? [])].filter(
-                    (p) => !pathParameterPascalNames.has(p.name.name.pascalCase.safeName)
-                );
+                const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
                 const allPropertyPascalNames = new Set(allProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of allProps) {
                     const field = generateField(class_, {
@@ -209,16 +218,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 }
             },
             fileUpload: (request) => {
-                const bodyProps = request.properties
-                    .filter((p) => p.type === "bodyProperty")
-                    .filter((p) => !pathParameterPascalNames.has(p.name.name.pascalCase.safeName));
+                const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
                 const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
-                            if (pathParameterPascalNames.has(property.name.name.pascalCase.safeName)) {
-                                break;
-                            }
                             generateField(class_, {
                                 property,
                                 className: this.classReference.name,
@@ -286,7 +290,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }): ast.CodeBlock {
         const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
         let extraPropertiesFromExample: ExampleInlinedRequestBodyExtraProperty[] | undefined;
-        const snippetPathParamPascalNames = new Set<string>();
+        const snippetBodyPropertyPascalNames = this.getBodyPropertyPascalNames();
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -298,7 +302,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 ...example.servicePathParameters,
                 ...example.endpointPathParameters
             ]) {
-                snippetPathParamPascalNames.add(pathParameter.name.pascalCase.safeName);
+                // Skip path param snippet if a body property with the same name exists;
+                // the body property snippet will provide the value for both.
+                if (snippetBodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
+                    continue;
+                }
                 orderedFields.push({
                     name: pathParameter.name,
                     value: this.exampleGenerator.getSnippetForTypeReference({
@@ -352,9 +360,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
-                    if (snippetPathParamPascalNames.has(property.name.name.pascalCase.safeName)) {
-                        continue;
-                    }
                     orderedFields.push({
                         name: property.name.name,
                         value: this.exampleGenerator.getSnippetForTypeReference({
@@ -464,6 +469,32 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             bodyType: ast.Method.BodyType.Expression,
             body: this.csharp.codeblock(`${additionalProperties.name}.CopyFromExtensionData(_extensionData)`)
         });
+    }
+
+    /**
+     * Collects PascalCase names of all body properties for this endpoint, used to detect
+     * collisions with path parameters.
+     */
+    private getBodyPropertyPascalNames(): Set<string> {
+        const names = new Set<string>();
+        this.endpoint.requestBody?._visit({
+            reference: () => undefined,
+            inlinedRequestBody: (request) => {
+                for (const prop of [...request.properties, ...(request.extendedProperties ?? [])]) {
+                    names.add(prop.name.name.pascalCase.safeName);
+                }
+            },
+            fileUpload: (request) => {
+                for (const prop of request.properties) {
+                    if (prop.type === "bodyProperty") {
+                        names.add(prop.name.name.pascalCase.safeName);
+                    }
+                }
+            },
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+        return names;
     }
 
     private generateExtraPropertiesSnippet({
