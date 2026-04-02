@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v66
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring

@@ -1,9 +1,17 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    getOriginalName
+} from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { JavaProject } from "../project/JavaProject.js";
 
 import { JavaTypeMapper } from "./JavaTypeMapper.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 export abstract class AbstractJavaGeneratorContext<
     CustomConfig extends BaseJavaCustomConfigSchema
@@ -37,7 +45,7 @@ export abstract class AbstractJavaGeneratorContext<
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: typeDeclaration.name.name.pascalCase.unsafeName,
+            name: caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -55,6 +63,14 @@ export abstract class AbstractJavaGeneratorContext<
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+        return caseConverter.pascalSafe(name);
+    }
+
+    public getCaseConverter(): CaseConverter {
+        return caseConverter;
+    }
+
+    public getOriginalName(name: FernIr.NameOrString): string {
+        return getOriginalName(name);
     }
 }
