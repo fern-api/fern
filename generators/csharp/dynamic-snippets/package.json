@@ -32,6 +32,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",

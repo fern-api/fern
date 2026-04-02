@@ -1,4 +1,5 @@
-import { DiscriminatedUnionTypeInstance, NamedArgument, Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";

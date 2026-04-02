@@ -1,4 +1,5 @@
-import { NamedArgument, Options, Scope, Severity, Style, getWireValue } from "@fern-api/browser-compatible-base-generator";
+import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";

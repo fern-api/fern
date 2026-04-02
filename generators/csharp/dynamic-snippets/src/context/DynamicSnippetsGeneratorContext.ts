@@ -1,4 +1,5 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, Options, CaseConverter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, Options } from "@fern-api/browser-compatible-base-generator";
+import { CaseConverter } from "@fern-api/base-generator";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicLiteralMapper } from "./DynamicLiteralMapper.js";
