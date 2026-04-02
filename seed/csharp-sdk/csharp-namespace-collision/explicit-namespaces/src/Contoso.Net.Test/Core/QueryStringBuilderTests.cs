@@ -1,5 +1,5 @@
-using Contoso.Net.Core;
 using NUnit.Framework;
+using Contoso.Net.Core;
 
 namespace Contoso.Net.Test.Core;
 
@@ -46,7 +46,7 @@ public class QueryStringBuilderTests
         Assert.That(
             result,
             Is.EqualTo(
-                "?email=test%40example.com&url=https%3A%2F%2Fexample.com%2Fpath%3Fquery%3Dvalue&special=a%2Bb%3Dc%26d"
+                "?email=test@example.com&url=https://example.com/path?query=value&special=a%2Bb=c%26d"
             )
         );
     }
@@ -159,7 +159,7 @@ public class QueryStringBuilderTests
 
         var result = QueryStringBuilder.Build(parameters);
 
-        // Unreserved characters: A-Z a-z 0-9 - _ . ~
+        // Safe query characters include RFC 3986 unreserved + sub-delimiters (except & = +) + : @ /
         Assert.That(result, Is.EqualTo("?path=some-path&id=123-456_789.test~value"));
     }
 
@@ -207,7 +207,10 @@ public class QueryStringBuilderTests
             .Build();
 
         Assert.That(result, Does.Contain("api_key=key123"));
-        Assert.That(result, Does.Contain("session_settings%5Bcustom_session_id%5D=id-123"));
+        Assert.That(
+            result,
+            Does.Contain("session_settings%5Bcustom_session_id%5D=id-123")
+        );
         Assert.That(
             result,
             Does.Contain("session_settings%5Bsystem_prompt%5D=You%20are%20helpful")
@@ -295,7 +298,10 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Contain("allow_connection=true"));
         Assert.That(result, Does.Contain("config_id=config456"));
         Assert.That(result, Does.Contain("api_key=key789"));
-        Assert.That(result, Does.Contain("session_settings%5Bcustom_session_id%5D=session-123"));
+        Assert.That(
+            result,
+            Does.Contain("session_settings%5Bcustom_session_id%5D=session-123")
+        );
         Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserName%5D=John"));
         Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserAge%5D=30"));
     }
@@ -409,7 +415,10 @@ public class QueryStringBuilderTests
     [Test]
     public void Builder_MergeAdditional_OverridesExistingParameters()
     {
-        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "override"),
+        };
 
         var result = new QueryStringBuilder.Builder()
             .Add("foo", "original1")
@@ -483,7 +492,10 @@ public class QueryStringBuilderTests
             .Add("bar", "baz");
 
         // User provides foo=override in AdditionalQueryParameters
-        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
+        var additional = new List<KeyValuePair<string, string>>
+        {
+            new("foo", "override"),
+        };
 
         var result = builder.MergeAdditional(additional).Build();
 
@@ -519,7 +531,9 @@ public class QueryStringBuilderTests
     public void Builder_Add_WithCollection_CreatesMultipleParameters()
     {
         var tags = new[] { "tag1", "tag2", "tag3" };
-        var result = new QueryStringBuilder.Builder().Add("tag", tags).Build();
+        var result = new QueryStringBuilder.Builder()
+            .Add("tag", tags)
+            .Build();
 
         Assert.That(result, Does.Contain("tag=tag1"));
         Assert.That(result, Does.Contain("tag=tag2"));
@@ -530,7 +544,9 @@ public class QueryStringBuilderTests
     public void Builder_Add_WithList_CreatesMultipleParameters()
     {
         var ids = new List<int> { 1, 2, 3 };
-        var result = new QueryStringBuilder.Builder().Add("id", ids).Build();
+        var result = new QueryStringBuilder.Builder()
+            .Add("id", ids)
+            .Build();
 
         Assert.That(result, Does.Contain("id=1"));
         Assert.That(result, Does.Contain("id=2"));
@@ -556,5 +572,109 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Not.Contain("id=2?"));
         Assert.That(result, Does.Not.EndWith("id=1"));
         Assert.That(result, Does.Not.EndWith("id=2"));
+    }
+
+    [Test]
+    public void EncodePathSegment_UnreservedChars_NotEncoded()
+    {
+        var result = QueryStringBuilder.EncodePathSegment("hello-world_test.value~123");
+        Assert.That(result, Is.EqualTo("hello-world_test.value~123"));
+    }
+
+    [Test]
+    public void EncodePathSegment_SubDelimiters_NotEncoded()
+    {
+        // All sub-delimiters are safe in path segments per RFC 3986
+        var result = QueryStringBuilder.EncodePathSegment("a!b$c&d'e(f)g*h+i,j;k=l");
+        Assert.That(result, Is.EqualTo("a!b$c&d'e(f)g*h+i,j;k=l"));
+    }
+
+    [Test]
+    public void EncodePathSegment_ColonAndAt_NotEncoded()
+    {
+        var result = QueryStringBuilder.EncodePathSegment("user@host:8080");
+        Assert.That(result, Is.EqualTo("user@host:8080"));
+    }
+
+    [Test]
+    public void EncodePathSegment_SlashAndQuestion_Encoded()
+    {
+        // "/" and "?" are NOT part of pchar, so they must be encoded in path segments
+        var result = QueryStringBuilder.EncodePathSegment("path/with?query");
+        Assert.That(result, Is.EqualTo("path%2Fwith%3Fquery"));
+    }
+
+    [Test]
+    public void EncodePathSegment_Space_Encoded()
+    {
+        var result = QueryStringBuilder.EncodePathSegment("hello world");
+        Assert.That(result, Is.EqualTo("hello%20world"));
+    }
+
+    [Test]
+    public void EncodePathSegment_EmptyAndNull()
+    {
+        Assert.That(QueryStringBuilder.EncodePathSegment(""), Is.EqualTo(""));
+        Assert.That(QueryStringBuilder.EncodePathSegment(null!), Is.Null);
+    }
+
+    [Test]
+    public void Build_QueryKeyVsValue_DifferentEncoding()
+    {
+        // "=" is safe in query values but NOT in query keys
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("key=with=equals", "value=with=equals"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        // Key: "=" must be encoded
+        // Value: "=" is safe (part of query value safe chars)
+        Assert.That(result, Is.EqualTo("?key%3Dwith%3Dequals=value=with=equals"));
+    }
+
+    [Test]
+    public void Build_QueryValue_QuestionMarkNotEncoded()
+    {
+        // "?" is safe in both query keys and query values per RFC 3986
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("q?key", "is this?"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        Assert.That(result, Is.EqualTo("?q?key=is%20this?"));
+    }
+
+    [Test]
+    public void Build_QueryKey_PlusEncoded()
+    {
+        // "+" must be encoded in both query keys and query values
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("a+b", "c+d"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        Assert.That(result, Is.EqualTo("?a%2Bb=c%2Bd"));
+    }
+
+    [Test]
+    public void Build_ODataFilter_DollarPreserved()
+    {
+        // "$" is safe in query keys (sub-delimiter), verifies OData-style parameters work
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("$filter", "status eq 'active'"),
+            new("$top", "10"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        Assert.That(result, Does.Contain("$filter=status%20eq%20'active'"));
+        Assert.That(result, Does.Contain("$top=10"));
     }
 }

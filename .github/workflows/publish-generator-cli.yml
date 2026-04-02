@@ -89,6 +89,11 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@11
+
       - name: Publish generator-cli
         run: |
           cd packages/generator-cli/dist
