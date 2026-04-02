@@ -143,6 +143,7 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+        maxRetries: 5
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1

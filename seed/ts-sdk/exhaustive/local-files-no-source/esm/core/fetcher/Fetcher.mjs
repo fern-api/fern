@@ -257,6 +257,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: "The user aborted a request",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -274,6 +275,7 @@ export function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -292,6 +294,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: error.message,
+                        cause: error,
                     },
                     rawResponse: unknownRawResponse,
                 };
@@ -309,6 +312,7 @@ export function fetcherImpl(args) {
                 error: {
                     reason: "unknown",
                     errorMessage: toJson(error),
+                    cause: error,
                 },
                 rawResponse: unknownRawResponse,
             };
