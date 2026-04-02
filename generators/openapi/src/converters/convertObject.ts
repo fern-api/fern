@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -8,7 +7,7 @@ import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponen
 export interface ObjectProperty {
     docs: string | undefined;
     availability?: FernIr.Availability;
-    name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
+    name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     example?: FernIr.ExampleObjectProperty | FernIr.ExampleInlinedRequestBodyProperty;
 }
@@ -52,11 +51,11 @@ export function convertObject({
             }
         }
 
-        convertedProperties[getWireValue(objectProperty.name)] = propertySchema as OpenApiComponentSchema;
+        convertedProperties[objectProperty.name.wireValue] = propertySchema as OpenApiComponentSchema;
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {
-            required.push(getWireValue(objectProperty.name));
+            required.push(objectProperty.name.wireValue);
         }
     });
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {
