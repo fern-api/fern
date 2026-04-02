@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+<<<<<<< HEAD
 - version: 4.1.3
   changelogEntry:
     - summary: |
@@ -53,6 +54,17 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+||||||| parent of 4459cb6012f (revert(java): revert v66 upgrade - Java IR SDK cannot deserialize compressed names)
+- version: 4.1.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+=======
+>>>>>>> 4459cb6012f (revert(java): revert v66 upgrade - Java IR SDK cannot deserialize compressed names)
 - version: 4.0.9
   changelogEntry:
     - summary: |

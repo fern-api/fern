@@ -1,4 +1,3 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { java, Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -9,8 +8,6 @@ import { HeaderValidator } from "../validators/HeaderValidator.js";
 import { JsonValidator } from "../validators/JsonValidator.js";
 import { PaginationValidator } from "../validators/PaginationValidator.js";
 import { TestClassBuilder } from "./TestClassBuilder.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 /**
  * Builder for generating individual test methods in wire tests.
@@ -55,7 +52,7 @@ export class TestMethodBuilder {
         testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toJavaMethodName(caseConverter.pascalSafe(endpoint.name))}`;
+            const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream

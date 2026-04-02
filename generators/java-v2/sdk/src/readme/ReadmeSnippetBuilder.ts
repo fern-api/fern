@@ -1,12 +1,10 @@
-import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -743,7 +741,7 @@ ${clientClassName} client = ${clientClassName}.builder()
                                 valueType.type === "container" &&
                                 (valueType.container.type === "optional" || valueType.container.type === "nullable")
                             ) {
-                                const fieldName = caseConverter.camelUnsafe(property.name.name);
+                                const fieldName = property.name.name.camelCase.unsafeName;
                                 optionalFieldNames.add(fieldName);
                             }
                         }
@@ -804,7 +802,7 @@ ${clientClassName} client = ${clientClassName}.builder()
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): java.AstNode {
         const clientAccessParts = fernFilepath.allParts.map(
-            (part) => this.getKeyWordCompatibleMethodName(caseConverter.camelSafe(part)) + "()"
+            (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         return clientAccessParts.length > 0
             ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
@@ -812,7 +810,7 @@ ${clientClassName} client = ${clientClassName}.builder()
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return caseConverter.camelUnsafe(endpoint.name);
+        return endpoint.name.camelCase.unsafeName;
     }
 
     private getDefaultEnvironmentId(): string | undefined {
@@ -928,8 +926,8 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
             for (const variable of this.context.ir.variables) {
                 builderParameters.push({
-                    name: caseConverter.camelUnsafe(variable.name),
-                    value: java.TypeLiteral.string(`YOUR_${caseConverter.screamingSnakeUnsafe(variable.name)}`)
+                    name: variable.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
                 });
             }
         }
@@ -937,16 +935,16 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
             for (const param of this.context.ir.pathParameters.filter((p) => p.variable == null)) {
                 builderParameters.push({
-                    name: caseConverter.camelUnsafe(param.name),
-                    value: java.TypeLiteral.string(`YOUR_${caseConverter.screamingSnakeUnsafe(param.name)}`)
+                    name: param.name.camelCase.unsafeName,
+                    value: java.TypeLiteral.string(`YOUR_${param.name.screamingSnakeCase.unsafeName}`)
                 });
             }
         }
         // Environment URL variables (e.g., tenantDomain)
         for (const urlVariable of this.getEnvironmentUrlVariables()) {
             builderParameters.push({
-                name: caseConverter.camelUnsafe(urlVariable.name),
-                value: java.TypeLiteral.string(`YOUR_${caseConverter.screamingSnakeUnsafe(urlVariable.name)}`)
+                name: urlVariable.name.camelCase.unsafeName,
+                value: java.TypeLiteral.string(`YOUR_${urlVariable.name.screamingSnakeCase.unsafeName}`)
             });
         }
     }
@@ -1031,7 +1029,8 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part) => this.getKeyWordCompatibleMethodName(caseConverter.camelSafe(part)) + "()"
+            (part: { camelCase: { safeName: string } }) =>
+                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
@@ -1101,11 +1100,11 @@ ${clientClassName} client = ${clientClassName}.builder()
         }
 
         // Build the factory method name: <channelName>WebSocket()
-        const channelName = caseConverter.camelSafe(channel.name);
+        const channelName = channel.name.camelCase.safeName;
         const wsFactoryMethod = `${channelName}WebSocket`;
 
         // Build connect options class name: <PascalName>ConnectOptions
-        const channelPascalName = caseConverter.pascalSafe(channel.name);
+        const channelPascalName = channel.name.pascalCase.safeName;
         const connectOptionsClass = `${channelPascalName}ConnectOptions`;
 
         // Check if there are required query parameters for the connect options

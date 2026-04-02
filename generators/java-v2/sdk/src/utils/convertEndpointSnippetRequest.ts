@@ -1,4 +1,3 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 export type EndpointSnippetRequest = Omit<FernIr.dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
@@ -39,18 +38,18 @@ export function convertExampleEndpointCallToSnippetRequest(
     const pathParameters: Record<string, unknown> = {};
     [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
         (param) => {
-            pathParameters[getOriginalName(param.name)] = param.value.jsonExample;
+            pathParameters[param.name.originalName] = param.value.jsonExample;
         }
     );
 
     const queryParameters: Record<string, unknown> = {};
     example.queryParameters.forEach((param) => {
-        queryParameters[getWireValue(param.name)] = param.value.jsonExample;
+        queryParameters[param.name.wireValue] = param.value.jsonExample;
     });
 
     const headers: Record<string, unknown> = {};
     [...example.serviceHeaders, ...example.endpointHeaders].forEach((header) => {
-        headers[getWireValue(header.name)] = header.value.jsonExample;
+        headers[header.name.wireValue] = header.value.jsonExample;
     });
 
     return {

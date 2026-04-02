@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
@@ -10,8 +10,6 @@ import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;
@@ -114,7 +112,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: caseConverter.pascalUnsafe(typeDeclaration.name.name),
+            name: typeDeclaration.name.name.pascalCase.unsafeName,
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -193,7 +191,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
         const serviceCount = Object.keys(this.ir.services).length;
         const serviceNames = Object.values(this.ir.services).map(
-            (service) => service.name?.fernFilepath?.allParts?.map((part) => getOriginalName(part)).join("") || ""
+            (service) => service.name?.fernFilepath?.allParts?.map((part) => part.originalName).join("") || ""
         );
 
         if (
@@ -355,7 +353,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     private getPackageNameSegment(name: FernIr.Name): string {
-        return caseConverter.camelSafe(name).toLowerCase();
+        return name.camelCase.safeName.toLowerCase();
     }
 
     public getExampleEndpointCallOrThrow(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall {
