@@ -11,7 +11,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyTimeoutError extends Er
         }
 
         this.name = this.constructor.name;
-        if (opts?.cause) {
+        if (opts?.cause != null) {
             this.cause = opts.cause;
         }
     }

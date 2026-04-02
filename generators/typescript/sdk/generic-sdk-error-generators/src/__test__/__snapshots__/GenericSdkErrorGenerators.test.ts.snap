@@ -181,7 +181,7 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
-        if (opts?.cause) {
+        if (opts?.cause != null) {
             this.cause = opts.cause;
         }
     }
@@ -201,7 +201,7 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
-        if (opts?.cause) {
+        if (opts?.cause != null) {
             this.cause = opts.cause;
         }
     }

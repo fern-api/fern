@@ -80,10 +80,14 @@ export class GeneratedTimeoutSdkErrorImpl
     protected getConstructorStatements(): ts.Statement[] {
         return [
             ts.factory.createIfStatement(
-                ts.factory.createPropertyAccessChain(
-                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.OPTIONS_CONSTRUCTOR_PARAMETER_NAME),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME)
+                ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.OPTIONS_CONSTRUCTOR_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(GeneratedTimeoutSdkErrorImpl.CAUSE_PROPERTY_NAME)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
                 ),
                 ts.factory.createBlock(
                     [
