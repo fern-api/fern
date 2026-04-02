@@ -1167,6 +1167,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             final boolean isBasicAuth;
             final boolean isOAuth;
             final boolean isInferredAuth;
+            final boolean fieldNameOmitted;
+            final boolean secondaryFieldNameOmitted;
 
             AuthProviderInfo(
                     String schemeKey,
@@ -1175,7 +1177,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     String secondaryFieldName,
                     String envVarHint,
                     boolean isBasicAuth) {
-                this(schemeKey, providerClass, fieldName, secondaryFieldName, envVarHint, isBasicAuth, false, false);
+                this(
+                        schemeKey,
+                        providerClass,
+                        fieldName,
+                        secondaryFieldName,
+                        envVarHint,
+                        isBasicAuth,
+                        false,
+                        false,
+                        false,
+                        false);
             }
 
             AuthProviderInfo(
@@ -1187,6 +1199,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     boolean isBasicAuth,
                     boolean isOAuth,
                     boolean isInferredAuth) {
+                this(
+                        schemeKey,
+                        providerClass,
+                        fieldName,
+                        secondaryFieldName,
+                        envVarHint,
+                        isBasicAuth,
+                        isOAuth,
+                        isInferredAuth,
+                        false,
+                        false);
+            }
+
+            AuthProviderInfo(
+                    String schemeKey,
+                    String providerClass,
+                    String fieldName,
+                    String secondaryFieldName,
+                    String envVarHint,
+                    boolean isBasicAuth,
+                    boolean isOAuth,
+                    boolean isInferredAuth,
+                    boolean fieldNameOmitted,
+                    boolean secondaryFieldNameOmitted) {
                 this.schemeKey = schemeKey;
                 this.providerClass = providerClass;
                 this.fieldName = fieldName;
@@ -1195,6 +1231,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 this.isBasicAuth = isBasicAuth;
                 this.isOAuth = isOAuth;
                 this.isInferredAuth = isInferredAuth;
+                this.fieldNameOmitted = fieldNameOmitted;
+                this.secondaryFieldNameOmitted = secondaryFieldNameOmitted;
             }
         }
 
@@ -1342,7 +1380,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             + basic.getPasswordEnvVar().get().get() + " environment variables";
                 }
                 authProviderInfos.add(new AuthProviderInfo(
-                        "Basic", "BasicAuthProvider", usernameFieldName, passwordFieldName, envVarHint, true));
+                        "Basic",
+                        "BasicAuthProvider",
+                        usernameFieldName,
+                        passwordFieldName,
+                        envVarHint,
+                        true,
+                        false,
+                        false,
+                        usernameOmitted,
+                        passwordOmitted));
             } else if (this.configureAuthMethod != null) {
                 // Condition: only require non-omitted fields to be present
                 if (!usernameOmitted && !passwordOmitted) {
@@ -2341,14 +2388,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 if (info.isBasicAuth) {
                     String usernameField = info.fieldName;
                     String passwordField = info.secondaryFieldName;
+                    boolean usernameOmit = info.fieldNameOmitted;
+                    boolean passwordOmit = info.secondaryFieldNameOmitted;
+                    // Build condition: only check non-omitted fields
+                    String condition;
+                    if (!usernameOmit && !passwordOmit) {
+                        condition = "this." + usernameField + " != null && this." + passwordField + " != null";
+                    } else if (usernameOmit && !passwordOmit) {
+                        condition = "this." + passwordField + " != null";
+                    } else if (!usernameOmit && passwordOmit) {
+                        condition = "this." + usernameField + " != null";
+                    } else {
+                        condition = "true";
+                    }
+                    // Build supplier args: omitted fields use empty string
+                    String usernameArg = usernameOmit ? "() -> \"\"" : "() -> this." + usernameField;
+                    String passwordArg = passwordOmit ? "() -> \"\"" : "() -> this." + passwordField;
                     this.configureAuthMethod
-                            .beginControlFlow("if (this.$L != null && this.$L != null)", usernameField, passwordField)
+                            .beginControlFlow("if (" + condition + ")")
                             .addStatement(
-                                    "routingBuilder.addAuthProvider($S, new $T(() -> this.$L, () -> this.$L), $S)",
+                                    "routingBuilder.addAuthProvider($S, new $T(" + usernameArg + ", " + passwordArg
+                                            + "), $S)",
                                     info.schemeKey,
                                     providerClassName,
-                                    usernameField,
-                                    passwordField,
                                     info.envVarHint)
                             .endControlFlow();
                 } else if (info.isOAuth) {
