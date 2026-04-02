@@ -874,11 +874,10 @@ export class DocsDefinitionResolver {
             colorsV2: undefined,
             typography: undefined,
             backgroundImage: undefined,
-            // TODO: Wire llmsConfig through once @fern-api/fdr-sdk is updated with LlmsConfig support
-            // llmsConfig: this.parsedDocsConfig.llmsConfig != null
+            // TODO: Wire agentsConfig through once @fern-api/fdr-sdk is updated with AgentsConfig support
+            // agentsConfig: this.parsedDocsConfig.agentsConfig != null
             //     ? {
-            //           pageDirectivePrepend: this.parsedDocsConfig.llmsConfig.pageDirectivePrepend,
-            //           pageDirectiveAppend: this.parsedDocsConfig.llmsConfig.pageDirectiveAppend
+            //           pageDirective: this.parsedDocsConfig.agentsConfig["page-directive"]
             //       }
             //     : undefined,
             // custom components - the compiled JS will be stored in jsFiles and referenced by relative path

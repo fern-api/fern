@@ -83,7 +83,7 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
-        llms,
+        agents,
 
         pageActions,
 
@@ -233,11 +233,10 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        llmsConfig:
-            llms != null
+        agentsConfig:
+            agents != null
                 ? {
-                      pageDirectivePrepend: llms["page-directive-prepend"],
-                      pageDirectiveAppend: llms["page-directive-append"]
+                      "page-directive": agents["page-directive"]
                   }
                 : undefined,
 
