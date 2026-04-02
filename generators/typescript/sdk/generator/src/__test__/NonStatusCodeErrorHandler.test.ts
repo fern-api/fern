@@ -33,7 +33,8 @@ function createMockFileContext() {
                     },
                     UnknownError: {
                         _reasonLiteralValue: "unknown",
-                        message: "message"
+                        message: "message",
+                        cause: "cause"
                     }
                 },
                 RawResponse: {
@@ -52,6 +53,7 @@ function createMockFileContext() {
                         statusCode: ts.Expression | undefined;
                         responseBody: ts.Expression | undefined;
                         rawResponse: ts.Expression;
+                        cause?: ts.Expression | undefined;
                     }
                 ) => {
                     const props: ts.ObjectLiteralElementLike[] = [];
@@ -65,6 +67,9 @@ function createMockFileContext() {
                         props.push(ts.factory.createPropertyAssignment("body", args.responseBody));
                     }
                     props.push(ts.factory.createPropertyAssignment("rawResponse", args.rawResponse));
+                    if (args.cause != null) {
+                        props.push(ts.factory.createPropertyAssignment("cause", args.cause));
+                    }
                     return ts.factory.createNewExpression(ts.factory.createIdentifier("ApiError"), undefined, [
                         ts.factory.createObjectLiteralExpression(props, true)
                     ]);

@@ -15,7 +15,8 @@ exports[`GeneratedNonStatusCodeErrorHandlerImpl > writes handleNonStatusCodeErro
         case "timeout": throw new TimeoutError(\`Timeout exceeded when calling \${method} \${path}.\`);
         case "unknown": throw new ApiError({
             message: error.message,
-            rawResponse: rawResponse
+            rawResponse: rawResponse,
+            cause: error.cause
         });
         default: throw new ApiError({
             message: "Unknown error",
