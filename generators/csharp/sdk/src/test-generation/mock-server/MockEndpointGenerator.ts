@@ -780,10 +780,6 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
-     * Returns a string like: "key1=value1", "key2=value2"
-     */
-    /**
      * Gets the set of nullable property wire names from an endpoint's inlined request body.
      * Used to determine which null properties should be kept in the expected request JSON
      * (nullable properties serialize null explicitly via [Nullable] attribute) vs omitted
@@ -809,6 +805,10 @@ export class MockEndpointGenerator extends WithGeneration {
         return nullableNames;
     }
 
+    /**
+     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
+     * Returns a string like: "key1=value1", "key2=value2"
+     */
     private convertToFormUrlEncodedPairs(json: unknown): string {
         if (typeof json !== "object" || json === null) {
             return "";
