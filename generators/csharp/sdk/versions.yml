@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.55.5
+  changelogEntry:
+    - summary: |
+        Use RFC 3986 query-safe character set in QueryStringBuilder. Characters
+        like `$`, `!`, `'`, `(`, `)`, `*`, `,`, `;`, `:`, `@`, `/`, `?` are now
+        passed through unencoded in query parameter keys and values. This fixes
+        wire test failures for APIs using OData-style query parameters such as
+        `$filter` and `$select`, where the `$` was incorrectly percent-encoded
+        as `%24`.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 2.55.4
   changelogEntry:
     - summary: |
