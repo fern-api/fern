@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
@@ -12,7 +12,6 @@ type ContainerType = FernIr.ContainerType;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleInlinedRequestBodyExtraProperty = FernIr.ExampleInlinedRequestBodyExtraProperty;
 type HttpEndpoint = FernIr.HttpEndpoint;
-type Name = FernIr.Name;
 type SdkRequestWrapper = FernIr.SdkRequestWrapper;
 type ServiceId = FernIr.ServiceId;
 type TypeReference = FernIr.TypeReference;
@@ -278,7 +277,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
-        const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
+        const orderedFields: { name: NameInput; value: ast.CodeBlock }[] = [];
         let extraPropertiesFromExample: ExampleInlinedRequestBodyExtraProperty[] | undefined;
         if (
             this.context.includePathParametersInWrappedRequest({

@@ -2,6 +2,8 @@ import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
+
 const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -305,9 +307,9 @@ export class MockEndpointGenerator extends WithGeneration {
         type: "named";
         typeName: { typeId: TypeId };
         shape:
-            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
-            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
-            | { type: "enum"; value: { wireValue: string } }
+            | { type: "object"; properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }> }
+            | { type: "union"; discriminant: NameAndWireValueOrString; singleUnionType: unknown }
+            | { type: "enum"; value: NameAndWireValueOrString }
             | { type: "alias"; value: ExampleTypeReference }
             | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
     }): boolean {
@@ -518,11 +520,11 @@ export class MockEndpointGenerator extends WithGeneration {
             shape:
                 | {
                       type: "object";
-                      properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
-                      extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                      properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>;
+                      extraProperties?: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>;
                   }
-                | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
-                | { type: "enum"; value: { wireValue: string } }
+                | { type: "union"; discriminant: NameAndWireValueOrString; singleUnionType: unknown }
+                | { type: "enum"; value: NameAndWireValueOrString }
                 | { type: "alias"; value: ExampleTypeReference }
                 | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
         },
@@ -560,9 +562,9 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterObjectExample(
         typeId: TypeId,
-        properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>,
+        properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>,
         options: { filterWriteOnly?: boolean } = {},
-        extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
+        extraProperties?: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }>
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
@@ -602,25 +604,25 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterUnionExample(
         typeId: TypeId,
-        unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
+        unionShape: { discriminant: NameAndWireValueOrString; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
         // Union examples have a complex structure
         // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
-            wireDiscriminantValue: { wireValue: string };
+            wireDiscriminantValue: NameAndWireValueOrString;
             shape:
                 | {
                       type: "samePropertiesAsObject";
                       typeId: TypeId;
-                      object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
+                      object: { properties: Array<{ name: NameAndWireValueOrString; value: ExampleTypeReference }> };
                   }
                 | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
         };
 
         const result: Record<string, unknown> = {
-            [getWireValue(unionShape.discriminant)]: singleUnionType.wireDiscriminantValue.wireValue
+            [getWireValue(unionShape.discriminant)]: getWireValue(singleUnionType.wireDiscriminantValue)
         };
 
         if (singleUnionType.shape.type === "samePropertiesAsObject") {
@@ -673,8 +675,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getReadOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            properties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
         };
     }): Set<string> {
         const readOnlyNames = new Set<string>();
@@ -707,8 +709,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getWriteOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            properties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: NameAndWireValueOrString; propertyAccess?: string }>;
         };
     }): Set<string> {
         const writeOnlyNames = new Set<string>();
@@ -742,8 +744,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getNullablePropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+            properties?: Array<{ name: NameAndWireValueOrString; valueType: TypeReference }>;
+            extendedProperties?: Array<{ name: NameAndWireValueOrString; valueType: TypeReference }>;
         };
     }): Set<string> {
         const nullableNames = new Set<string>();
