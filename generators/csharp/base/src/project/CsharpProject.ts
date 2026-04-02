@@ -29,6 +29,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
+    private readonly nonJitFilePaths: string[] = [];
 
     public constructor({
         context,
@@ -167,15 +168,17 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await writeFile(csprojPath, csprojContents);
     }
 
-    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
+    private async csharpier(files: string[]): Promise<void> {
+        if (files.length === 0) {
+            return;
+        }
         const csharpier = findDotnetToolPath("csharpier");
         await loggingExeca(
             this.context.logger,
             csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            ["format", ...files, "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
             {
-                doNotPipeOutput: false,
-                cwd: absolutePathToSrcDirectory
+                doNotPipeOutput: false
             }
         );
     }
@@ -312,7 +315,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             .replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
-        await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
+        const ciYmlPath = join(ghDir, RelativeFilePath.of("ci.yml"));
+        await writeFile(ciYmlPath, githubWorkflow);
+        this.nonJitFilePaths.push(ciYmlPath);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
         await this.createTestUtilsDirectory({ absolutePathToTestProjectDirectory });
@@ -349,9 +354,9 @@ dotnet_diagnostic.IDE0005.severity = error
         }
         this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
-        // format the code cleanly using csharpier on the full output directory
+        // format non-JIT files (csproj, props, sln, etc.) using csharpier
         const csharpierStartTime = Date.now();
-        await this.csharpier(this.absolutePathToOutputDirectory);
+        await this.csharpier(this.nonJitFilePaths);
         this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
 
         this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
@@ -394,11 +399,14 @@ dotnet_diagnostic.IDE0005.severity = error
         const templateCsProjContents = csproj.toString();
         const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
         await writeFile(libraryCsprojPath, templateCsProjContents);
+        this.nonJitFilePaths.push(libraryCsprojPath);
 
-        await writeFile(
-            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
-            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
+        const libraryCustomPropsPath = join(
+            absolutePathToProjectDirectory,
+            RelativeFilePath.of(`${this.name}.Custom.props`)
         );
+        await writeFile(libraryCustomPropsPath, (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString());
+        this.nonJitFilePaths.push(libraryCustomPropsPath);
 
         return absolutePathToProjectDirectory;
     }
@@ -431,10 +439,17 @@ dotnet_diagnostic.IDE0005.severity = error
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
+        this.nonJitFilePaths.push(testCsprojPath);
+
+        const testCustomPropsPath = join(
+            absolutePathToTestProject,
+            RelativeFilePath.of(`${testProjectName}.Custom.props`)
+        );
         await writeFile(
-            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
+            testCustomPropsPath,
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
+        this.nonJitFilePaths.push(testCustomPropsPath);
 
         return absolutePathToTestProject;
     }
@@ -479,6 +494,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
         const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await writeFile(slnxFilePath, slnxContents);
+        this.nonJitFilePaths.push(slnxFilePath);
 
         // When sln-format is "sln", also generate the legacy .sln file
         if (this.settings.slnFormat === "sln") {
@@ -523,6 +539,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
             const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
             await writeFile(slnFilePath, slnContents);
+            this.nonJitFilePaths.push(slnFilePath);
         }
     }
 
@@ -846,6 +863,15 @@ dotnet_diagnostic.IDE0005.severity = error
             this.addRawFiles(await this.createRawAsIsFile({ filename }));
         }
         await this.writeRawFiles();
+        for (const file of this.rawFiles) {
+            this.nonJitFilePaths.push(
+                join(
+                    this.absolutePathToOutputDirectory,
+                    RelativeFilePath.of(file.directory),
+                    RelativeFilePath.of(file.filename)
+                )
+            );
+        }
     }
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
