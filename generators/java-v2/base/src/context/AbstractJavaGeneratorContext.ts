@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    CaseConverter
+} from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { JavaProject } from "../project/JavaProject.js";
