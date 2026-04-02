@@ -871,7 +871,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
-    ): Array<{ name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
+    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
         return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
@@ -896,7 +896,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name | FernIr.NameOrString): go.Selector {
+    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
         return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
     }
 

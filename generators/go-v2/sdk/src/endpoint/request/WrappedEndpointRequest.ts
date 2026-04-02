@@ -216,7 +216,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
     }
 
-    private getRequestPropertyReference({ fieldName, isFile }: { fieldName: FernIr.Name | FernIr.NameOrString; isFile?: boolean }): string {
+    private getRequestPropertyReference({ fieldName, isFile }: { fieldName: FernIr.Name; isFile?: boolean }): string {
         if (isFile && !this.context.customConfig.inlineFileProperties) {
             return this.context.getParameterName(fieldName);
         }

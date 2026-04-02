@@ -130,11 +130,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "raw_client.go";
     }
 
-    public getMethodName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getMethodName(name: FernIr.Name): string {
         return caseConverter.pascalUnsafe(name);
     }
 
-    public getReceiverName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getReceiverName(name: FernIr.Name): string {
         return caseConverter.camelUnsafe(name).charAt(0);
     }
 
@@ -646,7 +646,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name | FernIr.NameOrString): go.TypeReference {
+    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): go.TypeReference {
         return go.typeReference({
             name: this.getClassName(requestName),
             importPath: this.getLocationForWrappedRequest(serviceId).importPath
@@ -726,8 +726,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: FernIr.Name | FernIr.NameOrString;
-        propertyName: FernIr.Name | FernIr.NameOrString;
+        requestParameterName: FernIr.Name;
+        propertyName: FernIr.Name;
     }): string {
         const requestParameter = this.getParameterName(requestParameterName);
         return `${requestParameter}.${this.getFieldName(propertyName)}`;

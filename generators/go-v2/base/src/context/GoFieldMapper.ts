@@ -13,7 +13,7 @@ export declare namespace GoFieldMapper {
 
     interface Args {
         /* The name of the field. */
-        name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
+        name: FernIr.NameAndWireValue;
         /* The type of the field. */
         reference: FernIr.TypeReference;
         /* The docs of the field, if any. */
@@ -63,7 +63,7 @@ export class GoFieldMapper {
         includeTags
     }: {
         container: FernIr.ContainerType;
-        name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
+        name: FernIr.NameAndWireValue;
         reference: FernIr.TypeReference;
         docs?: string;
         includeTags: GoFieldMapper.Tag[];
@@ -88,7 +88,7 @@ export class GoFieldMapper {
         }
     }
 
-    private convertLiteral({ name, literal }: { name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString; literal: FernIr.Literal }): go.Field {
+    private convertLiteral({ name, literal }: { name: FernIr.NameAndWireValue; literal: FernIr.Literal }): go.Field {
         const nameValue = typeof name === "string" ? name : name.name;
         switch (literal.type) {
             case "boolean":
@@ -111,7 +111,7 @@ export class GoFieldMapper {
         reference,
         includeTags
     }: {
-        name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
+        name: FernIr.NameAndWireValue;
         reference: FernIr.TypeReference;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field.Tag[] {
@@ -128,7 +128,7 @@ export class GoFieldMapper {
         includedTags,
         tag
     }: {
-        name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
+        name: FernIr.NameAndWireValue;
         reference: FernIr.TypeReference;
         includedTags: Set<GoFieldMapper.Tag>;
         tag: GoFieldMapper.Tag;

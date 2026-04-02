@@ -880,8 +880,8 @@ function getPropertyReference({
     dereference
 }: {
     variableName: string;
-    propertyPath: (FernIr.Name | FernIr.NameOrString)[] | undefined;
-    name: FernIr.Name | FernIr.NameOrString;
+    propertyPath: (FernIr.Name)[] | undefined;
+    name: FernIr.Name;
     withGetter?: boolean;
     dereference?: boolean;
 }): go.AstNode {
@@ -899,7 +899,7 @@ function getPropertyNilCheckCondition({
     propertyPath
 }: {
     variableName: string;
-    propertyPath: (FernIr.Name | FernIr.NameOrString)[];
+    propertyPath: (FernIr.Name)[];
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath
@@ -948,7 +948,7 @@ function encodeQuery({ writer }: { writer: go.Writer }): void {
     writer.writeLine("}");
 }
 
-function getPropertyAccessor({ name, withGetter }: { name: FernIr.Name | FernIr.NameOrString; withGetter?: boolean }): string {
+function getPropertyAccessor({ name, withGetter }: { name: FernIr.Name; withGetter?: boolean }): string {
     if (withGetter) {
         return `Get${caseConverter.pascalUnsafe(name)}()`;
     }

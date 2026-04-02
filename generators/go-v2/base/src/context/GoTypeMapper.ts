@@ -33,7 +33,7 @@ export class GoTypeMapper {
         }
     }
 
-    public convertToTypeReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name | FernIr.NameOrString }): go.TypeReference {
+    public convertToTypeReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name }): go.TypeReference {
         return go.typeReference({
             name: this.context.getClassName(declaredTypeName.name),
             importPath: this.context.getLocationForTypeId(declaredTypeName.typeId).importPath
@@ -74,7 +74,6 @@ export class GoTypeMapper {
             string: () => go.Type.string(),
             date: () => go.Type.date(),
             dateTime: () => go.Type.dateTime(),
-            dateTimeRfc2822: () => go.Type.dateTime(),
             uuid: () => go.Type.uuid(),
             base64: () => go.Type.bytes(),
             bigInteger: () => go.Type.string(),

@@ -73,19 +73,19 @@ export abstract class AbstractGoGeneratorContext<
         return errorDeclaration;
     }
 
-    public getClassName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getClassName(name: FernIr.Name): string {
         return caseConverter.pascalUnsafe(name);
     }
 
-    public getPackageName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getPackageName(name: FernIr.Name): string {
         return caseConverter.snakeUnsafe(name).toLowerCase();
     }
 
-    public getFilename(name: FernIr.Name | FernIr.NameOrString): string {
+    public getFilename(name: FernIr.Name): string {
         return caseConverter.snakeUnsafe(name);
     }
 
-    public getReceiverName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getReceiverName(name: FernIr.Name): string {
         return caseConverter.camelUnsafe(name).charAt(0).toLowerCase();
     }
 
@@ -112,15 +112,15 @@ export abstract class AbstractGoGeneratorContext<
         return `${this.rootImportPath}/option`;
     }
 
-    public getFieldName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getFieldName(name: FernIr.Name): string {
         return goExportedFieldName(caseConverter.pascalUnsafe(name));
     }
 
-    public getLiteralFieldName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getLiteralFieldName(name: FernIr.Name): string {
         return caseConverter.camelSafe(name);
     }
 
-    public getParameterName(name: FernIr.Name | FernIr.NameOrString): string {
+    public getParameterName(name: FernIr.Name): string {
         return caseConverter.camelSafe(name);
     }
 
@@ -644,7 +644,7 @@ export abstract class AbstractGoGeneratorContext<
         return this.getLocation(filepath.allParts, suffix);
     }
 
-    private getLocation(names: (FernIr.Name | FernIr.NameOrString)[], suffix?: string): FileLocation {
+    private getLocation(names: (FernIr.Name)[], suffix?: string): FileLocation {
         let parts = names.map((name) => caseConverter.camelSafe(name).toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {

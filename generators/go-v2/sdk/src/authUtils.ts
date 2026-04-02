@@ -116,7 +116,7 @@ export function getEndpointPath(endpoint: FernIr.HttpEndpoint): string {
 export function resolveTokenEndpointBodyProperties(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>
-): Array<{ name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
+): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
     if (tokenEndpoint.requestBody == null) {
         return [];
     }
@@ -142,7 +142,7 @@ export function resolveTokenEndpointBodyProperties(
 export function getInferredAuthCredentialParams(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>,
-    context: { getFieldName(name: FernIr.Name | FernIr.NameOrString): string }
+    context: { getFieldName(name: FernIr.Name): string }
 ): Array<{ fieldName: string; isOptional: boolean }> {
     const params: Array<{ fieldName: string; isOptional: boolean }> = [];
 

@@ -698,7 +698,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     float: () => undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
-                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     bigInteger: () => undefined,
