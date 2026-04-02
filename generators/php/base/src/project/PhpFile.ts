@@ -1,4 +1,4 @@
-import { File, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";

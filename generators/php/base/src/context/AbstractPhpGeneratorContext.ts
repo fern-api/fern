@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, getSafeClassName, php, SELF } from "@fern-api/php-codegen";

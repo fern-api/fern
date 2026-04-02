@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -348,5 +348,8 @@ function isRootServiceId({
 }
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
+    return (
+        service.displayName ??
+        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+    );
 }

@@ -1,4 +1,4 @@
-import { File, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
