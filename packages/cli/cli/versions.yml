@@ -4,9 +4,6 @@
   changelogEntry:
     - summary: |
         Add `--email` flag to `fern login` for enterprise SSO support.
-        When provided, the CLI resolves the email's SSO connection via the
-        Dashboard API and routes directly to the identity provider through
-        Auth0. The default login flow (social providers) is unchanged.
       type: feat
   createdAt: "2026-04-02"
   irVersion: 65
