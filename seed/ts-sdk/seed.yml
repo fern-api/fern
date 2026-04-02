@@ -47,6 +47,7 @@ fixtures:
     - outputFolder: branded-string-aliases
       customConfig:
         useBrandedStringAliases: true
+        maxRetries: 5
   streaming:
     - outputFolder: no-custom-config
       customConfig: null

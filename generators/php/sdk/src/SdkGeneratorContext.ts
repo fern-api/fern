@@ -635,12 +635,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public override getExtraTemplateVarsForFile(filename: string): Record<string, string> | undefined {
+        const vars: Record<string, string> = {
+            defaultMaxRetries: String(this.customConfig.maxRetries ?? 2)
+        };
         if (filename === AsIsFiles.CustomPager) {
-            return {
-                customPagerClassName: this.getCustomPagerClassName()
-            };
+            vars.customPagerClassName = this.getCustomPagerClassName();
         }
-        return undefined;
+        return vars;
     }
 
     public getLocationForTypeId(typeId: FernIr.TypeId): FileLocation {

@@ -192,6 +192,7 @@ fixtures:
     - customConfig:
         client-class-name: BaseClient
         exported-client-class-name: CustomClient
+        maxRetries: 5
       outputFolder: exported-client-class-name
     - customConfig:
         include-exception-handler: true
