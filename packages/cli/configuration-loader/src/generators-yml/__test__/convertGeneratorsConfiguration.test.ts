@@ -1217,7 +1217,7 @@ describe("convertGeneratorsConfiguration", () => {
                         generators: [
                             {
                                 image: {
-                                    name: "my-generator",
+                                    name: "fern-typescript-sdk",
                                     registry: "ecr.aws/myorg"
                                 },
                                 version: "2.0.0",
@@ -1244,7 +1244,7 @@ describe("convertGeneratorsConfiguration", () => {
         const generators = converted.groups[0]?.generators ?? [];
         const customImageGenerators = generators.filter((g) => g.containerImage != null);
         expect(customImageGenerators).toHaveLength(1);
-        expect(customImageGenerators[0]?.name).toBe("my-generator");
+        expect(customImageGenerators[0]?.name).toBe("fernapi/fern-typescript-sdk");
     });
 
     it("containerImage combined with version yields correct Docker image reference", async () => {
