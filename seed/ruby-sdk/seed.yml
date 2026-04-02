@@ -31,7 +31,8 @@ generatorType: SDK
 defaultOutputMode: github
 fixtures:
   exhaustive:
-    - customConfig: null
+    - customConfig:
+        maxRetries: 5
       outputFolder: no-custom-config
     - customConfig:
         extraDependencies:
