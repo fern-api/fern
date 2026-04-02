@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { snakeCase } from "lodash-es";
 

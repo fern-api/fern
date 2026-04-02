@@ -1,4 +1,4 @@
-import { File, CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
