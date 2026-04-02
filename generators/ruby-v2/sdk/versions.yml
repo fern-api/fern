@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.1.13
+  changelogEntry:
+    - summary: |
+        Remove legacy dollar-sign workaround in generated CI workflow now that Eta
+        template engine does not interpret `${}` syntax.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 61
+
 - version: 1.1.12
   changelogEntry:
     - summary: |
