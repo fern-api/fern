@@ -1,46 +1,46 @@
 openapi: 3.0.1
 info:
   title: csharp-namespace-collision
-  version: ''
+  version: ""
 paths:
   /users:
     post:
       operationId: createUser
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
   /users/create-task:
     post:
       operationId: createTask
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: "#/components/schemas/Task"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Task'
+              $ref: "#/components/schemas/Task"
   /system/users:
     post:
       operationId: system_createUser
@@ -48,18 +48,18 @@ paths:
         - System
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SystemUser'
+                $ref: "#/components/schemas/SystemUser"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SystemUser'
+              $ref: "#/components/schemas/SystemUser"
   /system/users/create-task:
     post:
       operationId: system_createTask
@@ -67,18 +67,18 @@ paths:
         - System
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SystemTask'
+                $ref: "#/components/schemas/SystemTask"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SystemTask'
+              $ref: "#/components/schemas/SystemTask"
   /system/users/{userId}:
     get:
       operationId: system_getUser
@@ -91,12 +91,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SystemUser'
+                $ref: "#/components/schemas/SystemUser"
 components:
   schemas:
     User:
@@ -140,9 +140,9 @@ components:
         name:
           type: string
         user:
-          $ref: '#/components/schemas/SystemUser'
+          $ref: "#/components/schemas/SystemUser"
         owner:
-          $ref: '#/components/schemas/SystemUser'
+          $ref: "#/components/schemas/SystemUser"
       required:
         - name
         - user

@@ -1,4 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getOriginalName } from "@fern-typescript/commons";
 
 type SimpleErrorName = string;
 
@@ -22,5 +23,5 @@ export class ErrorResolver {
 }
 
 function getSimpleErrorName(errorName: FernIr.DeclaredErrorName): SimpleErrorName {
-    return errorName.name.originalName;
+    return getOriginalName(errorName.name);
 }

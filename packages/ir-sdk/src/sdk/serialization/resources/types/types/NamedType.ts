@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DisplayName } from "../../commons/types/DisplayName.js";
 import { FernFilepath } from "../../commons/types/FernFilepath.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { TypeId } from "../../commons/types/TypeId.js";
 import { NamedTypeDefault } from "./NamedTypeDefault.js";
 
@@ -13,7 +13,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
     core.serialization.objectWithoutOptionalProperties({
         typeId: TypeId,
         fernFilepath: FernFilepath,
-        name: Name,
+        name: NameOrString,
         displayName: DisplayName.optional(),
         default: NamedTypeDefault.optional(),
         inline: core.serialization.boolean().optional(),
@@ -23,7 +23,7 @@ export declare namespace NamedType {
     export interface Raw {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
         displayName?: DisplayName.Raw | null;
         default?: NamedTypeDefault.Raw | null;
         inline?: boolean | null;

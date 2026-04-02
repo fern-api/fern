@@ -1,4 +1,5 @@
 export * from "./AbsoluteProductPath.js";
+export * from "./AgentsConfig.js";
 export * from "./AiChatConfig.js";
 export * from "./AiChatDatasource.js";
 export * from "./AiChatLocation.js";

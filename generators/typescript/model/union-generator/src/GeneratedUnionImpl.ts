@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -48,6 +49,7 @@ export declare namespace GeneratedUnionImpl {
         inline: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -80,6 +82,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private readonly inline: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         typeName,
@@ -98,7 +101,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         noOptionalProperties,
         inline,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -117,6 +121,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.inline = inline;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.caseConverter = caseConverter;
     }
 
     public generateStatements(
@@ -277,7 +282,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     public getBasePropertyKey(rawKey: string): string {
-        const baseProperty = this.baseProperties.find((property) => property.name.wireValue === rawKey);
+        const baseProperty = this.baseProperties.find((property) => getWireValue(property.name) === rawKey);
         if (baseProperty == null) {
             throw new Error("No base property exists for key " + rawKey);
         }
@@ -286,9 +291,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private _getBasePropertyKey(baseProperty: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return baseProperty.name.name.camelCase.unsafeName;
+            return this.caseConverter.camelUnsafe(baseProperty.name);
         } else {
-            return baseProperty.name.wireValue;
+            return getWireValue(baseProperty.name);
         }
     }
 

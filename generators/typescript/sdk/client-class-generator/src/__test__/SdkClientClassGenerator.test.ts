@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
-import { createMinimalIR } from "@fern-typescript/test-utils";
+import { caseConverter, createMinimalIR } from "@fern-typescript/test-utils";
 import { describe, expect, it } from "vitest";
 
 import { SdkClientClassGenerator } from "../SdkClientClassGenerator.js";
@@ -50,6 +50,7 @@ function createMockImportsManager(): any {
 
 function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClientClassGenerator {
     return new SdkClientClassGenerator({
+        caseConverter,
         intermediateRepresentation: createMinimalIR(),
         errorResolver: createMockErrorResolver(),
         packageResolver: createMockPackageResolver(),

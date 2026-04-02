@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-parameter-name` for parameters.",
   "auth": {
     "requirement": "ALL",
@@ -27,26 +9,8 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "version",
-          "camelCase": {
-            "unsafeName": "version",
-            "safeName": "version"
-          },
-          "snakeCase": {
-            "unsafeName": "version",
-            "safeName": "version"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "VERSION",
-            "safeName": "VERSION"
-          },
-          "pascalCase": {
-            "unsafeName": "Version",
-            "safeName": "Version"
-          }
-        },
-        "wireValue": "X-API-Version"
+        "wireValue": "X-API-Version",
+        "name": "version"
       },
       "valueType": {
         "primitive": {
@@ -89,25 +53,7 @@
       "endpoints": [
         {
           "id": "endpoint_.get_user",
-          "name": {
-            "originalName": "get_user",
-            "camelCase": {
-              "unsafeName": "getUser",
-              "safeName": "getUser"
-            },
-            "snakeCase": {
-              "unsafeName": "get_user",
-              "safeName": "get_user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_USER",
-              "safeName": "GET_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetUser",
-              "safeName": "GetUser"
-            }
-          },
+          "name": "get_user",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -131,25 +77,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -168,25 +96,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -206,26 +116,8 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "bar",
-                  "camelCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BAR",
-                    "safeName": "BAR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Bar",
-                    "safeName": "Bar"
-                  }
-                },
-                "wireValue": "foo"
+                "wireValue": "foo",
+                "name": "bar"
               },
               "valueType": {
                 "primitive": {
@@ -246,67 +138,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUserRequest",
-                "camelCase": {
-                  "unsafeName": "getUserRequest",
-                  "safeName": "getUserRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_user_request",
-                  "safeName": "get_user_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_USER_REQUEST",
-                  "safeName": "GET_USER_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetUserRequest",
-                  "safeName": "GetUserRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "GetUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -337,28 +175,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -377,6 +194,7 @@
     "headers": [
       {
         "name": {
+          "wireValue": "X-API-Version",
           "name": {
             "originalName": "version",
             "camelCase": {
@@ -395,8 +213,7 @@
               "unsafeName": "Version",
               "safeName": "Version"
             }
-          },
-          "wireValue": "X-API-Version"
+          }
         },
         "typeReference": {
           "value": "STRING",
@@ -494,6 +311,7 @@
           "queryParameters": [
             {
               "name": {
+                "wireValue": "foo",
                 "name": {
                   "originalName": "bar",
                   "camelCase": {
@@ -512,8 +330,7 @@
                     "unsafeName": "Bar",
                     "safeName": "Bar"
                   }
-                },
-                "wireValue": "foo"
+                }
               },
               "typeReference": {
                 "value": "STRING",
@@ -537,6 +354,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

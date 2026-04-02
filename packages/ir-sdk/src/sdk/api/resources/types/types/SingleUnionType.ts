@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface SingleUnionType extends FernIr.WithDocs {
-    discriminantValue: FernIr.NameAndWireValue;
+    discriminantValue: FernIr.NameAndWireValueOrString;
     shape: FernIr.SingleUnionTypeProperties;
     displayName: string | undefined;
     availability: FernIr.Availability | undefined;

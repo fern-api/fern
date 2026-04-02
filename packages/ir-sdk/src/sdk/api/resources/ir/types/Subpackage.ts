@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface Subpackage extends FernIr.Package {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     displayName: FernIr.DisplayName | undefined;
 }

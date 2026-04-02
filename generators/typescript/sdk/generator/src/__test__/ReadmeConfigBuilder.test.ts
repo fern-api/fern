@@ -1,7 +1,8 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -104,7 +105,7 @@ function createEndpointSnippet(endpointId: string, method: string, snippetCode: 
 // Mock context factory
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext(overrides?: {
+function createMockFileContext(overrides?: {
     services?: Record<string, FernIr.HttpService>;
     readmeConfig?: FernIr.ReadmeConfig;
     subpackages?: Record<string, FernIr.Subpackage>;
@@ -114,7 +115,7 @@ function createMockSdkContext(overrides?: {
     authSchemes?: FernIr.AuthScheme[];
     organization?: string;
     customConfig?: unknown;
-}): SdkContext {
+}): FileContext {
     const services = overrides?.services ?? {};
     const subpackages = overrides?.subpackages ?? {};
     const readmeConfig = overrides?.readmeConfig;
@@ -162,7 +163,8 @@ function createMockSdkContext(overrides?: {
             debug: () => {
                 /* noop */
             }
-        }
+        },
+        case: new CaseConverter({ generationLanguage: "typescript", keywords: undefined, smartCasing: false })
         // biome-ignore lint/suspicious/noExplicitAny: test mock
     } as any;
 }
@@ -193,7 +195,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 organization: "acme"
@@ -231,7 +233,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -264,7 +266,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 authSchemes: [
@@ -304,7 +306,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -330,7 +332,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -364,7 +366,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -391,7 +393,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service }
             });
 
@@ -417,7 +419,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 readmeConfig: {
@@ -460,7 +462,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -492,7 +494,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -524,7 +526,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -557,7 +559,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 readmeConfig: {
@@ -605,7 +607,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk"
             });
@@ -632,7 +634,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 customConfig: {
@@ -672,7 +674,7 @@ describe("ReadmeConfigBuilder", () => {
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
             const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
 
-            const context = createMockSdkContext({
+            const context = createMockFileContext({
                 services: { svc1: service },
                 packageName: "@acme/sdk",
                 organization: "acme",

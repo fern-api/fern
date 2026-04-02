@@ -7,6 +7,10 @@ import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export const TYPES_DIRECTORY_NAME = "types";
 
+export declare namespace TypeDeclarationReferencer {
+    export type Init = AbstractDeclarationReferencer.Init;
+}
+
 export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<FernIr.DeclaredTypeName> {
     public getExportedFilepath(typeName: FernIr.DeclaredTypeName): ExportedFilePath {
         return {
@@ -14,6 +18,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Fer
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: typeName.fernFilepath,
+                    caseConverter: this.caseConverter,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -37,7 +42,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Fer
     }
 
     public getExportedName(typeName: FernIr.DeclaredTypeName): string {
-        return typeName.name.pascalCase.safeName;
+        return this.caseConverter.pascalSafe(typeName.name);
     }
 
     public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<FernIr.DeclaredTypeName>): Reference {

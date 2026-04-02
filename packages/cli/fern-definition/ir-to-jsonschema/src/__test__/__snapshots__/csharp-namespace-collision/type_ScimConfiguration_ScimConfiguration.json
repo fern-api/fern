@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "connectionId": {
+      "type": "string"
+    },
+    "connectionName": {
+      "type": "string"
+    },
+    "strategy": {
+      "type": "string"
+    },
+    "tenant": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connectionId",
+    "connectionName",
+    "strategy",
+    "tenant"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

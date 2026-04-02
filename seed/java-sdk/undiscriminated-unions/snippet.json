@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "f438a51f",
+            "example_identifier": "6077f6cf",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "3dbd6f62",
+            "example_identifier": "a1513005",
             "id": {
                 "method": "GET",
                 "path": "/metadata",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "615c76f",
+            "example_identifier": "39010665",
             "id": {
                 "method": "PUT",
                 "path": "/metadata",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "13bb56fc",
+            "example_identifier": "38e366b2",
             "id": {
                 "method": "POST",
                 "path": "/call",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "305ddcbf",
+            "example_identifier": "1a3de9b7",
             "id": {
                 "method": "POST",
                 "path": "/duplicate",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "a3cba66",
+            "example_identifier": "b191b93d",
             "id": {
                 "method": "POST",
                 "path": "/nested",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "d706e48b",
+            "example_identifier": "e0b6e056",
             "id": {
                 "method": "POST",
                 "path": "/camel-case",
