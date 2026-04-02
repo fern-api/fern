@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -8,6 +9,8 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export class FileUploadEndpointRequest extends EndpointRequest {
     private fileUploadRequest: FernIr.FileUploadRequest;
@@ -40,7 +43,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    const snakeCaseName = property.value.key.name.snakeCase.safeName;
+                    const snakeCaseName = caseConverter.snakeSafe(property.value.key.name);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -58,7 +61,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         })
                     );
                 } else {
-                    const snakeCaseName = property.name.name.snakeCase.safeName;
+                    const snakeCaseName = caseConverter.snakeSafe(property.name.name);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -70,7 +73,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                         const keywordArguments = [
                                             ruby.keywordArgument({
                                                 name: "name",
-                                                value: ruby.TypeLiteral.string(property.name.wireValue)
+                                                value: ruby.TypeLiteral.string(getWireValue(property.name))
                                             }),
                                             ruby.keywordArgument({
                                                 name: "value",
@@ -111,7 +114,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
     }
 
     private getFormDataPartForNonFileProperty(property: FernIr.FileUploadBodyProperty): ruby.CodeBlock | undefined {
-        const snakeCaseName = property.name.name.snakeCase.safeName;
+        const snakeCaseName = caseConverter.snakeSafe(property.name.name);
         switch (property.style) {
             case "json":
                 return ruby.codeblock((writer) => {

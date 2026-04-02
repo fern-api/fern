@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;
@@ -26,7 +29,7 @@ export abstract class EndpointRequest {
     ) {}
 
     public getParameterName(): string {
-        return this.sdkRequest.requestParameterName.camelCase.safeName;
+        return caseConverter.camelSafe(this.sdkRequest.requestParameterName);
     }
 
     public getRequestBodyVariableName(): string {

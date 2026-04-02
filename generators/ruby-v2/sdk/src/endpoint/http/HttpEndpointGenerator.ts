@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -5,6 +6,8 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace HttpEndpointGenerator {
     export interface GenerateArgs {
@@ -111,7 +114,7 @@ export class HttpEndpointGenerator {
                 case "custom": {
                     const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
                     // Use snakeCase.safeName for Ruby method calls
-                    const itemField = endpoint.pagination.results.property.name.name.snakeCase.safeName;
+                    const itemField = caseConverter.snakeSafe(endpoint.pagination.results.property.name.name);
                     requestStatements = [
                         ...requestStatements,
                         ruby.invokeMethod({
@@ -149,14 +152,14 @@ export class HttpEndpointGenerator {
                                     name: "cursor_field",
                                     // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.next.property.name.name.snakeCase.safeName}`
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.next.property.name.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -198,7 +201,7 @@ export class HttpEndpointGenerator {
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -206,7 +209,7 @@ export class HttpEndpointGenerator {
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(
-                                              `:${endpoint.pagination.hasNextPage.property.name.name.snakeCase.safeName}`
+                                              `:${caseConverter.snakeSafe(endpoint.pagination.hasNextPage.property.name.name)}`
                                           )
                                         : ruby.nilValue()
                                 }),
@@ -235,7 +238,7 @@ export class HttpEndpointGenerator {
         statements.push(...requestStatements);
 
         return ruby.method({
-            name: endpoint.name.snakeCase.safeName,
+            name: caseConverter.snakeSafe(endpoint.name),
             docstring: enhancedDocstring,
             returnType,
             parameters: {
@@ -342,13 +345,13 @@ export class HttpEndpointGenerator {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[pathParam.name.originalName] = `${PARAMS_VN}[:${parameterName}]`;
+            pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
         }
         return pathParameterReferences;
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
-        return pathParameter.name.snakeCase.safeName;
+        return caseConverter.snakeSafe(pathParameter.name);
     }
 
     private loadResponseBodyFromJson({
@@ -398,19 +401,19 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
-            const paramName = pathParam.name.snakeCase.safeName;
+            const paramName = caseConverter.snakeSafe(pathParam.name);
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = queryParam.name.name.snakeCase.safeName;
+            const paramName = caseConverter.snakeSafe(queryParam.name.name);
             const typeString = this.typeReferenceToYardString(queryParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
         for (const headerParam of endpoint.headers) {
-            const paramName = headerParam.name.name.snakeCase.safeName;
+            const paramName = caseConverter.snakeSafe(headerParam.name.name);
             const typeString = this.typeReferenceToYardString(headerParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }

@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -6,6 +7,8 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
@@ -227,7 +230,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
-                snakeName: query.name.name.snakeCase.unsafeName,
+                snakeName: caseConverter.snakeUnsafe(query.name.name),
                 isOptional: this.isOptional(query.valueType),
                 literal: this.maybeLiteral(query.valueType)
             });
@@ -236,7 +239,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
-                snakeName: header.name.name.snakeCase.unsafeName,
+                snakeName: caseConverter.snakeUnsafe(header.name.name),
                 isOptional: this.isOptional(header.valueType),
                 literal: this.maybeLiteral(header.valueType)
             });
@@ -250,7 +253,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                        snakeName: property.name.name.snakeCase.unsafeName,
+                        snakeName: caseConverter.snakeUnsafe(property.name.name),
                         isOptional: this.isOptional(property.valueType),
                         literal: this.maybeLiteral(property.valueType)
                     });
@@ -260,7 +263,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                 for (const property of fileUpload.properties) {
                     if (property.type === "bodyProperty") {
                         properties.push({
-                            snakeName: property.name.name.snakeCase.unsafeName,
+                            snakeName: caseConverter.snakeUnsafe(property.name.name),
                             isOptional: this.isOptional(property.valueType),
                             literal: this.maybeLiteral(property.valueType)
                         });
@@ -331,11 +334,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getEndpointMethodName(): string {
-        return this.tokenEndpoint.name.snakeCase.safeName;
+        return caseConverter.snakeSafe(this.tokenEndpoint.name);
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return name.name.snakeCase.unsafeName;
+        return caseConverter.snakeUnsafe(name.name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -348,11 +351,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
-        return `.${pathItem.name.snakeCase.safeName}`;
+        return `.${caseConverter.snakeSafe(pathItem.name)}`;
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `.${property.name.name.snakeCase.safeName}`;
+        return `.${caseConverter.snakeSafe(property.name.name)}`;
     }
 
     private isOptional(typeReference: { type: string }): boolean {

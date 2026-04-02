@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -5,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
@@ -27,7 +30,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCu
         for (const environment of this.singleUrlEnvironments.environments) {
             class_.addStatement(
                 ruby.codeblock((writer) => {
-                    writer.write(`${environment.name.screamingSnakeCase.safeName} = "${environment.url}"`);
+                    writer.write(`${caseConverter.screamingSnakeSafe(environment.name)} = "${environment.url}"`);
                 })
             );
         }

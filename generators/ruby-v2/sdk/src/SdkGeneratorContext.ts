@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ClassReference, ruby } from "@fern-api/ruby-ast";
@@ -10,6 +10,8 @@ import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 const ROOT_TYPES_FOLDER = "types";
 
@@ -55,13 +57,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
-            name: typeDeclaration.name.name.pascalCase.safeName
+            name: caseConverter.pascalSafe(typeDeclaration.name.name)
         });
     }
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return typeDeclaration.name.name.snakeCase.safeName + ".rb";
+        return caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
@@ -84,7 +86,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             [
                 "lib",
                 this.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName)
+                ...subpackage.fernFilepath.allParts.map((path) => caseConverter.snakeSafe(path))
             ].join("/")
         );
     }
@@ -127,7 +129,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
                     throw new Error(
-                        `Unable to parse streaming response for endpoint ${httpEndpoint.name.camelCase.safeName}`
+                        `Unable to parse streaming response for endpoint ${caseConverter.camelSafe(httpEndpoint.name)}`
                     );
                 }
                 return this.getStreamPayload(streamingResponse);
@@ -246,7 +248,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
         // Return the class reference, performing the same casing as the SingleUrlEnvironmentGenerator
         return ruby.classReference({
-            name: defaultEnvironment.name.screamingSnakeCase.safeName,
+            name: caseConverter.screamingSnakeSafe(defaultEnvironment.name),
             modules: [this.getRootModuleName(), "Environment"]
         });
     }
@@ -272,10 +274,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getReferenceToTypeId(typeId: FernIr.TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
-            name: typeDeclaration.name.name.pascalCase.safeName,
+            name: caseConverter.pascalSafe(typeDeclaration.name.name),
             modules: [
                 this.getRootModuleName(),
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path)),
                 "Types"
             ]
         });
@@ -284,7 +286,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getModuleNamesForServiceId(serviceId: FernIr.ServiceId): string[] {
         return [
             this.getRootModuleName(),
-            ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => part.pascalCase.safeName),
+            ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)),
             this.getTypesModule().name
         ];
     }
@@ -295,7 +297,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): ruby.ClassReference {
         return ruby.classReference({
-            name: requestName.pascalCase.safeName,
+            name: caseConverter.pascalSafe(requestName),
             modules: this.getModuleNamesForServiceId(serviceId)
         });
     }
@@ -400,7 +402,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const multiUrlEnvs = this.getMultipleBaseUrlsEnvironments();
         if (multiUrlEnvs != null) {
             const baseUrl = multiUrlEnvs.baseUrls.find((b) => b.id === baseUrlId);
-            return baseUrl?.name.snakeCase.safeName;
+            return baseUrl?.name != null ? caseConverter.snakeSafe(baseUrl.name) : undefined;
         }
         return undefined;
     }

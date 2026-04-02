@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -5,6 +6,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace MultiUrlEnvironmentGenerator {
     interface Args {
@@ -31,7 +34,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                     if (url == null) {
                         return undefined;
                     }
-                    return `${baseUrl.name.snakeCase.safeName}: "${url}"`;
+                    return `${caseConverter.snakeSafe(baseUrl.name)}: "${url}"`;
                 })
                 .filter((entry): entry is string => entry != null);
 
@@ -39,7 +42,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                 class_.addStatement(
                     ruby.codeblock((writer) => {
                         writer.write(
-                            `${environment.name.screamingSnakeCase.safeName} = { ${urlEntries.join(", ")} }.freeze`
+                            `${caseConverter.screamingSnakeSafe(environment.name)} = { ${urlEntries.join(", ")} }.freeze`
                         );
                     })
                 );

@@ -1,10 +1,12 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -394,14 +396,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.snakeCase.safeName;
+        return caseConverter.snakeSafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
@@ -433,7 +435,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.screamingSnakeCase.safeName}`;
+        return `${this.rootPackageClientName}::Environment::${caseConverter.screamingSnakeSafe(defaultEnvironment.name)}`;
     }
 
     private getRootPackageClientName(): string {

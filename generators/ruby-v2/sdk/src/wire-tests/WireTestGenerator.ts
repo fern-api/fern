@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -8,6 +8,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 interface EndpointTestCase {
     snippetAst: ruby.AstNode;
@@ -113,8 +115,8 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const endpointName = caseConverter.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -202,14 +204,14 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${scheme.token.snakeCase.safeName}: "<token>"`);
+                    authParams.push(`${caseConverter.snakeSafe(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${scheme.name.name.snakeCase.safeName}: "test-api-key"`);
+                    authParams.push(`${caseConverter.snakeSafe(scheme.name.name)}: "test-api-key"`);
                     break;
                 case "basic":
-                    authParams.push(`${scheme.username.snakeCase.safeName}: "test-username"`);
-                    authParams.push(`${scheme.password.snakeCase.safeName}: "test-password"`);
+                    authParams.push(`${caseConverter.snakeSafe(scheme.username)}: "test-username"`);
+                    authParams.push(`${caseConverter.snakeSafe(scheme.password)}: "test-password"`);
                     break;
                 case "oauth":
                     authParams.push('client_id: "test-client-id"');
@@ -256,7 +258,7 @@ export class WireTestGenerator {
             for (const property of requestBody.properties) {
                 const literal = this.maybeLiteral(property.valueType);
                 if (literal == null) {
-                    const paramName = property.name.name.snakeCase.safeName;
+                    const paramName = caseConverter.snakeSafe(property.name.name);
                     params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
                 }
             }
@@ -266,7 +268,7 @@ export class WireTestGenerator {
         for (const header of endpoint.headers) {
             const literal = this.maybeLiteral(header.valueType);
             if (literal == null) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = caseConverter.snakeSafe(header.name.name);
                 params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
             }
         }
@@ -417,7 +419,7 @@ export class WireTestGenerator {
             const isOptional =
                 queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional";
             if (!isOptional) {
-                requiredQueryParamNames.add(queryParam.name.wireValue);
+                requiredQueryParamNames.add(getWireValue(queryParam.name));
             }
         }
 
@@ -440,7 +442,7 @@ export class WireTestGenerator {
     }
 
     private getTestMethodName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = caseConverter.snakeSafe(endpoint.name);
         return `test_${serviceName}_${endpointName}_with_wiremock`;
     }
 
@@ -504,7 +506,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => caseConverter.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({
