@@ -715,6 +715,8 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         module_path = project.get_module_path_for_imports()
+        client_filename = context.custom_config.client_filename or context.custom_config.client.filename
+        client_module = client_filename.removesuffix(".py")
         dist_name = project._project_config.package_name if project._project_config is not None else module_path
         contents = f'''import importlib
 import sys
@@ -731,7 +733,7 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
     def test_returns_httpx_async_client(self) -> None:
         """When httpx_aiohttp is not installed, returns plain httpx.AsyncClient."""
         with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
-            from {module_path}.client import _make_default_async_client
+            from {module_path}.{client_module} import _make_default_async_client
 
             client = _make_default_async_client(timeout=60, follow_redirects=True)
             self.assertIsInstance(client, httpx.AsyncClient)
@@ -741,7 +743,7 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
     def test_follow_redirects_none(self) -> None:
         """When follow_redirects is None, omits it from httpx.AsyncClient."""
         with mock.patch.dict(sys.modules, {{"httpx_aiohttp": None}}):
-            from {module_path}.client import _make_default_async_client
+            from {module_path}.{client_module} import _make_default_async_client
 
             client = _make_default_async_client(timeout=60, follow_redirects=None)
             self.assertIsInstance(client, httpx.AsyncClient)
@@ -749,10 +751,10 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
 
     def test_explicit_httpx_client_bypasses_autodetect(self) -> None:
         """When user passes httpx_client explicitly, _make_default_async_client is not called."""
-        from {module_path}.client import _make_default_async_client
+        from {module_path}.{client_module} import _make_default_async_client
 
         explicit_client = httpx.AsyncClient(timeout=120)
-        with mock.patch("{module_path}.client._make_default_async_client") as mock_make:
+        with mock.patch("{module_path}.{client_module}._make_default_async_client") as mock_make:
             # Replicate the generated conditional: httpx_client if httpx_client is not None else _make_default_async_client(...)
             result = explicit_client if explicit_client is not None else mock_make(timeout=60, follow_redirects=True)
             mock_make.assert_not_called()
@@ -767,7 +769,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
         """When httpx_aiohttp is installed, returns HttpxAiohttpClient."""
         import httpx_aiohttp  # type: ignore[import-not-found]
 
-        from {module_path}.client import _make_default_async_client
+        from {module_path}.{client_module} import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=True)
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
@@ -778,7 +780,7 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
         """When httpx_aiohttp is installed and follow_redirects is None, omits it."""
         import httpx_aiohttp  # type: ignore[import-not-found]
 
-        from {module_path}.client import _make_default_async_client
+        from {module_path}.{client_module} import _make_default_async_client
 
         client = _make_default_async_client(timeout=60, follow_redirects=None)
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
