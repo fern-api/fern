@@ -1,4 +1,8 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, Options, CaseConverter } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractDynamicSnippetsGeneratorContext,
+    FernGeneratorExec,
+    Options
+} from "@fern-api/browser-compatible-base-generator";
 import { assertDefined, assertNever, entries, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@fern-api/swift-codegen";
@@ -7,8 +11,6 @@ import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -84,7 +86,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             });
             const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
                 typeId,
-                caseConverter.pascalUnsafe(namedType.declaration.name),
+                namedType.declaration.name.pascalCase.unsafeName,
                 symbolShape
             );
             return { namedType, registeredSymbol: schemaTypeSymbol };
@@ -112,7 +114,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 if (endpoint.request.body?.type === "properties") {
                     const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
                         endpointId,
-                        requestNamePascalCase: caseConverter.pascalUnsafe(endpoint.request.declaration.name)
+                        requestNamePascalCase: endpoint.request.declaration.name.pascalCase.unsafeName
                     });
                     registerLiteralEnumsForObjectProperties({
                         parentSymbol: requestTypeSymbol,
@@ -123,7 +125,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 if (endpoint.request.body?.type === "fileUpload") {
                     nameRegistry.registerRequestTypeSymbol({
                         endpointId,
-                        requestNamePascalCase: caseConverter.pascalUnsafe(endpoint.request.declaration.name)
+                        requestNamePascalCase: endpoint.request.declaration.name.pascalCase.unsafeName
                     });
                 }
             }

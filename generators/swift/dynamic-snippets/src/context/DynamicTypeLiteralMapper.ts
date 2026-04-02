@@ -1,10 +1,8 @@
-import { Severity, CaseConverter, getWireValue } from "@fern-api/browser-compatible-base-generator";
+import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -232,7 +230,7 @@ export class DynamicTypeLiteralMapper {
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
-            caseConverter.camelUnsafe(unionVariant.discriminantValue.name)
+            unionVariant.discriminantValue.name.camelCase.unsafeName
         );
 
         switch (unionVariant.type) {
@@ -256,7 +254,7 @@ export class DynamicTypeLiteralMapper {
             }
             case "singleProperty": {
                 try {
-                    this.context.errors.scope(getWireValue(unionVariant.discriminantValue));
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                     if (record == null) {
                         return swift.Expression.nop();
@@ -264,7 +262,7 @@ export class DynamicTypeLiteralMapper {
                     const converted = this.convert({
                         fromSymbol,
                         typeReference: unionVariant.typeReference,
-                        value: record[getWireValue(unionVariant.discriminantValue)]
+                        value: record[unionVariant.discriminantValue.wireValue]
                     });
                     return swift.Expression.methodCall({
                         target: swift.Expression.reference(unionSymbol.name),
@@ -291,7 +289,7 @@ export class DynamicTypeLiteralMapper {
         if (nameAndWireValue == null) {
             return swift.Expression.nop();
         }
-        return swift.Expression.enumCaseShorthand(caseConverter.camelUnsafe(nameAndWireValue.name));
+        return swift.Expression.enumCaseShorthand(nameAndWireValue.name.camelCase.unsafeName);
     }
 
     private getEnumValue({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }) {
@@ -342,7 +340,7 @@ export class DynamicTypeLiteralMapper {
                         return null;
                     }
                     return swift.functionArgument({
-                        label: sanitizeSelf(caseConverter.camelUnsafe(typeInstance.name.name)),
+                        label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
                         value: this.convert({
                             fromSymbol,
                             typeReference: typeInstance.typeReference,
