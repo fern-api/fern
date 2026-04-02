@@ -378,6 +378,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "connectionId",
                         "name": {
                             "originalName": "connectionId",
                             "camelCase": {
@@ -396,8 +397,7 @@
                                 "unsafeName": "ConnectionID",
                                 "safeName": "ConnectionID"
                             }
-                        },
-                        "wireValue": "connectionId"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -408,6 +408,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "connectionName",
                         "name": {
                             "originalName": "connectionName",
                             "camelCase": {
@@ -426,8 +427,7 @@
                                 "unsafeName": "ConnectionName",
                                 "safeName": "ConnectionName"
                             }
-                        },
-                        "wireValue": "connectionName"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -438,6 +438,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "strategy",
                         "name": {
                             "originalName": "strategy",
                             "camelCase": {
@@ -456,8 +457,7 @@
                                 "unsafeName": "Strategy",
                                 "safeName": "Strategy"
                             }
-                        },
-                        "wireValue": "strategy"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -468,6 +468,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tenant",
                         "name": {
                             "originalName": "tenant",
                             "camelCase": {
@@ -486,8 +487,7 @@
                                 "unsafeName": "Tenant",
                                 "safeName": "Tenant"
                             }
-                        },
-                        "wireValue": "tenant"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -571,6 +571,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "tokenId",
                         "name": {
                             "originalName": "tokenId",
                             "camelCase": {
@@ -589,8 +590,7 @@
                                 "unsafeName": "TokenID",
                                 "safeName": "TokenID"
                             }
-                        },
-                        "wireValue": "tokenId"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -601,6 +601,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "token",
                         "name": {
                             "originalName": "token",
                             "camelCase": {
@@ -619,8 +620,7 @@
                                 "unsafeName": "Token",
                                 "safeName": "Token"
                             }
-                        },
-                        "wireValue": "token"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -634,6 +634,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "scopes",
                         "name": {
                             "originalName": "scopes",
                             "camelCase": {
@@ -652,8 +653,7 @@
                                 "unsafeName": "Scopes",
                                 "safeName": "Scopes"
                             }
-                        },
-                        "wireValue": "scopes"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -670,6 +670,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "createdAt",
                         "name": {
                             "originalName": "createdAt",
                             "camelCase": {
@@ -688,8 +689,7 @@
                                 "unsafeName": "CreatedAt",
                                 "safeName": "CreatedAt"
                             }
-                        },
-                        "wireValue": "createdAt"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
