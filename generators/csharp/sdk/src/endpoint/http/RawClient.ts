@@ -1,8 +1,10 @@
 import { fail } from "node:assert";
-import { Arguments } from "@fern-api/base-generator";
+import { Arguments, CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpMethod = FernIr.HttpMethod;
@@ -224,16 +226,16 @@ export class RawClient extends WithGeneration {
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
-                propertyName = property.value.key.name.pascalCase.safeName;
-                partName = property.value.key.wireValue;
+                propertyName = caseConverter.pascalSafe(property.value.key.name);
+                partName = getWireValue(property.value.key);
                 contentType = property.value.contentType;
                 csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
                     property: property.value
                 });
                 break;
             case "bodyProperty": {
-                propertyName = property.name.name.pascalCase.safeName;
-                partName = property.name.wireValue;
+                propertyName = caseConverter.pascalSafe(property.name.name);
+                partName = getWireValue(property.name);
                 contentType = property.contentType;
                 encoding = property.style;
                 csharpType = this.context.csharpTypeMapper.convert({

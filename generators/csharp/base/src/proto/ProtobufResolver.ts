@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { fail } from "node:assert";
 import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -59,7 +60,7 @@ export class ProtobufResolver extends WithGeneration {
                 // Nested proto types use underscore-separated names (e.g. "InvoiceBundle_Status")
                 // from protoc-gen-openapi. In C# protobuf codegen, nested types are
                 // accessed as "ParentMessage.Types.NestedType".
-                const originalName = protobufType.name.originalName;
+                const originalName = getOriginalName(protobufType.name);
                 const protoClassName = originalName.includes("_")
                     ? originalName.split("_").join(".Types.")
                     : originalName;

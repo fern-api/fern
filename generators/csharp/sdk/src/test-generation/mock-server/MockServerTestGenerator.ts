@@ -1,8 +1,11 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleTypeReference = FernIr.ExampleTypeReference;
@@ -35,7 +38,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.classReference = this.csharp.classReference({
             origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
-            name: `${this.endpoint.name.pascalCase.safeName}Test`,
+            name: `${caseConverter.pascalSafe(this.endpoint.name)}Test`,
             namespace: this.getTestNamespace()
         });
 
@@ -61,7 +64,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         }
         // Use allParts (not packagePath) to include the service name itself,
         // ensuring each service gets its own subdirectory and namespace.
-        return subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        return subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
     }
 
     private getTestNamespace(): string {

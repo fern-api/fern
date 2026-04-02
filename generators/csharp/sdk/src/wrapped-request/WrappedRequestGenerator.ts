@@ -1,9 +1,12 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { fail } from "node:assert";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ContainerType = FernIr.ContainerType;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -136,7 +139,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
-                    protoPropertyName: query.name.name.pascalCase.safeName,
+                    protoPropertyName: caseConverter.pascalSafe(query.name.name),
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -186,7 +189,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
-                const allPropertyPascalNames = new Set(allProps.map((p) => p.name.name.pascalCase.safeName));
+                const allPropertyPascalNames = new Set(allProps.map((p) => caseConverter.pascalSafe(p.name.name)));
                 for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
@@ -198,7 +201,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
-                            protoPropertyName: property.name.name.pascalCase.safeName,
+                            protoPropertyName: caseConverter.pascalSafe(property.name.name),
                             typeReference: property.valueType
                         });
                     }
@@ -206,7 +209,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             fileUpload: (request) => {
                 const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
-                const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
+                const allPropertyPascalNames = new Set(bodyProps.map((p) => caseConverter.pascalSafe(p.name.name)));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
@@ -358,7 +361,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
         const args = orderedFields.map(({ name, value }) => {
             return {
-                name: name.pascalCase.safeName,
+                name: caseConverter.pascalSafe(name),
                 assignment: value
             };
         });

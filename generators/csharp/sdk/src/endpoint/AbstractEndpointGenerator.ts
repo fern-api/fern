@@ -1,7 +1,10 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type HttpEndpoint = FernIr.HttpEndpoint;
@@ -196,7 +199,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                     })
                 );
             }
-            pathParameterReferences[pathParam.name.originalName] = parameterName;
+            pathParameterReferences[getOriginalName(pathParam.name)] = parameterName;
         }
         return {
             pathParameters,
@@ -252,7 +255,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${caseConverter.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {
@@ -389,8 +392,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         requestParameter?: ast.Parameter;
     }): string {
         if (!includePathParametersInEndpointSignature && requestParameter != null) {
-            return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;
+            return `${requestParameter?.name}.${caseConverter.pascalSafe(pathParameter.name)}`;
         }
-        return pathParameter.name.camelCase.safeName;
+        return caseConverter.camelSafe(pathParameter.name);
     }
 }

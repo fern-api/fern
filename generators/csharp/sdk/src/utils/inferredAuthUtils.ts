@@ -1,4 +1,7 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type TypeReference = FernIr.TypeReference;
@@ -57,15 +60,15 @@ export function collectInferredAuthCredentials(
             continue;
         }
 
-        const camelName = header.name.name.camelCase.unsafeName;
+        const camelName = caseConverter.camelUnsafe(header.name.name);
         const typeRef = context.csharpTypeMapper.convert({
             reference: header.valueType
         });
 
         credentials.push({
             camelName,
-            pascalName: header.name.name.pascalCase.safeName,
-            wireValue: header.name.wireValue,
+            pascalName: caseConverter.pascalSafe(header.name.name),
+            wireValue: getWireValue(header.name),
             typeReference: header.valueType,
             docs: header.docs,
             isFromHeader: true,
@@ -76,7 +79,7 @@ export function collectInferredAuthCredentials(
     }
 
     for (const prop of getRequestBodyProperties(context, tokenEndpoint.requestBody)) {
-        const camelName = prop.name.name.camelCase.unsafeName;
+        const camelName = caseConverter.camelUnsafe(prop.name.name);
 
         if (seenNames.has(camelName)) {
             continue;
@@ -88,8 +91,8 @@ export function collectInferredAuthCredentials(
 
         credentials.push({
             camelName,
-            pascalName: prop.name.name.pascalCase.safeName,
-            wireValue: prop.name.wireValue,
+            pascalName: caseConverter.pascalSafe(prop.name.name),
+            wireValue: getWireValue(prop.name),
             typeReference: prop.valueType,
             docs: prop.docs,
             isFromHeader: false,

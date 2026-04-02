@@ -1,7 +1,9 @@
-import { File } from "@fern-api/base-generator";
+import { File, CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 
@@ -38,7 +40,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 if (context.generation.settings.generateLiterals) {
                     const resolvedType = aliasDeclaration.resolvedType;
                     if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
-                        const rawStructName = typeDeclaration.name.name.pascalCase.safeName;
+                        const rawStructName = caseConverter.pascalSafe(typeDeclaration.name.name);
                         const namespace = context.getNamespaceForTypeId(typeId);
                         const directory = context.getDirectoryForTypeId(typeId);
                         // Register the name through the name registry so the raw file uses the

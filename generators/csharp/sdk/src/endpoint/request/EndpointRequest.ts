@@ -1,5 +1,8 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type SdkRequest = FernIr.SdkRequest;
@@ -33,7 +36,7 @@ export abstract class EndpointRequest extends WithGeneration {
     }
 
     public getParameterName(): string {
-        return this.sdkRequest.requestParameterName.camelCase.safeName;
+        return caseConverter.camelSafe(this.sdkRequest.requestParameterName);
     }
 
     public getRequestBodyVariableName(): string {

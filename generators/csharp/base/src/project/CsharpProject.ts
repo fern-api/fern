@@ -1,4 +1,4 @@
-import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
+import { AbstractProject, FernGeneratorExec, File, SourceFetcher, CaseConverter } from "@fern-api/base-generator";
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -10,6 +10,8 @@ import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
@@ -665,12 +667,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                    parts.push(`${caseConverter.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
-                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                    parts.push(`${caseConverter.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${caseConverter.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                    parts.push(`${caseConverter.pascalSafe(scheme.name.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);

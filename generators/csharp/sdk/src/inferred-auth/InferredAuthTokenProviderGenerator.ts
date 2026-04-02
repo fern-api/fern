@@ -1,8 +1,11 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type EndpointReference = FernIr.EndpointReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
@@ -330,11 +333,11 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
         if (responseProperty.propertyPath != null && responseProperty.propertyPath.length > 0) {
             for (const pathElement of responseProperty.propertyPath) {
-                accessor += `.${pathElement.name.pascalCase.safeName}`;
+                accessor += `.${caseConverter.pascalSafe(pathElement.name)}`;
             }
         }
 
-        accessor += `.${responseProperty.property.name.name.pascalCase.safeName}`;
+        accessor += `.${caseConverter.pascalSafe(responseProperty.property.name.name)}`;
 
         return accessor;
     }

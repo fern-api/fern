@@ -1,6 +1,9 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type TypeReference = FernIr.TypeReference;
 type Literal = FernIr.Literal;
@@ -86,7 +89,7 @@ export function generateFields(
     // Collect all property PascalCase names for collision detection when generating
     // nested literal struct names (e.g., {PropertyName}Literal must not collide with
     // another property name).
-    const allPropertyPascalNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
+    const allPropertyPascalNames = new Set(properties.map((p) => caseConverter.pascalSafe(p.name.name)));
     return properties.map((property) => generateField(cls, { property, className, context, allPropertyPascalNames }));
 }
 
@@ -142,7 +145,7 @@ export function generateField(
             }
         }
 
-        fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
+        fieldAttributes.push(context.createJsonPropertyNameAttribute(getWireValue(property.name)));
     }
     // if we are using readonly constants, we need to generate the accessors and initializer
     // so that deserialization works correctly  (ie, throws deserializing an incorrect value to a readonly constant)
@@ -187,7 +190,7 @@ export function generateField(
         // readonly struct inside the parent record named {PropertyName}Literal.
         const inlineLiteral = extractInlineLiteral(property.valueType);
         if (inlineLiteral != null) {
-            const propertyPascalName = property.name.name.pascalCase.safeName;
+            const propertyPascalName = caseConverter.pascalSafe(property.name.name);
             const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames ?? new Set());
 
             // Register the class reference FIRST so the name registry can resolve any conflicts,
@@ -238,7 +241,7 @@ export function generateField(
             set: (writer: Writer) => {
                 writer.write("value.Assert(value == ");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, string.Format("'${property.name.name.pascalCase.safeName}' must be {0}", `);
+                writer.write(`, string.Format("'${caseConverter.pascalSafe(property.name.name)}' must be {0}", `);
                 writer.writeNode(maybeLiteralInitializer);
                 writer.write("))");
             }
@@ -289,7 +292,7 @@ function resolveNamedLiteralType(
         typeDeclaration.shape.resolvedType.type === "container" &&
         typeDeclaration.shape.resolvedType.container.type === "literal"
     ) {
-        const structName = typeDeclaration.name.name.pascalCase.safeName;
+        const structName = caseConverter.pascalSafe(typeDeclaration.name.name);
         const namespace = context.getNamespaceForTypeId(typeId);
         return context.csharp.classReference({
             name: structName,

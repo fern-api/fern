@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "../utils/fail.js";
@@ -5,6 +6,8 @@ import { fail } from "../utils/fail.js";
 import { type TypesOf } from "../utils/type-extractor.js";
 import { is } from "../utils/type-guards.js";
 import { type Generation } from "./generation-info.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 /**
  * JsonPath is a string that represents a path of nodes in the Intermediate Representation (IR) to a given node.
@@ -440,17 +443,17 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return property.name.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(property.name.name);
             }
             if (is.IR.Name(property.name)) {
-                return property.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
                 return property.name;
             }
         }
         if ("pascalCase" in property) {
-            return property.pascalCase.safeName;
+            return caseConverter.pascalSafe(property);
         }
 
         throw new Error(`Unknown property type: ${this.jsonPath(property)}`);
@@ -481,20 +484,20 @@ export class ModelNavigator {
         }
         if ("name" in classDeclaration) {
             if (is.IR.TypeDeclaration(classDeclaration)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
-                return classDeclaration.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
                 return classDeclaration.name;
             }
         }
         if ("pascalCase" in classDeclaration) {
-            return classDeclaration.pascalCase.safeName;
+            return caseConverter.pascalSafe(classDeclaration);
         }
 
         throw new Error(`Unknown property type: ${JSON.stringify(classDeclaration)}`);
@@ -513,7 +516,7 @@ export class ModelNavigator {
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
     nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
-        return name1.camelCase.safeName === name2.camelCase.safeName;
+        return caseConverter.camelSafe(name1) === caseConverter.camelSafe(name2);
     }
 
     /**

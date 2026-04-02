@@ -1,10 +1,12 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type FernFilepath = FernIr.FernFilepath;
 type IntermediateRepresentation = FernIr.IntermediateRepresentation;
@@ -36,7 +38,7 @@ export class ModelGeneratorContext extends GeneratorContext {
             config,
             customConfig,
             generatorNotificationService,
-            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
+            new Generation(ir, caseConverter.pascalUnsafe(ir.apiName), customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
                 getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
@@ -64,7 +66,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path))].join("/")
         );
     }
 
@@ -72,7 +74,7 @@ export class ModelGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return [
             this.namespaces.root,
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => caseConverter.pascalSafe(path))
         ].join(".");
     }
 
@@ -131,7 +133,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
+        return fernFilepath.packagePath.map((segmentName) => caseConverter.pascalSafe(segmentName));
     }
 
     public override shouldCreateCustomPagination(): boolean {

@@ -1,4 +1,4 @@
-import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
+import { NamedArgument, Options, Scope, Severity, Style, getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -462,7 +462,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         // Use parameters from the IR
         if (auth.parameters != null) {
             for (const param of auth.parameters) {
-                const wireValue = param.name.wireValue;
+                const wireValue = getWireValue(param.name);
                 const value = values.values?.[wireValue];
 
                 args.push({
@@ -494,7 +494,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         const args: NamedArgument[] = [];
         for (const header of headers) {
-            const value = values[header.name.wireValue];
+            const value = values[getWireValue(header.name)];
             const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push({

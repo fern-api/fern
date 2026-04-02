@@ -1,7 +1,9 @@
-import { File } from "@fern-api/base-generator";
+import { File, CaseConverter } from "@fern-api/base-generator";
 import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type FernFilepath = FernIr.FernFilepath;
 
@@ -82,6 +84,6 @@ export class CSharpFile extends File {
     }
 
     public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
+        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => caseConverter.pascalSafe(part))));
     }
 }

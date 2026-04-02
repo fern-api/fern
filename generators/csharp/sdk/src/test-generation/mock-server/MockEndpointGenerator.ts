@@ -1,5 +1,8 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleRequestBody = FernIr.ExampleRequestBody;
@@ -112,14 +115,14 @@ export class MockEndpointGenerator extends WithGeneration {
                         switch (scheme.type) {
                             case "basic": {
                                 // Compute exact expected header value from the known test credentials
-                                const username = scheme.username.screamingSnakeCase.safeName;
-                                const password = scheme.password.screamingSnakeCase.safeName;
+                                const username = caseConverter.screamingSnakeSafe(scheme.username);
+                                const password = caseConverter.screamingSnakeSafe(scheme.password);
                                 const encoded = Buffer.from(`${username}:${password}`).toString("base64");
                                 writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
                                 break;
                             }
                             case "bearer": {
-                                const tokenValue = scheme.token.screamingSnakeCase.safeName;
+                                const tokenValue = caseConverter.screamingSnakeSafe(scheme.token);
                                 writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
                                 break;
                             }
@@ -350,17 +353,17 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of exampleRequest.properties) {
             // Check if this property is read-only by looking up the original type declaration
-            if (this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration)) {
+            if (this.isPropertyReadOnly(getWireValue(prop.name), prop.originalTypeDeclaration)) {
                 continue;
             }
             // Recursively filter the property value (also normalizes datetime values)
-            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+            result[getWireValue(prop.name)] = this.filterExampleTypeReference(prop.value);
         }
 
         // Also include extra properties if present
         if (exampleRequest.extraProperties) {
             for (const extraProp of exampleRequest.extraProperties) {
-                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value);
+                result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value);
             }
         }
 
@@ -536,7 +539,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 return this.filterExampleTypeReference(innerShape.value, options);
 
             case "enum":
-                return innerShape.value.wireValue;
+                return getWireValue(innerShape.value);
 
             case "union":
                 // For unions, we need to handle the discriminant and the union value
@@ -571,23 +574,23 @@ export class MockEndpointGenerator extends WithGeneration {
 
         const result: Record<string, unknown> = {};
         for (const prop of properties) {
-            if (propertiesToFilter.has(prop.name.wireValue)) {
+            if (propertiesToFilter.has(getWireValue(prop.name))) {
                 continue;
             }
             const filteredValue = this.filterExampleTypeReference(prop.value, options);
 
             // Omit null values for properties that are optional-but-not-nullable
             // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
-            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+            if (filteredValue === null && !nullableNames.has(getWireValue(prop.name))) {
                 continue;
             }
-            result[prop.name.wireValue] = filteredValue;
+            result[getWireValue(prop.name)] = filteredValue;
         }
 
         // Include extra properties (AdditionalProperties) inline — they serialize via [JsonExtensionData]
         if (extraProperties != null) {
             for (const extraProp of extraProperties) {
-                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value, options);
+                result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value, options);
             }
         }
 
@@ -617,7 +620,7 @@ export class MockEndpointGenerator extends WithGeneration {
         };
 
         const result: Record<string, unknown> = {
-            [unionShape.discriminant.wireValue]: singleUnionType.wireDiscriminantValue.wireValue
+            [getWireValue(unionShape.discriminant)]: singleUnionType.wireDiscriminantValue.wireValue
         };
 
         if (singleUnionType.shape.type === "samePropertiesAsObject") {
@@ -635,7 +638,7 @@ export class MockEndpointGenerator extends WithGeneration {
             // for singleProperty variants (e.g., "value")
             const propertyWireName = this.getSinglePropertyWireName(
                 typeId,
-                singleUnionType.wireDiscriminantValue.wireValue
+                getWireValue(singleUnionType.wireDiscriminantValue)
             );
             result[propertyWireName] = filteredValue;
         }
@@ -655,7 +658,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     (t) => t.discriminantValue.wireValue === discriminantWireValue
                 );
                 if (matchingType?.shape.propertiesType === "singleProperty") {
-                    return matchingType.shape.name.wireValue;
+                    return getWireValue(matchingType.shape.name);
                 }
             }
         } catch {
@@ -683,14 +686,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
-                readOnlyNames.add(prop.name.wireValue);
+                readOnlyNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
-                    readOnlyNames.add(prop.name.wireValue);
+                    readOnlyNames.add(getWireValue(prop.name));
                 }
             }
         }
@@ -717,14 +720,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
-                writeOnlyNames.add(prop.name.wireValue);
+                writeOnlyNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
-                    writeOnlyNames.add(prop.name.wireValue);
+                    writeOnlyNames.add(getWireValue(prop.name));
                 }
             }
         }
@@ -752,14 +755,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (this.context.isNullable(prop.valueType)) {
-                nullableNames.add(prop.name.wireValue);
+                nullableNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (this.context.isNullable(prop.valueType)) {
-                    nullableNames.add(prop.name.wireValue);
+                    nullableNames.add(getWireValue(prop.name));
                 }
             }
         }

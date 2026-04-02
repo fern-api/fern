@@ -1,6 +1,9 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type CursorPagination = FernIr.CursorPagination;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -640,7 +643,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
+                return this.csharp.codeblock(`_client.Options.Environment.${caseConverter.pascalSafe(baseUrl.name)}`);
             }
         }
         return undefined;
@@ -1776,7 +1779,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${caseConverter.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {

@@ -1,7 +1,9 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
 import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpService = FernIr.HttpService;
@@ -187,5 +189,5 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
 }
 
 function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ");
 }

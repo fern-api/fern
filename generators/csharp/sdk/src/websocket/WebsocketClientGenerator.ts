@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type Subpackage = FernIr.Subpackage;
 type TypeReference = FernIr.TypeReference;
@@ -57,7 +60,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns A PascalCase class name with "Api" suffix
      */
     static createWebsocketClientClassName(websocketChannel: WebSocketChannel) {
-        return `${websocketChannel.name.pascalCase.safeName}Api`;
+        return `${caseConverter.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -67,7 +70,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns A PascalCase interface name with "I" prefix and "Api" suffix
      */
     static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
-        return `I${websocketChannel.name.pascalCase.safeName}Api`;
+        return `I${caseConverter.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -101,7 +104,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
             );
             if (baseUrl != null) {
-                return `_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`;
+                return `_client.Options.Environment.${caseConverter.pascalSafe(baseUrl.name)}`;
             }
         }
         return undefined;
@@ -341,7 +344,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             for (const env of multiEnvs.environments) {
                 const url = env.urls[baseUrlId];
                 if (url != null) {
-                    const envName = env.name.pascalCase.safeName;
+                    const envName = caseConverter.pascalSafe(env.name);
                     this.environments.push({
                         url,
                         environment: envName,
@@ -357,7 +360,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 if (defaultEnv != null) {
                     const defaultUrl = defaultEnv.urls[baseUrlId];
                     if (defaultUrl != null) {
-                        this.defaultEnvironment = defaultEnv.name.pascalCase.safeName;
+                        this.defaultEnvironment = caseConverter.pascalSafe(defaultEnv.name);
                     }
                 }
             }
@@ -740,11 +743,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
                         if (isComplexType) {
                             writer.write(
-                                `\n        .AddDeepObject("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                                `\n        .AddDeepObject("${queryParameter.name.wireValue}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
                             );
                         } else {
                             writer.write(
-                                `\n        .Add("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                                `\n        .Add("${queryParameter.name.wireValue}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
                             );
                         }
                     }
@@ -767,7 +770,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     if (pp) {
                         parts.push(
                             this.csharp.codeblock((writer) =>
-                                writer.write(`Uri.EscapeDataString(_options.${pp.name.pascalCase.safeName})`)
+                                writer.write(`Uri.EscapeDataString(_options.${caseConverter.pascalSafe(pp.name)})`)
                             )
                         );
                     }
@@ -854,7 +857,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                             name:
                                 reference._visit({
                                     container: () => undefined,
-                                    named: (named) => named.name.pascalCase.safeName,
+                                    named: (named) => caseConverter.pascalSafe(named.name),
                                     primitive: (value) => undefined,
                                     unknown: () => undefined,
                                     _other: (value) => value.type
@@ -893,7 +896,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                         name:
                             bodyType._visit({
                                 container: () => undefined,
-                                named: (named) => named.name.pascalCase.safeName,
+                                named: (named) => caseConverter.pascalSafe(named.name),
                                 primitive: () => each.type,
                                 unknown: () => each.type,
                                 _other: () => each.type
