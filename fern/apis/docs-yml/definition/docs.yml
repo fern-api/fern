@@ -147,7 +147,7 @@ types:
 
   AgentsConfig:
     properties:
-      "page-directive":
+      page-directive:
         type: optional<string>
         docs: |
           Text to prepend to each page when it is served through agent endpoints.
