@@ -16,7 +16,6 @@
 
 ```typescript
 await client.user.get("id");
-
 ```
 
 </dd>
