@@ -7,6 +7,16 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 2.56.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 2.55.4
   changelogEntry:
     - summary: |
@@ -24,7 +34,6 @@
       type: chore
   createdAt: "2026-04-01"
   irVersion: 65
-
 - version: 2.55.2
   changelogEntry:
     - summary: |
