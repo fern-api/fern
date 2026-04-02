@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	defaultRetryAttempts = 2
+	defaultRetryAttempts = 5
 	minRetryDelay        = 1000 * time.Millisecond
 	maxRetryDelay        = 60000 * time.Millisecond
 )
