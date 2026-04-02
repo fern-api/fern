@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -34,8 +33,8 @@ export class FilePropertyMapper extends WithGeneration {
             switch (property.type) {
                 case "file":
                     // if we don't have a record, we can fake some data for it.
-                    if (is.Record.missingKey(record, getWireValue(property))) {
-                        record[getWireValue(property)] = "[bytes]";
+                    if (is.Record.missingKey(record, property.wireValue)) {
+                        record[property.wireValue] = "[bytes]";
                     }
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
@@ -44,8 +43,8 @@ export class FilePropertyMapper extends WithGeneration {
                     break;
                 case "fileArray":
                     // if we don't have a record, we can fake some data for it.
-                    if (is.Record.missingKey(record, getWireValue(property))) {
-                        record[getWireValue(property)] = ["[bytes]"];
+                    if (is.Record.missingKey(record, property.wireValue)) {
+                        record[property.wireValue] = ["[bytes]"];
                     }
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
@@ -54,7 +53,7 @@ export class FilePropertyMapper extends WithGeneration {
                     break;
                 case "bodyProperty":
                     // if we don't have a record, we can try fake some data for it.
-                    if (is.Record.missingKey(record, getWireValue(property.name))) {
+                    if (is.Record.missingKey(record, property.name.wireValue)) {
                         switch (property.typeReference.type) {
                             case "optional": {
                                 // ignore missing optional values
@@ -64,55 +63,55 @@ export class FilePropertyMapper extends WithGeneration {
                                 // for primitives, we can return a sample value.
                                 switch (property.typeReference.value.toLowerCase()) {
                                     case "integer": {
-                                        record[getWireValue(property.name)] = 123;
+                                        record[property.name.wireValue] = 123;
                                         break;
                                     }
                                     case "string": {
-                                        record[getWireValue(property.name)] = "[string]";
+                                        record[property.name.wireValue] = "[string]";
                                         break;
                                     }
                                     case "boolean": {
-                                        record[getWireValue(property.name)] = true;
+                                        record[property.name.wireValue] = true;
                                         break;
                                     }
                                     case "double": {
-                                        record[getWireValue(property.name)] = 123.456;
+                                        record[property.name.wireValue] = 123.456;
                                         break;
                                     }
                                     case "float": {
-                                        record[getWireValue(property.name)] = 123.456;
+                                        record[property.name.wireValue] = 123.456;
                                         break;
                                     }
                                     case "long": {
-                                        record[getWireValue(property.name)] = 123456789;
+                                        record[property.name.wireValue] = 123456789;
                                         break;
                                     }
                                     case "uint": {
-                                        record[getWireValue(property.name)] = 123;
+                                        record[property.name.wireValue] = 123;
                                         break;
                                     }
                                     case "uint64": {
-                                        record[getWireValue(property.name)] = 12345;
+                                        record[property.name.wireValue] = 12345;
                                         break;
                                     }
                                     case "date": {
-                                        record[getWireValue(property.name)] = new Date(2021, 1, 1);
+                                        record[property.name.wireValue] = new Date(2021, 1, 1);
                                         break;
                                     }
                                     case "datetime": {
-                                        record[getWireValue(property.name)] = new Date(2021, 1, 1, 12, 0, 0);
+                                        record[property.name.wireValue] = new Date(2021, 1, 1, 12, 0, 0);
                                         break;
                                     }
                                     case "uuid": {
-                                        record[getWireValue(property.name)] = "123e4567-e89b-12d3-a456-426614174000";
+                                        record[property.name.wireValue] = "123e4567-e89b-12d3-a456-426614174000";
                                         break;
                                     }
                                     case "base64": {
-                                        record[getWireValue(property.name)] = "SGVsbG8gd29ybGQh";
+                                        record[property.name.wireValue] = "SGVsbG8gd29ybGQh";
                                         break;
                                     }
                                     case "biginteger": {
-                                        record[getWireValue(property.name)] = "12345678901234567890";
+                                        record[property.name.wireValue] = "12345678901234567890";
                                         break;
                                     }
                                 }
@@ -175,7 +174,7 @@ export class FilePropertyMapper extends WithGeneration {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
     }): ast.Literal {
-        const bodyPropertyValue = record[getWireValue(property.name)];
+        const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
             return this.csharp.Literal.nop();
         }

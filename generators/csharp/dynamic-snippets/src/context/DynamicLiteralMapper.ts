@@ -1,11 +1,8 @@
 import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 export declare namespace DynamicLiteralMapper {
     interface Args {
@@ -306,12 +303,12 @@ export class DynamicLiteralMapper extends WithGeneration {
                 }
                 try {
                     const innerClassName = ["Value", "Type"].includes(
-                        caseConverter.pascalSafe(unionVariant.discriminantValue.name)
+                        unionVariant.discriminantValue.name.pascalCase.safeName
                     )
-                        ? `${caseConverter.pascalSafe(unionVariant.discriminantValue.name)}Inner`
-                        : caseConverter.pascalSafe(unionVariant.discriminantValue.name);
+                        ? `${unionVariant.discriminantValue.name.pascalCase.safeName}Inner`
+                        : unionVariant.discriminantValue.name.pascalCase.safeName;
 
-                    this.context.errors.scope(getWireValue(unionVariant.discriminantValue));
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     return this.instantiateUnionWithBaseProperties({
                         classReference,
                         baseProperties,
@@ -371,7 +368,7 @@ export class DynamicLiteralMapper extends WithGeneration {
             ignoreMissingParameters: true
         });
         return properties.map((property) => {
-            this.context.errors.scope(getWireValue(property.name));
+            this.context.errors.scope(property.name.wireValue);
             try {
                 return {
                     name: this.context.getPropertyName(property.name.name),
@@ -463,7 +460,7 @@ export class DynamicLiteralMapper extends WithGeneration {
                 namespace: this.context.getNamespace(object_.declaration.fernFilepath)
             }),
             fields: properties.map((property) => {
-                this.context.errors.scope(getWireValue(property.name));
+                this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
                         name: this.context.getClassName(property.name.name),

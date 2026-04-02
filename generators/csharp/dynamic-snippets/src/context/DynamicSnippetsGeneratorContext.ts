@@ -1,12 +1,13 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec, Options } from "@fern-api/browser-compatible-base-generator";
-import { CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractDynamicSnippetsGeneratorContext,
+    FernGeneratorExec,
+    Options
+} from "@fern-api/browser-compatible-base-generator";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicLiteralMapper } from "./DynamicLiteralMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -134,19 +135,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        return caseConverter.pascalSafe(name);
+        return name.pascalCase.safeName;
     }
 
     public getParameterName(name: FernIr.Name): string {
-        return caseConverter.camelSafe(name);
+        return name.camelCase.safeName;
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return caseConverter.pascalSafe(name);
+        return name.pascalCase.safeName;
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return `${caseConverter.pascalSafe(name)}Async`;
+        return `${name.pascalCase.safeName}Async`;
     }
 
     public getNamespace(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
@@ -172,7 +173,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private getNamespaceSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
         const segments = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
-        return segments.map((segment) => caseConverter.pascalSafe(segment));
+        return segments.map((segment) => segment.pascalCase.safeName);
     }
 
     public precalculate(requests: Partial<FernIr.dynamic.EndpointSnippetRequest>[]): void {
