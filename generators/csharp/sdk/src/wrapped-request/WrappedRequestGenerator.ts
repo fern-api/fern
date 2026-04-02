@@ -81,7 +81,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         // property (which has [JsonPropertyName]) and skip adding a separate [JsonIgnore] path
         // param field. The single property then serializes to both the URL path and the JSON body.
         const bodyPropertyPascalNames = this.getBodyPropertyPascalNames();
-        const pathParameterPascalNames = new Set<string>();
         if (
             this.context.includePathParametersInWrappedRequest({
                 endpoint: this.endpoint,
@@ -89,11 +88,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             })
         ) {
             for (const pathParameter of this.endpoint.allPathParameters) {
-                const pascalName = pathParameter.name.pascalCase.safeName;
-                pathParameterPascalNames.add(pascalName);
                 // Skip adding a [JsonIgnore] field for this path param if a body property
                 // with the same PascalCase name exists — the body property will serve both roles.
-                if (bodyPropertyPascalNames.has(pascalName)) {
+                if (bodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
                     continue;
                 }
                 class_.addField({

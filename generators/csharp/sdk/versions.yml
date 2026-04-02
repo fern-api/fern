@@ -5,8 +5,10 @@
         Fix duplicate field error in wrapped request generation when an inlined
         request body property has the same PascalCase name as a path parameter
         (e.g., `upload_request_id` body property colliding with `uploadRequestId`
-        path parameter). Body properties that duplicate path parameters already
-        included in the request wrapper are now skipped.
+        path parameter). When a collision is detected, the path parameter field
+        ([JsonIgnore]) is skipped and the body property ([JsonPropertyName]) is
+        kept, so the single property serializes to both the URL path and the
+        JSON request body.
       type: fix
   createdAt: "2026-04-02"
   irVersion: 65
