@@ -3,11 +3,10 @@
 - version: 4.57.0
   changelogEntry:
     - summary: |
-        Open the Fern Dashboard login page instead of Auth0 Universal Login
-        during `fern login`. This enables enterprise SSO (SAML/OIDC) support
-        in the CLI by reusing the Dashboard's email-based connection routing.
-        Falls back to direct Auth0 login and device code flow if the Dashboard
-        is unreachable.
+        Add `--email` flag to `fern login` for enterprise SSO support.
+        When provided, the CLI resolves the email's SSO connection via the
+        Dashboard API and routes directly to the identity provider through
+        Auth0. The default login flow (social providers) is unchanged.
       type: feat
   createdAt: "2026-04-02"
   irVersion: 65
