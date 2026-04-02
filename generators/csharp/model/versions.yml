@@ -2,10 +2,10 @@
 - version: 0.8.7
   changelogEntry:
     - summary: |
-        Switch from front-loaded batch formatting to JIT formatting. Files are
-        now formatted individually as they are written using the persistent
-        CSharpier process, instead of running `csharpier format .` on the
-        entire output directory after all files are generated.
+        Add JIT formatting for dynamically generated .cs files using the
+        persistent CSharpier process. Files are formatted in writeFilesInBatches
+        before being written to disk. The final `csharpier format .` pass is
+        retained for template and .csproj files.
       type: chore
   createdAt: "2026-04-02"
   irVersion: 65
