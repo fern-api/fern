@@ -24,11 +24,15 @@ export function handleNonStatusCodeError(
         case "timeout":
             throw new errors.SeedUndiscriminatedUnionWithResponsePropertyTimeoutError(
                 `Timeout exceeded when calling ${method} ${path}.`,
+                {
+                    cause: error.cause,
+                },
             );
         case "unknown":
             throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({

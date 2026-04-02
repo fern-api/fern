@@ -13,8 +13,11 @@ export function resolveRootImportPath({
     customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
-    const importPath = getImportPath({ config, customConfig });
-    return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+    const modulePath = getImportPath({ config, customConfig, isModulePath: true });
+    const modulePathWithSuffix =
+        suffix != null ? maybeAppendMajorVersionSuffix({ importPath: modulePath, majorVersion: suffix }) : modulePath;
+    const packagePath = customConfig?.packagePath ?? "";
+    return packagePath ? path.join(modulePathWithSuffix, packagePath) : modulePathWithSuffix;
 }
 
 export function resolveRootModulePath({
