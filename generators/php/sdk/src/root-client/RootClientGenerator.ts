@@ -362,22 +362,22 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         const passwordOmitted = scheme.passwordOmit === true;
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             const controlFlowKeyword = i === 0 ? "if" : "else if";
-                            // Per-field condition: required fields must be present, omittable fields are always satisfied
+                            // Condition: only require non-omitted fields to be present
                             let condition: string;
                             if (!usernameOmitted && !passwordOmitted) {
                                 condition = `$${usernameName} !== null && $${passwordName} !== null`;
-                            } else if (usernameOmitted && passwordOmitted) {
-                                condition = `$${usernameName} !== null || $${passwordName} !== null`;
-                            } else if (usernameOmitted) {
+                            } else if (usernameOmitted && !passwordOmitted) {
                                 condition = `$${passwordName} !== null`;
-                            } else {
+                            } else if (!usernameOmitted && passwordOmitted) {
                                 condition = `$${usernameName} !== null`;
+                            } else {
+                                condition = `true`;
                             }
                             writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
                         }
-                        // Per-field null coalescing: only omittable fields get ?? "" fallback
-                        const usernameExpr = usernameOmitted ? `($${usernameName} ?? "")` : `$${usernameName}`;
-                        const passwordExpr = passwordOmitted ? `($${passwordName} ?? "")` : `$${passwordName}`;
+                        // Omitted fields use empty string directly
+                        const usernameExpr = usernameOmitted ? `""` : `$${usernameName}`;
+                        const passwordExpr = passwordOmitted ? `""` : `$${passwordName}`;
                         writer.writeLine(
                             `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${usernameExpr} . ":" . ${passwordExpr});`
                         );
@@ -612,34 +612,38 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             case "basic": {
                 const username = this.context.getParameterName(scheme.username);
                 const password = this.context.getParameterName(scheme.password);
-                // Per-field optionality: make parameter optional when its omit flag is set
+                // When omit is true, the field is completely removed from the end-user API.
                 const schemeRecord = scheme as unknown as Record<string, unknown>;
-                const usernameIsOptional = isOptional || schemeRecord.usernameOmit === true;
-                const passwordIsOptional = isOptional || schemeRecord.passwordOmit === true;
-                return [
-                    {
+                const usernameOmitted = schemeRecord.usernameOmit === true;
+                const passwordOmitted = schemeRecord.passwordOmit === true;
+                const params: ConstructorParameter[] = [];
+                if (!usernameOmitted) {
+                    params.push({
                         name: username,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name: username }),
-                        isOptional: usernameIsOptional,
+                        isOptional,
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: STRING_TYPE_REFERENCE,
                             envVar: scheme.usernameEnvVar,
-                            isOptional: usernameIsOptional
+                            isOptional
                         }),
                         environmentVariable: scheme.usernameEnvVar
-                    },
-                    {
+                    });
+                }
+                if (!passwordOmitted) {
+                    params.push({
                         name: password,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name: password }),
-                        isOptional: passwordIsOptional,
+                        isOptional,
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: STRING_TYPE_REFERENCE,
                             envVar: scheme.passwordEnvVar,
-                            isOptional: passwordIsOptional
+                            isOptional
                         }),
                         environmentVariable: scheme.passwordEnvVar
-                    }
-                ];
+                    });
+                }
+                return params;
             }
             case "header": {
                 const name = this.context.getParameterName(scheme.name.name);
