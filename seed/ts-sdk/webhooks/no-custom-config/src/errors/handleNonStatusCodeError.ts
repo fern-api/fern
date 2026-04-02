@@ -27,6 +27,7 @@ export function handleNonStatusCodeError(
             throw new errors.SeedWebhooksError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedWebhooksError({

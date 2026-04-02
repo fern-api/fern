@@ -125,7 +125,11 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
                                 ),
                                 statusCode: undefined,
                                 responseBody: undefined,
-                                rawResponse: ts.factory.createIdentifier("rawResponse")
+                                rawResponse: ts.factory.createIdentifier("rawResponse"),
+                                cause: ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("error"),
+                                    context.coreUtilities.fetcher.Fetcher.UnknownError.cause
+                                )
                             })
                         )
                     ]

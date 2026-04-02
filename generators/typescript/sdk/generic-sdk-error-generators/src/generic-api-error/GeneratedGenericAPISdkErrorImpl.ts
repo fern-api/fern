@@ -18,6 +18,7 @@ export class GeneratedGenericAPISdkErrorImpl
         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME;
     private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
+    private static readonly CAUSE_CONSTRUCTOR_PARAMETER_NAME = "cause";
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 
@@ -32,18 +33,20 @@ export class GeneratedGenericAPISdkErrorImpl
             message,
             statusCode,
             responseBody,
-            rawResponse
+            rawResponse,
+            cause
         }: {
             message: ts.Expression | undefined;
             statusCode: ts.Expression | undefined;
             responseBody: ts.Expression | undefined;
             rawResponse: ts.Expression | undefined;
+            cause?: ts.Expression | undefined;
         }
     ): ts.NewExpression {
         return ts.factory.createNewExpression(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression(),
             undefined,
-            this.buildConstructorArguments({ message, statusCode, responseBody, rawResponse })
+            this.buildConstructorArguments({ message, statusCode, responseBody, rawResponse, cause })
         );
     }
 
@@ -51,12 +54,14 @@ export class GeneratedGenericAPISdkErrorImpl
         message,
         statusCode,
         responseBody,
-        rawResponse
+        rawResponse,
+        cause
     }: {
         message: ts.Expression | undefined;
         statusCode: ts.Expression | undefined;
         responseBody: ts.Expression | undefined;
         rawResponse: ts.Expression | undefined;
+        cause?: ts.Expression | undefined;
     }): ts.Expression[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
         if (message != null) {
@@ -88,6 +93,14 @@ export class GeneratedGenericAPISdkErrorImpl
                 ts.factory.createPropertyAssignment(
                     GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME,
                     rawResponse
+                )
+            );
+        }
+        if (cause != null) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                    cause
                 )
             );
         }
@@ -153,6 +166,13 @@ export class GeneratedGenericAPISdkErrorImpl
                             ts.factory.createIdentifier(
                                 GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME
                             )
+                        ),
+                        ts.factory.createBindingElement(
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier(
+                                GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                            )
                         )
                     ])
                 ),
@@ -189,6 +209,14 @@ export class GeneratedGenericAPISdkErrorImpl
                             ),
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType()
+                        ),
+                        ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createIdentifier(
+                                GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                         )
                     ])
                 )
@@ -220,6 +248,15 @@ export class GeneratedGenericAPISdkErrorImpl
                         false
                     )
                 ]
+            ),
+            ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createShorthandPropertyAssignment(
+                        GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                        undefined
+                    )
+                ],
+                false
             )
         ];
     }

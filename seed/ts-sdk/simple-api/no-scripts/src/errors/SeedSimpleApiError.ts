@@ -8,13 +8,14 @@ export class SeedSimpleApiError extends Error {
     public readonly body?: unknown;
     public readonly rawResponse?: core.RawResponse;
 
-    constructor({ message, statusCode, body, rawResponse }: {
+    constructor({ message, statusCode, body, rawResponse, cause }: {
             message?: string;
             statusCode?: number;
             body?: unknown;
             rawResponse?: core.RawResponse;
+            cause?: unknown;
         }) {
-        super(buildMessage({ message, statusCode, body }));
+        super(buildMessage({ message, statusCode, body }), { cause });
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);

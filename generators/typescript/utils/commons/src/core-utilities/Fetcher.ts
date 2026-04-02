@@ -59,6 +59,7 @@ export interface Fetcher {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "unknown";
             message: "errorMessage";
+            cause: "cause";
         };
     };
 
@@ -266,7 +267,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
-            message: "errorMessage"
+            message: "errorMessage",
+            cause: "cause"
         }
     };
 

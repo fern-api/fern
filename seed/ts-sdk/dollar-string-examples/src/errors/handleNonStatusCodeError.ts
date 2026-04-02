@@ -27,6 +27,7 @@ export function handleNonStatusCodeError(
             throw new errors.SeedDollarStringExamplesError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedDollarStringExamplesError({

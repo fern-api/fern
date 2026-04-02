@@ -17,7 +17,8 @@ export function handleNonStatusCodeError(error: core.Fetcher.Error, rawResponse:
         case "timeout": throw new errors.SeedSimpleApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
         case "unknown": throw new errors.SeedSimpleApiError({
             message: error.errorMessage,
-            rawResponse: rawResponse
+            rawResponse: rawResponse,
+            cause: error.cause
         });
         default: throw new errors.SeedSimpleApiError({
             message: "Unknown error",

@@ -27,6 +27,7 @@ export function handleNonStatusCodeError(
             throw new errors.SeedPathParametersError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedPathParametersError({

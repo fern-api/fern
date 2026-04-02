@@ -13,13 +13,15 @@ export class SeedIdempotencyHeadersError extends Error {
         statusCode,
         body,
         rawResponse,
+        cause,
     }: {
         message?: string;
         statusCode?: number;
         body?: unknown;
         rawResponse?: core.RawResponse;
+        cause?: unknown;
     }) {
-        super(buildMessage({ message, statusCode, body }));
+        super(buildMessage({ message, statusCode, body }), { cause });
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);

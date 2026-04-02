@@ -29,6 +29,7 @@ export function handleNonStatusCodeError(
             throw new errors.SeedOauthClientCredentialsMandatoryAuthError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedOauthClientCredentialsMandatoryAuthError({

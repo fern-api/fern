@@ -61,6 +61,7 @@ export declare namespace Fetcher {
     export interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+        cause?: unknown;
     }
 }
 
@@ -338,6 +339,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: "The user aborted a request",
+                    cause: error instanceof Error ? error : undefined,
                 },
                 rawResponse: abortRawResponse,
             };
@@ -371,6 +373,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: error.message,
+                    cause: error,
                 },
                 rawResponse: unknownRawResponse,
             };
@@ -389,6 +392,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             error: {
                 reason: "unknown",
                 errorMessage: toJson(error),
+                cause: error,
             },
             rawResponse: unknownRawResponse,
         };
