@@ -4,7 +4,7 @@
     - summary: |
         Add `maxRetries` custom configuration option to control the default number of
         retry attempts for all requests. Set to `0` to disable retries entirely.
-        When not specified, the existing default of 2 retries is preserved.
+        When not specified, the existing default of 1 retry (2 total attempts) is preserved.
       type: feat
   createdAt: "2026-04-02"
   irVersion: 61
