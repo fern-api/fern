@@ -7,7 +7,7 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Contextlib, UrlLibParse, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator, filter_variable_path_parameters
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
@@ -113,7 +113,8 @@ class WebsocketConnectMethodGenerator:
         named_parameters = self._named_parameters_raw.copy()
         # Path params with client_default are skipped from positional params,
         # so they need to be added as named params with their default value
-        client_default_path_params = [p for p in self._websocket.path_parameters if p.client_default is not None]
+        non_variable_path_params = filter_variable_path_parameters(self._websocket.path_parameters)
+        client_default_path_params = [p for p in non_variable_path_params if p.client_default is not None]
         if client_default_path_params:
             named_path_parameters = self._named_parameters_from_path_parameters(client_default_path_params)
             named_parameters = named_path_parameters + named_parameters
@@ -138,7 +139,8 @@ class WebsocketConnectMethodGenerator:
 
     def _get_websocket_path_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
-        for path_parameter in self._websocket.path_parameters:
+        non_variable_path_params = filter_variable_path_parameters(self._websocket.path_parameters)
+        for path_parameter in non_variable_path_params:
             if not self._is_type_literal(path_parameter.value_type):
                 # Path parameters with client defaults are moved to named parameters
                 if path_parameter.client_default is not None:
