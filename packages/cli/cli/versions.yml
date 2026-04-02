@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Open the Fern Dashboard login page instead of Auth0 Universal Login
+        during `fern login`. This enables enterprise SSO (SAML/OIDC) support
+        in the CLI by reusing the Dashboard's email-based connection routing.
+        Falls back to direct Auth0 login and device code flow if the Dashboard
+        is unreachable.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 4.56.0
   changelogEntry:
     - summary: |

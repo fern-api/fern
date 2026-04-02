@@ -6,6 +6,7 @@ const PORTS = [3129];
 export interface ServerAndPort {
     server: http.Server;
     origin: string;
+    port: number;
 }
 
 export async function createServer(): Promise<ServerAndPort> {
@@ -16,7 +17,7 @@ export async function createServer(): Promise<ServerAndPort> {
             return port;
         })
     );
-    return { server, origin: `http://localhost:${port}` };
+    return { server, origin: `http://localhost:${port}`, port };
 }
 
 function listenOnPort(server: http.Server, port: number): Promise<void> {
