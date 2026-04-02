@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { casingsGenerator, createMockReference, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    casingsGenerator,
+    createMockReference,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -11,7 +16,7 @@ import { SdkErrorGenerator } from "../SdkErrorGenerator.js";
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -65,7 +70,8 @@ function createMockSdkContext() {
                     return [ts.factory.createObjectLiteralExpression(props, true)];
                 }
             })
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock
     } as any;
 }
@@ -156,7 +162,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
     describe("writeToFile", () => {
         it("writes error class without body type", () => {
             const errorClass = createErrorClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             errorClass.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -165,7 +171,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
             const errorClass = createErrorClass({
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             errorClass.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -181,7 +187,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
                     inline: undefined
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             errorClass.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -190,7 +196,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
             const errorClass = createErrorClass({
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
             });
-            const optionalContext = createMockSdkContext();
+            const optionalContext = createMockFileContext();
             // Override to return optional type
             optionalContext.type.getReferenceToType = () => ({
                 typeNode: ts.factory.createUnionTypeNode([
@@ -209,7 +215,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
                 statusCode: 404,
                 name: "NotFound"
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             errorClass.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -218,7 +224,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
     describe("build", () => {
         it("builds new expression without body", () => {
             const errorClass = createErrorClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = errorClass.build(context, {
                 referenceToBody: undefined,
                 referenceToRawResponse: undefined
@@ -230,7 +236,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
             const errorClass = createErrorClass({
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = errorClass.build(context, {
                 referenceToBody: ts.factory.createIdentifier("parsedBody"),
                 referenceToRawResponse: undefined
@@ -242,7 +248,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
             const errorClass = createErrorClass({
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = errorClass.build(context, {
                 referenceToBody: ts.factory.createIdentifier("parsedBody"),
                 referenceToRawResponse: ts.factory.createIdentifier("rawResp")
@@ -252,7 +258,7 @@ describe("GeneratedSdkErrorClassImpl", () => {
 
         it("builds new expression with only rawResponse (no body)", () => {
             const errorClass = createErrorClass();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = errorClass.build(context, {
                 referenceToBody: undefined,
                 referenceToRawResponse: ts.factory.createIdentifier("rawResp")

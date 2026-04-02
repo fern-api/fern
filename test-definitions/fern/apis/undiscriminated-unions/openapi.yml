@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: undiscriminated-unions
-  version: ''
+  version: ""
 paths:
   /:
     post:
@@ -10,18 +10,18 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MyUnion'
+                $ref: "#/components/schemas/MyUnion"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MyUnion'
+              $ref: "#/components/schemas/MyUnion"
   /metadata:
     get:
       operationId: union_getMetadata
@@ -29,20 +29,20 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Metadata'
+                $ref: "#/components/schemas/Metadata"
     put:
       operationId: union_updateMetadata
       tags:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -52,7 +52,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MetadataUnion'
+              $ref: "#/components/schemas/MetadataUnion"
   /call:
     post:
       operationId: union_call
@@ -60,8 +60,8 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -71,7 +71,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Request'
+              $ref: "#/components/schemas/Request"
   /duplicate:
     post:
       operationId: union_duplicateTypesUnion
@@ -79,18 +79,18 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnionWithDuplicateTypes'
+                $ref: "#/components/schemas/UnionWithDuplicateTypes"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UnionWithDuplicateTypes'
+              $ref: "#/components/schemas/UnionWithDuplicateTypes"
   /nested:
     post:
       operationId: union_nestedUnions
@@ -98,8 +98,8 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -109,7 +109,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NestedUnionRoot'
+              $ref: "#/components/schemas/NestedUnionRoot"
   /camel-case:
     post:
       operationId: union_testCamelCaseProperties
@@ -117,8 +117,8 @@ paths:
         - Union
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -131,7 +131,7 @@ paths:
               type: object
               properties:
                 paymentMethod:
-                  $ref: '#/components/schemas/PaymentMethodUnion'
+                  $ref: "#/components/schemas/PaymentMethodUnion"
               required:
                 - paymentMethod
 components:
@@ -141,14 +141,14 @@ components:
       type: object
       properties:
         union:
-          $ref: '#/components/schemas/MetadataUnion'
+          $ref: "#/components/schemas/MetadataUnion"
           nullable: true
     TypeWithOptionalUnion:
       title: TypeWithOptionalUnion
       type: object
       properties:
         myUnion:
-          $ref: '#/components/schemas/MyUnion'
+          $ref: "#/components/schemas/MyUnion"
           nullable: true
     MyUnion:
       title: MyUnion
@@ -191,7 +191,7 @@ components:
         - type: array
           items:
             type: string
-        - $ref: '#/components/schemas/NestedUnionL2'
+        - $ref: "#/components/schemas/NestedUnionL2"
       description: Nested layer 1.
     NestedUnionRoot:
       title: NestedUnionRoot
@@ -200,7 +200,7 @@ components:
         - type: array
           items:
             type: string
-        - $ref: '#/components/schemas/NestedUnionL1'
+        - $ref: "#/components/schemas/NestedUnionL1"
       description: Nested union root.
     UnionWithDuplicateTypes:
       title: UnionWithDuplicateTypes
@@ -217,8 +217,8 @@ components:
     MetadataUnion:
       title: MetadataUnion
       oneOf:
-        - $ref: '#/components/schemas/OptionalMetadata'
-        - $ref: '#/components/schemas/NamedMetadata'
+        - $ref: "#/components/schemas/OptionalMetadata"
+        - $ref: "#/components/schemas/NamedMetadata"
     NamedMetadata:
       title: NamedMetadata
       type: object
@@ -248,7 +248,7 @@ components:
     Key:
       title: Key
       oneOf:
-        - $ref: '#/components/schemas/KeyType'
+        - $ref: "#/components/schemas/KeyType"
         - type: string
           const: default
     KeyType:
@@ -275,8 +275,8 @@ components:
     PaymentMethodUnion:
       title: PaymentMethodUnion
       oneOf:
-        - $ref: '#/components/schemas/TokenizeCard'
-        - $ref: '#/components/schemas/ConvertToken'
+        - $ref: "#/components/schemas/TokenizeCard"
+        - $ref: "#/components/schemas/ConvertToken"
       description: |-
         Tests that nested properties with camelCase wire names are properly
         converted from snake_case Ruby keys when passed as Hash values.
@@ -325,8 +325,8 @@ components:
       title: UnionWithTypeAliases
       oneOf:
         - type: string
-        - $ref: '#/components/schemas/UserId'
-        - $ref: '#/components/schemas/Name'
+        - $ref: "#/components/schemas/UserId"
+        - $ref: "#/components/schemas/Name"
       description: >-
         Union with multiple named type aliases that all resolve to the same C#
         type (string).

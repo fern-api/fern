@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: ruby-reserved-word-properties
-  version: ''
+  version: ""
 paths:
   /ruby-reserved-word-properties/getFoo:
     get:
@@ -10,12 +10,12 @@ paths:
         - Service
       parameters: []
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Foo'
+                $ref: "#/components/schemas/Foo"
 components:
   schemas:
     Foo:

@@ -1,4 +1,4 @@
-export { serialization as V64 } from "@fern-api/ir-sdk";
+export { serialization as V66 } from "@fern-api/ir-sdk";
 export * as V53 from "@fern-fern/ir-v53-sdk/serialization";
 export * as V54 from "@fern-fern/ir-v54-sdk/serialization";
 export * as V55 from "@fern-fern/ir-v55-sdk/serialization";
@@ -10,3 +10,5 @@ export * as V60 from "@fern-fern/ir-v60-sdk/serialization";
 export * as V61 from "@fern-fern/ir-v61-sdk/serialization";
 export * as V62 from "@fern-fern/ir-v62-sdk/serialization";
 export * as V63 from "@fern-fern/ir-v63-sdk/serialization";
+// V64 was never released as a public IR version; the migration chain jumps from v65 directly to v63.
+export * as V65 from "@fern-fern/ir-v65-sdk/serialization";

@@ -1,21 +1,21 @@
 openapi: 3.0.1
 info:
   title: validation
-  version: ''
+  version: ""
 paths:
   /create:
     post:
       operationId: create
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Type'
+                $ref: "#/components/schemas/Type"
       requestBody:
         required: true
         content:
@@ -33,7 +33,7 @@ paths:
                   format: custom
                   pattern: ^[a-z]+$
                 shape:
-                  $ref: '#/components/schemas/Shape'
+                  $ref: "#/components/schemas/Shape"
               required:
                 - decimal
                 - even
@@ -43,7 +43,7 @@ paths:
     get:
       operationId: get
       tags:
-        - ''
+        - ""
       parameters:
         - name: decimal
           in: query
@@ -64,12 +64,12 @@ paths:
             format: custom
             pattern: ^[a-z]+$
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Type'
+                $ref: "#/components/schemas/Type"
 components:
   schemas:
     SmallInteger:
@@ -110,7 +110,7 @@ components:
           format: custom
           pattern: ^[a-z]+$
         shape:
-          $ref: '#/components/schemas/Shape'
+          $ref: "#/components/schemas/Shape"
       required:
         - decimal
         - even

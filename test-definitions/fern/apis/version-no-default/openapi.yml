@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: version-no-default
-  version: ''
+  version: ""
 paths:
   /users/{userId}:
     get:
@@ -13,14 +13,14 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/UserId'
+            $ref: "#/components/schemas/UserId"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     UserId:
@@ -31,7 +31,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/UserId'
+          $ref: "#/components/schemas/UserId"
         name:
           type: string
       required:

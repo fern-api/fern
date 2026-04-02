@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: server-sent-events
-  version: ''
+  version: ""
 paths:
   /stream:
     post:
@@ -10,8 +10,8 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             text/event-stream:
               schema:
@@ -35,8 +35,8 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             text/event-stream:
               schema:

@@ -1,4 +1,4 @@
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export type PaginationResponseInfo =
@@ -45,9 +45,9 @@ export interface UriOrPathPaginationResponseInfo {
 }
 
 export interface GeneratedEndpointResponse {
-    getPaginationInfo: (context: SdkContext) => PaginationResponseInfo | undefined;
+    getPaginationInfo: (context: FileContext) => PaginationResponseInfo | undefined;
     getResponseVariableName: () => string;
-    getReturnResponseStatements: (context: SdkContext) => ts.Statement[];
-    getReturnType: (context: SdkContext) => ts.TypeNode;
-    getNamesOfThrownExceptions: (context: SdkContext) => string[];
+    getReturnResponseStatements: (context: FileContext) => ts.Statement[];
+    getReturnType: (context: FileContext) => ts.TypeNode;
+    getNamesOfThrownExceptions: (context: FileContext) => string[];
 }

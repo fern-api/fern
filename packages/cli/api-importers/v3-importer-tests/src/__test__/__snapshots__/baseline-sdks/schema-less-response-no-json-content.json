@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "No JSON Content Response API",
   "auth": {
     "requirement": "ALL",
@@ -51,25 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.uploadPlantImage",
-          "name": {
-            "originalName": "uploadPlantImage",
-            "camelCase": {
-              "unsafeName": "uploadPlantImage",
-              "safeName": "uploadPlantImage"
-            },
-            "snakeCase": {
-              "unsafeName": "upload_plant_image",
-              "safeName": "upload_plant_image"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "UPLOAD_PLANT_IMAGE",
-              "safeName": "UPLOAD_PLANT_IMAGE"
-            },
-            "pascalCase": {
-              "unsafeName": "UploadPlantImage",
-              "safeName": "UploadPlantImage"
-            }
-          },
+          "name": "uploadPlantImage",
           "displayName": "Upload Plant Image",
           "auth": false,
           "idempotent": false,
@@ -94,25 +58,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "plantId",
-                "camelCase": {
-                  "unsafeName": "plantID",
-                  "safeName": "plantID"
-                },
-                "snakeCase": {
-                  "unsafeName": "plant_id",
-                  "safeName": "plant_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PLANT_ID",
-                  "safeName": "PLANT_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "PlantID",
-                  "safeName": "PlantID"
-                }
-              },
+              "name": "plantId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -131,25 +77,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "plantId",
-                "camelCase": {
-                  "unsafeName": "plantID",
-                  "safeName": "plantID"
-                },
-                "snakeCase": {
-                  "unsafeName": "plant_id",
-                  "safeName": "plant_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PLANT_ID",
-                  "safeName": "PLANT_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "PlantID",
-                  "safeName": "PlantID"
-                }
-              },
+              "name": "plantId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -169,51 +97,12 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UploadPlantImageRequest",
-              "camelCase": {
-                "unsafeName": "uploadPlantImageRequest",
-                "safeName": "uploadPlantImageRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "upload_plant_image_request",
-                "safeName": "upload_plant_image_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPLOAD_PLANT_IMAGE_REQUEST",
-                "safeName": "UPLOAD_PLANT_IMAGE_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "UploadPlantImageRequest",
-                "safeName": "UploadPlantImageRequest"
-              }
-            },
+            "name": "UploadPlantImageRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "originalName": "imageUrl",
-                    "camelCase": {
-                      "unsafeName": "imageURL",
-                      "safeName": "imageURL"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "image_url",
-                      "safeName": "image_url"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "IMAGE_URL",
-                      "safeName": "IMAGE_URL"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ImageURL",
-                      "safeName": "ImageURL"
-                    }
-                  },
-                  "wireValue": "imageUrl"
-                },
+                "name": "imageUrl",
                 "valueType": {
                   "container": {
                     "optional": {
@@ -244,67 +133,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UploadPlantImageRequest",
-                "camelCase": {
-                  "unsafeName": "uploadPlantImageRequest",
-                  "safeName": "uploadPlantImageRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "upload_plant_image_request",
-                  "safeName": "upload_plant_image_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "UPLOAD_PLANT_IMAGE_REQUEST",
-                  "safeName": "UPLOAD_PLANT_IMAGE_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "UploadPlantImageRequest",
-                  "safeName": "UploadPlantImageRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "UploadPlantImageRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -323,28 +158,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -454,6 +268,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "imageUrl",
                   "name": {
                     "originalName": "imageUrl",
                     "camelCase": {
@@ -472,8 +287,7 @@
                       "unsafeName": "ImageURL",
                       "safeName": "ImageURL"
                     }
-                  },
-                  "wireValue": "imageUrl"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -501,6 +315,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

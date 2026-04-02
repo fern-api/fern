@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { Reference } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType } from "@fern-typescript/contexts";
@@ -11,6 +12,7 @@ export declare namespace AbstractGeneratedTypeSchema {
         getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
         noOptionalProperties: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -22,6 +24,7 @@ export abstract class AbstractGeneratedTypeSchema<
     protected getGeneratedType: () => GeneratedType<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
     protected noOptionalProperties: boolean;
+    protected caseConverter: CaseConverter;
     private getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
 
     constructor({
@@ -30,7 +33,8 @@ export abstract class AbstractGeneratedTypeSchema<
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema,
-        noOptionalProperties
+        noOptionalProperties,
+        caseConverter
     }: AbstractGeneratedTypeSchema.Init<Shape, Context>) {
         super({ typeName });
         this.shape = shape;
@@ -38,6 +42,7 @@ export abstract class AbstractGeneratedTypeSchema<
         this.getReferenceToGeneratedType = getReferenceToGeneratedType;
         this.getReferenceToSchema = getReferenceToGeneratedTypeSchema;
         this.noOptionalProperties = noOptionalProperties;
+        this.caseConverter = caseConverter;
     }
 
     public writeToFile(context: Context): void {

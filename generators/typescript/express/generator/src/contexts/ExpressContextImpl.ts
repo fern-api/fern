@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -84,6 +85,7 @@ export declare namespace ExpressContextImpl {
         expressRegisterGenerator: ExpressRegisterGenerator;
         expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
         expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
+        case: CaseConverter;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
@@ -97,6 +99,7 @@ export declare namespace ExpressContextImpl {
 }
 
 export class ExpressContextImpl implements ExpressContext {
+    public readonly case: CaseConverter;
     public readonly logger: Logger;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
@@ -150,6 +153,7 @@ export class ExpressContextImpl implements ExpressContext {
         expressErrorSchemaDeclarationReferencer,
         jsonDeclarationReferencer,
         expressErrorSchemaGenerator,
+        case: caseConverter,
         includeSerdeLayer,
         retainOriginalCasing,
         enableInlineTypes,
@@ -160,6 +164,7 @@ export class ExpressContextImpl implements ExpressContext {
         relativeTestPath,
         generateReadWriteOnlyTypes
     }: ExpressContextImpl.Init) {
+        this.case = caseConverter;
         this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;

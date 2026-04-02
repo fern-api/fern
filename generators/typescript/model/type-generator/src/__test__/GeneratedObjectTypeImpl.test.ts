@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     createNameAndWireValue,
@@ -89,7 +90,7 @@ function createMockBaseContext(opts?: {
             },
             getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => {
                 const overrideName = namedTypeMap.get(typeName.typeId);
-                const refName = overrideName ?? typeName.name.pascalCase.safeName;
+                const refName = overrideName ?? caseConverter.pascalSafe(typeName.name);
                 return {
                     getTypeNode: () => ts.factory.createTypeReferenceNode(refName),
                     getExpression: () => ts.factory.createIdentifier(refName),
@@ -223,7 +224,8 @@ function createObjectGenerator(opts: {
         noOptionalProperties: opts.noOptionalProperties ?? false,
         retainOriginalCasing: opts.retainOriginalCasing ?? false,
         enableInlineTypes: opts.enableInlineTypes ?? false,
-        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false
+        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
+        caseConverter
     });
 }
 
