@@ -8,7 +8,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
-import { readFile, rm } from "fs/promises";
+import { readFile, rm, writeFile } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -736,6 +736,20 @@ export async function runAppPreviewServer({
     }
 
     // Now start Next.js after backend is ready
+
+    // Polyfill `navigator` for Node.js < 21, where it doesn't exist as a global.
+    // Some bundled dependencies (e.g. JSPM browser process polyfills) access
+    // `navigator.language` without a typeof guard, causing a ReferenceError on
+    // older Node versions. Node 21+ / 22+ provide `navigator` natively.
+    const navigatorPolyfillPath = path.join(bundleRoot, "navigator-polyfill.cjs");
+    await writeFile(
+        navigatorPolyfillPath,
+        `if (typeof globalThis.navigator === "undefined") {
+  globalThis.navigator = { language: "en-US", userAgent: "node", platform: "linux" };
+}
+`
+    );
+
     const env = {
         ...process.env,
         PORT: port.toString(),
@@ -747,7 +761,7 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
+        NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${navigatorPolyfillPath}`
     };
 
     // Track the current server process
