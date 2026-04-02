@@ -3,6 +3,21 @@ import { AbstractConverter, AbstractConverterContext, ExampleConverter } from "@
 
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
 
+function convertDefaultToLiteral(defaultValue: unknown): FernIr.Literal | undefined {
+    if (defaultValue == null) {
+        return undefined;
+    }
+    if (typeof defaultValue === "string") {
+        return FernIr.Literal.string(defaultValue);
+    }
+    if (typeof defaultValue === "boolean") {
+        return FernIr.Literal.boolean(defaultValue);
+    }
+    // Non-string/non-boolean defaults (e.g., numbers) are not representable as
+    // Literal values, so we silently skip them here.
+    return undefined;
+}
+
 export function convertGlobalHeadersExtension({
     globalHeaders,
     context
@@ -20,7 +35,7 @@ export function convertGlobalHeadersExtension({
         v2Examples: header.optional ? undefined : constructGlobalHeaderExample({ header, context }),
         availability: undefined,
         docs: undefined,
-        clientDefault: undefined
+        clientDefault: convertDefaultToLiteral(header["x-fern-default"])
     }));
 }
 
