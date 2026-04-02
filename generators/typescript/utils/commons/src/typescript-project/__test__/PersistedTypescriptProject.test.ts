@@ -150,7 +150,7 @@ describe("PersistedTypescriptProject", () => {
             });
 
             // Second call is the publish command (first is npm config set)
-            const publishCall = mockNpm.mock.calls[1]![0] as string[];
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
             expect(publishCall).toContain("--tag");
             expect(publishCall).toContain("preview");
         });
@@ -170,7 +170,7 @@ describe("PersistedTypescriptProject", () => {
                 version: "1.0.0"
             });
 
-            const publishCall = mockNpm.mock.calls[1]![0] as string[];
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
             expect(publishCall).not.toContain("--tag");
         });
 
@@ -188,7 +188,7 @@ describe("PersistedTypescriptProject", () => {
                 shouldTolerateRepublish: false
             });
 
-            const publishCall = mockNpm.mock.calls[1]![0] as string[];
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
             expect(publishCall).not.toContain("--tag");
         });
 
@@ -207,7 +207,7 @@ describe("PersistedTypescriptProject", () => {
                 version: "0.0.1-preview.123"
             });
 
-            const publishCall = mockNpm.mock.calls[1]![0] as string[];
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
             expect(publishCall).toContain("--tag");
             expect(publishCall).toContain("--dry-run");
             expect(publishCall).toContain("--tolerate-republish");
@@ -227,13 +227,8 @@ describe("PersistedTypescriptProject", () => {
                 shouldTolerateRepublish: false
             });
 
-            const configCall = mockNpm.mock.calls[0]![0] as string[];
-            expect(configCall).toEqual([
-                "config",
-                "set",
-                "//npm.buildwithfern.com/:_authToken",
-                "fern_test_token_123"
-            ]);
+            const configCall = mockNpm.mock.calls[0]?.[0] as string[];
+            expect(configCall).toEqual(["config", "set", "//npm.buildwithfern.com/:_authToken", "fern_test_token_123"]);
         });
     });
 
