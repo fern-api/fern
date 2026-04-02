@@ -342,18 +342,18 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
               ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
               : passwordSupplierGetCode;
 
-        // Build per-field null checks based on individual omit flags
+        // Build per-field null checks based on individual omit flags.
+        // Interleave declaration and null-check to preserve short-circuit evaluation:
+        // if username is null, the password supplier is never evaluated.
         const buildNullChecks = (errorAction: string): string => {
             const lines: string[] = [];
             lines.push(`const ${usernameVar} = ${usernameEnvFallback};`);
-            lines.push(`const ${passwordVar} = ${passwordEnvFallback};`);
-
-            // Only add null checks for non-omitted fields
             if (!usernameOmit) {
                 lines.push(
                     `if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`
                 );
             }
+            lines.push(`const ${passwordVar} = ${passwordEnvFallback};`);
             if (!passwordOmit) {
                 lines.push(
                     `if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`
