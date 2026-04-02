@@ -11,9 +11,7 @@ public class Example4
             }
         );
 
-        await client.System.GetUserAsync(
-            "userId"
-        );
+        await client.ScimConfiguration.ListUsersAsync();
     }
 
 }
