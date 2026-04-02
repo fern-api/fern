@@ -371,7 +371,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             } else if (!usernameOmitted && passwordOmitted) {
                                 condition = `$${usernameName} !== null`;
                             } else {
-                                condition = `true`;
+                                // Both fields omitted — skip auth header entirely when auth is optional
+                                continue;
                             }
                             writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
                         }
