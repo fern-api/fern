@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm, writeFile } from "fs/promises";
+import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -476,6 +476,15 @@ export class PersistedTypescriptProject {
         });
 
         const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
+
+        // npm requires --tag when publishing prerelease versions (e.g. 0.0.1-preview.123)
+        const packageJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        const packageJsonContents = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+        const packageVersion: string = packageJsonContents.version ?? "";
+        if (packageVersion.includes("-")) {
+            publishCommand.push("--tag", "preview");
+        }
+
         if (dryRun) {
             publishCommand.push("--dry-run");
         }
