@@ -871,8 +871,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
-    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
-        return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types) as Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }>;
+    ): Array<{ name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
+        return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
     private writeEnvConditional({

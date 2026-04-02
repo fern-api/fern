@@ -73,7 +73,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
                     docs: property.docs
                 }),
                 zeroValue: this.context.goZeroValueMapper.convert({ reference: property.valueType }),
-                serde: this.getSerde({ name: property.name as FernIr.NameAndWireValue, typeReference: property.valueType })
+                serde: this.getSerde({ name: property.name, typeReference: property.valueType })
             };
         });
         return [...fields, this.getExtraPropertiesField(), this.getRawJsonField()];
