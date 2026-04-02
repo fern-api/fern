@@ -77,7 +77,14 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         String passwordEnvVar =
                 basicAuthScheme.getPasswordEnvVar().map(ev -> ev.get()).orElse(null);
 
-        String errorMessage = "Please provide username and password when initializing the client";
+        String errorMessage;
+        if (usernameOmitted && !passwordOmitted) {
+            errorMessage = "Please provide password when initializing the client";
+        } else if (!usernameOmitted && passwordOmitted) {
+            errorMessage = "Please provide username when initializing the client";
+        } else {
+            errorMessage = "Please provide username and password when initializing the client";
+        }
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
