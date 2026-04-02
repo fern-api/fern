@@ -322,10 +322,7 @@ export class CoreUtilitiesManager {
         // Replace relative import paths that reference the default package path (src/)
         // e.g. from "../../../src/core/fetcher/makeRequest" -> from "../../../core/fetcher/makeRequest"
         // where ../../../ resolves to the custom package path
-        contents = contents.replace(
-            /from "([^"]*\/)src\/([^"]*)"/g,
-            `from "${normalizedPath}/$2"`
-        );
+        contents = contents.replace(/from "([^"]*\/)src\/([^"]*)"/g, `from "${normalizedPath}/$2"`);
 
         if (contents !== originalContents) {
             await writeFile(filePath, contents);
