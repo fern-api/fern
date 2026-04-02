@@ -380,7 +380,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     reference: this.getUnionTypeClassReferenceByTypeName(
                         caseConverter.pascalSafe(type.discriminantValue.name)
                     ),
-                    summary: `Discriminated union type for ${type.discriminantValue.name.originalName}`,
+                    summary: `Discriminated union type for ${getOriginalName(type.discriminantValue)}`,
                     access: ast.Access.Public,
                     type: memberType.isReferenceType ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
                     annotations: [this.System.Serializable]
