@@ -217,7 +217,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         ...(example.endpointHeaders ?? [])
                     ]) {
                         const matchingHeader = tokenHttpEndpoint.headers.find(
-                            (h) => h.name.wireValue === getWireValue(exampleHeader.name)
+                            (h) => getWireValue(h.name) === getWireValue(exampleHeader.name)
                         );
                         if (
                             matchingHeader &&
@@ -229,7 +229,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             // Update the example header value to match what the client sends (wireValue)
                             exampleHeader.value = {
                                 ...exampleHeader.value,
-                                jsonExample: matchingHeader.name.wireValue
+                                jsonExample: getWireValue(matchingHeader.name)
                             };
                         }
                     }
