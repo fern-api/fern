@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.8.7
+  changelogEntry:
+    - summary: |
+        Switch from front-loaded batch formatting to JIT formatting. Files are
+        now formatted individually as they are written using the persistent
+        CSharpier process, instead of running `csharpier format .` on the
+        entire output directory after all files are generated.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 0.8.6
   changelogEntry:
     - summary: |

@@ -4,11 +4,10 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { createHash } from "crypto";
 import { Eta } from "eta";
-import { mkdir, readFile, unlink, writeFile } from "fs/promises";
+import { mkdir, readdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
-import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
@@ -165,19 +164,6 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await unlink(editorConfigPath);
 
         await writeFile(csprojPath, csprojContents);
-    }
-
-    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
-        const csharpier = findDotnetToolPath("csharpier");
-        await loggingExeca(
-            this.context.logger,
-            csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
-            {
-                doNotPipeOutput: false,
-                cwd: absolutePathToSrcDirectory
-            }
-        );
     }
 
     public async persist(): Promise<void> {
@@ -343,13 +329,11 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
 dotnet_diagnostic.IDE0005.severity = error          
           `
             );
+            // Re-format files modified by dotnet format
+            await this.formatCsFilesOnDisk(absolutePathToProjectDirectory);
         }
         this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
-        // format the code cleanly using csharpier on the full output directory
-        const csharpierStartTime = Date.now();
-        await this.csharpier(this.absolutePathToOutputDirectory);
-        this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
         this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
@@ -776,10 +760,68 @@ dotnet_diagnostic.IDE0005.severity = error
     /**
      * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
      * while still being significantly faster than sequential writes.
+     * Formats .cs files JIT using the persistent CSharpier process before writing.
      */
+    /**
+     * Recursively finds all .cs files in a directory, formats them using the persistent
+     * CSharpier process, and writes the formatted content back to disk.
+     * Used after dotnet format modifies files on disk.
+     */
+    private async formatCsFilesOnDisk(directory: AbsoluteFilePath): Promise<void> {
+        const csFilePaths: string[] = [];
+        const collectCsFiles = async (dir: string): Promise<void> => {
+            const entries = await readdir(dir, { withFileTypes: true });
+            for (const entry of entries) {
+                const fullPath = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                    await collectCsFiles(fullPath);
+                } else if (entry.name.endsWith(".cs")) {
+                    csFilePaths.push(fullPath);
+                }
+            }
+        };
+        await collectCsFiles(directory);
+
+        if (csFilePaths.length === 0) {
+            return;
+        }
+
+        for (let i = 0; i < csFilePaths.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
+            const batch = csFilePaths.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
+            const contents = await Promise.all(batch.map((fp) => readFile(fp, "utf-8")));
+            const formatted = await this.context.formatter.formatFileContents(contents);
+            await Promise.all(batch.map((fp, j) => writeFile(fp, formatted[j] ?? "")));
+        }
+    }
+
     private async writeFilesInBatches(files: File[], directoryPrefix: AbsoluteFilePath): Promise<void> {
         for (let i = 0; i < files.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
             const batch = files.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
+
+            // Resolve CSharpFile content before formatting
+            for (const file of batch) {
+                if (file instanceof CSharpFile) {
+                    file.resolveFileContents();
+                }
+            }
+
+            // Format all .cs files in the batch using the persistent formatter
+            const csFiles = batch.filter(
+                (file): file is File & { fileContents: string } =>
+                    file.filename.endsWith(".cs") && typeof file.fileContents === "string"
+            );
+            if (csFiles.length > 0) {
+                const formatted = await this.context.formatter.formatFileContents(
+                    csFiles.map((file) => file.fileContents)
+                );
+                for (let j = 0; j < csFiles.length; j++) {
+                    const csFile = csFiles[j];
+                    if (csFile != null) {
+                        csFile.fileContents = formatted[j] ?? "";
+                    }
+                }
+            }
+
             await Promise.all(batch.map((file) => file.write(directoryPrefix)));
         }
     }

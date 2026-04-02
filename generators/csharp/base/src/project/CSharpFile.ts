@@ -53,9 +53,9 @@ export class CSharpFile extends File {
     }
 
     /**
-     * Lazily resolves the AST to string, caching the result for subsequent calls.
+     * Resolves the AST to string, caching the result for subsequent calls.
      */
-    private resolveFileContents(): void {
+    public resolveFileContents(): void {
         if (this.resolved) {
             return;
         }

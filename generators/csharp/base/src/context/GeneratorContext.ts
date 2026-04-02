@@ -95,6 +95,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      */
     protected _formatter: AbstractFormatter | undefined;
 
+    public abstract get formatter(): AbstractFormatter;
+
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
