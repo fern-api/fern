@@ -28,14 +28,14 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     public doGenerate(): RubyFile {
         const aliasModule = ruby.module({
-            name: caseConverter.pascalSafe(this.typeDeclaration.name)
+            name: caseConverter.pascalSafe(this.typeDeclaration.name.name)
         });
 
         // Add a comment describing what this alias is for
         const aliasedTypeName = this.getAliasedTypeName();
         aliasModule.addStatement(
             ruby.comment({
-                docs: `${caseConverter.pascalSafe(this.typeDeclaration.name)} is an alias for ${aliasedTypeName}`
+                docs: `${caseConverter.pascalSafe(this.typeDeclaration.name.name)} is an alias for ${aliasedTypeName}`
             })
         );
 
@@ -88,7 +88,7 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             case "container":
                 return this.getContainerTypeName(aliasOf.container);
             case "named":
-                return caseConverter.pascalSafe(aliasOf.name);
+                return caseConverter.pascalSafe(aliasOf.name.name);
             case "unknown":
                 return "Object";
             default:

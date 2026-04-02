@@ -57,13 +57,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
-            name: caseConverter.pascalSafe(typeDeclaration.name)
+            name: caseConverter.pascalSafe(typeDeclaration.name.name)
         });
     }
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return caseConverter.snakeSafe(typeDeclaration.name) + ".rb";
+        return caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
@@ -274,7 +274,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getReferenceToTypeId(typeId: FernIr.TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
-            name: caseConverter.pascalSafe(typeDeclaration.name),
+            name: caseConverter.pascalSafe(typeDeclaration.name.name),
             modules: [
                 this.getRootModuleName(),
                 ...typeDeclaration.name.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path)),
