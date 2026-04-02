@@ -751,7 +751,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 writer.popScope();
                 writer.writeStatement(" ?? ", jsonObjReference.new());
                 writer.writeTextStatement(
-                    `json["${this.unionDeclaration.getWireValue(discriminant)}"] = value.${discriminant.name}`
+                    `json["${getWireValue(this.unionDeclaration.discriminant)}"] = value.${discriminant.name}`
                 );
                 if (baseProperties.length > 0) {
                     writer.write("var basePropertiesJson = JsonSerializer.SerializeToNode(new ");
