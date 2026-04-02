@@ -340,7 +340,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: "The user aborted a request",
-                    cause: error instanceof Error ? error : undefined,
+                    cause: error,
                 },
                 rawResponse: abortRawResponse,
             };

@@ -261,7 +261,7 @@ function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: "The user aborted a request",
-                        cause: error instanceof Error ? error : undefined,
+                        cause: error,
                     },
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };
