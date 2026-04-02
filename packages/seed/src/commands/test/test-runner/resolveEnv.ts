@@ -7,7 +7,7 @@ export function resolveEnv(
     }
     const resolved: Record<string, string> = {};
     for (const [key, value] of Object.entries(env)) {
-        resolved[key] = value.replace("{REPO_ROOT}", repoRoot).replace("{PATH}", process.env.PATH ?? "");
+        resolved[key] = value.replaceAll("{REPO_ROOT}", repoRoot).replaceAll("{PATH}", process.env.PATH ?? "");
     }
     return resolved;
 }

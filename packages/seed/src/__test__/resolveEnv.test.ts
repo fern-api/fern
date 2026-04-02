@@ -39,6 +39,12 @@ describe("resolveEnv", () => {
         }
     });
 
+    it("substitutes all occurrences of {REPO_ROOT}", () => {
+        expect(resolveEnv({ PATH: "{REPO_ROOT}/a:{REPO_ROOT}/b" }, "/repo")).toEqual({
+            PATH: "/repo/a:/repo/b"
+        });
+    });
+
     it("passes through values with no placeholders unchanged", () => {
         expect(resolveEnv({ FOO: "bar", BAZ: "qux" }, "/repo")).toEqual({ FOO: "bar", BAZ: "qux" });
     });

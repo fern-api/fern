@@ -4,6 +4,9 @@ image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
 
 buildScripts:
+  preInstallScript:
+    commands:
+      - dotnet tool install --tool-path generators/csharp/.tools csharpier --version 1.2.6 || dotnet tool update --tool-path generators/csharp/.tools csharpier --version 1.2.6
   compileScript:
     commands:
       - |
@@ -34,6 +37,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
     runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
+    env:
+      PATH: "{REPO_ROOT}/generators/csharp/.tools:{PATH}"
 
 language: csharp
 generatorType: Model
