@@ -559,16 +559,8 @@ class ClientWrapperGenerator:
                             writer.write("._auth_header")
                             writer.write_newline_if_last_line_not()
                     else:
-                        # Both fields omitted - always set header with empty strings
-                        writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
-                                args=[username_arg, password_arg],
-                            )
-                        )
-                        writer.write("._auth_header")
-                        writer.write_newline_if_last_line_not()
+                        # Both fields omitted and auth is non-mandatory - skip header entirely
+                        pass
                 else:
                     # Auth is mandatory - omitted fields use empty string
                     username_getter = (
