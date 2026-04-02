@@ -106,7 +106,8 @@ export class ContainerTestRunner extends TestRunner {
         license,
         smartCasing,
         organization,
-        absolutePathToFernConfig
+        absolutePathToFernConfig,
+        skipAutogenerationIfManualExamplesExist
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -144,7 +145,8 @@ export class ContainerTestRunner extends TestRunner {
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
             executionEnvironment: this.reusableContainer,
-            ai: undefined
+            ai: undefined,
+            skipAutogenerationIfManualExamplesExist
         });
     }
 

@@ -14,7 +14,7 @@
         {
             "name": {
                 "wireValue": "X-API-Version",
-                "name": "apiVersion"
+                "name": "api_version"
             },
             "valueType": {
                 "_type": "container",
@@ -627,7 +627,7 @@
                 "name": {
                     "wireValue": "X-API-Version",
                     "name": {
-                        "originalName": "apiVersion",
+                        "originalName": "api_version",
                         "camelCase": {
                             "unsafeName": "apiVersion",
                             "safeName": "apiVersion"

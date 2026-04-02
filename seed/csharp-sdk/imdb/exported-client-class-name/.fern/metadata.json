@@ -4,7 +4,8 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "client-class-name": "BaseClient",
-    "exported-client-class-name": "CustomClient"
+    "exported-client-class-name": "CustomClient",
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
