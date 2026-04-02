@@ -49,7 +49,10 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         const defaultType = isOptional ? "optional<string>" : "string";
         let schema: RawSchemas.HttpHeaderSchema = defaultType;
 
-        if (header.name == null && header.env == null && typeof header.schema === "string") {
+        // x-fern-default is passed through from the extension via spread but isn't on the GlobalHeader type
+        const clientDefault = (header as Record<string, unknown>)["x-fern-default"];
+
+        if (header.name == null && header.env == null && clientDefault == null && typeof header.schema === "string") {
             schema = header.schema;
         } else if (header != null) {
             const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
@@ -73,6 +76,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                           ) ?? defaultType)
                         : defaultType
             };
+            if (clientDefault != null) {
+                schema.default = clientDefault;
+            }
         }
         context.builder.addGlobalHeader({
             name: headerName,
