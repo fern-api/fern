@@ -2,13 +2,15 @@
 - version: 2.56.1
   changelogEntry:
     - summary: |
-        Relax query-string encoding to allow RFC 3986 sub-delimiters and other
-        characters that are safe in query strings (`! $ ' ( ) * , ; : @ /`).
-        Previously, the `QueryStringBuilder` only left RFC 3986 unreserved
-        characters unencoded, which caused OData-style parameter names like
-        `$filter` to be percent-encoded to `%24filter`. Some HTTP servers and
-        mock frameworks (e.g. WireMock) do not decode parameter names, leading
-        to request mismatches.
+        Make query-string and path parameter encoding RFC 3986 spec-compliant
+        with three distinct encoding contexts: path segments (pchar), query keys,
+        and query values. Each context now encodes exactly the characters that
+        RFC 3986 requires. Query keys exclude `&`, `=`, `+`, `#`; query values
+        exclude `&`, `+`, `#` (but allow `=`); path segments allow all
+        sub-delimiters plus `:` and `@` (but encode `/` and `?`). Path parameter
+        values are now percent-encoded via `EncodePathSegment` in
+        `ValueConvert.ToPathParameterString`. Previously, all contexts shared a
+        single character set and path parameters were not encoded.
       type: fix
   createdAt: "2026-04-02"
   irVersion: 65

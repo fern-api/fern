@@ -37,7 +37,10 @@ public class QueryParameterTests
     {
         var queryString = new QueryStringBuilder.Builder()
             .Add("sdk", "param")
-            .MergeAdditional(new List<KeyValuePair<string, string>> { new("user", "value") })
+            .MergeAdditional(new List<KeyValuePair<string, string>>
+            {
+                new("user", "value")
+            })
             .Build();
 
         Assert.That(queryString, Does.Contain("sdk=param"));
@@ -49,7 +52,10 @@ public class QueryParameterTests
     {
         var queryString = new QueryStringBuilder.Builder()
             .Add("foo", "sdk_value")
-            .MergeAdditional(new List<KeyValuePair<string, string>> { new("foo", "user_override") })
+            .MergeAdditional(new List<KeyValuePair<string, string>>
+            {
+                new("foo", "user_override")
+            })
             .Build();
 
         Assert.That(queryString, Does.Contain("foo=user_override"));
@@ -61,9 +67,11 @@ public class QueryParameterTests
     {
         var queryString = new QueryStringBuilder.Builder()
             .Add("foo", "sdk_value")
-            .MergeAdditional(
-                new List<KeyValuePair<string, string>> { new("foo", "user1"), new("foo", "user2") }
-            )
+            .MergeAdditional(new List<KeyValuePair<string, string>>
+            {
+                new("foo", "user1"),
+                new("foo", "user2")
+            })
             .Build();
 
         Assert.That(queryString, Does.Contain("foo=user1"));
@@ -75,9 +83,11 @@ public class QueryParameterTests
     public void QueryParameters_OnlyAdditionalParameters()
     {
         var queryString = new QueryStringBuilder.Builder()
-            .MergeAdditional(
-                new List<KeyValuePair<string, string>> { new("foo", "bar"), new("baz", "qux") }
-            )
+            .MergeAdditional(new List<KeyValuePair<string, string>>
+            {
+                new("foo", "bar"),
+                new("baz", "qux")
+            })
             .Build();
 
         Assert.That(queryString, Does.Contain("foo=bar"));
