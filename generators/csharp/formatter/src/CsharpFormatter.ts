@@ -39,6 +39,7 @@ export class CsharpFormatter extends AbstractFormatter {
                 process.stderr.write(`CSharpier process exited unexpectedly with code ${code}\n`);
             }
             this.process = undefined;
+            this.buffer = "";
             this.drainCallbacks();
         });
 
