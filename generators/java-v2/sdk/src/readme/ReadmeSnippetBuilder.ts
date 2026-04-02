@@ -917,8 +917,7 @@ ${clientClassName} client = ${clientClassName}.builder()
                     value: java.TypeLiteral.string("<password>")
                 });
             } else if (authScheme?.type === "header") {
-                const headerName =
-                    authScheme.name != null ? caseConverter.camelUnsafe(authScheme.name) : "apiKey";
+                const headerName = authScheme.name != null ? caseConverter.camelUnsafe(authScheme.name) : "apiKey";
                 builderParameters.push({
                     name: headerName,
                     value: java.TypeLiteral.string("<api-key>")

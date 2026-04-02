@@ -265,7 +265,7 @@ export class TestClassBuilder {
             case "basic":
                 return '.credentials("testuser", "testpass")';
             case "header": {
-                if (scheme.name?.name != null) {
+                if (scheme.name != null) {
                     const methodName = caseConverter.camelUnsafe(scheme.name);
                     return `.${methodName}("test-api-key")`;
                 }
