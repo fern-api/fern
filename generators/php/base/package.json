@@ -44,6 +44,7 @@
     "@fern-fern/ir-sdk": "^62.1.0",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
+    "eta": "^4.5.1",
     "lodash-es": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

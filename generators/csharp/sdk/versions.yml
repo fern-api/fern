@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.56.1
+  changelogEntry:
+    - summary: |
+        Use a persistent CSharpier process for code formatting. Instead of
+        spawning a new process per format call, a single `csharpier pipe-files`
+        process is kept alive and files are piped to it on demand. This
+        eliminates repeated .NET startup overhead and significantly speeds up
+        formatting during SDK generation.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 2.56.0
   changelogEntry:
     - summary: |
