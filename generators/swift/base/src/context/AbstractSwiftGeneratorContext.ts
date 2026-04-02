@@ -98,7 +98,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
             const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
                 typeId,
-                caseConverter.pascalUnsafe(typeDeclaration.name),
+                caseConverter.pascalUnsafe(typeDeclaration.name.name),
                 symbolShape
             );
             return { typeId, typeDeclaration, registeredSymbol: schemaTypeSymbol };
