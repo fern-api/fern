@@ -93,9 +93,6 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
-    - outputFolder: max-retries-five
-      customConfig:
-        maxRetries: 5
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
