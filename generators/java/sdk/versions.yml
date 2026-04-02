@@ -6,7 +6,7 @@
         number of retries for failed requests. The default remains 2 when not
         specified.
       type: feat
-  createdAt: "2026-03-31"
+  createdAt: "2026-04-02"
   irVersion: 65
 
 - version: 4.0.9

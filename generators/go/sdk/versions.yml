@@ -6,7 +6,7 @@
         number of retries for failed requests. The default remains 1 retry
         (2 total attempts) when not specified.
       type: feat
-  createdAt: "2026-03-31"
+  createdAt: "2026-04-02"
   irVersion: 61
 
 - version: 1.32.2
