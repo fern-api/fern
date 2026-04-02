@@ -78,12 +78,16 @@ export class RootClientGenerator {
     }
 
     private get maxRetriesParam() {
+        const configuredMaxRetries = this.sdkGeneratorContext.customConfig.maxRetries;
         return swift.functionParameter({
             argumentLabel: "maxRetries",
             unsafeName: "maxRetries",
             type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
-            defaultValue: swift.Expression.rawValue("nil"),
-            docsContent: "Maximum number of retries for failed requests. Defaults to 2."
+            defaultValue:
+                configuredMaxRetries != null
+                    ? swift.Expression.rawValue(String(configuredMaxRetries))
+                    : swift.Expression.rawValue("nil"),
+            docsContent: `Maximum number of retries for failed requests. Defaults to ${configuredMaxRetries ?? 2}.`
         });
     }
 
@@ -452,7 +456,10 @@ export class RootClientGenerator {
                 argumentLabel: "maxRetries",
                 unsafeName: "maxRetries",
                 type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
-                defaultValue: swift.Expression.nil()
+                defaultValue:
+                    this.sdkGeneratorContext.customConfig.maxRetries != null
+                        ? swift.Expression.rawValue(String(this.sdkGeneratorContext.customConfig.maxRetries))
+                        : swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "urlSession",
