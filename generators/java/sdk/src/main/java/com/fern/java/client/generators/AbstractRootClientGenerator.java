@@ -1323,8 +1323,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
 
             // Only add credentials() method with non-omitted fields as parameters
-            MethodSpec.Builder credentialsMethodBuilder = MethodSpec.methodBuilder("credentials")
-                    .addModifiers(Modifier.PUBLIC);
+            MethodSpec.Builder credentialsMethodBuilder =
+                    MethodSpec.methodBuilder("credentials").addModifiers(Modifier.PUBLIC);
             if (!usernameOmitted) {
                 credentialsMethodBuilder.addParameter(
                         ParameterSpec.builder(String.class, usernameFieldName).build());

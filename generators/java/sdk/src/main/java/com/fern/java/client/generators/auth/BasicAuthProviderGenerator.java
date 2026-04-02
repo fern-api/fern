@@ -63,12 +63,14 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
         boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
 
-        FieldSpec usernameSupplierField = usernameOmitted ? null : FieldSpec.builder(
-                        stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
-                .build();
-        FieldSpec passwordSupplierField = passwordOmitted ? null : FieldSpec.builder(
-                        stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
-                .build();
+        FieldSpec usernameSupplierField = usernameOmitted
+                ? null
+                : FieldSpec.builder(stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
+                        .build();
+        FieldSpec passwordSupplierField = passwordOmitted
+                ? null
+                : FieldSpec.builder(stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
+                        .build();
 
         String usernameEnvVar =
                 basicAuthScheme.getUsernameEnvVar().map(ev -> ev.get()).orElse(null);
@@ -95,8 +97,7 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                         .build());
 
         // Only add fields and constructor params for non-omitted fields
-        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC);
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         if (!usernameOmitted) {
             classBuilder.addField(usernameSupplierField);
             constructorBuilder.addParameter(stringSupplierType, "usernameSupplier");
