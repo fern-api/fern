@@ -234,7 +234,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: caseConverter.snakeSafe(queryParam.name.name),
+            name: caseConverter.snakeSafe(queryParam.name),
             type: getRubyTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -243,7 +243,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: caseConverter.snakeSafe(header.name.name),
+            name: caseConverter.snakeSafe(header.name),
             type: getRubyTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -253,7 +253,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: caseConverter.snakeSafe(property.name.name),
+                name: caseConverter.snakeSafe(property.name),
                 type: getRubyTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true

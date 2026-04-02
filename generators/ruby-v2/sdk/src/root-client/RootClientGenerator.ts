@@ -332,7 +332,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: caseConverter.snakeSafe(scheme.name.name),
+                        name: caseConverter.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -423,7 +423,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            snakeName: caseConverter.snakeUnsafe(property.name.name),
+                            snakeName: caseConverter.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType)
                         });
                     }
@@ -435,7 +435,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const literal = this.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        snakeName: caseConverter.snakeUnsafe(header.name.name),
+                        snakeName: caseConverter.snakeUnsafe(header.name),
                         isOptional: this.isOptional(header.valueType)
                     });
                 }
@@ -488,7 +488,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 case "header": {
-                    const headerParamName = caseConverter.snakeSafe(header.name.name);
+                    const headerParamName = caseConverter.snakeSafe(header.name);
                     const headerName = getWireValue(header.name);
                     const headerValue =
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;

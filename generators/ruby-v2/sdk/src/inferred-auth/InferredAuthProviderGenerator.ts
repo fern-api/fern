@@ -230,7 +230,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
-                snakeName: caseConverter.snakeUnsafe(query.name.name),
+                snakeName: caseConverter.snakeUnsafe(query.name),
                 isOptional: this.isOptional(query.valueType),
                 literal: this.maybeLiteral(query.valueType)
             });
@@ -239,7 +239,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
-                snakeName: caseConverter.snakeUnsafe(header.name.name),
+                snakeName: caseConverter.snakeUnsafe(header.name),
                 isOptional: this.isOptional(header.valueType),
                 literal: this.maybeLiteral(header.valueType)
             });
@@ -253,17 +253,17 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                        snakeName: caseConverter.snakeUnsafe(property.name.name),
-                        isOptional: this.isOptional(property.valueType),
-                        literal: this.maybeLiteral(property.valueType)
-                    });
-                }
-            },
-            fileUpload: (fileUpload) => {
-                for (const property of fileUpload.properties) {
-                    if (property.type === "bodyProperty") {
-                        properties.push({
-                            snakeName: caseConverter.snakeUnsafe(property.name.name),
+                                    snakeName: caseConverter.snakeUnsafe(property.name),
+                                    isOptional: this.isOptional(property.valueType),
+                                    literal: this.maybeLiteral(property.valueType)
+                                });
+                            }
+                        },
+                        fileUpload: (fileUpload) => {
+                            for (const property of fileUpload.properties) {
+                                if (property.type === "bodyProperty") {
+                                    properties.push({
+                                        snakeName: caseConverter.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType),
                             literal: this.maybeLiteral(property.valueType)
                         });
@@ -338,7 +338,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return caseConverter.snakeUnsafe(name.name);
+        return caseConverter.snakeUnsafe(name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -355,7 +355,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `.${caseConverter.snakeSafe(property.name.name)}`;
+        return `.${caseConverter.snakeSafe(property.name)}`;
     }
 
     private isOptional(typeReference: { type: string }): boolean {

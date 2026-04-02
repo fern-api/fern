@@ -15,7 +15,7 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = caseConverter.snakeSafe(prop.name.name);
+        const fieldName = caseConverter.snakeSafe(prop.name);
         const wireValue = getWireValue(prop.name);
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 

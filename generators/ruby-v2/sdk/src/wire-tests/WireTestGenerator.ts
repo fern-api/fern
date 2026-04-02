@@ -207,7 +207,7 @@ export class WireTestGenerator {
                     authParams.push(`${caseConverter.snakeSafe(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${caseConverter.snakeSafe(scheme.name.name)}: "test-api-key"`);
+                    authParams.push(`${caseConverter.snakeSafe(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
                     authParams.push(`${caseConverter.snakeSafe(scheme.username)}: "test-username"`);
@@ -258,7 +258,7 @@ export class WireTestGenerator {
             for (const property of requestBody.properties) {
                 const literal = this.maybeLiteral(property.valueType);
                 if (literal == null) {
-                    const paramName = caseConverter.snakeSafe(property.name.name);
+                    const paramName = caseConverter.snakeSafe(property.name);
                     params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
                 }
             }
@@ -268,7 +268,7 @@ export class WireTestGenerator {
         for (const header of endpoint.headers) {
             const literal = this.maybeLiteral(header.valueType);
             if (literal == null) {
-                const paramName = caseConverter.snakeSafe(header.name.name);
+                const paramName = caseConverter.snakeSafe(header.name);
                 params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
             }
         }

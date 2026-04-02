@@ -37,7 +37,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
             const escapedStringLiteral = originalStringValue.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 
             enumModule.addStatement(
-                ruby.codeblock(`${caseConverter.screamingSnakeSafe(enumValue.name.name)} = "${escapedStringLiteral}"`)
+                ruby.codeblock(`${caseConverter.screamingSnakeSafe(enumValue.name)} = "${escapedStringLiteral}"`)
             );
         }
 

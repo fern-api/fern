@@ -114,7 +114,7 @@ export class HttpEndpointGenerator {
                 case "custom": {
                     const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
                     // Use snakeCase.safeName for Ruby method calls
-                    const itemField = caseConverter.snakeSafe(endpoint.pagination.results.property.name.name);
+                    const itemField = caseConverter.snakeSafe(endpoint.pagination.results.property.name);
                     requestStatements = [
                         ...requestStatements,
                         ruby.invokeMethod({
@@ -152,18 +152,18 @@ export class HttpEndpointGenerator {
                                     name: "cursor_field",
                                     // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
                                     value: ruby.codeblock(
-                                        `:${caseConverter.snakeSafe(endpoint.pagination.next.property.name.name)}`
+                                        `:${caseConverter.snakeSafe(endpoint.pagination.next.property.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name.name)}`
-                                    )
-                                }),
-                                ruby.keywordArgument({
-                                    name: "initial_cursor",
+                                                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
+                                                                    )
+                                                                }),
+                                                                ruby.keywordArgument({
+                                                                    name: "initial_cursor",
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
@@ -201,15 +201,15 @@ export class HttpEndpointGenerator {
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name.name)}`
-                                    )
-                                }),
-                                ruby.keywordArgument({
-                                    name: "has_next_field",
+                                                                        `:${caseConverter.snakeSafe(endpoint.pagination.results.property.name)}`
+                                                                    )
+                                                                }),
+                                                                ruby.keywordArgument({
+                                                                    name: "has_next_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(
-                                              `:${caseConverter.snakeSafe(endpoint.pagination.hasNextPage.property.name.name)}`
+                                              `:${caseConverter.snakeSafe(endpoint.pagination.hasNextPage.property.name)}`
                                           )
                                         : ruby.nilValue()
                                 }),
@@ -407,13 +407,13 @@ export class HttpEndpointGenerator {
         }
 
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = caseConverter.snakeSafe(queryParam.name.name);
+            const paramName = caseConverter.snakeSafe(queryParam.name);
             const typeString = this.typeReferenceToYardString(queryParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
         for (const headerParam of endpoint.headers) {
-            const paramName = caseConverter.snakeSafe(headerParam.name.name);
+            const paramName = caseConverter.snakeSafe(headerParam.name);
             const typeString = this.typeReferenceToYardString(headerParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
