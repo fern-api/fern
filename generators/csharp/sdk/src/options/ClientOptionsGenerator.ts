@@ -232,7 +232,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 continue;
             }
-            const name = caseConverter.pascalSafe(header.name.name);
+            const name = caseConverter.pascalSafe(header.name);
             if (!seenNames.has(name)) {
                 seenNames.add(name);
                 const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
@@ -301,9 +301,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         } else if (scheme.type === "header") {
             return [
                 {
-                    name: caseConverter.pascalSafe(scheme.name.name),
+                    name: caseConverter.pascalSafe(scheme.name),
                     type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
-                    docs: scheme.docs ?? `The ${caseConverter.camelSafe(scheme.name.name)} to use for authentication.`,
+                    docs: scheme.docs ?? `The ${caseConverter.camelSafe(scheme.name)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.headerEnvVar != null
                 }
@@ -339,9 +339,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     continue;
                 }
                 fields.push({
-                    name: caseConverter.pascalSafe(customProperty.property.name.name),
+                    name: caseConverter.pascalSafe(customProperty.property.name),
                     type: typeRef,
-                    docs: `The ${caseConverter.camelSafe(customProperty.property.name.name)} for OAuth authentication.`,
+                    docs: `The ${caseConverter.camelSafe(customProperty.property.name)} for OAuth authentication.`,
                     isOptional
                 });
             }

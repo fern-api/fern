@@ -743,11 +743,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
                         if (isComplexType) {
                             writer.write(
-                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
+                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name)})`
                             );
                         } else {
                             writer.write(
-                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name.name)})`
+                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${caseConverter.pascalSafe(queryParameter.name)})`
                             );
                         }
                     }

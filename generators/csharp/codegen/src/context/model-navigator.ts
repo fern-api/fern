@@ -409,7 +409,7 @@ export class ModelNavigator {
         // get the name of the enum value
         const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
         // match the name given to the name in the actual type
-        const member = typeEnum.values.find((v) => this.nameEquals(v.name.name, name));
+        const member = typeEnum.values.find((v) => this.nameEquals(v.name, name));
         // return the property name for that value
         return member ? this.getPropertyNameFor(member) : fail(`Unexpected - can't find enum value ${name} in enum`);
     }
@@ -443,7 +443,7 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return caseConverter.pascalSafe(property.name.name);
+                return caseConverter.pascalSafe(property.name);
             }
             if (is.IR.Name(property.name)) {
                 return caseConverter.pascalSafe(property.name);
@@ -487,7 +487,7 @@ export class ModelNavigator {
                 return caseConverter.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return caseConverter.pascalSafe(classDeclaration.name.name);
+                return caseConverter.pascalSafe(classDeclaration.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
                 return caseConverter.pascalSafe(classDeclaration.name);
@@ -515,7 +515,7 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
+    nameEquals(name1: FernIr.NameOrString | FernIr.NameAndWireValueOrString, name2: FernIr.NameOrString | FernIr.NameAndWireValueOrString): boolean {
         return caseConverter.camelSafe(name1) === caseConverter.camelSafe(name2);
     }
 

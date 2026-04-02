@@ -246,7 +246,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
             if (type.isReferenceType && !type.isOptional) {
-                const name = caseConverter.pascalSafe(header.name.name);
+                const name = caseConverter.pascalSafe(header.name);
                 writer.write(name, " = ", type.defaultValue, ",");
                 writer.writeLine();
             }

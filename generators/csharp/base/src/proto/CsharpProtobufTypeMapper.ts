@@ -393,7 +393,7 @@ class ToProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
                 writer.write(".Values.");
-                writer.write(caseConverter.pascalSafe(enumValue.name.name));
+                writer.write(caseConverter.pascalSafe(enumValue.name));
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
@@ -434,7 +434,7 @@ class ToProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
                 writer.write(".Values.");
-                writer.write(caseConverter.pascalSafe(enumValue.name.name));
+                writer.write(caseConverter.pascalSafe(enumValue.name));
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
@@ -835,7 +835,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
-                writer.write(caseConverter.pascalSafe(enumValue.name.name));
+                writer.write(caseConverter.pascalSafe(enumValue.name));
                 writer.writeLine(",");
             }
             writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}}")`);
@@ -870,7 +870,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
-                writer.write(caseConverter.pascalSafe(enumValue.name.name));
+                writer.write(caseConverter.pascalSafe(enumValue.name));
                 writer.writeLine(",");
             }
             writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}}")`);
@@ -1100,7 +1100,7 @@ function getProtobufEnumValueName({
     classReference: ast.ClassReference;
     enumValue: EnumValue;
 }): string {
-    const enumValueName = caseConverter.pascalSafe(enumValue.name.name);
+    const enumValueName = caseConverter.pascalSafe(enumValue.name);
     // For nested enums (e.g. "UpdateResponse.Types.Status"), protobuf C# codegen
     // strips only the bare enum name ("Status"), not the full nested path.
     const fullName = classReference.name;

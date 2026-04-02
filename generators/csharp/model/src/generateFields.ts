@@ -89,7 +89,7 @@ export function generateFields(
     // Collect all property PascalCase names for collision detection when generating
     // nested literal struct names (e.g., {PropertyName}Literal must not collide with
     // another property name).
-    const allPropertyPascalNames = new Set(properties.map((p) => caseConverter.pascalSafe(p.name.name)));
+    const allPropertyPascalNames = new Set(properties.map((p) => caseConverter.pascalSafe(p.name)));
     return properties.map((property) => generateField(cls, { property, className, context, allPropertyPascalNames }));
 }
 
@@ -190,7 +190,7 @@ export function generateField(
         // readonly struct inside the parent record named {PropertyName}Literal.
         const inlineLiteral = extractInlineLiteral(property.valueType);
         if (inlineLiteral != null) {
-            const propertyPascalName = caseConverter.pascalSafe(property.name.name);
+            const propertyPascalName = caseConverter.pascalSafe(property.name);
             const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames ?? new Set());
 
             // Register the class reference FIRST so the name registry can resolve any conflicts,
@@ -241,7 +241,7 @@ export function generateField(
             set: (writer: Writer) => {
                 writer.write("value.Assert(value == ");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, string.Format("'${caseConverter.pascalSafe(property.name.name)}' must be {0}", `);
+                writer.write(`, string.Format("'${caseConverter.pascalSafe(property.name)}' must be {0}", `);
                 writer.writeNode(maybeLiteralInitializer);
                 writer.write("))");
             }

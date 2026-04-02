@@ -672,7 +672,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     parts.push(`${caseConverter.pascalSafe(scheme.username)} = "test"`);
                     parts.push(`${caseConverter.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${caseConverter.pascalSafe(scheme.name.name)} = "test"`);
+                    parts.push(`${caseConverter.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);

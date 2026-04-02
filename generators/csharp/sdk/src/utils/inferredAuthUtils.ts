@@ -60,14 +60,14 @@ export function collectInferredAuthCredentials(
             continue;
         }
 
-        const camelName = caseConverter.camelUnsafe(header.name.name);
+        const camelName = caseConverter.camelUnsafe(header.name);
         const typeRef = context.csharpTypeMapper.convert({
             reference: header.valueType
         });
 
         credentials.push({
             camelName,
-            pascalName: caseConverter.pascalSafe(header.name.name),
+            pascalName: caseConverter.pascalSafe(header.name),
             wireValue: getWireValue(header.name),
             typeReference: header.valueType,
             docs: header.docs,
@@ -79,7 +79,7 @@ export function collectInferredAuthCredentials(
     }
 
     for (const prop of getRequestBodyProperties(context, tokenEndpoint.requestBody)) {
-        const camelName = caseConverter.camelUnsafe(prop.name.name);
+        const camelName = caseConverter.camelUnsafe(prop.name);
 
         if (seenNames.has(camelName)) {
             continue;
@@ -91,7 +91,7 @@ export function collectInferredAuthCredentials(
 
         credentials.push({
             camelName,
-            pascalName: caseConverter.pascalSafe(prop.name.name),
+            pascalName: caseConverter.pascalSafe(prop.name),
             wireValue: getWireValue(prop.name),
             typeReference: prop.valueType,
             docs: prop.docs,

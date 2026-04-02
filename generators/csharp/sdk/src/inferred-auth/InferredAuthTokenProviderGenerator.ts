@@ -337,7 +337,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             }
         }
 
-        accessor += `.${caseConverter.pascalSafe(responseProperty.property.name.name)}`;
+        accessor += `.${caseConverter.pascalSafe(responseProperty.property.name)}`;
 
         return accessor;
     }

@@ -366,9 +366,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private dotAccess(property: ObjectProperty, path?: FernIr.Name[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => caseConverter.pascalSafe(val)).join(".")}.${caseConverter.pascalSafe(property.name.name)}`;
+            return `${path.map((val) => caseConverter.pascalSafe(val)).join(".")}.${caseConverter.pascalSafe(property.name)}`;
         }
-        return caseConverter.pascalSafe(property.name.name);
+        return caseConverter.pascalSafe(property.name);
     }
 }
 

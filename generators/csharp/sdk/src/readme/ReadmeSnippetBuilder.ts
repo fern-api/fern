@@ -288,11 +288,11 @@ var response = await ${this.getMethodCall(queryParameterEndpoint)}(
             shape: FernIr.Type.Enum;
         };
 
-        const enumName = caseConverter.pascalSafe(firstEnum.name.name);
-        const enumCamelCaseName = caseConverter.camelSafe(firstEnum.name.name);
+        const enumName = caseConverter.pascalSafe(firstEnum.name);
+        const enumCamelCaseName = caseConverter.camelSafe(firstEnum.name);
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
         const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
-        const firstEnumValueName = caseConverter.pascalSafe(firstEnumValue.name.name);
+        const firstEnumValueName = caseConverter.pascalSafe(firstEnumValue.name);
         const firstEnumValueWire = getWireValue(firstEnumValue.name);
 
         return [

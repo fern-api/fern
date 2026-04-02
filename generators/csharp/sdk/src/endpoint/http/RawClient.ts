@@ -234,7 +234,7 @@ export class RawClient extends WithGeneration {
                 });
                 break;
             case "bodyProperty": {
-                propertyName = caseConverter.pascalSafe(property.name.name);
+                propertyName = caseConverter.pascalSafe(property.name);
                 partName = getWireValue(property.name);
                 contentType = property.contentType;
                 encoding = property.style;

@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue, NamedArgument } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NamedArgument, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -6,7 +6,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type InferredAuthScheme = FernIr.InferredAuthScheme;
-type Name = FernIr.Name;
 type OAuthScheme = FernIr.OAuthScheme;
 
 import { fail } from "assert";
@@ -241,7 +240,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
                                 continue;
                             }
-                            deepSetProperty(jsonExample, [], prop.name.name, getWireValue(prop.name));
+                            deepSetProperty(jsonExample, [], prop.name, getWireValue(prop.name));
                         }
                     }
                 });
@@ -291,7 +290,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         scheme.configuration.tokenEndpoint.requestProperties.clientId.propertyPath?.map(
                             (val) => val.name
                         ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name.name,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name,
                         "CLIENT_ID"
                     );
                     deepSetProperty(
@@ -299,7 +298,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         scheme.configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath?.map(
                             (val) => val.name
                         ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name.name,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name,
                         "CLIENT_SECRET"
                     );
                 });
@@ -372,8 +371,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
  */
 function deepSetProperty(
     obj: Record<string, unknown>,
-    path: Name[] | undefined,
-    finalProp: Name,
+    path: NameInput[] | undefined,
+    finalProp: NameInput,
     value: unknown
 ): boolean {
     // Start with the provided object

@@ -139,7 +139,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
-                    protoPropertyName: caseConverter.pascalSafe(query.name.name),
+                    protoPropertyName: caseConverter.pascalSafe(query.name),
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -189,7 +189,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
-                const allPropertyPascalNames = new Set(allProps.map((p) => caseConverter.pascalSafe(p.name.name)));
+                const allPropertyPascalNames = new Set(allProps.map((p) => caseConverter.pascalSafe(p.name)));
                 for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
@@ -201,7 +201,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
-                            protoPropertyName: caseConverter.pascalSafe(property.name.name),
+                            protoPropertyName: caseConverter.pascalSafe(property.name),
                             typeReference: property.valueType
                         });
                     }
@@ -209,7 +209,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             fileUpload: (request) => {
                 const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
-                const allPropertyPascalNames = new Set(bodyProps.map((p) => caseConverter.pascalSafe(p.name.name)));
+                const allPropertyPascalNames = new Set(bodyProps.map((p) => caseConverter.pascalSafe(p.name)));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
@@ -317,14 +317,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                       )
                   );
             orderedFields.push({
-                name: exampleQueryParameter.name.name,
+                name: exampleQueryParameter.name,
                 value
             });
         }
 
         for (const header of [...example.endpointHeaders, ...example.serviceHeaders]) {
             orderedFields.push({
-                name: header.name.name,
+                name: header.name,
                 value: this.exampleGenerator.getSnippetForTypeReference({
                     exampleTypeReference: header.value,
                     parseDatetimes
@@ -345,7 +345,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
                     orderedFields.push({
-                        name: property.name.name,
+                        name: property.name,
                         value: this.exampleGenerator.getSnippetForTypeReference({
                             exampleTypeReference: property.value,
                             parseDatetimes
@@ -470,7 +470,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     exampleTypeReference: extraProperty.value,
                     parseDatetimes
                 });
-                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.write(`["${getWireValue(extraProperty.name)}"] = `);
                 writer.writeNode(valueSnippet);
                 writer.writeLine(",");
             }
