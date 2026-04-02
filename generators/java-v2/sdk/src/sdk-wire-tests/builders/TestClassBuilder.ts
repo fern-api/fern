@@ -266,7 +266,7 @@ export class TestClassBuilder {
                 return '.credentials("testuser", "testpass")';
             case "header": {
                 if (scheme.name?.name != null) {
-                    const methodName = caseConverter.camelUnsafe(scheme.name.name);
+                    const methodName = caseConverter.camelUnsafe(scheme.name);
                     return `.${methodName}("test-api-key")`;
                 }
                 return '.apiKey("test-api-key")';
@@ -287,7 +287,7 @@ export class TestClassBuilder {
                             if (endpoint.id === endpointId) {
                                 // Check for header parameters that aren't part of standard OAuth
                                 for (const header of endpoint.headers) {
-                                    const headerName = caseConverter.camelSafe(header.name.name);
+                                    const headerName = caseConverter.camelSafe(header.name);
                                     if (headerName !== "authorization" && headerName !== "contentType") {
                                         oauthCalls.push(`.${headerName}("test-${headerName}")`);
                                     }

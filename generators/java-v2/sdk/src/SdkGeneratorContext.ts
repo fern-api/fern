@@ -115,7 +115,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: caseConverter.pascalUnsafe(typeDeclaration.name.name),
+            name: caseConverter.pascalUnsafe(typeDeclaration.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }

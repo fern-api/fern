@@ -743,7 +743,7 @@ ${clientClassName} client = ${clientClassName}.builder()
                                 valueType.type === "container" &&
                                 (valueType.container.type === "optional" || valueType.container.type === "nullable")
                             ) {
-                                const fieldName = caseConverter.camelUnsafe(property.name.name);
+                                const fieldName = caseConverter.camelUnsafe(property.name);
                                 optionalFieldNames.add(fieldName);
                             }
                         }
@@ -918,7 +918,7 @@ ${clientClassName} client = ${clientClassName}.builder()
                 });
             } else if (authScheme?.type === "header") {
                 const headerName =
-                    authScheme.name.name != null ? caseConverter.camelUnsafe(authScheme.name.name) : "apiKey";
+                    authScheme.name != null ? caseConverter.camelUnsafe(authScheme.name) : "apiKey";
                 builderParameters.push({
                     name: headerName,
                     value: java.TypeLiteral.string("<api-key>")
