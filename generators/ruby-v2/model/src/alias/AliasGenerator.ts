@@ -1,9 +1,12 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -25,14 +28,14 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     public doGenerate(): RubyFile {
         const aliasModule = ruby.module({
-            name: this.typeDeclaration.name.name.pascalCase.safeName
+            name: caseConverter.pascalSafe(this.typeDeclaration.name.name)
         });
 
         // Add a comment describing what this alias is for
         const aliasedTypeName = this.getAliasedTypeName();
         aliasModule.addStatement(
             ruby.comment({
-                docs: `${this.typeDeclaration.name.name.pascalCase.safeName} is an alias for ${aliasedTypeName}`
+                docs: `${caseConverter.pascalSafe(this.typeDeclaration.name.name)} is an alias for ${aliasedTypeName}`
             })
         );
 
@@ -85,7 +88,7 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             case "container":
                 return this.getContainerTypeName(aliasOf.container);
             case "named":
-                return aliasOf.name.pascalCase.safeName;
+                return caseConverter.pascalSafe(aliasOf.name);
             case "unknown":
                 return "Object";
             default:

@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -43,7 +43,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ...pathParameter,
                 name: {
                     name: pathParameter.name,
-                    wireValue: pathParameter.name.originalName
+                    wireValue: getOriginalName(pathParameter.name)
                 },
                 propertyAccess: undefined,
                 availability: undefined
@@ -71,7 +71,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 properties.push({
                     name: {
                         name: this.wrapper.bodyKey,
-                        wireValue: this.wrapper.bodyKey.originalName
+                        wireValue: getOriginalName(this.wrapper.bodyKey)
                     },
                     valueType: reference.requestBodyType,
                     propertyAccess: undefined,

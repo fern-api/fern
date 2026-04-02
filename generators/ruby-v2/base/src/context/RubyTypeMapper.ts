@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace RubyTypeMapper {
     interface Args {
@@ -59,7 +62,7 @@ export class RubyTypeMapper {
     ): ruby.ClassReference {
         // In Ruby, modules are used for namespaces.
         return ruby.classReference({
-            name: declaredTypeName.name.pascalCase.safeName,
+            name: caseConverter.pascalSafe(declaredTypeName.name),
             modules: this.context.getModuleNamesForTypeId(declaredTypeName.typeId),
             fullyQualified: !!fullyQualified
         });

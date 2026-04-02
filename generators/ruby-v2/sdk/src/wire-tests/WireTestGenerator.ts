@@ -493,7 +493,7 @@ export class WireTestGenerator {
             // The Ruby SDK doesn't generate methods for root-level endpoints on the main client
             if (!service.name?.fernFilepath?.allParts || service.name.fernFilepath.allParts.length === 0) {
                 this.context.logger.debug(
-                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file?.snakeCase?.safeName ?? "unknown"}`
+                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file != null ? caseConverter.snakeSafe(service.name.fernFilepath.file) : "unknown"}`
                 );
                 continue;
             }

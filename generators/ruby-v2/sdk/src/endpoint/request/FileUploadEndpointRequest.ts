@@ -53,7 +53,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                 thenBody: [
                                     ruby.codeblock((writer) => {
                                         writer.writeLine(
-                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${property.value.key.wireValue}"))`
+                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${getWireValue(property.value.key)}"))`
                                         );
                                     })
                                 ]

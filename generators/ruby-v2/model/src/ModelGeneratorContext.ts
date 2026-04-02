@@ -1,9 +1,12 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
     public getLocationForTypeId(typeId: FernIr.TypeId): RelativeFilePath {
@@ -20,13 +23,13 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
-            name: typeDeclaration.name.name.pascalCase.safeName
+            name: caseConverter.pascalSafe(typeDeclaration.name.name)
         });
     }
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return typeDeclaration.name.name.snakeCase.safeName + ".rb";
+        return caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {

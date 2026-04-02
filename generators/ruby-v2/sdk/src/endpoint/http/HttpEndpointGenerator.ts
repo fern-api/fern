@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -165,7 +165,7 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
                                 })
                             ],
@@ -173,7 +173,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_cursor`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_cursor`
                                     ),
                                     ...requestStatements
                                 ]
@@ -194,7 +194,7 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "initial_page",
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -222,7 +222,7 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_page`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_page`
                                     ),
                                     ...requestStatements
                                 ]

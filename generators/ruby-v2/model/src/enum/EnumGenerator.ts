@@ -1,9 +1,12 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -25,16 +28,16 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
 
     public doGenerate(): RubyFile {
         const enumModule = ruby.module({
-            name: this.typeDeclaration.name.name.pascalCase.safeName
+            name: caseConverter.pascalSafe(this.typeDeclaration.name.name)
         });
         enumModule.addStatement(ruby.codeblock(`extend ${this.context.getRootModuleName()}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
-            const originalStringValue = enumValue.name.wireValue;
+            const originalStringValue = getWireValue(enumValue.name);
             const escapedStringLiteral = originalStringValue.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 
             enumModule.addStatement(
-                ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${escapedStringLiteral}"`)
+                ruby.codeblock(`${caseConverter.screamingSnakeSafe(enumValue.name.name)} = "${escapedStringLiteral}"`)
             );
         }
 

@@ -1,6 +1,9 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export function generateFields({
     typeDeclaration,
@@ -12,8 +15,8 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = prop.name.name.snakeCase.safeName;
-        const wireValue = prop.name.wireValue;
+        const fieldName = caseConverter.snakeSafe(prop.name.name);
+        const wireValue = getWireValue(prop.name);
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 
         let isCircular: boolean = false;
