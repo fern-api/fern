@@ -88,7 +88,7 @@ export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             case "container":
                 return this.getContainerTypeName(aliasOf.container);
             case "named":
-                return caseConverter.pascalSafe(aliasOf.name.name);
+                return caseConverter.pascalSafe(aliasOf.name);
             case "unknown":
                 return "Object";
             default:
