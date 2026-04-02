@@ -277,14 +277,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.usernameEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(typeof scheme.username === "string" ? scheme.username : scheme.username),
+                propertyReference: this.getOptionsPropertyReference(scheme.username),
                 env: scheme.usernameEnvVar
             });
         }
         if (scheme.passwordEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(typeof scheme.password === "string" ? scheme.password : scheme.password),
+                propertyReference: this.getOptionsPropertyReference(scheme.password),
                 env: scheme.passwordEnvVar
             });
         }
@@ -300,7 +300,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.tokenEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(typeof scheme.token === "string" ? scheme.token : scheme.token),
+                propertyReference: this.getOptionsPropertyReference(scheme.token),
                 env: scheme.tokenEnvVar
             });
         }
