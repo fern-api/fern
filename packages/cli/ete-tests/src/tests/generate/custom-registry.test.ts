@@ -6,7 +6,6 @@ import { isDockerAvailable, type LocalRegistry, startLocalRegistry } from "../..
 import { runFernCli } from "../../utils/runFernCli.js";
 
 const SOURCE_IMAGE = "fernapi/fern-typescript-sdk:3.60.9";
-const SOURCE_IR_VERSION = 65;
 
 const dockerAvailable = await isDockerAvailable();
 
@@ -34,7 +33,6 @@ describe.skipIf(!dockerAvailable)("fern generate --local with custom registry", 
             `          name: ${reg.testImage}`,
             `          registry: ${reg.url}`,
             `        version: ${reg.testTag}`,
-            `        ir-version: v${SOURCE_IR_VERSION}`,
             "        output:",
             "          location: local-file-system",
             "          path: ../sdks/typescript"

@@ -595,10 +595,15 @@ function getGeneratorNameAndImage(
     containerImage: string | undefined;
 } {
     if ("image" in generator) {
-        // CustomGeneratorInvocationSchema — use exact image name, no Docker Hub normalization
+        // CustomGeneratorInvocationSchema — normalize the image name the same way as a default
+        // generator so that IR version resolution works. The image.name must be a recognized
+        // fern generator name (e.g. "fern-typescript-sdk") even though it's pulled from a
+        // custom registry.
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
         return {
-            normalizedName: generator.image.name,
-            containerImage: `${generator.image.registry}/${generator.image.name}`
+            normalizedName: normalizedImageName,
+            containerImage: `${generator.image.registry}/${normalizedImageName}`
         };
     }
     // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization

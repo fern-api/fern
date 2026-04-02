@@ -1157,7 +1157,7 @@ describe("convertGeneratorsConfiguration", () => {
                         generators: [
                             {
                                 image: {
-                                    name: "my-custom-generator",
+                                    name: "fern-typescript-sdk",
                                     registry: "ghcr.io/myorg"
                                 },
                                 version: "1.0.0",
@@ -1174,8 +1174,8 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         const generator = converted.groups[0]?.generators[0];
-        expect(generator?.name).toBe("my-custom-generator");
-        expect(generator?.containerImage).toBe("ghcr.io/myorg/my-custom-generator");
+        expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(generator?.containerImage).toBe("ghcr.io/myorg/fernapi/fern-typescript-sdk");
         expect(generator?.version).toBe("1.0.0");
     });
 

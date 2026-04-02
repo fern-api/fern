@@ -38,8 +38,11 @@ export async function isDockerAvailable(): Promise<boolean> {
 
 export async function startLocalRegistry(sourceImage: string): Promise<LocalRegistry> {
     const url = `localhost:${REGISTRY_PORT}`;
-    const testImage = "fern-ete-custom-generator";
-    const testTag = "1.0.0";
+    // Parse the source image to preserve its name and tag in the local registry.
+    // e.g. "fernapi/fern-typescript-sdk:3.60.9" → image "fernapi/fern-typescript-sdk", tag "3.60.9"
+    const [imagePart, tagPart] = sourceImage.split(":");
+    const testImage = imagePart ?? sourceImage;
+    const testTag = tagPart ?? "latest";
     const fullImageRef = `${url}/${testImage}:${testTag}`;
 
     const htpasswdDir = await tmp.dir({ unsafeCleanup: true });

@@ -826,7 +826,7 @@ sdks:
   targets:
     my-gen:
       lang: typescript
-      image: "my-custom-image"
+      image: "fernapi/fern-typescript-sdk"
       version: "1.0.0"
       output:
         path: ./sdks/ts
@@ -838,7 +838,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("my-custom-image");
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
                 expect(result.config.targets[0]?.registry).toBeUndefined();
                 expect(result.config.targets[0]?.version).toBe("1.0.0");
             }
@@ -855,7 +855,7 @@ sdks:
     my-gen:
       lang: typescript
       image:
-        name: my-custom-image
+        name: fernapi/fern-typescript-sdk
         registry: ghcr.io/myorg
       version: "2.0.0"
       output:
@@ -868,7 +868,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("my-custom-image");
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
                 expect(result.config.targets[0]?.registry).toBe("ghcr.io/myorg");
                 expect(result.config.targets[0]?.version).toBe("2.0.0");
             }
