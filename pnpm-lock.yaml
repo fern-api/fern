@@ -925,19 +925,16 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
-      '@fern-api/csharp-base':
-        specifier: workspace:*
-        version: link:../base
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
