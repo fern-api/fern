@@ -342,7 +342,17 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 }
 
 function tokenizeString(input: string): string[] {
-    let tokens = isCamelOrPascalCase(input) ? splitOnCapitalLetters(input) : splitOnNonAlphanumericCharacters(input);
+    let tokens: string[];
+    if (isCamelOrPascalCase(input)) {
+        tokens = splitOnCapitalLetters(input);
+    } else {
+        // Split on non-alphanumeric characters first, then further split
+        // each segment on camelCase boundaries to handle mixed formats
+        // like "phoneNumbers_list" → ["phone", "numbers", "list"]
+        tokens = splitOnNonAlphanumericCharacters(input).flatMap((segment) =>
+            isCamelOrPascalCase(segment) ? splitOnCapitalLetters(segment) : [segment]
+        );
+    }
     tokens = tokens.map((token) => token.toLowerCase());
     tokens = compact(tokens);
     return tokens;
