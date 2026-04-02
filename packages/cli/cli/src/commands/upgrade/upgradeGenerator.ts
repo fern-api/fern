@@ -166,6 +166,17 @@ export async function loadAndUpdateGenerators({
                     `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
                 );
             }
+            // Custom image generators (using `image` instead of `name`) are user-managed
+            // and cannot be auto-upgraded. Skip them with a warning.
+            if (generator.get("image") != null) {
+                const imageNode = generator.get("image");
+                const imageName = YAML.isMap(imageNode) ? (imageNode.get("name") as string) : "unknown";
+                context.logger.warn(
+                    `Skipping custom image generator "${imageName}" in group ${groupName}: ` +
+                        `generators using a custom image cannot be auto-upgraded.`
+                );
+                continue;
+            }
             const generatorName = generator.get("name") as string;
             // Normalize the generator name to add default Docker org prefix if not present
             // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
