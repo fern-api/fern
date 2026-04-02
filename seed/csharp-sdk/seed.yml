@@ -192,6 +192,7 @@ fixtures:
     - customConfig:
         client-class-name: BaseClient
         exported-client-class-name: CustomClient
+        maxRetries: 5
       outputFolder: exported-client-class-name
     - customConfig:
         include-exception-handler: true
@@ -199,9 +200,6 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
-    - customConfig:
-        maxRetries: 5
-      outputFolder: max-retries-five
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
