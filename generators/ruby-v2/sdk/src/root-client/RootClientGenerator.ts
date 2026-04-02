@@ -138,7 +138,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         } else if (!usernameOmitted && passwordOmitted) {
                             condition = `!${usernameName}.nil?`;
                         } else {
-                            condition = `true`;
+                            // Both fields omitted — skip auth header entirely when auth is optional
+                            continue;
                         }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
