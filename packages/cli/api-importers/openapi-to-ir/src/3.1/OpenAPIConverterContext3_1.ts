@@ -1,4 +1,5 @@
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
@@ -106,7 +107,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
     }
 
     public setGlobalHeaders(globalHeaders: FernIr.HttpHeader[]): void {
-        this.globalHeaderNames = globalHeaders.map((header) => header.name.wireValue);
+        this.globalHeaderNames = globalHeaders.map((header) => getWireValue(header.name));
     }
 
     public getDisplayNameForTag(tag: string): string {

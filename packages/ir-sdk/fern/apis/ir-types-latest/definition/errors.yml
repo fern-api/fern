@@ -12,7 +12,7 @@ types:
     properties:
       name: DeclaredErrorName
       displayName: optional<string>
-      discriminantValue: commons.NameAndWireValue
+      discriminantValue: commons.NameAndWireValueOrString
       type: optional<types.TypeReference>
       statusCode: integer
       isWildcardStatusCode:
@@ -28,13 +28,13 @@ types:
           Response headers associated with this error (e.g., Retry-After for 429 errors).
   ErrorDeclarationDiscriminantValue:
     union:
-      property: commons.NameAndWireValue
+      property: commons.NameAndWireValueOrString
       statusCode: {}
   DeclaredErrorName:
     properties:
       errorId: commons.ErrorId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
 
   # examples
 
@@ -43,5 +43,5 @@ types:
       - commons.WithJsonExample
       - commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       shape: types.ExampleTypeReference

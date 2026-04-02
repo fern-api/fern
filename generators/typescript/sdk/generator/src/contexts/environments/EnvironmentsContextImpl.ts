@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
@@ -14,6 +15,7 @@ export declare namespace EnvironmentsContextImpl {
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
         sourceFile: SourceFile;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -24,6 +26,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
+    private readonly caseConverter: CaseConverter;
 
     constructor({
         intermediateRepresentation,
@@ -31,7 +34,8 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         environmentsDeclarationReferencer,
         importsManager,
         exportsManager,
-        sourceFile
+        sourceFile,
+        caseConverter
     }: EnvironmentsContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.environmentsGenerator = environmentsGenerator;
@@ -39,13 +43,15 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
+        this.caseConverter = caseConverter;
     }
 
     public getGeneratedEnvironments(): GeneratedEnvironments {
         return this.environmentsGenerator.generateEnvironments({
             environmentEnumName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentsEnum(),
             environmentUrlsTypeName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentUrls(),
-            environmentsConfig: this.intermediateRepresentation.environments ?? undefined
+            environmentsConfig: this.intermediateRepresentation.environments ?? undefined,
+            caseConverter: this.caseConverter
         });
     }
 

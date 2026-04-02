@@ -118,3 +118,6 @@ seed-remote-local/*
 
 # Test logs from test-remote-local.sh
 test-remote-local-logs-*/
+
+# Devbox gradle properties
+/gradle.properties

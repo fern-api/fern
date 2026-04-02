@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: no-retries
-  version: ''
+  version: ""
 paths:
   /users:
     get:
@@ -10,14 +10,14 @@ paths:
         - Retries
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
 components:
   schemas:
     User:

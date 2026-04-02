@@ -2,4 +2,4 @@
 
 import type * as FernIr from "../../../index.js";
 
-export type EndpointName = FernIr.Name;
+export type EndpointName = FernIr.NameOrString;

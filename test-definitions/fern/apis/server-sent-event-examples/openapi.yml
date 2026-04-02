@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: server-sent-event-examples
-  version: ''
+  version: ""
 paths:
   /stream:
     post:
@@ -10,15 +10,15 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             text/event-stream:
               schema:
                 type: string
                 format: binary
-        '400':
-          description: ''
+        "400":
+          description: ""
           content:
             application/json:
               schema:
@@ -41,15 +41,15 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             text/event-stream:
               schema:
                 type: string
                 format: binary
-        '400':
-          description: ''
+        "400":
+          description: ""
           content:
             application/json:
               schema:
@@ -72,15 +72,15 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             text/event-stream:
               schema:
                 type: string
                 format: binary
-        '400':
-          description: ''
+        "400":
+          description: ""
           content:
             application/json:
               schema:
@@ -150,7 +150,7 @@ components:
                   type: string
                   enum:
                     - completion
-            - $ref: '#/components/schemas/CompletionEvent'
+            - $ref: "#/components/schemas/CompletionEvent"
           required:
             - event
         - type: object
@@ -161,7 +161,7 @@ components:
                   type: string
                   enum:
                     - error
-            - $ref: '#/components/schemas/ErrorEvent'
+            - $ref: "#/components/schemas/ErrorEvent"
           required:
             - event
         - type: object
@@ -172,7 +172,7 @@ components:
                   type: string
                   enum:
                     - event
-            - $ref: '#/components/schemas/EventEvent'
+            - $ref: "#/components/schemas/EventEvent"
           required:
             - event
     StreamEvent:
@@ -186,7 +186,7 @@ components:
                   type: string
                   enum:
                     - completion
-            - $ref: '#/components/schemas/CompletionEvent'
+            - $ref: "#/components/schemas/CompletionEvent"
           required:
             - event
         - type: object
@@ -197,7 +197,7 @@ components:
                   type: string
                   enum:
                     - error
-            - $ref: '#/components/schemas/ErrorEvent'
+            - $ref: "#/components/schemas/ErrorEvent"
           required:
             - event
   securitySchemes: {}

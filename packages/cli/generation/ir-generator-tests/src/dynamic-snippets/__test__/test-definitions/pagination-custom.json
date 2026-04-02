@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "cursor",
                         "name": {
                             "originalName": "cursor",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Cursor",
                                 "safeName": "Cursor"
                             }
-                        },
-                        "wireValue": "cursor"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -95,6 +95,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "after",
                         "name": {
                             "originalName": "after",
                             "camelCase": {
@@ -113,8 +114,7 @@
                                 "unsafeName": "After",
                                 "safeName": "After"
                             }
-                        },
-                        "wireValue": "after"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -128,6 +128,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -146,8 +147,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -327,6 +327,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "starting_after",
                             "name": {
                                 "originalName": "starting_after",
                                 "camelCase": {
@@ -345,8 +346,7 @@
                                     "unsafeName": "StartingAfter",
                                     "safeName": "StartingAfter"
                                 }
-                            },
-                            "wireValue": "starting_after"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

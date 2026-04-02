@@ -1,14 +1,14 @@
 openapi: 3.0.1
 info:
   title: java-optional-nullable-query-params
-  version: ''
+  version: ""
 paths:
   /api/search:
     get:
       description: Search endpoint with optional nullable query params with defaults
       operationId: search
       tags:
-        - ''
+        - ""
       parameters:
         - name: query
           in: query
@@ -36,7 +36,7 @@ paths:
           description: Sort order - defaults to ASC when absent
           required: false
           schema:
-            $ref: '#/components/schemas/SortOrder'
+            $ref: "#/components/schemas/SortOrder"
             nullable: true
         - name: optionalWithoutDefault
           in: query
@@ -60,12 +60,12 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: "#/components/schemas/SearchResponse"
 components:
   schemas:
     SortOrder:
@@ -96,7 +96,7 @@ components:
           type: boolean
           nullable: true
         sortOrder:
-          $ref: '#/components/schemas/SortOrder'
+          $ref: "#/components/schemas/SortOrder"
           nullable: true
       required:
         - results

@@ -12,6 +12,7 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -176,7 +177,7 @@ export async function runRemoteGenerationForGenerator({
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
+        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });

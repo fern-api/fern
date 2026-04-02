@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: errors
-  version: ''
+  version: ""
 paths:
   /foo1:
     post:
@@ -10,36 +10,36 @@ paths:
         - Simple
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: ''
+                $ref: "#/components/schemas/FooResponse"
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "500":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FooRequest'
+              $ref: "#/components/schemas/FooRequest"
   /foo2:
     post:
       operationId: simple_foo
@@ -47,42 +47,42 @@ paths:
         - Simple
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: ''
+                $ref: "#/components/schemas/FooResponse"
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "429":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "500":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FooRequest'
+              $ref: "#/components/schemas/FooRequest"
   /foo3:
     post:
       operationId: simple_fooWithExamples
@@ -90,42 +90,42 @@ paths:
         - Simple
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: ''
+                $ref: "#/components/schemas/FooResponse"
+        "400":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "429":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: ''
+                $ref: "#/components/schemas/ErrorBody"
+        "500":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FooRequest'
+              $ref: "#/components/schemas/FooRequest"
 components:
   schemas:
     ErrorBody:

@@ -56,7 +56,7 @@ function createMockZurgSchema(name: string): Zurg.Schema {
     } as any;
 }
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -195,7 +195,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
     describe("deserializeResponse", () => {
         it("returns raw reference when includeSerdeLayer is false", () => {
             const impl = createImpl({ includeSerdeLayer: false });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const rawRef = ts.factory.createIdentifier("rawData");
             const result = impl.deserializeResponse(rawRef, context);
             expect(getTextOfTsNode(result)).toBe("rawData");
@@ -206,7 +206,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
                 includeSerdeLayer: true,
                 receiveMessages: [createMockReceiveMessage()]
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const rawRef = ts.factory.createIdentifier("rawData");
             const result = impl.deserializeResponse(rawRef, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -218,7 +218,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
                 omitUndefined: true,
                 receiveMessages: [createMockReceiveMessage()]
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const rawRef = ts.factory.createIdentifier("rawData");
             const result = impl.deserializeResponse(rawRef, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -230,7 +230,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
                 skipResponseValidation: true,
                 receiveMessages: [createMockReceiveMessage()]
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const rawRef = ts.factory.createIdentifier("rawData");
             const result = impl.deserializeResponse(rawRef, context);
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -240,7 +240,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
     describe("writeToFile", () => {
         it("writes schema for channel with no receive messages", () => {
             const impl = createImpl({ receiveMessages: [] });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -249,7 +249,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
             const impl = createImpl({
                 receiveMessages: [createMockReceiveMessage()]
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -258,7 +258,7 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
             const impl = createImpl({
                 receiveMessages: [createMockReceiveMessage(), createMockReceiveMessage()]
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });

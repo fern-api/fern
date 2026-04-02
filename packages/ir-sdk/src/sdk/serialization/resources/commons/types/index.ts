@@ -10,6 +10,8 @@ export * from "./FeatureId.js";
 export * from "./FernFilepath.js";
 export * from "./Name.js";
 export * from "./NameAndWireValue.js";
+export * from "./NameAndWireValueOrString.js";
+export * from "./NameOrString.js";
 export * from "./SafeAndUnsafeString.js";
 export * from "./ServiceId.js";
 export * from "./SubpackageId.js";

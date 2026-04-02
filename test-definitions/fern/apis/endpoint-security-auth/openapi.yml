@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: endpoint-security-auth
-  version: ''
+  version: ""
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -45,14 +45,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: &ref_0 []
   /users/api-key:
     get:
@@ -61,14 +61,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
   /users/oauth:
     get:
@@ -77,14 +77,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
   /users/basic:
     get:
@@ -93,14 +93,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
   /users/inferred:
     get:
@@ -109,14 +109,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
   /users/any-auth:
     get:
@@ -125,14 +125,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
   /users/all-auth:
     get:
@@ -141,14 +141,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security: *ref_0
 components:
   schemas:

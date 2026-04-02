@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: file-upload
-  version: ''
+  version: ""
 paths:
   /:
     post:
@@ -10,8 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -47,23 +47,23 @@ paths:
                 list_of_objects:
                   type: array
                   items:
-                    $ref: '#/components/schemas/MyObject'
+                    $ref: "#/components/schemas/MyObject"
                 optional_metadata:
                   nullable: true
                 optional_object_type:
-                  $ref: '#/components/schemas/ObjectType'
+                  $ref: "#/components/schemas/ObjectType"
                   nullable: true
                 optional_id:
-                  $ref: '#/components/schemas/Id'
+                  $ref: "#/components/schemas/Id"
                   nullable: true
                 alias_object:
-                  $ref: '#/components/schemas/MyAliasObject'
+                  $ref: "#/components/schemas/MyAliasObject"
                 list_of_alias_object:
                   type: array
                   items:
-                    $ref: '#/components/schemas/MyAliasObject'
+                    $ref: "#/components/schemas/MyAliasObject"
                 alias_list_of_object:
-                  $ref: '#/components/schemas/MyCollectionAliasObject'
+                  $ref: "#/components/schemas/MyCollectionAliasObject"
   /just-file:
     post:
       operationId: service_justFile
@@ -71,8 +71,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -122,8 +122,8 @@ paths:
               type: string
               nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -153,8 +153,8 @@ paths:
             type: integer
             nullable: true
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -172,8 +172,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -187,9 +187,9 @@ paths:
                 foo:
                   type: string
                 bar:
-                  $ref: '#/components/schemas/MyObject'
+                  $ref: "#/components/schemas/MyObject"
                 foo_bar:
-                  $ref: '#/components/schemas/MyObject'
+                  $ref: "#/components/schemas/MyObject"
                   nullable: true
   /with-form-encoding:
     post:
@@ -198,8 +198,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -213,7 +213,7 @@ paths:
                 foo:
                   type: string
                 bar:
-                  $ref: '#/components/schemas/MyObject'
+                  $ref: "#/components/schemas/MyObject"
   /form-encoded-containers:
     post:
       operationId: service_withFormEncodedContainers
@@ -221,8 +221,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: true
         content:
@@ -258,27 +258,27 @@ paths:
                 list_of_objects:
                   type: array
                   items:
-                    $ref: '#/components/schemas/MyObject'
+                    $ref: "#/components/schemas/MyObject"
                 optional_metadata:
                   nullable: true
                 optional_object_type:
-                  $ref: '#/components/schemas/ObjectType'
+                  $ref: "#/components/schemas/ObjectType"
                   nullable: true
                 optional_id:
-                  $ref: '#/components/schemas/Id'
+                  $ref: "#/components/schemas/Id"
                   nullable: true
                 list_of_objects_with_optionals:
                   type: array
                   items:
-                    $ref: '#/components/schemas/MyObjectWithOptional'
+                    $ref: "#/components/schemas/MyObjectWithOptional"
                 alias_object:
-                  $ref: '#/components/schemas/MyAliasObject'
+                  $ref: "#/components/schemas/MyAliasObject"
                 list_of_alias_object:
                   type: array
                   items:
-                    $ref: '#/components/schemas/MyAliasObject'
+                    $ref: "#/components/schemas/MyAliasObject"
                 alias_list_of_object:
-                  $ref: '#/components/schemas/MyCollectionAliasObject'
+                  $ref: "#/components/schemas/MyCollectionAliasObject"
   /optional-args:
     post:
       operationId: service_optionalArgs
@@ -286,8 +286,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -311,8 +311,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -328,7 +328,7 @@ paths:
                   type: string
                   format: binary
                 request:
-                  $ref: '#/components/schemas/MyInlineType'
+                  $ref: "#/components/schemas/MyInlineType"
   /with-json-property:
     post:
       operationId: service_withJsonProperty
@@ -336,8 +336,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -353,7 +353,7 @@ paths:
                   type: string
                   format: binary
                 json:
-                  $ref: '#/components/schemas/MyObject'
+                  $ref: "#/components/schemas/MyObject"
                   nullable: true
   /snippet:
     post:
@@ -362,8 +362,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
   /with-literal-enum:
     post:
       operationId: service_withLiteralAndEnumTypes
@@ -371,8 +371,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -388,10 +388,10 @@ paths:
                   type: string
                   format: binary
                 model_type:
-                  $ref: '#/components/schemas/ModelType'
+                  $ref: "#/components/schemas/ModelType"
                   nullable: true
                 open_enum:
-                  $ref: '#/components/schemas/OpenEnumType'
+                  $ref: "#/components/schemas/OpenEnumType"
                   nullable: true
                 maybe_name:
                   type: string
@@ -414,12 +414,12 @@ components:
         - prop
     MyAliasObject:
       title: MyAliasObject
-      $ref: '#/components/schemas/MyObject'
+      $ref: "#/components/schemas/MyObject"
     MyCollectionAliasObject:
       title: MyCollectionAliasObject
       type: array
       items:
-        $ref: '#/components/schemas/MyObject'
+        $ref: "#/components/schemas/MyObject"
     MyObject:
       title: MyObject
       type: object

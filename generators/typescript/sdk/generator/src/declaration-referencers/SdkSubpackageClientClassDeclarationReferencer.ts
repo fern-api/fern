@@ -4,6 +4,10 @@ import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
 import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
+export declare namespace SdkSubpackageClientClassDeclarationReferencer {
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
+}
+
 export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<FernIr.SubpackageId> {
     public getExportedFilepath(subpackageId: FernIr.SubpackageId): ExportedFilePath {
         return {
@@ -20,7 +24,7 @@ export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkCl
 
     public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
-        return `${subpackage.name.pascalCase.unsafeName}Client`;
+        return `${this.caseConverter.pascalUnsafe(subpackage.name)}Client`;
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernIr.SubpackageId>): Reference {
