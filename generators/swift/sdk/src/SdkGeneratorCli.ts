@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService, CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
@@ -375,7 +375,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(getWireValue(property.key))
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });
@@ -391,7 +393,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(getWireValue(property.key))
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });

@@ -341,7 +341,9 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(caseConverter.camelUnsafe(exampleEnumType.value.name));
+                        return swift.Expression.enumCaseShorthand(
+                            caseConverter.camelUnsafe(exampleEnumType.value.name)
+                        );
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -366,8 +368,9 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
-                        const caseName =
-                            caseConverter.camelUnsafe(exampleUnionType.singleUnionType.wireDiscriminantValue.name);
+                        const caseName = caseConverter.camelUnsafe(
+                            exampleUnionType.singleUnionType.wireDiscriminantValue.name
+                        );
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
                                 swift.Expression.memberAccess({

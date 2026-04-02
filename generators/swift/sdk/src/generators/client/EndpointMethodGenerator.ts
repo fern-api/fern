@@ -290,7 +290,9 @@ export class EndpointMethodGenerator {
                                                       optionalChain: true,
                                                       memberName: "wrappedValue"
                                                   })
-                                                : swift.Expression.reference(caseConverter.camelUnsafe(queryParam.name.name)),
+                                                : swift.Expression.reference(
+                                                      caseConverter.camelUnsafe(queryParam.name.name)
+                                                  ),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
                                             methodName: this.inferQueryParamCaseName(swiftType),

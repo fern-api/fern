@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
@@ -146,8 +151,8 @@ export abstract class AbstractSwiftGeneratorContext<
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
             nameRegistry.registerSubClientSymbol({
                 subpackageId,
-                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
-                    (name) => caseConverter.pascalUnsafe(name)
+                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map((name) =>
+                    caseConverter.pascalUnsafe(name)
                 ),
                 subpackageNamePascalCase: caseConverter.pascalUnsafe(subpackage.name)
             });

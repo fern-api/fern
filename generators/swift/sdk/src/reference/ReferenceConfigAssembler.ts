@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -38,7 +38,8 @@ export class ReferenceConfigAssembler {
 
     private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
-            service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+            service.displayName ??
+            service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
         );
     }
 
