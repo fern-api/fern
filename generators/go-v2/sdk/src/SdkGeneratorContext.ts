@@ -578,7 +578,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return false;
         }
         const pagination = this.getPagination(endpoint);
-        if (pagination?.type === "custom") {
+        if (pagination?.type === "custom" || pagination?.type === "uri" || pagination?.type === "path") {
             return false;
         }
         return this.isPaginationEndpoint(endpoint);
