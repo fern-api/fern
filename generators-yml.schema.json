@@ -4079,12 +4079,9 @@
       },
       "additionalProperties": false
     },
-    "group.GeneratorInvocationSchema": {
+    "group.DefaultGeneratorInvocationSchema": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
         "version": {
           "type": "string"
         },
@@ -4217,13 +4214,188 @@
               "type": "null"
             }
           ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "generators.GeneratorImageObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "registry": {
+          "type": "string"
         }
       },
       "required": [
         "name",
-        "version"
+        "registry"
       ],
       "additionalProperties": false
+    },
+    "group.CustomGeneratorInvocationSchema": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "output": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorOutputSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "github": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GithubConfigurationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "keywords": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snippets": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorSnippetsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ir-version": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "smart-casing": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "api": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorAPISettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publish-metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image": {
+          "$ref": "#/definitions/generators.GeneratorImageObjectSchema"
+        }
+      },
+      "required": [
+        "version",
+        "image"
+      ],
+      "additionalProperties": false
+    },
+    "group.GeneratorInvocationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/group.DefaultGeneratorInvocationSchema"
+        },
+        {
+          "$ref": "#/definitions/group.CustomGeneratorInvocationSchema"
+        }
+      ]
     },
     "group.GeneratorGroupSchema": {
       "type": "object",

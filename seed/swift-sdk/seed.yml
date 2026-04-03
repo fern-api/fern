@@ -101,7 +101,8 @@ fixtures:
         decodeNullableToOptional: true
       outputFolder: nullable-as-optional
   single-url-environment-default:
-    - customConfig: null
+    - customConfig:
+        maxRetries: 5
       outputFolder: no-custom-config
     - customConfig:
         environmentEnumName: MyCustomEnvironment
