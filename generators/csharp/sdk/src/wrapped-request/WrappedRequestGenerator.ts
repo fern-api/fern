@@ -1,12 +1,11 @@
 import { fail } from "node:assert";
-import { CaseConverter, getWireValue, NameInput } from "@fern-api/base-generator";
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ContainerType = FernIr.ContainerType;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -92,7 +91,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             for (const pathParameter of this.endpoint.allPathParameters) {
                 // Skip adding a [JsonIgnore] field for this path param if a body property
                 // with the same PascalCase name exists — the body property will serve both roles.
-                if (bodyPropertyPascalNames.has(caseConverter.pascalSafe(pathParameter.name))) {
+                if (bodyPropertyPascalNames.has(this.context.caseConverter.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 class_.addField({
@@ -148,7 +147,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
-                    protoPropertyName: caseConverter.pascalSafe(query.name),
+                    protoPropertyName: this.context.caseConverter.pascalSafe(query.name),
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -187,7 +186,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 const useRequired = !type.isOptional;
                 if (typeof this.wrapper.bodyKey === "string") {
                     class_.addField({
-                        name: caseConverter.pascalSafe(this.wrapper.bodyKey),
+                        name: this.context.caseConverter.pascalSafe(this.wrapper.bodyKey),
                         type,
                         access: ast.Access.Public,
                         get: true,
@@ -211,7 +210,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
-                const allPropertyPascalNames = new Set(allProps.map((p) => caseConverter.pascalSafe(p.name)));
+                const allPropertyPascalNames = new Set(allProps.map((p) => this.context.caseConverter.pascalSafe(p.name)));
                 for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
@@ -223,7 +222,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
-                            protoPropertyName: caseConverter.pascalSafe(property.name),
+                            protoPropertyName: this.context.caseConverter.pascalSafe(property.name),
                             typeReference: property.valueType
                         });
                     }
@@ -231,7 +230,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             fileUpload: (request) => {
                 const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
-                const allPropertyPascalNames = new Set(bodyProps.map((p) => caseConverter.pascalSafe(p.name)));
+                const allPropertyPascalNames = new Set(bodyProps.map((p) => this.context.caseConverter.pascalSafe(p.name)));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
@@ -316,7 +315,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             ]) {
                 // Skip path param snippet if a body property with the same name exists;
                 // the body property snippet will provide the value for both.
-                if (snippetBodyPropertyPascalNames.has(caseConverter.pascalSafe(pathParameter.name))) {
+                if (snippetBodyPropertyPascalNames.has(this.context.caseConverter.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 orderedFields.push({
@@ -389,7 +388,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
         const args = orderedFields.map(({ name, value }) => {
             return {
-                name: caseConverter.pascalSafe(name),
+                name: this.context.caseConverter.pascalSafe(name),
                 assignment: value
             };
         });
@@ -493,13 +492,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             reference: () => undefined,
             inlinedRequestBody: (request) => {
                 for (const prop of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    names.add(caseConverter.pascalSafe(prop.name));
+                    names.add(this.context.caseConverter.pascalSafe(prop.name));
                 }
             },
             fileUpload: (request) => {
                 for (const prop of request.properties) {
                     if (prop.type === "bodyProperty") {
-                        names.add(caseConverter.pascalSafe(prop.name));
+                        names.add(this.context.caseConverter.pascalSafe(prop.name));
                     }
                 }
             },

@@ -1,11 +1,10 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
@@ -46,7 +45,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorConte
         );
 
         this.enumDeclaration.values.forEach((member) =>
-            enum_.addMember({ name: caseConverter.pascalSafe(member.name), value: getWireValue(member.name) })
+            enum_.addMember({ name: this.context.caseConverter.pascalSafe(member.name), value: getWireValue(member.name) })
         );
 
         return new CSharpFile({

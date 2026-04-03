@@ -1,4 +1,4 @@
-import { CaseConverter, NameInput } from "@fern-api/base-generator";
+import { NameInput } from "@fern-api/base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "../utils/fail.js";
@@ -7,7 +7,6 @@ import { type TypesOf } from "../utils/type-extractor.js";
 import { is } from "../utils/type-guards.js";
 import { type Generation } from "./generation-info.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 /**
  * JsonPath is a string that represents a path of nodes in the Intermediate Representation (IR) to a given node.
@@ -448,17 +447,17 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return caseConverter.pascalSafe(property.name);
+                return this.generation.caseConverter.pascalSafe(property.name);
             }
             if (is.IR.Name(property.name)) {
-                return caseConverter.pascalSafe(property.name);
+                return this.generation.caseConverter.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
-                return caseConverter.pascalSafe(property.name);
+                return this.generation.caseConverter.pascalSafe(property.name);
             }
         }
         if ("pascalCase" in property) {
-            return caseConverter.pascalSafe(property);
+            return this.generation.caseConverter.pascalSafe(property);
         }
 
         throw new Error(`Unknown property type: ${this.jsonPath(property)}`);
@@ -489,20 +488,20 @@ export class ModelNavigator {
         }
         if ("name" in classDeclaration) {
             if (is.IR.TypeDeclaration(classDeclaration)) {
-                return caseConverter.pascalSafe(classDeclaration.name.name);
+                return this.generation.caseConverter.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
-                return caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
-                return caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
             }
         }
         if ("pascalCase" in classDeclaration) {
-            return caseConverter.pascalSafe(classDeclaration);
+            return this.generation.caseConverter.pascalSafe(classDeclaration);
         }
 
         throw new Error(`Unknown property type: ${JSON.stringify(classDeclaration)}`);
@@ -521,7 +520,7 @@ export class ModelNavigator {
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
     nameEquals(name1: NameInput, name2: NameInput): boolean {
-        return caseConverter.camelSafe(name1) === caseConverter.camelSafe(name2);
+        return this.generation.caseConverter.camelSafe(name1) === this.generation.caseConverter.camelSafe(name2);
     }
 
     /**

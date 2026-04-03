@@ -11,7 +11,6 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type FernFilepath = FernIr.FernFilepath;
 type IntermediateRepresentation = FernIr.IntermediateRepresentation;
@@ -38,6 +37,11 @@ export class ModelGeneratorContext extends GeneratorContext {
         customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
+        const caseConverter = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         super(
             ir,
             config,
@@ -71,7 +75,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path))].join("/")
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
         );
     }
 
@@ -79,7 +83,7 @@ export class ModelGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return [
             this.namespaces.root,
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => caseConverter.pascalSafe(path))
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => this.caseConverter.pascalSafe(path))
         ].join(".");
     }
 
@@ -138,7 +142,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segmentName) => caseConverter.pascalSafe(segmentName));
+        return fernFilepath.packagePath.map((segmentName) => this.caseConverter.pascalSafe(segmentName));
     }
 
     public override shouldCreateCustomPagination(): boolean {

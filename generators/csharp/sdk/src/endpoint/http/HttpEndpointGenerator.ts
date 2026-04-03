@@ -1,9 +1,8 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type CursorPagination = FernIr.CursorPagination;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -643,7 +642,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(`_client.Options.Environment.${caseConverter.pascalSafe(baseUrl.name)}`);
+                return this.csharp.codeblock(`_client.Options.Environment.${this.context.caseConverter.pascalSafe(baseUrl.name)}`);
             }
         }
         return undefined;
@@ -1593,7 +1592,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return {
                 code:
                     typeof property.name === "string"
-                        ? caseConverter.pascalSafe(property.name)
+                        ? this.context.caseConverter.pascalSafe(property.name)
                         : this.csharp.getPropertyName(enclosingType, property),
                 enclosingType
             };
@@ -1606,7 +1605,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     // get the property name for the current property
                     const propertyName =
                         typeof val.name === "string"
-                            ? caseConverter.pascalSafe(val.name)
+                            ? this.context.caseConverter.pascalSafe(val.name)
                             : this.csharp.getPropertyName(enclosingType, val);
 
                     // get the type of the current property
@@ -1640,10 +1639,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
 
         if (!property.propertyPath || property.propertyPath.length === 0) {
-            return `${variableName}.${typeof property.property.name === "string" ? caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(enclosingType, property.property)}`;
+            return `${variableName}.${typeof property.property.name === "string" ? this.context.caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(enclosingType, property.property)}`;
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
-        return `${variableName}.${dotAccess.code}.${typeof property.property.name === "string" ? caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
+        return `${variableName}.${dotAccess.code}.${typeof property.property.name === "string" ? this.context.caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
     }
 
     private getPropertyWithDefault(
@@ -1785,7 +1784,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${caseConverter.pascalSafe(path)}`);
+                writer.write(`.${this.context.caseConverter.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {

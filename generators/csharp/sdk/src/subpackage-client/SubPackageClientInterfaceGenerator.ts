@@ -1,10 +1,8 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ServiceId = FernIr.ServiceId;
 type HttpService = FernIr.HttpService;
@@ -47,7 +45,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
                 interface_.addField({
-                    name: caseConverter.pascalSafe(childSubpackage.name),
+                    name: this.context.caseConverter.pascalSafe(childSubpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,

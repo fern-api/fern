@@ -1,10 +1,9 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type QueryParameter = FernIr.QueryParameter;
@@ -85,7 +84,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * The builder automatically handles null values, so no conditional checks are needed.
      */
     private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
-        const baseReference = `${this.getParameterName()}.${caseConverter.pascalSafe(query.name)}`;
+        const baseReference = `${this.getParameterName()}.${this.context.caseConverter.pascalSafe(query.name)}`;
 
         // When experimental explicit nullable/optional is enabled, Optional<T> types need special handling
         // since QueryStringBuilder doesn't know how to serialize Optional<T> objects directly
@@ -196,7 +195,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
-                    const headerReference = `${this.getParameterName()}.${caseConverter.pascalSafe(header.name)}`;
+                    const headerReference = `${this.getParameterName()}.${this.context.caseConverter.pascalSafe(header.name)}`;
                     writer.write(`.Add("${getWireValue(header.name)}", ${headerReference})`);
                 }
 
@@ -263,7 +262,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${caseConverter.pascalSafe(this.wrapper.bodyKey)}`
+                    requestBodyReference: `${this.getParameterName()}.${this.context.caseConverter.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             inlinedRequestBody: () => {
@@ -274,7 +273,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             fileUpload: () => undefined,
             bytes: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${caseConverter.pascalSafe(this.wrapper.bodyKey)}`
+                    requestBodyReference: `${this.getParameterName()}.${this.context.caseConverter.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             _other: () => undefined

@@ -1,11 +1,9 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type SingleBaseUrlEnvironments = FernIr.SingleBaseUrlEnvironments;
 
@@ -38,8 +36,8 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
             class_.addField({
                 origin: class_.explicit(
                     this.settings.pascalCaseEnvironments
-                        ? caseConverter.pascalSafe(environment.name)
-                        : caseConverter.screamingSnakeSafe(environment.name)
+                        ? this.context.caseConverter.pascalSafe(environment.name)
+                        : this.context.caseConverter.screamingSnakeSafe(environment.name)
                 ),
 
                 enclosingType: class_,

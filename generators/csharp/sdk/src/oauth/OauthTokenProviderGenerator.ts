@@ -1,10 +1,8 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type EndpointReference = FernIr.EndpointReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
@@ -120,7 +118,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             if (typeRef.isOptional) {
                 continue;
             }
-            const name = caseConverter.pascalSafe(customProperty.property.name);
+            const name = this.context.caseConverter.pascalSafe(customProperty.property.name);
 
             this.additionalRequestFields.set(
                 name,
@@ -137,7 +135,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 reference: scopes.property.valueType
             });
             if (!typeRef.isOptional) {
-                const name = caseConverter.pascalSafe(scopes.property.name);
+                const name = this.context.caseConverter.pascalSafe(scopes.property.name);
                 this.additionalRequestFields.set(
                     name,
                     this.cls.addField({
@@ -265,9 +263,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private request = lazy({
         clientId: () =>
-            caseConverter.pascalSafe(this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name),
+            this.context.caseConverter.pascalSafe(this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name),
         secret: () =>
-            caseConverter.pascalSafe(
+            this.context.caseConverter.pascalSafe(
                 this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
             )
     });
@@ -364,9 +362,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private dotAccess(property: ObjectProperty, path?: FernIr.NameOrString[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => caseConverter.pascalSafe(val)).join(".")}.${caseConverter.pascalSafe(property.name)}`;
+            return `${path.map((val) => this.context.caseConverter.pascalSafe(val)).join(".")}.${this.context.caseConverter.pascalSafe(property.name)}`;
         }
-        return caseConverter.pascalSafe(property.name);
+        return this.context.caseConverter.pascalSafe(property.name);
     }
 }
 

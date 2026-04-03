@@ -1,10 +1,9 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type ExampleObjectType = FernIr.ExampleObjectType;
 type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
@@ -242,7 +241,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         className: string;
         objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = caseConverter.pascalSafe(objectProperty);
+        const propertyName = this.context.caseConverter.pascalSafe(objectProperty);
         if (propertyName === className) {
             return `${propertyName}_`;
         }

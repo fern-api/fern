@@ -1,10 +1,9 @@
-import { AbstractReadmeSnippetBuilder, CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, getWireValue } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type TypeDeclaration = FernIr.TypeDeclaration;
@@ -288,11 +287,11 @@ var response = await ${this.getMethodCall(queryParameterEndpoint)}(
             shape: FernIr.Type.Enum;
         };
 
-        const enumName = caseConverter.pascalSafe(firstEnum.name.name);
-        const enumCamelCaseName = caseConverter.camelSafe(firstEnum.name.name);
+        const enumName = this.context.caseConverter.pascalSafe(firstEnum.name.name);
+        const enumCamelCaseName = this.context.caseConverter.camelSafe(firstEnum.name.name);
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
         const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
-        const firstEnumValueName = caseConverter.pascalSafe(firstEnumValue.name);
+        const firstEnumValueName = this.context.caseConverter.pascalSafe(firstEnumValue.name);
         const firstEnumValueWire = getWireValue(firstEnumValue.name);
 
         return [
@@ -447,8 +446,8 @@ var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.na
 
         const getEnvName = (env: { name: FernIr.NameOrString }): string => {
             return this.context.settings.pascalCaseEnvironments
-                ? caseConverter.pascalSafe(env.name)
-                : caseConverter.screamingSnakeSafe(env.name);
+                ? this.context.caseConverter.pascalSafe(env.name)
+                : this.context.caseConverter.screamingSnakeSafe(env.name);
         };
 
         if (defaultEnvId != null) {

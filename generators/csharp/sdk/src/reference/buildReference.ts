@@ -1,9 +1,8 @@
-import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpService = FernIr.HttpService;
@@ -21,7 +20,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({
             context,
             serviceId,
@@ -188,9 +187,9 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
     return (
         service.displayName ??
-        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
     );
 }

@@ -1,10 +1,8 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
 const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
@@ -1181,7 +1179,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                 });
             },
             named: (namedType) => {
-                const typeName = caseConverter.pascalSafe(namedType.name);
+                const typeName = this.context.caseConverter.pascalSafe(namedType.name);
                 return { discriminator: this.toCamelCase(typeName), methodName: typeName, isNull: false };
             },
             primitive: (primitive) => {
@@ -1361,7 +1359,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     _other: () => baseMethodName
                 });
             },
-            named: (namedType) => caseConverter.pascalSafe(namedType.name),
+            named: (namedType) => this.context.caseConverter.pascalSafe(namedType.name),
             primitive: (primitive) => {
                 return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",
@@ -1400,7 +1398,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     _other: () => "Unknown"
                 });
             },
-            named: (namedType) => caseConverter.pascalSafe(namedType.name),
+            named: (namedType) => this.context.caseConverter.pascalSafe(namedType.name),
             primitive: (primitive) => {
                 return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",

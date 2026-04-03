@@ -1,4 +1,4 @@
-import { AbstractProject, CaseConverter, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
+import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -11,7 +11,6 @@ import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "csharp", keywords: undefined, smartCasing: true });
 
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
@@ -667,12 +666,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${caseConverter.pascalSafe(scheme.token)} = "test"`);
+                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${caseConverter.pascalSafe(scheme.username)} = "test"`);
-                    parts.push(`${caseConverter.pascalSafe(scheme.password)} = "test"`);
+                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${caseConverter.pascalSafe(scheme.name)} = "test"`);
+                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);
