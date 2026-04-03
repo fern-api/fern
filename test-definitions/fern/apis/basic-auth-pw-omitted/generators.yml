@@ -9,7 +9,7 @@ groups:
           token: ${GITHUB_TOKEN}
           mode: push
           uri: fern-api/php-sdk-tests
-          branch: basic-auth-optional
+          branch: basic-auth-pw-omitted
   go-sdk:
     generators:
       - name: fernapi/fern-go-sdk
@@ -19,4 +19,4 @@ groups:
           token: ${GITHUB_TOKEN}
           mode: push
           uri: fern-api/go-sdk-tests
-          branch: basic-auth-optional
+          branch: basic-auth-pw-omitted
