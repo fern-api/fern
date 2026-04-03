@@ -1,3 +1,4 @@
+export * from "./ListUsersAliasedDataPaginationResponse";
 export * from "./ListUsersExtendedOptionalListResponse";
 export * from "./ListUsersExtendedResponse";
 export * from "./ListUsersMixedTypePaginationResponse";
@@ -8,6 +9,7 @@ export * from "./NextPage";
 export * from "./Order";
 export * from "./Page";
 export * from "./User";
+export * from "./UserList";
 export * from "./UserListContainer";
 export * from "./UsernameContainer";
 export * from "./UserOptionalListContainer";

@@ -12,6 +12,7 @@
   },
   "scripts": {
     "sparse-checkout": "./scripts/sparse-checkout.sh",
+    "worktree:add": "./scripts/worktree-add.sh",
     "clean": "turbo run clean",
     "compile": "turbo run compile",
     "compile:debug": "turbo run compile:debug",
