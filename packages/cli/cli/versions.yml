@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping request body examples when the request
+        body has no schema defined. Previously, endpoints with a JSON content
+        type but no schema were treated as having no request body at all,
+        causing valid example JSON to be lost. The importer now preserves the
+        request and its examples so they render in docs and code snippets.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
 - version: 4.62.1
   changelogEntry:
     - summary: |
@@ -7,7 +19,6 @@
       type: chore
   createdAt: "2026-04-04"
   irVersion: 66
-
 - version: 4.62.0
   changelogEntry:
     - summary: |
@@ -17,7 +28,6 @@
       type: feat
   createdAt: "2026-04-03"
   irVersion: 66
-
 - version: 4.61.0
   changelogEntry:
     - summary: |

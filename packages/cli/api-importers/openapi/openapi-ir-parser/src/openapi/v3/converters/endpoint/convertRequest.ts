@@ -259,6 +259,11 @@ function multipartOrJsonOrNone<TResult, TNone>({
     const [, multipartMediaTypeObject] = multipart ?? [undefined, undefined];
 
     if (!jsonMediaTypeObject?.schema && !multipartMediaTypeObject?.schema) {
+        // Allow JSON content types through even without a schema so that
+        // raw examples are preserved for rendering in docs and code snippets.
+        if (json) {
+            return visitor.json(json);
+        }
         return visitor.neither();
     }
 
