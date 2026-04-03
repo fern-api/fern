@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 5.2.2
+- version: 5.4.0
   changelogEntry:
     - summary: |
         Support omitting username or password from basic auth when configured via
