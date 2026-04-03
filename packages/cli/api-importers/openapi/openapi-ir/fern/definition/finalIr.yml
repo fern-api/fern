@@ -60,6 +60,10 @@ types:
       optional: optional<boolean>
       env: optional<string>
       schema: optional<Schema>
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on an `x-fern-global-headers` entry.
 
   IdempotencyHeader:
     properties:
