@@ -49,6 +49,7 @@ fixtures:
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
+        maxRetries: 5
   pagination-custom:
     - customConfig:
         customPagerName: FooPager
