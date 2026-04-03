@@ -8,7 +8,10 @@ function makeName(original: string, camelUnsafe: string): FernIr.Name {
         camelCase: { unsafeName: camelUnsafe, safeName: camelUnsafe },
         snakeCase: { unsafeName: original, safeName: original },
         screamingSnakeCase: { unsafeName: original.toUpperCase(), safeName: original.toUpperCase() },
-        pascalCase: { unsafeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1), safeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1) }
+        pascalCase: {
+            unsafeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1),
+            safeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1)
+        }
     };
 }
 
