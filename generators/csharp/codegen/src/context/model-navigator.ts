@@ -53,6 +53,9 @@ export type IrNode = Exclude<
     | FernIr.TypeDeclaration
     | FernIr.ProtobufService
     | FernIr.WebSocketChannel
+    | FernIr.SingleUnionType
+    | FernIr.SdkRequestWrapper
+    | FernIr.InlinedRequestBody
     | DynamicFernIr.dynamic.NamedType
     | DynamicFernIr.dynamic.Declaration
     | FernIr.DeclaredErrorName

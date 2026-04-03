@@ -809,15 +809,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: FernIr.NameOrString): ast.ClassReference {
-        if (typeof requestName !== "string") {
-            return this.csharp.classReference({
-                origin: requestName,
-                namespace: this.getNamespaceForServiceId(serviceId)
-            });
-        }
+    public getRequestWrapperReference(
+        serviceId: ServiceId,
+        wrapper: FernIr.SdkRequestWrapper | FernIr.InlinedRequestBody
+    ): ast.ClassReference {
+        const wrapperName = "wrapperName" in wrapper ? wrapper.wrapperName : wrapper.name;
         return this.csharp.classReference({
-            name: this.case.pascalSafe(requestName),
+            name: this.case.pascalSafe(wrapperName),
+            origin: wrapper,
             namespace: this.getNamespaceForServiceId(serviceId)
         });
     }
@@ -972,19 +971,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                         utd.types.map((type) => {
-                            this.case.pascalSafe(type.discriminantValue);
-
-                            if (typeof type.discriminantValue !== "string") {
-                                this.csharp.classReference({
-                                    origin: type.discriminantValue,
-                                    enclosingType
-                                });
-                            } else {
-                                this.csharp.classReference({
-                                    name: this.case.pascalSafe(type.discriminantValue),
-                                    enclosingType
-                                });
-                            }
+                            this.csharp.classReference({
+                                origin: this.model.explicit(type, "Inner"),
+                                enclosingType
+                            });
                         });
 
                         this.csharp.classReference({
@@ -1039,7 +1029,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                             if (wrapper.wrapperName && subpackage.service) {
                                 const requestWrapperReference = this.getRequestWrapperReference(
                                     subpackage.service,
-                                    wrapper.wrapperName
+                                    wrapper
                                 );
                             }
                         },

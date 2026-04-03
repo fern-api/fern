@@ -42,7 +42,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

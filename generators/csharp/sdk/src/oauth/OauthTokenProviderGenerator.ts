@@ -285,7 +285,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         // otherwise we'd need a rather hacky-lookup scheme.
 
         // try to get the request type from the sdk request first
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -299,31 +299,19 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         throw new Error("Failed to get request class reference");
     }
 
-    private rwn() {
-        if (is.IR.SdkRequestShape.Wrapper(this.tokenEndpoint.sdkRequest?.shape)) {
-            return this.tokenEndpoint.sdkRequest?.shape.wrapperName;
-        }
-
-        if (is.IR.HttpRequestBody.InlinedRequestBody(this.tokenEndpoint.requestBody)) {
-            return this.tokenEndpoint.requestBody.name;
-        }
-
-        return undefined;
-    }
-
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: (value) => undefined,
                 justRequestBody: (value) => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: (value) => undefined,
                 reference: (value) => undefined,
                 fileUpload: (value) => undefined,
                 bytes: (value) => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }

@@ -374,7 +374,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 const isNoProperties = type.shape.propertiesType === "noProperties";
                 const memberType = this.getCsharpType(type);
                 const unionTypeClass = this.csharp.class_({
-                    origin: this.model.explicit(this.case.resolveNameAndWireValue(type.discriminantValue), "Inner"),
+                    origin: this.model.explicit(type, "Inner"),
                     reference: this.getUnionTypeClassReferenceByTypeName(this.case.pascalSafe(type.discriminantValue)),
                     summary: `Discriminated union type for ${getOriginalName(type.discriminantValue)}`,
                     access: ast.Access.Public,
