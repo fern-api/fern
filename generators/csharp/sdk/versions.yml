@@ -2,10 +2,10 @@
 - version: 2.56.5
   changelogEntry:
     - summary: |
-        Add JIT formatting for dynamically generated .cs files using the
-        persistent CSharpier process. Files are formatted in writeFilesInBatches
-        before being written to disk. The final `csharpier format .` pass is
-        retained for template and .csproj files.
+        Use a pool of persistent CSharpier processes for parallel snippet
+        formatting. Code snippets embedded in XML doc comments are now
+        distributed across multiple `csharpier pipe-files` processes via
+        round-robin, enabling parallel formatting during AST code generation.
       type: chore
   createdAt: "2026-04-02"
   irVersion: 65
