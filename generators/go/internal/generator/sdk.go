@@ -1453,7 +1453,8 @@ func (f *fileWriter) WriteClient(
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
 				} else if queryParameter.ClientDefault != nil {
 					// Add clientDefault for query params not already set by user.
-					f.P(`if !queryParams.Has("`, queryParameter.Name.WireValue, `") {`)
+					// Use map indexing instead of Has() for Go <1.17 compatibility.
+					f.P(`if _, ok := queryParams["`, queryParameter.Name.WireValue, `"]; !ok {`)
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ClientDefault), "))")
 					f.P("}")
 				}
