@@ -370,7 +370,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         } else if (!usernameOmitted && passwordOmitted) {
                             condition = `$${usernameName} !== null`;
                         } else {
-                            // Both fields omitted — skip auth header entirely when auth is optional
+                            // Both fields omitted — skip auth header entirely when auth is non-mandatory
                             continue;
                         }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {

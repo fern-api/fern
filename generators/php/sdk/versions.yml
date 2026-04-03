@@ -2,11 +2,11 @@
 - version: 2.3.2
   changelogEntry:
     - summary: |
-        Support optional username and password in basic auth. The SDK now accepts
-        username-only, password-only, or both credentials. Missing fields are treated
-        as empty strings (e.g., username-only encodes `username:`, password-only
-        encodes `:password`). When neither is provided, the Authorization header is
-        omitted entirely.
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
       type: feat
   createdAt: "2026-04-02"
   irVersion: 62
