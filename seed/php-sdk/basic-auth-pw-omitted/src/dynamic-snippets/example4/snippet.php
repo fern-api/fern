@@ -6,7 +6,6 @@ use Seed\SeedClient;
 
 $client = new SeedClient(
     username: '<username>',
-    password: '<password>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
