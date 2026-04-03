@@ -198,4 +198,18 @@ public final class UsersClient: Sendable {
             responseType: ListUsersOptionalDataPaginationResponse.self
         )
     }
+
+    public func listWithAliasedData(page: Int? = nil, perPage: Int? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersAliasedDataPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users/aliased-data",
+            queryParams: [
+                "page": page.map { .int($0) }, 
+                "per_page": perPage.map { .int($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersAliasedDataPaginationResponse.self
+        )
+    }
 }

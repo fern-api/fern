@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -43,7 +44,10 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorConte
         );
 
         this.enumDeclaration.values.forEach((member) =>
-            enum_.addMember({ name: member.name.name.pascalCase.safeName, value: member.name.wireValue })
+            enum_.addMember({
+                name: this.case.pascalSafe(member.name),
+                value: getWireValue(member.name)
+            })
         );
 
         return new CSharpFile({

@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<FernIr.EndpointId, string> = {};
     private readonly defaultEndpointId: FernIr.EndpointId;
@@ -31,9 +32,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.case = context.case;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) && this.getEndpointWithPagination() != null;
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -266,7 +269,8 @@ foreach ($items->getPages() as $page) {
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && pagination.type !== "uri" && pagination.type !== "path") {
                 return endpointWithFilepath;
             }
             return undefined;
@@ -442,14 +446,14 @@ ${environmentsList}
 
         const baseUrlsList = baseUrls
             .map((baseUrl) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 return `  - \`${propertyName}\`: The ${propertyName} base URL`;
             })
             .join("\n");
 
         const customEnvParams = baseUrls
             .map((baseUrl, index) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 const indent = index === 0 ? "" : "    ";
                 return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
             })

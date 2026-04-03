@@ -8,10 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .errors import PropertyBasedErrorTest, PropertyBasedErrorTestBody
     from . import errors, property_based_error
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedErrorProperty, SeedErrorProperty
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedErrorProperty": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "PropertyBasedErrorTest": ".errors",
     "PropertyBasedErrorTestBody": ".errors",
     "SeedErrorProperty": ".client",
@@ -44,6 +47,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedErrorProperty",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "PropertyBasedErrorTest",
     "PropertyBasedErrorTestBody",
     "SeedErrorProperty",

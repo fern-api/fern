@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .list_users_aliased_data_pagination_response import ListUsersAliasedDataPaginationResponse
 from .list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .list_users_extended_response import ListUsersExtendedResponse
 from .list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
@@ -12,6 +13,7 @@ from .next_page import NextPage
 from .order import Order
 from .page import Page
 from .user import User
+from .user_list import UserList
 from .user_list_container import UserListContainer
 from .user_optional_list_container import UserOptionalListContainer
 from .user_optional_list_page import UserOptionalListPage
@@ -21,6 +23,7 @@ from .with_cursor import WithCursor
 from .with_page import WithPage
 
 __all__ = [
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
@@ -31,6 +34,7 @@ __all__ = [
     "Order",
     "Page",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",

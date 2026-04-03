@@ -1395,17 +1395,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "login",
         "Log in to Fern via GitHub",
         (yargs) =>
-            yargs.option("device-code", {
-                boolean: true,
-                default: false,
-                description: "Use device code authorization"
-            }),
+            yargs
+                .option("device-code", {
+                    boolean: true,
+                    default: false,
+                    description: "Use device code authorization"
+                })
+                .option("email", {
+                    string: true,
+                    description: "Log in via enterprise SSO using your email address"
+                }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
                 await cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
-                await login(context, { useDeviceCodeFlow: argv.deviceCode });
+                await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
             });
         }
     );
@@ -2114,7 +2119,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        false, // Hidden from --help
+        "Merge an AI examples overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
                 .positional("openapi", {

@@ -14,7 +14,7 @@ export class ExpressErrorDeclarationReferencer extends AbstractDeclarationRefere
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: errorName.fernFilepath,
-                    caseConverter: this.caseConverter,
+                    caseConverter: this.case,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -38,7 +38,7 @@ export class ExpressErrorDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     public getExportedName(errorName: FernIr.DeclaredErrorName): string {
-        return this.caseConverter.pascalUnsafe(errorName.name);
+        return this.case.pascalUnsafe(errorName.name);
     }
 
     public getReferenceToError(

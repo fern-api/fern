@@ -558,19 +558,16 @@ export class DynamicTypeLiteralMapper {
                 return "2024-01-15";
             case "DATE_TIME":
                 return "2024-01-15T09:30:00Z";
+            case "DATE_TIME_RFC_2822":
+                return "Tue, 15 Jan 2024 09:30:00 +0000";
             case "UUID":
                 return "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
             case "BASE_64":
                 return "SGVsbG8gd29ybGQh";
             case "BIG_INTEGER":
                 return "123456789";
-            default: {
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    return "Tue, 15 Jan 2024 09:30:00 +0000";
-                }
+            default:
                 return "string";
-            }
         }
     }
 
@@ -827,16 +824,12 @@ export class DynamicTypeLiteralMapper {
                 return "Date";
             case "DATE_TIME":
                 return "DateTime";
+            case "DATE_TIME_RFC_2822":
+                return "DateTimeRfc2822";
             case "BASE_64":
                 return "Base64";
-            default: {
-                // Forward-compatible: handle primitive types not yet in the published SDK
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    return "DateTimeRfc2822";
-                }
+            default:
                 assertNever(primitive);
-            }
         }
     }
 
@@ -1007,7 +1000,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.string(date);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return java.TypeLiteral.nop();
@@ -1035,18 +1029,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.bigInteger(bigInt);
             }
-            default: {
-                // Forward-compatible: handle primitive types not yet in the published SDK
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    const dateTime = this.context.getValueAsString({ value });
-                    if (dateTime == null) {
-                        return java.TypeLiteral.nop();
-                    }
-                    return java.TypeLiteral.dateTime(dateTime);
-                }
+            default:
                 assertNever(primitive);
-            }
         }
     }
 
