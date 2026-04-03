@@ -7,9 +7,6 @@ export abstract class AbstractFormatter {
     formatMultipleSync(contents: string[]): string[] {
         return contents.map((content) => this.formatSync(content));
     }
-    formatFileContents(contents: string[]): Promise<string[]> {
-        return this.formatMultiple(contents);
-    }
     dispose(): void {
         // no-op by default; subclasses may override to clean up resources
     }

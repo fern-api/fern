@@ -136,10 +136,6 @@ export class CsharpFormatter extends AbstractFormatter {
         return Promise.all(contents.map((c) => this.pipeFile(this.appendSemicolon(c))));
     }
 
-    public override async formatFileContents(contents: string[]): Promise<string[]> {
-        return Promise.all(contents.map((c) => this.pipeFile(c)));
-    }
-
     public formatSync(content: string): string {
         content = this.appendSemicolon(content);
 

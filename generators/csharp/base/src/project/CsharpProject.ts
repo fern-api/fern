@@ -4,7 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { createHash } from "crypto";
 import { Eta } from "eta";
-import { mkdir, readdir, readFile, unlink, writeFile } from "fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
@@ -29,7 +29,6 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
-    private readonly nonJitFilePaths: string[] = [];
 
     public constructor({
         context,
@@ -168,17 +167,15 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await writeFile(csprojPath, csprojContents);
     }
 
-    private async csharpier(files: string[]): Promise<void> {
-        if (files.length === 0) {
-            return;
-        }
+    private async csharpier(absolutePathToSrcDirectory: AbsoluteFilePath): Promise<void> {
         const csharpier = findDotnetToolPath("csharpier");
         await loggingExeca(
             this.context.logger,
             csharpier,
-            ["format", ...files, "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
             {
-                doNotPipeOutput: false
+                doNotPipeOutput: false,
+                cwd: absolutePathToSrcDirectory
             }
         );
     }
@@ -315,9 +312,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             .replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
-        const ciYmlPath = join(ghDir, RelativeFilePath.of("ci.yml"));
-        await writeFile(ciYmlPath, githubWorkflow);
-        this.nonJitFilePaths.push(ciYmlPath);
+        await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
         await this.createTestUtilsDirectory({ absolutePathToTestProjectDirectory });
@@ -348,17 +343,13 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
 dotnet_diagnostic.IDE0005.severity = error          
           `
             );
-            // Re-format files modified by dotnet format (covers both library and test projects)
-            await this.formatCsFilesOnDisk(absolutePathToProjectDirectory);
-            await this.formatCsFilesOnDisk(absolutePathToTestProjectDirectory);
         }
         this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
-        // format non-JIT files (csproj, props, sln, etc.) using csharpier
+        // format the code cleanly using csharpier on the full output directory
         const csharpierStartTime = Date.now();
-        await this.csharpier(this.nonJitFilePaths);
+        await this.csharpier(this.absolutePathToOutputDirectory);
         this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
-
         this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
@@ -399,14 +390,11 @@ dotnet_diagnostic.IDE0005.severity = error
         const templateCsProjContents = csproj.toString();
         const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
         await writeFile(libraryCsprojPath, templateCsProjContents);
-        this.nonJitFilePaths.push(libraryCsprojPath);
 
-        const libraryCustomPropsPath = join(
-            absolutePathToProjectDirectory,
-            RelativeFilePath.of(`${this.name}.Custom.props`)
+        await writeFile(
+            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
+            (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
         );
-        await writeFile(libraryCustomPropsPath, (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString());
-        this.nonJitFilePaths.push(libraryCustomPropsPath);
 
         return absolutePathToProjectDirectory;
     }
@@ -439,17 +427,10 @@ dotnet_diagnostic.IDE0005.severity = error
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
-        this.nonJitFilePaths.push(testCsprojPath);
-
-        const testCustomPropsPath = join(
-            absolutePathToTestProject,
-            RelativeFilePath.of(`${testProjectName}.Custom.props`)
-        );
         await writeFile(
-            testCustomPropsPath,
+            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
-        this.nonJitFilePaths.push(testCustomPropsPath);
 
         return absolutePathToTestProject;
     }
@@ -494,7 +475,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
         const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await writeFile(slnxFilePath, slnxContents);
-        this.nonJitFilePaths.push(slnxFilePath);
 
         // When sln-format is "sln", also generate the legacy .sln file
         if (this.settings.slnFormat === "sln") {
@@ -539,7 +519,6 @@ dotnet_diagnostic.IDE0005.severity = error
 
             const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
             await writeFile(slnFilePath, slnContents);
-            this.nonJitFilePaths.push(slnFilePath);
         }
     }
 
@@ -795,65 +774,12 @@ dotnet_diagnostic.IDE0005.severity = error
     private static readonly FILE_WRITE_BATCH_SIZE = 100;
 
     /**
-     * Recursively finds all .cs files in a directory, formats them using the persistent
-     * CSharpier process, and writes the formatted content back to disk.
-     * Used after dotnet format modifies files on disk.
+     * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
+     * while still being significantly faster than sequential writes.
      */
-    private async formatCsFilesOnDisk(directory: AbsoluteFilePath): Promise<void> {
-        const csFilePaths: string[] = [];
-        const collectCsFiles = async (dir: string): Promise<void> => {
-            const entries = await readdir(dir, { withFileTypes: true });
-            for (const entry of entries) {
-                const fullPath = path.join(dir, entry.name);
-                if (entry.isDirectory()) {
-                    await collectCsFiles(fullPath);
-                } else if (entry.name.endsWith(".cs")) {
-                    csFilePaths.push(fullPath);
-                }
-            }
-        };
-        await collectCsFiles(directory);
-
-        if (csFilePaths.length === 0) {
-            return;
-        }
-
-        for (let i = 0; i < csFilePaths.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
-            const batch = csFilePaths.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
-            const contents = await Promise.all(batch.map((fp) => readFile(fp, "utf-8")));
-            const formatted = await this.context.formatter.formatFileContents(contents);
-            await Promise.all(batch.map((fp, j) => writeFile(fp, formatted[j] ?? "")));
-        }
-    }
-
     private async writeFilesInBatches(files: File[], directoryPrefix: AbsoluteFilePath): Promise<void> {
         for (let i = 0; i < files.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
             const batch = files.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
-
-            // Resolve CSharpFile content before formatting
-            for (const file of batch) {
-                if (file instanceof CSharpFile) {
-                    file.resolveFileContents();
-                }
-            }
-
-            // Format all .cs files in the batch using the persistent formatter
-            const csFiles = batch.filter(
-                (file): file is File & { fileContents: string } =>
-                    file.filename.endsWith(".cs") && typeof file.fileContents === "string"
-            );
-            if (csFiles.length > 0) {
-                const formatted = await this.context.formatter.formatFileContents(
-                    csFiles.map((file) => file.fileContents)
-                );
-                for (let j = 0; j < csFiles.length; j++) {
-                    const csFile = csFiles[j];
-                    if (csFile != null) {
-                        csFile.fileContents = formatted[j] ?? "";
-                    }
-                }
-            }
-
             await Promise.all(batch.map((file) => file.write(directoryPrefix)));
         }
     }
@@ -863,15 +789,6 @@ dotnet_diagnostic.IDE0005.severity = error
             this.addRawFiles(await this.createRawAsIsFile({ filename }));
         }
         await this.writeRawFiles();
-        for (const file of this.rawFiles) {
-            this.nonJitFilePaths.push(
-                join(
-                    this.absolutePathToOutputDirectory,
-                    RelativeFilePath.of(file.directory),
-                    RelativeFilePath.of(file.filename)
-                )
-            );
-        }
     }
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
