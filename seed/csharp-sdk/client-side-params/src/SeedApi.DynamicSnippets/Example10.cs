@@ -2,7 +2,7 @@ using SeedClientSideParams;
 
 public partial class Examples
 {
-    public static async Task Example10()
+    public async Task Example10()
     {
         var client = new SeedClientSideParamsClient(
             token: "<token>",

@@ -2,7 +2,7 @@ using SeedAudiences;
 
 public partial class Examples
 {
-    public static async Task Example1()
+    public async Task Example1()
     {
         var client = new SeedAudiencesClient(
             clientOptions: new ClientOptions {

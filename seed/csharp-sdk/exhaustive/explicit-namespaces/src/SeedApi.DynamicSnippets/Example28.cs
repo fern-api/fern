@@ -3,7 +3,7 @@ using SeedExhaustive.Endpoints.Pagination;
 
 public partial class Examples
 {
-    public static async Task Example28()
+    public async Task Example28()
     {
         var client = new SeedExhaustiveClient(
             token: "<token>",

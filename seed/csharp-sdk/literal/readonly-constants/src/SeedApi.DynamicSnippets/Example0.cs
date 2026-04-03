@@ -2,7 +2,7 @@ using SeedLiteral;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedLiteralClient(
             clientOptions: new ClientOptions {

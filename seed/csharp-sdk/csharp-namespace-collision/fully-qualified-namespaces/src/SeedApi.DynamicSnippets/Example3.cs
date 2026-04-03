@@ -3,7 +3,7 @@ using SeedCsharpNamespaceCollision.ScimConfiguration;
 
 public partial class Examples
 {
-    public static async System.Threading.Tasks.Task Example3()
+    public async System.Threading.Tasks.Task Example3()
     {
         var client = new SeedCsharpNamespaceCollisionClient(
             clientOptions: new ClientOptions {

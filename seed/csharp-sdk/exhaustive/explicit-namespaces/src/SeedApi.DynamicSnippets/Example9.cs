@@ -4,7 +4,7 @@ using System.Globalization;
 
 public partial class Examples
 {
-    public static async Task Example9()
+    public async Task Example9()
     {
         var client = new SeedExhaustiveClient(
             token: "<token>",

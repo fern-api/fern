@@ -2,7 +2,7 @@ using SeedResponseProperty;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedResponsePropertyClient(
             clientOptions: new ClientOptions {

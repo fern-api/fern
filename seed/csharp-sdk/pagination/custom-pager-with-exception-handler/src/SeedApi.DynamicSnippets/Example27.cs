@@ -2,7 +2,7 @@ using SeedPagination;
 
 public partial class Examples
 {
-    public static async Task Example27()
+    public async Task Example27()
     {
         var client = new SeedPaginationClient(
             token: "<token>",

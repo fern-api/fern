@@ -2,7 +2,7 @@ using SeedApi;
 
 public partial class Examples
 {
-    public static async Task Example10()
+    public async Task Example10()
     {
         var client = new SeedApiClient(
             clientOptions: new ClientOptions {

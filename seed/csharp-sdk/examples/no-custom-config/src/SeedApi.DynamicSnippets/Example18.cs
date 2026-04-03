@@ -2,7 +2,7 @@ using SeedExamples;
 
 public partial class Examples
 {
-    public static async Task Example18()
+    public async Task Example18()
     {
         var client = new SeedExamplesClient(
             token: "<token>",

@@ -2,7 +2,7 @@ using SeedTrace;
 
 public partial class Examples
 {
-    public static async Task Example15()
+    public async Task Example15()
     {
         var client = new SeedTraceClient(
             token: "<token>",

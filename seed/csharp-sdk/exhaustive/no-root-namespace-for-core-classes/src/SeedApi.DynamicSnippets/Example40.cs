@@ -3,7 +3,7 @@ using SeedExhaustive.Core;
 
 public partial class Examples
 {
-    public static async Task Example40()
+    public async Task Example40()
     {
         var client = new SeedExhaustiveClient(
             token: "<token>",

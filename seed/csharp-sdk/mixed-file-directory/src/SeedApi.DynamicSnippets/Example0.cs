@@ -2,7 +2,7 @@ using SeedMixedFileDirectory;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedMixedFileDirectoryClient(
             clientOptions: new ClientOptions {

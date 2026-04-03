@@ -2,7 +2,7 @@ using SeedVariables;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedVariablesClient(
             clientOptions: new ClientOptions {

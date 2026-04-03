@@ -2,7 +2,7 @@ using SeedContentTypes;
 
 public partial class Examples
 {
-    public static async Task Example3()
+    public async Task Example3()
     {
         var client = new SeedContentTypesClient(
             clientOptions: new ClientOptions {

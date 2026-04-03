@@ -3,7 +3,7 @@ using System.Globalization;
 
 public partial class Examples
 {
-    public static async Task Example7()
+    public async Task Example7()
     {
         var client = new SeedUnionsClient(
             clientOptions: new ClientOptions {

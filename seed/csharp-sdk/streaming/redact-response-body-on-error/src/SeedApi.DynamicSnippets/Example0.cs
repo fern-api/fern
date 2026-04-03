@@ -2,7 +2,7 @@ using SeedStreaming;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedStreamingClient(
             clientOptions: new ClientOptions {

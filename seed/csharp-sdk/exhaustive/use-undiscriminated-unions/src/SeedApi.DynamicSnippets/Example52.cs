@@ -2,7 +2,7 @@ using SeedExhaustive;
 
 public partial class Examples
 {
-    public static async Task Example52()
+    public async Task Example52()
     {
         var client = new SeedExhaustiveClient(
             token: "<token>",

@@ -2,7 +2,7 @@ using SeedServerSentEvents;
 
 public partial class Examples
 {
-    public static async Task Example10()
+    public async Task Example10()
     {
         var client = new SeedServerSentEventsClient(
             clientOptions: new ClientOptions {

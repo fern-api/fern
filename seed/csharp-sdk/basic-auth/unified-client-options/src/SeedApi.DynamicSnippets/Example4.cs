@@ -2,7 +2,7 @@ using SeedBasicAuth;
 
 public partial class Examples
 {
-    public static async Task Example4()
+    public async Task Example4()
     {
         var client = new SeedBasicAuthClient(
             clientOptions: new ClientOptions {

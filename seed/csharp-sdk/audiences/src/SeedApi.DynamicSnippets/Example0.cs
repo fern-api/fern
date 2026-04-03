@@ -3,7 +3,7 @@ using SeedAudiences.FolderA;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedAudiencesClient(
             clientOptions: new ClientOptions {

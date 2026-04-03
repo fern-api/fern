@@ -2,7 +2,7 @@ using Contoso.Net;
 
 public partial class Examples
 {
-    public static async System.Threading.Tasks.Task Example7()
+    public async System.Threading.Tasks.Task Example7()
     {
         var client = new Contoso.Net.Contoso(
             clientOptions: new ClientOptions {

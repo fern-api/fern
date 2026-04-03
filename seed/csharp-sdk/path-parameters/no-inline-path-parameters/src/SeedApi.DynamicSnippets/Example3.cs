@@ -2,7 +2,7 @@ using SeedPathParameters;
 
 public partial class Examples
 {
-    public static async Task Example3()
+    public async Task Example3()
     {
         var client = new SeedPathParametersClient(
             clientOptions: new ClientOptions {

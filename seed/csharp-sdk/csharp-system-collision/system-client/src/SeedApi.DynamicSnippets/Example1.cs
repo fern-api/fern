@@ -2,7 +2,7 @@ using SeedCsharpSystemCollision;
 
 public partial class Examples
 {
-    public static async System.Threading.Tasks.Task Example1()
+    public async System.Threading.Tasks.Task Example1()
     {
         var client = new SeedCsharpSystemCollision.System(
             clientOptions: new ClientOptions {

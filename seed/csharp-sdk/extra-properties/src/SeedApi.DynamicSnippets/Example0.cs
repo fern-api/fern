@@ -2,7 +2,7 @@ using SeedExtraProperties;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedExtraPropertiesClient(
             clientOptions: new ClientOptions {

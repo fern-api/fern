@@ -2,7 +2,7 @@ using SeedInferredAuthImplicit;
 
 public partial class Examples
 {
-    public static async Task Example4()
+    public async Task Example4()
     {
         var client = new SeedInferredAuthImplicitClient(
             clientId: "client_id",

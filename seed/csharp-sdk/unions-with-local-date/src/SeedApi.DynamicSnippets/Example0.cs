@@ -2,7 +2,7 @@ using SeedUnions;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedUnionsClient(
             clientOptions: new ClientOptions {

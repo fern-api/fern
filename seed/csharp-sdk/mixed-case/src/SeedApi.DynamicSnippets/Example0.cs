@@ -2,7 +2,7 @@ using SeedMixedCase;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedMixedCaseClient(
             clientOptions: new ClientOptions {

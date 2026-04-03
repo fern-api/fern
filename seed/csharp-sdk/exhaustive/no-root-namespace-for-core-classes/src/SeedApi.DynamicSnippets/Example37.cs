@@ -4,7 +4,7 @@ using System.Text;
 
 public partial class Examples
 {
-    public static async Task Example37()
+    public async Task Example37()
     {
         var client = new SeedExhaustiveClient(
             token: "<token>",

@@ -2,7 +2,7 @@ using SeedUndiscriminatedUnions;
 
 public partial class Examples
 {
-    public static async Task Example3()
+    public async Task Example3()
     {
         var client = new SeedUndiscriminatedUnionsClient(
             clientOptions: new ClientOptions {

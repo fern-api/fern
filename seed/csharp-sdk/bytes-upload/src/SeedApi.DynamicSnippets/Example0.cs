@@ -3,7 +3,7 @@ using System.Text;
 
 public partial class Examples
 {
-    public static async Task Example0()
+    public async Task Example0()
     {
         var client = new SeedBytesUploadClient(
             clientOptions: new ClientOptions {

@@ -2,7 +2,7 @@ using SeedCsharpNamespaceCollision;
 
 public partial class Examples
 {
-    public static async System.Threading.Tasks.Task Example4()
+    public async System.Threading.Tasks.Task Example4()
     {
         var client = new SeedCsharpNamespaceCollisionClient(
             clientOptions: new ClientOptions {

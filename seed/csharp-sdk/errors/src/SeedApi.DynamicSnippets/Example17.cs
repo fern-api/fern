@@ -2,7 +2,7 @@ using SeedErrors;
 
 public partial class Examples
 {
-    public static async Task Example17()
+    public async Task Example17()
     {
         var client = new SeedErrorsClient(
             clientOptions: new ClientOptions {
