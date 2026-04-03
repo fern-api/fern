@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.57.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
 - version: 2.56.5
   changelogEntry:
     - summary: |
@@ -85,7 +93,6 @@
       type: fix
   createdAt: "2026-04-01"
   irVersion: 65
-
 - version: 2.55.3
   changelogEntry:
     - summary: |

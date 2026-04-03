@@ -509,10 +509,10 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     private getEnumValueName(enumValue: FernIr.EnumValue): string {
-        return this.caseConverter.pascalUnsafe(enumValue.name);
+        return this.case.pascalUnsafe(enumValue.name);
     }
 
     private getEnumValueVisitPropertyName(enumValue: FernIr.EnumValue): string {
-        return this.caseConverter.camelUnsafe(enumValue.name);
+        return this.case.camelUnsafe(enumValue.name);
     }
 }

@@ -32,7 +32,7 @@ export class EndpointDeclarationReferencer extends AbstractExpressServiceDeclara
     }
 
     private getNamespaceExport({ endpoint }: EndpointDeclarationReferencer.Name): string {
-        return this.caseConverter.camelUnsafe(endpoint.name);
+        return this.case.camelUnsafe(endpoint.name);
     }
 
     public getReferenceToEndpointExport(

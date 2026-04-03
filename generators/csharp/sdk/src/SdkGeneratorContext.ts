@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter, CaseConverter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 
@@ -36,12 +36,17 @@ export class SdkGeneratorContext extends GeneratorContext {
         customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
+        const caseConverter = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         super(
             ir,
             config,
             customConfig,
             generatorNotificationService,
-            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
+            new Generation(ir, caseConverter.pascalUnsafe(ir.apiName), customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
                 getNamespaceForTypeId: (typeId: FernIr.TypeId) => this.getNamespaceForTypeId(typeId),
@@ -91,7 +96,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path: FernIr.Name) => path.pascalCase.safeName),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.types
             ].join("/")
         );
@@ -100,7 +105,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public getDirectoryForError(declaredErrorName: FernIr.DeclaredErrorName): RelativeFilePath {
         return RelativeFilePath.of(
             [
-                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                ...declaredErrorName.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.exceptions
             ].join("/")
         );
@@ -112,7 +117,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return clientAccessParts.length > 0
             ? `${this.names.variables.client}.${clientAccessParts.join(".")}`
             : this.names.variables.client;
@@ -316,11 +321,11 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => this.case.pascalSafe(path))].join("/"));
     }
 
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return `${endpoint.name.pascalCase.safeName}Async`;
+        return `${this.case.pascalSafe(endpoint.name)}Async`;
     }
 
     public endpointUsesGrpcTransport(service: FernIr.HttpService, endpoint: FernIr.HttpEndpoint): boolean {
@@ -360,7 +365,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getNameForField(name: FernIr.NameAndWireValue): string {
-        return name.name.pascalCase.safeName;
+        return this.case.pascalSafe(name.name);
     }
 
     /**
@@ -473,6 +478,6 @@ export class SdkGeneratorContext extends GeneratorContext {
 
     getChildNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
         const segmentNames = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
-        return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
+        return segmentNames.map((segmentName) => this.case.pascalSafe(segmentName));
     }
 }
