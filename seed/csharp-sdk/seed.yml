@@ -186,6 +186,10 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
     - customConfig:
+        extra-dependencies:
+          OneOf: "3.0.290"
+      outputFolder: extra-dependencies-override
+    - customConfig:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names

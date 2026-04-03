@@ -7,6 +7,18 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 2.56.6
+  changelogEntry:
+    - summary: |
+        Ensure `extra-dependencies` in `generators.yml` overrides bundled dependency
+        versions. Previously, specifying a custom version for a bundled package (e.g.,
+        `OneOf`) would result in duplicate PackageReference entries. The generator now
+        removes the bundled entry before adding the user-specified version, allowing
+        customers to pin patched dependency versions for CVE remediation.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
 - version: 2.56.5
   changelogEntry:
     - summary: |

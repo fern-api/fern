@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "extra-dependencies": {
+      "OneOf": "3.0.290"
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}
