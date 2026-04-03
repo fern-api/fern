@@ -8,11 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import OptionalStringResponse, StringResponse, WithMetadata
     from . import service
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedResponseProperty, SeedResponseProperty
     from .service import Movie, OptionalWithDocs, Response, WithDocs
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedResponseProperty": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Movie": ".service",
     "OptionalStringResponse": ".types",
     "OptionalWithDocs": ".service",
@@ -49,6 +52,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedResponseProperty",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Movie",
     "OptionalStringResponse",
     "OptionalWithDocs",

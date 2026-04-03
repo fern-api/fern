@@ -7,11 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import completions
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
     from .completions import StreamedCompletion
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedServerSentEvents": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedServerSentEvents": ".client",
     "StreamedCompletion": ".completions",
     "__version__": ".version",
@@ -40,4 +43,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedServerSentEvents", "SeedServerSentEvents", "StreamedCompletion", "__version__", "completions"]
+__all__ = [
+    "AsyncSeedServerSentEvents",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "SeedServerSentEvents",
+    "StreamedCompletion",
+    "__version__",
+    "completions",
+]
