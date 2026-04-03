@@ -532,7 +532,7 @@ function addRunCommand(cli: Argv) {
             yargs
                 .option("generator", {
                     string: true,
-                    demandOption: true,
+                    demandOption: false,
                     description: "Generator to run"
                 })
                 .option("path", {
@@ -593,6 +593,9 @@ function addRunCommand(cli: Argv) {
         async (argv) => {
             // Resolve --sdk shorthand into --generator value
             const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
+            if (resolvedGenerator == null) {
+                throw new Error("Either --generator or --sdk must be provided.");
+            }
 
             const generators = await loadGeneratorWorkspaces();
             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
@@ -704,7 +707,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
             yargs
                 .option("generator", {
                     string: true,
-                    demandOption: true,
+                    demandOption: false,
                     description: "Generator to get fixtures for"
                 })
                 .option("include-output-folders", {
@@ -723,6 +726,9 @@ function addGetAvailableFixturesCommand(cli: Argv) {
         async (argv) => {
             // Resolve --sdk shorthand into --generator value
             const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
+            if (resolvedGenerator == null) {
+                throw new Error("Either --generator or --sdk must be provided.");
+            }
 
             const generators = await loadGeneratorWorkspaces();
             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
