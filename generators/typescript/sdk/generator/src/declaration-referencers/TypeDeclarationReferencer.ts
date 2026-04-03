@@ -18,7 +18,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Fer
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: typeName.fernFilepath,
-                    caseConverter: this.caseConverter,
+                    caseConverter: this.case,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -42,7 +42,7 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Fer
     }
 
     public getExportedName(typeName: FernIr.DeclaredTypeName): string {
-        return this.caseConverter.pascalSafe(typeName.name);
+        return this.case.pascalSafe(typeName.name);
     }
 
     public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<FernIr.DeclaredTypeName>): Reference {

@@ -24,7 +24,7 @@ export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkCl
 
     public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
-        return `${this.caseConverter.pascalUnsafe(subpackage.name)}Client`;
+        return `${this.case.pascalUnsafe(subpackage.name)}Client`;
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernIr.SubpackageId>): Reference {

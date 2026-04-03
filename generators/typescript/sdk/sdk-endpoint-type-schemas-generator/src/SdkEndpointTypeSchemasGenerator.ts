@@ -35,7 +35,7 @@ export class SdkEndpointTypeSchemasGenerator {
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
-    private caseConverter: CaseConverter;
+    private case: CaseConverter;
 
     constructor({
         errorResolver,
@@ -54,7 +54,7 @@ export class SdkEndpointTypeSchemasGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public generateEndpointTypeSchemas({
@@ -73,7 +73,7 @@ export class SdkEndpointTypeSchemasGenerator {
             includeSerdeLayer: this.includeSerdeLayer,
             allowExtraFields: this.allowExtraFields,
             omitUndefined: this.omitUndefined,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 }

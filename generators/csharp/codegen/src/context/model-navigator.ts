@@ -1,3 +1,4 @@
+import { NameInput } from "@fern-api/base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "../utils/fail.js";
@@ -52,6 +53,9 @@ export type IrNode = Exclude<
     | FernIr.TypeDeclaration
     | FernIr.ProtobufService
     | FernIr.WebSocketChannel
+    | FernIr.SingleUnionType
+    | FernIr.SdkRequestWrapper
+    | FernIr.InlinedRequestBody
     | DynamicFernIr.dynamic.NamedType
     | DynamicFernIr.dynamic.Declaration
     | FernIr.DeclaredErrorName
@@ -402,13 +406,18 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType): string {
-        // get the name of the enum value
-        const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
+    getEnumValueName(
+        typeEnum: FernIr.Type.Enum,
+        valueName: FernIr.NameAndWireValueOrString | FernIr.ExampleEnumType
+    ): string {
+        // get the name of the enum value - ExampleEnumType.value is NameAndWireValueOrString
+        const name: NameInput = is.IR.ExampleEnumType(valueName) ? valueName.value : valueName;
         // match the name given to the name in the actual type
-        const member = typeEnum.values.find((v) => this.nameEquals(v.name.name, name));
+        const member = typeEnum.values.find((v) => this.nameEquals(v.name, name));
         // return the property name for that value
-        return member ? this.getPropertyNameFor(member) : fail(`Unexpected - can't find enum value ${name} in enum`);
+        return member
+            ? this.getPropertyNameFor(member)
+            : fail(`Unexpected - can't find enum value ${JSON.stringify(name)} in enum`);
     }
 
     /**
@@ -440,17 +449,17 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return property.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(property.name);
             }
             if (is.IR.Name(property.name)) {
-                return property.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
-                return property.name;
+                return this.generation.case.pascalSafe(property.name);
             }
         }
         if ("pascalCase" in property) {
-            return property.pascalCase.safeName;
+            return this.generation.case.pascalSafe(property);
         }
 
         throw new Error(`Unknown property type: ${this.jsonPath(property)}`);
@@ -481,20 +490,20 @@ export class ModelNavigator {
         }
         if ("name" in classDeclaration) {
             if (is.IR.TypeDeclaration(classDeclaration)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
-                return classDeclaration.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
-                return classDeclaration.name;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
         }
         if ("pascalCase" in classDeclaration) {
-            return classDeclaration.pascalCase.safeName;
+            return this.generation.case.pascalSafe(classDeclaration);
         }
 
         throw new Error(`Unknown property type: ${JSON.stringify(classDeclaration)}`);
@@ -512,8 +521,8 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
-        return name1.camelCase.safeName === name2.camelCase.safeName;
+    nameEquals(name1: NameInput, name2: NameInput): boolean {
+        return this.generation.case.camelSafe(name1) === this.generation.case.camelSafe(name2);
     }
 
     /**

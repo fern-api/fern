@@ -25,7 +25,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
     protected consolidateTypeFiles: boolean;
-    protected readonly caseConverter: CaseConverter;
+    protected readonly case: CaseConverter;
 
     protected namingOverride: string | undefined;
 
@@ -40,7 +40,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
         this.containingDirectory = containingDirectory;
         this.consolidateTypeFiles = consolidateTypeFiles;
         this.namingOverride = namingOverride;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

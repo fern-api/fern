@@ -1,10 +1,11 @@
 import { at } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as dynamic } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { fail } from "./utils/fail.js";
 
 type Name = FernIr.Name;
 type NameAndWireValue = FernIr.NameAndWireValue;
+type NameAndWireValueOrString = FernIr.NameAndWireValue | string;
+type NameOrString = FernIr.Name | string;
 
 import {
     And,
@@ -184,18 +185,21 @@ export class CSharp {
 
     getPropertyName(
         enclosingType: ClassReference,
-        property: (IrNode & { name: Name | dynamic.Name }) | (IrNode & { name: NameAndWireValue })
+        property:
+            | (IrNode & { name: Name | dynamic.Name })
+            | (IrNode & { name: NameAndWireValue })
+            | (IrNode & { name: NameAndWireValueOrString })
+            | (IrNode & { name: NameOrString })
     ) {
         const expectedName = this.model.getPropertyNameFor(property);
-        const origin =
-            this.model.origin(property) ??
-            fail(`Origin not found for property: ${JSON.stringify(property).substring(0, 100)}`);
+        const origin = this.model.origin(property);
 
-        const value = enclosingType.getFieldName(origin, expectedName);
-
-        if (value) {
-            // we have been told there is a member that looks like the one we want.
-            return value;
+        if (origin) {
+            const value = enclosingType.getFieldName(origin, expectedName);
+            if (value) {
+                // we have been told there is a member that looks like the one we want.
+                return value;
+            }
         }
 
         // there isn't anything registered that looks like the one we want.

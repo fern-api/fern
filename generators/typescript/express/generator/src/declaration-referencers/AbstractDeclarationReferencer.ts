@@ -21,12 +21,12 @@ export declare namespace AbstractDeclarationReferencer {
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
-    protected readonly caseConverter: CaseConverter;
+    protected readonly case: CaseConverter;
 
     constructor({ namespaceExport, containingDirectory, caseConverter }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

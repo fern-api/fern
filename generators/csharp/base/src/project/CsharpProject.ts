@@ -47,6 +47,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     protected get generation(): Generation {
         return this.context.generation;
     }
+    protected get case(): Generation["case"] {
+        return this.generation.case;
+    }
     protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
@@ -665,12 +668,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
-                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);
