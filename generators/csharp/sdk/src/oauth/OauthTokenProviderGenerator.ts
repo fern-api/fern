@@ -265,9 +265,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private request = lazy({
         clientId: () =>
-            caseConverter.pascalSafe(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
-            ),
+            caseConverter.pascalSafe(this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name),
         secret: () =>
             caseConverter.pascalSafe(
                 this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name

@@ -61,27 +61,28 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             type: ast.Class.ClassType.Record
         });
 
-        const discriminant = typeof this.unionDeclaration.discriminant === "string"
-            ? class_.addField({
-                  name: caseConverter.pascalSafe(this.unionDeclaration.discriminant),
-                  enclosingType: class_,
-                  summary: "Discriminant value",
-                  jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
-                  access: ast.Access.Public,
-                  type: this.Primitive.string,
-                  get: "public",
-                  set: "internal"
-              })
-            : class_.addField({
-                  origin: this.unionDeclaration.discriminant,
-                  enclosingType: class_,
-                  summary: "Discriminant value",
-                  jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
-                  access: ast.Access.Public,
-                  type: this.Primitive.string,
-                  get: "public",
-                  set: "internal"
-              });
+        const discriminant =
+            typeof this.unionDeclaration.discriminant === "string"
+                ? class_.addField({
+                      name: caseConverter.pascalSafe(this.unionDeclaration.discriminant),
+                      enclosingType: class_,
+                      summary: "Discriminant value",
+                      jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
+                      access: ast.Access.Public,
+                      type: this.Primitive.string,
+                      get: "public",
+                      set: "internal"
+                  })
+                : class_.addField({
+                      origin: this.unionDeclaration.discriminant,
+                      enclosingType: class_,
+                      summary: "Discriminant value",
+                      jsonPropertyName: getWireValue(this.unionDeclaration.discriminant),
+                      access: ast.Access.Public,
+                      type: this.Primitive.string,
+                      get: "public",
+                      set: "internal"
+                  });
 
         const value = class_.addField({
             enclosingType: class_,
