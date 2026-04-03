@@ -644,7 +644,7 @@ export abstract class AbstractGoGeneratorContext<
         return this.getLocation(filepath.allParts, suffix);
     }
 
-    private getLocation(names: FernIr.Name[], suffix?: string): FileLocation {
+    private getLocation(names: FernIr.NameOrString[], suffix?: string): FileLocation {
         let parts = names.map((name) => caseConverter.camelSafe(name).toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
