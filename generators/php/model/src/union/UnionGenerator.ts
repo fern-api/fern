@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
@@ -37,10 +37,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         for (const property of this.unionTypeDeclaration.baseProperties) {
             const field = this.toField({ property });
             if (includeGetter) {
-                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
             }
             if (includeSetter) {
-                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name, field }));
             }
             clazz.addField(field);
         }
@@ -54,7 +54,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         if (includeGetter) {
             clazz.addMethod(
                 this.context.getGetterMethod({
-                    name: this.unionTypeDeclaration.discriminant.name,
+                    name: this.unionTypeDeclaration.discriminant,
                     field: discriminantField
                 })
             );
@@ -97,7 +97,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private discriminantGetter(): php.CodeBlock {
-        const discriminant = this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name);
+        const discriminant = this.context.getPropertyName(this.unionTypeDeclaration.discriminant);
         return php.codeblock("$this->" + discriminant);
     }
 
@@ -127,7 +127,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         );
         discriminantValues.push("_unknown");
         return php.field({
-            name: this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name),
+            name: this.context.getPropertyName(this.unionTypeDeclaration.discriminant),
             type: php.Type.union(discriminantValues.map((value) => php.Type.literalString(value))),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -220,7 +220,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             }
 
             constructorArgs.push({
-                key: php.codeblock(`'${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'`),
+                key: php.codeblock(`'${this.context.getPropertyName(this.unionTypeDeclaration.discriminant)}'`),
                 value: php.codeblock(`'${getWireValue(variant.discriminantValue)}'`)
             });
 
@@ -253,7 +253,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private isMethod(variant: FernIr.SingleUnionType): php.Method {
-        const methodName = "is" + caseConverter.pascalSafe(variant.discriminantValue.name);
+        const methodName = "is" + caseConverter.pascalSafe(variant.discriminantValue);
 
         return php.method({
             name: methodName,
@@ -272,7 +272,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             return null;
         }
 
-        const methodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
+        const methodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
         const returnType = this.getReturnType(variant);
 
         const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter());
@@ -386,30 +386,30 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         });
     }
 
-    private getDeserializationArrayKeyExistsErrorMessage(propertyName: FernIr.NameAndWireValue): php.CodeBlock {
-        return php.codeblock(`"JSON data is missing property '${propertyName.wireValue}'"`);
+    private getDeserializationArrayKeyExistsErrorMessage(propertyName: FernIr.NameAndWireValueOrString): php.CodeBlock {
+        return php.codeblock(`"JSON data is missing property '${getWireValue(propertyName)}'"`);
     }
 
     private getDeserializationTypeCheckErrorMessage(
-        propertyName: FernIr.NameAndWireValue,
+        propertyName: FernIr.NameAndWireValueOrString,
         type: php.Type
     ): php.CodeBlock {
         return php.codeblock((writer) => {
             if (type.internalType.type === "literal") {
                 writer.write(
-                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be `
+                    `"Expected property '${this.context.getPropertyName(propertyName)}' in JSON data to be `
                 );
                 writer.writeNode(type.internalType.value);
                 writer.write(', instead received " . ');
             } else {
                 writer.write(
-                    `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be ${type.internalType.type}, instead received " . `
+                    `"Expected property '${this.context.getPropertyName(propertyName)}' in JSON data to be ${type.internalType.type}, instead received " . `
                 );
             }
             writer.writeNode(
                 php.invokeMethod({
                     method: "get_debug_type",
-                    arguments_: [php.codeblock(`$data['${propertyName.wireValue}']`)],
+                    arguments_: [php.codeblock(`$data['${getWireValue(propertyName)}']`)],
                     static_: true
                 })
             );
@@ -420,7 +420,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock((writer) => {
             writer.writeNode(variableGetter);
             writer.write(" === ");
-            writer.write(`'${variant.discriminantValue.wireValue}'`);
+            writer.write(`'${getWireValue(variant.discriminantValue)}'`);
         });
     }
 
@@ -662,7 +662,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMaybeArrayMerge(variant: FernIr.SingleUnionType, type: php.Type): php.CodeBlock {
-        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
+        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
         switch (type.internalType.type) {
             case "reference":
             case "object":
@@ -741,7 +741,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         variant: FernIr.SingleUnionType;
         type: php.Type;
     }): php.CodeBlock {
-        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue.name);
+        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
         let argument: php.AstNode = php.invokeMethod({
             method: asCastMethodName,
             arguments_: [],
@@ -1004,8 +1004,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonDeserializeMethod(): php.Method {
-        const discriminantPropertyName = this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name);
-        const discriminantVariableName = this.context.getVariableName(this.unionTypeDeclaration.discriminant.name);
+        const discriminantPropertyName = this.context.getPropertyName(this.unionTypeDeclaration.discriminant);
+        const discriminantVariableName = this.context.getVariableName(this.unionTypeDeclaration.discriminant);
         const body: php.CodeBlock = php.codeblock((writer) => {
             writer.writeTextStatement("$args = []");
             writer.writeNode(this.jsonDeserializeBaseProperties());
@@ -1089,7 +1089,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonDeserializeCheckDiscriminant(): php.CodeBlock {
-        const discriminant: FernIr.NameAndWireValue = this.unionTypeDeclaration.discriminant;
+        const discriminant = this.unionTypeDeclaration.discriminant;
         return php.codeblock((writer) => {
             const arrayKeyDoesNotExist = php.codeblock((_writer) => {
                 _writer.write("!");
@@ -1107,10 +1107,10 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
             writer.endControlFlow();
             writer.writeTextStatement(
-                `${this.context.getVariableName(discriminant.name)} = $data['${getWireValue(discriminant)}']`
+                `${this.context.getVariableName(discriminant)} = $data['${getWireValue(discriminant)}']`
             );
             const typeCheck = this.getTypeCheck(
-                php.codeblock(this.context.getVariableName(discriminant.name)),
+                php.codeblock(this.context.getVariableName(discriminant)),
                 php.Type.string()
             );
 
@@ -1140,7 +1140,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private jsonDeserializeDefaultHandler(): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeTextStatement(
-                `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)}'] = '_unknown'`
+                `$args['${this.context.getPropertyName(this.unionTypeDeclaration.discriminant)}'] = '_unknown'`
             );
             writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = $data`);
         });
