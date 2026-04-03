@@ -236,8 +236,11 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
 export const AgentsConfig = z.object({
-    "page-directive": z.string().optional()
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional()
 });
 
 export const AIChatConfig = z.object({
@@ -574,7 +577,8 @@ export const CheckRulesConfig = z.object({
     "no-non-component-refs": CheckRuleSeverity.optional(),
     "valid-local-references": CheckRuleSeverity.optional(),
     "no-circular-redirects": CheckRuleSeverity.optional(),
-    "valid-docs-endpoints": CheckRuleSeverity.optional()
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({

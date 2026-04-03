@@ -1,4 +1,4 @@
-import { BasicAuth } from "../../../../../src/test-packagePath/core/auth/BasicAuth";
+import { BasicAuth } from "../../../core/auth/BasicAuth";
 
 describe("BasicAuth", () => {
     interface ToHeaderTestCase {

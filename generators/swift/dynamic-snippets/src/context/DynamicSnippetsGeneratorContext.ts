@@ -65,6 +65,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 case "HTTPClient":
                     nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
                     break;
+                case "ClientConfig":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
                 default:
                     assertNever(templateId);
             }
