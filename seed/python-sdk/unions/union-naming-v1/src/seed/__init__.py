@@ -77,6 +77,7 @@ if typing.TYPE_CHECKING:
         ValueUnionWithTime,
     )
     from . import bigunion, types, union
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .bigunion import (
         ActiveDiamond,
         ActiveDiamondBigUnion,
@@ -166,6 +167,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DateUnionWithTime": ".types",
     "DatetimeUnionWithOptionalTime": ".types",
     "DatetimeUnionWithTime": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DiligentDeal": ".bigunion",
     "DiligentDealBigUnion": ".bigunion",
     "DisloyalValue": ".bigunion",
@@ -331,6 +334,8 @@ __all__ = [
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
     "DatetimeUnionWithTime",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DiligentDeal",
     "DiligentDealBigUnion",
     "DisloyalValue",
