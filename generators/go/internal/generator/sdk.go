@@ -1331,11 +1331,11 @@ func (f *fileWriter) WriteClient(
 			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
 			f.P("}")
 		}
-		if header.ClientDefault != nil {
-			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
-			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
-			f.P("}")
-		}
+			if header.ClientDefault != nil && isStringType(header.ValueType) {
+				f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+				f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
+				f.P("}")
+			}
 	}
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
@@ -2751,8 +2751,8 @@ func (f *fileWriter) endpointFromIR(
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
 			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
-			if pathParameter.ClientDefault != nil && isStringPathParameter(pathParameter.ValueType) {
-				// Use a local variable to avoid mutating the caller's request struct.
+						if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+							// Use a local variable to avoid mutating the caller's request struct.
 				localVar := "_" + pathParameter.Name.CamelCase.SafeName
 				pathParameterNames = append(pathParameterNames, localVar)
 				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
@@ -2782,8 +2782,8 @@ func (f *fileWriter) endpointFromIR(
 			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 			pathParameterNames = append(pathParameterNames, pathParameterName)
 			pathParameterToScopedName[part.PathParameter] = pathParameterName
-			if pathParameter.ClientDefault != nil && isStringPathParameter(pathParameter.ValueType) {
-				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+						if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+							pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
 					VarExpr:    pathParameterName,
 					DefaultVal: literalToValue(pathParameter.ClientDefault),
 				})
@@ -4164,10 +4164,10 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 	return nil
 }
 
-// isStringPathParameter returns true if the given path parameter's value type is a string.
+// isStringType returns true if the given type reference resolves to a string primitive.
 // This is used to guard clientDefault generation, since the `== ""` zero-value check
 // and `fmt.Sprintf` assignment only compile for string-typed parameters.
-func isStringPathParameter(valueType *ir.TypeReference) bool {
+func isStringType(valueType *ir.TypeReference) bool {
 	primitive := maybePrimitive(valueType)
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
 }
