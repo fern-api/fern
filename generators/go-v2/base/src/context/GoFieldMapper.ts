@@ -88,7 +88,13 @@ export class GoFieldMapper {
         }
     }
 
-    private convertLiteral({ name, literal }: { name: FernIr.NameAndWireValueOrString; literal: FernIr.Literal }): go.Field {
+    private convertLiteral({
+        name,
+        literal
+    }: {
+        name: FernIr.NameAndWireValueOrString;
+        literal: FernIr.Literal;
+    }): go.Field {
         const nameValue = typeof name === "string" ? name : name.name;
         switch (literal.type) {
             case "boolean":

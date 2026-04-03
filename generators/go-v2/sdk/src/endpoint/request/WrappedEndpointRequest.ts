@@ -214,13 +214,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
     }
 
-    private getRequestPropertyReference({
-        fieldName,
-        isFile
-    }: {
-        fieldName: NameInput;
-        isFile?: boolean;
-    }): string {
+    private getRequestPropertyReference({ fieldName, isFile }: { fieldName: NameInput; isFile?: boolean }): string {
         const nameStr = getOriginalName(fieldName);
         if (isFile && !this.context.customConfig.inlineFileProperties) {
             return this.context.getParameterName(nameStr);

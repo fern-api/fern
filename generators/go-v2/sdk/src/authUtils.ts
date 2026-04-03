@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 

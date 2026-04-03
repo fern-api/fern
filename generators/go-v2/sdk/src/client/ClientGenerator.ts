@@ -903,7 +903,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     }
 
     private getOptionsPropertyReference(name: NameInput): go.Selector {
-        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(getOriginalName(name))) });
+        return go.selector({
+            on: go.codeblock("options"),
+            selector: go.codeblock(this.context.getFieldName(getOriginalName(name)))
+        });
     }
 
     private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {
