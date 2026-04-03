@@ -1591,10 +1591,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         if (!propertyPath || propertyPath.length === 0) {
             return {
-                code:
-                    typeof property.name === "string"
-                        ? this.context.caseConverter.pascalSafe(property.name)
-                        : this.csharp.getPropertyName(enclosingType, property),
+                code: this.csharp.getPropertyName(enclosingType, property),
                 enclosingType
             };
         }
@@ -1604,10 +1601,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             code: propertyPath
                 .map((val) => {
                     // get the property name for the current property
-                    const propertyName =
-                        typeof val.name === "string"
-                            ? this.context.caseConverter.pascalSafe(val.name)
-                            : this.csharp.getPropertyName(enclosingType, val);
+                    const propertyName = this.csharp.getPropertyName(enclosingType, val);
 
                     // get the type of the current property
                     let typeOfValue = this.context.csharpTypeMapper.convert({
@@ -1640,10 +1634,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
 
         if (!property.propertyPath || property.propertyPath.length === 0) {
-            return `${variableName}.${typeof property.property.name === "string" ? this.context.caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(enclosingType, property.property)}`;
+            return `${variableName}.${this.csharp.getPropertyName(enclosingType, property.property)}`;
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
-        return `${variableName}.${dotAccess.code}.${typeof property.property.name === "string" ? this.context.caseConverter.pascalSafe(property.property.name) : this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
+        return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
     }
 
     private getPropertyWithDefault(

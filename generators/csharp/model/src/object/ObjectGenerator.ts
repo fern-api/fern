@@ -74,45 +74,73 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     private addExtensionDataField(class_: ast.Class): void {
-        class_.addField({
-            origin: class_.explicit("_extensionData"),
-            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-            access: ast.Access.Private,
-            readonly: true,
-            type: this.Collection.idictionary(
-                this.Primitive.string,
-                this.objectDeclaration.extraProperties
-                    ? this.Primitive.object.asOptional()
-                    : this.System.Text.Json.JsonElement,
-                {
-                    dontSimplify: true
-                }
-            ),
-            initializer: this.objectDeclaration.extraProperties
-                ? this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.Primitive.object.asOptional()
-                  ).new()
-                : this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.System.Text.Json.JsonElement
-                  ).new()
-        });
+        const hasBoundOrigin = class_.origin != null;
+        const fieldType = this.Collection.idictionary(
+            this.Primitive.string,
+            this.objectDeclaration.extraProperties
+                ? this.Primitive.object.asOptional()
+                : this.System.Text.Json.JsonElement,
+            {
+                dontSimplify: true
+            }
+        );
+        const fieldInitializer = this.objectDeclaration.extraProperties
+            ? this.System.Collections.Generic.Dictionary(
+                  this.Primitive.string,
+                  this.Primitive.object.asOptional()
+              ).new()
+            : this.System.Collections.Generic.Dictionary(
+                  this.Primitive.string,
+                  this.System.Text.Json.JsonElement
+              ).new();
+        if (hasBoundOrigin) {
+            class_.addField({
+                origin: class_.explicit("_extensionData"),
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        } else {
+            class_.addField({
+                name: "_extensionData",
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        }
     }
 
     private addAdditionalPropertiesProperty(class_: ast.Class) {
-        return class_.addField({
-            origin: class_.explicit("AdditionalProperties"),
-            annotations: [this.System.Text.Json.Serialization.JsonIgnore],
-            access: ast.Access.Public,
-            type: this.objectDeclaration.extraProperties
-                ? this.Types.AdditionalProperties()
-                : this.Types.ReadOnlyAdditionalProperties(),
-
-            get: true,
-            set: this.objectDeclaration.extraProperties ? true : ast.Access.Private,
-            initializer: this.csharp.codeblock("new()")
-        });
+        const hasBoundOrigin = class_.origin != null;
+        const fieldType = this.objectDeclaration.extraProperties
+            ? this.Types.AdditionalProperties()
+            : this.Types.ReadOnlyAdditionalProperties();
+        const fieldSet = this.objectDeclaration.extraProperties ? true : ast.Access.Private;
+        if (hasBoundOrigin) {
+            return class_.addField({
+                origin: class_.explicit("AdditionalProperties"),
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: fieldType,
+                get: true,
+                set: fieldSet,
+                initializer: this.csharp.codeblock("new()")
+            });
+        } else {
+            return class_.addField({
+                name: "AdditionalProperties",
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: fieldType,
+                get: true,
+                set: fieldSet,
+                initializer: this.csharp.codeblock("new()")
+            });
+        }
     }
 
     private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {

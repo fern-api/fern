@@ -438,31 +438,58 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private addExtensionDataField(class_: ast.Class): void {
-        class_.addField({
-            origin: class_.explicit("_extensionData"),
-            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-            access: ast.Access.Private,
-            readonly: true,
-            type: this.Collection.idictionary(this.Primitive.string, this.Primitive.object.asOptional(), {
-                dontSimplify: true
-            }),
-            initializer: this.System.Collections.Generic.Dictionary(
-                this.Primitive.string,
-                this.Primitive.object.asOptional()
-            ).new()
+        const hasBoundOrigin = class_.origin != null;
+        const fieldType = this.Collection.idictionary(this.Primitive.string, this.Primitive.object.asOptional(), {
+            dontSimplify: true
         });
+        const fieldInitializer = this.System.Collections.Generic.Dictionary(
+            this.Primitive.string,
+            this.Primitive.object.asOptional()
+        ).new();
+        if (hasBoundOrigin) {
+            class_.addField({
+                origin: class_.explicit("_extensionData"),
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        } else {
+            class_.addField({
+                name: "_extensionData",
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        }
     }
 
     private addAdditionalPropertiesProperty(class_: ast.Class): ast.Field {
-        return class_.addField({
-            origin: class_.explicit("AdditionalProperties"),
-            annotations: [this.System.Text.Json.Serialization.JsonIgnore],
-            access: ast.Access.Public,
-            type: this.Types.AdditionalProperties(),
-            get: true,
-            set: true,
-            initializer: this.csharp.codeblock("new()")
-        });
+        const hasBoundOrigin = class_.origin != null;
+        if (hasBoundOrigin) {
+            return class_.addField({
+                origin: class_.explicit("AdditionalProperties"),
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: this.Types.AdditionalProperties(),
+                get: true,
+                set: true,
+                initializer: this.csharp.codeblock("new()")
+            });
+        } else {
+            return class_.addField({
+                name: "AdditionalProperties",
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: this.Types.AdditionalProperties(),
+                get: true,
+                set: true,
+                initializer: this.csharp.codeblock("new()")
+            });
+        }
     }
 
     private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {
