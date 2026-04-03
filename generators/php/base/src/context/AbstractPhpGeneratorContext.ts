@@ -76,7 +76,7 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getClassName(name: FernIr.Name): string {
+    public getClassName(name: NameInput): string {
         return getSafeClassName(caseConverter.pascalSafe(name));
     }
 
