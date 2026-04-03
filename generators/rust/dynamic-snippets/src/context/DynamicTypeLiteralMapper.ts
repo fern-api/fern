@@ -97,7 +97,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private generatePrimitivePlaceholder(primitive: FernIr.PrimitiveTypeV1): rust.Expression {
+    private generatePrimitivePlaceholder(primitive: FernIr.dynamic.PrimitiveTypeV1): rust.Expression {
         switch (primitive) {
             case "STRING":
             case "UUID":
@@ -125,6 +125,7 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 if (this.context.getDateTimeType() === "utc") {
                     return rust.Expression.raw(
                         'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
@@ -144,7 +145,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): rust.Expression {
@@ -210,7 +211,8 @@ export class DynamicTypeLiteralMapper {
                     args: []
                 });
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");

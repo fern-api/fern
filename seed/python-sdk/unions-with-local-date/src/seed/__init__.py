@@ -65,6 +65,7 @@ if typing.TYPE_CHECKING:
         Union_Foo,
     )
     from . import bigunion, types, union
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .bigunion import (
         ActiveDiamond,
         AttractiveScript,
@@ -167,6 +168,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Circle": ".union",
     "CircularCard": ".bigunion",
     "ColorfulCover": ".bigunion",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DiligentDeal": ".bigunion",
     "DisloyalValue": ".bigunion",
     "DistinctFailure": ".bigunion",
@@ -320,6 +323,8 @@ __all__ = [
     "Circle",
     "CircularCard",
     "ColorfulCover",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DiligentDeal",
     "DisloyalValue",
     "DistinctFailure",

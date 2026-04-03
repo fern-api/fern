@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
@@ -49,6 +50,13 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
+
+    constructor(context: SdkGeneratorContext) {
+        super(context);
+        this.case = context.case;
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"));
     }
@@ -271,7 +279,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             const apiVersion = this.context.ir.apiVersion;
             const headerKey = apiVersion._visit({
                 header: (header) => {
-                    return header.header.name.wireValue;
+                    return getWireValue(header.header.name);
                 },
                 _other: () => {
                     return undefined;
@@ -279,7 +287,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             });
             const headerValue = apiVersion._visit({
                 header: (header) => {
-                    return header.value.default?.name.wireValue;
+                    return header.value.default?.name != null ? getWireValue(header.value.default.name) : undefined;
                 },
                 _other: () => {
                     return undefined;
@@ -474,7 +482,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
@@ -504,7 +512,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             parameters: [],
             return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
             body: php.codeblock((writer) => {
-                writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+                writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
             })
         });
     }
@@ -623,14 +631,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 ];
             }
             case "header": {
-                const name = this.context.getParameterName(scheme.name.name);
+                const name = this.context.getParameterName(scheme.name);
                 return [
                     {
                         name,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name }),
                         isOptional,
                         header: {
-                            name: scheme.name.wireValue,
+                            name: getWireValue(scheme.name),
                             prefix: scheme.prefix
                         },
                         typeReference: this.getAuthParameterTypeReference({
@@ -696,9 +704,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getParameterForHeader(header: FernIr.HttpHeader): ConstructorParameter {
         return {
-            name: this.context.getParameterName(header.name.name),
+            name: this.context.getParameterName(header.name),
             header: {
-                name: header.name.wireValue
+                name: getWireValue(header.name)
             },
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
@@ -824,7 +832,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            name: this.context.getParameterName(property.name.name),
+                            name: this.context.getParameterName(property.name),
                             docs: property.docs,
                             isOptional: isOptional || this.context.isOptional(property.valueType),
                             typeReference: this.getAuthParameterTypeReference({
@@ -842,11 +850,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        name: this.context.getParameterName(header.name.name),
+                        name: this.context.getParameterName(header.name),
                         docs: header.docs,
                         isOptional: isOptional || this.context.isOptional(header.valueType),
                         header: {
-                            name: header.name.wireValue
+                            name: getWireValue(header.name)
                         },
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: header.valueType,
@@ -912,7 +920,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     const requestBody = endpoint.requestBody;
                     if (requestBody != null && requestBody.type === "inlinedRequestBody") {
                         for (const property of requestBody.properties) {
-                            const paramName = this.context.getParameterName(property.name.name);
+                            const paramName = this.context.getParameterName(property.name);
                             const literal = this.context.maybeLiteral(property.valueType);
                             if (literal != null) {
                                 writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
@@ -932,7 +940,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                     // Also add header parameters
                     for (const header of endpoint.headers) {
-                        const paramName = this.context.getParameterName(header.name.name);
+                        const paramName = this.context.getParameterName(header.name);
                         const literal = this.context.maybeLiteral(header.valueType);
                         if (literal != null) {
                             writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);

@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import organizations, user
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPathParameters, SeedPathParameters
     from .organizations import Organization
     from .user import User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPathParameters": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Organization": ".organizations",
     "SeedPathParameters": ".client",
     "User": ".user",
@@ -45,6 +48,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedPathParameters",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Organization",
     "SeedPathParameters",
     "User",
