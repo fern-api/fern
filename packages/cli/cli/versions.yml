@@ -35,7 +35,6 @@
   createdAt: "2026-04-02"
   irVersion: 66
 
-
 - version: 4.56.0
   changelogEntry:
     - summary: |
