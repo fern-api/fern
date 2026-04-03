@@ -9,15 +9,12 @@
 
 - version: 2.56.6
   changelogEntry:
-    - summary: |
-        Ensure `extra-dependencies` in `generators.yml` overrides bundled dependency
-        versions. Previously, specifying a custom version for a bundled package (e.g.,
-        `OneOf`) would result in duplicate PackageReference entries. The generator now
-        removes the bundled entry before adding the user-specified version, allowing
-        customers to pin patched dependency versions for CVE remediation.
-      type: fix
-  createdAt: "2026-04-03"
+    - type: fix
+      summary: >-
+        Ensure extra-dependencies overrides take precedence over bundled dependency
+        versions, preventing duplicate PackageReference entries in generated .csproj files.
   irVersion: 65
+  createdAt: "2026-04-03"
 
 - version: 2.56.5
   changelogEntry:
