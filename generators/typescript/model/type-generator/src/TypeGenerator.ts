@@ -57,7 +57,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private readonly retainOriginalCasing: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         useBrandedStringAliases,
@@ -80,7 +80,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public generateType({
@@ -149,7 +149,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -185,7 +185,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             enableInlineTypes: this.enableInlineTypes,
             inline,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -216,7 +216,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -249,7 +249,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -281,7 +281,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   retainOriginalCasing: this.retainOriginalCasing,
                   enableInlineTypes: this.enableInlineTypes,
                   generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-                  caseConverter: this.caseConverter
+                  caseConverter: this.case
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -295,7 +295,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   retainOriginalCasing: this.retainOriginalCasing,
                   enableInlineTypes: this.enableInlineTypes,
                   generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-                  caseConverter: this.caseConverter
+                  caseConverter: this.case
               });
     }
 }

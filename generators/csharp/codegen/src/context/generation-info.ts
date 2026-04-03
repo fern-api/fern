@@ -15,6 +15,7 @@ function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
 
+import { CaseConverter } from "@fern-api/base-generator";
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
@@ -89,6 +90,16 @@ export class Generation {
             getChildNamespaceSegments: (fernFilepath: FernFilepath) => []
         }
     ) {
+        // Initialize the CaseConverter from IR config
+        const irConfig = is.IR.IntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation.casingsConfig
+            : undefined;
+        this.case = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: irConfig?.keywords,
+            smartCasing: irConfig?.smartCasing ?? true
+        });
+
         // Initialize the model navigator to traverse and query the IR
         this.model = new ModelNavigator(intermediateRepresentation, this);
 
@@ -120,6 +131,12 @@ export class Generation {
      * Provides access to types, endpoints, errors, and other IR elements.
      */
     public readonly model: ModelNavigator;
+
+    /**
+     * CaseConverter for converting names to C# casing conventions.
+     * Constructed from the IR's casingsConfig for proper keyword handling.
+     */
+    public readonly case: CaseConverter;
 
     /**
      * Manager for external dependencies and imports.

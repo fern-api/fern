@@ -43,7 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -78,7 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -218,7 +218,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         pathParameter,
                         retainOriginalCasing: this.retainOriginalCasing,
                         parameterNaming: this.parameterNaming,
-                        caseConverter: this.caseConverter
+                        caseConverter: this.case
                     })
                 ),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
@@ -326,15 +326,15 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: FernIr.BearerAuthScheme): string {
-        return this.caseConverter.camelSafe(bearerAuthScheme.token);
+        return this.case.camelSafe(bearerAuthScheme.token);
     }
 
     private getBasicAuthUsernameOptionKey(basicAuthScheme: FernIr.BasicAuthScheme): string {
-        return this.caseConverter.camelSafe(basicAuthScheme.username);
+        return this.case.camelSafe(basicAuthScheme.username);
     }
 
     private getBasicAuthPasswordOptionKey(basicAuthScheme: FernIr.BasicAuthScheme): string {
-        return this.caseConverter.camelSafe(basicAuthScheme.password);
+        return this.case.camelSafe(basicAuthScheme.password);
     }
 
     public anyRequiredBaseRequestOptions(context: FileContext): boolean {
@@ -432,14 +432,14 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-        return this.caseConverter.camelUnsafe(header.name);
+        return this.case.camelUnsafe(header.name);
     }
 
     private getOptionKeyForAuthHeader(header: FernIr.HeaderAuthScheme): string {
-        return this.caseConverter.camelUnsafe(header.name);
+        return this.case.camelUnsafe(header.name);
     }
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
-        return this.caseConverter.camelUnsafe(variable.name);
+        return this.case.camelUnsafe(variable.name);
     }
 }
 

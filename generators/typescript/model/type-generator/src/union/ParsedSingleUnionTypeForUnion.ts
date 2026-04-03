@@ -28,7 +28,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     private singleUnionTypeFromUnion: FernIr.SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
-    private caseConverter: CaseConverter;
+    private case: CaseConverter;
     protected union: FernIr.UnionTypeDeclaration;
 
     constructor({
@@ -77,7 +77,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public getDocs(): string | null | undefined {
@@ -85,7 +85,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
+        return sanitizeIdentifier(this.case.pascalUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
@@ -98,7 +98,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
 
     public getBuilderName(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return sanitizeIdentifier(this.caseConverter.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
+            return sanitizeIdentifier(this.case.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
             return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
@@ -106,7 +106,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
 
     public getVisitorKey(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return sanitizeIdentifier(this.caseConverter.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
+            return sanitizeIdentifier(this.case.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
             return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
