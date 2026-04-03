@@ -28,7 +28,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     private responseError: FernIr.ResponseError;
     private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private retainOriginalCasing: boolean;
-    private caseConverter: CaseConverter;
+    private case: CaseConverter;
 
     constructor({
         error,
@@ -60,7 +60,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         this.responseError = error;
         this.errorDeclaration = errorDeclaration;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public getDocs(): string | null | undefined {
@@ -68,7 +68,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.errorDeclaration.discriminantValue));
+        return sanitizeIdentifier(this.case.pascalUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public getDiscriminantValue(): string | number {
@@ -84,13 +84,13 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     public getBuilderName(): string {
         return this.retainOriginalCasing
             ? sanitizeIdentifier(getOriginalName(this.errorDeclaration.discriminantValue))
-            : sanitizeIdentifier(this.caseConverter.camelUnsafe(this.errorDeclaration.discriminantValue));
+            : sanitizeIdentifier(this.case.camelUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public getVisitorKey(): string {
         return this.retainOriginalCasing
             ? sanitizeIdentifier(getOriginalName(this.errorDeclaration.discriminantValue))
-            : sanitizeIdentifier(this.caseConverter.camelUnsafe(this.errorDeclaration.discriminantValue));
+            : sanitizeIdentifier(this.case.camelUnsafe(this.errorDeclaration.discriminantValue));
     }
 
     public needsRequestResponse(): { request: boolean; response: boolean } {

@@ -1,4 +1,4 @@
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { Arguments, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -39,6 +39,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
     }): php.Method[] {
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            this.context.logger.warn(
+                `Pagination type '${endpoint.pagination?.type}' is not supported for PHP, falling back to unpaged endpoint for ${getOriginalName(endpoint.name)}`
+            );
+        }
         const methods: php.Method[] = [];
         if (this.hasPagination(endpoint)) {
             methods.push(this.generatePagedEndpointMethod({ serviceId, service, endpoint }));
@@ -281,6 +286,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             writer,
                             unpagedEndpointMethodName
                         });
+                        break;
+                    case "uri":
+                    case "path":
+                        this.context.logger.warn(
+                            `Pagination type '${endpoint.pagination.type}' is not supported for PHP, skipping`
+                        );
                         break;
                     default:
                         assertNever(endpoint.pagination);
@@ -542,8 +553,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
-    private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): FernIr.Name[] {
-        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name.name];
+    private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): NameInput[] {
+        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name];
     }
 
     private nullableGet(
@@ -559,7 +570,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
             }
             writer.write("?");
-            writer.writeNode(this.context.getTypeGetter(property.name.name));
+            writer.writeNode(this.context.getTypeGetter(property.name));
         });
     }
 
@@ -580,6 +591,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        // unreachable: hasPagination() returns false for uri/path
+                        throw new Error(`Pagination type ${endpoint.pagination.type} is not supported`);
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -592,7 +607,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
 
             throw new Error(
-                `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
+                `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
             );
         }
 
@@ -601,7 +616,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is ${listItemType.internalType.type}.`
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is ${listItemType.internalType.type}.`
         );
     }
 
@@ -609,14 +624,26 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
-        return endpoint.pagination !== undefined;
+        if (endpoint.pagination == null) {
+            return false;
+        }
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            return false;
+        }
+        return true;
+    }
+
+    private isUnsupportedPaginationType(endpoint: FernIr.HttpEndpoint): boolean {
+        return (
+            endpoint.pagination != null && (endpoint.pagination.type === "uri" || endpoint.pagination.type === "path")
+        );
     }
 
     protected assertHasPagination(endpoint: FernIr.HttpEndpoint): asserts endpoint is PagingEndpoint {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {

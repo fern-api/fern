@@ -1,4 +1,4 @@
-import { NamedArgument } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NamedArgument, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -6,7 +6,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type InferredAuthScheme = FernIr.InferredAuthScheme;
-type Name = FernIr.Name;
 type OAuthScheme = FernIr.OAuthScheme;
 
 import { fail } from "assert";
@@ -217,7 +216,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         ...(example.endpointHeaders ?? [])
                     ]) {
                         const matchingHeader = tokenHttpEndpoint.headers.find(
-                            (h) => h.name.wireValue === exampleHeader.name.wireValue
+                            (h) => getWireValue(h.name) === getWireValue(exampleHeader.name)
                         );
                         if (
                             matchingHeader &&
@@ -229,7 +228,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             // Update the example header value to match what the client sends (wireValue)
                             exampleHeader.value = {
                                 ...exampleHeader.value,
-                                jsonExample: matchingHeader.name.wireValue
+                                jsonExample: getWireValue(matchingHeader.name)
                             };
                         }
                     }
@@ -241,7 +240,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
                                 continue;
                             }
-                            deepSetProperty(jsonExample, [], prop.name.name, prop.name.wireValue);
+                            deepSetProperty(jsonExample, [], prop.name, getWireValue(prop.name));
                         }
                     }
                 });
@@ -291,7 +290,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         scheme.configuration.tokenEndpoint.requestProperties.clientId.propertyPath?.map(
                             (val) => val.name
                         ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name.name,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name,
                         "CLIENT_ID"
                     );
                     deepSetProperty(
@@ -299,7 +298,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         scheme.configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath?.map(
                             (val) => val.name
                         ) ?? [],
-                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name.name,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name,
                         "CLIENT_SECRET"
                     );
                 });
@@ -372,8 +371,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
  */
 function deepSetProperty(
     obj: Record<string, unknown>,
-    path: Name[] | undefined,
-    finalProp: Name,
+    path: NameInput[] | undefined,
+    finalProp: NameInput,
     value: unknown
 ): boolean {
     // Start with the provided object
@@ -386,24 +385,24 @@ function deepSetProperty(
         if (current == null || typeof current !== "object") {
             return false;
         }
-        if (prop.originalName in current === false) {
+        if (getOriginalName(prop) in current === false) {
             // Property path doesn't exist, return false
             return false;
         }
 
         // Move to the next level
-        current = (current as Record<string, unknown>)[prop.originalName];
+        current = (current as Record<string, unknown>)[getOriginalName(prop)];
     }
 
     // Check if the final property exists at the current level
     if (current == null || typeof current !== "object") {
         return false;
     }
-    if (finalProp.originalName in current === false) {
+    if (getOriginalName(finalProp) in current === false) {
         // Property path doesn't exist, return false
         return false;
     }
     // Set the property value
-    (current as Record<string, unknown>)[finalProp.originalName] = value;
+    (current as Record<string, unknown>)[getOriginalName(finalProp)] = value;
     return true;
 }

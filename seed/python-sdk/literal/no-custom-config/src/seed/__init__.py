@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import SendResponse
     from . import headers, inlined, path, query, reference
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedLiteral, SeedLiteral
     from .inlined import (
         ANestedLiteral,
@@ -30,6 +31,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AliasToStream": ".query",
     "AsyncSeedLiteral": ".client",
     "ContainerObject": ".reference",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DiscriminatedLiteral": ".inlined",
     "DiscriminatedLiteral_CustomName": ".inlined",
     "DiscriminatedLiteral_DefaultName": ".inlined",
@@ -79,6 +82,8 @@ __all__ = [
     "AliasToStream",
     "AsyncSeedLiteral",
     "ContainerObject",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DiscriminatedLiteral",
     "DiscriminatedLiteral_CustomName",
     "DiscriminatedLiteral_DefaultName",

@@ -1,3 +1,4 @@
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -27,7 +28,7 @@ const HEADER_BAG_NAME = "$headers";
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: FernIr.ServiceId;
     private wrapper: FernIr.SdkRequestWrapper;
-    private requestParameterName: FernIr.Name;
+    private requestParameterName: FernIr.NameOrString;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, service, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, service, endpoint);
@@ -63,7 +64,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = this.context.accessRequestProperty({
                         requestParameterName: this.requestParameterName,
-                        propertyName: query.name.name
+                        propertyName: query.name
                     });
                     writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
@@ -98,7 +99,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const header of optionalHeaders) {
                     const headerParameterReference = this.context.accessRequestProperty({
                         requestParameterName: this.requestParameterName,
-                        propertyName: header.name.name
+                        propertyName: header.name
                     });
                     writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
                     this.writeHeader(writer, header);
@@ -110,13 +111,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private writeQueryParameter(writer: php.Writer, query: FernIr.QueryParameter): void {
-        writer.write(`${QUERY_PARAMETER_BAG_NAME}['${query.name.wireValue}'] = `);
-        writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
+        writer.write(`${QUERY_PARAMETER_BAG_NAME}['${getWireValue(query.name)}'] = `);
+        writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name }));
     }
 
     private writeHeader(writer: php.Writer, header: FernIr.HttpHeader): void {
-        writer.write(`${HEADER_BAG_NAME}['${header.name.wireValue}'] = `);
-        writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
+        writer.write(`${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = `);
+        writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name }));
     }
 
     private writeMultipartBodyParameter({
@@ -131,7 +132,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
         let paramRef = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
-            propertyName: property.name.name
+            propertyName: property.name
         });
         let propType = property.valueType;
         const isOptional = this.context.isOptional(propType);
@@ -151,7 +152,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const arguments_ = [
             {
                 name: "name",
-                assignment: php.codeblock(`'${property.name.wireValue}'`)
+                assignment: php.codeblock(`'${getWireValue(property.name)}'`)
             },
             {
                 name: "value",
@@ -220,14 +221,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ? [
                       {
                           name: "name",
-                          assignment: php.codeblock(`'${property.key.wireValue}'`)
+                          assignment: php.codeblock(`'${getWireValue(property.key)}'`)
                       },
                       {
                           name: "contentType",
                           assignment: php.codeblock(`'${property.contentType}'`)
                       }
                   ]
-                : [php.codeblock(`'${property.key.wireValue}'`)];
+                : [php.codeblock(`'${getWireValue(property.key)}'`)];
         writer.writeNodeStatement(
             php.invokeMethod({
                 method: "addPart",
@@ -252,13 +253,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer: php.Writer;
         property: FernIr.FilePropertyArray;
     }): void {
-        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`;
+        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key)}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
         this.writeMultipartPart({ writer, paramRef: "$file", property: FernIr.FileProperty.fileArray(property) });
         writer.endControlFlow();
     }
 
-    private stringify({ reference, name }: { reference: FernIr.TypeReference; name: FernIr.Name }): php.CodeBlock {
+    private stringify({ reference, name }: { reference: FernIr.TypeReference; name: NameInput }): php.CodeBlock {
         const parameter = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
             propertyName: name
@@ -401,7 +402,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private writeSingleFile(writer: php.Writer, file: FernIr.FilePropertySingle): void {
         const paramRef = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
-            propertyName: file.key.name
+            propertyName: file.key
         });
         if (file.isOptional) {
             writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
@@ -416,7 +417,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (fileArray.isOptional) {
             const ref = this.context.accessRequestProperty({
                 requestParameterName: this.sdkRequest.requestParameterName,
-                propertyName: fileArray.key.name
+                propertyName: fileArray.key
             });
             writer.controlFlow("if", php.codeblock(`${ref} != null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });

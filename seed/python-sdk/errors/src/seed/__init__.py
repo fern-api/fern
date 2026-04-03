@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import commons, simple
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedErrors, SeedErrors
     from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError
     from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch
@@ -14,6 +15,8 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedErrors": ".client",
     "BadRequestError": ".commons",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "ErrorBody": ".commons",
     "FooRequest": ".simple",
     "FooResponse": ".simple",
@@ -52,6 +55,8 @@ def __dir__():
 __all__ = [
     "AsyncSeedErrors",
     "BadRequestError",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "ErrorBody",
     "FooRequest",
     "FooResponse",
