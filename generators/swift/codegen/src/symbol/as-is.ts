@@ -11,7 +11,6 @@ export type AsIsSymbolName =
     | "EncodableValue"
     | "Serde"
     | "StringKey"
-    | "ClientConfig"
     | "FormFile"
     | "HTTPError"
     | "Nullable"
@@ -123,11 +122,6 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "CalendarDate",
         symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
-    },
-    ClientConfig: {
-        relativePathToDir: "Public",
-        filenameWithoutExtension: "ClientConfig",
-        symbols: [{ name: "ClientConfig", shape: { type: "class" } }]
     },
     FormFile: {
         relativePathToDir: "Public",
