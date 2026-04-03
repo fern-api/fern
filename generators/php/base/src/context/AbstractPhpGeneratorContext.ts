@@ -583,7 +583,7 @@ export abstract class AbstractPhpGeneratorContext<
         return propertyAccess === php.Access.Protected || propertyAccess === php.Access.Private;
     }
 
-    public getGetterMethod({ name, field }: { name: FernIr.Name; field: php.Field }): php.Method {
+    public getGetterMethod({ name, field }: { name: NameInput; field: php.Field }): php.Method {
         return php.method({
             name: this.getPropertyGetterName(name),
             access: php.Access.Public,
@@ -595,7 +595,7 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getSetterMethod({ name, field }: { name: FernIr.Name; field: php.Field }): php.Method {
+    public getSetterMethod({ name, field }: { name: NameInput; field: php.Field }): php.Method {
         const propertyName = this.getPropertyName(name);
         return php.method({
             name: this.getPropertySetterName(name),

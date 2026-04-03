@@ -1,4 +1,4 @@
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { Arguments, NameInput, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -542,7 +542,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
-    private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): FernIr.Name[] {
+    private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): NameInput[] {
         return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name];
     }
 

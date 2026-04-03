@@ -436,14 +436,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public deepSetPagination(
         objectVarToSetOn: php.AstNode,
-        setterPath: FernIr.Name[],
+        setterPath: NameInput[],
         valueVarToSet: php.AstNode
     ): php.AstNode {
         if (setterPath.length === 0) {
             throw new Error("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
-            const singleSetter = setterPath[0] as FernIr.Name;
+            const singleSetter = setterPath[0]!;
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);
                 writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));

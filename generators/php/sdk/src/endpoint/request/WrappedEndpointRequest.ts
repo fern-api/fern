@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -259,7 +259,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer.endControlFlow();
     }
 
-    private stringify({ reference, name }: { reference: FernIr.TypeReference; name: FernIr.Name }): php.CodeBlock {
+    private stringify({ reference, name }: { reference: FernIr.TypeReference; name: NameInput }): php.CodeBlock {
         const parameter = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
             propertyName: name

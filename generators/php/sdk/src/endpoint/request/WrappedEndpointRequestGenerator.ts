@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
@@ -254,7 +255,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         includeSetters
     }: {
         clazz: php.DataClass;
-        name: FernIr.Name;
+        name: NameInput;
         field: php.Field;
         includeGetters: boolean;
         includeSetters: boolean;
