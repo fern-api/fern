@@ -1082,7 +1082,7 @@ return core.makePassthroughRequest(input, init, {
                     clientDefaultVal != null
                         ? ts.factory.createStringLiteral(clientDefaultVal.toString())
                         : ts.factory.createStringLiteral(
-                              `YOUR_${this.caseConverter.screamingSnakeUnsafe(header.name)}`
+                              `YOUR_${this.case.screamingSnakeUnsafe(header.name)}`
                           );
                 properties.push(
                     ts.factory.createPropertyAssignment(
