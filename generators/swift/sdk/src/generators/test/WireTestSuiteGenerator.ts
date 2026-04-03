@@ -66,6 +66,7 @@ export class WireTestSuiteGenerator {
     private generateTestFunctions(): swift.Method[] {
         return (this.service?.endpoints ?? []).flatMap((endpoint) => {
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+                // @ts-expect-error ir-sdk@66.0.0 types are structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
                 ir: this.dynamicIr,
                 config: this.sdkGeneratorContext.config
             });

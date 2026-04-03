@@ -22,6 +22,7 @@ export class TemplateDataGenerator {
         this.context = context;
         this.dynamicIr = this.getDynamicIrOrThrow();
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            // @ts-expect-error ir-sdk@66.0.0 types are structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             ir: this.dynamicIr,
             config: this.context.config
         });
@@ -110,6 +111,7 @@ export class TemplateDataGenerator {
                 swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCallMaxRetries5: swift.Statement.discardAssignment(
                 this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                    // @ts-expect-error ir-sdk@66.0.0 Endpoint is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
                     endpoint: dynamicEndpoint,
                     snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
                     additionalArguments: [
@@ -137,6 +139,7 @@ export class TemplateDataGenerator {
             ).toStringWithIndentation(4),
             endpointCallMaxRetriesZero: swift.Statement.discardAssignment(
                 this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                    // @ts-expect-error ir-sdk@66.0.0 Endpoint is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
                     endpoint: dynamicEndpoint,
                     snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
                     additionalArguments: [
@@ -179,6 +182,7 @@ export class TemplateDataGenerator {
         }
         const { dynamicEndpoint, endpointSnippetRequest } = sampleEndpoint;
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
+            // @ts-expect-error ir-sdk@66.0.0 Auth is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             auth: dynamicEndpoint.auth,
             snippet: endpointSnippetRequest,
             additionalArgs: [
@@ -200,6 +204,7 @@ export class TemplateDataGenerator {
         }
         const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            // @ts-expect-error ir-sdk@66.0.0 Endpoint is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             endpoint: dynamicEndpoint,
             snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
             additionalArguments: [
