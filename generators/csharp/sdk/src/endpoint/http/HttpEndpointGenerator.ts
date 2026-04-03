@@ -1591,9 +1591,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         if (!propertyPath || propertyPath.length === 0) {
             return {
-                code: typeof property.name === "string"
-                    ? caseConverter.pascalSafe(property.name)
-                    : this.csharp.getPropertyName(enclosingType, property),
+                code:
+                    typeof property.name === "string"
+                        ? caseConverter.pascalSafe(property.name)
+                        : this.csharp.getPropertyName(enclosingType, property),
                 enclosingType
             };
         }
@@ -1603,9 +1604,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             code: propertyPath
                 .map((val) => {
                     // get the property name for the current property
-                    const propertyName = typeof val.name === "string"
-                        ? caseConverter.pascalSafe(val.name)
-                        : this.csharp.getPropertyName(enclosingType, val);
+                    const propertyName =
+                        typeof val.name === "string"
+                            ? caseConverter.pascalSafe(val.name)
+                            : this.csharp.getPropertyName(enclosingType, val);
 
                     // get the type of the current property
                     let typeOfValue = this.context.csharpTypeMapper.convert({
