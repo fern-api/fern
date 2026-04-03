@@ -92,7 +92,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             for (const pathParameter of this.endpoint.allPathParameters) {
                 // Skip adding a [JsonIgnore] field for this path param if a body property
                 // with the same PascalCase name exists — the body property will serve both roles.
-                if (bodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
+                if (bodyPropertyPascalNames.has(caseConverter.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 class_.addField({
@@ -316,7 +316,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             ]) {
                 // Skip path param snippet if a body property with the same name exists;
                 // the body property snippet will provide the value for both.
-                if (snippetBodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
+                if (snippetBodyPropertyPascalNames.has(caseConverter.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 orderedFields.push({
