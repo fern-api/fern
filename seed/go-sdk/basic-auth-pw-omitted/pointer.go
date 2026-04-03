@@ -1,4 +1,4 @@
-package basicauthoptional
+package basicauthpwomitted
 
 import (
 	"time"
