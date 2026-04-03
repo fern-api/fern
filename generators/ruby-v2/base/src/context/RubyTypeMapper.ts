@@ -112,6 +112,7 @@ export class RubyTypeMapper {
             string: () => ruby.Type.string(),
             date: () => ruby.Type.string(),
             dateTime: () => ruby.Type.string(),
+            dateTimeRfc2822: () => ruby.Type.string(),
             uuid: () => ruby.Type.string(),
             base64: () => ruby.Type.string(),
             bigInteger: () => ruby.Type.string(),
