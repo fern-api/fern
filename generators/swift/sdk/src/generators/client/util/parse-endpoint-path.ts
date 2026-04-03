@@ -1,6 +1,4 @@
-import { CaseConverter, getOriginalName, type NameInput } from "@fern-api/base-generator";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
+import { type CaseConverter, getOriginalName, type NameInput } from "@fern-api/base-generator";
 
 export interface EndpointPathInput {
     fullPath: {
@@ -28,7 +26,7 @@ export type ParseEndpointPathResult = {
     pathParts: PathPart[];
 };
 
-export function parseEndpointPath(endpoint: EndpointPathInput): ParseEndpointPathResult {
+export function parseEndpointPath(endpoint: EndpointPathInput, caseConverter: CaseConverter): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
     const pathParameterInfosByOriginalName = Object.fromEntries(

@@ -1,4 +1,4 @@
-import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -7,8 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators/index.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -39,7 +37,7 @@ export class ReferenceConfigAssembler {
     private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
             service.displayName ??
-            service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+            service.name.fernFilepath.allParts.map((part) => this.context.caseConverter.pascalSafe(part)).join(" ")
         );
     }
 

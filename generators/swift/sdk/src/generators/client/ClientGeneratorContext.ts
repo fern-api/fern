@@ -1,9 +1,6 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace ClientGeneratorContext {
     interface Args {
@@ -38,7 +35,7 @@ export class ClientGeneratorContext {
                 const subClientSymbol =
                     this.sdkGeneratorContext.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
                 const property = swift.property({
-                    unsafeName: caseConverter.camelUnsafe(subpackage.name),
+                    unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(subpackage.name),
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
                     type: this.referencer.referenceType(subClientSymbol)

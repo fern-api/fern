@@ -1,12 +1,10 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { assertDefined } from "@fern-api/core-utils";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
@@ -135,7 +133,7 @@ export class WireTestFunctionGenerator {
                 ];
                 return swift.method({
                     attributes: [{ name: "Test" }],
-                    unsafeName: `${caseConverter.camelUnsafe(this.endpoint.name)}${endpointExampleIdx + 1}`,
+                    unsafeName: `${this.sdkGeneratorContext.caseConverter.camelUnsafe(this.endpoint.name)}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
                     returnType: this.referencer.referenceSwiftType("Void"),
@@ -352,7 +350,9 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(caseConverter.camelUnsafe(exampleEnumType.value));
+                        return swift.Expression.enumCaseShorthand(
+                            this.sdkGeneratorContext.caseConverter.camelUnsafe(exampleEnumType.value)
+                        );
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -368,7 +368,7 @@ export class WireTestFunctionGenerator {
                                     }
                                     const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
-                                        label: caseConverter.camelUnsafe(property.name),
+                                        label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
                                         value: exampleResponse
                                     });
                                 })
@@ -377,7 +377,7 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
-                        const caseName = caseConverter.camelUnsafe(
+                        const caseName = this.sdkGeneratorContext.caseConverter.camelUnsafe(
                             exampleUnionType.singleUnionType.wireDiscriminantValue
                         );
                         return exampleUnionType.singleUnionType.shape._visit({
@@ -410,7 +410,7 @@ export class WireTestFunctionGenerator {
                                         }
                                         const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                         return swift.functionArgument({
-                                            label: caseConverter.camelUnsafe(property.name),
+                                            label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
                                             value: exampleResponse
                                         });
                                     })

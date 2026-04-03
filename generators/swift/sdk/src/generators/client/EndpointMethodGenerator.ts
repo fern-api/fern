@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -6,8 +6,6 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
 import { parseEndpointPath } from "./util/parse-endpoint-path.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
@@ -41,7 +39,7 @@ export class EndpointMethodGenerator {
     public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
         return swift.method({
-            unsafeName: caseConverter.camelUnsafe(endpoint.name),
+            unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(endpoint.name),
             accessLevel: swift.AccessLevel.Public,
             parameters,
             async: true,
@@ -65,7 +63,7 @@ export class EndpointMethodGenerator {
     private getMethodParametersForEndpoint(endpoint: FernIr.HttpEndpoint): swift.FunctionParameter[] {
         const params: swift.FunctionParameter[] = [];
 
-        const { pathParts } = parseEndpointPath(endpoint);
+        const { pathParts } = parseEndpointPath(endpoint, this.sdkGeneratorContext.caseConverter);
 
         pathParts.forEach((pathPart) => {
             if (pathPart.type === "path-parameter") {
@@ -87,8 +85,8 @@ export class EndpointMethodGenerator {
             }
             params.push(
                 swift.functionParameter({
-                    argumentLabel: caseConverter.camelUnsafe(header.name),
-                    unsafeName: caseConverter.camelUnsafe(header.name),
+                    argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name),
+                    unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name),
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
@@ -103,8 +101,8 @@ export class EndpointMethodGenerator {
             );
             params.push(
                 swift.functionParameter({
-                    argumentLabel: caseConverter.camelUnsafe(queryParam.name),
-                    unsafeName: caseConverter.camelUnsafe(queryParam.name),
+                    argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(queryParam.name),
+                    unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(queryParam.name),
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: queryParam.docs
@@ -128,7 +126,7 @@ export class EndpointMethodGenerator {
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
                 const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
-                    caseConverter.pascalUnsafe(endpoint.requestBody.name)
+                    this.sdkGeneratorContext.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                 );
                 params.push(
                     swift.functionParameter({
@@ -150,7 +148,7 @@ export class EndpointMethodGenerator {
             } else if (endpoint.requestBody.type === "fileUpload") {
                 const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
-                    caseConverter.pascalUnsafe(endpoint.requestBody.name)
+                    this.sdkGeneratorContext.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                 );
                 params.push(
                     swift.functionParameter({
@@ -260,7 +258,9 @@ export class EndpointMethodGenerator {
                         entries: validHeaders.map((header) => {
                             return [
                                 swift.Expression.stringLiteral(getWireValue(header.name)),
-                                swift.Expression.reference(caseConverter.camelUnsafe(header.name))
+                                swift.Expression.reference(
+                                    this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name)
+                                )
                             ];
                         }),
                         multiline: true
@@ -285,13 +285,17 @@ export class EndpointMethodGenerator {
                                             swiftType.nonOptional().variant.type === "nullable"
                                                 ? swift.Expression.memberAccess({
                                                       target: swift.Expression.reference(
-                                                          caseConverter.camelUnsafe(queryParam.name)
+                                                          this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                                                              queryParam.name
+                                                          )
                                                       ),
                                                       optionalChain: true,
                                                       memberName: "wrappedValue"
                                                   })
                                                 : swift.Expression.reference(
-                                                      caseConverter.camelUnsafe(queryParam.name)
+                                                      this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                                                          queryParam.name
+                                                      )
                                                   ),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
@@ -318,7 +322,9 @@ export class EndpointMethodGenerator {
                                         ? swift.Expression.methodCallWithTrailingClosure({
                                               target: swift.Expression.memberAccess({
                                                   target: swift.Expression.reference(
-                                                      caseConverter.camelUnsafe(queryParam.name)
+                                                      this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                                                          queryParam.name
+                                                      )
                                                   ),
                                                   memberName: "wrappedValue"
                                               }),
@@ -341,12 +347,16 @@ export class EndpointMethodGenerator {
                                                       )
                                                           ? swift.Expression.memberAccess({
                                                                 target: swift.Expression.reference(
-                                                                    caseConverter.camelUnsafe(queryParam.name)
+                                                                    this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                                                                        queryParam.name
+                                                                    )
                                                                 ),
                                                                 memberName: "rawValue"
                                                             })
                                                           : swift.Expression.reference(
-                                                                caseConverter.camelUnsafe(queryParam.name)
+                                                                this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                                                                    queryParam.name
+                                                                )
                                                             )
                                                   })
                                               ]

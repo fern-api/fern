@@ -14,11 +14,10 @@ import { CycleDetector } from "./cycle-detector.js";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
-
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
+    public readonly caseConverter: CaseConverter;
     public readonly project: SwiftProject;
     private readonly indirectPropertiesMapping: Map<FernIr.TypeId, Set<string>>;
     private readonly schemaTypeIdBySymbolId: Map<string, FernIr.TypeId>;
@@ -31,6 +30,11 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "swift",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.project = new SwiftProject({ context: this });
         this.schemaTypeIdBySymbolId = new Map();
         const cycleDetector = new CycleDetector(ir);
@@ -62,7 +66,7 @@ export abstract class AbstractSwiftGeneratorContext<
         const { nameRegistry } = project;
         const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
-            apiNamePascalCase: caseConverter.pascalUnsafe(ir.apiName),
+            apiNamePascalCase: this.caseConverter.pascalUnsafe(ir.apiName),
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         nameRegistry.registerRootClientSymbol({
@@ -101,7 +105,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
             const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
                 typeId,
-                caseConverter.pascalUnsafe(typeDeclaration.name.name),
+                this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
                 symbolShape
             );
             return { typeId, typeDeclaration, registeredSymbol: schemaTypeSymbol };
@@ -133,7 +137,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
-                        requestNamePascalCase: caseConverter.pascalUnsafe(endpoint.requestBody.name)
+                        requestNamePascalCase: this.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     });
                     registerLiteralEnumsForObjectProperties({
                         parentSymbol: requestTypeSymbol,
@@ -146,7 +150,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 } else if (endpoint.requestBody?.type === "fileUpload") {
                     nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
-                        requestNamePascalCase: caseConverter.pascalUnsafe(endpoint.requestBody.name)
+                        requestNamePascalCase: this.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     });
                 }
             });
@@ -155,9 +159,9 @@ export abstract class AbstractSwiftGeneratorContext<
             nameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map((name) =>
-                    caseConverter.pascalUnsafe(name)
+                    this.caseConverter.pascalUnsafe(name)
                 ),
-                subpackageNamePascalCase: caseConverter.pascalUnsafe(subpackage.name)
+                subpackageNamePascalCase: this.caseConverter.pascalUnsafe(subpackage.name)
             });
         });
     }
@@ -245,7 +249,9 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path))].join("/"));
+        return RelativeFilePath.of(
+            [...fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
+        );
     }
 
     public getSourceAsIsFiles(): AsIsFileDefinition[] {
@@ -346,9 +352,9 @@ export abstract class AbstractSwiftGeneratorContext<
         }
         const packageOrSubpackage =
             endpointContainer.type === "root-package" ? this.ir.rootPackage : endpointContainer.subpackage;
-        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => caseConverter.camelUnsafe(p));
+        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => this.caseConverter.camelUnsafe(p));
         const leadingPath = leadingParts.join(".");
-        const methodName = caseConverter.camelUnsafe(endpoint.name);
+        const methodName = this.caseConverter.camelUnsafe(endpoint.name);
         const fullyQualifiedMethodName = [...leadingParts, methodName].join(".");
         return {
             leadingParts,

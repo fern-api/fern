@@ -1,9 +1,7 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { type CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace StringEnumGenerator {
     type Source =
@@ -24,6 +22,7 @@ export declare namespace StringEnumGenerator {
         name: string;
         source: Source;
         docsContent?: string;
+        caseConverter?: CaseConverter;
     }
 }
 
@@ -31,11 +30,13 @@ export class StringEnumGenerator {
     private readonly name: string;
     private readonly source: StringEnumGenerator.Source;
     private readonly docsContent?: string;
+    private readonly caseConverter?: CaseConverter;
 
-    public constructor({ name, source, docsContent }: StringEnumGenerator.Args) {
+    public constructor({ name, source, docsContent, caseConverter }: StringEnumGenerator.Args) {
         this.name = name;
         this.source = source;
         this.docsContent = docsContent;
+        this.caseConverter = caseConverter;
     }
 
     public generate(): swift.EnumWithRawValues {
@@ -55,8 +56,11 @@ export class StringEnumGenerator {
             ],
             cases: visitDiscriminatedUnion(this.source, "type")._visit({
                 ir: (info) => {
+                    if (this.caseConverter == null) {
+                        throw new Error("CaseConverter is required for IR source");
+                    }
                     return info.enumTypeDeclaration.values.map((val) => ({
-                        unsafeName: caseConverter.camelUnsafe(val.name),
+                        unsafeName: this.caseConverter.camelUnsafe(val.name),
                         rawValue: getWireValue(val.name),
                         docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
                     }));

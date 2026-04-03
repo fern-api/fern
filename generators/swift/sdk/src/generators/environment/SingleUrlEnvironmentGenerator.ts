@@ -1,10 +1,7 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
@@ -31,7 +28,7 @@ export class SingleUrlEnvironmentGenerator {
             accessLevel: swift.AccessLevel.Public,
             conformances: ["String", swift.Protocol.CaseIterable],
             cases: this.environments.environments.map((e) => ({
-                unsafeName: caseConverter.camelUnsafe(e.name),
+                unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(e.name),
                 rawValue: e.url,
                 docs: e.docs ? swift.docComment({ summary: e.docs }) : undefined
             }))
