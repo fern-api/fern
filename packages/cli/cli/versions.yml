@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Make the `fern api enrich` command public. This command merges an
+        AI examples overrides file into an OpenAPI spec, integrating
+        `x-fern-examples` into native OpenAPI example fields.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
+
 - version: 4.61.0
   changelogEntry:
     - summary: |

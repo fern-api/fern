@@ -243,7 +243,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                 base_url: ${this.getEnvironmentURLExample()},
-                max_retries: 3  # Configure max retries (default is 2)
+                max_retries: 3  # Configure max retries (default is ${this.context.customConfig.maxRetries ?? 2})
             )
         `);
     }
