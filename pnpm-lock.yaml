@@ -1464,6 +1464,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      eta:
+        specifier: ^4.5.1
+        version: 4.5.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1998,6 +2001,9 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)
+      eta:
+        specifier: ^4.5.1
+        version: 4.5.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -5141,6 +5147,10 @@ importers:
         version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli-v2:
+    dependencies:
+      tmp-promise:
+        specifier: 'catalog:'
+        version: 3.0.3
     devDependencies:
       '@boundaryml/baml':
         specifier: 'catalog:'
@@ -5413,6 +5423,9 @@ importers:
       '@fern-api/github':
         specifier: workspace:*
         version: link:../../commons/github
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../commons/logging-execa
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -7576,6 +7589,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../commons/api-workspace-commons
+      '@fern-api/auth':
+        specifier: workspace:*
+        version: link:../../auth
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli-source-resolver

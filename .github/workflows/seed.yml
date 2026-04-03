@@ -136,11 +136,19 @@ jobs:
         run: |
           # Determine base ref for affected detection.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Use the PR base SHA from the event payload and fetch only that
-            # specific commit. This is much faster than `git fetch --deepen=1`
-            # which negotiates the entire repo graph (~4 min on this repo).
-            BASE_REF="${{ github.event.pull_request.base.sha }}"
-            echo "Using PR base SHA: $BASE_REF"
+            # CI checks out pull/N/merge — a merge commit whose first parent
+            # is the exact main tip used to create the merge ref. Using HEAD^1
+            # instead of base.sha avoids a race where main advances between the
+            # webhook event and the merge ref computation, which caused unrelated
+            # generators to run (e.g. go-model on PHP-only PRs).
+            if git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+              BASE_REF=$(git rev-parse HEAD^1)
+              echo "Using merge commit first parent: $BASE_REF"
+            else
+              # Fallback: not a merge commit (shouldn't happen for PRs, but be safe)
+              BASE_REF="${{ github.event.pull_request.base.sha }}"
+              echo "Using PR base SHA (fallback): $BASE_REF"
+            fi
             # Fetch just the base commit so git diff can reach it
             git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
           else

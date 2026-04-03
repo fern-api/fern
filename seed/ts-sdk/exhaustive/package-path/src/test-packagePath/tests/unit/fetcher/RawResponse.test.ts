@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { toRawResponse } from "../../../../../src/test-packagePath/core/fetcher/RawResponse";
+import { toRawResponse } from "../../../core/fetcher/RawResponse";
 
 describe("RawResponse", () => {
     describe("toRawResponse", () => {

@@ -1,6 +1,7 @@
 export * from "./accent-color-contrast/index.js";
 export * from "./all-roles-must-be-declared/index.js";
 export * from "./filepaths-exist/index.js";
+export * from "./missing-redirects/index.js";
 export * from "./no-circular-redirects/index.js";
 export * from "./only-versioned-navigation/index.js";
 export * from "./tab-with-href/index.js";
