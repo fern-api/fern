@@ -18,6 +18,7 @@ export default mergeConfig(
             }
         ],
         test: {
+            exclude: ["**/*.integration.test.ts", "**/node_modules/**"],
             server: {
                 deps: {
                     // @fern-api/ui-core-utils dist/index.js uses extensionless ESM imports

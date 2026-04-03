@@ -157,6 +157,9 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
         let client = SingleUrlEnvironmentDefaultClient(
@@ -170,7 +173,7 @@ import Testing
 
             Issue.record("Expected error to be thrown")
         } catch {
-            try #require(stub.getRequestCount() == 3)
+            try #require(stub.getRequestCount() == 6)
         }
     }
 

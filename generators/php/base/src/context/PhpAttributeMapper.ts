@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -26,7 +27,7 @@ export class PhpAttributeMapper {
         attributes.push(
             php.attribute({
                 reference: this.context.getJsonPropertyAttributeClassReference(),
-                arguments: [`'${property.name.wireValue}'`]
+                arguments: [`'${getWireValue(property.name)}'`]
             })
         );
         const underlyingInternalType = type.underlyingType().internalType;

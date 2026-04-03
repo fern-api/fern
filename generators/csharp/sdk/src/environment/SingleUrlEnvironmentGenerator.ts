@@ -35,8 +35,8 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
             class_.addField({
                 origin: class_.explicit(
                     this.settings.pascalCaseEnvironments
-                        ? environment.name.pascalCase.safeName
-                        : environment.name.screamingSnakeCase.safeName
+                        ? this.case.pascalSafe(environment.name)
+                        : this.case.screamingSnakeSafe(environment.name)
                 ),
 
                 enclosingType: class_,

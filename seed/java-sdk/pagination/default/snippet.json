@@ -428,6 +428,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "6b370bc1",
+            "id": {
+                "method": "GET",
+                "path": "/users/aliased-data",
+                "identifier_override": "endpoint_users.listWithAliasedData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithAliasedData(\n            ListUsersAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithAliasedData(\n            ListUsersAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

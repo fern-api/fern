@@ -17,6 +17,7 @@ from .complex_ import (
     StartingAfterPaging,
 )
 from .users import (
+    ListUsersAliasedDataPaginationResponse,
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersMixedTypePaginationResponse,
@@ -27,6 +28,7 @@ from .users import (
     Order,
     Page,
     User,
+    UserList,
     UserListContainer,
     UserOptionalListContainer,
     UserOptionalListPage,
@@ -39,6 +41,7 @@ from .users import (
 __all__ = [
     "Conversation",
     "CursorPages",
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
@@ -58,6 +61,7 @@ __all__ = [
     "SingleFilterSearchRequestOperator",
     "StartingAfterPaging",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",

@@ -539,14 +539,21 @@ internal static class QueryStringBuilder
             }
 
             // Handle collections (arrays, lists, etc.) - add each element as a separate key-value pair
-            if (value is global::System.Collections.IEnumerable enumerable and not global::System.Collections.IDictionary)
+            if (
+                value
+                is global::System.Collections.IEnumerable enumerable
+                    and not global::System.Collections.IDictionary
+            )
             {
                 foreach (var item in enumerable)
                 {
                     if (item is not null)
                     {
                         _params.Add(
-                            new KeyValuePair<string, string>(key, ValueConvert.ToQueryStringValue(item))
+                            new KeyValuePair<string, string>(
+                                key,
+                                ValueConvert.ToQueryStringValue(item)
+                            )
                         );
                     }
                 }
@@ -582,7 +589,12 @@ internal static class QueryStringBuilder
         /// - If a key appears multiple times, all values are added as an array
         /// - All parameters override any existing parameters with the same key
         /// </summary>
-        public Builder MergeAdditional(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<string, string>>? additionalParameters)
+        public Builder MergeAdditional(
+            global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<
+                string,
+                string
+            >>? additionalParameters
+        )
         {
             if (additionalParameters is null)
             {

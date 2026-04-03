@@ -205,6 +205,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             declaration=class_declaration,
             should_export=False,
         )
+        source_file.add_arbitrary_code(AST.CodeWriter(self._write_make_default_async_client))
         source_file.add_class_declaration(
             declaration=async_class_declaration,
             should_export=False,
@@ -1437,6 +1438,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 ),
             )
+        elif is_async:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.Expression(
+                                f"_make_default_async_client(timeout={timeout_local_variable}, follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME})"
+                            ),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                )
+            )
         else:
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1446,11 +1464,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    HttpX.CLIENT,
                                     kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    HttpX.CLIENT,
                                     kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
@@ -1485,6 +1503,35 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         return client_wrapper_constructor_kwargs
+
+    def _write_make_default_async_client(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("")
+        writer.write_line("def _make_default_async_client(")
+        with writer.indent():
+            writer.write_line("timeout: typing.Optional[float],")
+            writer.write_line("follow_redirects: typing.Optional[bool],")
+        writer.write_line(") -> httpx.AsyncClient:")
+        with writer.indent():
+            writer.write_line("try:")
+            with writer.indent():
+                writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
+            writer.write_line("except ImportError:")
+            with writer.indent():
+                writer.write_line("pass")
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)"
+                    )
+                writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
+            writer.write_line("")
+            writer.write_line("if follow_redirects is not None:")
+            with writer.indent():
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
+            writer.write_line("return httpx.AsyncClient(timeout=timeout)")
+        writer.write_line("")
 
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")

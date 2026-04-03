@@ -8,6 +8,7 @@ from .service import (
     ListUsersTopLevelBodyCursorPaginationRequest,
 )
 from .types import (
+    ListUsersAliasedDataPaginationResponse,
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersMixedTypePaginationResponse,
@@ -18,6 +19,7 @@ from .types import (
     Order,
     Page,
     User,
+    UserList,
     UserListContainer,
     UserOptionalListContainer,
     UserOptionalListPage,
@@ -28,6 +30,7 @@ from .types import (
 )
 
 __all__ = [
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersBodyCursorPaginationRequest",
     "ListUsersBodyOffsetPaginationRequest",
     "ListUsersExtendedOptionalListResponse",
@@ -41,6 +44,7 @@ __all__ = [
     "Order",
     "Page",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",
