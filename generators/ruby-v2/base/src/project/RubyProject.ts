@@ -442,6 +442,7 @@ class Gemfile {
         const extraDevDependenciesString = this.getExtraDevDependenciesString();
 
         const bundledLines = BUNDLED_DEV_DEPENDENCIES.map((dep) => this.getBundledDevDependencyLine(dep));
+        const bundledDepsString = bundledLines.join("\n        ");
 
         return dedent`
             # frozen_string_literal: true
@@ -451,7 +452,7 @@ class Gemfile {
                 gemspec
 
                 group :test, :development do
-                ${bundledLines.join("\n")}
+                ${bundledDepsString}
 ${extraDevDependenciesString}
             end
 
