@@ -1,12 +1,10 @@
-import { ReferenceConfigBuilder, CaseConverter } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -48,7 +46,7 @@ export class ReferenceConfigAssembler {
 
     private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
-            service.displayName ?? service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+            service.displayName ?? service.name.fernFilepath.allParts.map((part) => this.context.case.pascalSafe(part)).join(" ")
         );
     }
 
@@ -129,7 +127,7 @@ export class ReferenceConfigAssembler {
         const clientPath = servicePath ? `client.${servicePath}.` : "client.";
 
         // Method name in snake_case
-        const methodName = caseConverter.snakeSafe(endpoint.name);
+        const methodName = this.context.case.snakeSafe(endpoint.name);
 
         // Build parameters - simplified for reference docs
         const parameters = this.buildParameterSignature(endpoint);
@@ -152,7 +150,7 @@ export class ReferenceConfigAssembler {
         }
 
         // For subpackage services, use snake_case path
-        return service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part)).join("().");
+        return service.name.fernFilepath.allParts.map((part) => this.context.case.snakeSafe(part)).join("().");
     }
 
     private buildParameterSignature(endpoint: FernIr.HttpEndpoint): string {
@@ -161,13 +159,13 @@ export class ReferenceConfigAssembler {
         // Add path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             const rustType = this.getRustTypeForTypeReference(pathParam.valueType);
-            params.push(`${caseConverter.snakeSafe(pathParam.name)}: ${rustType}`);
+            params.push(`${this.context.case.snakeSafe(pathParam.name)}: ${rustType}`);
         });
 
         // Add request body parameter
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "inlinedRequestBody") {
-                params.push(`request: ${caseConverter.pascalSafe(endpoint.requestBody.name)}`);
+                params.push(`request: ${this.context.case.pascalSafe(endpoint.requestBody.name)}`);
             } else if (endpoint.requestBody.type === "reference") {
                 const typeName = this.getRustTypeForTypeReference(endpoint.requestBody.requestBodyType);
                 params.push(`request: ${typeName}`);
@@ -180,7 +178,7 @@ export class ReferenceConfigAssembler {
             .forEach((qp) => {
                 const rustType = this.getRustTypeForTypeReference(qp.valueType);
                 const optional = qp.allowMultiple ? rustType : `Option<${rustType}>`;
-                params.push(`${caseConverter.snakeSafe(qp.name)}: ${optional}`);
+                params.push(`${this.context.case.snakeSafe(qp.name)}: ${optional}`);
             });
 
         return `(${params.join(", ")})`;
@@ -210,7 +208,7 @@ export class ReferenceConfigAssembler {
         // Path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             params.push({
-                name: caseConverter.snakeSafe(pathParam.name),
+                name: this.context.case.snakeSafe(pathParam.name),
                 type: this.getRustTypeForTypeReference(pathParam.valueType),
                 required: true,
                 description: pathParam.docs
@@ -221,7 +219,7 @@ export class ReferenceConfigAssembler {
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             endpoint.requestBody.properties.forEach((prop) => {
                 params.push({
-                    name: caseConverter.snakeSafe(prop.name),
+                    name: this.context.case.snakeSafe(prop.name),
                     type: this.getRustTypeForTypeReference(prop.valueType),
                     required: !this.isOptionalType(prop.valueType),
                     description: prop.docs
@@ -232,7 +230,7 @@ export class ReferenceConfigAssembler {
         // Query parameters
         endpoint.queryParameters.forEach((qp) => {
             params.push({
-                name: caseConverter.snakeSafe(qp.name),
+                name: this.context.case.snakeSafe(qp.name),
                 type: this.getRustTypeForTypeReference(qp.valueType),
                 required: !qp.allowMultiple,
                 description: qp.docs
@@ -277,7 +275,7 @@ export class ReferenceConfigAssembler {
                 }
             },
             named: (named) => {
-                return caseConverter.pascalSafe(named.name);
+                return this.context.case.pascalSafe(named.name);
             },
             container: (container) => {
                 return container._visit<string>({

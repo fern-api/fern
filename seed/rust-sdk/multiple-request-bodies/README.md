@@ -69,7 +69,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_api::prelude::{*};
+use seed_api::prelude::*;
 
 let config = ClientConfig {
     base_url: Environment::Default.url().to_string(),
@@ -101,7 +101,7 @@ match client.upload_json_document(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_api::prelude::{*};
+use seed_api::prelude::*;
 
 let request = UploadDocumentRequest {
     ...

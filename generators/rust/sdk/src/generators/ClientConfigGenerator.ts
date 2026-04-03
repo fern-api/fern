@@ -1,10 +1,7 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class ClientConfigGenerator {
     private readonly context: SdkGeneratorContext;
@@ -122,7 +119,7 @@ export class ClientConfigGenerator {
     }
 
     private generateDefaultImpl() {
-        const userAgent = `${caseConverter.pascalSafe(this.context.ir.apiName)} Rust SDK`;
+        const userAgent = `${this.context.case.pascalSafe(this.context.ir.apiName)} Rust SDK`;
         const environmentEnumName = this.context.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 

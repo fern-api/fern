@@ -88,7 +88,7 @@ match client.payment.create(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_idempotency_headers::prelude::{*};
+use seed_idempotency_headers::prelude::*;
 
 let request = CreatePaymentRequest {
     ...

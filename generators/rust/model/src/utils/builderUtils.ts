@@ -1,12 +1,9 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { getInnerTypeFromOptional, isOptionalType, isStringType } from "./primitiveTypeUtils.js";
 import { isFieldRecursive } from "./recursiveTypeUtils.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export interface BuilderFieldInfo {
     /** Field name in Rust (snake_case, keyword-escaped) */
@@ -73,7 +70,7 @@ export function collectBuilderFieldsFromProperties(
         // Check if the bare type is String for impl Into usage
         const useImplInto = isStringType(bareTypeRef);
 
-        const name = context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
+        const name = context.escapeRustKeyword(context.case.snakeUnsafe(property.name));
 
         return {
             name,
@@ -95,7 +92,7 @@ export function collectBuilderFieldsFromExtends(
 ): BuilderFieldInfo[] {
     return extends_.map((parentType) => {
         const parentTypeName = context.getUniqueTypeNameForReference(parentType);
-        const name = `${caseConverter.snakeUnsafe(parentType.name)}_fields`;
+        const name = `${context.case.snakeUnsafe(parentType.name)}_fields`;
 
         return {
             name,

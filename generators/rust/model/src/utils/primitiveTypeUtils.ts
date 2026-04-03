@@ -1,8 +1,6 @@
-import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
+import { getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 /**
  * Utility functions to check primitive types without repeating the visitor pattern

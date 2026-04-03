@@ -28,6 +28,7 @@
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
       "export PATH=\"$(go env GOPATH)/bin:$PATH\"",
+      "rustup default 1.82 2>/dev/null || true",
       "rustup component add rustfmt 2>/dev/null || true",
       "bash scripts/setup-dotnet.sh 2>/dev/null || true",
       "export PATH=\"$HOME/.dotnet:$PATH\"",

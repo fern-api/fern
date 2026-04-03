@@ -90,7 +90,7 @@ match client.auth.get_token_with_client_credentials(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::prelude::{*};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 let request = GetTokenRequest {
     ...

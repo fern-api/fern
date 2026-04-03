@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -21,8 +21,6 @@ import {
 } from "../utils/primitiveTypeUtils.js";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import { canDeriveHashAndEq, canDerivePartialEq, generateFieldAttributes, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class UnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -63,9 +61,9 @@ export class UnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const modulePath = this.context.getModulePathForType(caseConverter.snakeUnsafe(typeName));
+            const modulePath = this.context.getModulePathForType(this.context.case.snakeUnsafe(typeName));
             const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
-            writer.writeLine(`use crate::${moduleNameEscaped}::${caseConverter.pascalUnsafe(typeName)};`);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${this.context.case.pascalUnsafe(typeName)};`);
         });
 
         // Add chrono imports based on specific types needed
@@ -231,7 +229,7 @@ export class UnionGenerator {
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
-        const rawVariantName = caseConverter.pascalUnsafe(unionType.discriminantValue);
+        const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName); // Escape reserved types with r#
         const discriminantValue = getWireValue(unionType.discriminantValue);
 
@@ -259,7 +257,7 @@ export class UnionGenerator {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
 
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
-                const fieldName = caseConverter.snakeUnsafe(singleProperty.name);
+                const fieldName = this.context.case.snakeUnsafe(singleProperty.name);
                 const wireValue = getWireValue(singleProperty.name);
                 const isOptional = isOptionalType(singleProperty.type);
 
@@ -364,7 +362,7 @@ export class UnionGenerator {
     private generateVariantAttributes(unionType: FernIr.SingleUnionType, escapedVariantName: string): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
         const discriminantValue = getWireValue(unionType.discriminantValue);
-        const rawVariantName = caseConverter.pascalUnsafe(unionType.discriminantValue);
+        const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
 
         // Add serde rename if:
         // 1. The variant name was escaped (e.g., String -> r#String), OR
@@ -388,7 +386,7 @@ export class UnionGenerator {
         unionTypeId: string | undefined
     ): void {
         properties.forEach((property) => {
-            const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
+            const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
             const isRecursive = unionTypeId ? isFieldRecursive(unionTypeId, property.valueType, this.context.ir) : false;
             const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
 
@@ -410,7 +408,7 @@ export class UnionGenerator {
 
         // Generate base properties that are common to all variants
         this.unionTypeDeclaration.baseProperties.forEach((property) => {
-            const fieldName = caseConverter.snakeUnsafe(property.name);
+            const fieldName = this.context.case.snakeUnsafe(property.name);
 
             // Check if this field creates a recursive reference
             const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
@@ -484,7 +482,7 @@ export class UnionGenerator {
             if (this.unionTypeDeclaration.baseProperties.length > 0) {
                 this.unionTypeDeclaration.baseProperties.forEach((property) => {
                     writer.newLine();
-                    const fieldName = caseConverter.snakeUnsafe(property.name);
+                    const fieldName = this.context.case.snakeUnsafe(property.name);
                     const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
                     const methodName = `get_${fieldName}`;
 
@@ -495,7 +493,7 @@ export class UnionGenerator {
                         writer.writeLine("match self {");
 
                         this.unionTypeDeclaration.types.forEach((unionType) => {
-                            const variantName = caseConverter.pascalUnsafe(unionType.discriminantValue);
+                            const variantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
                             writer.writeLine(`            Self::${variantName} { ${fieldName}, .. } => ${fieldName},`);
                         });
 
@@ -507,9 +505,9 @@ export class UnionGenerator {
     }
 
     private generateVariantConstructor(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
-        const rawVariantName = caseConverter.pascalUnsafe(unionType.discriminantValue);
+        const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorName = caseConverter.snakeUnsafe(unionType.discriminantValue);
+        const constructorName = this.context.case.snakeUnsafe(unionType.discriminantValue);
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({
@@ -522,7 +520,7 @@ export class UnionGenerator {
             singleProperty: (singleProperty) => {
                 const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
-                const fieldName = caseConverter.snakeUnsafe(singleProperty.name);
+                const fieldName = this.context.case.snakeUnsafe(singleProperty.name);
                 const isOptional = isOptionalType(singleProperty.type);
 
                 const fieldTypeStr = isOptional
@@ -564,7 +562,7 @@ export class UnionGenerator {
                             const fieldAssignments: string[] = [];
 
                             properties.forEach((property) => {
-                                const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
+                                const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
                                 const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
                                 const isOptional = isOptionalType(property.valueType);
 
@@ -649,9 +647,9 @@ export class UnionGenerator {
         unionType: FernIr.SingleUnionType
     ): ((writer: rust.Writer) => void)[] {
         const constructors: ((writer: rust.Writer) => void)[] = [];
-        const rawVariantName = caseConverter.pascalUnsafe(unionType.discriminantValue);
+        const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorBaseName = caseConverter.snakeUnsafe(unionType.discriminantValue);
+        const constructorBaseName = this.context.case.snakeUnsafe(unionType.discriminantValue);
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({
@@ -677,10 +675,10 @@ export class UnionGenerator {
                 }
 
                 for (const optionalProperty of optionalProperties) {
-                    const optFieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(optionalProperty.name));
+                    const optFieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(optionalProperty.name));
                     // Use the raw (unescaped) field name in the method name since r# prefixes
                     // are not valid in function names
-                    const optFieldNameRaw = caseConverter.snakeUnsafe(optionalProperty.name);
+                    const optFieldNameRaw = this.context.case.snakeUnsafe(optionalProperty.name);
                     const methodName = `${constructorBaseName}_with_${optFieldNameRaw}`;
 
                     constructors.push((writer: rust.Writer) => {
@@ -690,7 +688,7 @@ export class UnionGenerator {
                         const fieldAssignments: string[] = [];
 
                         properties.forEach((property) => {
-                            const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
+                            const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
                             const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
                             const isOptional = isOptionalType(property.valueType);
 
@@ -742,7 +740,7 @@ export class UnionGenerator {
 
     private getBasePropertyParams(): string[] {
         return this.unionTypeDeclaration.baseProperties.map((property) => {
-            const fieldName = caseConverter.snakeUnsafe(property.name);
+            const fieldName = this.context.case.snakeUnsafe(property.name);
             const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
             const isOptional = isOptionalType(property.valueType);
             const fieldTypeStr = isOptional
@@ -754,7 +752,7 @@ export class UnionGenerator {
 
     private getBasePropertyFieldAssignments(): string[] {
         return this.unionTypeDeclaration.baseProperties.map((property) => {
-            return caseConverter.snakeUnsafe(property.name);
+            return this.context.case.snakeUnsafe(property.name);
         });
     }
 
