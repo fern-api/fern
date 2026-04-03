@@ -50,6 +50,7 @@ export async function getGeneratorInvocation({
 
     return {
         name: docker.name,
+        containerImage: undefined,
         version: docker.version,
         config: customConfig,
         outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),

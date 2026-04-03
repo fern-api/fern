@@ -114,6 +114,14 @@ export class GeneratorPipeline {
             if (this.isLocalGeneration(args)) {
                 return await this.runLocalGeneration(args);
             }
+            // Custom image registries are only supported with local generation
+            if (args.target.registry != null) {
+                throw new CliError({
+                    message:
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                        `Target "${args.target.name}" uses a custom image registry.`
+                });
+            }
             return await this.runRemoteGeneration(args);
         } catch (error) {
             const message = extractErrorMessage(error);
