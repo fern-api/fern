@@ -56,11 +56,8 @@ export class ContainerTestRunner extends TestRunner {
             throw new Error(`Failed. No ${this.runner} command for ${this.generator.workspaceName}`);
         }
 
-        // Rewrite -t flags in build commands to use worktree-namespaced tags
-        const namespacedCommands =
-            this.worktreeSuffix != null
-                ? containerCommands.map((cmd) => this.rewriteDockerBuildTag(cmd))
-                : containerCommands;
+        // Rewrite -t flags in build commands to use :local (or :local-wt-<suffix>) tags
+        const namespacedCommands = containerCommands.map((cmd) => this.rewriteDockerBuildTag(cmd));
 
         if (!this.shouldPipeOutput()) {
             CONSOLE_LOGGER.info(`Building container for ${this.generator.workspaceName}...`);
@@ -96,9 +93,8 @@ export class ContainerTestRunner extends TestRunner {
             this.reusableContainer = undefined;
         }
 
-        // Remove the namespaced Docker image when a worktree suffix was applied,
-        // unless the user passed --keep-docker
-        if (this.worktreeSuffix != null && !this.keepContainer) {
+        // Remove the local Docker image unless the user passed --keep-docker
+        if (!this.keepContainer) {
             const namespacedImage = this.getContainerImageName();
             try {
                 await loggingExeca(undefined, "docker", ["rmi", namespacedImage], {
@@ -177,49 +173,40 @@ export class ContainerTestRunner extends TestRunner {
 
     protected override getParsedDockerImageName(): ParsedDockerName {
         const parsed = parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
-        if (this.worktreeSuffix == null) {
-            return parsed;
-        }
         return {
             name: parsed.name,
-            version: `${parsed.version}-${this.worktreeSuffix}`
+            version: this.getLocalTag()
         };
     }
 
     protected getContainerImageName(): string {
-        const testConfig =
-            this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
-                ? this.generator.workspaceConfig.test.podman
-                : this.generator.workspaceConfig.test.docker;
-        return this.appendWorktreeSuffix(testConfig.image);
+        return `${this.getBaseImageName()}:${this.getLocalTag()}`;
     }
 
     /**
-     * Appends the worktree suffix to a Docker image reference.
-     * e.g. `fernapi/fern-python-sdk:latest` → `fernapi/fern-python-sdk:latest-wt-abc123`
+     * Returns the tag to use for local seed test builds.
+     * `local` in a normal checkout, `local-wt-<suffix>` in a worktree.
      */
-    private appendWorktreeSuffix(image: string): string {
-        if (this.worktreeSuffix == null) {
-            return image;
-        }
-        return `${image}-${this.worktreeSuffix}`;
+    private getLocalTag(): string {
+        return this.worktreeSuffix != null ? `local-${this.worktreeSuffix}` : "local";
     }
 
     /**
-     * Rewrites `-t <image>` flags in a docker build command to use the
-     * worktree-namespaced tag. Non-docker-build commands are returned unchanged.
+     * Rewrites `-t <image>` flags in a docker build command to use
+     * `:local` (or `:local-wt-<suffix>` in worktrees) instead of `:latest`.
+     * Non-docker-build commands are returned unchanged.
      */
     private rewriteDockerBuildTag(command: string): string {
-        if (!command.includes("docker build") || this.worktreeSuffix == null) {
+        if (!command.includes("docker build")) {
             return command;
         }
 
         const baseImage = this.getBaseImageName();
         const escapedBase = baseImage.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const imagePattern = new RegExp(`(${escapedBase})(:[\\w.-]+)?`, "g");
-        return command.replace(imagePattern, (_match: string, name: string, tag?: string) => {
-            const fullTag = tag != null ? `${tag}-${this.worktreeSuffix}` : `-${this.worktreeSuffix}`;
-            return `${name}${fullTag}`;
+        const localTag = this.getLocalTag();
+        return command.replace(imagePattern, (_match: string, name: string, _tag?: string) => {
+            return `${name}:${localTag}`;
         });
     }
 
