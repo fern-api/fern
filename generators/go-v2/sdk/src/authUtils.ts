@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -122,7 +122,7 @@ export function getEndpointPath(endpoint: FernIr.HttpEndpoint): string {
 export function resolveTokenEndpointBodyProperties(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>
-): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+): Array<{ name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
     if (tokenEndpoint.requestBody == null) {
         return [];
     }
@@ -148,7 +148,7 @@ export function resolveTokenEndpointBodyProperties(
 export function getInferredAuthCredentialParams(
     tokenEndpoint: FernIr.HttpEndpoint,
     irTypes: Record<string, FernIr.TypeDeclaration>,
-    context: { getFieldName(name: FernIr.Name): string }
+    context: { getFieldName(name: NameInput): string }
 ): Array<{ fieldName: string; isOptional: boolean }> {
     const params: Array<{ fieldName: string; isOptional: boolean }> = [];
 
@@ -159,7 +159,7 @@ export function getInferredAuthCredentialParams(
         }
         const nameVal = header.name;
         params.push({
-            fieldName: context.getFieldName(nameVal.name),
+            fieldName: context.getFieldName(getOriginalName(nameVal)),
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
         });
     }
@@ -177,7 +177,7 @@ export function getInferredAuthCredentialParams(
         }
         const propNameVal = prop.name;
         params.push({
-            fieldName: context.getFieldName(propNameVal.name),
+            fieldName: context.getFieldName(getOriginalName(propNameVal)),
             isOptional: false
         });
     }

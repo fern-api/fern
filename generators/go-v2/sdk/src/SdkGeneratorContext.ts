@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
@@ -130,11 +130,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "raw_client.go";
     }
 
-    public getMethodName(name: FernIr.Name): string {
+    public getMethodName(name: NameInput): string {
         return caseConverter.pascalUnsafe(name);
     }
 
-    public getReceiverName(name: FernIr.Name): string {
+    public getReceiverName(name: NameInput): string {
         return caseConverter.camelUnsafe(name).charAt(0);
     }
 
@@ -595,6 +595,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 return pagination.page.property.type === "body";
             case "custom":
                 return false;
+            case "uri":
+            case "path":
+                return false;
             default:
                 assertNever(pagination);
         }
@@ -644,7 +647,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): go.TypeReference {
+    public getRequestWrapperTypeReference(serviceId: FernIr.ServiceId, requestName: NameInput): go.TypeReference {
         return go.typeReference({
             name: this.getClassName(requestName),
             importPath: this.getLocationForWrappedRequest(serviceId).importPath
@@ -724,8 +727,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: FernIr.Name;
-        propertyName: FernIr.Name;
+        requestParameterName: NameInput;
+        propertyName: NameInput;
     }): string {
         const requestParameter = this.getParameterName(requestParameterName);
         return `${requestParameter}.${this.getFieldName(propertyName)}`;

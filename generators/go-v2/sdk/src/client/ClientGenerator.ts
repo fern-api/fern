@@ -1,3 +1,4 @@
+import { getOriginalName, NameInput } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -876,7 +877,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
-    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+    ): Array<{ name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
         return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
@@ -901,9 +902,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name | FernIr.NameAndWireValue): go.Selector {
-        const nameObj = "wireValue" in name ? name.name : name;
-        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(nameObj)) });
+    private getOptionsPropertyReference(name: NameInput): go.Selector {
+        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(getOriginalName(name))) });
     }
 
     private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {

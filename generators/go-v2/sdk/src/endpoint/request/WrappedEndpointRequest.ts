@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -218,14 +218,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
         fieldName,
         isFile
     }: {
-        fieldName: FernIr.Name | FernIr.NameAndWireValue;
+        fieldName: NameInput;
         isFile?: boolean;
     }): string {
-        const nameObj = "wireValue" in fieldName ? fieldName.name : fieldName;
+        const nameStr = getOriginalName(fieldName);
         if (isFile && !this.context.customConfig.inlineFileProperties) {
-            return this.context.getParameterName(nameObj);
+            return this.context.getParameterName(nameStr);
         }
-        return `${this.getRequestParameterName()}.${this.context.getFieldName(nameObj)}`;
+        return `${this.getRequestParameterName()}.${this.context.getFieldName(nameStr)}`;
     }
 
     // TODO: Add support for custom Content-Type header values.
