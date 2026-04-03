@@ -2751,8 +2751,8 @@ func (f *fileWriter) endpointFromIR(
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
 			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
-						if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
-							// Use a local variable to avoid mutating the caller's request struct.
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				// Use a local variable to avoid mutating the caller's request struct.
 				localVar := "_" + pathParameter.Name.CamelCase.SafeName
 				pathParameterNames = append(pathParameterNames, localVar)
 				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
@@ -2782,8 +2782,8 @@ func (f *fileWriter) endpointFromIR(
 			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 			pathParameterNames = append(pathParameterNames, pathParameterName)
 			pathParameterToScopedName[part.PathParameter] = pathParameterName
-						if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
-							pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
 					VarExpr:    pathParameterName,
 					DefaultVal: literalToValue(pathParameter.ClientDefault),
 				})
