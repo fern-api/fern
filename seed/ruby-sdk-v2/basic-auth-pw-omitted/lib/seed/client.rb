@@ -9,7 +9,7 @@ module Seed
     # @return [void]
     def initialize(username:, password:, base_url: nil)
       headers = {
-        "User-Agent" => "fern_basic-auth-optional/0.0.1",
+        "User-Agent" => "fern_basic-auth-pw-omitted/0.0.1",
         "X-Fern-Language" => "Ruby"
       }
       headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}"
