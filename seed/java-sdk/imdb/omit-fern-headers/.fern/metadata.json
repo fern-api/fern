@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "omit-fern-headers": true
+    "omit-fern-headers": true,
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"

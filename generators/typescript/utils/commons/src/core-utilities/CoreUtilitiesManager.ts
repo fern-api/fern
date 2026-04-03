@@ -222,18 +222,23 @@ export class CoreUtilitiesManager {
 
                 // Update import paths after copying (customize findAndReplace as needed)
                 if (isCustomPackagePath) {
-                    const findAndReplace: Record<string, { importPath: string; body: string }> = {
-                        [DEFAULT_PACKAGE_PATH]: {
-                            importPath: this.getPackagePathImport(),
-                            body: this.relativePackagePath
-                        },
-                        [DEFAULT_TEST_PATH]: {
-                            importPath: this.getTestPathImport(),
-                            body: this.relativeTestPath
-                        }
-                    };
+                    const isTestFile = destinationFile.includes(this.relativeTestPath);
+                    if (isTestFile) {
+                        await this.updateTestFileImportPaths(destPath, destinationFile);
+                    } else {
+                        const findAndReplace: Record<string, { importPath: string; body: string }> = {
+                            [DEFAULT_PACKAGE_PATH]: {
+                                importPath: this.getPackagePathImport(),
+                                body: this.relativePackagePath
+                            },
+                            [DEFAULT_TEST_PATH]: {
+                                importPath: this.getTestPathImport(),
+                                body: this.relativeTestPath
+                            }
+                        };
 
-                    await this.updateImportPaths(destPath, findAndReplace);
+                        await this.updateImportPaths(destPath, findAndReplace);
+                    }
                 }
             })
         );
@@ -299,6 +304,28 @@ export class CoreUtilitiesManager {
                     encoding: "utf8"
                 });
             }
+        }
+    }
+
+    // Helper to update import paths in test files that use relative imports to source files.
+    // When both test and source files are moved under a custom package path (e.g. src/management),
+    // relative imports like "../../../src/core/..." need to strip the "src/" prefix since both
+    // files are already under the same custom prefix.
+    private async updateTestFileImportPaths(filePath: string, destinationFile: string) {
+        const testDir = path.dirname(destinationFile);
+        const relativePathToPackage = path.relative(testDir, this.relativePackagePath);
+        const normalizedPath = relativePathToPackage.replace(/\\/g, "/");
+
+        let contents = await readFile(filePath, "utf8");
+        const originalContents = contents;
+
+        // Replace relative import paths that reference the default package path (src/)
+        // e.g. from "../../../src/core/fetcher/makeRequest" -> from "../../../core/fetcher/makeRequest"
+        // where ../../../ resolves to the custom package path
+        contents = contents.replace(/from "([^"]*\/)src\/([^"]*)"/g, `from "${normalizedPath}/$2"`);
+
+        if (contents !== originalContents) {
+            await writeFile(filePath, contents);
         }
     }
 
