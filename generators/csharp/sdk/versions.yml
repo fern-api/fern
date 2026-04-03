@@ -9,7 +9,7 @@
         both are omitted, the Authorization header is skipped entirely.
       type: feat
   createdAt: "2026-04-03"
-  irVersion: 65
+  irVersion: 66
 
 - version: 2.57.0-rc.0
   changelogEntry:
