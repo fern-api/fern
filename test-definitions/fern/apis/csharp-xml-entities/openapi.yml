@@ -1,22 +1,22 @@
 openapi: 3.0.1
 info:
   title: csharp-xml-entities
-  version: ''
+  version: ""
 paths:
   /timezone:
     get:
       description: Get timezone information with &plus; offset
       operationId: getTimeZone
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TimeZoneModel'
+                $ref: "#/components/schemas/TimeZoneModel"
 components:
   schemas:
     TimeZoneModel:
@@ -31,14 +31,14 @@ components:
           description: Format is UTC &plus; offset notation (e.g., &plus;05:30)
         mathExpression:
           type: string
-          description: 'Expression: A &plus; B &minus; C &times; D &divide; E'
+          description: "Expression: A &plus; B &minus; C &times; D &divide; E"
         validEntity:
           type: string
-          description: 'This uses valid XML entity: A &lt; B &amp; C &gt; D'
+          description: "This uses valid XML entity: A &lt; B &amp; C &gt; D"
         specialChars:
           type: string
           nullable: true
-          description: 'Special characters: &nbsp; &hellip; &middot; &copy;'
+          description: "Special characters: &nbsp; &hellip; &middot; &copy;"
       required:
         - timeZoneOffset
         - mathExpression

@@ -35,7 +35,7 @@ types:
       name:
         docs: |
           The name of the service defined in the `.proto` file (e.g. UserService).
-        type: commons.Name
+        type: commons.NameOrString
 
   ProtobufType:
     docs: |
@@ -81,7 +81,7 @@ types:
           This name is _usually_ equivalent to the associated DeclaredTypeName's name.
           However, its repeated here just in case the naming convention differs, which
           is most relevant for APIs that specify `smart-casing`.
-        type: commons.Name
+        type: commons.NameOrString
 
   WellKnownProtobufType:
     docs: |

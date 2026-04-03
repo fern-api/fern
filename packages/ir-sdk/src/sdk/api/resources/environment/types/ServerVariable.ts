@@ -8,7 +8,7 @@ import type * as FernIr from "../../../index.js";
 export interface ServerVariable {
     /** The unique identifier for this variable (matches the placeholder in the URL template). */
     id: string;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     /** The default value for this variable. */
     default: string | undefined;
     /** If present, the allowed values for this variable (from OpenAPI enum). */

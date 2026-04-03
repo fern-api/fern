@@ -1,12 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 
-export function isLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): boolean {
+export function isLiteralHeader(header: FernIr.HttpHeader, context: FileContext): boolean {
     return getLiteralValueForHeader(header, context) != null;
 }
 
-export function getLiteralValueForHeader(header: FernIr.HttpHeader, context: SdkContext): string | boolean | undefined {
+export function getLiteralValueForHeader(
+    header: FernIr.HttpHeader,
+    context: FileContext
+): string | boolean | undefined {
     const resolvedType = context.type.resolveTypeReference(header.valueType);
     if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
         const literal = resolvedType.container.literal;

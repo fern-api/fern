@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -4367,6 +4377,39 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TwitterCardSetting": {
       "type": "string",
       "enum": [
@@ -4659,6 +4702,16 @@
           ]
         },
         "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CheckRuleSeverity"

@@ -82,9 +82,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - name: Test packages
         run: |
           pnpm turbo run test --filter=@fern-api/migrations-base
@@ -96,6 +93,11 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
           scope: "@fern-api"
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing.
+      # Node 22 ships with npm 10.x which does not support OIDC.
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@11
 
       - name: Build and publish generator-migrations
         env:

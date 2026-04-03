@@ -1,21 +1,21 @@
 openapi: 3.0.1
 info:
   title: java-default-timeout
-  version: ''
+  version: ""
 paths:
   /user:
     get:
       operationId: getUser
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     User:

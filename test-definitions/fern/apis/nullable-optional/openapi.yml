@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: nullable-optional
-  version: ''
+  version: ""
 paths:
   /api/users/{userId}:
     get:
@@ -16,12 +16,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
     patch:
       description: Update a user (partial update)
       operationId: nullableOptional_updateUser
@@ -34,18 +34,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
+              $ref: "#/components/schemas/UpdateUserRequest"
   /api/users:
     post:
       description: Create a new user
@@ -54,18 +54,18 @@ paths:
         - NullableOptional
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserRequest'
+              $ref: "#/components/schemas/CreateUserRequest"
     get:
       description: List all users
       operationId: nullableOptional_listUsers
@@ -97,14 +97,14 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'
+                  $ref: "#/components/schemas/UserResponse"
   /api/users/search:
     get:
       description: Search users
@@ -136,14 +136,14 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'
+                  $ref: "#/components/schemas/UserResponse"
   /api/profiles/complex:
     post:
       description: Create a complex profile to test nullable enums and unions
@@ -152,18 +152,18 @@ paths:
         - NullableOptional
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComplexProfile'
+                $ref: "#/components/schemas/ComplexProfile"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ComplexProfile'
+              $ref: "#/components/schemas/ComplexProfile"
   /api/profiles/complex/{profileId}:
     get:
       description: Get a complex profile by ID
@@ -177,12 +177,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComplexProfile'
+                $ref: "#/components/schemas/ComplexProfile"
     patch:
       description: Update complex profile to test nullable field updates
       operationId: nullableOptional_updateComplexProfile
@@ -195,12 +195,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComplexProfile'
+                $ref: "#/components/schemas/ComplexProfile"
       requestBody:
         required: true
         content:
@@ -209,16 +209,16 @@ paths:
               type: object
               properties:
                 nullableRole:
-                  $ref: '#/components/schemas/UserRole'
+                  $ref: "#/components/schemas/UserRole"
                   nullable: true
                 nullableStatus:
-                  $ref: '#/components/schemas/UserStatus'
+                  $ref: "#/components/schemas/UserStatus"
                   nullable: true
                 nullableNotification:
-                  $ref: '#/components/schemas/NotificationMethod'
+                  $ref: "#/components/schemas/NotificationMethod"
                   nullable: true
                 nullableSearchResult:
-                  $ref: '#/components/schemas/SearchResult'
+                  $ref: "#/components/schemas/SearchResult"
                   nullable: true
                 nullableArray:
                   type: array
@@ -233,18 +233,18 @@ paths:
         - NullableOptional
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeserializationTestResponse'
+                $ref: "#/components/schemas/DeserializationTestResponse"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeserializationTestRequest'
+              $ref: "#/components/schemas/DeserializationTestRequest"
   /api/users/filter:
     get:
       description: Filter users by role with nullable enum
@@ -256,29 +256,29 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/UserRole'
+            $ref: "#/components/schemas/UserRole"
             nullable: true
         - name: status
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/UserStatus'
+            $ref: "#/components/schemas/UserStatus"
             nullable: true
         - name: secondaryRole
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/UserRole'
+            $ref: "#/components/schemas/UserRole"
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'
+                  $ref: "#/components/schemas/UserResponse"
   /api/users/{userId}/notifications:
     get:
       description: Get notification settings which may be null
@@ -292,12 +292,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Nullable notification method or empty for no preference
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotificationMethod'
+                $ref: "#/components/schemas/NotificationMethod"
                 nullable: true
   /api/users/{userId}/tags:
     put:
@@ -312,7 +312,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Updated tags
           content:
             application/json:
@@ -352,14 +352,14 @@ paths:
         - NullableOptional
       parameters: []
       responses:
-        '200':
+        "200":
           description: List of search results, can be null if no results
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SearchResult'
+                  $ref: "#/components/schemas/SearchResult"
                 nullable: true
       requestBody:
         required: true
@@ -419,7 +419,7 @@ components:
           format: date-time
           nullable: true
         nullableObject:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
         nullableList:
           type: array
@@ -445,7 +445,7 @@ components:
           format: date-time
           nullable: true
         optionalObject:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
         optionalList:
           type: array
@@ -461,7 +461,7 @@ components:
           type: string
           nullable: true
         optionalNullableObject:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
       required:
         - id
@@ -492,9 +492,9 @@ components:
           type: string
           nullable: true
         buildingId:
-          $ref: '#/components/schemas/NullableUserId'
+          $ref: "#/components/schemas/NullableUserId"
         tenantId:
-          $ref: '#/components/schemas/OptionalUserId'
+          $ref: "#/components/schemas/OptionalUserId"
       required:
         - street
         - city
@@ -514,7 +514,7 @@ components:
           type: string
           nullable: true
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
       required:
         - username
@@ -534,7 +534,7 @@ components:
           type: string
           nullable: true
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
     UserRole:
       title: UserRole
@@ -565,7 +565,7 @@ components:
                   type: string
                   enum:
                     - email
-            - $ref: '#/components/schemas/EmailNotification'
+            - $ref: "#/components/schemas/EmailNotification"
           required:
             - type
         - type: object
@@ -576,7 +576,7 @@ components:
                   type: string
                   enum:
                     - sms
-            - $ref: '#/components/schemas/SmsNotification'
+            - $ref: "#/components/schemas/SmsNotification"
           required:
             - type
         - type: object
@@ -587,7 +587,7 @@ components:
                   type: string
                   enum:
                     - push
-            - $ref: '#/components/schemas/PushNotification'
+            - $ref: "#/components/schemas/PushNotification"
           required:
             - type
       description: Discriminated union for testing nullable unions
@@ -647,7 +647,7 @@ components:
                   type: string
                   enum:
                     - user
-            - $ref: '#/components/schemas/UserResponse'
+            - $ref: "#/components/schemas/UserResponse"
           required:
             - type
         - type: object
@@ -658,7 +658,7 @@ components:
                   type: string
                   enum:
                     - organization
-            - $ref: '#/components/schemas/Organization'
+            - $ref: "#/components/schemas/Organization"
           required:
             - type
         - type: object
@@ -669,7 +669,7 @@ components:
                   type: string
                   enum:
                     - document
-            - $ref: '#/components/schemas/Document'
+            - $ref: "#/components/schemas/Document"
           required:
             - type
       description: Undiscriminated union for testing
@@ -722,37 +722,37 @@ components:
         id:
           type: string
         nullableRole:
-          $ref: '#/components/schemas/UserRole'
+          $ref: "#/components/schemas/UserRole"
           nullable: true
         optionalRole:
-          $ref: '#/components/schemas/UserRole'
+          $ref: "#/components/schemas/UserRole"
           nullable: true
         optionalNullableRole:
-          $ref: '#/components/schemas/UserRole'
+          $ref: "#/components/schemas/UserRole"
           nullable: true
         nullableStatus:
-          $ref: '#/components/schemas/UserStatus'
+          $ref: "#/components/schemas/UserStatus"
           nullable: true
         optionalStatus:
-          $ref: '#/components/schemas/UserStatus'
+          $ref: "#/components/schemas/UserStatus"
           nullable: true
         optionalNullableStatus:
-          $ref: '#/components/schemas/UserStatus'
+          $ref: "#/components/schemas/UserStatus"
           nullable: true
         nullableNotification:
-          $ref: '#/components/schemas/NotificationMethod'
+          $ref: "#/components/schemas/NotificationMethod"
           nullable: true
         optionalNotification:
-          $ref: '#/components/schemas/NotificationMethod'
+          $ref: "#/components/schemas/NotificationMethod"
           nullable: true
         optionalNullableNotification:
-          $ref: '#/components/schemas/NotificationMethod'
+          $ref: "#/components/schemas/NotificationMethod"
           nullable: true
         nullableSearchResult:
-          $ref: '#/components/schemas/SearchResult'
+          $ref: "#/components/schemas/SearchResult"
           nullable: true
         optionalSearchResult:
-          $ref: '#/components/schemas/SearchResult'
+          $ref: "#/components/schemas/SearchResult"
           nullable: true
         nullableArray:
           type: array
@@ -778,18 +778,18 @@ components:
         nullableMapOfNullables:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Address'
+            $ref: "#/components/schemas/Address"
             nullable: true
           nullable: true
         nullableListOfUnions:
           type: array
           items:
-            $ref: '#/components/schemas/NotificationMethod'
+            $ref: "#/components/schemas/NotificationMethod"
           nullable: true
         optionalMapOfEnums:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/UserRole'
+            $ref: "#/components/schemas/UserRole"
           nullable: true
       required:
         - id
@@ -818,16 +818,16 @@ components:
           type: string
           nullable: true
         nullableEnum:
-          $ref: '#/components/schemas/UserRole'
+          $ref: "#/components/schemas/UserRole"
           nullable: true
         optionalEnum:
-          $ref: '#/components/schemas/UserStatus'
+          $ref: "#/components/schemas/UserStatus"
           nullable: true
         nullableUnion:
-          $ref: '#/components/schemas/NotificationMethod'
+          $ref: "#/components/schemas/NotificationMethod"
           nullable: true
         optionalUnion:
-          $ref: '#/components/schemas/SearchResult'
+          $ref: "#/components/schemas/SearchResult"
           nullable: true
         nullableList:
           type: array
@@ -840,10 +840,10 @@ components:
             type: integer
           nullable: true
         nullableObject:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
         optionalObject:
-          $ref: '#/components/schemas/Organization'
+          $ref: "#/components/schemas/Organization"
           nullable: true
       required:
         - requiredString
@@ -859,7 +859,7 @@ components:
       description: Response for deserialization test
       properties:
         echo:
-          $ref: '#/components/schemas/DeserializationTestRequest'
+          $ref: "#/components/schemas/DeserializationTestRequest"
         processedAt:
           type: string
           format: date-time
@@ -894,7 +894,7 @@ components:
           format: date-time
           nullable: true
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           nullable: true
       required:
         - id

@@ -168,13 +168,18 @@ export function convertParameters({
             }
         }
 
+        const clientDefault =
+            getExtension<unknown>(parameter, FernOpenAPIExtension.FERN_DEFAULT) ??
+            getExtension<unknown>(resolvedParameter, FernOpenAPIExtension.FERN_DEFAULT);
+
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
-            source
+            source,
+            clientDefault
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push({

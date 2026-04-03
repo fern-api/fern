@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { ObjectPropertyAccess } from "../../types/types/ObjectPropertyAccess.js";
@@ -13,7 +13,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     FernIr.InlinedRequestBodyProperty
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: NameAndWireValue,
+        name: NameAndWireValueOrString,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
         v2Examples: V2SchemaExamples.optional(),
         propertyAccess: ObjectPropertyAccess.optional(),
@@ -22,7 +22,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
 
 export declare namespace InlinedRequestBodyProperty {
     export interface Raw extends WithDocsAndAvailability.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         v2Examples?: V2SchemaExamples.Raw | null;
         propertyAccess?: ObjectPropertyAccess.Raw | null;

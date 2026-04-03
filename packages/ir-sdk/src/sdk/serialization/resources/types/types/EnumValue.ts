@@ -4,17 +4,17 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Declaration } from "../../commons/types/Declaration.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Raw, FernIr.EnumValue> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: NameAndWireValue,
+            name: NameAndWireValueOrString,
         })
         .extend(Declaration);
 
 export declare namespace EnumValue {
     export interface Raw extends Declaration.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
     }
 }
