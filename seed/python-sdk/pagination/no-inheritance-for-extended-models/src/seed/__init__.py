@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import UsernameCursor, UsernamePage
     from . import complex_, inline_users, users
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPagination, SeedPagination
     from .complex_ import (
         Conversation,
@@ -48,6 +49,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPagination": ".client",
     "Conversation": ".complex_",
     "CursorPages": ".complex_",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "ListUsersAliasedDataPaginationResponse": ".users",
     "ListUsersExtendedOptionalListResponse": ".users",
     "ListUsersExtendedResponse": ".users",
@@ -111,6 +114,8 @@ __all__ = [
     "AsyncSeedPagination",
     "Conversation",
     "CursorPages",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "ListUsersAliasedDataPaginationResponse",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",

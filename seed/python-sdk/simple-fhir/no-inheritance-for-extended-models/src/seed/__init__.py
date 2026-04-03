@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Account, BaseResource, Memo, Patient, Practitioner, ResourceList, Script
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".types",
     "AsyncSeedApi": ".client",
     "BaseResource": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Memo": ".types",
     "Patient": ".types",
     "Practitioner": ".types",
@@ -48,6 +51,8 @@ __all__ = [
     "Account",
     "AsyncSeedApi",
     "BaseResource",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Memo",
     "Patient",
     "Practitioner",
