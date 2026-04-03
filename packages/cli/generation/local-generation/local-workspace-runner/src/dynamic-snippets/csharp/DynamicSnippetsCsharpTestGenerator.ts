@@ -21,7 +21,7 @@ const PROJECT_FILE_CONTENT = `
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\\..\\**\\*.csproj" Exclude="..\\..\\**\\*.DynamicSnippets.csproj;..\\..\\**\\*.Test.csproj" />
+        <ProjectReference Include="..\\**\\*.csproj" Exclude="..\\**\\Snippets.csproj;..\\**\\*.Test.csproj" />
     </ItemGroup>
 </Project>`;
 
@@ -72,7 +72,7 @@ export class DynamicSnippetsCsharpTestGenerator {
                 }
                 const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
                     config: {
-                        fullStyleClassName: `Example${idx}`
+                        fullStyleMethodName: `Example${idx}`
                     } as Config,
                     style: Style.Full,
                     endpointId
@@ -91,12 +91,9 @@ export class DynamicSnippetsCsharpTestGenerator {
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("src/SeedApi.DynamicSnippets"));
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
-        await writeFile(
-            join(absolutePathToOutputDir, RelativeFilePath.of("SeedApi.DynamicSnippets.csproj")),
-            PROJECT_FILE_CONTENT
-        );
+        await writeFile(join(absolutePathToOutputDir, RelativeFilePath.of("Snippets.csproj")), PROJECT_FILE_CONTENT);
 
         return absolutePathToOutputDir;
     }
