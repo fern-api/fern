@@ -1,10 +1,9 @@
 using SeedCsharpSystemCollision;
 
-namespace Usage;
-
-public class Example0
+public partial class Examples
 {
-    public async System.Threading.Tasks.Task Do() {
+    public static async System.Threading.Tasks.Task Example0()
+    {
         var client = new SeedCsharpSystemCollision.System(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

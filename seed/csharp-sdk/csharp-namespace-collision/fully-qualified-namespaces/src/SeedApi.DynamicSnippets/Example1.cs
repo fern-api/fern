@@ -1,10 +1,9 @@
 using SeedCsharpNamespaceCollision;
 
-namespace Usage;
-
-public class Example1
+public partial class Examples
 {
-    public async System.Threading.Tasks.Task Do() {
+    public static async System.Threading.Tasks.Task Example1()
+    {
         var client = new SeedCsharpNamespaceCollisionClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

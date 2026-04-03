@@ -1,10 +1,9 @@
 using SeedEndpointSecurityAuth;
 
-namespace Usage;
-
-public class Example7
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example7()
+    {
         var client = new SeedEndpointSecurityAuthClient(
             token: "<token>",
             clientOptions: new ClientOptions {

@@ -1,10 +1,9 @@
 using SeedOauthClientCredentialsEnvironmentVariables;
 
-namespace Usage;
-
-public class Example4
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example4()
+    {
         var client = new SeedOauthClientCredentialsEnvironmentVariablesClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",

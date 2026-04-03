@@ -1,11 +1,10 @@
 using SeedCsharpNamespaceCollision;
 using SeedCsharpNamespaceCollision.ScimConfiguration;
 
-namespace Usage;
-
-public class Example3
+public partial class Examples
 {
-    public async System.Threading.Tasks.Task Do() {
+    public static async System.Threading.Tasks.Task Example3()
+    {
         var client = new SeedCsharpNamespaceCollisionClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

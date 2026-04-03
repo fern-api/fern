@@ -3,11 +3,10 @@ using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 using System.Globalization;
 
-namespace Usage;
-
-public class Example21
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example21()
+    {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

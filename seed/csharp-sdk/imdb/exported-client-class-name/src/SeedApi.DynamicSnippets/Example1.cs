@@ -1,10 +1,9 @@
 using SeedApi;
 
-namespace Usage;
-
-public class Example1
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example1()
+    {
         var client = new CustomClient(
             token: "<token>",
             clientOptions: new ClientOptions {

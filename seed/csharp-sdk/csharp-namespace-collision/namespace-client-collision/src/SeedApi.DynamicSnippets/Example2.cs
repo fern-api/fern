@@ -1,10 +1,9 @@
 using Contoso.Net;
 
-namespace Usage;
-
-public class Example2
+public partial class Examples
 {
-    public async System.Threading.Tasks.Task Do() {
+    public static async System.Threading.Tasks.Task Example2()
+    {
         var client = new Contoso.Net.Contoso(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

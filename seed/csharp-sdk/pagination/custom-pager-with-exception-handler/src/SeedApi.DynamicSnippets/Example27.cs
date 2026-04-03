@@ -1,10 +1,9 @@
 using SeedPagination;
 
-namespace Usage;
-
-public class Example27
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example27()
+    {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions {

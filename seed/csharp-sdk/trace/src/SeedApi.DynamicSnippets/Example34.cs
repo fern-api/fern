@@ -1,10 +1,9 @@
 using SeedTrace;
 
-namespace Usage;
-
-public class Example34
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example34()
+    {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions {

@@ -2,11 +2,10 @@ using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
-namespace Usage;
-
-public class Example7
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example7()
+    {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

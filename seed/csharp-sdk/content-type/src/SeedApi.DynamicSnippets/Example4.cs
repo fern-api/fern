@@ -1,10 +1,9 @@
 using SeedContentTypes;
 
-namespace Usage;
-
-public class Example4
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example4()
+    {
         var client = new SeedContentTypesClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

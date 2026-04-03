@@ -1,10 +1,9 @@
 using SeedServerSentEvents;
 
-namespace Usage;
-
-public class Example11
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example11()
+    {
         var client = new SeedServerSentEventsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

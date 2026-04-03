@@ -1,11 +1,10 @@
 using SeedNullableOptional;
 using System.Globalization;
 
-namespace Usage;
-
-public class Example8
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example8()
+    {
         var client = new SeedNullableOptionalClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

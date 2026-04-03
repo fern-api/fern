@@ -1,10 +1,9 @@
 using SeedClientSideParams;
 
-namespace Usage;
-
-public class Example9
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example9()
+    {
         var client = new SeedClientSideParamsClient(
             token: "<token>",
             clientOptions: new ClientOptions {

@@ -1,10 +1,9 @@
 using SeedMixedCase;
 
-namespace Usage;
-
-public class Example1
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example1()
+    {
         var client = new SeedMixedCaseClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

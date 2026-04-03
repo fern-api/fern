@@ -1,10 +1,9 @@
 using SeedUnions;
 
-namespace Usage;
-
-public class Example9
+public partial class Examples
 {
-    public async Task Do() {
+    public static async Task Example9()
+    {
         var client = new SeedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
