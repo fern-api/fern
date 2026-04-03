@@ -159,7 +159,9 @@ export class Class extends DefinedType {
         this.annotations.forEach((annotation) => {
             annotation.write(writer);
         });
-        writer.writeNewLineIfLastLineNot();
+        if (!this.skipNamespaceDeclaration) {
+            writer.writeNewLineIfLastLineNot();
+        }
         writer.write(`${this.access}`);
         if (this.static_) {
             writer.write(" static");
