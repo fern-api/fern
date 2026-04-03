@@ -610,12 +610,27 @@ export function ${functionName}(server: MockServer): void {
                     const wrapperKey = camelCase(schema.key);
                     const usernameKey = context.case.camelUnsafe(schema.username);
                     const passwordKey = context.case.camelUnsafe(schema.password);
+                    const usernameOmitted = schema.usernameOmit === true;
+                    const passwordOmitted = schema.passwordOmit === true;
 
                     if (requiresNestedAuth) {
-                        authOptions[wrapperKey] = code`${literalOf({ [usernameKey]: "test", [passwordKey]: "test" })}`;
+                        const nestedOptions: Record<string, string> = {};
+                        if (!usernameOmitted) {
+                            nestedOptions[usernameKey] = "test";
+                        }
+                        if (!passwordOmitted) {
+                            nestedOptions[passwordKey] = "test";
+                        }
+                        if (Object.keys(nestedOptions).length > 0) {
+                            authOptions[wrapperKey] = code`${literalOf(nestedOptions)}`;
+                        }
                     } else {
-                        authOptions[usernameKey] = code`"test"`;
-                        authOptions[passwordKey] = code`"test"`;
+                        if (!usernameOmitted) {
+                            authOptions[usernameKey] = code`"test"`;
+                        }
+                        if (!passwordOmitted) {
+                            authOptions[passwordKey] = code`"test"`;
+                        }
                     }
                 },
                 oauth: (oauthScheme) => {
