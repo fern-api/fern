@@ -160,7 +160,7 @@ export class WireMock {
         for (const param of example?.endpointPathParameters || []) {
             const paramValue = this.extractExampleValue(param.value);
             if (paramValue !== null) {
-                const paramName = param.name?.originalName;
+                const paramName = typeof param.name === "string" ? param.name : param.name?.originalName;
                 if (paramName) {
                     pathParameters[paramName] = { equalTo: String(paramValue) };
                 }
@@ -172,7 +172,7 @@ export class WireMock {
         for (const param of example?.queryParameters || []) {
             const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
             if (paramValue !== undefined) {
-                const paramName = param.name?.wireValue;
+                const paramName = typeof param.name === "string" ? param.name : param.name?.wireValue;
                 if (paramName) {
                     queryParameters[paramName] = { equalTo: paramValue };
                 }
@@ -200,7 +200,7 @@ export class WireMock {
                 }
             } else if (example.response.type === "error") {
                 // Extract status code from error
-                const errorName = example.response.error?.name?.originalName;
+                const errorName = typeof example.response.error?.name === "string" ? example.response.error.name : example.response.error?.name?.originalName;
                 if (errorName === "NotFoundError") {
                     status = 404;
                 } else if (errorName === "InternalServerError") {
@@ -258,7 +258,7 @@ export class WireMock {
         }
 
         // Build descriptive name
-        const endpointName = endpoint.displayName || endpoint.name.originalName;
+        const endpointName = endpoint.displayName || (typeof endpoint.name === "string" ? endpoint.name : endpoint.name.originalName);
         const exampleName = typeof example?.name === "string" ? example.name : "default";
         const name = `${endpointName} - ${exampleName}`;
         const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
@@ -282,7 +282,7 @@ export class WireMock {
                         authHeaders["Authorization"] = { matches: "Bearer .+" };
                         break;
                     case "header": {
-                        const headerName = scheme.name?.wireValue;
+                        const headerName = typeof scheme.name === "string" ? scheme.name : scheme.name?.wireValue;
                         if (headerName) {
                             authHeaders[headerName] = { matches: ".+" };
                         }
