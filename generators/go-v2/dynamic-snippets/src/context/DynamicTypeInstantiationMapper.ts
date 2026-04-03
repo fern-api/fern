@@ -721,6 +721,7 @@ export class DynamicTypeInstantiationMapper {
             case "DATE":
                 return "Date";
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return "DateTime";
             case "BASE_64":
                 return "Base64";
@@ -788,7 +789,8 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return go.TypeInstantiation.date(date);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return go.TypeInstantiation.nop();

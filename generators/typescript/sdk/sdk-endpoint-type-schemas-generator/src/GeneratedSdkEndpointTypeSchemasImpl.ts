@@ -42,7 +42,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
-    private caseConverter: CaseConverter;
+    private case: CaseConverter;
 
     constructor({
         packageId,
@@ -62,7 +62,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined

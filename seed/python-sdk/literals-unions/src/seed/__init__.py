@@ -7,11 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import literals
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedLiteralsUnions, SeedLiteralsUnions
     from .literals import LiteralString, UnionOverLiteral
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedLiteralsUnions": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "LiteralString": ".literals",
     "SeedLiteralsUnions": ".client",
     "UnionOverLiteral": ".literals",
@@ -43,6 +46,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedLiteralsUnions",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "LiteralString",
     "SeedLiteralsUnions",
     "UnionOverLiteral",

@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import completions
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
     from .completions import (
         BadRequestError,
@@ -27,6 +28,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedServerSentEvents": ".client",
     "BadRequestError": ".completions",
     "CompletionEvent": ".completions",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "ErrorEvent": ".completions",
     "EventEvent": ".completions",
     "SeedServerSentEvents": ".client",
@@ -68,6 +71,8 @@ __all__ = [
     "AsyncSeedServerSentEvents",
     "BadRequestError",
     "CompletionEvent",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "ErrorEvent",
     "EventEvent",
     "SeedServerSentEvents",

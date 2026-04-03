@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import realtime
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedWebsocketMultiUrl, SeedWebsocketMultiUrl
     from .environment import SeedWebsocketMultiUrlEnvironment
     from .realtime import ReceiveEvent, SendEvent
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocketMultiUrl": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "ReceiveEvent": ".realtime",
     "SeedWebsocketMultiUrl": ".client",
     "SeedWebsocketMultiUrlEnvironment": ".environment",
@@ -45,6 +48,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedWebsocketMultiUrl",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "ReceiveEvent",
     "SeedWebsocketMultiUrl",
     "SeedWebsocketMultiUrlEnvironment",

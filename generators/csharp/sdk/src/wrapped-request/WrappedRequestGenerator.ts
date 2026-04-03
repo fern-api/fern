@@ -1,4 +1,5 @@
 import { fail } from "node:assert";
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
@@ -9,7 +10,6 @@ type ContainerType = FernIr.ContainerType;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleInlinedRequestBodyExtraProperty = FernIr.ExampleInlinedRequestBodyExtraProperty;
 type HttpEndpoint = FernIr.HttpEndpoint;
-type Name = FernIr.Name;
 type SdkRequestWrapper = FernIr.SdkRequestWrapper;
 type ServiceId = FernIr.ServiceId;
 type TypeReference = FernIr.TypeReference;
@@ -39,7 +39,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         super(context);
         this.wrapper = wrapper;
         this.serviceId = serviceId;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper);
 
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
@@ -90,7 +90,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             for (const pathParameter of this.endpoint.allPathParameters) {
                 // Skip adding a [JsonIgnore] field for this path param if a body property
                 // with the same PascalCase name exists — the body property will serve both roles.
-                if (bodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
+                if (bodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 class_.addField({
@@ -146,7 +146,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName: field.name,
-                    protoPropertyName: query.name.name.pascalCase.safeName,
+                    protoPropertyName: this.case.pascalSafe(query.name),
                     typeReference: query.allowMultiple
                         ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
@@ -184,7 +184,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 });
                 const useRequired = !type.isOptional;
                 class_.addField({
-                    origin: this.wrapper.bodyKey,
+                    origin: this.case.resolveNameOrString(this.wrapper.bodyKey),
                     type,
                     access: ast.Access.Public,
                     get: true,
@@ -196,7 +196,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
-                const allPropertyPascalNames = new Set(allProps.map((p) => p.name.name.pascalCase.safeName));
+                const allPropertyPascalNames = new Set(allProps.map((p) => this.case.pascalSafe(p.name)));
                 for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
@@ -208,7 +208,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
-                            protoPropertyName: property.name.name.pascalCase.safeName,
+                            protoPropertyName: this.case.pascalSafe(property.name),
                             typeReference: property.valueType
                         });
                     }
@@ -216,7 +216,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             fileUpload: (request) => {
                 const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
-                const allPropertyPascalNames = new Set(bodyProps.map((p) => p.name.name.pascalCase.safeName));
+                const allPropertyPascalNames = new Set(bodyProps.map((p) => this.case.pascalSafe(p.name)));
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
@@ -285,7 +285,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
-        const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
+        const orderedFields: { name: NameInput; value: ast.CodeBlock }[] = [];
         let extraPropertiesFromExample: ExampleInlinedRequestBodyExtraProperty[] | undefined;
         const snippetBodyPropertyPascalNames = this.getBodyPropertyPascalNames();
         if (
@@ -301,7 +301,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             ]) {
                 // Skip path param snippet if a body property with the same name exists;
                 // the body property snippet will provide the value for both.
-                if (snippetBodyPropertyPascalNames.has(pathParameter.name.pascalCase.safeName)) {
+                if (snippetBodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {
                     continue;
                 }
                 orderedFields.push({
@@ -330,14 +330,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                       )
                   );
             orderedFields.push({
-                name: exampleQueryParameter.name.name,
+                name: exampleQueryParameter.name,
                 value
             });
         }
 
         for (const header of [...example.endpointHeaders, ...example.serviceHeaders]) {
             orderedFields.push({
-                name: header.name.name,
+                name: header.name,
                 value: this.exampleGenerator.getSnippetForTypeReference({
                     exampleTypeReference: header.value,
                     parseDatetimes
@@ -358,7 +358,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
                     orderedFields.push({
-                        name: property.name.name,
+                        name: property.name,
                         value: this.exampleGenerator.getSnippetForTypeReference({
                             exampleTypeReference: property.value,
                             parseDatetimes
@@ -374,7 +374,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
         const args = orderedFields.map(({ name, value }) => {
             return {
-                name: name.pascalCase.safeName,
+                name: this.case.pascalSafe(name),
                 assignment: value
             };
         });
@@ -478,13 +478,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             reference: () => undefined,
             inlinedRequestBody: (request) => {
                 for (const prop of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    names.add(prop.name.name.pascalCase.safeName);
+                    names.add(this.case.pascalSafe(prop.name));
                 }
             },
             fileUpload: (request) => {
                 for (const prop of request.properties) {
                     if (prop.type === "bodyProperty") {
-                        names.add(prop.name.name.pascalCase.safeName);
+                        names.add(this.case.pascalSafe(prop.name));
                     }
                 }
             },
@@ -509,7 +509,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     exampleTypeReference: extraProperty.value,
                     parseDatetimes
                 });
-                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.write(`["${getWireValue(extraProperty.name)}"] = `);
                 writer.writeNode(valueSnippet);
                 writer.writeLine(",");
             }

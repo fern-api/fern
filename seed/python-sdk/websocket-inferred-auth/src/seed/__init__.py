@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import auth, realtime
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .auth import TokenResponse
     from .client import AsyncSeedWebsocketAuth, SeedWebsocketAuth
     from .realtime import (
@@ -21,6 +22,8 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocketAuth": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "ReceiveEvent": ".realtime",
     "ReceiveEvent2": ".realtime",
     "ReceiveEvent3": ".realtime",
@@ -59,6 +62,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedWebsocketAuth",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
