@@ -355,44 +355,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const basicAuthSchemes = this.context.ir.auth.schemes.filter(
                     (s): s is typeof s & { type: "basic" } => s.type === "basic"
                 );
-                if (basicAuthSchemes.length > 0) {
+                const resolvedBasicAuthSchemes = basicAuthSchemes
+                    .map((scheme) => this.resolveBasicAuthScheme(scheme))
+                    .filter((resolved) => resolved != null);
+                if (resolvedBasicAuthSchemes.length > 0) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
-                    let isFirstBlock = true;
-                    for (let i = 0; i < basicAuthSchemes.length; i++) {
-                        const basicAuthScheme = basicAuthSchemes[i];
-                        if (basicAuthScheme == null) {
-                            continue;
+                    const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
+                    for (let i = 0; i < resolvedBasicAuthSchemes.length; i++) {
+                        const { condition, usernameExpr, passwordExpr } = resolvedBasicAuthSchemes[i]!;
+                        if (needsControlFlow) {
+                            writer.controlFlow(i === 0 ? "if" : "else if", php.codeblock(condition));
                         }
-                        const usernameName = this.context.getParameterName(basicAuthScheme.username);
-                        const passwordName = this.context.getParameterName(basicAuthScheme.password);
-                        // usernameOmit/passwordOmit may exist in newer IR versions
-                        const scheme = basicAuthScheme as unknown as Record<string, unknown>;
-                        const usernameOmitted = scheme.usernameOmit === true;
-                        const passwordOmitted = scheme.passwordOmit === true;
-                        // Condition: only require non-omitted fields to be present
-                        let condition: string;
-                        if (!usernameOmitted && !passwordOmitted) {
-                            condition = `$${usernameName} !== null && $${passwordName} !== null`;
-                        } else if (usernameOmitted && !passwordOmitted) {
-                            condition = `$${passwordName} !== null`;
-                        } else if (!usernameOmitted && passwordOmitted) {
-                            condition = `$${usernameName} !== null`;
-                        } else {
-                            // Both fields omitted — skip auth header entirely when auth is non-mandatory
-                            continue;
-                        }
-                        if (isAuthOptional || basicAuthSchemes.length > 1) {
-                            const controlFlowKeyword = isFirstBlock ? "if" : "else if";
-                            writer.controlFlow(controlFlowKeyword, php.codeblock(condition));
-                        }
-                        isFirstBlock = false;
-                        // Omitted fields use empty string directly
-                        const usernameExpr = usernameOmitted ? `""` : `$${usernameName}`;
-                        const passwordExpr = passwordOmitted ? `""` : `$${passwordName}`;
                         writer.writeLine(
                             `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${usernameExpr} . ":" . ${passwordExpr});`
                         );
-                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                        if (needsControlFlow) {
                             writer.endControlFlow();
                         }
                     }
@@ -625,8 +602,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const password = this.context.getParameterName(scheme.password);
                 // When omit is true, the field is completely removed from the end-user API.
                 const schemeRecord = scheme as unknown as Record<string, unknown>;
-                const usernameOmitted = schemeRecord.usernameOmit === true;
-                const passwordOmitted = schemeRecord.passwordOmit === true;
+                const usernameOmitted = !!schemeRecord.usernameOmit;
+                const passwordOmitted = !!schemeRecord.passwordOmit;
                 const params: ConstructorParameter[] = [];
                 if (!usernameOmitted) {
                     params.push({
@@ -779,6 +756,38 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getAuthParameterDocs({ docs, name }: { docs: string | undefined; name: string }): string {
         return docs ?? `The ${name} to use for authentication.`;
+    }
+
+    /**
+     * Resolves a basic auth scheme into its null-check condition and credential expressions,
+     * accounting for omitted username/password fields. Returns undefined if both fields are omitted.
+     */
+    private resolveBasicAuthScheme(
+        scheme: FernIr.AuthScheme & { type: "basic" }
+    ): { condition: string; usernameExpr: string; passwordExpr: string } | undefined {
+        const usernameName = this.context.getParameterName(scheme.username);
+        const passwordName = this.context.getParameterName(scheme.password);
+        const schemeRecord = scheme as unknown as Record<string, unknown>;
+        const usernameOmitted = !!schemeRecord.usernameOmit;
+        const passwordOmitted = !!schemeRecord.passwordOmit;
+
+        if (usernameOmitted && passwordOmitted) {
+            return undefined;
+        }
+
+        const conditions: string[] = [];
+        if (!usernameOmitted) {
+            conditions.push(`$${usernameName} !== null`);
+        }
+        if (!passwordOmitted) {
+            conditions.push(`$${passwordName} !== null`);
+        }
+
+        return {
+            condition: conditions.join(" && "),
+            usernameExpr: usernameOmitted ? `""` : `$${usernameName}`,
+            passwordExpr: passwordOmitted ? `""` : `$${passwordName}`
+        };
     }
 
     private getRootSubpackages(): FernIr.Subpackage[] {
