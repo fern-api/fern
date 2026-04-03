@@ -28,7 +28,7 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
             return "RootService";
         }
         const subpackage = this.packageResolver.resolveSubpackage(name.subpackageId);
-        return `${this.caseConverter.pascalUnsafe(subpackage.name)}Service`;
+        return `${this.case.pascalUnsafe(subpackage.name)}Service`;
     }
 
     public getReferenceToService(args: DeclarationReferencer.getReferenceTo.Options<PackageId>): Reference {
