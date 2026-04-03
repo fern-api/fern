@@ -4,7 +4,8 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": false,
-    "omitFernHeaders": true
+    "omitFernHeaders": true,
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

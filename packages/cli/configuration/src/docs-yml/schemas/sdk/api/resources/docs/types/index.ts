@@ -1,4 +1,5 @@
 export * from "./AbsoluteProductPath.js";
+export * from "./AgentsConfig.js";
 export * from "./AiChatConfig.js";
 export * from "./AiChatDatasource.js";
 export * from "./AiChatLocation.js";
@@ -95,6 +96,7 @@ export * from "./PageActionOptions.js";
 export * from "./PageActionsConfig.js";
 export * from "./PageActionsThemeConfig.js";
 export * from "./PageConfiguration.js";
+export * from "./PageDescriptionSource.js";
 export * from "./PathLibraryInputSchema.js";
 export * from "./PlaygroundButtonSettings.js";
 export * from "./PlaygroundSettings.js";

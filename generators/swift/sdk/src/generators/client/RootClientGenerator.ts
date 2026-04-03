@@ -81,12 +81,13 @@ export class RootClientGenerator {
     }
 
     private get maxRetriesParam() {
+        const configuredMaxRetries = this.sdkGeneratorContext.customConfig.maxRetries;
         return swift.functionParameter({
             argumentLabel: "maxRetries",
             unsafeName: "maxRetries",
             type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
             defaultValue: swift.Expression.rawValue("nil"),
-            docsContent: "Maximum number of retries for failed requests. Defaults to 2."
+            docsContent: `Maximum number of retries for failed requests. Defaults to ${configuredMaxRetries ?? 2}.`
         });
     }
 
@@ -414,7 +415,10 @@ export class RootClientGenerator {
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "HeaderAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "HeaderAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -422,7 +426,10 @@ export class RootClientGenerator {
                 argumentLabel: "bearerAuth",
                 unsafeName: "bearerAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BearerAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "BearerAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -430,7 +437,10 @@ export class RootClientGenerator {
                 argumentLabel: "basicAuth",
                 unsafeName: "basicAuth",
                 type: swift.TypeReference.optional(
-                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BasicAuth")
+                    swift.TypeReference.memberAccess(
+                        this.referencer.referenceSourceTemplateType("ClientConfig"),
+                        "BasicAuth"
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
@@ -603,12 +613,12 @@ export class RootClientGenerator {
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
                             ? swift.TypeReference.memberAccess(
-                                  this.referencer.referenceAsIsType("ClientConfig"),
+                                  this.referencer.referenceSourceTemplateType("ClientConfig"),
                                   "CredentialProvider"
                               )
                             : swift.TypeReference.optional(
                                   swift.TypeReference.memberAccess(
-                                      this.referencer.referenceAsIsType("ClientConfig"),
+                                      this.referencer.referenceSourceTemplateType("ClientConfig"),
                                       "CredentialProvider"
                                   )
                               ),

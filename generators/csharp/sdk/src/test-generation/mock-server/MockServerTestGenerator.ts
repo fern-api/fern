@@ -54,6 +54,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         return super.shouldGenerate();
     }
 
+    /**
+     * Returns true only when pagination clients are actually generated for this endpoint.
+     * The IR may have pagination info even when `generatePaginatedClients` is disabled,
+     * so we must check the config flag to avoid emitting `await foreach` against a
+     * non-IAsyncEnumerable return type.
+     */
+    private hasPaginationEnabled(): boolean {
+        return this.context.config.generatePaginatedClients === true && this.endpoint.pagination != null;
+    }
+
     private getServiceNamespaceSegments(): string[] {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
@@ -90,7 +100,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             const responseBodyType = this.endpoint.response?.body?.type;
 
             let isAsyncTest = false;
-            const isPaginationEndpoint = !!this.endpoint.pagination;
+            const isPaginationEndpoint = this.hasPaginationEnabled();
             if (isPaginationEndpoint) {
                 isAsyncTest = true;
             }
@@ -120,7 +130,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                if (this.endpoint.pagination) {
+                if (this.hasPaginationEnabled()) {
                     writer.write("var items = ");
                     writer.writeNode(endpointSnippet);
                     writer.write(";");

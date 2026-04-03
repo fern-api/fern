@@ -11,7 +11,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
     /// - Parameter token: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
-    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 5.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String = SingleUrlEnvironmentDefaultEnvironment.production.rawValue,
@@ -39,7 +39,7 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
     /// - Parameter token: An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
-    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 5.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String = SingleUrlEnvironmentDefaultEnvironment.production.rawValue,

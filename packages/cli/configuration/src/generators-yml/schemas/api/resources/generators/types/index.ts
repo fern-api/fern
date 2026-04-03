@@ -16,6 +16,7 @@ export * from "./ConjureSchema.js";
 export * from "./DefaultIntegerFormat.js";
 export * from "./ExampleStyle.js";
 export * from "./FormParameterEncoding.js";
+export * from "./GeneratorImageObjectSchema.js";
 export * from "./GeneratorsConfigurationSchema.js";
 export * from "./GeneratorsOpenApiObjectSchema.js";
 export * from "./GeneratorsOpenApiSchema.js";
