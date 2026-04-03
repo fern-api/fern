@@ -33,9 +33,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
         this.case = context.case;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) && this.getEndpointWithPagination() != null;
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -268,7 +269,8 @@ foreach ($items->getPages() as $page) {
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && pagination.type !== "uri" && pagination.type !== "path") {
                 return endpointWithFilepath;
             }
             return undefined;

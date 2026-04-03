@@ -1,7 +1,7 @@
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { convertEndpoints, Endpoint } from "./convertEndpoints.js";
-
+// TODO: remove this hack
 export type DynamicIntermediateRepresentation = Omit<
     DynamicFernIr.dynamic.DynamicIntermediateRepresentation,
     "endpoints"

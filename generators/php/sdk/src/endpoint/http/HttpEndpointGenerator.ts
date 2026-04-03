@@ -39,6 +39,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: FernIr.HttpService;
         endpoint: FernIr.HttpEndpoint;
     }): php.Method[] {
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            this.context.logger.warn(
+                `Pagination type '${endpoint.pagination?.type}' is not supported for PHP, falling back to unpaged endpoint for ${getOriginalName(endpoint.name)}`
+            );
+        }
         const methods: php.Method[] = [];
         if (this.hasPagination(endpoint)) {
             methods.push(this.generatePagedEndpointMethod({ serviceId, service, endpoint }));
@@ -284,6 +289,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         break;
                     case "uri":
                     case "path":
+                        this.context.logger.warn(
+                            `Pagination type '${endpoint.pagination.type}' is not supported for PHP, skipping`
+                        );
                         break;
                     default:
                         assertNever(endpoint.pagination);
@@ -585,6 +593,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return endpoint.pagination.results.property.valueType;
                     case "uri":
                     case "path":
+                        // unreachable: hasPagination() returns false for uri/path
                         throw new Error(`Pagination type ${endpoint.pagination.type} is not supported`);
                     default:
                         assertNever(endpoint.pagination);
@@ -615,7 +624,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
-        return endpoint.pagination !== undefined;
+        if (endpoint.pagination == null) {
+            return false;
+        }
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            return false;
+        }
+        return true;
+    }
+
+    private isUnsupportedPaginationType(endpoint: FernIr.HttpEndpoint): boolean {
+        return (
+            endpoint.pagination != null && (endpoint.pagination.type === "uri" || endpoint.pagination.type === "path")
+        );
     }
 
     protected assertHasPagination(endpoint: FernIr.HttpEndpoint): asserts endpoint is PagingEndpoint {

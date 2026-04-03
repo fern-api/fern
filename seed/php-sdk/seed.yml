@@ -173,8 +173,6 @@ allowedFailures:
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
   - pagination-custom
-  # URI pagination is not yet supported.
-  - pagination-uri-path
   - endpoint-security-auth
   - inferred-auth-implicit
   - inferred-auth-implicit-reference
