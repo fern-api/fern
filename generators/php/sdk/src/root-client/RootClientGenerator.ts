@@ -605,9 +605,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const username = this.context.getParameterName(scheme.username);
                 const password = this.context.getParameterName(scheme.password);
                 // When omit is true, the field is completely removed from the end-user API.
-                const schemeRecord = scheme as unknown as Record<string, unknown>;
-                const usernameOmitted = !!schemeRecord.usernameOmit;
-                const passwordOmitted = !!schemeRecord.passwordOmit;
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
                 const params: ConstructorParameter[] = [];
                 if (!usernameOmitted) {
                     params.push({
@@ -771,9 +770,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     ): { condition: string; usernameExpr: string; passwordExpr: string } | undefined {
         const usernameName = this.context.getParameterName(scheme.username);
         const passwordName = this.context.getParameterName(scheme.password);
-        const schemeRecord = scheme as unknown as Record<string, unknown>;
-        const usernameOmitted = !!schemeRecord.usernameOmit;
-        const passwordOmitted = !!schemeRecord.passwordOmit;
+        const usernameOmitted = !!scheme.usernameOmit;
+        const passwordOmitted = !!scheme.passwordOmit;
 
         if (usernameOmitted && passwordOmitted) {
             return undefined;
