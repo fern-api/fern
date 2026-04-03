@@ -2119,7 +2119,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        false, // Hidden from --help
+        "Merge an AI examples overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
                 .positional("openapi", {
