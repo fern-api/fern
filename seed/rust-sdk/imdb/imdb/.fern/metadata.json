@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-rust-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "clientName": "ImdbClient"
+    "clientName": "ImdbClient",
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
