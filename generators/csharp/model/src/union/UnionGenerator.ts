@@ -409,16 +409,29 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                               type: unionClassType,
                               annotations: [this.System.Serializable]
                           });
+                const hasBoundOrigin = unionTypeClass.origin != null;
                 if (isNoProperties) {
-                    unionTypeClass.addField({
-                        origin: unionTypeClass.explicit("Value"),
-                        enclosingType: unionTypeClass,
-                        access: ast.Access.Internal,
-                        type: memberType,
-                        get: true,
-                        set: false,
-                        initializer: this.csharp.codeblock("new {}")
-                    });
+                    if (hasBoundOrigin) {
+                        unionTypeClass.addField({
+                            origin: unionTypeClass.explicit("Value"),
+                            enclosingType: unionTypeClass,
+                            access: ast.Access.Internal,
+                            type: memberType,
+                            get: true,
+                            set: false,
+                            initializer: this.csharp.codeblock("new {}")
+                        });
+                    } else {
+                        unionTypeClass.addField({
+                            name: "Value",
+                            enclosingType: unionTypeClass,
+                            access: ast.Access.Internal,
+                            type: memberType,
+                            get: true,
+                            set: false,
+                            initializer: this.csharp.codeblock("new {}")
+                        });
+                    }
                 } else {
                     unionTypeClass.addConstructor({
                         access: ast.Access.Public,
@@ -430,14 +443,25 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         ],
                         body: this.csharp.codeblock("Value = value;\n")
                     });
-                    unionTypeClass.addField({
-                        origin: unionTypeClass.explicit("Value"),
-                        enclosingType: unionTypeClass,
-                        access: ast.Access.Internal,
-                        type: memberType,
-                        get: true,
-                        set: true
-                    });
+                    if (hasBoundOrigin) {
+                        unionTypeClass.addField({
+                            origin: unionTypeClass.explicit("Value"),
+                            enclosingType: unionTypeClass,
+                            access: ast.Access.Internal,
+                            type: memberType,
+                            get: true,
+                            set: true
+                        });
+                    } else {
+                        unionTypeClass.addField({
+                            name: "Value",
+                            enclosingType: unionTypeClass,
+                            access: ast.Access.Internal,
+                            type: memberType,
+                            get: true,
+                            set: true
+                        });
+                    }
                 }
                 unionTypeClass.addMethod({
                     access: ast.Access.Public,
