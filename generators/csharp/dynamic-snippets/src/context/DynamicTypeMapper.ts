@@ -136,6 +136,7 @@ export class DynamicTypeMapper extends WithGeneration {
             case "DATE":
                 return this.Value.dateOnly;
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return this.Value.dateTime;
             case "UUID":
                 return this.Primitive.string;

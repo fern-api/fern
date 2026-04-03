@@ -807,4 +807,56 @@ describe("UsersClient", () => {
         });
         expect(page.data).toEqual([]);
     });
+
+    test("listWithAliasedData", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: true,
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
+            total_count: 1,
+            data: [
+                { name: "name", id: 1 },
+                { name: "name", id: 1 },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/users/aliased-data")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.users.listWithAliasedData({
+            page: 1,
+            per_page: 1,
+            starting_after: "starting_after",
+        });
+        expect(response).toEqual({
+            hasNextPage: true,
+            page: {
+                page: 1,
+                next: {
+                    page: 1,
+                    starting_after: "starting_after",
+                },
+                per_page: 1,
+                total_page: 1,
+            },
+            total_count: 1,
+            data: [
+                {
+                    name: "name",
+                    id: 1,
+                },
+                {
+                    name: "name",
+                    id: 1,
+                },
+            ],
+        });
+    });
 });

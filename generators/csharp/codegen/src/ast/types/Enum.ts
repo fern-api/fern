@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { type Generation } from "../../context/generation-info.js";
 import { Node } from "../core/AstNode.js";
 import { Writer } from "../core/Writer.js";
@@ -140,7 +141,7 @@ export class Enum extends Node {
         );
         writer.pushScope();
         for (const field of this.fields) {
-            writer.writeLine(`{ ${JSON.stringify(field.wireValue)}, ${this.name}.${field.name} },`);
+            writer.writeLine(`{ ${JSON.stringify(getWireValue(field))}, ${this.name}.${field.name} },`);
         }
         writer.popScope(false);
         writer.writeLine(";");
@@ -152,7 +153,7 @@ export class Enum extends Node {
         );
         writer.pushScope();
         for (const field of this.fields) {
-            writer.writeLine(`{ ${this.name}.${field.name}, ${JSON.stringify(field.wireValue)} },`);
+            writer.writeLine(`{ ${this.name}.${field.name}, ${JSON.stringify(getWireValue(field))} },`);
         }
         writer.popScope(false);
         writer.writeLine(";");

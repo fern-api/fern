@@ -414,18 +414,25 @@ export function runMigrations(params: {
 
 /**
  * Validates that a config object has the minimum required shape for migrations.
- * Checks that the config is an object with a 'name' property.
+ * Accepts either a DefaultGeneratorInvocationSchema (has string `name`) or a
+ * CustomGeneratorInvocationSchema (has non-null object `image`).
  *
  * @param config - The config to validate
  * @returns True if the config is valid, false otherwise
  */
 function isValidGeneratorConfig(config: unknown): config is generatorsYml.GeneratorInvocationSchema {
-    return (
-        typeof config === "object" &&
-        config != null &&
-        "name" in config &&
-        typeof (config as { name: unknown }).name === "string"
-    );
+    if (typeof config !== "object" || config == null) {
+        return false;
+    }
+
+    // DefaultGeneratorInvocationSchema — identified by a string `name` field
+    const hasValidName = "name" in config && typeof config.name === "string";
+
+    // CustomGeneratorInvocationSchema — identified by a non-null object `image` field
+    // Note: `typeof null === "object"` in JS, so the explicit null check is required.
+    const hasValidImage = "image" in config && config.image != null && typeof config.image === "object";
+
+    return hasValidName || hasValidImage;
 }
 
 /**
@@ -470,8 +477,8 @@ export async function loadAndRunMigrations(params: {
     if (!isValidGeneratorConfig(config)) {
         throw new Error(
             `Invalid generator configuration for ${generatorName}.\n\n` +
-                `The generator configuration must be an object with a 'name' property, but the current configuration ` +
-                `does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
+                `The generator configuration must be an object with either a 'name' property or an 'image' property, ` +
+                `but the current configuration does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
                 `Please check your generators.yml file and ensure the generator is properly configured.`
         );
     }

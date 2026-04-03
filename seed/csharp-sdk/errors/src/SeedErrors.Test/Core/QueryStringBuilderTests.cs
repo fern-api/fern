@@ -207,10 +207,7 @@ public class QueryStringBuilderTests
             .Build();
 
         Assert.That(result, Does.Contain("api_key=key123"));
-        Assert.That(
-            result,
-            Does.Contain("session_settings%5Bcustom_session_id%5D=id-123")
-        );
+        Assert.That(result, Does.Contain("session_settings%5Bcustom_session_id%5D=id-123"));
         Assert.That(
             result,
             Does.Contain("session_settings%5Bsystem_prompt%5D=You%20are%20helpful")
@@ -298,10 +295,7 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Contain("allow_connection=true"));
         Assert.That(result, Does.Contain("config_id=config456"));
         Assert.That(result, Does.Contain("api_key=key789"));
-        Assert.That(
-            result,
-            Does.Contain("session_settings%5Bcustom_session_id%5D=session-123")
-        );
+        Assert.That(result, Does.Contain("session_settings%5Bcustom_session_id%5D=session-123"));
         Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserName%5D=John"));
         Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserAge%5D=30"));
     }
@@ -415,10 +409,7 @@ public class QueryStringBuilderTests
     [Test]
     public void Builder_MergeAdditional_OverridesExistingParameters()
     {
-        var additional = new List<KeyValuePair<string, string>>
-        {
-            new("foo", "override"),
-        };
+        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
 
         var result = new QueryStringBuilder.Builder()
             .Add("foo", "original1")
@@ -492,10 +483,7 @@ public class QueryStringBuilderTests
             .Add("bar", "baz");
 
         // User provides foo=override in AdditionalQueryParameters
-        var additional = new List<KeyValuePair<string, string>>
-        {
-            new("foo", "override"),
-        };
+        var additional = new List<KeyValuePair<string, string>> { new("foo", "override") };
 
         var result = builder.MergeAdditional(additional).Build();
 
@@ -531,9 +519,7 @@ public class QueryStringBuilderTests
     public void Builder_Add_WithCollection_CreatesMultipleParameters()
     {
         var tags = new[] { "tag1", "tag2", "tag3" };
-        var result = new QueryStringBuilder.Builder()
-            .Add("tag", tags)
-            .Build();
+        var result = new QueryStringBuilder.Builder().Add("tag", tags).Build();
 
         Assert.That(result, Does.Contain("tag=tag1"));
         Assert.That(result, Does.Contain("tag=tag2"));
@@ -544,9 +530,7 @@ public class QueryStringBuilderTests
     public void Builder_Add_WithList_CreatesMultipleParameters()
     {
         var ids = new List<int> { 1, 2, 3 };
-        var result = new QueryStringBuilder.Builder()
-            .Add("id", ids)
-            .Build();
+        var result = new QueryStringBuilder.Builder().Add("id", ids).Build();
 
         Assert.That(result, Does.Contain("id=1"));
         Assert.That(result, Does.Contain("id=2"));
@@ -638,10 +622,7 @@ public class QueryStringBuilderTests
     public void Build_QueryValue_QuestionMarkNotEncoded()
     {
         // "?" is safe in both query keys and query values per RFC 3986
-        var parameters = new List<KeyValuePair<string, string>>
-        {
-            new("q?key", "is this?"),
-        };
+        var parameters = new List<KeyValuePair<string, string>> { new("q?key", "is this?") };
 
         var result = QueryStringBuilder.Build(parameters);
 
@@ -652,10 +633,7 @@ public class QueryStringBuilderTests
     public void Build_QueryKey_PlusEncoded()
     {
         // "+" must be encoded in both query keys and query values
-        var parameters = new List<KeyValuePair<string, string>>
-        {
-            new("a+b", "c+d"),
-        };
+        var parameters = new List<KeyValuePair<string, string>> { new("a+b", "c+d") };
 
         var result = QueryStringBuilder.Build(parameters);
 

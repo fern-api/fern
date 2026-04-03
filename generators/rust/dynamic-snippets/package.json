@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^59.6.1",
+    "@fern-api/dynamic-ir-sdk": "65.5.0",
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",

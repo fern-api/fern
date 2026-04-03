@@ -58,7 +58,7 @@ export class SubClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "config",
                     unsafeName: "config",
-                    type: this.referencer.referenceAsIsType("ClientConfig")
+                    type: this.referencer.referenceSourceTemplateType("ClientConfig")
                 })
             ],
             body: swift.CodeBlock.withStatements([

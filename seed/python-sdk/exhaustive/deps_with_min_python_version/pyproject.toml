@@ -43,8 +43,10 @@ Repository = 'https://github.com/exhaustive/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
+aiohttp = { version = ">=3.10.0,<4", optional = true}
 boto3 = "1.28.57"
 httpx = ">=0.21.2"
+httpx-aiohttp = { version = "0.1.8", optional = true}
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2,<2.44.0"
 typing_extensions = ">= 4.0.0"
@@ -65,6 +67,9 @@ ruff = "==0.11.5"
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
+markers = [
+    "aiohttp: tests that require httpx_aiohttp to be installed",
+]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
@@ -96,3 +101,6 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.extras]
+aiohttp=["aiohttp", "httpx-aiohttp"]

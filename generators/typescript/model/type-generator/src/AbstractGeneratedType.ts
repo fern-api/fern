@@ -44,7 +44,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
     protected readonly retainOriginalCasing: boolean;
     protected readonly enableInlineTypes: boolean;
     protected readonly generateReadWriteOnlyTypes: boolean;
-    protected readonly caseConverter: CaseConverter;
+    protected readonly case: CaseConverter;
 
     private docs: string | undefined;
 
@@ -73,7 +73,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         this.retainOriginalCasing = retainOriginalCasing;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {

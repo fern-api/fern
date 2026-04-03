@@ -44,7 +44,7 @@ export class WebsocketTypeSchemaDeclarationReferencer extends AbstractSdkClientC
     }
 
     public getExportedName(name: WebsocketTypeSchemaDeclarationReferencer.Name): string {
-        return `${this.caseConverter.pascalUnsafe(name.channel.name)}SocketResponse`;
+        return `${this.case.pascalUnsafe(name.channel.name)}SocketResponse`;
     }
 
     public getReferenceToWebsocketResponseType(
