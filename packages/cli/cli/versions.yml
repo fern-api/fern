@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.59.1
+  changelogEntry:
+    - summary: |
+        Batch multiple `docker cp` calls into a single invocation when copying
+        input files (IR, config, snippets) into reusable generator containers,
+        reducing the number of Docker CLI round-trips during local generation.
+      type: chore
+  createdAt: "2026-04-03"
+  irVersion: 66
+
 - version: 4.59.0
   changelogEntry:
     - summary: |

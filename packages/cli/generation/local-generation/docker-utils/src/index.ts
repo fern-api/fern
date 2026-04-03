@@ -1,4 +1,5 @@
 export {
+    batchCopyToContainer,
     copyFromContainer,
     copyToContainer,
     execInContainer,

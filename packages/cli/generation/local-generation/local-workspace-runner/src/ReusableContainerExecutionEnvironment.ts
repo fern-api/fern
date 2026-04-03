@@ -1,5 +1,6 @@
 import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
 import {
+    batchCopyToContainer,
     copyFromContainer,
     copyToContainer,
     execInContainer,
@@ -11,11 +12,13 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_FERN_DIRECTORY,
-    CONTAINER_GENERATOR_CONFIG_PATH,
-    CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-    CONTAINER_SOURCES_DIRECTORY
+    CONTAINER_SOURCES_DIRECTORY,
+    GENERATOR_CONFIG_FILENAME,
+    IR_FILENAME,
+    SNIPPET_FILENAME,
+    SNIPPET_TEMPLATES_FILENAME
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
@@ -180,42 +183,24 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             writeLogsToFile: false
         });
 
-        // Copy input files into the container
-        await copyToContainer({
-            logger,
-            containerId,
-            hostPath: irPath,
-            containerPath: CONTAINER_PATH_TO_IR,
-            runner: this.runner
-        });
-
-        await copyToContainer({
-            logger,
-            containerId,
-            hostPath: configPath,
-            containerPath: CONTAINER_GENERATOR_CONFIG_PATH,
-            runner: this.runner
-        });
-
+        // Batch copy input files that all go to /fern/ in a single docker cp
+        const fernFiles: Array<{ hostPath: string; containerFilename: string }> = [
+            { hostPath: irPath, containerFilename: IR_FILENAME },
+            { hostPath: configPath, containerFilename: GENERATOR_CONFIG_FILENAME }
+        ];
         if (snippetPath != null) {
-            await copyToContainer({
-                logger,
-                containerId,
-                hostPath: snippetPath,
-                containerPath: CONTAINER_PATH_TO_SNIPPET,
-                runner: this.runner
-            });
+            fernFiles.push({ hostPath: snippetPath, containerFilename: SNIPPET_FILENAME });
         }
-
         if (snippetTemplatePath != null) {
-            await copyToContainer({
-                logger,
-                containerId,
-                hostPath: snippetTemplatePath,
-                containerPath: CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-                runner: this.runner
-            });
+            fernFiles.push({ hostPath: snippetTemplatePath, containerFilename: SNIPPET_TEMPLATES_FILENAME });
         }
+        await batchCopyToContainer({
+            logger,
+            containerId,
+            files: fernFiles,
+            containerDir: CONTAINER_FERN_DIRECTORY,
+            runner: this.runner
+        });
 
         if (licenseFilePath != null) {
             await copyToContainer({
@@ -241,7 +226,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         await execInContainer({
             logger,
             containerId,
-            command: [...entrypoint, CONTAINER_GENERATOR_CONFIG_PATH],
+            command: [...entrypoint, `${CONTAINER_FERN_DIRECTORY}/${GENERATOR_CONFIG_FILENAME}`],
             runner: this.runner,
             writeLogsToFile: true
         });

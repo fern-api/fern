@@ -1,7 +1,8 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { writeFile } from "fs/promises";
+import { copyFile, writeFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
 
 export declare namespace runContainer {
@@ -288,6 +289,67 @@ export async function copyToContainer({
         throw new Error(
             `Failed to copy ${hostPath} to container ${containerId}:${containerPath}.\n${stdout}\n${stderr}`
         );
+    }
+}
+
+/**
+ * Copies multiple files into a single container directory using one `docker cp` call.
+ * Files are staged in a temporary directory and copied as a batch, reducing the number
+ * of Docker CLI invocations.
+ */
+export async function batchCopyToContainer({
+    logger,
+    containerId,
+    files,
+    containerDir,
+    runner
+}: {
+    logger: Logger;
+    containerId: string;
+    files: Array<{ hostPath: string; containerFilename: string }>;
+    containerDir: string;
+    runner?: ContainerRunner;
+}): Promise<void> {
+    if (files.length === 0) {
+        return;
+    }
+    if (files.length === 1) {
+        const [file] = files;
+        if (file != null) {
+            return copyToContainer({
+                logger,
+                containerId,
+                hostPath: file.hostPath,
+                containerPath: `${containerDir}/${file.containerFilename}`,
+                runner
+            });
+        }
+    }
+
+    const containerRunner = runner ?? "docker";
+    const tmpDir = await tmp.dir({ unsafeCleanup: true });
+    try {
+        await Promise.all(
+            files.map(({ hostPath, containerFilename }) =>
+                copyFile(hostPath, path.join(tmpDir.path, containerFilename))
+            )
+        );
+        const { exitCode, stdout, stderr } = await loggingExeca(
+            logger,
+            containerRunner,
+            ["cp", `${tmpDir.path}/.`, `${containerId}:${containerDir}/`],
+            {
+                reject: false,
+                doNotPipeOutput: true
+            }
+        );
+        if (exitCode !== 0) {
+            throw new Error(
+                `Failed to batch copy files to container ${containerId}:${containerDir}.\n${stdout}\n${stderr}`
+            );
+        }
+    } finally {
+        await tmpDir.cleanup();
     }
 }
 
