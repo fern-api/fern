@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.56.5
+  changelogEntry:
+    - summary: |
+        Fix mock server test generation to omit null values for non-nullable
+        properties in inlined request bodies, matching the SDK's
+        JsonIgnoreCondition.WhenWritingNull serialization behavior. When
+        enableExplicitNullableOptional is disabled (default), all nulls are
+        now unconditionally omitted from expected request JSON.
+      type: fix
+    - summary: |
+        Fix pagination test build errors (CS8411) when generatePaginatedClients
+        is disabled. The test generator now checks the config flag before emitting
+        `await foreach` code, preventing attempts to iterate over plain response
+        types that do not implement IAsyncEnumerable.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
 - version: 2.56.4
   changelogEntry:
     - summary: |
