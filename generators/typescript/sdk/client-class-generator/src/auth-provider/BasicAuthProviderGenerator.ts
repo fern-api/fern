@@ -438,9 +438,25 @@ ${buildNullChecks(errorAction)}
         }
 
         // Generate AuthOptions type based on keepIfWrapper — omitted fields are excluded
-        const propertyDefs = authOptionsProperties
-            .map((prop) => `${prop.name}${prop.hasQuestionToken ? "?" : ""}: ${prop.type}`)
-            .join("; ");
+        // Use computed property keys ([USERNAME_PARAM], [PASSWORD_PARAM]) instead of literal names
+        const computedPropertyDefs: string[] = [];
+        if (!usernameOmit) {
+            const isUsernameOptional = !this.isAuthMandatory || usernameEnvVar != null;
+            const optMark = isUsernameOptional ? "?" : "";
+            const usernameType = authOptionsProperties.find(
+                (p) => p.name === getPropertyKey(context.case.camelSafe(this.authScheme.username))
+            )?.type;
+            computedPropertyDefs.push(`[USERNAME_PARAM]${optMark}: ${usernameType}`);
+        }
+        if (!passwordOmit) {
+            const isPasswordOptional = !this.isAuthMandatory || passwordEnvVar != null;
+            const optMark = isPasswordOptional ? "?" : "";
+            const passwordType = authOptionsProperties.find(
+                (p) => p.name === getPropertyKey(context.case.camelSafe(this.authScheme.password))
+            )?.type;
+            computedPropertyDefs.push(`[PASSWORD_PARAM]${optMark}: ${passwordType}`);
+        }
+        const propertyDefs = computedPropertyDefs.join("; ");
 
         // When wrapped (multiple auth schemes), the wrapper property should be optional
         // When not wrapped, individual fields already have their own ?: markers based on env vars
