@@ -76,6 +76,7 @@ fixtures:
     - outputFolder: clientName
       customConfig:
         clientName: FernClient
+        maxRetries: 5
     - outputFolder: packageName
       customConfig:
         packageName: fern-api/imdb-php

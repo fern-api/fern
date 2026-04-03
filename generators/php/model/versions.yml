@@ -8,6 +8,14 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 0.0.3
+  changelogEntry:
+    - summary: |
+        Migrate template engine from lodash to Eta for consistency with other generators.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 62
+
 - version: 0.0.2
   changelogEntry:
     - summary: |

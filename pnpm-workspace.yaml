@@ -28,6 +28,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "lodash-es"
+  - "lodash"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -182,8 +184,8 @@ catalog:
   jwks-rsa: ^3.1.0
   knip: ^5.84.1
   latest-version: ^9.0.0
-  lodash: ^4.17.23
-  lodash-es: ^4.17.21
+  lodash: ^4.18.1
+  lodash-es: ^4.18.1
   mdast-util-from-markdown: ^2.0.3
   mdast-util-gfm: ^3.0.0
   mdast-util-math: ^3.0.0
