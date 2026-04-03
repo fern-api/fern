@@ -1,9 +1,13 @@
 #!/bin/bash
 #
-#
+# Configures sparse checkout to exclude large test fixture directories.
+# Can be run from the repo root or from a worktree.
 #
 
 set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -22,8 +26,12 @@ print_info() {
     echo "→ $1"
 }
 
-if [ ! -f "package.json" ] || [ ! -d ".git" ]; then
-    print_error "This script must be run from the root of the fern repository"
+# Allow running from a worktree path passed as $1, or default to repo root
+TARGET_DIR="${1:-$REPO_ROOT}"
+cd "$TARGET_DIR"
+
+if [ ! -f "package.json" ]; then
+    print_error "Target directory does not appear to be a fern checkout: $TARGET_DIR"
     exit 1
 fi
 
