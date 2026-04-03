@@ -1400,7 +1400,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 } else if (!usernameOmitted && passwordOmitted) {
                     this.configureAuthMethod.beginControlFlow("if (this.$L != null)", usernameFieldName);
                 } else {
-                    // Both fields omitted — skip auth header entirely when auth is optional
+                    // Both fields omitted — skip auth header entirely when auth is non-mandatory
                 }
                 if (!usernameOmitted || !passwordOmitted) {
                     // Use empty string for omitted fields in token construction
