@@ -1331,7 +1331,7 @@ func (f *fileWriter) WriteClient(
 			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
 			f.P("}")
 		}
-			if header.ClientDefault != nil && isStringType(header.ValueType) {
+				if header.ClientDefault != nil && isStringType(header.ValueType) {
 				f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
 				f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
 				f.P("}")
@@ -4164,10 +4164,13 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 	return nil
 }
 
-// isStringType returns true if the given type reference resolves to a string primitive.
+// isStringType returns true if the given type reference is a non-optional string primitive.
 // This is used to guard clientDefault generation, since the `== ""` zero-value check
-// and `fmt.Sprintf` assignment only compile for string-typed parameters.
+// and `fmt.Sprintf` assignment only compile for Go `string` types (not `*string`).
 func isStringType(valueType *ir.TypeReference) bool {
+	if getOptionalOrNullableContainer(valueType) != nil {
+		return false
+	}
 	primitive := maybePrimitive(valueType)
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
 }
