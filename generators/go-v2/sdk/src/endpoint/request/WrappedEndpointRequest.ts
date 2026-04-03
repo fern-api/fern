@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -119,20 +119,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }): void {
         switch (fileProperty.type) {
             case "file": {
-                const fileKeyName = typeof fileProperty.key === "string" ? fileProperty.key : fileProperty.key.name;
                 this.writeFileUploadField({
                     writer,
                     key: getWireValue(fileProperty.key),
-                    value: go.codeblock(this.getRequestPropertyReference({ fieldName: fileKeyName, isFile: true })),
+                    value: go.codeblock(this.getRequestPropertyReference({ fieldName: fileProperty.key, isFile: true })),
                     contentType: fileProperty.contentType,
                     format: "file"
                 });
                 break;
             }
             case "fileArray": {
-                const fileArrKeyName = typeof fileProperty.key === "string" ? fileProperty.key : fileProperty.key.name;
                 writer.writeLine(
-                    `for _, f := range ${this.getRequestPropertyReference({ fieldName: fileArrKeyName, isFile: true })} {`
+                    `for _, f := range ${this.getRequestPropertyReference({ fieldName: fileProperty.key, isFile: true })} {`
                 );
                 writer.indent();
                 this.writeFileUploadField({
@@ -215,11 +213,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getRequestPropertyReference({ fieldName, isFile }: { fieldName: NameInput; isFile?: boolean }): string {
-        const nameStr = getOriginalName(fieldName);
         if (isFile && !this.context.customConfig.inlineFileProperties) {
-            return this.context.getParameterName(nameStr);
+            return this.context.getParameterName(fieldName);
         }
-        return `${this.getRequestParameterName()}.${this.context.getFieldName(nameStr)}`;
+        return `${this.getRequestParameterName()}.${this.context.getFieldName(fieldName)}`;
     }
 
     // TODO: Add support for custom Content-Type header values.

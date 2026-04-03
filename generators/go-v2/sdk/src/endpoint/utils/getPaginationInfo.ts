@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -462,7 +462,7 @@ function getResponsePropertySetter({
                 getPropertyReference({
                     variableName: "response",
                     propertyPath: responsePropertyPath.map((item) => item.name),
-                    name: getOriginalName(responseProperty.property.name),
+                    name: responseProperty.property.name,
                     dereference
                 })
             );
@@ -844,7 +844,7 @@ function getPagePropertyReference({
             return getPropertyReference({
                 variableName,
                 propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
-                name: getOriginalName(pagination.page.property.name),
+                name: pagination.page.property.name,
                 withGetter
             });
         }
@@ -867,7 +867,7 @@ function getResponsePropertyReference({
     return getPropertyReference({
         variableName: "response",
         propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
-        name: getOriginalName(results.property.name),
+        name: results.property.name,
         withGetter
     });
 }

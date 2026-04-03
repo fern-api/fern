@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -51,18 +51,10 @@ export function getRequestPropertyFieldName(
     requestProperty: FernIr.RequestProperty
 ): string {
     if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
-        const nameVal =
-            typeof requestProperty.property.name === "string"
-                ? requestProperty.property.name
-                : requestProperty.property.name;
-        return context.getFieldName(nameVal);
+        return context.getFieldName(requestProperty.property.name);
     }
     if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
-        const nameVal =
-            typeof requestProperty.property.name === "string"
-                ? requestProperty.property.name
-                : requestProperty.property.name;
-        return context.getFieldName(nameVal);
+        return context.getFieldName(requestProperty.property.name);
     }
     // Fallback to default names if we can't extract from IR
     return "ClientId";
@@ -157,9 +149,8 @@ export function getInferredAuthCredentialParams(
         if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
             continue;
         }
-        const nameVal = header.name;
         params.push({
-            fieldName: context.getFieldName(getOriginalName(nameVal)),
+            fieldName: context.getFieldName(header.name),
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
         });
     }
@@ -175,9 +166,8 @@ export function getInferredAuthCredentialParams(
         if (isOptional) {
             continue;
         }
-        const propNameVal = prop.name;
         params.push({
-            fieldName: context.getFieldName(getOriginalName(propNameVal)),
+            fieldName: context.getFieldName(prop.name),
             isOptional: false
         });
     }
