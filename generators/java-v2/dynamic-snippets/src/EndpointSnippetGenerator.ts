@@ -439,10 +439,24 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): java.BuilderParameter[] {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = authRecord.usernameOmit === true;
+        const passwordOmitted = authRecord.passwordOmit === true;
+        const credentialParts: string[] = [];
+        if (!usernameOmitted) {
+            credentialParts.push(`"${values.username}"`);
+        }
+        if (!passwordOmitted) {
+            credentialParts.push(`"${values.password}"`);
+        }
+        if (credentialParts.length === 0) {
+            return [];
+        }
         return [
             {
                 name: "credentials",
-                value: java.TypeLiteral.raw(`"${values.username}", "${values.password}"`)
+                value: java.TypeLiteral.raw(credentialParts.join(", "))
             }
         ];
     }
