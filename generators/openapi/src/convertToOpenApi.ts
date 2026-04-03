@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -79,8 +80,8 @@ export function convertToOpenApi({
                 url: environment.url,
                 description:
                     environment.docs != null
-                        ? `${environment.name.originalName} (${environment.docs})`
-                        : environment.name.originalName
+                        ? `${getOriginalName(environment.name)} (${environment.docs})`
+                        : getOriginalName(environment.name)
             };
         });
     }
@@ -90,14 +91,14 @@ export function convertToOpenApi({
 
 export function getDeclaredTypeNameKey(declaredTypeName: FernIr.DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("-");
 }
 
 export function getErrorTypeNameKey(declaredErrorName: FernIr.DeclaredErrorName): string {
     return [
-        ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredErrorName.name.originalName
+        ...declaredErrorName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredErrorName.name)
     ].join("-");
 }
