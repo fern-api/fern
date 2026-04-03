@@ -56,11 +56,12 @@ export class StringEnumGenerator {
             ],
             cases: visitDiscriminatedUnion(this.source, "type")._visit({
                 ir: (info) => {
-                    if (this.caseConverter == null) {
+                    const caseConverter = this.caseConverter;
+                    if (caseConverter == null) {
                         throw new Error("CaseConverter is required for IR source");
                     }
                     return info.enumTypeDeclaration.values.map((val) => ({
-                        unsafeName: this.caseConverter.camelUnsafe(val.name),
+                        unsafeName: caseConverter.camelUnsafe(val.name),
                         rawValue: getWireValue(val.name),
                         docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
                     }));
