@@ -1,6 +1,5 @@
 using SeedSingleUrlEnvironmentNoDefault;
 
-
 public partial class Examples
 {
     public async Task Example0() {

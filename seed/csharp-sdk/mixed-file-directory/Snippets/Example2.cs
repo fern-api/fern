@@ -1,7 +1,6 @@
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.User_;
 
-
 public partial class Examples
 {
     public async Task Example2() {

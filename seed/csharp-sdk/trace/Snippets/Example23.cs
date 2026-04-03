@@ -1,6 +1,5 @@
 using SeedTrace;
 
-
 public partial class Examples
 {
     public async Task Example23() {

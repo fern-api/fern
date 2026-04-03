@@ -1,7 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Types.Object;
 
-
 public partial class Examples
 {
     public async Task Example12() {

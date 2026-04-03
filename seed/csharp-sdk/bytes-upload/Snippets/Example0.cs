@@ -1,7 +1,6 @@
 using SeedBytesUpload;
 using System.Text;
 
-
 public partial class Examples
 {
     public async Task Example0() {

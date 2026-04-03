@@ -1,6 +1,5 @@
 using SeedErrors;
 
-
 public partial class Examples
 {
     public async Task Example18() {

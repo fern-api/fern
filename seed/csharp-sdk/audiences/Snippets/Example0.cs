@@ -1,7 +1,6 @@
 using SeedAudiences;
 using SeedAudiences.FolderA;
 
-
 public partial class Examples
 {
     public async Task Example0() {

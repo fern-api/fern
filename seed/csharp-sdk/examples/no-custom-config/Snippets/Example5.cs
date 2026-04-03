@@ -1,7 +1,6 @@
 using SeedExamples;
 using SeedExamples.File_;
 
-
 public partial class Examples
 {
     public async Task Example5() {

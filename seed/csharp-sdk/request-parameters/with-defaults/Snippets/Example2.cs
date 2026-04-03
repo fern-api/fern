@@ -1,6 +1,5 @@
 using SeedRequestParameters;
 
-
 public partial class Examples
 {
     public async Task Example2() {

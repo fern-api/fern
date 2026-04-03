@@ -1,6 +1,5 @@
 using SeedInferredAuthImplicitApiKey;
 
-
 public partial class Examples
 {
     public async Task Example3() {

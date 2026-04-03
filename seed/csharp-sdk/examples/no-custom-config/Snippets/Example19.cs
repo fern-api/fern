@@ -2,7 +2,6 @@ using SeedExamples;
 using SeedExamples.Commons;
 using System.Globalization;
 
-
 public partial class Examples
 {
     public async Task Example19() {

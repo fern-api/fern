@@ -1,6 +1,5 @@
 using SeedInferredAuthImplicitNoExpiry;
 
-
 public partial class Examples
 {
     public async Task Example2() {

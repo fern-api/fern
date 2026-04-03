@@ -1,7 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Endpoints.Params;
 
-
 public partial class Examples
 {
     public async Task Example34() {

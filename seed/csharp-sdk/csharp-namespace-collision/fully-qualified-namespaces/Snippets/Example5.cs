@@ -1,6 +1,5 @@
 using SeedCsharpNamespaceCollision;
 
-
 public partial class Examples
 {
     public async System.Threading.Tasks.Task Example5() {

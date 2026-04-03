@@ -2,7 +2,6 @@ using SeedExhaustive;
 using SeedExhaustive.Core;
 using System.Globalization;
 
-
 public partial class Examples
 {
     public async Task Example45() {

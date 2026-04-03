@@ -1,7 +1,6 @@
 using SeedApi;
 using System.Text;
 
-
 public partial class Examples
 {
     public async Task Example0() {

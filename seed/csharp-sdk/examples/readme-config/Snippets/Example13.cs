@@ -1,6 +1,5 @@
 using SeedExamples;
 
-
 public partial class Examples
 {
     public async Task Example13() {

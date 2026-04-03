@@ -1,6 +1,5 @@
 using SeedClientSideParams;
 
-
 public partial class Examples
 {
     public async Task Example9() {

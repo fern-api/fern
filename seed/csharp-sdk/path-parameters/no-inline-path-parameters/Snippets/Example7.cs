@@ -1,6 +1,5 @@
 using SeedPathParameters;
 
-
 public partial class Examples
 {
     public async Task Example7() {

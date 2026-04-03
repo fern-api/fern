@@ -3,7 +3,6 @@ using SeedExhaustive.InlinedRequests;
 using SeedExhaustive.Types.Object;
 using System.Globalization;
 
-
 public partial class Examples
 {
     public async Task Example55() {
