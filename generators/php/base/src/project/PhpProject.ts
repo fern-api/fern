@@ -3,9 +3,13 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { Eta } from "eta";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { createWriteStream, existsSync } from "fs";
+import { chmod, mkdir, readFile, writeFile } from "fs/promises";
+import https from "https";
 import { cloneDeep, isArray, mergeWith } from "lodash-es";
+import os from "os";
 import path from "path";
+import { pipeline } from "stream/promises";
 
 import { AsIsFiles } from "../AsIs.js";
 import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext.js";
@@ -23,6 +27,74 @@ const TESTS_DIRECTORY_NAME = "tests";
 const CUSTOM_LICENSE_NAME = "LicenseRef-LICENSE";
 
 const COMPOSER_JSON_FILENAME = "composer.json";
+
+const PHP_CS_FIXER_VERSION = "v3.94.2";
+const PHP_CS_FIXER_DOWNLOAD_URL = `https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/${PHP_CS_FIXER_VERSION}/php-cs-fixer.phar`;
+
+let resolvedPhpCsFixerPath: string | undefined;
+
+async function resolvePhpCsFixer(): Promise<{ command: string; args: string[] }> {
+    if (resolvedPhpCsFixerPath != null) {
+        if (resolvedPhpCsFixerPath === "php-cs-fixer") {
+            return { command: "php-cs-fixer", args: [] };
+        }
+        return { command: "php", args: [resolvedPhpCsFixerPath] };
+    }
+
+    // Check if php-cs-fixer is on PATH
+    try {
+        const { exitCode } = await loggingExeca(undefined, "php-cs-fixer", ["--version"], {
+            doNotPipeOutput: true,
+            reject: false
+        });
+        if (exitCode === 0) {
+            resolvedPhpCsFixerPath = "php-cs-fixer";
+            return { command: "php-cs-fixer", args: [] };
+        }
+    } catch {
+        // Not on PATH, fall through to download
+    }
+
+    // Download the phar to a cache directory
+    const cacheDir = path.join(os.tmpdir(), "fern-php-cs-fixer");
+    const pharPath = path.join(cacheDir, `php-cs-fixer-${PHP_CS_FIXER_VERSION}.phar`);
+
+    if (!existsSync(pharPath)) {
+        await mkdir(cacheDir, { recursive: true });
+        await downloadFile(PHP_CS_FIXER_DOWNLOAD_URL, pharPath);
+        await chmod(pharPath, 0o755);
+    }
+
+    resolvedPhpCsFixerPath = pharPath;
+    return { command: "php", args: [pharPath] };
+}
+
+function downloadFile(url: string, destPath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const makeRequest = (requestUrl: string) => {
+            https
+                .get(requestUrl, (response) => {
+                    if (
+                        response.statusCode != null &&
+                        response.statusCode >= 300 &&
+                        response.statusCode < 400 &&
+                        response.headers.location
+                    ) {
+                        makeRequest(response.headers.location);
+                        return;
+                    }
+                    if (response.statusCode != null && response.statusCode !== 200) {
+                        reject(new Error(`Failed to download ${requestUrl}: HTTP ${response.statusCode}`));
+                        return;
+                    }
+                    const fileStream = createWriteStream(destPath);
+                    pipeline(response, fileStream).then(resolve).catch(reject);
+                })
+                .on("error", reject);
+        };
+        makeRequest(url);
+    });
+}
 
 /**
  * In memory representation of a PHP project.
@@ -228,7 +300,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.mkdir(absolutePathToDirectory);
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
-            await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", ".", "--no-interaction"], {
+            const { command, args } = await resolvePhpCsFixer();
+            await loggingExeca(this.context.logger, command, [...args, "fix", ".", "--no-interaction"], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToDirectory
             });
