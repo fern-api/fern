@@ -118,7 +118,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .forEach(httpHeader -> processHeader(httpHeader, headerWireValues, headerObjectProperties, "endpoint"));
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
             TypeReference valueType = queryParameter.getValueType();
-            boolean hasDefault = defaultValueExtractor.hasAnyDefault(valueType, queryParameter.getClientDefault());
+            boolean hasDefault = defaultValueExtractor.hasDefaultValue(valueType);
             if (hasDefault) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
             }
@@ -142,7 +142,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .filter(param -> param.getLocation().equals(PathParameterLocation.ENDPOINT))
                     .forEach(pathParameter -> {
                         TypeReference valueType = pathParameter.getValueType();
-                        if (defaultValueExtractor.hasAnyDefault(valueType, pathParameter.getClientDefault())) {
+                        if (defaultValueExtractor.hasDefaultValue(valueType)) {
                             valueType = TypeReference.container(ContainerType.optional(valueType));
                         }
                         pathParameterObjectProperties.add(ObjectProperty.builder()
@@ -286,7 +286,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             List<ObjectProperty> headerObjectProperties,
             String source) {
         TypeReference valueType = httpHeader.getValueType();
-        if (defaultValueExtractor.hasAnyDefault(valueType, httpHeader.getClientDefault())) {
+        if (defaultValueExtractor.hasDefaultValue(valueType)) {
             valueType = TypeReference.container(ContainerType.optional(valueType));
         }
         String sdkName = httpHeader.getName().getName().getCamelCase().getSafeName();

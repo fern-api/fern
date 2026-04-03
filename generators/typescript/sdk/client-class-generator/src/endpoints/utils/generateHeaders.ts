@@ -205,8 +205,10 @@ function getValueExpressionForHeader({
             );
         }
         // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        // Skip when the type is nullable — explicit null means "don't send the header",
+        // and ?? would replace null with the clientDefault, preventing intentional omission.
         const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-        if (clientDefaultVal != null) {
+        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
             valueExpression = ts.factory.createBinaryExpression(
                 valueExpression,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),

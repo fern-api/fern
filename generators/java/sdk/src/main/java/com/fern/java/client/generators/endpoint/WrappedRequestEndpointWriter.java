@@ -55,7 +55,6 @@ import okhttp3.*;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
-    private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -90,7 +89,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 variables,
                 apiErrorClassName,
                 baseErrorClassName);
-        this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
@@ -223,36 +221,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         : header.objectProperty().getName().getName().getOriginalName();
             }
             if (typeNameIsOptional(header.poetTypeName())) {
-                // Check if this header has a clientDefault
-                Optional<CodeBlock> headerClientDefault = findHeaderClientDefault(headerName);
-                if (headerClientDefault.isPresent()) {
-                    // Use clientDefault as fallback via .orElse()
-                    requestBodyCodeBlock.addStatement(
-                            "$L.addHeader($S, $L)",
-                            AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                            headerName,
-                            PoetTypeNameStringifier.stringify(
-                                    CodeBlock.of(
-                                                    "$L.$N().orElse($L)",
-                                                    "request",
-                                                    header.getterProperty(),
-                                                    headerClientDefault.get())
-                                            .toString(),
-                                    header.poetTypeName()));
-                } else {
-                    requestBodyCodeBlock
-                            .beginControlFlow(
-                                    "if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
-                            .addStatement(
-                                    "$L.addHeader($S, $L)",
-                                    AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                                    headerName,
-                                    PoetTypeNameStringifier.stringify(
-                                            CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
-                                                    .toString(),
-                                            header.poetTypeName()))
-                            .endControlFlow();
-                }
+                requestBodyCodeBlock
+                        .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
+                        .addStatement(
+                                "$L.addHeader($S, $L)",
+                                AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                                headerName,
+                                PoetTypeNameStringifier.stringify(
+                                        CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
+                                                .toString(),
+                                        header.poetTypeName()))
+                        .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L)",
@@ -555,19 +534,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
                 .endControlFlow();
-    }
-
-    /**
-     * Finds the clientDefault for a header by matching on wire value across service and endpoint headers.
-     */
-    private Optional<CodeBlock> findHeaderClientDefault(String headerWireValue) {
-        return java.util.stream.Stream.concat(
-                        httpService.getHeaders().stream(),
-                        httpEndpoint.getHeaders().stream())
-                .filter(h -> h.getName().getWireValue().equals(headerWireValue))
-                .findFirst()
-                .flatMap(HttpHeader::getClientDefault)
-                .flatMap(DefaultValueExtractor::extractClientDefault);
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {
