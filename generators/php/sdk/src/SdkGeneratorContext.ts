@@ -205,7 +205,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getUtilsClassReference("File");
     }
 
-    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): php.ClassReference {
+    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: NameInput): php.ClassReference {
         return php.classReference({
             name: caseConverter.pascalSafe(requestName),
             namespace: this.getLocationForWrappedRequest(serviceId).namespace

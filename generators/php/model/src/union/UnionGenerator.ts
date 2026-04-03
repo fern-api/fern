@@ -396,9 +396,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     ): php.CodeBlock {
         return php.codeblock((writer) => {
             if (type.internalType.type === "literal") {
-                writer.write(
-                    `"Expected property '${this.context.getPropertyName(propertyName)}' in JSON data to be `
-                );
+                writer.write(`"Expected property '${this.context.getPropertyName(propertyName)}' in JSON data to be `);
                 writer.writeNode(type.internalType.value);
                 writer.write(', instead received " . ');
             } else {
