@@ -149,7 +149,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                         case "file": {
                             this.addFieldWithMethods({
                                 clazz,
-                                name: property.value.key.name,
+                                name: property.value.key,
                                 field: this.filePropertyToField(property.value),
                                 includeGetters,
                                 includeSetters
@@ -200,7 +200,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             }
         }
         return php.field({
-            name: this.context.getPropertyName(fileProperty.key.name),
+            name: this.context.getPropertyName(fileProperty.key),
             type: fileProperty.isOptional ? php.Type.optional(type) : type,
             access: this.context.getPropertyAccess()
         });

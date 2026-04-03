@@ -399,7 +399,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentAccess(name: FernIr.Name): php.CodeBlock {
+    public getEnvironmentAccess(name: NameInput): php.CodeBlock {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         if (isMultiUrl) {
             return php.codeblock((writer) => {
@@ -467,7 +467,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentName(name: FernIr.Name): string {
+    public getEnvironmentName(name: NameInput): string {
         return caseConverter.pascalSafe(name);
     }
 

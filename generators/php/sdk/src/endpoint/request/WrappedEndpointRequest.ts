@@ -28,7 +28,7 @@ const HEADER_BAG_NAME = "$headers";
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: FernIr.ServiceId;
     private wrapper: FernIr.SdkRequestWrapper;
-    private requestParameterName: FernIr.Name;
+    private requestParameterName: FernIr.NameOrString;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, service, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, service, endpoint);
@@ -253,7 +253,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer: php.Writer;
         property: FernIr.FilePropertyArray;
     }): void {
-        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`;
+        const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key)}`;
         writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`));
         this.writeMultipartPart({ writer, paramRef: "$file", property: FernIr.FileProperty.fileArray(property) });
         writer.endControlFlow();
@@ -402,7 +402,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private writeSingleFile(writer: php.Writer, file: FernIr.FilePropertySingle): void {
         const paramRef = this.context.accessRequestProperty({
             requestParameterName: this.requestParameterName,
-            propertyName: file.key.name
+            propertyName: file.key
         });
         if (file.isOptional) {
             writer.controlFlow("if", php.codeblock(`${paramRef} != null`));
@@ -417,7 +417,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (fileArray.isOptional) {
             const ref = this.context.accessRequestProperty({
                 requestParameterName: this.sdkRequest.requestParameterName,
-                propertyName: fileArray.key.name
+                propertyName: fileArray.key
             });
             writer.controlFlow("if", php.codeblock(`${ref} != null`));
             this.writeMultipartPartFileArray({ writer, property: fileArray });

@@ -1,4 +1,4 @@
-import { Arguments, NameInput, UnnamedArgument } from "@fern-api/base-generator";
+import { Arguments, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -281,6 +281,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             writer,
                             unpagedEndpointMethodName
                         });
+                        break;
+                    case "uri":
+                    case "path":
                         break;
                     default:
                         assertNever(endpoint.pagination);
@@ -580,6 +583,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        throw new Error(`Pagination type ${endpoint.pagination.type} is not supported`);
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -592,7 +598,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
 
             throw new Error(
-                `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
+                `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
             );
         }
 
@@ -601,7 +607,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is ${listItemType.internalType.type}.`
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is ${listItemType.internalType.type}.`
         );
     }
 
@@ -616,7 +622,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {
