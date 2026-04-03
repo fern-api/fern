@@ -441,8 +441,8 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter[] {
         // usernameOmit/passwordOmit may exist in newer IR versions
         const authRecord = auth as unknown as Record<string, unknown>;
-        const usernameOmitted = authRecord.usernameOmit === true;
-        const passwordOmitted = authRecord.passwordOmit === true;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
         const credentialParts: string[] = [];
         if (!usernameOmitted) {
             credentialParts.push(`"${values.username}"`);
