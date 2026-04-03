@@ -592,6 +592,9 @@ function addRunCommand(cli: Argv) {
                 }),
         async (argv) => {
             // Resolve --sdk shorthand into --generator value
+            if (argv.sdk != null && argv.generator != null) {
+                throw new Error("Cannot specify both --generator and --sdk. Use one or the other.");
+            }
             const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
             if (resolvedGenerator == null) {
                 throw new Error("Either --generator or --sdk must be provided.");
@@ -725,6 +728,9 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 }),
         async (argv) => {
             // Resolve --sdk shorthand into --generator value
+            if (argv.sdk != null && argv.generator != null) {
+                throw new Error("Cannot specify both --generator and --sdk. Use one or the other.");
+            }
             const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
             if (resolvedGenerator == null) {
                 throw new Error("Either --generator or --sdk must be provided.");
