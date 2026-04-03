@@ -25,7 +25,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
 
     private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
         const d = "FromCustom";
-        return enumDeclaration.values.some((v) => this.context.case.pascalSafe(v.name) === d) ? "FromCustom_" : d;
+        return enumDeclaration.values.some((v) => this.case.pascalSafe(v.name) === d) ? "FromCustom_" : d;
     }
 
     protected doGenerate(): CSharpFile {

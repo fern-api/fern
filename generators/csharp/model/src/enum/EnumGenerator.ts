@@ -45,7 +45,7 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorConte
 
         this.enumDeclaration.values.forEach((member) =>
             enum_.addMember({
-                name: this.context.case.pascalSafe(member.name),
+                name: this.case.pascalSafe(member.name),
                 value: getWireValue(member.name)
             })
         );

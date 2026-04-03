@@ -113,21 +113,21 @@ export class MockEndpointGenerator extends WithGeneration {
                         switch (scheme.type) {
                             case "basic": {
                                 // Compute exact expected header value from the known test credentials
-                                const username = this.context.case.screamingSnakeSafe(scheme.username);
-                                const password = this.context.case.screamingSnakeSafe(scheme.password);
+                                const username = this.case.screamingSnakeSafe(scheme.username);
+                                const password = this.case.screamingSnakeSafe(scheme.password);
                                 const encoded = Buffer.from(`${username}:${password}`).toString("base64");
                                 writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
                                 break;
                             }
                             case "bearer": {
-                                const tokenValue = this.context.case.screamingSnakeSafe(scheme.token);
+                                const tokenValue = this.case.screamingSnakeSafe(scheme.token);
                                 writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
                                 break;
                             }
                             case "header": {
                                 const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
                                 const headerValue =
-                                    scheme.name != null ? this.context.case.screamingSnakeSafe(scheme.name) : undefined;
+                                    scheme.name != null ? this.case.screamingSnakeSafe(scheme.name) : undefined;
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;

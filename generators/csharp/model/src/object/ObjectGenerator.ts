@@ -268,7 +268,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         className: string;
         objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = this.context.case.pascalSafe(objectProperty);
+        const propertyName = this.case.pascalSafe(objectProperty);
         if (propertyName === className) {
             return `${propertyName}_`;
         }

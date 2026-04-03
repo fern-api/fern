@@ -44,7 +44,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
                 interface_.addField({
-                    name: this.context.case.pascalSafe(childSubpackage.name),
+                    name: this.case.pascalSafe(childSubpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,

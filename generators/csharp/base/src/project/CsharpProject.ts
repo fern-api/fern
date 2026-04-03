@@ -47,6 +47,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     protected get generation(): Generation {
         return this.context.generation;
     }
+    protected get case(): Generation["case"] {
+        return this.generation.case;
+    }
     protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }

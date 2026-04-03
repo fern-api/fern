@@ -117,7 +117,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             if (typeRef.isOptional) {
                 continue;
             }
-            const name = this.context.case.pascalSafe(customProperty.property.name);
+            const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(customProperty.property.name));
 
             this.additionalRequestFields.set(
                 name,
@@ -134,7 +134,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 reference: scopes.property.valueType
             });
             if (!typeRef.isOptional) {
-                const name = this.context.case.pascalSafe(scopes.property.name);
+                const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(scopes.property.name));
                 this.additionalRequestFields.set(
                     name,
                     this.cls.addField({
@@ -241,7 +241,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             writer.writeTextStatement(
                 `${this.accessTokenField.name} = tokenResponse.${this.dotAccess(
                     tokenEndpoint.responseProperties.accessToken.property,
-                    tokenEndpoint.responseProperties.accessToken.propertyPath?.map((val) => val.name)
+                    tokenEndpoint.responseProperties.accessToken.propertyPath?.map((val) => val.name) ?? []
                 )}`
             );
 
@@ -249,7 +249,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeTextStatement(
                     `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
                         this.expiresIn.property,
-                        this.expiresIn.propertyPath?.map((val) => val.name)
+                        this.expiresIn.propertyPath?.map((val) => val.name) ?? []
                     )}).AddMinutes(-${this.bufferInMinutesField.name})`
                 );
             }
@@ -262,12 +262,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private request = lazy({
         clientId: () =>
-            this.context.case.pascalSafe(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+            this.context.getNameForField(
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                )
             ),
         secret: () =>
-            this.context.case.pascalSafe(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+            this.context.getNameForField(
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                )
             )
     });
 
@@ -363,9 +367,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private dotAccess(property: ObjectProperty, path?: FernIr.NameOrString[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => this.context.case.pascalSafe(val)).join(".")}.${this.context.case.pascalSafe(property.name)}`;
+            return `${path.map((val) => this.case.pascalSafe(val)).join(".")}.${this.case.pascalSafe(property.name)}`;
         }
-        return this.context.case.pascalSafe(property.name);
+        return this.case.pascalSafe(property.name);
     }
 }
 

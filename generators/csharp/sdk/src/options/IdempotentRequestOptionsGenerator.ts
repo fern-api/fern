@@ -49,7 +49,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile>
                     // unless the type is optional
                     const nullConditionalOperator = !isString && type.isOptional ? "?" : "";
                     writer.writeLine(
-                        `["${getWireValue(header.name)}"] = ${this.context.case.pascalSafe(header.name)}${nullConditionalOperator}${toString},`
+                        `["${getWireValue(header.name)}"] = ${this.case.pascalSafe(header.name)}${nullConditionalOperator}${toString},`
                     );
                 }
                 writer.popScope();

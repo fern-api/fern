@@ -1178,7 +1178,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                 });
             },
             named: (namedType) => {
-                const typeName = this.context.case.pascalSafe(namedType.name);
+                const typeName = this.case.pascalSafe(namedType.name);
                 return { discriminator: this.toCamelCase(typeName), methodName: typeName, isNull: false };
             },
             primitive: (primitive) => {
@@ -1358,7 +1358,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     _other: () => baseMethodName
                 });
             },
-            named: (namedType) => this.context.case.pascalSafe(namedType.name),
+            named: (namedType) => this.case.pascalSafe(namedType.name),
             primitive: (primitive) => {
                 return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",
@@ -1397,7 +1397,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     _other: () => "Unknown"
                 });
             },
-            named: (namedType) => this.context.case.pascalSafe(namedType.name),
+            named: (namedType) => this.case.pascalSafe(namedType.name),
             primitive: (primitive) => {
                 return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",

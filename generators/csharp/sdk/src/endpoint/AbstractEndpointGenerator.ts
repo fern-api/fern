@@ -253,7 +253,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${this.context.case.pascalSafe(path)}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {
@@ -390,8 +390,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         requestParameter?: ast.Parameter;
     }): string {
         if (!includePathParametersInEndpointSignature && requestParameter != null) {
-            return `${requestParameter?.name}.${this.context.case.pascalSafe(pathParameter.name)}`;
+            return `${requestParameter?.name}.${this.case.pascalSafe(pathParameter.name)}`;
         }
-        return this.context.case.camelSafe(pathParameter.name);
+        return this.case.camelSafe(pathParameter.name);
     }
 }

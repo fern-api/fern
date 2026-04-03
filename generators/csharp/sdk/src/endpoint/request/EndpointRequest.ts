@@ -33,7 +33,7 @@ export abstract class EndpointRequest extends WithGeneration {
     }
 
     public getParameterName(): string {
-        return this.context.case.camelSafe(this.sdkRequest.requestParameterName);
+        return this.case.camelSafe(this.sdkRequest.requestParameterName);
     }
 
     public getRequestBodyVariableName(): string {

@@ -224,7 +224,7 @@ export class RawClient extends WithGeneration {
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
-                propertyName = this.context.case.pascalSafe(property.value.key);
+                propertyName = this.case.pascalSafe(property.value.key);
                 partName = getWireValue(property.value.key);
                 contentType = property.value.contentType;
                 csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
@@ -232,7 +232,7 @@ export class RawClient extends WithGeneration {
                 });
                 break;
             case "bodyProperty": {
-                propertyName = this.context.case.pascalSafe(property.name);
+                propertyName = this.case.pascalSafe(property.name);
                 partName = getWireValue(property.name);
                 contentType = property.contentType;
                 encoding = property.style;

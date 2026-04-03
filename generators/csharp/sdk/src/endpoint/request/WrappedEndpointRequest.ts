@@ -83,7 +83,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * The builder automatically handles null values, so no conditional checks are needed.
      */
     private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
-        const baseReference = `${this.getParameterName()}.${this.context.case.pascalSafe(query.name)}`;
+        const baseReference = `${this.getParameterName()}.${this.case.pascalSafe(query.name)}`;
 
         // When experimental explicit nullable/optional is enabled, Optional<T> types need special handling
         // since QueryStringBuilder doesn't know how to serialize Optional<T> objects directly
@@ -194,7 +194,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
-                    const headerReference = `${this.getParameterName()}.${this.context.case.pascalSafe(header.name)}`;
+                    const headerReference = `${this.getParameterName()}.${this.case.pascalSafe(header.name)}`;
                     writer.write(`.Add("${getWireValue(header.name)}", ${headerReference})`);
                 }
 
@@ -261,7 +261,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.context.case.pascalSafe(this.wrapper.bodyKey)}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             inlinedRequestBody: () => {
@@ -272,7 +272,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             fileUpload: () => undefined,
             bytes: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.context.case.pascalSafe(this.wrapper.bodyKey)}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             _other: () => undefined

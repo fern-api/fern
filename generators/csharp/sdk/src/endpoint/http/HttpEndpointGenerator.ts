@@ -641,9 +641,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(
-                    `_client.Options.Environment.${this.context.case.pascalSafe(baseUrl.name)}`
-                );
+                return this.csharp.codeblock(`_client.Options.Environment.${this.case.pascalSafe(baseUrl.name)}`);
             }
         }
         return undefined;
@@ -1779,7 +1777,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${this.context.case.pascalSafe(path)}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {

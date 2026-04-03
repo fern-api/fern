@@ -330,11 +330,11 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
         if (responseProperty.propertyPath != null && responseProperty.propertyPath.length > 0) {
             for (const pathElement of responseProperty.propertyPath) {
-                accessor += `.${this.context.case.pascalSafe(pathElement.name)}`;
+                accessor += `.${this.case.pascalSafe(pathElement.name)}`;
             }
         }
 
-        accessor += `.${this.context.case.pascalSafe(responseProperty.property.name)}`;
+        accessor += `.${this.case.pascalSafe(responseProperty.property.name)}`;
 
         return accessor;
     }
