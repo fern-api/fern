@@ -349,8 +349,13 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterInlinedRequestBody(
         exampleRequest: FernIr.ExampleRequestBody.InlinedRequestBody,
-        _endpoint: HttpEndpoint
+        endpoint: HttpEndpoint
     ): Record<string, unknown> {
+        // Build the set of nullable property wire names so we can distinguish
+        // optional-but-not-nullable (null is omitted by WhenWritingNull) from
+        // nullable (null is explicitly serialized via [Nullable] attribute).
+        const nullableNames = this.getNullablePropertyNamesFromEndpoint(endpoint);
+
         // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
@@ -360,7 +365,14 @@ export class MockEndpointGenerator extends WithGeneration {
                 continue;
             }
             // Recursively filter the property value (also normalizes datetime values)
-            result[getWireValue(prop.name)] = this.filterExampleTypeReference(prop.value);
+            const filteredValue = this.filterExampleTypeReference(prop.value);
+
+            // Omit null values for properties that are optional-but-not-nullable
+            // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
+            if (filteredValue === null && !nullableNames.has(getWireValue(prop.name))) {
+                continue;
+            }
+            result[getWireValue(prop.name)] = filteredValue;
         }
 
         // Also include extra properties if present
@@ -746,6 +758,9 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Gets the set of nullable property wire names for a type declaration.
      * A property is nullable if its type is a nullable container or optional<nullable<T>>.
+     *
+     * When enableExplicitNullableOptional is disabled (default), no [Nullable] attributes
+     * are generated and WhenWritingNull omits ALL nulls, so this returns an empty set.
      */
     private getNullablePropertyNamesForType(typeDeclaration: {
         shape: {
@@ -755,6 +770,13 @@ export class MockEndpointGenerator extends WithGeneration {
         };
     }): Set<string> {
         const nullableNames = new Set<string>();
+
+        // When the explicit nullable/optional flag is off, the generator does not emit
+        // [Nullable] attributes, so WhenWritingNull omits every null value.
+        if (!this.context.generation.settings.enableExplicitNullableOptional) {
+            return nullableNames;
+        }
+
         const shape = typeDeclaration.shape;
 
         if (shape.type !== "object" || !shape.properties) {
@@ -775,6 +797,42 @@ export class MockEndpointGenerator extends WithGeneration {
             }
         }
 
+        return nullableNames;
+    }
+
+    /**
+     * Gets the set of nullable property wire names from an endpoint's inlined request body.
+     * Used to determine which null properties should be kept in the expected request JSON
+     * (nullable properties serialize null explicitly via [Nullable] attribute) vs omitted
+     * (optional-but-not-nullable properties are skipped by JsonIgnoreCondition.WhenWritingNull).
+     *
+     * When enableExplicitNullableOptional is disabled (default), no [Nullable] attributes
+     * are generated and WhenWritingNull omits ALL nulls, so this returns an empty set.
+     */
+    private getNullablePropertyNamesFromEndpoint(endpoint: HttpEndpoint): Set<string> {
+        const nullableNames = new Set<string>();
+
+        // When the explicit nullable/optional flag is off, the generator does not emit
+        // [Nullable] attributes, so WhenWritingNull omits every null value.
+        if (!this.context.generation.settings.enableExplicitNullableOptional) {
+            return nullableNames;
+        }
+
+        if (endpoint.requestBody?.type !== "inlinedRequestBody") {
+            return nullableNames;
+        }
+        for (const prop of endpoint.requestBody.properties) {
+            if (this.context.isNullable(prop.valueType)) {
+                nullableNames.add(prop.name.wireValue);
+            }
+        }
+        if (endpoint.requestBody.extendedProperties) {
+            for (const prop of endpoint.requestBody.extendedProperties) {
+                if (this.context.isNullable(prop.valueType)) {
+                    nullableNames.add(prop.name.wireValue);
+                }
+            }
+        }
         return nullableNames;
     }
 

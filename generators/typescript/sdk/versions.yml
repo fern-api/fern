@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.62.1
+  changelogEntry:
+    - summary: |
+        Fix incorrect import paths in generated test files when using a custom
+        package path (e.g. `src/management`). Multi-line imports in test files
+        like `makeRequest.test.ts` were emitting `../../../src/management/core/...`
+        instead of `../../../core/...`, causing the import to resolve to a
+        nonexistent path.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 66
+
 - version: 3.62.0
   changelogEntry:
     - summary: |

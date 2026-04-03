@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v66.0.0] - 2026-04-02
+- Feature: Add IR Name compression support via new `NameOrString` and `NameAndWireValueOrString` union types.
+  Throughout the IR, fields previously typed as `Name` or `NameAndWireValue` are now typed as `NameOrString` or
+  `NameAndWireValueOrString` respectively, allowing names to be stored as plain strings (compressed) instead of fully
+  expanded casing objects. Affected fields span `FernFilepath`, auth schemes, environments, errors, HTTP types,
+  webhooks, websockets, and type declarations.
+- Feature: Add `CasingsConfig` type to `IntermediateRepresentation`. Stores the casing generator configuration
+  (target language, reserved keywords, smart casing flag) so that IR migrations can reconstruct the correct
+  `CasingsGenerator` when inflating compressed `NameOrString` values back to full `Name` objects.
+- Feature: Add `NameOrString` and `NameAndWireValueOrString` union types to both the main IR and dynamic IR commons,
+  enabling forward-compatible parsing of either string or structured name objects.
+
 ## [v65.7.0] - 2026-03-31
 - Feature: Add optional `clientDefault` field to `HttpHeader`, `PathParameter`, and `QueryParameter`.
   When present, the parameter/header is optional in the generated SDK and the literal value is sent

@@ -106,11 +106,12 @@ export class GeneratorMigrator {
      * migration system expects.
      */
     private toGeneratorInvocationSchema(target: Target): generatorsYml.GeneratorInvocationSchema {
-        return {
+        const invocation: generatorsYml.DefaultGeneratorInvocationSchema = {
             name: target.image,
             version: target.version,
             config: target.config
         };
+        return invocation;
     }
 
     /**
