@@ -7,7 +7,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
         scheme: FernIr.InferredAuthScheme;

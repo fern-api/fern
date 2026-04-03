@@ -12,7 +12,6 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
 
-
 export declare namespace WrappedEndpointRequest {
     interface Args {
         context: SdkGeneratorContext;

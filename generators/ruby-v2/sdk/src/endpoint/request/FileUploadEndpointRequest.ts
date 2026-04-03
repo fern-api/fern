@@ -10,7 +10,6 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
 
-
 export class FileUploadEndpointRequest extends EndpointRequest {
     private fileUploadRequest: FernIr.FileUploadRequest;
 

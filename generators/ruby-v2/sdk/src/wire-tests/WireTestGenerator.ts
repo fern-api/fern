@@ -115,9 +115,7 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) =>
-            this.case.snakeSafe(part)
-        );
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
         const endpointName = this.case.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
@@ -508,10 +506,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return (
-            service.name?.fernFilepath?.allParts?.map((part) => this.case.snakeSafe(part)).join("_") ||
-            "root"
-        );
+        return service.name?.fernFilepath?.allParts?.map((part) => this.case.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({

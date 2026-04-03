@@ -232,7 +232,9 @@ export class HttpEndpointGenerator {
                     break;
                 case "uri":
                 case "path":
-                    // Unsupported pagination types - no pagination behavior
+                    this.context.logger.warn(
+                        `Pagination type "${endpoint.pagination.type}" is not supported by the Ruby SDK generator. Endpoint "${getOriginalName(endpoint.name)}" will be generated without pagination.`
+                    );
                     break;
                 default:
                     assertNever(endpoint.pagination);

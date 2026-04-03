@@ -6,7 +6,6 @@ import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { generateFields } from "./generateFields.js";
 
-
 export interface GeneratorContextLike {
     customConfig: unknown;
 }

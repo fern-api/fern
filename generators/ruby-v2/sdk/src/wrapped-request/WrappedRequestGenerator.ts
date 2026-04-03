@@ -7,7 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-
 export declare namespace WrappedRequestGenerator {
     export interface Args {
         serviceId: FernIr.ServiceId;

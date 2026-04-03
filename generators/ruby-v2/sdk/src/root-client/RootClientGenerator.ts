@@ -8,7 +8,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-
 const TOKEN_PARAMETER_NAME = "token";
 
 interface InferredAuthParameter {

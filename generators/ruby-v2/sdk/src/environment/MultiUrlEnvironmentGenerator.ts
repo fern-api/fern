@@ -6,7 +6,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-
 export declare namespace MultiUrlEnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;

@@ -5,7 +5,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
-
 export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly aliasDeclaration: FernIr.AliasTypeDeclaration;
