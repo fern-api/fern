@@ -5,21 +5,26 @@ import {
     runContainerizedGenerationForSeed
 } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import path from "path";
 
 import { runScript } from "../../../runScript.js";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
+import { getWorktreeSuffix } from "../../../utils/getWorktreeSuffix.js";
+import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow.js";
 import { TestRunner } from "./TestRunner.js";
 
 export class ContainerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;
     private readonly parallelism: number;
     private reusableContainer: ReusableContainerExecutionEnvironment | undefined;
+    private readonly worktreeSuffix: string | undefined;
 
     constructor(args: TestRunner.Args & { runner?: ContainerRunner; parallelism?: number }) {
         super(args);
         this.parallelism = args.parallelism ?? 4;
+        this.worktreeSuffix = getWorktreeSuffix();
 
         if (args.runner != null) {
             this.runner = args.runner;
@@ -50,11 +55,18 @@ export class ContainerTestRunner extends TestRunner {
         if (containerCommands == null) {
             throw new Error(`Failed. No ${this.runner} command for ${this.generator.workspaceName}`);
         }
+
+        // Rewrite -t flags in build commands to use worktree-namespaced tags
+        const namespacedCommands =
+            this.worktreeSuffix != null
+                ? containerCommands.map((cmd) => this.rewriteDockerBuildTag(cmd))
+                : containerCommands;
+
         if (!this.shouldPipeOutput()) {
             CONSOLE_LOGGER.info(`Building container for ${this.generator.workspaceName}...`);
         }
         const containerBuildReturn = await runScript({
-            commands: containerCommands,
+            commands: namespacedCommands,
             logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
             doNotPipeOutput: !this.shouldPipeOutput()
@@ -82,6 +94,19 @@ export class ContainerTestRunner extends TestRunner {
         if (this.reusableContainer != null) {
             await this.reusableContainer.stop(CONSOLE_LOGGER, this.logLevel);
             this.reusableContainer = undefined;
+        }
+
+        // Remove the namespaced Docker image when a worktree suffix was applied,
+        // unless the user passed --keep-docker
+        if (this.worktreeSuffix != null && !this.keepContainer) {
+            const namespacedImage = this.getContainerImageName();
+            try {
+                await loggingExeca(undefined, "docker", ["rmi", namespacedImage], {
+                    doNotPipeOutput: !this.shouldPipeOutput()
+                });
+            } catch {
+                // Best-effort cleanup; image may already have been removed
+            }
         }
     }
 
@@ -150,11 +175,62 @@ export class ContainerTestRunner extends TestRunner {
         });
     }
 
+    protected override getParsedDockerImageName(): ParsedDockerName {
+        const parsed = parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
+        if (this.worktreeSuffix == null) {
+            return parsed;
+        }
+        return {
+            name: parsed.name,
+            version: `${parsed.version}-${this.worktreeSuffix}`
+        };
+    }
+
     protected getContainerImageName(): string {
         const testConfig =
             this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
                 ? this.generator.workspaceConfig.test.podman
                 : this.generator.workspaceConfig.test.docker;
-        return testConfig.image;
+        return this.appendWorktreeSuffix(testConfig.image);
+    }
+
+    /**
+     * Appends the worktree suffix to a Docker image reference.
+     * e.g. `fernapi/fern-python-sdk:latest` → `fernapi/fern-python-sdk:latest-wt-abc123`
+     */
+    private appendWorktreeSuffix(image: string): string {
+        if (this.worktreeSuffix == null) {
+            return image;
+        }
+        return `${image}-${this.worktreeSuffix}`;
+    }
+
+    /**
+     * Rewrites `-t <image>` flags in a docker build command to use the
+     * worktree-namespaced tag. Non-docker-build commands are returned unchanged.
+     */
+    private rewriteDockerBuildTag(command: string): string {
+        if (!command.includes("docker build") || this.worktreeSuffix == null) {
+            return command;
+        }
+
+        const baseImage = this.getBaseImageName();
+        const escapedBase = baseImage.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const imagePattern = new RegExp(`(${escapedBase})(:[\\w.-]+)?`, "g");
+        return command.replace(imagePattern, (_match: string, name: string, tag?: string) => {
+            const fullTag = tag != null ? `${tag}-${this.worktreeSuffix}` : `-${this.worktreeSuffix}`;
+            return `${name}${fullTag}`;
+        });
+    }
+
+    /** Returns the base image name from the test config without any tag. */
+    private getBaseImageName(): string {
+        const testConfig =
+            this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
+                ? this.generator.workspaceConfig.test.podman
+                : this.generator.workspaceConfig.test.docker;
+        const image = testConfig.image;
+        const colonIndex = image.indexOf(":");
+        return colonIndex >= 0 ? image.substring(0, colonIndex) : image;
     }
 }

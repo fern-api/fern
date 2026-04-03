@@ -129,7 +129,7 @@ export abstract class TestRunner {
     protected readonly lock: Semaphore;
     protected readonly taskContextFactory: TaskContextFactory;
     private readonly skipScripts: boolean;
-    private readonly keepContainer: boolean;
+    protected readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
     protected readonly logLevel: LogLevel;
