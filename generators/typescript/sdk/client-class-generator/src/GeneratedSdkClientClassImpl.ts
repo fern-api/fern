@@ -1081,9 +1081,7 @@ return core.makePassthroughRequest(input, init, {
                 const snippetValue =
                     clientDefaultVal != null
                         ? ts.factory.createStringLiteral(clientDefaultVal.toString())
-                        : ts.factory.createStringLiteral(
-                              `YOUR_${this.case.screamingSnakeUnsafe(header.name)}`
-                          );
+                        : ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(header.name)}`);
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         getPropertyKey(this.getOptionKeyForHeader(header)),
