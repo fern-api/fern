@@ -20,6 +20,7 @@ export function getWorktreeSuffix(): string | undefined {
     try {
         stat = fs.statSync(gitPath);
     } catch {
+        // stat may fail for dangling symlinks or permission errors; safe to ignore
         return undefined;
     }
 

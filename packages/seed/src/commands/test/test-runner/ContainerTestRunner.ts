@@ -56,7 +56,8 @@ export class ContainerTestRunner extends TestRunner {
             throw new Error(`Failed. No ${this.runner} command for ${this.generator.workspaceName}`);
         }
 
-        // Rewrite -t flags in build commands to use :local (or :local-wt-<suffix>) tags
+        // Rewrite -t flags in build commands to use :local (or :local-wt-<suffix>) tags.
+        // This handles direct `docker build` / `podman build` commands.
         const namespacedCommands = containerCommands.map((cmd) => this.rewriteDockerBuildTag(cmd));
 
         if (!this.shouldPipeOutput()) {
@@ -70,6 +71,21 @@ export class ContainerTestRunner extends TestRunner {
         });
         if (containerBuildReturn.exitCode !== 0) {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
+        }
+
+        // For turbo-wrapped or other indirect build commands that may have built
+        // the image under its original tag (e.g. :latest), create a :local alias
+        // so downstream consumers can find the image.
+        const originalImage = this.getOriginalImageFromConfig();
+        const localImage = this.getContainerImageName();
+        if (originalImage !== localImage) {
+            try {
+                await loggingExeca(undefined, this.runner, ["tag", originalImage, localImage], {
+                    doNotPipeOutput: !this.shouldPipeOutput()
+                });
+            } catch {
+                // tag may fail if the rewrite already produced the :local image directly
+            }
         }
 
         // Start a reusable long-lived container for generation (guard against double build() calls)
@@ -95,9 +111,9 @@ export class ContainerTestRunner extends TestRunner {
 
         // Remove the local Docker image unless the user passed --keep-docker
         if (!this.keepContainer) {
-            const namespacedImage = this.getContainerImageName();
+            const localImage = this.getContainerImageName();
             try {
-                await loggingExeca(undefined, "docker", ["rmi", namespacedImage], {
+                await loggingExeca(undefined, this.runner, ["rmi", localImage], {
                     doNotPipeOutput: !this.shouldPipeOutput()
                 });
             } catch {
@@ -172,7 +188,11 @@ export class ContainerTestRunner extends TestRunner {
     }
 
     protected override getParsedDockerImageName(): ParsedDockerName {
-        const parsed = parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
+        const testConfig =
+            this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
+                ? this.generator.workspaceConfig.test.podman
+                : this.generator.workspaceConfig.test.docker;
+        const parsed = parseDockerOrThrow(testConfig.image);
         return {
             name: parsed.name,
             version: this.getLocalTag()
@@ -192,12 +212,12 @@ export class ContainerTestRunner extends TestRunner {
     }
 
     /**
-     * Rewrites `-t <image>` flags in a docker build command to use
+     * Rewrites `-t <image>` flags in a docker/podman build command to use
      * `:local` (or `:local-wt-<suffix>` in worktrees) instead of `:latest`.
-     * Non-docker-build commands are returned unchanged.
+     * Non-build commands (including turbo-wrapped builds) are returned unchanged.
      */
     private rewriteDockerBuildTag(command: string): string {
-        if (!command.includes("docker build")) {
+        if (!command.includes("docker build") && !command.includes("podman build")) {
             return command;
         }
 
@@ -210,13 +230,18 @@ export class ContainerTestRunner extends TestRunner {
         });
     }
 
-    /** Returns the base image name from the test config without any tag. */
-    private getBaseImageName(): string {
+    /** Returns the original image string from the test config (e.g. `fernapi/fern-python-sdk:latest`). */
+    private getOriginalImageFromConfig(): string {
         const testConfig =
             this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
                 ? this.generator.workspaceConfig.test.podman
                 : this.generator.workspaceConfig.test.docker;
-        const image = testConfig.image;
+        return testConfig.image;
+    }
+
+    /** Returns the base image name from the test config without any tag. */
+    private getBaseImageName(): string {
+        const image = this.getOriginalImageFromConfig();
         const colonIndex = image.indexOf(":");
         return colonIndex >= 0 ? image.substring(0, colonIndex) : image;
     }
