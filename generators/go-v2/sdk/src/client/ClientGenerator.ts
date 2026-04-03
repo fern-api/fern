@@ -826,7 +826,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         for (const header of tokenEndpoint.headers) {
             if (header.env != null) {
                 const hNameVal = header.name;
-                headerEnvVars.set(this.context.getFieldName(hNameVal), header.env);
+                headerEnvVars.set(this.context.getFieldName(getOriginalName(hNameVal)), header.env);
             }
         }
 
