@@ -145,12 +145,24 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  PageDescriptionSource:
+    enum:
+      - description
+      - subtitle
+
   AgentsConfig:
     properties:
       page-directive:
         type: optional<string>
         docs: |
           Text to prepend to each page when it is served through agent endpoints.
+      page-description-source:
+        type: optional<PageDescriptionSource>
+        docs: |
+          Controls which frontmatter field is preferred for one-line page descriptions
+          in llms.txt. Defaults to "description". If the preferred field is not present
+          in a page's frontmatter, falls back to other fields (description, subtitle,
+          og:description, headline, excerpt).
 
   CheckRuleSeverity:
     enum:
