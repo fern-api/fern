@@ -7,6 +7,7 @@ import com.fern.ir.model.types.BooleanType;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DoubleType;
 import com.fern.ir.model.types.IntegerType;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.LongType;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.NamedType;
@@ -19,7 +20,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.squareup.javapoet.CodeBlock;
 import java.util.Optional;
 
-/** Utility class to detect and extract default values from PrimitiveTypeV2 types. */
+/** Utility class to detect and extract default values from PrimitiveTypeV2 types and clientDefault literals. */
 public final class DefaultValueExtractor {
 
     private final ClientGeneratorContext context;
@@ -110,12 +111,61 @@ public final class DefaultValueExtractor {
         });
     }
 
+    /**
+     * Checks whether a parameter has a client default (from x-fern-default).
+     * clientDefault is always applied regardless of the useDefaultRequestParameterValues flag.
+     */
+    public static boolean hasClientDefault(Optional<Literal> clientDefault) {
+        return clientDefault.isPresent();
+    }
+
+    /**
+     * Extracts a CodeBlock for a clientDefault literal value.
+     * Returns the string or boolean value as a CodeBlock suitable for use as a Java default.
+     */
+    public static Optional<CodeBlock> extractClientDefault(Optional<Literal> clientDefault) {
+        return clientDefault.map(literal -> literal.visit(new Literal.Visitor<CodeBlock>() {
+            @Override
+            public CodeBlock visitString(String value) {
+                return CodeBlock.of("$S", value);
+            }
+
+            @Override
+            public CodeBlock visitBoolean(boolean value) {
+                return CodeBlock.of("$L", value);
+            }
+
+            @Override
+            public CodeBlock _visitUnknown(Object unknown) {
+                return CodeBlock.of("$S", unknown.toString());
+            }
+        }));
+    }
+
     public Optional<CodeBlock> extractDefaultValue(TypeReference typeReference) {
         if (!hasDefaultValue(typeReference)) {
             return Optional.empty();
         }
 
         return extractDefaultValueInternal(typeReference);
+    }
+
+    /**
+     * Extracts the effective default value for a parameter, preferring clientDefault over type-level defaults.
+     */
+    public Optional<CodeBlock> extractEffectiveDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
+        Optional<CodeBlock> clientDefaultValue = extractClientDefault(clientDefault);
+        if (clientDefaultValue.isPresent()) {
+            return clientDefaultValue;
+        }
+        return extractDefaultValue(typeReference);
+    }
+
+    /**
+     * Checks whether a parameter has any default (clientDefault or type-level).
+     */
+    public boolean hasAnyDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
+        return hasClientDefault(clientDefault) || hasDefaultValue(typeReference);
     }
 
     private Optional<CodeBlock> extractDefaultValueInternal(TypeReference typeReference) {
