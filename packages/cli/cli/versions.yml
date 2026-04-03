@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Add `agents.page-description-source` to `docs.yml` to control which
+        frontmatter field is preferred for one-line page descriptions in `llms.txt`.
+        Supports `description` and `subtitle`, and falls back to other supported
+        frontmatter fields when the preferred field is not present.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
+
 - version: 4.59.0
   changelogEntry:
     - summary: |
