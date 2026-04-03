@@ -25,19 +25,17 @@ export class EndpointSnippetGenerator extends WithGeneration {
         options: Options;
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
-        return this.removeNamespaceLine(
-            code.toString({
-                namespace: "Examples",
-                generation: this.generation,
-                allNamespaceSegments: new Set(),
-                allTypeClassReferences: new Map(),
-                // Snippets are user-facing code (READMEs, docs) — skip global:: qualifiers
-                // so the output looks clean. With empty allNamespaceSegments/allTypeClassReferences,
-                // the ambiguity and type-namespace conflict checks are already no-ops;
-                // this flag additionally suppresses the unconditional System prefix.
-                skipGlobalQualifier: true
-            })
-        );
+        return code.toString({
+            namespace: "Examples",
+            generation: this.generation,
+            allNamespaceSegments: new Set(),
+            allTypeClassReferences: new Map(),
+            // Snippets are user-facing code (READMEs, docs) — skip global:: qualifiers
+            // so the output looks clean. With empty allNamespaceSegments/allTypeClassReferences,
+            // the ambiguity and type-namespace conflict checks are already no-ops;
+            // this flag additionally suppresses the unconditional System prefix.
+            skipGlobalQualifier: true
+        });
     }
 
     public generateSnippetSync({
@@ -50,16 +48,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
         options: Options;
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
-        return this.removeNamespaceLine(
-            code.toString({
-                namespace: "Examples",
-                generation: this.generation,
-                allNamespaceSegments: new Set(),
-                allTypeClassReferences: new Map(),
-                // See generateSnippet for rationale.
-                skipGlobalQualifier: true
-            })
-        );
+        return code.toString({
+            namespace: "Examples",
+            generation: this.generation,
+            allNamespaceSegments: new Set(),
+            allTypeClassReferences: new Map(),
+            // See generateSnippet for rationale.
+            skipGlobalQualifier: true
+        });
     }
 
     public async generateSnippetAst({
@@ -116,6 +112,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             name: "Examples",
             namespace: "Examples",
             partial: true,
+            skipNamespaceDeclaration: true,
             access: ast.Access.Public
         });
 
@@ -883,13 +880,5 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getConfig(options: Options): Config {
         return options.config ?? this.context.options.config ?? {};
-    }
-
-    private removeNamespaceLine(code: string): string {
-        return code
-            .split("\n")
-            .filter((line) => !line.startsWith("namespace "))
-            .join("\n")
-            .replace(/^\n+/, "");
     }
 }
