@@ -1429,6 +1429,9 @@ func (f *fileWriter) WriteClient(
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
 		for _, ppd := range endpoint.PathParameterDefaults {
+			if ppd.InitExpr != "" {
+				f.P(ppd.VarExpr, " := ", ppd.InitExpr)
+			}
 			f.P("if ", ppd.VarExpr, ` == "" {`)
 			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
 			f.P("}")
@@ -2664,7 +2667,8 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
 type pathParameterDefault struct {
-	VarExpr    string // Go variable/expression to check (e.g., "region" or "request.Region")
+	VarExpr    string // Go local variable to check and assign (e.g., "_region")
+	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
 	DefaultVal string // Go expression for the default value
 }
 
@@ -2746,13 +2750,18 @@ func (f *fileWriter) endpointFromIR(
 	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
-			varExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
-			pathParameterNames = append(pathParameterNames, varExpr)
+			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
 			if pathParameter.ClientDefault != nil && isStringPathParameter(pathParameter.ValueType) {
+				// Use a local variable to avoid mutating the caller's request struct.
+				localVar := "_" + pathParameter.Name.CamelCase.SafeName
+				pathParameterNames = append(pathParameterNames, localVar)
 				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
-					VarExpr:    varExpr,
+					VarExpr:    localVar,
+					InitExpr:   requestFieldExpr,
 					DefaultVal: literalToValue(pathParameter.ClientDefault),
 				})
+			} else {
+				pathParameterNames = append(pathParameterNames, requestFieldExpr)
 			}
 		}
 	} else {
