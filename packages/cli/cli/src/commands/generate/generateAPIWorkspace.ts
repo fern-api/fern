@@ -162,6 +162,15 @@ export async function generateWorkspace({
                     skipFernignore
                 });
             } else if (token != null) {
+                // Block custom images for remote generation — only trusted images can run on Fiddle
+                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+                if (customImageGenerators.length > 0) {
+                    const names = customImageGenerators.map((g) => g.name).join(", ");
+                    return context.failAndThrow(
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                            `The following generators use custom images: ${names}`
+                    );
+                }
                 await runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,

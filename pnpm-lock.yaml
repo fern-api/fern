@@ -5147,6 +5147,10 @@ importers:
         version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/cli-v2:
+    dependencies:
+      tmp-promise:
+        specifier: 'catalog:'
+        version: 3.0.3
     devDependencies:
       '@boundaryml/baml':
         specifier: 'catalog:'
@@ -5419,6 +5423,9 @@ importers:
       '@fern-api/github':
         specifier: workspace:*
         version: link:../../commons/github
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../commons/logging-execa
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
