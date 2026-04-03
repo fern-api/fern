@@ -387,8 +387,8 @@ export class EndpointSnippetGenerator {
     }): go.AstNode[] {
         // usernameOmit/passwordOmit may exist in newer IR versions
         const authRecord = auth as unknown as Record<string, unknown>;
-        const usernameOmitted = authRecord.usernameOmit === true;
-        const passwordOmitted = authRecord.passwordOmit === true;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
         const arguments_: go.AstNode[] = [];
         if (!usernameOmitted) {
             arguments_.push(go.TypeInstantiation.string(values.username));
