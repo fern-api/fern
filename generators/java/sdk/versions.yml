@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 4.0.9
   changelogEntry:
     - summary: |

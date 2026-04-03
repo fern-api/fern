@@ -49,7 +49,12 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         const defaultType = isOptional ? "optional<string>" : "string";
         let schema: RawSchemas.HttpHeaderSchema = defaultType;
 
-        if (header.name == null && header.env == null && typeof header.schema === "string") {
+        if (
+            header.name == null &&
+            header.env == null &&
+            header.clientDefault == null &&
+            typeof header.schema === "string"
+        ) {
             schema = header.schema;
         } else if (header != null) {
             const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
@@ -73,6 +78,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                           ) ?? defaultType)
                         : defaultType
             };
+            if (typeof header.clientDefault === "string" || typeof header.clientDefault === "boolean") {
+                schema.default = header.clientDefault;
+            }
         }
         context.builder.addGlobalHeader({
             name: headerName,
