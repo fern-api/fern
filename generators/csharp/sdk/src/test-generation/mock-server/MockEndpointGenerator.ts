@@ -747,6 +747,9 @@ export class MockEndpointGenerator extends WithGeneration {
     /**
      * Gets the set of nullable property wire names for a type declaration.
      * A property is nullable if its type is a nullable container or optional<nullable<T>>.
+     *
+     * When enableExplicitNullableOptional is disabled (default), no [Nullable] attributes
+     * are generated and WhenWritingNull omits ALL nulls, so this returns an empty set.
      */
     private getNullablePropertyNamesForType(typeDeclaration: {
         shape: {
@@ -756,6 +759,13 @@ export class MockEndpointGenerator extends WithGeneration {
         };
     }): Set<string> {
         const nullableNames = new Set<string>();
+
+        // When the explicit nullable/optional flag is off, the generator does not emit
+        // [Nullable] attributes, so WhenWritingNull omits every null value.
+        if (!this.context.generation.settings.enableExplicitNullableOptional) {
+            return nullableNames;
+        }
+
         const shape = typeDeclaration.shape;
 
         if (shape.type !== "object" || !shape.properties) {
@@ -784,9 +794,19 @@ export class MockEndpointGenerator extends WithGeneration {
      * Used to determine which null properties should be kept in the expected request JSON
      * (nullable properties serialize null explicitly via [Nullable] attribute) vs omitted
      * (optional-but-not-nullable properties are skipped by JsonIgnoreCondition.WhenWritingNull).
+     *
+     * When enableExplicitNullableOptional is disabled (default), no [Nullable] attributes
+     * are generated and WhenWritingNull omits ALL nulls, so this returns an empty set.
      */
     private getNullablePropertyNamesFromEndpoint(endpoint: HttpEndpoint): Set<string> {
         const nullableNames = new Set<string>();
+
+        // When the explicit nullable/optional flag is off, the generator does not emit
+        // [Nullable] attributes, so WhenWritingNull omits every null value.
+        if (!this.context.generation.settings.enableExplicitNullableOptional) {
+            return nullableNames;
+        }
+
         if (endpoint.requestBody?.type !== "inlinedRequestBody") {
             return nullableNames;
         }
