@@ -2,7 +2,7 @@ module github.com/x-fern-default/fern
 
 go 1.21
 
-toolchain go1.23.8
+toolchain go1.22.0
 
 require github.com/google/uuid v1.6.0
 

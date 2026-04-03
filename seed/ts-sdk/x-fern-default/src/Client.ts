@@ -43,18 +43,20 @@ export class SeedApiClient {
     ): Promise<core.WithRawResponse<SeedApi.TestGetResponse>> {
         const { region, limit } = request;
         const _queryParams: Record<string, unknown> = {
-            limit,
+            limit: limit ?? "100",
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion }),
+            mergeOnlyDefinedHeaders({
+                "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `test/${core.url.encodePathParam(region)}/resource`,
+                `test/${core.url.encodePathParam(region ?? "us-east-1")}/resource`,
             ),
             method: "GET",
             headers: _headers,
