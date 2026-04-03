@@ -1,7 +1,6 @@
 import { at } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as dynamic } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { fail } from "./utils/fail.js";
 
 type Name = FernIr.Name;
 type NameAndWireValue = FernIr.NameAndWireValue;
