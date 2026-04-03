@@ -443,7 +443,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             throw new Error("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
-            const singleSetter = setterPath[0]!;
+            const singleSetter = setterPath[0];
+            if (singleSetter == null) {
+                throw new Error("setterPath[0] is unexpectedly undefined");
+            }
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);
                 writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));

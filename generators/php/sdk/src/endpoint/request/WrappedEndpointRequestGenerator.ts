@@ -1,8 +1,8 @@
+import { NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
-import { NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
