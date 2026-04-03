@@ -41,6 +41,7 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            // @ts-expect-error ir-sdk@66.0.0 types are structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             ir: convertIr(dynamicIr),
             config: this.context.config
         });

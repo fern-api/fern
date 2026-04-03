@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ClassReference, ruby } from "@fern-api/ruby-ast";
@@ -297,7 +297,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return this.getModuleNamesForServiceId(serviceId).map((part) => ruby.module({ name: part }));
     }
 
-    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): ruby.ClassReference {
+    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: NameInput): ruby.ClassReference {
         return ruby.classReference({
             name: caseConverter.pascalSafe(requestName),
             modules: this.getModuleNamesForServiceId(serviceId)

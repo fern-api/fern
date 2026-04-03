@@ -43,7 +43,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    const snakeCaseName = caseConverter.snakeSafe(property.value.key.name);
+                    const snakeCaseName = caseConverter.snakeSafe(property.value.key);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {

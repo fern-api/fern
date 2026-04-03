@@ -230,6 +230,10 @@ export class HttpEndpointGenerator {
                         })
                     ];
                     break;
+                case "uri":
+                case "path":
+                    // Unsupported pagination types - no pagination behavior
+                    break;
                 default:
                     assertNever(endpoint.pagination);
             }
