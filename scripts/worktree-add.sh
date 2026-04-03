@@ -31,8 +31,12 @@ if [ -z "$path" ]; then
     path="$WORKTREE_BASE/$branch"
 fi
 
-# Create worktree
-git worktree add "$path" "$branch"
+# Create worktree — use -b if the branch doesn't exist yet
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$path" "$branch"
+else
+    git worktree add -b "$branch" "$path"
+fi
 
 # Apply sparse checkout in the new worktree
 bash "$SCRIPT_DIR/sparse-checkout.sh" "$path"

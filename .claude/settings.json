@@ -46,7 +46,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ./scripts/worktree-create-hook.sh"
+            "command": "bash \"$(git rev-parse --show-toplevel)/scripts/worktree-create-hook.sh\""
           }
         ]
       }
