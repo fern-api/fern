@@ -215,8 +215,8 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         // usernameOmit/passwordOmit may exist in newer IR versions
         const authRecord = auth as unknown as Record<string, unknown>;
-        const usernameOmitted = authRecord.usernameOmit === true;
-        const passwordOmitted = authRecord.passwordOmit === true;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
         const args: ruby.KeywordArgument[] = [];
         if (!usernameOmitted) {
             args.push(

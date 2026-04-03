@@ -126,8 +126,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordName = basicAuthScheme.password.snakeCase.safeName;
                         // usernameOmit/passwordOmit may exist in newer IR versions
                         const scheme = basicAuthScheme as unknown as Record<string, unknown>;
-                        const usernameOmitted = scheme.usernameOmit === true;
-                        const passwordOmitted = scheme.passwordOmit === true;
+                        const usernameOmitted = !!scheme.usernameOmit;
+                        const passwordOmitted = !!scheme.passwordOmit;
                         // Omitted fields use empty string directly
                         const usernameExpr = usernameOmitted ? `""` : usernameName;
                         const passwordExpr = passwordOmitted ? `""` : passwordName;
@@ -367,8 +367,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "basic": {
                     // When omit is true, the field is completely removed from the end-user API.
                     const schemeRecord = scheme as unknown as Record<string, unknown>;
-                    const usernameOmitted = schemeRecord.usernameOmit === true;
-                    const passwordOmitted = schemeRecord.passwordOmit === true;
+                    const usernameOmitted = !!schemeRecord.usernameOmit;
+                    const passwordOmitted = !!schemeRecord.passwordOmit;
                     if (!usernameOmitted) {
                         const usernameParam = ruby.parameters.keyword({
                             name: scheme.username.snakeCase.safeName,
