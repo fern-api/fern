@@ -4,8 +4,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
-
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;
     queryParameterBagReference: string;
@@ -22,14 +20,18 @@ export interface RequestBodyCodeBlock {
 }
 
 export abstract class EndpointRequest {
+    protected readonly case: CaseConverter;
+
     public constructor(
         protected readonly context: SdkGeneratorContext,
         protected readonly sdkRequest: FernIr.SdkRequest,
         protected readonly endpoint: FernIr.HttpEndpoint
-    ) {}
+    ) {
+        this.case = context.caseConverter;
+    }
 
     public getParameterName(): string {
-        return caseConverter.camelSafe(this.sdkRequest.requestParameterName);
+        return this.case.camelSafe(this.sdkRequest.requestParameterName);
     }
 
     public getRequestBodyVariableName(): string {

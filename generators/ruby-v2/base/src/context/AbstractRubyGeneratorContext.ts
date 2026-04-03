@@ -35,11 +35,7 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly typeMapper: RubyTypeMapper;
     public readonly typesDirName: string = "types";
     public readonly typesModuleName: string = "Types";
-    protected readonly caseConverter = new CaseConverter({
-        generationLanguage: "ruby",
-        keywords: undefined,
-        smartCasing: true
-    });
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         ir: FernIr.IntermediateRepresentation,
@@ -50,6 +46,11 @@ export abstract class AbstractRubyGeneratorContext<
         super(config, generatorNotificationService);
         this.ir = ir;
         this.customConfig = customConfig;
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "ruby",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.typeMapper = new RubyTypeMapper(this);
         this.project = new RubyProject({ context: this });
     }

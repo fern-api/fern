@@ -4,8 +4,6 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
-
 export declare namespace RubyTypeMapper {
     interface Args {
         reference: FernIr.TypeReference;
@@ -18,9 +16,11 @@ export declare namespace RubyTypeMapper {
 
 export class RubyTypeMapper {
     private context: AbstractRubyGeneratorContext<object>;
+    private readonly case: CaseConverter;
 
     constructor(context: AbstractRubyGeneratorContext<object>) {
         this.context = context;
+        this.case = context.caseConverter;
     }
 
     public convert({ reference, unboxOptionals = false, fullyQualified = false }: RubyTypeMapper.Args): ruby.Type {
@@ -62,7 +62,7 @@ export class RubyTypeMapper {
     ): ruby.ClassReference {
         // In Ruby, modules are used for namespaces.
         return ruby.classReference({
-            name: caseConverter.pascalSafe(declaredTypeName.name),
+            name: this.case.pascalSafe(declaredTypeName.name),
             modules: this.context.getModuleNamesForTypeId(declaredTypeName.typeId),
             fullyQualified: !!fullyQualified
         });

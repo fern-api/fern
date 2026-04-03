@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -12,7 +12,6 @@ import {
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -69,7 +68,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = {}`);
                 for (const queryParam of this.endpoint.queryParameters) {
-                    const snakeCaseName = caseConverter.snakeSafe(queryParam.name);
+                    const snakeCaseName = this.case.snakeSafe(queryParam.name);
                     const wireValue = getWireValue(queryParam.name);
 
                     const extracted =
@@ -106,7 +105,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: ruby.codeblock((writer) => {
                 writer.writeLine(`${HEADER_BAG_NAME} = {}`);
                 for (const header of this.endpoint.headers) {
-                    const snakeCaseName = caseConverter.snakeSafe(header.name);
+                    const snakeCaseName = this.case.snakeSafe(header.name);
                     const wireValue = getWireValue(header.name);
 
                     const extracted = defaultExtractor?.extractDefault(header.valueType);
@@ -230,11 +229,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map((pathParameter) => caseConverter.snakeSafe(pathParameter.name));
+        return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
 
     private getQueryParameterNames(): string[] {
-        return this.endpoint.queryParameters.map((queryParameter) => caseConverter.snakeSafe(queryParameter.name));
+        return this.endpoint.queryParameters.map((queryParameter) => this.case.snakeSafe(queryParameter.name));
     }
 
     private hasPathParameters(): boolean {

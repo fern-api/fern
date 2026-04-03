@@ -1,4 +1,4 @@
-import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -8,7 +8,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 const TOKEN_PARAMETER_NAME = "token";
 
@@ -123,8 +122,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         if (basicAuthScheme == null) {
                             continue;
                         }
-                        const usernameName = caseConverter.snakeSafe(basicAuthScheme.username);
-                        const passwordName = caseConverter.snakeSafe(basicAuthScheme.password);
+                        const usernameName = this.case.snakeSafe(basicAuthScheme.username);
+                        const passwordName = this.case.snakeSafe(basicAuthScheme.password);
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
                                 writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
@@ -192,7 +191,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
         const firstPart = service?.name?.fernFilepath?.packagePath[0];
-        const subpackageId = firstPart != null ? caseConverter.pascalSafe(firstPart) : "Auth";
+        const subpackageId = firstPart != null ? this.case.pascalSafe(firstPart) : "Auth";
 
         // Get the token endpoint to check its baseUrl
         const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
@@ -332,7 +331,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: caseConverter.snakeSafe(scheme.name),
+                        name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -347,7 +346,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "basic": {
                     const usernameParam = ruby.parameters.keyword({
-                        name: caseConverter.snakeSafe(scheme.username),
+                        name: this.case.snakeSafe(scheme.username),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.usernameEnvVar != null
@@ -359,7 +358,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     parameters.push(usernameParam);
                     const passwordParam = ruby.parameters.keyword({
-                        name: caseConverter.snakeSafe(scheme.password),
+                        name: this.case.snakeSafe(scheme.password),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.passwordEnvVar != null
@@ -423,7 +422,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            snakeName: caseConverter.snakeUnsafe(property.name),
+                            snakeName: this.case.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType)
                         });
                     }
@@ -435,7 +434,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const literal = this.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        snakeName: caseConverter.snakeUnsafe(header.name),
+                        snakeName: this.case.snakeUnsafe(header.name),
                         isOptional: this.isOptional(header.valueType)
                     });
                 }
@@ -488,7 +487,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 case "header": {
-                    const headerParamName = caseConverter.snakeSafe(header.name);
+                    const headerParamName = this.case.snakeSafe(header.name);
                     const headerName = getWireValue(header.name);
                     const headerValue =
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
@@ -513,12 +512,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: caseConverter.snakeSafe(subpackage.name),
+            name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, caseConverter.pascalSafe(subpackage.name)],
+                    modules: [rootModule.name, this.case.pascalSafe(subpackage.name)],
                     fullyQualified: true
                 })
             ),
@@ -526,16 +525,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${caseConverter.snakeSafe(subpackage.name)} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${caseConverter.pascalSafe(subpackage.name)}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${caseConverter.snakeSafe(subpackage.name)} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${caseConverter.pascalSafe(subpackage.name)}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client)`
                         );
                     }

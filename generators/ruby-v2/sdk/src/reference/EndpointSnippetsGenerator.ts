@@ -38,7 +38,6 @@ export class EndpointSnippetsGenerator {
 
         const convertedIr = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // @ts-expect-error ir-sdk@66.0.0 types are structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             ir: convertedIr,
             config: this.context.config
         });

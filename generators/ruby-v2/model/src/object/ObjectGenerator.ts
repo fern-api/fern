@@ -1,4 +1,3 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -7,7 +6,6 @@ import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { generateFields } from "./generateFields.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export interface GeneratorContextLike {
     customConfig: unknown;
@@ -41,7 +39,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         });
 
         const classNode = ruby.class_({
-            name: caseConverter.pascalSafe(this.typeDeclaration.name.name),
+            name: this.case.pascalSafe(this.typeDeclaration.name.name),
             superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements

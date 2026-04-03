@@ -1,4 +1,3 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -7,7 +6,6 @@ import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -111,7 +109,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getClientModuleNames(): string[] {
         return [
             this.context.getRootModuleName(),
-            ...this.subpackage.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path))
+            ...this.subpackage.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))
         ];
     }
 
@@ -124,7 +122,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             name: CLIENT_CLASS_NAME,
             modules: [
                 this.context.getRootModuleName(),
-                ...this.subpackage.fernFilepath.allParts.map((path) => caseConverter.pascalSafe(path))
+                ...this.subpackage.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))
             ],
             fullyQualified: true
         });
@@ -149,12 +147,12 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: caseConverter.snakeSafe(subpackage.name),
+            name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, caseConverter.pascalSafe(subpackage.name)],
+                    modules: [rootModule.name, this.case.pascalSafe(subpackage.name)],
                     fullyQualified: true
                 })
             ),
@@ -162,16 +160,16 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${caseConverter.snakeSafe(subpackage.name)} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
-                                `${caseConverter.pascalSafe(subpackage.name)}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${caseConverter.snakeSafe(subpackage.name)} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
-                                `${caseConverter.pascalSafe(subpackage.name)}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client)`
                         );
                     }

@@ -1,4 +1,3 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -7,7 +6,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 // import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
@@ -31,7 +29,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
-        this.discriminantPropertyName = caseConverter.snakeSafe(unionDeclaration.discriminant);
+        this.discriminantPropertyName = this.case.snakeSafe(unionDeclaration.discriminant);
         this.classReference = this.context.typeMapper.convertToClassReference(this.typeDeclaration.name);
         this.unionMembers = this.unionDeclaration.types.map((type) => this.unionMemberFromUnionType(type));
     }
@@ -77,7 +75,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     private unionMemberFromUnionType(type: FernIr.SingleUnionType): UnionMember {
         return {
-            keyName: caseConverter.screamingSnakeSafe(type.discriminantValue),
+            keyName: this.case.screamingSnakeSafe(type.discriminantValue),
             typeReference: this.typeReferenceFromUnionType(type)
         };
     }

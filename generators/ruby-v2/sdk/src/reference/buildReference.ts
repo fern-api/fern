@@ -1,4 +1,4 @@
-import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 
@@ -7,8 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
-
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
@@ -16,7 +14,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({ context, serviceId, service });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
@@ -81,7 +79,7 @@ function getEndpointReference({
                     text: getAccessFromRootClient({ context, service }) + "."
                 },
                 {
-                    text: getEndpointMethodName({ endpoint }),
+                    text: getEndpointMethodName({ context, endpoint }),
                     location: serviceFilepath != null ? { path: serviceFilepath } : undefined
                 },
                 {
@@ -111,7 +109,7 @@ function getServiceFilepath({
     }
 
     // For subpackage services, the client file is at lib/<gem_name>/<subpackage_path>/client.rb
-    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     if (servicePath.length > 0) {
         return (
             "/" +
@@ -134,12 +132,18 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
-function getEndpointMethodName({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
-    return caseConverter.snakeSafe(endpoint.name);
+function getEndpointMethodName({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string {
+    return context.caseConverter.snakeSafe(endpoint.name);
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -152,7 +156,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(caseConverter.snakeSafe(pathParam.name));
+        parameters.push(context.caseConverter.snakeSafe(pathParam.name));
     });
 
     if (endpoint.requestBody != null) {
@@ -225,7 +229,7 @@ function getEndpointParameters({
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: caseConverter.snakeSafe(pathParam.name),
+            name: context.caseConverter.snakeSafe(pathParam.name),
             type: getRubyTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -234,7 +238,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: caseConverter.snakeSafe(queryParam.name),
+            name: context.caseConverter.snakeSafe(queryParam.name),
             type: getRubyTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -243,7 +247,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: caseConverter.snakeSafe(header.name),
+            name: context.caseConverter.snakeSafe(header.name),
             type: getRubyTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -253,7 +257,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: caseConverter.snakeSafe(property.name),
+                name: context.caseConverter.snakeSafe(property.name),
                 type: getRubyTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
@@ -297,7 +301,7 @@ function getRequestOptionsType({
         const subpackage = context.getSubpackageForServiceId(serviceId);
         const modulePath = [
             context.getRootModuleName(),
-            ...subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part))
+            ...subpackage.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part))
         ].join("::");
         return `${modulePath}::RequestOptions`;
     } catch {
@@ -316,9 +320,9 @@ function isRootServiceId({
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: FernIr.HttpService }): string {
     return (
         service.displayName ??
-        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
     );
 }

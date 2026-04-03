@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { getOriginalName } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -7,7 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "ruby", keywords: undefined, smartCasing: true });
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
@@ -34,7 +33,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         const properties: FernIr.ObjectProperty[] = [];
 
         const class_ = ruby.class_({
-            name: caseConverter.pascalSafe(this.wrapper.wrapperName),
+            name: this.case.pascalSafe(this.wrapper.wrapperName),
             superclass: this.context.getModelClassReference()
         });
 
@@ -107,7 +106,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${caseConverter.snakeSafe(this.wrapper.wrapperName)}.rb`,
+            filename: `${this.case.snakeSafe(this.wrapper.wrapperName)}.rb`,
             customConfig: this.context.customConfig
         });
     }
@@ -118,7 +117,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             [
                 "lib",
                 this.context.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => caseConverter.snakeSafe(path)),
+                ...subpackage.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
                 "types"
             ].join("/")
         );
