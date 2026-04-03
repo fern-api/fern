@@ -58,7 +58,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
         return context.coreUtilities.zurg.object([
             {
                 key: {
-                    parsed: this.caseConverter.camelUnsafe(this.discriminationStrategy.contentProperty),
+                    parsed: this.case.camelUnsafe(this.discriminationStrategy.contentProperty),
                     raw: getWireValue(this.discriminationStrategy.contentProperty)
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type)

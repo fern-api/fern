@@ -446,17 +446,17 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return this.generation.caseConverter.pascalSafe(property.name);
+                return this.generation.case.pascalSafe(property.name);
             }
             if (is.IR.Name(property.name)) {
-                return this.generation.caseConverter.pascalSafe(property.name);
+                return this.generation.case.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
-                return this.generation.caseConverter.pascalSafe(property.name);
+                return this.generation.case.pascalSafe(property.name);
             }
         }
         if ("pascalCase" in property) {
-            return this.generation.caseConverter.pascalSafe(property);
+            return this.generation.case.pascalSafe(property);
         }
 
         throw new Error(`Unknown property type: ${this.jsonPath(property)}`);
@@ -487,20 +487,20 @@ export class ModelNavigator {
         }
         if ("name" in classDeclaration) {
             if (is.IR.TypeDeclaration(classDeclaration)) {
-                return this.generation.caseConverter.pascalSafe(classDeclaration.name.name);
+                return this.generation.case.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
-                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
-                return this.generation.caseConverter.pascalSafe(classDeclaration.name);
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
         }
         if ("pascalCase" in classDeclaration) {
-            return this.generation.caseConverter.pascalSafe(classDeclaration);
+            return this.generation.case.pascalSafe(classDeclaration);
         }
 
         throw new Error(`Unknown property type: ${JSON.stringify(classDeclaration)}`);
@@ -519,7 +519,7 @@ export class ModelNavigator {
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
     nameEquals(name1: NameInput, name2: NameInput): boolean {
-        return this.generation.caseConverter.camelSafe(name1) === this.generation.caseConverter.camelSafe(name2);
+        return this.generation.case.camelSafe(name1) === this.generation.case.camelSafe(name2);
     }
 
     /**

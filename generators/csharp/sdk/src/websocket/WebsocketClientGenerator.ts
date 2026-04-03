@@ -58,7 +58,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns A PascalCase class name with "Api" suffix
      */
     static createWebsocketClientClassName(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
-        return `${context.caseConverter.pascalSafe(websocketChannel.name)}Api`;
+        return `${context.case.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -68,7 +68,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns A PascalCase interface name with "I" prefix and "Api" suffix
      */
     static createWebsocketInterfaceName(websocketChannel: WebSocketChannel, context: SdkGeneratorContext): string {
-        return `I${context.caseConverter.pascalSafe(websocketChannel.name)}Api`;
+        return `I${context.case.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -102,7 +102,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
             );
             if (baseUrl != null) {
-                return `_client.Options.Environment.${context.caseConverter.pascalSafe(baseUrl.name)}`;
+                return `_client.Options.Environment.${context.case.pascalSafe(baseUrl.name)}`;
             }
         }
         return undefined;
@@ -342,7 +342,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             for (const env of multiEnvs.environments) {
                 const url = env.urls[baseUrlId];
                 if (url != null) {
-                    const envName = this.context.caseConverter.pascalSafe(env.name);
+                    const envName = this.context.case.pascalSafe(env.name);
                     this.environments.push({
                         url,
                         environment: envName,
@@ -358,7 +358,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 if (defaultEnv != null) {
                     const defaultUrl = defaultEnv.urls[baseUrlId];
                     if (defaultUrl != null) {
-                        this.defaultEnvironment = this.context.caseConverter.pascalSafe(defaultEnv.name);
+                        this.defaultEnvironment = this.context.case.pascalSafe(defaultEnv.name);
                     }
                 }
             }
@@ -741,11 +741,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
                         if (isComplexType) {
                             writer.write(
-                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${this.context.caseConverter.pascalSafe(queryParameter.name)})`
+                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${this.context.case.pascalSafe(queryParameter.name)})`
                             );
                         } else {
                             writer.write(
-                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${this.context.caseConverter.pascalSafe(queryParameter.name)})`
+                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${this.context.case.pascalSafe(queryParameter.name)})`
                             );
                         }
                     }
@@ -768,9 +768,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     if (pp) {
                         parts.push(
                             this.csharp.codeblock((writer) =>
-                                writer.write(
-                                    `Uri.EscapeDataString(_options.${this.context.caseConverter.pascalSafe(pp.name)})`
-                                )
+                                writer.write(`Uri.EscapeDataString(_options.${this.context.case.pascalSafe(pp.name)})`)
                             )
                         );
                     }
@@ -857,7 +855,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                             name:
                                 reference._visit({
                                     container: () => undefined,
-                                    named: (named) => this.context.caseConverter.pascalSafe(named.name),
+                                    named: (named) => this.context.case.pascalSafe(named.name),
                                     primitive: (value) => undefined,
                                     unknown: () => undefined,
                                     _other: (value) => value.type
@@ -896,7 +894,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                         name:
                             bodyType._visit({
                                 container: () => undefined,
-                                named: (named) => this.context.caseConverter.pascalSafe(named.name),
+                                named: (named) => this.context.case.pascalSafe(named.name),
                                 primitive: () => each.type,
                                 unknown: () => each.type,
                                 _other: () => each.type

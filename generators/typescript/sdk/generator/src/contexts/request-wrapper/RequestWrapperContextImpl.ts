@@ -45,7 +45,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
     private readonly resolveQueryParameterNameConflicts: boolean;
 
     constructor({
@@ -80,7 +80,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.parameterNaming = parameterNaming;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         this.resolveQueryParameterNameConflicts = resolveQueryParameterNameConflicts;
     }
 
@@ -135,7 +135,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
             parameterNaming: this.parameterNaming,
-            caseConverter: this.caseConverter,
+            caseConverter: this.case,
             resolveQueryParameterNameConflicts: this.resolveQueryParameterNameConflicts
         });
     }

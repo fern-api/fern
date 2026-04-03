@@ -87,7 +87,7 @@ export function generateFields(
     // Collect all property PascalCase names for collision detection when generating
     // nested literal struct names (e.g., {PropertyName}Literal must not collide with
     // another property name).
-    const allPropertyPascalNames = new Set(properties.map((p) => context.caseConverter.pascalSafe(p.name)));
+    const allPropertyPascalNames = new Set(properties.map((p) => context.case.pascalSafe(p.name)));
     return properties.map((property) => generateField(cls, { property, className, context, allPropertyPascalNames }));
 }
 
@@ -188,7 +188,7 @@ export function generateField(
         // readonly struct inside the parent record named {PropertyName}Literal.
         const inlineLiteral = extractInlineLiteral(property.valueType);
         if (inlineLiteral != null) {
-            const propertyPascalName = context.caseConverter.pascalSafe(property.name);
+            const propertyPascalName = context.case.pascalSafe(property.name);
             const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames ?? new Set());
 
             // Register the class reference FIRST so the name registry can resolve any conflicts,
@@ -239,7 +239,7 @@ export function generateField(
             set: (writer: Writer) => {
                 writer.write("value.Assert(value == ");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, string.Format("'${context.caseConverter.pascalSafe(property.name)}' must be {0}", `);
+                writer.write(`, string.Format("'${context.case.pascalSafe(property.name)}' must be {0}", `);
                 writer.writeNode(maybeLiteralInitializer);
                 writer.write("))");
             }
@@ -290,7 +290,7 @@ function resolveNamedLiteralType(
         typeDeclaration.shape.resolvedType.type === "container" &&
         typeDeclaration.shape.resolvedType.container.type === "literal"
     ) {
-        const structName = context.caseConverter.pascalSafe(typeDeclaration.name.name);
+        const structName = context.case.pascalSafe(typeDeclaration.name.name);
         const namespace = context.getNamespaceForTypeId(typeId);
         return context.csharp.classReference({
             name: structName,
@@ -402,7 +402,7 @@ export function generateFieldForFileProperty(
 
     if (typeof property.key === "string") {
         return cls.addField({
-            name: context.caseConverter.pascalSafe(property.key),
+            name: context.case.pascalSafe(property.key),
             type: fieldType,
             access: ast.Access.Public,
             get: true,

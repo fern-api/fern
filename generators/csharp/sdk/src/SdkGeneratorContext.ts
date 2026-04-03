@@ -96,7 +96,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path)),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.types
             ].join("/")
         );
@@ -105,7 +105,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public getDirectoryForError(declaredErrorName: FernIr.DeclaredErrorName): RelativeFilePath {
         return RelativeFilePath.of(
             [
-                ...declaredErrorName.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path)),
+                ...declaredErrorName.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.exceptions
             ].join("/")
         );
@@ -117,7 +117,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => this.caseConverter.pascalSafe(part));
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return clientAccessParts.length > 0
             ? `${this.names.variables.client}.${clientAccessParts.join(".")}`
             : this.names.variables.client;
@@ -321,13 +321,11 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return RelativeFilePath.of(
-            [...fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
-        );
+        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => this.case.pascalSafe(path))].join("/"));
     }
 
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return `${this.caseConverter.pascalSafe(endpoint.name)}Async`;
+        return `${this.case.pascalSafe(endpoint.name)}Async`;
     }
 
     public endpointUsesGrpcTransport(service: FernIr.HttpService, endpoint: FernIr.HttpEndpoint): boolean {
@@ -367,7 +365,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getNameForField(name: FernIr.NameAndWireValue): string {
-        return this.caseConverter.pascalSafe(name.name);
+        return this.case.pascalSafe(name.name);
     }
 
     /**
@@ -480,6 +478,6 @@ export class SdkGeneratorContext extends GeneratorContext {
 
     getChildNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
         const segmentNames = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
-        return segmentNames.map((segmentName) => this.caseConverter.pascalSafe(segmentName));
+        return segmentNames.map((segmentName) => this.case.pascalSafe(segmentName));
     }
 }

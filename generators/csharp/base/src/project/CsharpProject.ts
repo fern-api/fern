@@ -665,12 +665,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.token)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.username)} = "test"`);
-                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.password)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${this.context.caseConverter.pascalSafe(scheme.name)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);

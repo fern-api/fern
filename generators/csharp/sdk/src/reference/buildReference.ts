@@ -188,7 +188,6 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
 
 function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
     return (
-        service.displayName ??
-        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
+        service.displayName ?? service.name.fernFilepath.allParts.map((part) => context.case.pascalSafe(part)).join(" ")
     );
 }

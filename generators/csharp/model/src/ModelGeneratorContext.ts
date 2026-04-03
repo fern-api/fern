@@ -74,7 +74,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))].join("/")
         );
     }
 
@@ -82,7 +82,7 @@ export class ModelGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return [
             this.namespaces.root,
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => this.caseConverter.pascalSafe(path))
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => this.case.pascalSafe(path))
         ].join(".");
     }
 
@@ -141,7 +141,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segmentName) => this.caseConverter.pascalSafe(segmentName));
+        return fernFilepath.packagePath.map((segmentName) => this.case.pascalSafe(segmentName));
     }
 
     public override shouldCreateCustomPagination(): boolean {

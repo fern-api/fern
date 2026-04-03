@@ -48,7 +48,7 @@ type Namespace = string;
 export abstract class GeneratorContext extends AbstractGeneratorContext {
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     public readonly project: CsharpProject;
-    public readonly caseConverter: CaseConverter;
+    public readonly case: CaseConverter;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -58,7 +58,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         public readonly generation: Generation
     ) {
         super(config, generatorNotificationService);
-        this.caseConverter = new CaseConverter({
+        this.case = new CaseConverter({
             generationLanguage: "csharp",
             keywords: ir.casingsConfig?.keywords,
             smartCasing: ir.casingsConfig?.smartCasing ?? true
@@ -250,7 +250,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
             if (type.isReferenceType && !type.isOptional) {
-                const name = this.caseConverter.pascalSafe(header.name);
+                const name = this.case.pascalSafe(header.name);
                 writer.write(name, " = ", type.defaultValue, ",");
                 writer.writeLine();
             }
@@ -763,7 +763,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public getSubpackageClassReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
-            name: `${this.caseConverter.pascalUnsafe(subpackage.name)}Client`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
             origin: subpackage
         });
@@ -771,7 +771,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public getSubpackageInterfaceReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
-            name: `I${this.caseConverter.pascalUnsafe(subpackage.name)}Client`,
+            name: `I${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
             origin: this.model.explicit(subpackage, "Interface")
         });
@@ -817,7 +817,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             });
         }
         return this.csharp.classReference({
-            name: this.caseConverter.pascalSafe(requestName),
+            name: this.case.pascalSafe(requestName),
             namespace: this.getNamespaceForServiceId(serviceId)
         });
     }
@@ -833,7 +833,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
         const serviceName = this.getGrpcClientServiceName(protobufService);
         return {
-            privatePropertyName: `_${this.caseConverter.camelSafe(protobufService.name)}`,
+            privatePropertyName: `_${this.case.camelSafe(protobufService.name)}`,
             classReference: this.csharp.classReference({
                 origin: protobufService,
                 name: `${serviceName}.${serviceName}Client`,
@@ -972,7 +972,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                         utd.types.map((type) => {
-                            this.caseConverter.pascalSafe(type.discriminantValue);
+                            this.case.pascalSafe(type.discriminantValue);
 
                             if (typeof type.discriminantValue !== "string") {
                                 this.csharp.classReference({
@@ -981,7 +981,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                                 });
                             } else {
                                 this.csharp.classReference({
-                                    name: this.caseConverter.pascalSafe(type.discriminantValue),
+                                    name: this.case.pascalSafe(type.discriminantValue),
                                     enclosingType
                                 });
                             }
@@ -1115,7 +1115,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
                 this.csharp.classReference({
                     origin: this.model.explicit(endpoint, "Test"),
-                    name: `${this.caseConverter.pascalSafe(endpoint.name)}Test`,
+                    name: `${this.case.pascalSafe(endpoint.name)}Test`,
 
                     namespace: this.namespaces.test
                 });

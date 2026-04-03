@@ -94,7 +94,7 @@ export class Generation {
         const irConfig = is.IR.IntermediateRepresentation(intermediateRepresentation)
             ? intermediateRepresentation.casingsConfig
             : undefined;
-        this.caseConverter = new CaseConverter({
+        this.case = new CaseConverter({
             generationLanguage: "csharp",
             keywords: irConfig?.keywords,
             smartCasing: irConfig?.smartCasing ?? true
@@ -136,7 +136,7 @@ export class Generation {
      * CaseConverter for converting names to C# casing conventions.
      * Constructed from the IR's casingsConfig for proper keyword handling.
      */
-    public readonly caseConverter: CaseConverter;
+    public readonly case: CaseConverter;
 
     /**
      * Manager for external dependencies and imports.

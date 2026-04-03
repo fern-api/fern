@@ -101,7 +101,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
 
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
     private readonly isRoot: boolean;
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly serviceClassName: string;
@@ -155,7 +155,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         parameterNaming,
         offsetSemantics
     }: GeneratedSdkClientClassImpl.Init) {
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
         this.serviceClassName = serviceClassName;
@@ -371,7 +371,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 retainOriginalCasing: this.retainOriginalCasing,
                 omitUndefined: this.omitUndefined,
                 parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -480,7 +480,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 retainOriginalCasing: this.retainOriginalCasing,
                 exportsManager: this.exportsManager,
                 parameterNaming: this.parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         }
         if (requestBody?.type === "fileUpload") {
@@ -498,7 +498,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 omitUndefined: this.omitUndefined,
                 formDataSupport: this.formDataSupport,
                 parameterNaming: this.parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         } else {
             return new GeneratedDefaultEndpointRequest({
@@ -511,7 +511,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
                 parameterNaming: this.parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         }
     }
@@ -573,7 +573,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
         return [...this.package_.fernFilepath.allParts].reduce<ts.Expression>(
-            (acc, part) => ts.factory.createPropertyAccessExpression(acc, this.caseConverter.camelUnsafe(part)),
+            (acc, part) => ts.factory.createPropertyAccessExpression(acc, this.case.camelUnsafe(part)),
             args.referenceToRootClient
         );
     }
@@ -736,7 +736,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isIdempotent = true;
             }
 
-            const publicMethodName = this.caseConverter.camelUnsafe(endpoint.endpoint.name);
+            const publicMethodName = this.case.camelUnsafe(endpoint.endpoint.name);
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
@@ -918,7 +918,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (targetBaseUrl == null) {
                 throw new Error("Multi-URL environment has no base URLs defined");
             }
-            const baseUrlName = this.caseConverter.camelUnsafe(targetBaseUrl.name);
+            const baseUrlName = this.case.camelUnsafe(targetBaseUrl.name);
 
             // Get the default environment reference (e.g. environments.SdkEnvironment.Production) if one exists.
             // This mirrors getEnvironment() which does: this._options.environment ?? defaultEnvironment
@@ -1080,7 +1080,7 @@ return core.makePassthroughRequest(input, init, {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         getPropertyKey(this.getOptionKeyForHeader(header)),
-                        ts.factory.createStringLiteral(`YOUR_${this.caseConverter.screamingSnakeUnsafe(header.name)}`)
+                        ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(header.name)}`)
                     )
                 );
             }
@@ -1093,7 +1093,7 @@ return core.makePassthroughRequest(input, init, {
             properties.push(
                 ts.factory.createPropertyAssignment(
                     getPropertyKey(this.getOptionNameForVariable(variable)),
-                    ts.factory.createStringLiteral(`YOUR_${this.caseConverter.screamingSnakeUnsafe(variable.name)}`)
+                    ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(variable.name)}`)
                 )
             );
         }
@@ -1279,7 +1279,7 @@ return core.makePassthroughRequest(input, init, {
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-        return this.caseConverter.camelUnsafe(header.name);
+        return this.case.camelUnsafe(header.name);
     }
 
     public getReferenceToMetadataForEndpointSupplier(): ts.Expression {
@@ -1292,7 +1292,7 @@ return core.makePassthroughRequest(input, init, {
                 pathParameter,
                 retainOriginalCasing: this.retainOriginalCasing,
                 parameterNaming: this.parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             })
         );
     }
@@ -1306,7 +1306,7 @@ return core.makePassthroughRequest(input, init, {
     }
 
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
-        return this.caseConverter.camelUnsafe(variable.name);
+        return this.case.camelUnsafe(variable.name);
     }
 
     public hasAnyEndpointsWithAuth(): boolean {

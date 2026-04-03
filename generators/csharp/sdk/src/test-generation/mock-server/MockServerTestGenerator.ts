@@ -35,7 +35,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.classReference = this.csharp.classReference({
             origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
-            name: `${this.context.caseConverter.pascalSafe(this.endpoint.name)}Test`,
+            name: `${this.context.case.pascalSafe(this.endpoint.name)}Test`,
             namespace: this.getTestNamespace()
         });
 
@@ -71,7 +71,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         }
         // Use allParts (not packagePath) to include the service name itself,
         // ensuring each service gets its own subdirectory and namespace.
-        return subpackage.fernFilepath.allParts.map((part) => this.context.caseConverter.pascalSafe(part));
+        return subpackage.fernFilepath.allParts.map((part) => this.context.case.pascalSafe(part));
     }
 
     private getTestNamespace(): string {
