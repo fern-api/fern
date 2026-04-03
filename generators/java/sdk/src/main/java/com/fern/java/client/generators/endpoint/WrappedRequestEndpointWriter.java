@@ -241,8 +241,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     header.poetTypeName()));
                 } else {
                     requestBodyCodeBlock
-                            .beginControlFlow(
-                                    "if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
+                            .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                             .addStatement(
                                     "$L.addHeader($S, $L)",
                                     AbstractEndpointWriter.REQUEST_BUILDER_NAME,
@@ -557,13 +556,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .endControlFlow();
     }
 
-    /**
-     * Finds the clientDefault for a header by matching on wire value across service and endpoint headers.
-     */
+    /** Finds the clientDefault for a header by matching on wire value across service and endpoint headers. */
     private Optional<CodeBlock> findHeaderClientDefault(String headerWireValue) {
-        return java.util.stream.Stream.concat(
-                        httpService.getHeaders().stream(),
-                        httpEndpoint.getHeaders().stream())
+        return java.util.stream.Stream.concat(httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
                 .filter(h -> h.getName().getWireValue().equals(headerWireValue))
                 .findFirst()
                 .flatMap(HttpHeader::getClientDefault)

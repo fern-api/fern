@@ -112,16 +112,16 @@ public final class DefaultValueExtractor {
     }
 
     /**
-     * Checks whether a parameter has a client default (from x-fern-default).
-     * clientDefault is always applied regardless of the useDefaultRequestParameterValues flag.
+     * Checks whether a parameter has a client default (from x-fern-default). clientDefault is always applied regardless
+     * of the useDefaultRequestParameterValues flag.
      */
     public static boolean hasClientDefault(Optional<Literal> clientDefault) {
         return clientDefault.isPresent();
     }
 
     /**
-     * Extracts a CodeBlock for a clientDefault literal value.
-     * Returns the string or boolean value as a CodeBlock suitable for use as a Java default.
+     * Extracts a CodeBlock for a clientDefault literal value. Returns the string or boolean value as a CodeBlock
+     * suitable for use as a Java default.
      */
     public static Optional<CodeBlock> extractClientDefault(Optional<Literal> clientDefault) {
         return clientDefault.map(literal -> literal.visit(new Literal.Visitor<CodeBlock>() {
@@ -150,9 +150,7 @@ public final class DefaultValueExtractor {
         return extractDefaultValueInternal(typeReference);
     }
 
-    /**
-     * Extracts the effective default value for a parameter, preferring clientDefault over type-level defaults.
-     */
+    /** Extracts the effective default value for a parameter, preferring clientDefault over type-level defaults. */
     public Optional<CodeBlock> extractEffectiveDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
         Optional<CodeBlock> clientDefaultValue = extractClientDefault(clientDefault);
         if (clientDefaultValue.isPresent()) {
@@ -161,9 +159,7 @@ public final class DefaultValueExtractor {
         return extractDefaultValue(typeReference);
     }
 
-    /**
-     * Checks whether a parameter has any default (clientDefault or type-level).
-     */
+    /** Checks whether a parameter has any default (clientDefault or type-level). */
     public boolean hasAnyDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
         return hasClientDefault(clientDefault) || hasDefaultValue(typeReference);
     }

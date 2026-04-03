@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import okhttp3.HttpUrl;
 import org.immutables.value.Value;
@@ -164,8 +163,8 @@ public final class HttpUrlBuilder {
             boolean isOptional = isJavaOptional || isOptionalNullable;
 
             // Check if this parameter has a default value (clientDefault takes precedence over type-level)
-            Optional<Literal> clientDefault = findQueryParamClientDefault(
-                    queryParamProperty.wireKey().get());
+            Optional<Literal> clientDefault =
+                    findQueryParamClientDefault(queryParamProperty.wireKey().get());
             Optional<CodeBlock> defaultValue = defaultValueExtractor.extractEffectiveDefault(
                     queryParamProperty.objectProperty().getValueType(), clientDefault);
 
@@ -321,10 +320,7 @@ public final class HttpUrlBuilder {
                             codeBlock
                                     .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
                                     .addStatement(
-                                            "$L.addPathSegment($S + $L)",
-                                            httpUrlname,
-                                            prefixForNextParam,
-                                            paramValue)
+                                            "$L.addPathSegment($S + $L)", httpUrlname, prefixForNextParam, paramValue)
                                     .endControlFlow();
                         } else {
                             codeBlock
@@ -401,9 +397,7 @@ public final class HttpUrlBuilder {
         return endedWithStatement;
     }
 
-    /**
-     * Finds the clientDefault for a query parameter by matching on wire key.
-     */
+    /** Finds the clientDefault for a query parameter by matching on wire key. */
     private Optional<Literal> findQueryParamClientDefault(String wireKey) {
         return httpEndpoint.getQueryParameters().stream()
                 .filter(qp -> qp.getName().getWireValue().equals(wireKey))
