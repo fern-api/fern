@@ -5,22 +5,40 @@ import execa from "execa";
 
 const DELIMITER = "\u0003";
 
+interface PendingCallback {
+    resolve: (result: string) => void;
+    reject: (error: Error) => void;
+}
+
+/**
+ * CSharpier formatter that maintains a pool of persistent `csharpier pipe-files`
+ * processes. Files are distributed across the pool via round-robin, enabling
+ * parallel formatting while each individual process handles files sequentially.
+ */
 export class CsharpFormatter extends AbstractFormatter {
     private readonly csharpierPath: string;
-    private process: ChildProcessWithoutNullStreams | undefined;
-    private callbacks: { resolve: (result: string) => void; reject: (error: Error) => void }[] = [];
-    private buffer: string = "";
-    private processDead = false;
+    private readonly poolSize: number;
+    private readonly processes: (ChildProcessWithoutNullStreams | undefined)[];
+    private readonly callbackQueues: PendingCallback[][];
+    private readonly buffers: string[];
+    private readonly processDeadFlags: boolean[];
     private fileCounter = 0;
+    private nextIndex = 0;
 
-    constructor() {
+    constructor(poolSize: number = 4) {
         super();
         this.csharpierPath = findDotnetToolPath("csharpier");
+        this.poolSize = poolSize;
+        this.processes = new Array<ChildProcessWithoutNullStreams | undefined>(poolSize).fill(undefined);
+        this.callbackQueues = Array.from({ length: poolSize }, () => [] as PendingCallback[]);
+        this.buffers = new Array<string>(poolSize).fill("");
+        this.processDeadFlags = new Array<boolean>(poolSize).fill(false);
     }
 
-    private ensureProcess(): ChildProcessWithoutNullStreams {
-        if (this.process != null && !this.process.killed) {
-            return this.process;
+    private ensureProcess(index: number): ChildProcessWithoutNullStreams {
+        const existing = this.processes[index];
+        if (existing != null && !existing.killed) {
+            return existing;
         }
 
         const csharpierProcess = spawn(this.csharpierPath, ["pipe-files"], {
@@ -29,18 +47,18 @@ export class CsharpFormatter extends AbstractFormatter {
         });
 
         csharpierProcess.on("error", (error: Error) => {
-            process.stderr.write(`CSharpier process failed to start: ${error.message}\n`);
-            this.processDead = true;
-            this.drainCallbacks();
+            process.stderr.write(`CSharpier process ${index} failed to start: ${error.message}\n`);
+            this.processDeadFlags[index] = true;
+            this.drainCallbacks(index);
         });
 
         csharpierProcess.on("close", (code: number | null) => {
             if (code != null && code !== 0) {
-                process.stderr.write(`CSharpier process exited unexpectedly with code ${code}\n`);
+                process.stderr.write(`CSharpier process ${index} exited unexpectedly with code ${code}\n`);
             }
-            this.process = undefined;
-            this.buffer = "";
-            this.drainCallbacks();
+            this.processes[index] = undefined;
+            this.buffers[index] = "";
+            this.drainCallbacks(index);
         });
 
         csharpierProcess.stdin.on("error", () => {
@@ -52,20 +70,23 @@ export class CsharpFormatter extends AbstractFormatter {
         });
 
         csharpierProcess.stdout.on("data", (chunk: Buffer) => {
-            this.buffer += chunk.toString();
-            let delimiterIndex = this.buffer.indexOf(DELIMITER);
+            this.buffers[index] += chunk.toString();
+            const queue = this.callbackQueues[index];
+            let buf = this.buffers[index] ?? "";
+            let delimiterIndex = buf.indexOf(DELIMITER);
             while (delimiterIndex >= 0) {
-                const result = this.buffer.substring(0, delimiterIndex);
-                this.buffer = this.buffer.substring(delimiterIndex + 1);
-                const callback = this.callbacks.shift();
+                const result = buf.substring(0, delimiterIndex);
+                buf = buf.substring(delimiterIndex + 1);
+                const callback = queue?.shift();
                 if (callback) {
                     callback.resolve(result);
                 }
-                delimiterIndex = this.buffer.indexOf(DELIMITER);
+                delimiterIndex = buf.indexOf(DELIMITER);
             }
+            this.buffers[index] = buf;
         });
 
-        this.process = csharpierProcess;
+        this.processes[index] = csharpierProcess;
         return csharpierProcess;
     }
 
@@ -73,10 +94,14 @@ export class CsharpFormatter extends AbstractFormatter {
         return content.endsWith(";") ? content : `${content};`;
     }
 
-    private drainCallbacks(): void {
-        const error = new Error("CSharpier process exited unexpectedly");
-        while (this.callbacks.length > 0) {
-            const callback = this.callbacks.shift();
+    private drainCallbacks(index: number): void {
+        const error = new Error(`CSharpier process ${index} exited unexpectedly`);
+        const queue = this.callbackQueues[index];
+        if (queue == null) {
+            return;
+        }
+        while (queue.length > 0) {
+            const callback = queue.shift();
             if (callback) {
                 callback.reject(error);
             }
@@ -84,11 +109,14 @@ export class CsharpFormatter extends AbstractFormatter {
     }
 
     private pipeFile(content: string): Promise<string> {
-        if (this.processDead) {
-            return Promise.reject(new Error("CSharpier process is not available"));
+        const index = this.nextIndex % this.poolSize;
+        this.nextIndex++;
+
+        if (this.processDeadFlags[index]) {
+            return Promise.reject(new Error(`CSharpier process ${index} is not available`));
         }
 
-        const proc = this.ensureProcess();
+        const proc = this.ensureProcess(index);
         const filePath = `Dummy${this.fileCounter++}.cs`;
         proc.stdin.write(filePath);
         proc.stdin.write(DELIMITER);
@@ -96,7 +124,7 @@ export class CsharpFormatter extends AbstractFormatter {
         proc.stdin.write(DELIMITER);
 
         return new Promise<string>((resolve, reject) => {
-            this.callbacks.push({ resolve, reject });
+            this.callbackQueues[index]?.push({ resolve, reject });
         });
     }
 
@@ -128,10 +156,13 @@ export class CsharpFormatter extends AbstractFormatter {
     }
 
     public dispose(): void {
-        if (this.process != null && !this.process.killed) {
-            this.process.stdin.end();
-            this.process.kill();
-            this.process = undefined;
+        for (let i = 0; i < this.poolSize; i++) {
+            const proc = this.processes[i];
+            if (proc != null && !proc.killed) {
+                proc.stdin.end();
+                proc.kill();
+                this.processes[i] = undefined;
+            }
         }
     }
 }
