@@ -1,9 +1,12 @@
 import { resolve } from "node:path";
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 import { ObjectGenerator } from "../../object/index.js";
 import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
 
 function getObjectTypeDeclarationOrThrow(context: ModelGeneratorContext, name: string) {
     for (const declaration of Object.values(context.ir.types)) {
@@ -15,7 +18,7 @@ function getObjectTypeDeclarationOrThrow(context: ModelGeneratorContext, name: s
             union: () => null,
             _other: () => null
         });
-        if (otd && declaration.name.name.originalName === name) {
+        if (otd && getOriginalName(declaration.name.name) === name) {
             return otd;
         }
     }
@@ -86,7 +89,7 @@ describe("ObjectGenerator", () => {
         for (const declaration of Object.values(context.ir.types)) {
             declaration.shape._visit({
                 object: (otd) => {
-                    const objectName = declaration.name.name.pascalCase.unsafeName;
+                    const objectName = caseConverter.pascalUnsafe(declaration.name.name);
                     const generator = new ObjectGenerator({
                         symbol: swift.Symbol.create(`${moduleName}.${objectName}`, objectName, {
                             type: "struct"

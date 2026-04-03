@@ -1,5 +1,16 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
 import { EndpointPathInput } from "../parse-endpoint-path.js";
+
+function makeName(original: string, camelUnsafe: string): FernIr.Name {
+    return {
+        originalName: original,
+        camelCase: { unsafeName: camelUnsafe, safeName: camelUnsafe },
+        snakeCase: { unsafeName: original, safeName: original },
+        screamingSnakeCase: { unsafeName: original.toUpperCase(), safeName: original.toUpperCase() },
+        pascalCase: { unsafeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1), safeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1) }
+    };
+}
 
 function makeEndpoint(opts: {
     head: string;
@@ -19,10 +30,7 @@ function makeEndpoint(opts: {
             }))
         },
         allPathParameters: parts.map((p) => ({
-            name: {
-                originalName: p.paramOriginalName,
-                camelCase: { unsafeName: p.paramCamelCase }
-            },
+            name: makeName(p.paramOriginalName, p.paramCamelCase),
             docs: undefined
         }))
     };
