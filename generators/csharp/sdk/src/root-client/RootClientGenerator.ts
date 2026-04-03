@@ -468,8 +468,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
-                            const usernameOmitted = basicScheme.usernameOmit === true;
-                            const passwordOmitted = basicScheme.passwordOmit === true;
+                            const usernameOmitted = !!basicScheme.usernameOmit;
+                            const passwordOmitted = !!basicScheme.passwordOmit;
                             // Condition: only require non-omitted fields to be present
                             let condition: string;
                             if (!usernameOmitted && !passwordOmitted) {
@@ -818,8 +818,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             {
                 const usernameName = this.case.camelSafe(scheme.username);
                 const passwordName = this.case.camelSafe(scheme.password);
-                const usernameOmitted = scheme.usernameOmit === true;
-                const passwordOmitted = scheme.passwordOmit === true;
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
                 // When omit is true, the field is completely removed from the end-user API.
                 const params: ConstructorParameter[] = [];
                 if (!usernameOmitted) {
