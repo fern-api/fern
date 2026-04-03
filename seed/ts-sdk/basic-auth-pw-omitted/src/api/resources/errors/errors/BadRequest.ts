@@ -3,7 +3,7 @@
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
-export class BadRequest extends errors.SeedBasicAuthOptionalError {
+export class BadRequest extends errors.SeedBasicAuthPwOmittedError {
     constructor(rawResponse?: core.RawResponse) {
         super({
             message: "BadRequest",

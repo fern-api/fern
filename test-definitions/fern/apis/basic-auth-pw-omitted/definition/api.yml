@@ -1,4 +1,4 @@
-name: basic-auth-optional
+name: basic-auth-pw-omitted
 auth: Basic
 auth-schemes:
   Basic:

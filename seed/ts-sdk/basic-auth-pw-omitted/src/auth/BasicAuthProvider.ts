@@ -24,7 +24,7 @@ export class BasicAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
         if (username == null) {
-            throw new errors.SeedBasicAuthOptionalError({
+            throw new errors.SeedBasicAuthPwOmittedError({
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }

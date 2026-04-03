@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedBasicAuthOptional from "../../../index.js";
+import * as SeedBasicAuthPwOmitted from "../../../index.js";
 
 export declare namespace BasicAuthClient {
     export type Options = BaseClientOptions;
@@ -26,7 +26,7 @@ export class BasicAuthClient {
      *
      * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedBasicAuthOptional.UnauthorizedRequest}
+     * @throws {@link SeedBasicAuthPwOmitted.UnauthorizedRequest}
      *
      * @example
      *     await client.basicAuth.getWithBasicAuth()
@@ -66,12 +66,12 @@ export class BasicAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 401:
-                    throw new SeedBasicAuthOptional.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuthOptional.UnauthorizedRequestErrorBody,
+                    throw new SeedBasicAuthPwOmitted.UnauthorizedRequest(
+                        _response.error.body as SeedBasicAuthPwOmitted.UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedBasicAuthOptionalError({
+                    throw new errors.SeedBasicAuthPwOmittedError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -88,8 +88,8 @@ export class BasicAuthClient {
      * @param {unknown} request
      * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedBasicAuthOptional.UnauthorizedRequest}
-     * @throws {@link SeedBasicAuthOptional.BadRequest}
+     * @throws {@link SeedBasicAuthPwOmitted.UnauthorizedRequest}
+     * @throws {@link SeedBasicAuthPwOmitted.BadRequest}
      *
      * @example
      *     await client.basicAuth.postWithBasicAuth({
@@ -138,14 +138,14 @@ export class BasicAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 401:
-                    throw new SeedBasicAuthOptional.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuthOptional.UnauthorizedRequestErrorBody,
+                    throw new SeedBasicAuthPwOmitted.UnauthorizedRequest(
+                        _response.error.body as SeedBasicAuthPwOmitted.UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedBasicAuthOptional.BadRequest(_response.rawResponse);
+                    throw new SeedBasicAuthPwOmitted.BadRequest(_response.rawResponse);
                 default:
-                    throw new errors.SeedBasicAuthOptionalError({
+                    throw new errors.SeedBasicAuthPwOmittedError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

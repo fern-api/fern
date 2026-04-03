@@ -3,7 +3,7 @@
 import type * as core from "../core/index.js";
 import { toJson } from "../core/json.js";
 
-export class SeedBasicAuthOptionalError extends Error {
+export class SeedBasicAuthPwOmittedError extends Error {
     public readonly statusCode?: number;
     public readonly body?: unknown;
     public readonly rawResponse?: core.RawResponse;

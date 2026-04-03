@@ -1,7 +1,7 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
-[![npm shield](https://img.shields.io/npm/v/@fern/basic-auth-optional)](https://www.npmjs.com/package/@fern/basic-auth-optional)
+[![npm shield](https://img.shields.io/npm/v/@fern/basic-auth-pw-omitted)](https://www.npmjs.com/package/@fern/basic-auth-pw-omitted)
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
@@ -27,7 +27,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 ## Installation
 
 ```sh
-npm i -s @fern/basic-auth-optional
+npm i -s @fern/basic-auth-pw-omitted
 ```
 
 ## Reference
@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedBasicAuthOptionalClient } from "@fern/basic-auth-optional";
+import { SeedBasicAuthPwOmittedClient } from "@fern/basic-auth-pw-omitted";
 
-const client = new SeedBasicAuthOptionalClient({ environment: "YOUR_BASE_URL", username: "YOUR_USERNAME" });
+const client = new SeedBasicAuthPwOmittedClient({ environment: "YOUR_BASE_URL", username: "YOUR_USERNAME" });
 await client.basicAuth.postWithBasicAuth({
     "key": "value"
 });
@@ -53,12 +53,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedBasicAuthOptionalError } from "@fern/basic-auth-optional";
+import { SeedBasicAuthPwOmittedError } from "@fern/basic-auth-pw-omitted";
 
 try {
     await client.basicAuth.postWithBasicAuth(...);
 } catch (err) {
-    if (err instanceof SeedBasicAuthOptionalError) {
+    if (err instanceof SeedBasicAuthPwOmittedError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -74,7 +74,7 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { BasicAuthClient } from '@fern/basic-auth-optional/basicAuth';
+import { BasicAuthClient } from '@fern/basic-auth-pw-omitted/basicAuth';
 
 const client = new BasicAuthClient({...});
 ```
@@ -84,9 +84,9 @@ const client = new BasicAuthClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedBasicAuthOptionalClient } from "@fern/basic-auth-optional";
+import { SeedBasicAuthPwOmittedClient } from "@fern/basic-auth-pw-omitted";
 
-const client = new SeedBasicAuthOptionalClient({
+const client = new SeedBasicAuthPwOmittedClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -171,9 +171,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedBasicAuthOptionalClient, logging } from "@fern/basic-auth-optional";
+import { SeedBasicAuthPwOmittedClient, logging } from "@fern/basic-auth-pw-omitted";
 
-const client = new SeedBasicAuthOptionalClient({
+const client = new SeedBasicAuthPwOmittedClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

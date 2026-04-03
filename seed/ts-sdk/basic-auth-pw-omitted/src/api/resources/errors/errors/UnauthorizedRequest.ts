@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedBasicAuthOptional from "../../../index.js";
+import type * as SeedBasicAuthPwOmitted from "../../../index.js";
 
-export class UnauthorizedRequest extends errors.SeedBasicAuthOptionalError {
-    constructor(body: SeedBasicAuthOptional.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
+export class UnauthorizedRequest extends errors.SeedBasicAuthPwOmittedError {
+    constructor(body: SeedBasicAuthPwOmitted.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,

@@ -49,9 +49,9 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": "@fern/basic-auth-optional",
+            "X-Fern-SDK-Name": "@fern/basic-auth-pw-omitted",
             "X-Fern-SDK-Version": "0.0.1",
-            "User-Agent": "@fern/basic-auth-optional/0.0.1",
+            "User-Agent": "@fern/basic-auth-pw-omitted/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },

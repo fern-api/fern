@@ -5,17 +5,17 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedBasicAuthOptionalClient {
+export declare namespace SeedBasicAuthPwOmittedClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedBasicAuthOptionalClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedBasicAuthOptionalClient.Options>;
+export class SeedBasicAuthPwOmittedClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedBasicAuthPwOmittedClient.Options>;
     protected _basicAuth: BasicAuthClient | undefined;
 
-    constructor(options: SeedBasicAuthOptionalClient.Options) {
+    constructor(options: SeedBasicAuthPwOmittedClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
