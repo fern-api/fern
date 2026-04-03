@@ -19,6 +19,21 @@ const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
 
+interface BundledDevDependency {
+    name: string;
+    versionConstraint?: string;
+}
+
+const BUNDLED_DEV_DEPENDENCIES: BundledDevDependency[] = [
+    { name: "rake", versionConstraint: "~> 13.0" },
+    { name: "minitest", versionConstraint: "~> 5.16" },
+    { name: "minitest-rg" },
+    { name: "rubocop", versionConstraint: "~> 1.21" },
+    { name: "rubocop-minitest" },
+    { name: "pry" },
+    { name: "webmock" }
+];
+
 /**
  * In memory representation of a Ruby project.
  */
@@ -284,6 +299,11 @@ class GemspecFile {
         if (!hasBasicAuth) {
             return "";
         }
+        // Skip bundled base64 dep if user overrides it via extraDependencies
+        const extraDependencies = this.context.customConfig.extraDependencies;
+        if (extraDependencies != null && "base64" in extraDependencies) {
+            return "";
+        }
         return '\nspec.add_dependency "base64"';
     }
 
@@ -392,15 +412,36 @@ class Gemfile {
             return "";
         }
 
-        const dependencyLines = Object.entries(extraDevDependencies).map(
+        // Only include extra dev deps that don't override bundled ones (those are handled inline)
+        const bundledDevDeps = new Set(BUNDLED_DEV_DEPENDENCIES.map((d) => d.name));
+        const nonOverrideDeps = Object.entries(extraDevDependencies).filter(
+            ([packageName]) => !bundledDevDeps.has(packageName)
+        );
+
+        if (nonOverrideDeps.length === 0) {
+            return "";
+        }
+
+        const dependencyLines = nonOverrideDeps.map(
             ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
         );
 
         return "\n" + dependencyLines.join("\n");
     }
 
+    private getBundledDevDependencyLine(dep: BundledDevDependency): string {
+        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
+        // If user overrides this bundled dep, use their version constraint
+        if (extraDevDependencies != null && dep.name in extraDevDependencies) {
+            return `gem "${dep.name}", "${extraDevDependencies[dep.name]}"`;
+        }
+        return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
+    }
+
     public async toString(): Promise<string> {
         const extraDevDependenciesString = this.getExtraDevDependenciesString();
+
+        const bundledLines = BUNDLED_DEV_DEPENDENCIES.map((dep) => this.getBundledDevDependencyLine(dep));
 
         return dedent`
             # frozen_string_literal: true
@@ -410,17 +451,7 @@ class Gemfile {
                 gemspec
 
                 group :test, :development do
-                gem "rake", "~> 13.0"
-
-                gem "minitest", "~> 5.16"
-                gem "minitest-rg"
-
-                gem "rubocop", "~> 1.21"
-                gem "rubocop-minitest"
-
-                gem "pry"
-
-                gem "webmock"
+                ${bundledLines.join("\n")}
 ${extraDevDependenciesString}
             end
 
