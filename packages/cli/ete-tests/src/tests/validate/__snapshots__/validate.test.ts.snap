@@ -6,7 +6,7 @@ No API definition found. Expected one of the following:
   - An api section in generators.yml pointing to your API spec(s)
   - A definition/ directory with Fern Definition files
 For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
-All checks passed"
+Found 0 errors and 1 warning in __ELAPSED__ seconds. Run fern check --warnings to print out the warnings not shown."
 `;
 
 exports[`validate > no-api 1`] = `"Missing file: api.yml"`;
@@ -29,5 +29,5 @@ exports[`validate > simple 1`] = `
         path: other.yml -> types -> MyType
         issue: Type MissingType is not defined.
 
-Found 2 errors and 0 warnings in"
+Found 2 errors and 0 warnings in __ELAPSED__ seconds."
 `;
