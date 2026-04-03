@@ -454,7 +454,7 @@ export class ModelNavigator {
                 return caseConverter.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
-                return property.name;
+                return caseConverter.pascalSafe(property.name);
             }
         }
         if ("pascalCase" in property) {
@@ -498,7 +498,7 @@ export class ModelNavigator {
                 return caseConverter.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
-                return classDeclaration.name;
+                return caseConverter.pascalSafe(classDeclaration.name);
             }
         }
         if ("pascalCase" in classDeclaration) {

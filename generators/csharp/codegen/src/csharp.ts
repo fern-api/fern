@@ -5,6 +5,8 @@ import { fail } from "./utils/fail.js";
 
 type Name = FernIr.Name;
 type NameAndWireValue = FernIr.NameAndWireValue;
+type NameAndWireValueOrString = FernIr.NameAndWireValue | string;
+type NameOrString = FernIr.Name | string;
 
 import {
     And,
@@ -184,7 +186,11 @@ export class CSharp {
 
     getPropertyName(
         enclosingType: ClassReference,
-        property: (IrNode & { name: Name | dynamic.Name }) | (IrNode & { name: NameAndWireValue })
+        property:
+            | (IrNode & { name: Name | dynamic.Name })
+            | (IrNode & { name: NameAndWireValue })
+            | (IrNode & { name: NameAndWireValueOrString })
+            | (IrNode & { name: NameOrString })
     ) {
         const expectedName = this.model.getPropertyNameFor(property);
         const origin =
