@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Fix `custom-dependencies` not being able to override bundled dependency
+        versions (OkHttp, Jackson, etc.). Previously, custom dependencies were
+        appended alongside bundled ones, so Gradle's dependency resolution would
+        pick the higher version. Custom dependencies now replace any bundled
+        dependency with the same group and artifact, allowing users to pin
+        specific versions for CVE remediation or compatibility.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 4.1.0
   changelogEntry:
     - summary: |

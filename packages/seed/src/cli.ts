@@ -95,8 +95,9 @@ function addTestCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -162,6 +163,7 @@ function addTestCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
 
             // Handle "affected" mode for --generator and --fixture
             const isGeneratorAffected =
@@ -401,8 +403,9 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -457,6 +460,9 @@ function addTestRemoteLocalCommand(cli: Argv) {
                         "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
         async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
+
             // Verify that the working directory is a valid path and is the root folder of the fern repo
             const inputValidationErrors = [];
 
@@ -511,7 +517,8 @@ function addRunCommand(cli: Argv) {
                 .option("generator", {
                     string: true,
                     demandOption: true,
-                    description: "Generator to run"
+                    alias: "sdk",
+                    description: "Generator to run (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("path", {
                     type: "string",
@@ -564,12 +571,13 @@ function addRunCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
-            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
             if (generator == null) {
                 throw new Error(
-                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                    `Generator ${resolvedGenerator} not found. Please make sure that there is a folder with the name ${resolvedGenerator} in the seed directory.`
                 );
             }
 
@@ -674,7 +682,9 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 .option("generator", {
                     string: true,
                     demandOption: true,
-                    description: "Generator to get fixtures for"
+                    alias: "sdk",
+                    description:
+                        "Generator to get fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("include-output-folders", {
                     type: "boolean",
@@ -685,12 +695,13 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
-            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
             if (generator == null) {
                 throw new Error(
-                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                    `Generator ${resolvedGenerator} not found. Please make sure that there is a folder with the name ${resolvedGenerator} in the seed directory.`
                 );
             }
 
@@ -712,8 +723,9 @@ function addListTestFixturesCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to list fixtures for (lists all if not provided)"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to list fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("groups", {
                     type: "string",
@@ -723,6 +735,7 @@ function addListTestFixturesCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -844,8 +857,8 @@ function addCleanCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to clean (cleans all if not provided)"
+                    alias: ["g", "sdk"],
+                    description: "The generators to clean (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("dry-run", {
                     type: "boolean",
@@ -855,6 +868,7 @@ function addCleanCommand(cli: Argv) {
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -1480,6 +1494,29 @@ function addGenerateCommands(cli: Argv) {
                 );
         });
     });
+}
+
+/**
+ * Resolves `--sdk` shorthand values into full generator names by appending `-sdk`.
+ * Merges them with any explicit `--generator` values.
+ */
+function normalizeGeneratorName(name: string, workspaces: GeneratorWorkspace[]): string {
+    const workspaceNames = new Set(workspaces.map((w) => w.workspaceName));
+    if (workspaceNames.has(name)) {
+        return name;
+    }
+    const expanded = `${name}-sdk`;
+    if (workspaceNames.has(expanded)) {
+        return expanded;
+    }
+    return name;
+}
+
+function normalizeGeneratorNames(names: string[] | undefined, workspaces: GeneratorWorkspace[]): string[] | undefined {
+    if (names == null) {
+        return undefined;
+    }
+    return names.map((name) => normalizeGeneratorName(name, workspaces));
 }
 
 function throwIfGeneratorDoesNotExist({
