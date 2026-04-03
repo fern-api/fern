@@ -27,9 +27,9 @@ GET request with basic auth scheme
 <dd>
 
 ```python
-from seed import SeedBasicAuthOptional
+from seed import SeedBasicAuthPwOmitted
 
-client = SeedBasicAuthOptional(
+client = SeedBasicAuthPwOmitted(
     username="<username>",
     password="<password>",
     base_url="https://yourhost.com/path/to/api",
@@ -90,9 +90,9 @@ POST request with basic auth scheme
 <dd>
 
 ```python
-from seed import SeedBasicAuthOptional
+from seed import SeedBasicAuthPwOmitted
 
-client = SeedBasicAuthOptional(
+client = SeedBasicAuthPwOmitted(
     username="<username>",
     password="<password>",
     base_url="https://yourhost.com/path/to/api",

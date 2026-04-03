@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
 
 
-class SeedBasicAuthOptional:
+class SeedBasicAuthPwOmitted:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +40,9 @@ class SeedBasicAuthOptional:
 
     Examples
     --------
-    from seed import SeedBasicAuthOptional
+    from seed import SeedBasicAuthPwOmitted
 
-    client = SeedBasicAuthOptional(
+    client = SeedBasicAuthPwOmitted(
         username="YOUR_USERNAME",
         password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
@@ -88,7 +88,7 @@ class SeedBasicAuthOptional:
         return self._basic_auth
 
 
-class AsyncSeedBasicAuthOptional:
+class AsyncSeedBasicAuthPwOmitted:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -116,9 +116,9 @@ class AsyncSeedBasicAuthOptional:
 
     Examples
     --------
-    from seed import AsyncSeedBasicAuthOptional
+    from seed import AsyncSeedBasicAuthPwOmitted
 
-    client = AsyncSeedBasicAuthOptional(
+    client = AsyncSeedBasicAuthPwOmitted(
         username="YOUR_USERNAME",
         password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",

@@ -8,12 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
     from . import basic_auth, errors
-    from .client import AsyncSeedBasicAuthOptional, SeedBasicAuthOptional
+    from .client import AsyncSeedBasicAuthPwOmitted, SeedBasicAuthPwOmitted
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedBasicAuthOptional": ".client",
+    "AsyncSeedBasicAuthPwOmitted": ".client",
     "BadRequest": ".errors",
-    "SeedBasicAuthOptional": ".client",
+    "SeedBasicAuthPwOmitted": ".client",
     "UnauthorizedRequest": ".errors",
     "UnauthorizedRequestErrorBody": ".errors",
     "__version__": ".version",
@@ -44,9 +44,9 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedBasicAuthOptional",
+    "AsyncSeedBasicAuthPwOmitted",
     "BadRequest",
-    "SeedBasicAuthOptional",
+    "SeedBasicAuthPwOmitted",
     "UnauthorizedRequest",
     "UnauthorizedRequestErrorBody",
     "__version__",

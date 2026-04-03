@@ -29,11 +29,11 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "fern_basic-auth-optional/0.0.1",
+            "User-Agent": "fern_basic-auth-pw-omitted/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "fern_basic-auth-optional",
+            "X-Fern-SDK-Name": "fern_basic-auth-pw-omitted",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }

@@ -40,9 +40,9 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed import SeedBasicAuthOptional
+        from seed import SeedBasicAuthPwOmitted
 
-        client = SeedBasicAuthOptional(
+        client = SeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
             password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
@@ -71,9 +71,9 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed import SeedBasicAuthOptional
+        from seed import SeedBasicAuthPwOmitted
 
-        client = SeedBasicAuthOptional(
+        client = SeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
             password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
@@ -118,9 +118,9 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedBasicAuthOptional
+        from seed import AsyncSeedBasicAuthPwOmitted
 
-        client = AsyncSeedBasicAuthOptional(
+        client = AsyncSeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
             password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
@@ -157,9 +157,9 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedBasicAuthOptional
+        from seed import AsyncSeedBasicAuthPwOmitted
 
-        client = AsyncSeedBasicAuthOptional(
+        client = AsyncSeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
             password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
