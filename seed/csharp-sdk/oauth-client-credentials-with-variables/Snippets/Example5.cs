@@ -1,9 +1,9 @@
 using SeedOauthClientCredentialsWithVariables;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedOauthClientCredentialsWithVariablesClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",

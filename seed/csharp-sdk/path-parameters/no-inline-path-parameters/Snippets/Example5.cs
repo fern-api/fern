@@ -1,9 +1,9 @@
 using SeedPathParameters;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedPathParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

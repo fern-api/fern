@@ -1,10 +1,10 @@
 using SeedTrace;
 using System.Globalization;
 
+
 public partial class Examples
 {
-    public async Task Example4()
-    {
+    public async Task Example4() {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions {

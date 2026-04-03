@@ -1,9 +1,9 @@
 using SeedClientSideParams;
 
+
 public partial class Examples
 {
-    public async Task Example8()
-    {
+    public async Task Example8() {
         var client = new SeedClientSideParamsClient(
             token: "<token>",
             clientOptions: new ClientOptions {

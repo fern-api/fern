@@ -11,16 +11,13 @@ import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
-const PROJECT_FILE_CONTENT = `
-<Project Sdk="Microsoft.NET.Sdk">
-
+const PROJECT_FILE_CONTENT = `<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Snippets</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
 </Project>`;
 
 export class DynamicSnippetsCsharpTestGenerator {

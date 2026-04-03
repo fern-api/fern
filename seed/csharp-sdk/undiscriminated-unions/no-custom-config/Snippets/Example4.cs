@@ -1,9 +1,9 @@
 using SeedUndiscriminatedUnions;
 
+
 public partial class Examples
 {
-    public async Task Example4()
-    {
+    public async Task Example4() {
         var client = new SeedUndiscriminatedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

@@ -1,9 +1,9 @@
 using SeedBasicAuthEnvironmentVariables;
 
+
 public partial class Examples
 {
-    public async Task Example3()
-    {
+    public async Task Example3() {
         var client = new SeedBasicAuthEnvironmentVariablesClient(
             username: "<username>",
             accessToken: "<password>",

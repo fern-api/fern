@@ -1,9 +1,9 @@
 using SeedMultiUrlEnvironmentNoDefault;
 
+
 public partial class Examples
 {
-    public async Task Example0()
-    {
+    public async Task Example0() {
         var client = new SeedMultiUrlEnvironmentNoDefaultClient(
             token: "<token>"
         );

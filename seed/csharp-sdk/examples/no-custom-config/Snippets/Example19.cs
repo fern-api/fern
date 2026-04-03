@@ -2,10 +2,10 @@ using SeedExamples;
 using SeedExamples.Commons;
 using System.Globalization;
 
+
 public partial class Examples
 {
-    public async Task Example19()
-    {
+    public async Task Example19() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions {

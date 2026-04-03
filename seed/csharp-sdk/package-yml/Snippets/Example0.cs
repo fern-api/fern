@@ -1,9 +1,9 @@
 using SeedPackageYml;
 
+
 public partial class Examples
 {
-    public async Task Example0()
-    {
+    public async Task Example0() {
         var client = new SeedPackageYmlClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

@@ -1,10 +1,10 @@
 using Contoso.Net;
 using Contoso.Net.ScimConfiguration;
 
+
 public partial class Examples
 {
-    public async System.Threading.Tasks.Task Example3()
-    {
+    public async System.Threading.Tasks.Task Example3() {
         var client = new Contoso.Net.Contoso(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

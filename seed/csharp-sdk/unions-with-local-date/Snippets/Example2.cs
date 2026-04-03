@@ -1,10 +1,10 @@
 using SeedUnions;
 using System.Globalization;
 
+
 public partial class Examples
 {
-    public async Task Example2()
-    {
+    public async Task Example2() {
         var client = new SeedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

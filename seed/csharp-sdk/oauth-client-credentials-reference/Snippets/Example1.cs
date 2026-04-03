@@ -1,9 +1,9 @@
 using SeedOauthClientCredentialsReference;
 
+
 public partial class Examples
 {
-    public async Task Example1()
-    {
+    public async Task Example1() {
         var client = new SeedOauthClientCredentialsReferenceClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",

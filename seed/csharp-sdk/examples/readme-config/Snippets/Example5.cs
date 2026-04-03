@@ -1,10 +1,10 @@
 using SeedExamples;
 using SeedExamples.File_;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions {

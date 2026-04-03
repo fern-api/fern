@@ -2,10 +2,10 @@ using SeedExhaustive;
 using SeedExhaustive.Types;
 using System.Globalization;
 
+
 public partial class Examples
 {
-    public async Task Example20()
-    {
+    public async Task Example20() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

@@ -1,9 +1,9 @@
 using SeedEndpointSecurityAuth;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedEndpointSecurityAuthClient(
             token: "<token>",
             clientOptions: new ClientOptions {

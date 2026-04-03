@@ -1,9 +1,9 @@
 using SeedWebsocketAuth;
 
+
 public partial class Examples
 {
-    public async Task Example0()
-    {
+    public async Task Example0() {
         var client = new SeedWebsocketAuthClient(
             xApiKey: "X-Api-Key",
             clientId: "client_id",

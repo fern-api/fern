@@ -1,9 +1,9 @@
 using SeedOauthClientCredentialsMandatoryAuth;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
             clientOptions: new ClientOptions {
                 ClientId = "<clientId>",

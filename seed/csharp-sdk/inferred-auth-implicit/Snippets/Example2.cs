@@ -1,9 +1,9 @@
 using SeedInferredAuthImplicit;
 
+
 public partial class Examples
 {
-    public async Task Example2()
-    {
+    public async Task Example2() {
         var client = new SeedInferredAuthImplicitClient(
             xApiKey: "X-Api-Key",
             clientId: "client_id",

@@ -1,9 +1,9 @@
 using SeedApi;
 
+
 public partial class Examples
 {
-    public async Task Example5()
-    {
+    public async Task Example5() {
         var client = new SeedApiClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",

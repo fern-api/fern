@@ -1,9 +1,9 @@
 using SeedBasicAuth;
 
+
 public partial class Examples
 {
-    public async Task Example6()
-    {
+    public async Task Example6() {
         var client = new SeedBasicAuthClient(
             username: "<username>",
             password: "<password>",

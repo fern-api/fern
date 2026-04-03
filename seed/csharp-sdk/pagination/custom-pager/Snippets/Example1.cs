@@ -1,9 +1,9 @@
 using SeedPagination;
 
+
 public partial class Examples
 {
-    public async Task Example1()
-    {
+    public async Task Example1() {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions {

@@ -1,9 +1,9 @@
 using SeedExamples;
 
+
 public partial class Examples
 {
-    public async Task Example12()
-    {
+    public async Task Example12() {
         var client = new SeedExamplesClient(
             token: "<token>",
             clientOptions: new ClientOptions {

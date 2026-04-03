@@ -1,10 +1,10 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
+
 public partial class Examples
 {
-    public async Task Example4()
-    {
+    public async Task Example4() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

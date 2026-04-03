@@ -1,9 +1,9 @@
 using SeedInferredAuthImplicitNoExpiry;
 
+
 public partial class Examples
 {
-    public async Task Example2()
-    {
+    public async Task Example2() {
         var client = new SeedInferredAuthImplicitNoExpiryClient(
             xApiKey: "X-Api-Key",
             clientId: "client_id",

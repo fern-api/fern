@@ -1,9 +1,9 @@
 using SeedExhaustive;
 
+
 public partial class Examples
 {
-    public async Task Example40()
-    {
+    public async Task Example40() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

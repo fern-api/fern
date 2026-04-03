@@ -1,9 +1,9 @@
 using SeedSingleUrlEnvironmentDefault;
 
+
 public partial class Examples
 {
-    public async Task Example0()
-    {
+    public async Task Example0() {
         var client = new SeedSingleUrlEnvironmentDefaultClient(
             token: "<token>",
             clientOptions: new ClientOptions {
