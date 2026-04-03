@@ -443,7 +443,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
         const literal = this.context.maybeLiteral(typeReference);
@@ -464,7 +464,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         typeReference,
         literal
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         typeReference: FernIr.TypeReference;
         literal: FernIr.Literal;
     }): ObjectGenerator.Serde | undefined {
@@ -510,7 +510,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
         const nameInner = typeof name === "string" ? name : name.name;
@@ -541,7 +541,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
         const nameInner = typeof name === "string" ? name : name.name;
@@ -612,7 +612,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         return `Get${field.name.charAt(0).toUpperCase()}${field.name.slice(1)}`;
     }
 
-    private getFieldReference(name: FernIr.Name): go.AstNode {
+    private getFieldReference(name: FernIr.NameOrString): go.AstNode {
         return go.selector({
             on: go.identifier(this.receiver),
             selector: go.identifier(this.context.getFieldName(name))
