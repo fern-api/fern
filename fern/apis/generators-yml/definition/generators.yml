@@ -612,6 +612,22 @@ types:
     properties:
       proto: ProtobufDefinitionSchema
 
+  GeneratorImageObjectSchema:
+    audiences:
+      - generators-yml
+    docs: |
+      Explicit Docker image configuration with a custom container registry.
+    properties:
+      name:
+        type: string
+        docs: |
+          The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
+      registry:
+        type: string
+        docs: |
+          The container registry URL to pull the image from during local generation.
+          Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
+
   Language:
     enum:
       - java
