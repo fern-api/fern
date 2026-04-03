@@ -150,7 +150,6 @@ export class WireTestFunctionGenerator {
             baseUrlFallback: "https://api.fern.com"
         });
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
-            // @ts-expect-error ir-sdk@66.0.0 Auth is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             auth: this.dynamicEndpoint.auth,
             snippet: endpointSnippetRequest,
             additionalArgs: [
@@ -172,7 +171,6 @@ export class WireTestFunctionGenerator {
         return swift.Statement.constantDeclaration({
             unsafeName: "response",
             value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-                // @ts-expect-error ir-sdk@66.0.0 Endpoint is structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
                 endpoint: this.dynamicEndpoint,
                 snippet: endpointSnippetRequest,
                 additionalArguments: [

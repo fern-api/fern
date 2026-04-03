@@ -84,7 +84,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
         const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
-            // @ts-expect-error ir-sdk@66.0.0 types are structurally compatible with dynamic-ir-sdk@61.7.0 at runtime
             ir: convertIr(dynamicIr),
             config: context.config
         });
