@@ -1366,7 +1366,7 @@ function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string
         enabled: true,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "45000"),
         styleInstructions
     };
 }
