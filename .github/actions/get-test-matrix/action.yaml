@@ -64,7 +64,7 @@ runs:
         "${{ inputs.sdk-name }}" == "openapi" || \
         "${{ inputs.sdk-name }}" == "php-model" || \
         "${{ inputs.sdk-name }}" == "postman" || \
-        "${{ inputs.sdk-name }}" == "ruby-sdk" || \
+        "${{ inputs.sdk-name }}" == "ruby-sdk-v2" || \
         "${{ inputs.sdk-name }}" == "rust-model" || \
         "${{ inputs.sdk-name }}" == "ts-express" ]]; then
           echo "split-tests=false" >> $GITHUB_OUTPUT
