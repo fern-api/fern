@@ -8,11 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import User
     from . import conversations, users
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .conversations import OutboundCallConversationsResponse
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "OutboundCallConversationsResponse": ".conversations",
     "SeedApi": ".client",
     "User": ".types",
@@ -45,6 +48,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedApi",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "OutboundCallConversationsResponse",
     "SeedApi",
     "User",
