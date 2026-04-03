@@ -6,8 +6,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
     fernFilepath: FernIr.FernFilepath;
@@ -19,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<FernIr.EndpointId, string> = {};
     private readonly defaultEndpointId: FernIr.EndpointId;
@@ -33,6 +32,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
+        this.case = context.case;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -444,14 +444,14 @@ ${environmentsList}
 
         const baseUrlsList = baseUrls
             .map((baseUrl) => {
-                const propertyName = caseConverter.camelSafe(baseUrl.name);
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 return `  - \`${propertyName}\`: The ${propertyName} base URL`;
             })
             .join("\n");
 
         const customEnvParams = baseUrls
             .map((baseUrl, index) => {
-                const propertyName = caseConverter.camelSafe(baseUrl.name);
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 const indent = index === 0 ? "" : "    ";
                 return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
             })

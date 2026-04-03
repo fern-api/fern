@@ -7,8 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
         scheme: FernIr.OAuthScheme;
@@ -20,6 +18,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
 
+    private readonly case: CaseConverter;
     private scheme: FernIr.OAuthScheme;
     private tokenEndpointHttpService: FernIr.HttpService;
     private tokenEndpointReference: FernIr.EndpointReference;
@@ -27,6 +26,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.scheme = scheme;
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
 
@@ -290,7 +290,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         }
         if (sdkRequest.shape.type === "wrapper") {
             return php.classReference({
-                name: caseConverter.pascalSafe(sdkRequest.shape.wrapperName),
+                name: this.case.pascalSafe(sdkRequest.shape.wrapperName),
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
@@ -298,7 +298,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getRequestPropertyName(requestProperty: FernIr.RequestProperty): string {
-        return caseConverter.camelUnsafe(requestProperty.property.name);
+        return this.case.camelUnsafe(requestProperty.property.name);
     }
 
     private getExpiresAtMethod(): php.Method {
@@ -352,7 +352,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return caseConverter.camelUnsafe(name.name);
+        return this.case.camelUnsafe(name.name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -365,10 +365,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     }
 
     private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
-        return `->${caseConverter.camelSafe(pathItem.name)}`;
+        return `->${this.case.camelSafe(pathItem.name)}`;
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `->${caseConverter.camelSafe(property.name)}`;
+        return `->${this.case.camelSafe(property.name)}`;
     }
 }

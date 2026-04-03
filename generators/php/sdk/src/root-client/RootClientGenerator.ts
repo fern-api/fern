@@ -8,8 +8,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 interface ConstructorParameters {
     all: ConstructorParameter[];
     required: ConstructorParameter[];
@@ -52,6 +50,13 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
+
+    constructor(context: SdkGeneratorContext) {
+        super(context);
+        this.case = context.case;
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"));
     }
@@ -477,7 +482,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${caseConverter.camelSafe(subpackage.name)} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
@@ -507,7 +512,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             parameters: [],
             return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
             body: php.codeblock((writer) => {
-                writer.writeTextStatement(`return $this->${caseConverter.camelSafe(subpackage.name)}`);
+                writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
             })
         });
     }

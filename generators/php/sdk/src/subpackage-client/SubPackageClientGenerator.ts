@@ -7,8 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export declare namespace SubClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
@@ -19,6 +17,7 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
     private classReference: php.ClassReference;
     private subpackage: FernIr.Subpackage;
     private serviceId: FernIr.ServiceId | undefined;
@@ -26,6 +25,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
         this.serviceId = serviceId;
@@ -88,7 +88,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         parameters: [],
                         return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
                         body: php.codeblock((writer) => {
-                            writer.writeTextStatement(`return $this->${caseConverter.camelSafe(subpackage.name)}`);
+                            writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
                         })
                     })
                 );
@@ -153,7 +153,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${caseConverter.camelSafe(subpackage.name)} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)

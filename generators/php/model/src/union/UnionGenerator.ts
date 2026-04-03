@@ -7,9 +7,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+    private readonly case: CaseConverter;
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: php.ClassReference;
     constructor(
@@ -18,6 +17,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration
     ) {
         super(context);
+        this.case = context.case;
         this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.phpTypeMapper.convertToClassReference(this.typeDeclaration.name);
     }
@@ -144,7 +144,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         types.push(php.Type.mixed());
 
         return php.field({
-            name: caseConverter.camelSafe(this.getValueName()),
+            name: this.case.camelSafe(this.getValueName()),
             type: php.Type.union(types),
             access: this.context.getPropertyAccess(),
             readonly_: true
@@ -253,7 +253,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private isMethod(variant: FernIr.SingleUnionType): php.Method {
-        const methodName = "is" + caseConverter.pascalSafe(variant.discriminantValue);
+        const methodName = "is" + this.case.pascalSafe(variant.discriminantValue);
 
         return php.method({
             name: methodName,
@@ -272,7 +272,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             return null;
         }
 
-        const methodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
+        const methodName = "as" + this.case.pascalSafe(variant.discriminantValue);
         const returnType = this.getReturnType(variant);
 
         const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter());
@@ -660,7 +660,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMaybeArrayMerge(variant: FernIr.SingleUnionType, type: php.Type): php.CodeBlock {
-        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
+        const asCastMethodName = "as" + this.case.pascalSafe(variant.discriminantValue);
         switch (type.internalType.type) {
             case "reference":
             case "object":
@@ -739,7 +739,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         variant: FernIr.SingleUnionType;
         type: php.Type;
     }): php.CodeBlock {
-        const asCastMethodName = "as" + caseConverter.pascalSafe(variant.discriminantValue);
+        const asCastMethodName = "as" + this.case.pascalSafe(variant.discriminantValue);
         let argument: php.AstNode = php.invokeMethod({
             method: asCastMethodName,
             arguments_: [],

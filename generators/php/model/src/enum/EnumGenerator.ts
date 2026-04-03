@@ -7,9 +7,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+    private readonly case: CaseConverter;
     private readonly classReference: php.ClassReference;
 
     constructor(
@@ -18,6 +17,7 @@ export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchem
         private readonly enumDeclaration: FernIr.EnumTypeDeclaration
     ) {
         super(context);
+        this.case = context.case;
         this.classReference = this.context.phpTypeMapper.convertToClassReference(this.typeDeclaration.name);
     }
 
@@ -27,7 +27,7 @@ export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchem
             backing: "string"
         });
         this.enumDeclaration.values.forEach((member) =>
-            enum_.addMember({ name: caseConverter.pascalSafe(member.name), value: getWireValue(member.name) })
+            enum_.addMember({ name: this.case.pascalSafe(member.name), value: getWireValue(member.name) })
         );
         return new PhpFile({
             clazz: enum_,

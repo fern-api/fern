@@ -7,8 +7,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
         scheme: FernIr.InferredAuthScheme;
@@ -20,6 +18,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     private static readonly CLASS_NAME = "InferredAuthProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
 
+    private readonly case: CaseConverter;
     private scheme: FernIr.InferredAuthScheme;
     private tokenEndpointHttpService: FernIr.HttpService;
     private tokenEndpointReference: FernIr.EndpointReference;
@@ -27,6 +26,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
 
     constructor({ context, scheme }: InferredAuthProviderGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.scheme = scheme;
         this.tokenEndpointReference = this.scheme.tokenEndpoint.endpoint;
 
@@ -303,7 +303,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
-                camelName: caseConverter.camelUnsafe(query.name),
+                camelName: this.case.camelUnsafe(query.name),
                 isOptional: this.context.isOptional(query.valueType),
                 literal: this.context.maybeLiteral(query.valueType)
             });
@@ -312,7 +312,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
-                camelName: caseConverter.camelUnsafe(header.name),
+                camelName: this.case.camelUnsafe(header.name),
                 isOptional: this.context.isOptional(header.valueType),
                 literal: this.context.maybeLiteral(header.valueType)
             });
@@ -326,7 +326,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                        camelName: caseConverter.camelUnsafe(property.name),
+                        camelName: this.case.camelUnsafe(property.name),
                         isOptional: this.context.isOptional(property.valueType),
                         literal: this.context.maybeLiteral(property.valueType)
                     });
@@ -336,7 +336,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 for (const property of fileUpload.properties) {
                     if (property.type === "bodyProperty") {
                         properties.push({
-                            camelName: caseConverter.camelUnsafe(property.name),
+                            camelName: this.case.camelUnsafe(property.name),
                             isOptional: this.context.isOptional(property.valueType),
                             literal: this.context.maybeLiteral(property.valueType)
                         });
@@ -388,7 +388,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         }
         if (sdkRequest.shape.type === "wrapper") {
             return php.classReference({
-                name: caseConverter.pascalSafe(sdkRequest.shape.wrapperName),
+                name: this.case.pascalSafe(sdkRequest.shape.wrapperName),
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
@@ -446,7 +446,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return caseConverter.camelUnsafe(name.name);
+        return this.case.camelUnsafe(name.name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -459,10 +459,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     }
 
     private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
-        return `->${caseConverter.camelSafe(pathItem.name)}`;
+        return `->${this.case.camelSafe(pathItem.name)}`;
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `->${caseConverter.camelSafe(property.name)}`;
+        return `->${this.case.camelSafe(property.name)}`;
     }
 }

@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -12,8 +12,6 @@ import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
@@ -83,7 +81,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
         return php.classReference({
-            name: `${caseConverter.pascalUnsafe(subpackage.name)}Client`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
     }
@@ -101,22 +99,22 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageInterfaceClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
         return php.classReference({
-            name: `${caseConverter.pascalUnsafe(subpackage.name)}ClientInterface`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}ClientInterface`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
     }
 
     public getSubpackageGetterName(subpackage: FernIr.Subpackage): string {
-        return `get${caseConverter.pascalSafe(subpackage.name)}`;
+        return `get${this.case.pascalSafe(subpackage.name)}`;
     }
 
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
-        const unsafeName = caseConverter.camelUnsafe(endpoint.name);
+        const unsafeName = this.case.camelUnsafe(endpoint.name);
         if (RESERVED_METHOD_NAMES.includes(unsafeName)) {
             return unsafeName;
         }
-        return caseConverter.camelSafe(endpoint.name);
+        return this.case.camelSafe(endpoint.name);
     }
 
     public getUnpagedEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
@@ -129,7 +127,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageField(subpackage: FernIr.Subpackage): php.Field {
         return php.field({
-            name: `$${caseConverter.camelSafe(subpackage.name)}`,
+            name: `$${this.case.camelSafe(subpackage.name)}`,
             access: "public",
             type: php.Type.reference(this.getSubpackageClassReference(subpackage))
         });
@@ -207,7 +205,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: NameInput): php.ClassReference {
         return php.classReference({
-            name: caseConverter.pascalSafe(requestName),
+            name: this.case.pascalSafe(requestName),
             namespace: this.getLocationForWrappedRequest(serviceId).namespace
         });
     }
@@ -468,7 +466,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getEnvironmentName(name: NameInput): string {
-        return caseConverter.pascalSafe(name);
+        return this.case.pascalSafe(name);
     }
 
     public getUserAgent(): FernIr.UserAgent | undefined {
@@ -556,7 +554,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
         const clientVariableName = this.getClientVariableName();
-        const clientAccessParts = fernFilepath.allParts.map((part) => caseConverter.camelSafe(part));
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.camelSafe(part));
         return clientAccessParts.length > 0
             ? `${clientVariableName}->${clientAccessParts.join("->")}`
             : clientVariableName;
@@ -735,7 +733,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
 
         const baseUrl = multiUrlEnvs.baseUrls.find((url) => url.id === baseUrlId);
-        return baseUrl?.name != null ? caseConverter.camelSafe(baseUrl.name) : "";
+        return baseUrl?.name != null ? this.case.camelSafe(baseUrl.name) : "";
     }
 
     private getComputedClientName(): string {

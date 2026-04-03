@@ -1,10 +1,6 @@
-import { CaseConverter, File } from "@fern-api/base-generator";
+import { File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
-import { FernIr } from "@fern-fern/ir-sdk";
-import path from "path";
-
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
 
 export type Namespace = string;
 
@@ -36,10 +32,6 @@ export class PhpFile extends File {
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
         await this.write(directoryPrefix);
-    }
-
-    public static getFilePathFromFernFilePath(fernFilePath: FernIr.FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => caseConverter.pascalSafe(part))));
     }
 }
 

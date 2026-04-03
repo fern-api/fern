@@ -16,8 +16,6 @@ import { PhpProject } from "../project/PhpProject.js";
 import { PhpAttributeMapper } from "./PhpAttributeMapper.js";
 import { PhpTypeMapper } from "./PhpTypeMapper.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "php", keywords: undefined, smartCasing: true });
-
 export interface FileLocation {
     namespace: string;
     directory: RelativeFilePath;
@@ -27,6 +25,7 @@ export abstract class AbstractPhpGeneratorContext<
     CustomConfig extends BasePhpCustomConfigSchema
 > extends AbstractGeneratorContext {
     private rootNamespace: string;
+    public readonly case: CaseConverter;
     public readonly phpTypeMapper: PhpTypeMapper;
     public readonly phpAttributeMapper: PhpAttributeMapper;
     public readonly project: PhpProject;
@@ -38,6 +37,11 @@ export abstract class AbstractPhpGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.case = new CaseConverter({
+            generationLanguage: "php",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.rootNamespace = this.customConfig.namespace ?? upperFirst(camelCase(`${this.config.organization}`));
         this.phpTypeMapper = new PhpTypeMapper(this);
         this.phpAttributeMapper = new PhpAttributeMapper(this);
@@ -77,7 +81,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getClassName(name: NameInput): string {
-        return getSafeClassName(caseConverter.pascalSafe(name));
+        return getSafeClassName(this.case.pascalSafe(name));
     }
 
     public getGlobalNamespace(): string {
@@ -137,15 +141,15 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getParameterName(name: NameInput): string {
-        return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
+        return this.prependUnderscoreIfNeeded(this.case.camelUnsafe(name));
     }
 
     public getFieldName(name: NameInput): string {
-        return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
+        return this.prependUnderscoreIfNeeded(this.case.camelUnsafe(name));
     }
 
     public getPropertyName(name: NameInput): string {
-        return this.prependUnderscoreIfNeeded(caseConverter.camelUnsafe(name));
+        return this.prependUnderscoreIfNeeded(this.case.camelUnsafe(name));
     }
 
     public getVariableName(name: NameInput): string {
@@ -153,11 +157,11 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getPropertyGetterName(name: NameInput): string {
-        return `get${caseConverter.pascalUnsafe(name)}`;
+        return `get${this.case.pascalUnsafe(name)}`;
     }
 
     public getPropertySetterName(name: NameInput): string {
-        return `set${caseConverter.pascalUnsafe(name)}`;
+        return `set${this.case.pascalUnsafe(name)}`;
     }
 
     public getToStringMethod(): php.Method {
@@ -680,7 +684,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     protected getFileLocation(filepath: FernIr.FernFilepath, suffix?: string): FileLocation {
-        let parts = filepath.allParts.map((path) => caseConverter.pascalSafe(path));
+        let parts = filepath.allParts.map((path) => this.case.pascalSafe(path));
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             namespace: [this.getRootNamespace(), ...parts].join("\\"),
