@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService, getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";

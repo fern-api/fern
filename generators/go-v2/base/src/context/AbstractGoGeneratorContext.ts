@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,

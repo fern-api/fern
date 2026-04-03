@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
