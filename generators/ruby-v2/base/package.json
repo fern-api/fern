@@ -48,6 +48,7 @@
     "@types/node": "catalog:",
     "dedent": "catalog:",
     "eslint": "catalog:",
+    "eta": "^4.5.1",
     "lodash-es": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",

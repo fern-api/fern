@@ -26,7 +26,8 @@ export const baseGoCustomConfigSchema = z.object({
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     customPagerName: z.string().optional(),
-    omitFernHeaders: z.boolean().optional()
+    omitFernHeaders: z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;
