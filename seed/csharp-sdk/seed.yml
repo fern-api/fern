@@ -73,10 +73,10 @@ scripts:
 
           if [ "$skip" = false ]; then
             # Check 1: using directives — e.g. "using System.Linq;"
-            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' || true)
+            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' || true)
             # Check 2: inline references — e.g. "new System.Exception()", "System.Threading.Tasks.Task"
-            # Excludes using directives (already caught above), comments (// and ///), strings, and DynamicSnippets.
-            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
+            # Excludes using directives (already caught above), comments (// and ///), strings, DynamicSnippets, and Snippets.
+            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
             violations="${using_violations}${using_violations:+\n}${inline_violations}"
             # Trim whitespace
             violations=$(echo "$violations" | sed '/^$/d')
@@ -100,9 +100,13 @@ scripts:
           fi
 
           dotnet build "$solution_file" -c Release
-          dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
-          if [ -n "$dynamic_snippets" ]; then
-            dotnet build "$dynamic_snippets" -c Release
+          if [ -f "Snippets/Snippets.csproj" ]; then
+            dotnet build Snippets/Snippets.csproj -c Release
+          else
+            dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
+            if [ -n "$dynamic_snippets" ]; then
+              dotnet build "$dynamic_snippets" -c Release
+            fi
           fi
       test:
         - |
