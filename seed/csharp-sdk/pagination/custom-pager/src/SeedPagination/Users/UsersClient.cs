@@ -1293,6 +1293,93 @@ public partial class UsersClient : IUsersClient
         }
     }
 
+    private WithRawResponseTask<ListUsersAliasedDataPaginationResponse> ListWithAliasedDataInternalAsync(
+        ListUsersAliasedDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersAliasedDataPaginationResponse>(
+            ListWithAliasedDataInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersAliasedDataPaginationResponse>
+    > ListWithAliasedDataInternalAsyncCore(
+        ListUsersAliasedDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3)
+            .Add("page", request.Page)
+            .Add("per_page", request.PerPage)
+            .Add("starting_after", request.StartingAfter)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = "/users/aliased-data",
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ListUsersAliasedDataPaginationResponse>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ListUsersAliasedDataPaginationResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedPaginationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.Users.ListWithCursorPaginationAsync(
     ///     new SeedPagination.ListUsersCursorPaginationRequest
@@ -1962,6 +2049,50 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <example><code>
+    /// await client.Users.ListWithAliasedDataAsync(
+    ///     new ListUsersAliasedDataRequest
+    ///     {
+    ///         Page = 1,
+    ///         PerPage = 1,
+    ///         StartingAfter = "starting_after",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<Pager<User>> ListWithAliasedDataAsync(
+        ListUsersAliasedDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            ListUsersAliasedDataRequest,
+            RequestOptions?,
+            ListUsersAliasedDataPaginationResponse,
+            string,
+            User
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                async (request, options, cancellationToken) =>
+                    await ListWithAliasedDataInternalAsync(request, options, cancellationToken),
+                (request, cursor) =>
+                {
+                    request.StartingAfter = cursor;
+                },
+                response => response.Page?.Next?.StartingAfter,
+                response => response.Data?.ToList(),
                 cancellationToken
             )
             .ConfigureAwait(false);
