@@ -823,13 +823,13 @@ export class MockEndpointGenerator extends WithGeneration {
         }
         for (const prop of endpoint.requestBody.properties) {
             if (this.context.isNullable(prop.valueType)) {
-                nullableNames.add(prop.name.wireValue);
+                nullableNames.add(getWireValue(prop.name));
             }
         }
         if (endpoint.requestBody.extendedProperties) {
             for (const prop of endpoint.requestBody.extendedProperties) {
                 if (this.context.isNullable(prop.valueType)) {
-                    nullableNames.add(prop.name.wireValue);
+                    nullableNames.add(getWireValue(prop.name));
                 }
             }
         }
