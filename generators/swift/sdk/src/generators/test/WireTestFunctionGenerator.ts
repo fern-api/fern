@@ -224,6 +224,7 @@ export class WireTestFunctionGenerator {
                             bigInteger: () => swift.Expression.nop(),
                             date: () => swift.Expression.nop(),
                             datetime: () => swift.Expression.nop(),
+                            datetimeRfc2822: () => swift.Expression.nop(),
                             base64: () => swift.Expression.nop(),
                             uuid: () => swift.Expression.nop(),
                             _other: () => swift.Expression.nop()
@@ -329,6 +330,16 @@ export class WireTestFunctionGenerator {
                         const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
                         return swift.Expression.dateLiteral(dateTimeWithoutFractional);
                     },
+                    datetimeRfc2822: (value) => {
+                        if (value.raw == null) {
+                            return swift.Expression.nop();
+                        }
+                        const timestampMs = new Date(value.raw).getTime();
+                        const timestampSec = Math.round(timestampMs / 1000);
+                        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+                        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
+                        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
+                    },
                     base64: (value) => swift.Expression.stringLiteral(value),
                     uuid: (value) => swift.Expression.uuidLiteral(value),
                     _other: () => swift.Expression.nop()
@@ -341,9 +352,7 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(
-                            caseConverter.camelUnsafe(exampleEnumType.value.name)
-                        );
+                        return swift.Expression.enumCaseShorthand(caseConverter.camelUnsafe(exampleEnumType.value));
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -544,6 +553,7 @@ export class WireTestFunctionGenerator {
                     bigInteger: () => this.referencer.referenceSwiftType("String"),
                     date: () => this.referencer.referenceAsIsType("CalendarDate"),
                     datetime: () => this.referencer.referenceFoundationType("Date"),
+                    datetimeRfc2822: () => this.referencer.referenceFoundationType("Date"),
                     base64: () => this.referencer.referenceSwiftType("String"),
                     uuid: () => this.referencer.referenceFoundationType("UUID"),
                     _other: () => this.referencer.referenceAsIsType("JSONValue")

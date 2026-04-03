@@ -311,6 +311,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     bigInteger: () => referencer.referenceSwiftType("String"),
                     date: () => referencer.referenceAsIsType("CalendarDate"),
                     dateTime: () => referencer.referenceFoundationType("Date"),
+                    dateTimeRfc2822: () => referencer.referenceFoundationType("Date"),
                     base64: () => referencer.referenceSwiftType("String"),
                     uuid: () => referencer.referenceFoundationType("UUID"),
                     _other: () => referencer.referenceAsIsType("JSONValue")
