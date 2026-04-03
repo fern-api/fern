@@ -420,6 +420,8 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        - poetry install --extras aiohttp
+        - poetry run pytest -rP -n auto -m aiohttp .
   # Test Pydantic V1
   - name: test-pydantic-v1
     image: fernapi/python-seed
@@ -436,6 +438,8 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        - poetry install --extras aiohttp
+        - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
   - any-auth
   - endpoint-security-auth

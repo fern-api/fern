@@ -532,7 +532,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return swift.Expression.calendarDateLiteral(date);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return swift.Expression.nop();

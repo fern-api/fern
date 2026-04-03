@@ -546,6 +546,7 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return python.TypeInstantiation.date("2024-01-15");
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return python.TypeInstantiation.datetime("2024-01-15T09:30:00Z");
             case "UUID":
                 return python.TypeInstantiation.uuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
@@ -689,7 +690,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return python.TypeInstantiation.date(str);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return python.TypeInstantiation.nop();
