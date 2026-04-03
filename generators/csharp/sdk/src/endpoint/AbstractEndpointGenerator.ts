@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
@@ -165,7 +166,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             return listItemType.getCollectionItemType();
         }
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.fullyQualifiedName}.`
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
 
@@ -196,7 +197,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                     })
                 );
             }
-            pathParameterReferences[pathParam.name.originalName] = parameterName;
+            pathParameterReferences[getOriginalName(pathParam.name)] = parameterName;
         }
         return {
             pathParameters,
@@ -215,7 +216,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({
@@ -252,7 +253,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {
@@ -389,8 +390,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         requestParameter?: ast.Parameter;
     }): string {
         if (!includePathParametersInEndpointSignature && requestParameter != null) {
-            return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;
+            return `${requestParameter?.name}.${this.case.pascalSafe(pathParameter.name)}`;
         }
-        return pathParameter.name.camelCase.safeName;
+        return this.case.camelSafe(pathParameter.name);
     }
 }

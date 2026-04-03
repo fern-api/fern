@@ -16,12 +16,12 @@ export declare namespace AbstractRawSingleUnionType {
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
     private discriminant: FernIr.NameAndWireValueOrString;
     private discriminantValueWithAllCasings: FernIr.NameAndWireValueOrString;
-    protected caseConverter: CaseConverter;
+    protected case: CaseConverter;
 
     constructor({ discriminant, discriminantValue, caseConverter }: AbstractRawSingleUnionType.Init) {
         this.discriminant = discriminant;
         this.discriminantValueWithAllCasings = discriminantValue;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public get discriminantValue(): string {
@@ -30,7 +30,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: sanitizeIdentifier(this.caseConverter.pascalUnsafe(this.discriminantValueWithAllCasings)),
+            name: sanitizeIdentifier(this.case.pascalUnsafe(this.discriminantValueWithAllCasings)),
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {

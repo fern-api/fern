@@ -31,10 +31,11 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "65.5.0",
-    "@fern-fern/ir-sdk": "^65.4.0",
+    "@fern-fern/ir-sdk": "66.0.0",
     "domhandler": "catalog:",
     "htmlparser2": "catalog:",
     "zod": "catalog:"

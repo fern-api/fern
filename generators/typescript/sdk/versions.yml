@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
 - version: 3.62.1
   changelogEntry:
     - summary: |
@@ -65,7 +77,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 3.60.7
   changelogEntry:
     - summary: |

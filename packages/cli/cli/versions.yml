@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add `--email` flag to `fern login` for enterprise SSO support.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
 - version: 4.60.0
   changelogEntry:
     - summary: |

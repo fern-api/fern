@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -56,8 +57,8 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns A PascalCase class name with "Api" suffix
      */
-    static createWebsocketClientClassName(websocketChannel: WebSocketChannel) {
-        return `${websocketChannel.name.pascalCase.safeName}Api`;
+    static createWebsocketClientClassName(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
+        return `${context.case.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -66,8 +67,8 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition
      * @returns A PascalCase interface name with "I" prefix and "Api" suffix
      */
-    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel): string {
-        return `I${websocketChannel.name.pascalCase.safeName}Api`;
+    static createWebsocketInterfaceName(websocketChannel: WebSocketChannel, context: SdkGeneratorContext): string {
+        return `I${context.case.pascalSafe(websocketChannel.name)}Api`;
     }
 
     /**
@@ -101,7 +102,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 (baseUrlWithId) => baseUrlWithId.id === websocketChannel.baseUrl
             );
             if (baseUrl != null) {
-                return `_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`;
+                return `_client.Options.Environment.${context.case.pascalSafe(baseUrl.name)}`;
             }
         }
         return undefined;
@@ -126,8 +127,8 @@ export class WebSocketClientGenerator extends WithGeneration {
         namespace: string,
         websocketChannel: WebSocketChannel
     ): void {
-        const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
-        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
+        const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel, context);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel, context);
         const createMethodName = `Create${websocketApiName}`;
 
         const websocketInterfaceRef = context.csharp.classReference({
@@ -176,8 +177,8 @@ export class WebSocketClientGenerator extends WithGeneration {
         namespace: string,
         websocketChannel: WebSocketChannel
     ): void {
-        const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
-        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel);
+        const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel, context);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(websocketChannel, context);
         const createMethodName = `Create${websocketApiName}`;
 
         const websocketApiClassReference = context.csharp.classReference({
@@ -275,7 +276,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         this.websocketChannel = websocketChannel;
         this.classReference = this.csharp.classReference({
             origin: websocketChannel,
-            name: WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel),
+            name: WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel, this.context),
             namespace: this.context.getSubpackageClassReference(subpackage).namespace
         });
         this.optionsClassReference = this.csharp.classReference({
@@ -341,7 +342,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             for (const env of multiEnvs.environments) {
                 const url = env.urls[baseUrlId];
                 if (url != null) {
-                    const envName = env.name.pascalCase.safeName;
+                    const envName = this.case.pascalSafe(env.name);
                     this.environments.push({
                         url,
                         environment: envName,
@@ -357,7 +358,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 if (defaultEnv != null) {
                     const defaultUrl = defaultEnv.urls[baseUrlId];
                     if (defaultUrl != null) {
-                        this.defaultEnvironment = defaultEnv.name.pascalCase.safeName;
+                        this.defaultEnvironment = this.case.pascalSafe(defaultEnv.name);
                     }
                 }
             }
@@ -740,11 +741,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         const isComplexType = this.isComplexType(queryParameter.valueType);
                         if (isComplexType) {
                             writer.write(
-                                `\n        .AddDeepObject("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                                `\n        .AddDeepObject("${getWireValue(queryParameter.name)}", _options.${this.case.pascalSafe(queryParameter.name)})`
                             );
                         } else {
                             writer.write(
-                                `\n        .Add("${queryParameter.name.wireValue}", _options.${queryParameter.name.name.pascalCase.safeName})`
+                                `\n        .Add("${getWireValue(queryParameter.name)}", _options.${this.case.pascalSafe(queryParameter.name)})`
                             );
                         }
                     }
@@ -762,12 +763,12 @@ export class WebSocketClientGenerator extends WithGeneration {
                 // collect each part (parameter, then tail)
                 for (const each of this.websocketChannel.path.parts) {
                     const pp = this.websocketChannel.pathParameters.find(
-                        (p) => p.name.originalName === each.pathParameter
+                        (p) => getOriginalName(p.name) === each.pathParameter
                     );
                     if (pp) {
                         parts.push(
                             this.csharp.codeblock((writer) =>
-                                writer.write(`Uri.EscapeDataString(_options.${pp.name.pascalCase.safeName})`)
+                                writer.write(`Uri.EscapeDataString(_options.${this.case.pascalSafe(pp.name)})`)
                             )
                         );
                     }
@@ -854,7 +855,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                             name:
                                 reference._visit({
                                     container: () => undefined,
-                                    named: (named) => named.name.pascalCase.safeName,
+                                    named: (named) => this.case.pascalSafe(named.name),
                                     primitive: (value) => undefined,
                                     unknown: () => undefined,
                                     _other: (value) => value.type
@@ -893,7 +894,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                         name:
                             bodyType._visit({
                                 container: () => undefined,
-                                named: (named) => named.name.pascalCase.safeName,
+                                named: (named) => this.case.pascalSafe(named.name),
                                 primitive: () => each.type,
                                 unknown: () => each.type,
                                 _other: () => each.type
@@ -1334,7 +1335,10 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns The WebSocket client interface definition
      */
     private createWebsocketInterface(): ast.Interface {
-        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(
+            this.websocketChannel,
+            this.context
+        );
 
         const interface_ = this.csharp.interface_({
             name: interfaceName,
@@ -1457,7 +1461,7 @@ export class WebSocketClientGenerator extends WithGeneration {
     private createWebsocketClass() {
         const interfaceRef = this.csharp.classReference({
             origin: this.model.explicit(this.websocketChannel, "Interface"),
-            name: WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel),
+            name: WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel, this.context),
             namespace: this.classReference.namespace
         });
 

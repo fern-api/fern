@@ -36,7 +36,6 @@ export class BasicAuthProvider implements core.AuthProvider {
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
-
         const password =
             (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM], { endpointMetadata })) ??
             process.env?.[ENV_PASSWORD];

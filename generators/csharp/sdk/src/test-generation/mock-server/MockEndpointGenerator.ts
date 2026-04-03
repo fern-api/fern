@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -94,13 +95,13 @@ export class MockEndpointGenerator extends WithGeneration {
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
                     if (maybeParameterValue != null) {
-                        writer.write(`.WithParam("${parameter.name.wireValue}", "${maybeParameterValue}")`);
+                        writer.write(`.WithParam("${getWireValue(parameter.name)}", "${maybeParameterValue}")`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
                     const maybeHeaderValue = this.exampleToQueryOrHeaderValue(header);
                     if (maybeHeaderValue != null) {
-                        writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
+                        writer.write(`.WithHeader("${getWireValue(header.name)}", "${maybeHeaderValue}")`);
                     }
                 }
                 // Add auth header matching for endpoints that require authentication.
@@ -112,20 +113,21 @@ export class MockEndpointGenerator extends WithGeneration {
                         switch (scheme.type) {
                             case "basic": {
                                 // Compute exact expected header value from the known test credentials
-                                const username = scheme.username.screamingSnakeCase.safeName;
-                                const password = scheme.password.screamingSnakeCase.safeName;
+                                const username = this.case.screamingSnakeSafe(scheme.username);
+                                const password = this.case.screamingSnakeSafe(scheme.password);
                                 const encoded = Buffer.from(`${username}:${password}`).toString("base64");
                                 writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
                                 break;
                             }
                             case "bearer": {
-                                const tokenValue = scheme.token.screamingSnakeCase.safeName;
+                                const tokenValue = this.case.screamingSnakeSafe(scheme.token);
                                 writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
                                 break;
                             }
                             case "header": {
-                                const headerName = scheme.name?.wireValue;
-                                const headerValue = scheme.name?.name?.screamingSnakeCase?.safeName;
+                                const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
+                                const headerValue =
+                                    scheme.name != null ? this.case.screamingSnakeSafe(scheme.name) : undefined;
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
@@ -302,9 +304,12 @@ export class MockEndpointGenerator extends WithGeneration {
         type: "named";
         typeName: { typeId: TypeId };
         shape:
-            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
-            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
-            | { type: "enum"; value: { wireValue: string } }
+            | {
+                  type: "object";
+                  properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+              }
+            | { type: "union"; discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown }
+            | { type: "enum"; value: FernIr.NameAndWireValue | string }
             | { type: "alias"; value: ExampleTypeReference }
             | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
     }): boolean {
@@ -355,7 +360,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of exampleRequest.properties) {
             // Check if this property is read-only by looking up the original type declaration
-            if (this.isPropertyReadOnly(prop.name.wireValue, prop.originalTypeDeclaration)) {
+            if (this.isPropertyReadOnly(getWireValue(prop.name), prop.originalTypeDeclaration)) {
                 continue;
             }
             // Recursively filter the property value (also normalizes datetime values)
@@ -363,16 +368,16 @@ export class MockEndpointGenerator extends WithGeneration {
 
             // Omit null values for properties that are optional-but-not-nullable
             // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
-            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+            if (filteredValue === null && !nullableNames.has(getWireValue(prop.name))) {
                 continue;
             }
-            result[prop.name.wireValue] = filteredValue;
+            result[getWireValue(prop.name)] = filteredValue;
         }
 
         // Also include extra properties if present
         if (exampleRequest.extraProperties) {
             for (const extraProp of exampleRequest.extraProperties) {
-                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value);
+                result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value);
             }
         }
 
@@ -394,7 +399,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         // Check properties
         for (const prop of typeDeclaration.shape.properties) {
-            if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+            if (getWireValue(prop.name) === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 return true;
             }
         }
@@ -402,7 +407,10 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+                if (
+                    getWireValue(prop.name) === wireValue &&
+                    prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
+                ) {
                     return true;
                 }
             }
@@ -527,11 +535,11 @@ export class MockEndpointGenerator extends WithGeneration {
             shape:
                 | {
                       type: "object";
-                      properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
-                      extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>;
+                      properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+                      extraProperties?: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
                   }
-                | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
-                | { type: "enum"; value: { wireValue: string } }
+                | { type: "union"; discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown }
+                | { type: "enum"; value: FernIr.NameAndWireValue | string }
                 | { type: "alias"; value: ExampleTypeReference }
                 | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
         },
@@ -548,7 +556,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 return this.filterExampleTypeReference(innerShape.value, options);
 
             case "enum":
-                return innerShape.value.wireValue;
+                return getWireValue(innerShape.value);
 
             case "union":
                 // For unions, we need to handle the discriminant and the union value
@@ -569,9 +577,9 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterObjectExample(
         typeId: TypeId,
-        properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>,
+        properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>,
         options: { filterWriteOnly?: boolean } = {},
-        extraProperties?: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
+        extraProperties?: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
@@ -583,23 +591,23 @@ export class MockEndpointGenerator extends WithGeneration {
 
         const result: Record<string, unknown> = {};
         for (const prop of properties) {
-            if (propertiesToFilter.has(prop.name.wireValue)) {
+            if (propertiesToFilter.has(getWireValue(prop.name))) {
                 continue;
             }
             const filteredValue = this.filterExampleTypeReference(prop.value, options);
 
             // Omit null values for properties that are optional-but-not-nullable
             // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
-            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+            if (filteredValue === null && !nullableNames.has(getWireValue(prop.name))) {
                 continue;
             }
-            result[prop.name.wireValue] = filteredValue;
+            result[getWireValue(prop.name)] = filteredValue;
         }
 
         // Include extra properties (AdditionalProperties) inline — they serialize via [JsonExtensionData]
         if (extraProperties != null) {
             for (const extraProp of extraProperties) {
-                result[extraProp.name.wireValue] = this.filterExampleTypeReference(extraProp.value, options);
+                result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value, options);
             }
         }
 
@@ -611,25 +619,27 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private filterUnionExample(
         typeId: TypeId,
-        unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
+        unionShape: { discriminant: FernIr.NameAndWireValue | string; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
         // Union examples have a complex structure
         // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
-            wireDiscriminantValue: { wireValue: string };
+            wireDiscriminantValue: FernIr.NameAndWireValue | string;
             shape:
                 | {
                       type: "samePropertiesAsObject";
                       typeId: TypeId;
-                      object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
+                      object: {
+                          properties: Array<{ name: FernIr.NameAndWireValue | string; value: ExampleTypeReference }>;
+                      };
                   }
                 | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
         };
 
         const result: Record<string, unknown> = {
-            [unionShape.discriminant.wireValue]: singleUnionType.wireDiscriminantValue.wireValue
+            [getWireValue(unionShape.discriminant)]: getWireValue(singleUnionType.wireDiscriminantValue)
         };
 
         if (singleUnionType.shape.type === "samePropertiesAsObject") {
@@ -647,7 +657,7 @@ export class MockEndpointGenerator extends WithGeneration {
             // for singleProperty variants (e.g., "value")
             const propertyWireName = this.getSinglePropertyWireName(
                 typeId,
-                singleUnionType.wireDiscriminantValue.wireValue
+                getWireValue(singleUnionType.wireDiscriminantValue)
             );
             result[propertyWireName] = filteredValue;
         }
@@ -664,10 +674,10 @@ export class MockEndpointGenerator extends WithGeneration {
             const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
             if (typeDeclaration.shape.type === "union") {
                 const matchingType = typeDeclaration.shape.types.find(
-                    (t) => t.discriminantValue.wireValue === discriminantWireValue
+                    (t) => getWireValue(t.discriminantValue) === discriminantWireValue
                 );
                 if (matchingType?.shape.propertiesType === "singleProperty") {
-                    return matchingType.shape.name.wireValue;
+                    return getWireValue(matchingType.shape.name);
                 }
             }
         } catch {
@@ -682,8 +692,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getReadOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
         };
     }): Set<string> {
         const readOnlyNames = new Set<string>();
@@ -695,14 +705,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
-                readOnlyNames.add(prop.name.wireValue);
+                readOnlyNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
-                    readOnlyNames.add(prop.name.wireValue);
+                    readOnlyNames.add(getWireValue(prop.name));
                 }
             }
         }
@@ -716,8 +726,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getWriteOnlyPropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; propertyAccess?: string }>;
         };
     }): Set<string> {
         const writeOnlyNames = new Set<string>();
@@ -729,14 +739,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
-                writeOnlyNames.add(prop.name.wireValue);
+                writeOnlyNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
-                    writeOnlyNames.add(prop.name.wireValue);
+                    writeOnlyNames.add(getWireValue(prop.name));
                 }
             }
         }
@@ -754,8 +764,8 @@ export class MockEndpointGenerator extends WithGeneration {
     private getNullablePropertyNamesForType(typeDeclaration: {
         shape: {
             type: string;
-            properties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
-            extendedProperties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+            properties?: Array<{ name: FernIr.NameAndWireValue | string; valueType: TypeReference }>;
+            extendedProperties?: Array<{ name: FernIr.NameAndWireValue | string; valueType: TypeReference }>;
         };
     }): Set<string> {
         const nullableNames = new Set<string>();
@@ -774,14 +784,14 @@ export class MockEndpointGenerator extends WithGeneration {
 
         for (const prop of shape.properties) {
             if (this.context.isNullable(prop.valueType)) {
-                nullableNames.add(prop.name.wireValue);
+                nullableNames.add(getWireValue(prop.name));
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
                 if (this.context.isNullable(prop.valueType)) {
-                    nullableNames.add(prop.name.wireValue);
+                    nullableNames.add(getWireValue(prop.name));
                 }
             }
         }
@@ -812,13 +822,13 @@ export class MockEndpointGenerator extends WithGeneration {
         }
         for (const prop of endpoint.requestBody.properties) {
             if (this.context.isNullable(prop.valueType)) {
-                nullableNames.add(prop.name.wireValue);
+                nullableNames.add(getWireValue(prop.name));
             }
         }
         if (endpoint.requestBody.extendedProperties) {
             for (const prop of endpoint.requestBody.extendedProperties) {
                 if (this.context.isNullable(prop.valueType)) {
-                    nullableNames.add(prop.name.wireValue);
+                    nullableNames.add(getWireValue(prop.name));
                 }
             }
         }
