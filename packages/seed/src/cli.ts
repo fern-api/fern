@@ -95,8 +95,9 @@ function addTestCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -154,13 +155,6 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Explicitly specify which container runtime to use (docker or podman)"
                 })
-                .option("sdk", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
-                })
                 .option("base-ref", {
                     type: "string",
                     demandOption: false,
@@ -168,11 +162,8 @@ function addTestCommand(cli: Argv) {
                     description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator values
-            const resolvedGenerators = resolveGeneratorNames({ generators: argv.generator, sdks: argv.sdk });
-            argv.generator = resolvedGenerators;
-
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
 
             // Handle "affected" mode for --generator and --fixture
             const isGeneratorAffected =
@@ -412,8 +403,9 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -460,13 +452,6 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     demandOption: false,
                     description: "The Fern token to use for the tests. Defaults to the FERN_TOKEN environment variable."
                 })
-                .option("sdk", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
-                })
                 .option("build-generator", {
                     type: "boolean",
                     demandOption: false,
@@ -475,9 +460,8 @@ function addTestRemoteLocalCommand(cli: Argv) {
                         "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator values
-            const resolvedGenerators = resolveGeneratorNames({ generators: argv.generator, sdks: argv.sdk });
-            argv.generator = resolvedGenerators;
+            const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
 
             // Verify that the working directory is a valid path and is the root folder of the fern repo
             const inputValidationErrors = [];
@@ -532,8 +516,9 @@ function addRunCommand(cli: Argv) {
             yargs
                 .option("generator", {
                     string: true,
-                    demandOption: false,
-                    description: "Generator to run"
+                    demandOption: true,
+                    alias: "sdk",
+                    description: "Generator to run (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("path", {
                     type: "string",
@@ -577,12 +562,6 @@ function addRunCommand(cli: Argv) {
                     demandOption: false,
                     default: false
                 })
-                .option("sdk", {
-                    string: true,
-                    demandOption: false,
-                    description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
-                })
                 .option("prefer-manual-examples", {
                     type: "boolean",
                     demandOption: false,
@@ -591,16 +570,8 @@ function addRunCommand(cli: Argv) {
                         "Skip autogenerated examples when manual examples exist (matches CLI remote generation behavior)"
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator value
-            if (argv.sdk != null && argv.generator != null) {
-                throw new Error("Cannot specify both --generator and --sdk. Use one or the other.");
-            }
-            const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
-            if (resolvedGenerator == null) {
-                throw new Error("Either --generator or --sdk must be provided.");
-            }
-
             const generators = await loadGeneratorWorkspaces();
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
             const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
@@ -710,8 +681,10 @@ function addGetAvailableFixturesCommand(cli: Argv) {
             yargs
                 .option("generator", {
                     string: true,
-                    demandOption: false,
-                    description: "Generator to get fixtures for"
+                    demandOption: true,
+                    alias: "sdk",
+                    description:
+                        "Generator to get fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("include-output-folders", {
                     type: "boolean",
@@ -719,24 +692,10 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                     default: false,
                     description:
                         "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
-                })
-                .option("sdk", {
-                    string: true,
-                    demandOption: false,
-                    description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator value
-            if (argv.sdk != null && argv.generator != null) {
-                throw new Error("Cannot specify both --generator and --sdk. Use one or the other.");
-            }
-            const resolvedGenerator = argv.sdk != null ? `${argv.sdk}-sdk` : argv.generator;
-            if (resolvedGenerator == null) {
-                throw new Error("Either --generator or --sdk must be provided.");
-            }
-
             const generators = await loadGeneratorWorkspaces();
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
             const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
@@ -764,15 +723,9 @@ function addListTestFixturesCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to list fixtures for (lists all if not provided)"
-                })
-                .option("sdk", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
+                    alias: ["g", "sdk"],
                     description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
+                        "The generators to list fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("groups", {
                     type: "string",
@@ -781,11 +734,8 @@ function addListTestFixturesCommand(cli: Argv) {
                         "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator values
-            const resolvedGenerators = resolveGeneratorNames({ generators: argv.generator, sdks: argv.sdk });
-            argv.generator = resolvedGenerators;
-
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -907,15 +857,8 @@ function addCleanCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to clean (cleans all if not provided)"
-                })
-                .option("sdk", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description:
-                        "Shorthand for --generator <name>-sdk (e.g., --sdk csharp is equivalent to --generator csharp-sdk)"
+                    alias: ["g", "sdk"],
+                    description: "The generators to clean (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("dry-run", {
                     type: "boolean",
@@ -924,11 +867,8 @@ function addCleanCommand(cli: Argv) {
                     description: "List orphaned folders without deleting them"
                 }),
         async (argv) => {
-            // Resolve --sdk shorthand into --generator values
-            const resolvedGenerators = resolveGeneratorNames({ generators: argv.generator, sdks: argv.sdk });
-            argv.generator = resolvedGenerators;
-
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -1560,21 +1500,23 @@ function addGenerateCommands(cli: Argv) {
  * Resolves `--sdk` shorthand values into full generator names by appending `-sdk`.
  * Merges them with any explicit `--generator` values.
  */
-function resolveGeneratorNames({
-    generators,
-    sdks
-}: {
-    generators: string[] | undefined;
-    sdks: string[] | undefined;
-}): string[] | undefined {
-    const resolved: string[] = [];
-    if (generators != null) {
-        resolved.push(...generators);
+function normalizeGeneratorName(name: string, workspaces: GeneratorWorkspace[]): string {
+    const workspaceNames = new Set(workspaces.map((w) => w.workspaceName));
+    if (workspaceNames.has(name)) {
+        return name;
     }
-    if (sdks != null) {
-        resolved.push(...sdks.map((sdk) => `${sdk}-sdk`));
+    const expanded = `${name}-sdk`;
+    if (workspaceNames.has(expanded)) {
+        return expanded;
     }
-    return resolved.length > 0 ? resolved : undefined;
+    return name;
+}
+
+function normalizeGeneratorNames(names: string[] | undefined, workspaces: GeneratorWorkspace[]): string[] | undefined {
+    if (names == null) {
+        return undefined;
+    }
+    return names.map((name) => normalizeGeneratorName(name, workspaces));
 }
 
 function throwIfGeneratorDoesNotExist({
