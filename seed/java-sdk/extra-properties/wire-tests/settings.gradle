@@ -1,0 +1,3 @@
+rootProject.name = 'extra-properties'
+
+include 'sample-app'

@@ -137,6 +137,10 @@ fixtures:
       license:
         custom: LICENSE
       outputFolder: custom-license
+  extra-properties:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   java-inline-types:
     - customConfig:
         enable-inline-types: true

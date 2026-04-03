@@ -93,7 +93,8 @@ export class WireTestDataExtractor {
             });
         }
 
-        return this.pruneUnionBaseProperties(rawBody, endpoint);
+        const prunedUnion = this.pruneUnionBaseProperties(rawBody, endpoint);
+        return this.pruneExtraProperties(prunedUnion, endpoint);
     }
 
     /**
@@ -200,6 +201,92 @@ export class WireTestDataExtractor {
         }
 
         return prunedBody;
+    }
+
+    /**
+     * Prunes extra (additional) properties from the request body.
+     * When a type has `extraProperties: true` (i.e. additionalProperties in OpenAPI),
+     * the example JSON may include fields not defined in the schema. The generated
+     * builder only sets explicit properties, so the expected body must be pruned
+     * to match what the SDK actually serializes.
+     */
+    private pruneExtraProperties(body: unknown, endpoint: FernIr.HttpEndpoint): unknown {
+        if (!body || typeof body !== "object" || Array.isArray(body)) {
+            return body;
+        }
+
+        const requestBody = endpoint.requestBody;
+        if (!requestBody) {
+            return body;
+        }
+
+        if (requestBody.type === "inlinedRequestBody") {
+            if (!requestBody.extraProperties) {
+                return body;
+            }
+            const explicitWireNames = this.collectInlinedRequestPropertyNames(requestBody);
+            return this.filterToExplicitProperties(body, explicitWireNames);
+        }
+
+        if (requestBody.type === "reference") {
+            const typeReference = requestBody.requestBodyType;
+            if (typeReference.type === "named") {
+                const typeDecl = this.context.ir.types[typeReference.typeId];
+                if (typeDecl && typeDecl.shape.type === "object" && typeDecl.shape.extraProperties) {
+                    const explicitWireNames = this.collectObjectPropertyNames(typeDecl.shape);
+                    return this.filterToExplicitProperties(body, explicitWireNames);
+                }
+            }
+        }
+
+        return body;
+    }
+
+    /**
+     * Collects all explicit property wire names from an inlined request body,
+     * including properties inherited from extended types.
+     */
+    private collectInlinedRequestPropertyNames(requestBody: FernIr.InlinedRequestBody): Set<string> {
+        const wireNames = new Set<string>();
+        for (const prop of requestBody.properties) {
+            wireNames.add(prop.name.wireValue);
+        }
+        if (requestBody.extendedProperties) {
+            for (const prop of requestBody.extendedProperties) {
+                wireNames.add(prop.name.wireValue);
+            }
+        }
+        return wireNames;
+    }
+
+    /**
+     * Collects all explicit property wire names from an object type declaration,
+     * including properties inherited from extended types.
+     */
+    private collectObjectPropertyNames(objectShape: FernIr.ObjectTypeDeclaration): Set<string> {
+        const wireNames = new Set<string>();
+        for (const prop of objectShape.properties) {
+            wireNames.add(prop.name.wireValue);
+        }
+        if (objectShape.extendedProperties) {
+            for (const prop of objectShape.extendedProperties) {
+                wireNames.add(prop.name.wireValue);
+            }
+        }
+        return wireNames;
+    }
+
+    /**
+     * Filters an object body to only include keys present in the explicit wire names set.
+     */
+    private filterToExplicitProperties(body: unknown, explicitWireNames: Set<string>): unknown {
+        const filteredBody: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(body as Record<string, unknown>)) {
+            if (explicitWireNames.has(key)) {
+                filteredBody[key] = value;
+            }
+        }
+        return filteredBody;
     }
 
     private extractResponseBody(response: FernIr.ExampleResponse | undefined): unknown | undefined {
