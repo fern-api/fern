@@ -18,6 +18,9 @@ const PROJECT_FILE_CONTENT = `<Project Sdk="Microsoft.NET.Sdk">
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\\src\\**\\*.csproj" Exclude="..\\src\\**\\*.Test.csproj" />
+  </ItemGroup>
 </Project>`;
 
 export class DynamicSnippetsCsharpTestGenerator {

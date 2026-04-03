@@ -5,4 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\**\*.csproj" Exclude="..\src\**\*.Test.csproj" />
+  </ItemGroup>
 </Project>
