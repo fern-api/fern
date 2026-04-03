@@ -478,7 +478,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             } else if (!usernameOmitted && passwordOmitted) {
                                 condition = `${usernameAccess} != null`;
                             } else {
-                                // Both fields omitted — skip auth header entirely when auth is optional
+                                // Both fields omitted — skip auth header entirely when auth is non-mandatory
                                 continue;
                             }
                             if (isAuthOptional || basicSchemes.length > 1) {
