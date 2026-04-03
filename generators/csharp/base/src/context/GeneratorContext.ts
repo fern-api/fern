@@ -12,7 +12,6 @@ import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type DeclaredErrorName = FernIr.DeclaredErrorName;
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;

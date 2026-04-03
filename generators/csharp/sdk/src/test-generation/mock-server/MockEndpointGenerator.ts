@@ -2,7 +2,6 @@ import { getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleRequestBody = FernIr.ExampleRequestBody;
 type ExampleTypeReference = FernIr.ExampleTypeReference;
@@ -128,7 +127,9 @@ export class MockEndpointGenerator extends WithGeneration {
                             case "header": {
                                 const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
                                 const headerValue =
-                                    scheme.name != null ? this.context.caseConverter.screamingSnakeSafe(scheme.name) : undefined;
+                                    scheme.name != null
+                                        ? this.context.caseConverter.screamingSnakeSafe(scheme.name)
+                                        : undefined;
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;

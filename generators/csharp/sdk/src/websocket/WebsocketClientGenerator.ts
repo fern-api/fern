@@ -4,7 +4,6 @@ import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type Subpackage = FernIr.Subpackage;
 type TypeReference = FernIr.TypeReference;
 type WebSocketChannel = FernIr.WebSocketChannel;
@@ -769,7 +768,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                     if (pp) {
                         parts.push(
                             this.csharp.codeblock((writer) =>
-                                writer.write(`Uri.EscapeDataString(_options.${this.context.caseConverter.pascalSafe(pp.name)})`)
+                                writer.write(
+                                    `Uri.EscapeDataString(_options.${this.context.caseConverter.pascalSafe(pp.name)})`
+                                )
                             )
                         );
                     }
@@ -1336,7 +1337,10 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns The WebSocket client interface definition
      */
     private createWebsocketInterface(): ast.Interface {
-        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(this.websocketChannel, this.context);
+        const interfaceName = WebSocketClientGenerator.createWebsocketInterfaceName(
+            this.websocketChannel,
+            this.context
+        );
 
         const interface_ = this.csharp.interface_({
             name: interfaceName,

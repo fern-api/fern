@@ -12,7 +12,6 @@ import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
-
 export class SdkGeneratorContext extends GeneratorContext {
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
@@ -322,7 +321,9 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/"));
+        return RelativeFilePath.of(
+            [...fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
+        );
     }
 
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {

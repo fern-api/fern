@@ -4,7 +4,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleTypeReference = FernIr.ExampleTypeReference;
 type HttpEndpoint = FernIr.HttpEndpoint;

@@ -3,7 +3,6 @@ import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type TypeReference = FernIr.TypeReference;
 type Literal = FernIr.Literal;
 

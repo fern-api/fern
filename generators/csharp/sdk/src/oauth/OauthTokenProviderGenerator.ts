@@ -3,7 +3,6 @@ import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type EndpointReference = FernIr.EndpointReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpService = FernIr.HttpService;
@@ -263,7 +262,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
     private request = lazy({
         clientId: () =>
-            this.context.caseConverter.pascalSafe(this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name),
+            this.context.caseConverter.pascalSafe(
+                this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+            ),
         secret: () =>
             this.context.caseConverter.pascalSafe(
                 this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name

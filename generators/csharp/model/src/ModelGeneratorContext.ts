@@ -11,7 +11,6 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type FernFilepath = FernIr.FernFilepath;
 type IntermediateRepresentation = FernIr.IntermediateRepresentation;
 type TypeId = FernIr.TypeId;

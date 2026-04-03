@@ -11,7 +11,6 @@ import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
 
-
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 export const CORE_DIRECTORY_NAME = "Core";

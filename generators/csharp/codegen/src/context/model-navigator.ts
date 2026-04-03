@@ -7,7 +7,6 @@ import { type TypesOf } from "../utils/type-extractor.js";
 import { is } from "../utils/type-guards.js";
 import { type Generation } from "./generation-info.js";
 
-
 /**
  * JsonPath is a string that represents a path of nodes in the Intermediate Representation (IR) to a given node.
  *

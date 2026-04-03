@@ -2,7 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, CSharp, Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type ContainerType = FernIr.ContainerType;
 const ContainerType = FernIr.ContainerType;
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;

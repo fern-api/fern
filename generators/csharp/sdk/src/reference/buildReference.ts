@@ -3,7 +3,6 @@ import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpService = FernIr.HttpService;
 type ServiceId = FernIr.ServiceId;

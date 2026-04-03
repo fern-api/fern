@@ -4,7 +4,6 @@ import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type QueryParameter = FernIr.QueryParameter;
 type SdkRequest = FernIr.SdkRequest;

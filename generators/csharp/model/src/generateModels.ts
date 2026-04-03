@@ -3,7 +3,6 @@ import { CSharpFile } from "@fern-api/csharp-base";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 
 import { EnumGenerator } from "./enum/EnumGenerator.js";

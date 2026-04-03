@@ -81,7 +81,10 @@ export class CSharpFile extends File {
         await this.write(directoryPrefix);
     }
 
-    public static getFilePathFromFernFilePath(fernFilePath: FernFilepath, caseConverter: CaseConverter): RelativeFilePath {
+    public static getFilePathFromFernFilePath(
+        fernFilePath: FernFilepath,
+        caseConverter: CaseConverter
+    ): RelativeFilePath {
         return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => caseConverter.pascalSafe(part))));
     }
 }

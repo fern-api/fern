@@ -3,7 +3,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type CursorPagination = FernIr.CursorPagination;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type HttpEndpoint = FernIr.HttpEndpoint;
@@ -642,7 +641,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(`_client.Options.Environment.${this.context.caseConverter.pascalSafe(baseUrl.name)}`);
+                return this.csharp.codeblock(
+                    `_client.Options.Environment.${this.context.caseConverter.pascalSafe(baseUrl.name)}`
+                );
             }
         }
         return undefined;

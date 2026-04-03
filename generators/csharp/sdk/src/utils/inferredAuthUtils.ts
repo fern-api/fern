@@ -1,7 +1,6 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type TypeReference = FernIr.TypeReference;
 

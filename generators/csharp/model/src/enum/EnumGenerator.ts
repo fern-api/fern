@@ -5,7 +5,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 
@@ -45,7 +44,10 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorConte
         );
 
         this.enumDeclaration.values.forEach((member) =>
-            enum_.addMember({ name: this.context.caseConverter.pascalSafe(member.name), value: getWireValue(member.name) })
+            enum_.addMember({
+                name: this.context.caseConverter.pascalSafe(member.name),
+                value: getWireValue(member.name)
+            })
         );
 
         return new CSharpFile({

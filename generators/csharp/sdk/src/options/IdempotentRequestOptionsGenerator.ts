@@ -6,7 +6,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
 
-
 export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 

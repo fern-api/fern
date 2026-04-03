@@ -4,7 +4,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type HttpMethod = FernIr.HttpMethod;
 

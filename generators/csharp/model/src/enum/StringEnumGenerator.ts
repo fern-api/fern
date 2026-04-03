@@ -4,7 +4,6 @@ import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 
@@ -26,7 +25,9 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
 
     private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
         const d = "FromCustom";
-        return enumDeclaration.values.some((v) => this.context.caseConverter.pascalSafe(v.name) === d) ? "FromCustom_" : d;
+        return enumDeclaration.values.some((v) => this.context.caseConverter.pascalSafe(v.name) === d)
+            ? "FromCustom_"
+            : d;
     }
 
     protected doGenerate(): CSharpFile {

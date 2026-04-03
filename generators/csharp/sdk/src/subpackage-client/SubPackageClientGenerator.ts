@@ -3,7 +3,6 @@ import { ast, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type Subpackage = FernIr.Subpackage;
 type HttpService = FernIr.HttpService;
 type ServiceId = FernIr.ServiceId;

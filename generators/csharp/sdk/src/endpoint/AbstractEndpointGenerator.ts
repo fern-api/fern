@@ -4,7 +4,6 @@ import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;

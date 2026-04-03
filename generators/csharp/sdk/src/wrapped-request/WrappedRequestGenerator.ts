@@ -6,7 +6,6 @@ import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type ContainerType = FernIr.ContainerType;
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
 type ExampleInlinedRequestBodyExtraProperty = FernIr.ExampleInlinedRequestBodyExtraProperty;
@@ -210,7 +209,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (request) => {
                 const allProps = [...request.properties, ...(request.extendedProperties ?? [])];
-                const allPropertyPascalNames = new Set(allProps.map((p) => this.context.caseConverter.pascalSafe(p.name)));
+                const allPropertyPascalNames = new Set(
+                    allProps.map((p) => this.context.caseConverter.pascalSafe(p.name))
+                );
                 for (const property of allProps) {
                     const field = generateField(class_, {
                         property,
@@ -230,7 +231,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             fileUpload: (request) => {
                 const bodyProps = request.properties.filter((p) => p.type === "bodyProperty");
-                const allPropertyPascalNames = new Set(bodyProps.map((p) => this.context.caseConverter.pascalSafe(p.name)));
+                const allPropertyPascalNames = new Set(
+                    bodyProps.map((p) => this.context.caseConverter.pascalSafe(p.name))
+                );
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":

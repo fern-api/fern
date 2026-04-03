@@ -4,7 +4,6 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type TypeDeclaration = FernIr.TypeDeclaration;
 type EnumValue = FernIr.EnumValue;

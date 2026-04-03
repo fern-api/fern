@@ -9,7 +9,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator.js";
 
-
 interface UnifiedField {
     name: string;
     type: ast.Type;
@@ -274,7 +273,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 {
                     name: this.context.caseConverter.pascalSafe(scheme.token),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${this.context.caseConverter.camelSafe(scheme.token)} to use for authentication.`,
+                    docs:
+                        scheme.docs ??
+                        `The ${this.context.caseConverter.camelSafe(scheme.token)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.tokenEnvVar != null
                 }
@@ -284,14 +285,18 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 {
                     name: this.context.caseConverter.pascalSafe(scheme.username),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${this.context.caseConverter.camelSafe(scheme.username)} to use for authentication.`,
+                    docs:
+                        scheme.docs ??
+                        `The ${this.context.caseConverter.camelSafe(scheme.username)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.usernameEnvVar != null
                 },
                 {
                     name: this.context.caseConverter.pascalSafe(scheme.password),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${this.context.caseConverter.camelSafe(scheme.password)} to use for authentication.`,
+                    docs:
+                        scheme.docs ??
+                        `The ${this.context.caseConverter.camelSafe(scheme.password)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.passwordEnvVar != null
                 }
@@ -301,7 +306,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 {
                     name: this.context.caseConverter.pascalSafe(scheme.name),
                     type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
-                    docs: scheme.docs ?? `The ${this.context.caseConverter.camelSafe(scheme.name)} to use for authentication.`,
+                    docs:
+                        scheme.docs ??
+                        `The ${this.context.caseConverter.camelSafe(scheme.name)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.headerEnvVar != null
                 }

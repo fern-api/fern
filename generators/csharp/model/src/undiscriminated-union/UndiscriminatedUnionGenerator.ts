@@ -3,7 +3,6 @@ import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
 const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
 type TypeDeclaration = FernIr.TypeDeclaration;

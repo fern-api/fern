@@ -1,7 +1,6 @@
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-
 type HttpEndpoint = FernIr.HttpEndpoint;
 type SdkRequest = FernIr.SdkRequest;
 
