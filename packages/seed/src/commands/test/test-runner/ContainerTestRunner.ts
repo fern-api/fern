@@ -83,8 +83,11 @@ export class ContainerTestRunner extends TestRunner {
                 await loggingExeca(undefined, this.runner, ["tag", originalImage, localImage], {
                     doNotPipeOutput: !this.shouldPipeOutput()
                 });
-            } catch {
+            } catch (error) {
                 // tag may fail if the rewrite already produced the :local image directly
+                CONSOLE_LOGGER.debug(
+                    `docker tag failed (expected if image was built with local tag directly): ${error}`
+                );
             }
         }
 
@@ -116,8 +119,9 @@ export class ContainerTestRunner extends TestRunner {
                 await loggingExeca(undefined, this.runner, ["rmi", localImage], {
                     doNotPipeOutput: !this.shouldPipeOutput()
                 });
-            } catch {
+            } catch (error) {
                 // Best-effort cleanup; image may already have been removed
+                CONSOLE_LOGGER.debug(`Failed to remove image ${localImage}: ${error}`);
             }
         }
     }
