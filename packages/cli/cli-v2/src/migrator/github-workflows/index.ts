@@ -1,1 +1,1 @@
-export { GithubWorkflowMigrator } from "./GithubWorkflowMigrator.js";
+export { migrateGithubWorkflows } from "./GithubWorkflowMigrator.js";

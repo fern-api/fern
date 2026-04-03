@@ -1,1 +1,2 @@
-export { DocsYmlMigrator } from "./DocsYmlMigrator.js";
+export type { DocsYmlMigratorResult } from "./DocsYmlMigrator.js";
+export { migrateDocsYml } from "./DocsYmlMigrator.js";

@@ -6,10 +6,10 @@ import { readdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { FERN_YML_FILENAME } from "../config/fern-yml/constants.js";
 import { convertMultiApi, convertSingleApi } from "./converters/index.js";
-import { DocsYmlMigrator } from "./docs-yml/index.js";
+import { migrateDocsYml } from "./docs-yml/index.js";
 import { FernConfigJsonMigrator } from "./fern-config-json/index.js";
 import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
-import { GithubWorkflowMigrator } from "./github-workflows/index.js";
+import { migrateGithubWorkflows } from "./github-workflows/index.js";
 import type { MigratorResult, MigratorWarning } from "./types/index.js";
 
 export interface MigratorConfig {
@@ -115,17 +115,13 @@ export class Migrator {
         }
 
         // Migrate docs.yml if present.
-        const docsMigrator = new DocsYmlMigrator({ cwd: fernDir });
-        const docsResult = await docsMigrator.migrate();
+        const docsResult = await migrateDocsYml(fernDir);
         warnings.push(...docsResult.warnings);
         if (docsResult.docs != null) {
             fernYml.docs = docsResult.docs as schemas.FernYmlSchema["docs"];
         }
         if (docsResult.absoluteFilePath != null) {
             migratedFiles.push(docsResult.absoluteFilePath);
-        }
-        for (const refFile of docsResult.referencedFiles) {
-            migratedFiles.push(refFile);
         }
 
         // Write fern.yml in the current working directory.
@@ -150,9 +146,7 @@ export class Migrator {
         this.logger.info(`Created ${fernYmlPath}`);
 
         // Migrate GitHub Actions workflow files if present.
-        const workflowMigrator = new GithubWorkflowMigrator({ cwd: this.cwd });
-        const workflowResult = await workflowMigrator.migrate();
-        warnings.push(...workflowResult.warnings);
+        warnings.push(...(await migrateGithubWorkflows(this.cwd)));
 
         return {
             success: true,
