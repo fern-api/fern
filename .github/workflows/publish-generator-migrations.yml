@@ -96,8 +96,9 @@ jobs:
 
       # npm >= 11.5.1 is required for OIDC trusted publishing.
       # Node 22 ships with npm 10.x which does not support OIDC.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
       - name: Update npm for OIDC publishing
-        run: npm install -g npm@11
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Build and publish generator-migrations
         env:

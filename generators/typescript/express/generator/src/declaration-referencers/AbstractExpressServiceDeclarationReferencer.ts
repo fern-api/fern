@@ -35,7 +35,7 @@ export abstract class AbstractExpressServiceDeclarationReferencer<Name> extends 
             ...this.containingDirectory,
             ...getExportedDirectoriesForFernFilepath({
                 fernFilepath: this.getFernFilepathFromName(name),
-                caseConverter: this.caseConverter,
+                caseConverter: this.case,
                 subExports:
                     subExports != null
                         ? entries(subExports).reduce(

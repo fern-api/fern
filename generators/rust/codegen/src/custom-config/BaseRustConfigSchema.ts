@@ -47,7 +47,8 @@ export const BaseRustCustomConfigSchema = z.object({
     features: z.record(z.array(z.string())).optional(),
     // Override which features are in the default feature set
     // Example: ["sse"] to only include SSE in default features
-    defaultFeatures: z.array(z.string()).optional()
+    defaultFeatures: z.array(z.string()).optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

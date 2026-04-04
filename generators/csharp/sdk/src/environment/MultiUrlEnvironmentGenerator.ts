@@ -35,8 +35,8 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
             class_.addField({
                 origin: class_.explicit(
                     this.settings.pascalCaseEnvironments
-                        ? environment.name.pascalCase.safeName
-                        : environment.name.screamingSnakeCase.safeName
+                        ? this.case.pascalSafe(environment.name)
+                        : this.case.screamingSnakeSafe(environment.name)
                 ),
                 enclosingType: class_,
                 access: ast.Access.Public,
@@ -54,7 +54,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
                                     throw new Error(`Failed to find base url with id ${id}`);
                                 }
                                 return {
-                                    name: baseUrl?.name.pascalCase.safeName ?? "",
+                                    name: this.case.pascalSafe(baseUrl?.name) ?? "",
                                     assignment: this.csharp.codeblock(this.csharp.string_({ string: url }))
                                 };
                             })
@@ -87,7 +87,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
 
     public generateSnippet(baseUrlValues?: ast.AstNode): ast.ClassInstantiation {
         const arguments_ = this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
-            const name = baseUrl.name.pascalCase.safeName;
+            const name = this.case.pascalSafe(baseUrl.name);
             const value = baseUrlValues ?? `<${baseUrl.id} URL>`;
             return { name, assignment: value };
         });
