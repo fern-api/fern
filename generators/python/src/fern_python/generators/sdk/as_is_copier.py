@@ -95,6 +95,15 @@ def copy_to_project(*, project: Project) -> None:
         )
 
 
+def _get_local_assets_root() -> str:
+    """Return the local equivalent of /assets for non-Docker runs.
+
+    In Docker the layout is /assets/{tests,core_utilities,...} which maps to
+    generators/python/{tests,core_utilities,...} on disk.
+    """
+    return os.path.join(os.path.dirname(__file__), "../../../../")
+
+
 def _copy_directory_to_project(
     *,
     project: Project,
@@ -102,9 +111,7 @@ def _copy_directory_to_project(
     path_in_project: str,
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
-    source = (
-        os.path.join(os.path.dirname(__file__), "../../../../../") if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
-    )
+    source = _get_local_assets_root() if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
 
     for _, _, files in os.walk(os.path.join(source, relative_path_on_disk)):
         for f in files:
@@ -129,10 +136,7 @@ def _copy_file_to_project(
     filepath_in_project: Filepath,
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
-    # Project root source, so all from_ requests should be relative to that
-    source = (
-        os.path.join(os.path.dirname(__file__), "../../../../../") if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
-    )
+    source = _get_local_assets_root() if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
     SourceFileFactory.add_source_file_from_disk(
         project=project,
         path_on_disk=os.path.join(source, relative_filepath_on_disk),

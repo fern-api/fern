@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -11,6 +12,23 @@ import fern.generator_exec as generator_exec
 V2_BIN_PATH = "/bin/python-v2"
 
 
+def _resolve_v2_bin_path() -> str:
+    """Resolve the python-v2 binary path.
+
+    In Docker the binary is at /bin/python-v2. In local mode it lives at
+    generators/python-v2/sdk/dist/cli.cjs relative to the repo root.
+    """
+    if Path(V2_BIN_PATH).exists():
+        return V2_BIN_PATH
+    # Local mode: walk up from this file to find the repo-relative path
+    local_path = os.path.normpath(
+        os.path.join(os.path.dirname(__file__), "../../../../../../python-v2/sdk/dist/cli.cjs")
+    )
+    if Path(local_path).exists():
+        return local_path
+    return V2_BIN_PATH
+
+
 class PythonV2Generator:
     """Generator represents a shim used to run the python-v2 SDK generator."""
 
@@ -21,8 +39,9 @@ class PythonV2Generator:
         if len(sys.argv) < 2:
             raise RuntimeError("Internal error; failed to resolve configuration file path")
 
-        if not Path(V2_BIN_PATH).exists():
-            raise RuntimeError(f"python-v2 binary not found at {V2_BIN_PATH}")
+        v2_bin = _resolve_v2_bin_path()
+        if not Path(v2_bin).exists():
+            raise RuntimeError(f"python-v2 binary not found at {v2_bin}")
 
         config_filepath = sys.argv[1]
         if not Path(config_filepath).exists():
@@ -39,7 +58,7 @@ class PythonV2Generator:
 
         try:
             subprocess.run(
-                ["node", "--enable-source-maps", V2_BIN_PATH, config_filepath],
+                ["node", "--enable-source-maps", v2_bin, config_filepath],
                 capture_output=True,
                 text=True,
                 check=True,

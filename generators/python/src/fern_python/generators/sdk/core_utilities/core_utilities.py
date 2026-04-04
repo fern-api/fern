@@ -328,6 +328,20 @@ class CoreUtilities:
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
+    @staticmethod
+    def _resolve_local_core_utilities_path(relative_filepath_on_disk: str) -> str:
+        """Resolve a core utilities file path for local (non-Docker) runs.
+
+        In Docker, both core_utilities/sdk and core_utilities/shared are merged
+        into /assets/core_utilities. In local mode we need to search both directories.
+        """
+        base = os.path.join(os.path.dirname(__file__), "../../../../../core_utilities")
+        for subdir in ("sdk", "shared"):
+            candidate = os.path.join(base, subdir, relative_filepath_on_disk)
+            if os.path.exists(candidate):
+                return os.path.join(base, subdir)
+        return os.path.join(base, "sdk")
+
     def _copy_file_to_project(
         self,
         *,
@@ -337,11 +351,10 @@ class CoreUtilities:
         exports: Set[str],
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            source = self._resolve_local_core_utilities_path(relative_filepath_on_disk)
+        else:
+            source = "/assets/core_utilities"
         SourceFileFactory.add_source_file_from_disk(
             project=project,
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
@@ -352,11 +365,10 @@ class CoreUtilities:
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
         """Copy the http_sse folder using the same approach as individual file copying"""
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            source = self._resolve_local_core_utilities_path("http_sse")
+        else:
+            source = "/assets/core_utilities"
         folder_path_on_disk = os.path.join(source, "http_sse")
 
         # Define exports for each file
