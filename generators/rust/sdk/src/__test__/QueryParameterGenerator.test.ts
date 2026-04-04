@@ -120,6 +120,7 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
 function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService,

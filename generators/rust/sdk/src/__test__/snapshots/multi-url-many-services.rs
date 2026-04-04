@@ -1,4 +1,4 @@
-use crate::prelude::{*};
+use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProductionUrls {
