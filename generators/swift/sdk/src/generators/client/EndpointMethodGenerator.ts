@@ -225,7 +225,9 @@ export class EndpointMethodGenerator {
             // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
-                value: swift.Expression.stringLiteral(formatEndpointPathForSwift(endpoint))
+                value: swift.Expression.stringLiteral(
+                    formatEndpointPathForSwift(endpoint, this.sdkGeneratorContext.caseConverter)
+                )
             })
         ];
 
