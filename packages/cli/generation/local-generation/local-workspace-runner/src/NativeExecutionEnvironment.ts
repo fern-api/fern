@@ -56,67 +56,69 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
             }
         }
 
-        for (const command of this.commands) {
-            const processedCommand = command
-                .replace("{IR_PATH}", irPath)
-                .replace("{CONFIG_PATH}", configPath)
-                .replace("{OUTPUT_PATH}", outputPath)
-                .replace("{SNIPPET_PATH}", snippetPath || "")
-                .replace("{SNIPPET_TEMPLATE_PATH}", snippetTemplatePath || "")
-                .replace("{GENERATOR_NAME}", generatorName);
+        try {
+            for (const command of this.commands) {
+                const processedCommand = command
+                    .replace("{IR_PATH}", irPath)
+                    .replace("{CONFIG_PATH}", configPath)
+                    .replace("{OUTPUT_PATH}", outputPath)
+                    .replace("{SNIPPET_PATH}", snippetPath || "")
+                    .replace("{SNIPPET_TEMPLATE_PATH}", snippetTemplatePath || "")
+                    .replace("{GENERATOR_NAME}", generatorName);
 
-            context.logger.debug(`Executing command: ${processedCommand}`);
+                context.logger.debug(`Executing command: ${processedCommand}`);
 
-            // Check if command contains shell operators that require shell mode
-            const shellOperators = ["&&", "||", "|", ";", ">", "<", ">>", "<<"];
-            const needsShell = shellOperators.some((op) => processedCommand.includes(op));
+                // Check if command contains shell operators that require shell mode
+                const shellOperators = ["&&", "||", "|", ";", ">", "<", ">>", "<<"];
+                const needsShell = shellOperators.some((op) => processedCommand.includes(op));
 
-            const execOptions = {
-                doNotPipeOutput: false,
-                reject: false,
-                cwd: this.workingDirectory,
-                env: {
-                    ...process.env,
-                    ...this.env,
-                    IR_PATH: irPath,
-                    CONFIG_PATH: configPath,
-                    OUTPUT_PATH: outputPath,
-                    SNIPPET_PATH: snippetPath || "",
-                    SNIPPET_TEMPLATE_PATH: snippetTemplatePath || "",
-                    GENERATOR_NAME: generatorName,
-                    ...(inspect ? { NODE_OPTIONS: "--inspect-brk=0.0.0.0:9229" } : {})
-                },
-                shell: needsShell
-            };
+                const execOptions = {
+                    doNotPipeOutput: false,
+                    reject: false,
+                    cwd: this.workingDirectory,
+                    env: {
+                        ...process.env,
+                        ...this.env,
+                        IR_PATH: irPath,
+                        CONFIG_PATH: configPath,
+                        OUTPUT_PATH: outputPath,
+                        SNIPPET_PATH: snippetPath || "",
+                        SNIPPET_TEMPLATE_PATH: snippetTemplatePath || "",
+                        GENERATOR_NAME: generatorName,
+                        ...(inspect ? { NODE_OPTIONS: "--inspect-brk=0.0.0.0:9229" } : {})
+                    },
+                    shell: needsShell
+                };
 
-            let result;
-            if (needsShell) {
-                // For shell commands, pass the entire command as a single string
-                result = await loggingExeca(context.logger, processedCommand, [], execOptions);
-            } else {
-                // For simple commands, split by space
-                const parts = processedCommand.split(" ");
-                const program = parts[0];
-                const args = parts.slice(1);
+                let result;
+                if (needsShell) {
+                    // For shell commands, pass the entire command as a single string
+                    result = await loggingExeca(context.logger, processedCommand, [], execOptions);
+                } else {
+                    // For simple commands, split by space
+                    const parts = processedCommand.split(" ");
+                    const program = parts[0];
+                    const args = parts.slice(1);
 
-                if (!program) {
-                    throw new Error(`Invalid command: ${processedCommand}`);
+                    if (!program) {
+                        throw new Error(`Invalid command: ${processedCommand}`);
+                    }
+
+                    result = await loggingExeca(context.logger, program, args, execOptions);
                 }
 
-                result = await loggingExeca(context.logger, program, args, execOptions);
+                if (result.failed) {
+                    throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);
+                }
             }
-
-            if (result.failed) {
-                throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);
-            }
-        }
-
-        // Clean up the copied license file
-        if (copiedLicense) {
-            try {
-                await rm(LICENSE_MOUNT_PATH, { force: true });
-            } catch {
-                // Best-effort cleanup
+        } finally {
+            // Clean up the copied license file
+            if (copiedLicense) {
+                try {
+                    await rm(LICENSE_MOUNT_PATH, { force: true });
+                } catch (e) {
+                    context.logger.debug(`Best-effort cleanup of ${LICENSE_MOUNT_PATH} failed: ${e}`);
+                }
             }
         }
 
