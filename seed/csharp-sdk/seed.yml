@@ -395,7 +395,6 @@ fixtures:
       outputFolder: redact-response-body-on-error
 allowedFailures:
   - schemaless-request-body-examples
-  - csharp-grpc-proto-exhaustive
   - bytes-upload
   - enum:forward-compatible-enums
   - imdb:exported-client-class-name

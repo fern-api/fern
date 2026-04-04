@@ -3380,12 +3380,7 @@
             "request": {
                 "type": "body",
                 "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "unknown"
-                    }
-                }
+                "body": null
             },
             "response": {
                 "type": "json"
