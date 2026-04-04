@@ -34,7 +34,9 @@ const PHP_CS_FIXER_DOWNLOAD_URL = `https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/
 
 let resolvedPhpCsFixerPath: string | undefined;
 
-async function resolvePhpCsFixer(logger?: { debug: (msg: string) => void }): Promise<{ command: string; args: string[] }> {
+async function resolvePhpCsFixer(logger?: {
+    debug: (msg: string) => void;
+}): Promise<{ command: string; args: string[] }> {
     if (resolvedPhpCsFixerPath != null) {
         if (resolvedPhpCsFixerPath === "php-cs-fixer") {
             return { command: "php-cs-fixer", args: [] };
@@ -69,7 +71,9 @@ async function resolvePhpCsFixer(logger?: { debug: (msg: string) => void }): Pro
             await rename(tmpPath, pharPath);
         } catch (error) {
             // Clean up partial download so next attempt re-downloads
-            await unlink(tmpPath).catch(() => {});
+            await unlink(tmpPath).catch(() => {
+                // Ignore cleanup errors; the file may not exist
+            });
             throw error;
         }
     }
