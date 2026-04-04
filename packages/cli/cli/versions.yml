@@ -4,8 +4,6 @@
   changelogEntry:
     - summary: |
         Remove deprecated `private` field from `DocsInstance` configuration.
-        This field previously controlled which S3 bucket assets were written to
-        but is no longer used by any customers.
       type: chore
   createdAt: "2026-04-04"
   irVersion: 66
