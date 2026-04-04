@@ -22,6 +22,11 @@ test:
   podman:
     image: fernapi/fern-ruby-sdk-v2:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/ruby-sdk
+  local:
+    workingDirectory: generators/ruby-v2
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   preBuildCommands:
