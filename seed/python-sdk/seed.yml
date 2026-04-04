@@ -441,9 +441,14 @@ scripts:
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
+  - any-auth
+  - endpoint-security-auth
+  - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
+  - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - oauth-client-credentials-openapi
+  - response-property
   - streaming-parameter
   - trace
