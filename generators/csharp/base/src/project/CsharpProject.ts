@@ -927,14 +927,17 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         };
 
         const result: string[] = [];
-        pushIfNotOverridden(result, "PolySharp", '<PackageReference Include="PolySharp" Version="1.15.0">');
-        if (!extraDepNames.has("polysharp")) {
-            result.push(
-                `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
-            );
-            result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
-            result.push("</PackageReference>");
-        }
+        // PolySharp always needs <IncludeAssets> and <PrivateAssets> metadata,
+        // even when the user overrides the version via extra-dependencies.
+        const polySharpVersion = extraDepNames.has("polysharp")
+            ? extraDeps[Object.keys(extraDeps).find((n) => n.toLowerCase() === "polysharp")!]!
+            : "1.15.0";
+        result.push(`<PackageReference Include="PolySharp" Version="${polySharpVersion}">`);
+        result.push(
+            `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
+        );
+        result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
+        result.push("</PackageReference>");
         // When use-undiscriminated-unions is false, we need the OneOf package.
         // System.Net.Http and System.Text.RegularExpressions are security version-floor
         // overrides for OneOf.Extended's unpatched transitive dependencies — only needed
@@ -960,6 +963,10 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             );
         }
         for (const [name, version] of Object.entries(extraDeps)) {
+            // PolySharp is already handled above with its required metadata.
+            if (name.toLowerCase() === "polysharp") {
+                continue;
+            }
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
         if (this.context.hasWebSocketEndpoints) {
