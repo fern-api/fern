@@ -3132,9 +3132,32 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "requestBody": null,
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "unknown"
+                        },
+                        "docs": null,
+                        "contentType": "application/json",
+                        "v2Examples": null
+                    },
                     "v2RequestBodies": null,
-                    "sdkRequest": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "unknown"
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
                     "response": {
                         "body": {
                             "type": "json",
@@ -3163,141 +3186,11 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "fdd31271",
-                                "name": null,
-                                "url": "/data.v1.DataService/Check",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:CheckResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "CheckResponse",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "created_at",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "2024-01-15T09:30:00Z"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "2024-01-15T09:30:00Z"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:CheckResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "CheckResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "updated_at",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "2024-01-15T09:30:00Z"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "2024-01-15T09:30:00Z"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:CheckResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "CheckResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "created_at": "2024-01-15T09:30:00Z",
-                                                "updated_at": "2024-01-15T09:30:00Z"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "94381cfa",
+                                "id": "f1766c1f",
                                 "url": "/data.v1.DataService/Check",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3306,7 +3199,18 @@
                                 "servicePathParameters": [],
                                 "serviceHeaders": [],
                                 "rootPathParameters": [],
-                                "request": null,
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                            "key": "value"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "key": "value"
+                                    }
+                                },
                                 "response": {
                                     "type": "ok",
                                     "value": {
@@ -21254,7 +21158,12 @@
                 "request": {
                     "type": "body",
                     "pathParameters": [],
-                    "body": null
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "unknown"
+                        }
+                    }
                 },
                 "response": {
                     "type": "json"
