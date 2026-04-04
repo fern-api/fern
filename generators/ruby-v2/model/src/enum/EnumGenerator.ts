@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -25,16 +26,16 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
 
     public doGenerate(): RubyFile {
         const enumModule = ruby.module({
-            name: this.typeDeclaration.name.name.pascalCase.safeName
+            name: this.case.pascalSafe(this.typeDeclaration.name.name)
         });
         enumModule.addStatement(ruby.codeblock(`extend ${this.context.getRootModuleName()}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
-            const originalStringValue = enumValue.name.wireValue;
+            const originalStringValue = getWireValue(enumValue.name);
             const escapedStringLiteral = originalStringValue.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 
             enumModule.addStatement(
-                ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${escapedStringLiteral}"`)
+                ruby.codeblock(`${this.case.screamingSnakeSafe(enumValue.name)} = "${escapedStringLiteral}"`)
             );
         }
 
