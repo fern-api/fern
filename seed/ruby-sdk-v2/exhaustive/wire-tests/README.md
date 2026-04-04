@@ -77,7 +77,7 @@ end
 ### Retries
 
 The SDK is instrumented with automatic retries. A request will be retried as long as the request is deemed
-retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 5).
+retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 2).
 
 A request is deemed retryable when any of the following HTTP status codes is returned:
 

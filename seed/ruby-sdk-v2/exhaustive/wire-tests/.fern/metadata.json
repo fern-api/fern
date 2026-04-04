@@ -4,7 +4,8 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": true,
-    "clientModuleName": "MyClient"
+    "clientModuleName": "MyClient",
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.3.0
+- version: 1.4.0
   changelogEntry:
     - summary: |
         Support omitting username or password from basic auth when configured via
@@ -10,7 +10,15 @@
         both are omitted, the Authorization header is skipped entirely.
       type: feat
   createdAt: "2026-04-02"
-  irVersion: 61
+  irVersion: 66
+
+- version: 1.3.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
 
 - version: 1.2.0
   changelogEntry:
@@ -37,7 +45,6 @@
       type: chore
   createdAt: "2026-04-02"
   irVersion: 61
-
 - version: 1.1.11
   changelogEntry:
     - summary: |

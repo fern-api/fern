@@ -108,7 +108,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getClientModuleNames(): string[] {
         return [
             this.context.getRootModuleName(),
-            ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+            ...this.subpackage.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))
         ];
     }
 
@@ -121,7 +121,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             name: CLIENT_CLASS_NAME,
             modules: [
                 this.context.getRootModuleName(),
-                ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+                ...this.subpackage.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))
             ],
             fullyQualified: true
         });
@@ -146,12 +146,12 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: subpackage.name.snakeCase.safeName,
+            name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    modules: [rootModule.name, this.case.pascalSafe(subpackage.name)],
                     fullyQualified: true
                 })
             ),
@@ -159,16 +159,16 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @client)`
                         );
                     }
