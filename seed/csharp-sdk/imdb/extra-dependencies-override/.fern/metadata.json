@@ -4,7 +4,7 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "extra-dependencies": {
-      "OneOf": "3.0.290"
+      "OneOf": "3.0.263"
     }
   },
   "originGitCommit": "DUMMY",
