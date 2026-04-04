@@ -17,6 +17,7 @@ from .complex import (
     StartingAfterPaging,
 )
 from .users import (
+    ListUsersAliasedDataPaginationResponse,
     ListUsersBodyCursorPaginationRequest,
     ListUsersBodyOffsetPaginationRequest,
     ListUsersExtendedOptionalListResponse,
@@ -30,6 +31,7 @@ from .users import (
     Order,
     Page,
     User,
+    UserList,
     UserListContainer,
     UserOptionalListContainer,
     UserOptionalListPage,
@@ -42,6 +44,7 @@ from .users import (
 __all__ = [
     "Conversation",
     "CursorPages",
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersBodyCursorPaginationRequest",
     "ListUsersBodyOffsetPaginationRequest",
     "ListUsersExtendedOptionalListResponse",
@@ -64,6 +67,7 @@ __all__ = [
     "SingleFilterSearchRequestOperator",
     "StartingAfterPaging",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",

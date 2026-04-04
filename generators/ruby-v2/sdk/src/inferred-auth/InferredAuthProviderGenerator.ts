@@ -227,7 +227,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
-                snakeName: query.name.name.snakeCase.unsafeName,
+                snakeName: this.case.snakeUnsafe(query.name),
                 isOptional: this.isOptional(query.valueType),
                 literal: this.maybeLiteral(query.valueType)
             });
@@ -236,7 +236,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
-                snakeName: header.name.name.snakeCase.unsafeName,
+                snakeName: this.case.snakeUnsafe(header.name),
                 isOptional: this.isOptional(header.valueType),
                 literal: this.maybeLiteral(header.valueType)
             });
@@ -250,7 +250,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     properties.push({
-                        snakeName: property.name.name.snakeCase.unsafeName,
+                        snakeName: this.case.snakeUnsafe(property.name),
                         isOptional: this.isOptional(property.valueType),
                         literal: this.maybeLiteral(property.valueType)
                     });
@@ -260,7 +260,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                 for (const property of fileUpload.properties) {
                     if (property.type === "bodyProperty") {
                         properties.push({
-                            snakeName: property.name.name.snakeCase.unsafeName,
+                            snakeName: this.case.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType),
                             literal: this.maybeLiteral(property.valueType)
                         });
@@ -331,11 +331,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getEndpointMethodName(): string {
-        return this.tokenEndpoint.name.snakeCase.safeName;
+        return this.case.snakeSafe(this.tokenEndpoint.name);
     }
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
-        return name.name.snakeCase.unsafeName;
+        return this.case.snakeUnsafe(name);
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
@@ -348,11 +348,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     }
 
     private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
-        return `.${pathItem.name.snakeCase.safeName}`;
+        return `.${this.case.snakeSafe(pathItem.name)}`;
     }
 
     private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
-        return `.${property.name.name.snakeCase.safeName}`;
+        return `.${this.case.snakeSafe(property.name)}`;
     }
 
     private isOptional(typeReference: { type: string }): boolean {
