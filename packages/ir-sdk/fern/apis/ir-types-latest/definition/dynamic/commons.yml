@@ -16,10 +16,20 @@ types:
       pascalCase: SafeAndUnsafeString
       snakeCase: SafeAndUnsafeString
       screamingSnakeCase: SafeAndUnsafeString
+  NameOrString:
+    discriminated: false
+    union:
+      - string
+      - Name
   NameAndWireValue:
     properties:
       wireValue: string
       name: Name
+  NameAndWireValueOrString:
+    discriminated: false
+    union:
+      - string
+      - NameAndWireValue
   SafeAndUnsafeString:
     properties:
       unsafeName:

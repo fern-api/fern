@@ -1,17 +1,17 @@
 openapi: 3.0.1
 info:
   title: examples
-  version: ''
+  version: ""
 paths:
   /:
     post:
       operationId: echo
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -26,21 +26,21 @@ paths:
     post:
       operationId: createType
       tags:
-        - ''
+        - ""
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Identifier'
+                $ref: "#/components/schemas/Identifier"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Type'
+              $ref: "#/components/schemas/Type"
   /file/notification/{notificationId}:
     get:
       operationId: file_notification_service_getException
@@ -53,12 +53,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Exception'
+                $ref: "#/components/schemas/Exception"
       security: &ref_0
         - BearerAuth: []
   /file/{filename}:
@@ -75,14 +75,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/File'
-        '404':
-          description: ''
+                $ref: "#/components/schemas/File"
+        "404":
+          description: ""
           content:
             application/json:
               schema:
@@ -102,8 +102,8 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       security: *ref_0
   /ping:
     get:
@@ -113,8 +113,8 @@ paths:
         - HealthService
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -130,14 +130,14 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/MovieId'
+            $ref: "#/components/schemas/MovieId"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: "#/components/schemas/Movie"
   /service/movie:
     post:
       operationId: service_createMovie
@@ -145,18 +145,18 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovieId'
+                $ref: "#/components/schemas/MovieId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Movie'
+              $ref: "#/components/schemas/Movie"
   /service/metadata:
     get:
       operationId: service_getMetadata
@@ -183,12 +183,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Metadata'
+                $ref: "#/components/schemas/Metadata"
   /service/big-entity:
     post:
       operationId: service_createBigEntity
@@ -196,18 +196,18 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BigEntity'
+              $ref: "#/components/schemas/BigEntity"
   /service/refresh-token:
     post:
       operationId: service_refreshToken
@@ -215,28 +215,28 @@ paths:
         - Service
       parameters: []
       responses:
-        '204':
-          description: ''
+        "204":
+          description: ""
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RefreshTokenRequest'
+              $ref: "#/components/schemas/RefreshTokenRequest"
               nullable: true
 components:
   schemas:
     Type:
       title: Type
       oneOf:
-        - $ref: '#/components/schemas/BasicType'
-        - $ref: '#/components/schemas/ComplexType'
+        - $ref: "#/components/schemas/BasicType"
+        - $ref: "#/components/schemas/ComplexType"
     Identifier:
       title: Identifier
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/Type'
+          $ref: "#/components/schemas/Type"
         value:
           type: string
         label:
@@ -299,7 +299,7 @@ components:
                   type: string
                   enum:
                     - metadata
-            - $ref: '#/components/schemas/commonsMetadata'
+            - $ref: "#/components/schemas/commonsMetadata"
           required:
             - type
         - type: object
@@ -309,7 +309,7 @@ components:
               enum:
                 - tag
             value:
-              $ref: '#/components/schemas/commonsTag'
+              $ref: "#/components/schemas/commonsTag"
           required:
             - type
     commonsData:
@@ -347,9 +347,9 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/MovieId'
+          $ref: "#/components/schemas/MovieId"
         prequel:
-          $ref: '#/components/schemas/MovieId'
+          $ref: "#/components/schemas/MovieId"
           nullable: true
         title:
           type: string
@@ -363,7 +363,7 @@ components:
           type: string
           const: movie
         tag:
-          $ref: '#/components/schemas/commonsTag'
+          $ref: "#/components/schemas/commonsTag"
         book:
           type: string
           nullable: true
@@ -385,9 +385,9 @@ components:
     CastMember:
       title: CastMember
       oneOf:
-        - $ref: '#/components/schemas/Actor'
-        - $ref: '#/components/schemas/Actress'
-        - $ref: '#/components/schemas/StuntDouble'
+        - $ref: "#/components/schemas/Actor"
+        - $ref: "#/components/schemas/Actress"
+        - $ref: "#/components/schemas/StuntDouble"
     Actor:
       title: Actor
       type: object
@@ -432,7 +432,7 @@ components:
       required:
         - cast
       allOf:
-        - $ref: '#/components/schemas/Movie'
+        - $ref: "#/components/schemas/Movie"
     Moment:
       title: Moment
       type: object
@@ -470,12 +470,12 @@ components:
         files:
           type: array
           items:
-            $ref: '#/components/schemas/File'
+            $ref: "#/components/schemas/File"
           nullable: true
         directories:
           type: array
           items:
-            $ref: '#/components/schemas/Directory'
+            $ref: "#/components/schemas/Directory"
           nullable: true
       required:
         - name
@@ -488,12 +488,12 @@ components:
         nodes:
           type: array
           items:
-            $ref: '#/components/schemas/Node'
+            $ref: "#/components/schemas/Node"
           nullable: true
         trees:
           type: array
           items:
-            $ref: '#/components/schemas/Tree'
+            $ref: "#/components/schemas/Tree"
           nullable: true
       required:
         - name
@@ -504,7 +504,7 @@ components:
         nodes:
           type: array
           items:
-            $ref: '#/components/schemas/Node'
+            $ref: "#/components/schemas/Node"
           nullable: true
     Metadata:
       title: Metadata
@@ -552,7 +552,7 @@ components:
                   type: string
                   enum:
                     - generic
-            - $ref: '#/components/schemas/ExceptionInfo'
+            - $ref: "#/components/schemas/ExceptionInfo"
           required:
             - type
         - type: object
@@ -591,7 +591,7 @@ components:
         name:
           type: string
         status:
-          $ref: '#/components/schemas/MigrationStatus'
+          $ref: "#/components/schemas/MigrationStatus"
       required:
         - name
         - status
@@ -610,7 +610,7 @@ components:
         identifiers:
           type: array
           items:
-            $ref: '#/components/schemas/Identifier'
+            $ref: "#/components/schemas/Identifier"
       required:
         - response
         - identifiers
@@ -619,7 +619,7 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/Type'
+          $ref: "#/components/schemas/Type"
       required:
         - type
     Test:
@@ -650,7 +650,7 @@ components:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/Type'
+          $ref: "#/components/schemas/Type"
         name:
           type: string
       required:
@@ -661,43 +661,43 @@ components:
       type: object
       properties:
         castMember:
-          $ref: '#/components/schemas/CastMember'
+          $ref: "#/components/schemas/CastMember"
           nullable: true
         extendedMovie:
-          $ref: '#/components/schemas/ExtendedMovie'
+          $ref: "#/components/schemas/ExtendedMovie"
           nullable: true
         entity:
-          $ref: '#/components/schemas/Entity'
+          $ref: "#/components/schemas/Entity"
           nullable: true
         metadata:
-          $ref: '#/components/schemas/Metadata'
+          $ref: "#/components/schemas/Metadata"
           nullable: true
         commonMetadata:
-          $ref: '#/components/schemas/commonsMetadata'
+          $ref: "#/components/schemas/commonsMetadata"
           nullable: true
         eventInfo:
-          $ref: '#/components/schemas/commonsEventInfo'
+          $ref: "#/components/schemas/commonsEventInfo"
           nullable: true
         data:
-          $ref: '#/components/schemas/commonsData'
+          $ref: "#/components/schemas/commonsData"
           nullable: true
         migration:
-          $ref: '#/components/schemas/Migration'
+          $ref: "#/components/schemas/Migration"
           nullable: true
         exception:
-          $ref: '#/components/schemas/Exception'
+          $ref: "#/components/schemas/Exception"
           nullable: true
         test:
-          $ref: '#/components/schemas/Test'
+          $ref: "#/components/schemas/Test"
           nullable: true
         node:
-          $ref: '#/components/schemas/Node'
+          $ref: "#/components/schemas/Node"
           nullable: true
         directory:
-          $ref: '#/components/schemas/Directory'
+          $ref: "#/components/schemas/Directory"
           nullable: true
         moment:
-          $ref: '#/components/schemas/Moment'
+          $ref: "#/components/schemas/Moment"
           nullable: true
     CronJob:
       title: CronJob

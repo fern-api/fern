@@ -46,12 +46,15 @@ if typing.TYPE_CHECKING:
         StreamProtocolWithFlatSchemaResponse_Heartbeat,
         StreamRequest,
     )
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
     "DataContextEntityEvent": ".types",
     "DataContextHeartbeat": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "EntityEventPayload": ".types",
     "EntityEventPayloadEventType": ".types",
     "Event": ".types",
@@ -118,6 +121,8 @@ __all__ = [
     "AsyncSeedApi",
     "DataContextEntityEvent",
     "DataContextHeartbeat",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "EntityEventPayload",
     "EntityEventPayloadEventType",
     "Event",

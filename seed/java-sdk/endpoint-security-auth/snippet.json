@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "b07f6ce1",
+            "example_identifier": "692a5a2c",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "3ba8dad2",
+            "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
                 "path": "/users",

@@ -40,7 +40,7 @@ async function visitGeneratorGroup({
                     ...nodePath,
                     "generators",
                     idx.toString(),
-                    generator.name
+                    "image" in generator ? generator.image.name : generator.name
                 ])
         )
     );

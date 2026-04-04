@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: bearer-token-environment-variable
-  version: ''
+  version: ""
 paths:
   /apiKey:
     get:
@@ -11,8 +11,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:

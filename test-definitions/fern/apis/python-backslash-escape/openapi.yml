@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: python-backslash-escape
-  version: ''
+  version: ""
 paths:
   /users/{id}:
     get:
@@ -31,12 +31,12 @@ paths:
             type: string
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 components:
   schemas:
     User:

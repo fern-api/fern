@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -117,12 +118,19 @@ export class ExpressGenerator {
     private expressErrorGenerator: ExpressErrorGenerator;
     private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
     private readonly asIsManager: AsIsManager;
+    private readonly case: CaseConverter;
 
     constructor({ namespaceExport, intermediateRepresentation, context, npmPackage, config }: ExpressGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.npmPackage = npmPackage;
         this.config = config;
+        const caseConverter = new CaseConverter({
+            generationLanguage: "typescript",
+            keywords: intermediateRepresentation.casingsConfig?.keywords,
+            smartCasing: intermediateRepresentation.casingsConfig?.smartCasing ?? true
+        });
+        this.case = caseConverter;
 
         this.defaultSrcDirectory = "src";
         this.defaultTestDirectory = "tests";
@@ -170,51 +178,62 @@ export class ExpressGenerator {
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressInlinedRequestBodyDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressInlinedRequestBodySchemaDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressServiceDeclarationReferencer = new ExpressServiceDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressRegisterDeclarationReferencer = new ExpressRegisterDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.genericApiExpressErrorDeclarationReferencer = new GenericAPIExpressErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressErrorDeclarationReferencer = new ExpressErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.expressErrorSchemaDeclarationReferencer = new ExpressErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
         this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            caseConverter
         });
 
         this.typeGenerator = new TypeGenerator({
@@ -226,11 +245,13 @@ export class ExpressGenerator {
             noOptionalProperties: config.noOptionalProperties,
             enableInlineTypes: false,
             generateReadWriteOnlyTypes: false,
-            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums,
+            caseConverter
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            caseConverter
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
             useBigInt: config.useBigInt,
@@ -608,6 +629,7 @@ export class ExpressGenerator {
             expressRegisterGenerator: this.expressRegisterGenerator,
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
+            case: this.case,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             useBigInt: this.config.useBigInt,

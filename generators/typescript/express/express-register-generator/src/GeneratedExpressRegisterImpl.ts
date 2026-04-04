@@ -82,13 +82,13 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
                                 .getGeneratedExpressService(packageId)
-                                .toRouter(this.getReferenceToServiceArgument(packageId))
+                                .toRouter(this.getReferenceToServiceArgument(packageId, context))
                         })
                     );
                     if (this.areImplementationsOptional) {
                         statement = ts.factory.createIfStatement(
                             ts.factory.createBinaryExpression(
-                                this.getReferenceToServiceArgument(packageId, { includeQuestionMarks: true }),
+                                this.getReferenceToServiceArgument(packageId, context, { includeQuestionMarks: true }),
                                 ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                                 ts.factory.createNull()
                             ),
@@ -103,6 +103,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
 
     private getReferenceToServiceArgument(
         packageId: PackageId,
+        context: ExpressContext,
         { includeQuestionMarks = false }: { includeQuestionMarks?: boolean } = {}
     ) {
         const referenceToPackage = this.packageResolver
@@ -112,7 +113,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     ts.factory.createPropertyAccessChain(
                         acc,
                         includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
-                        this.getPackagePathKey(part)
+                        this.getPackagePathKey(part, context)
                     ),
                 ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
             );
@@ -120,17 +121,17 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         return ts.factory.createPropertyAccessChain(
             referenceToPackage,
             includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
-            this.getServiceKey(packageId)
+            this.getServiceKey(packageId, context)
         );
     }
 
-    private getServiceKey(packageId: PackageId) {
+    private getServiceKey(packageId: PackageId, context: ExpressContext): string {
         const subpackage = this.packageResolver.resolvePackage(packageId);
-        return subpackage.fernFilepath.file != null ? subpackage.fernFilepath.file.camelCase.unsafeName : "_root";
+        return subpackage.fernFilepath.file != null ? context.case.camelUnsafe(subpackage.fernFilepath.file) : "_root";
     }
 
-    private getPackagePathKey(part: FernIr.Name): string {
-        return part.camelCase.unsafeName;
+    private getPackagePathKey(part: FernIr.NameOrString, context: ExpressContext): string {
+        return context.case.camelUnsafe(part);
     }
 
     private constructLiteralTypeNodeForServicesTree(
@@ -161,7 +162,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 members.push(
                     ts.factory.createPropertySignature(
                         undefined,
-                        getPropertyKey(this.getPackagePathKey(otherChild.name)),
+                        getPropertyKey(this.getPackagePathKey(otherChild.name, context)),
                         this.areImplementationsOptional
                             ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                             : undefined,
@@ -181,22 +182,22 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private getPropertySignatureForService(packageId: PackageId, context: ExpressContext): ts.TypeElement {
         return ts.factory.createPropertySignature(
             undefined,
-            getPropertyKey(this.getServiceKey(packageId)),
+            getPropertyKey(this.getServiceKey(packageId, context)),
             this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
             context.expressService
                 .getReferenceToExpressService(packageId, {
-                    importAlias: this.getImportAliasForService(packageId)
+                    importAlias: this.getImportAliasForService(packageId, context)
                 })
                 .getTypeNode()
         );
     }
 
-    private getImportAliasForService(packageId: PackageId): string {
+    private getImportAliasForService(packageId: PackageId, context: ExpressContext): string {
         const package_ = this.packageResolver.resolvePackage(packageId);
         return [
-            ...package_.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
+            ...package_.fernFilepath.packagePath.map((part) => context.case.camelUnsafe(part)),
             package_.fernFilepath.file != null
-                ? `${package_.fernFilepath.file.pascalCase.unsafeName}Service`
+                ? `${context.case.pascalUnsafe(package_.fernFilepath.file)}Service`
                 : "RootService"
         ].join("_");
     }

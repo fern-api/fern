@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -119,8 +120,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         queryParameters.push(convertedParameter.parameter);
                         break;
                     case "header": {
-                        const headerName = convertedParameter.parameter.name.name.originalName;
-                        const headerWireValue = convertedParameter.parameter.name.wireValue;
+                        const headerName = getOriginalName(convertedParameter.parameter.name);
+                        const headerWireValue = getWireValue(convertedParameter.parameter.name);
 
                         let duplicateHeader = false;
                         const authSchemes = this.context.authOverrides?.["auth-schemes"];
@@ -162,7 +163,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected checkMissingPathParameters(pathParameters: PathParameter[]): void {
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
         const missingPathParams = pathParams.filter(
-            (param) => !pathParameters.some((p) => p.name.originalName === param)
+            (param) => !pathParameters.some((p) => getOriginalName(p.name) === param)
         );
         for (const param of missingPathParams) {
             if (param == null) {

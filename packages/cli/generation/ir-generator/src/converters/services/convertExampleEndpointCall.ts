@@ -18,9 +18,9 @@ import {
     ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    Name
+    NameOrString
 } from "@fern-api/ir-sdk";
-import { hashJSON } from "@fern-api/ir-utils";
+import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext.js";
@@ -161,7 +161,7 @@ function convertPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: Name;
+        name: NameOrString;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -650,7 +650,7 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

@@ -12,25 +12,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-          "camelCase": {
-            "unsafeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-            "safeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-          },
-          "snakeCase": {
-            "unsafeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id",
-            "safeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID",
-            "safeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID"
-          },
-          "pascalCase": {
-            "unsafeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-            "safeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-          }
-        }
+        "name": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId"
       },
       "shape": {
         "members": [
@@ -81,51 +63,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "link_bulk_trigger_historical_pull_Response_200",
-          "camelCase": {
-            "unsafeName": "linkBulkTriggerHistoricalPullResponse200",
-            "safeName": "linkBulkTriggerHistoricalPullResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "link_bulk_trigger_historical_pull_response_200",
-            "safeName": "link_bulk_trigger_historical_pull_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200",
-            "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "LinkBulkTriggerHistoricalPullResponse200",
-            "safeName": "LinkBulkTriggerHistoricalPullResponse200"
-          }
-        }
+        "name": "link_bulk_trigger_historical_pull_Response_200"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "success",
-                "camelCase": {
-                  "unsafeName": "success",
-                  "safeName": "success"
-                },
-                "snakeCase": {
-                  "unsafeName": "success",
-                  "safeName": "success"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SUCCESS",
-                  "safeName": "SUCCESS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Success",
-                  "safeName": "Success"
-                }
-              },
-              "wireValue": "success"
-            },
+            "name": "success",
             "valueType": {
               "container": {
                 "optional": {
@@ -171,46 +114,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "link",
-              "camelCase": {
-                "unsafeName": "link",
-                "safeName": "link"
-              },
-              "snakeCase": {
-                "unsafeName": "link",
-                "safeName": "link"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LINK",
-                "safeName": "LINK"
-              },
-              "pascalCase": {
-                "unsafeName": "Link",
-                "safeName": "Link"
-              }
-            }
+            "link"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "link",
-            "camelCase": {
-              "unsafeName": "link",
-              "safeName": "link"
-            },
-            "snakeCase": {
-              "unsafeName": "link",
-              "safeName": "link"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LINK",
-              "safeName": "LINK"
-            },
-            "pascalCase": {
-              "unsafeName": "Link",
-              "safeName": "Link"
-            }
-          }
+          "file": "link"
         }
       },
       "displayName": "link",
@@ -231,52 +138,13 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": {
-                "name": {
-                  "originalName": "team_id",
-                  "camelCase": {
-                    "unsafeName": "teamId",
-                    "safeName": "teamId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "team_id",
-                    "safeName": "team_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "TEAM_ID",
-                    "safeName": "TEAM_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "TeamId",
-                    "safeName": "TeamId"
-                  }
-                },
-                "wireValue": "team_id"
-              },
+              "name": "team_id",
               "valueType": {
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                  "camelCase": {
-                    "unsafeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                    "safeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id",
-                    "safeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID",
-                    "safeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                    "safeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-                  }
-                },
+                "name": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
                 "typeId": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
                 "inline": false,
                 "type": "named"
@@ -298,34 +166,13 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "352ed0c3",
+                "id": "f224480c",
                 "url": "/v2/link/bulk_trigger_historical_pull",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
                 "queryParameters": [
                   {
-                    "name": {
-                      "name": {
-                        "originalName": "team_id",
-                        "camelCase": {
-                          "unsafeName": "teamId",
-                          "safeName": "teamId"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "team_id",
-                          "safeName": "team_id"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TEAM_ID",
-                          "safeName": "TEAM_ID"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TeamId",
-                          "safeName": "TeamId"
-                        }
-                      },
-                      "wireValue": "team_id"
-                    },
+                    "name": "team_id",
                     "shape": {
                       "type": "single"
                     },
@@ -357,25 +204,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                            "camelCase": {
-                              "unsafeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                              "safeName": "v2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id",
-                              "safeName": "v_2_link_bulk_trigger_historical_pull_post_parameters_team_id"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID",
-                              "safeName": "V_2_LINK_BULK_TRIGGER_HISTORICAL_PULL_POST_PARAMETERS_TEAM_ID"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId",
-                              "safeName": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId"
-                            }
-                          }
+                          "name": "V2LinkBulkTriggerHistoricalPullPostParametersTeamId"
                         },
                         "type": "named"
                       }
@@ -389,28 +218,7 @@
                   "jsonExample": {},
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "ids",
-                          "camelCase": {
-                            "unsafeName": "ids",
-                            "safeName": "ids"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "ids",
-                            "safeName": "ids"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "IDS",
-                            "safeName": "IDS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Ids",
-                            "safeName": "Ids"
-                          }
-                        },
-                        "wireValue": "ids"
-                      },
+                      "name": "ids",
                       "value": {
                         "shape": {
                           "container": {
@@ -449,53 +257,14 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "success",
-                                  "camelCase": {
-                                    "unsafeName": "success",
-                                    "safeName": "success"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "success",
-                                    "safeName": "success"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "SUCCESS",
-                                    "safeName": "SUCCESS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Success",
-                                    "safeName": "Success"
-                                  }
-                                },
-                                "wireValue": "success"
-                              },
+                              "name": "success",
                               "originalTypeDeclaration": {
                                 "typeId": "link_bulk_trigger_historical_pull_Response_200",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "link_bulk_trigger_historical_pull_Response_200",
-                                  "camelCase": {
-                                    "unsafeName": "linkBulkTriggerHistoricalPullResponse200",
-                                    "safeName": "linkBulkTriggerHistoricalPullResponse200"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "link_bulk_trigger_historical_pull_response_200",
-                                    "safeName": "link_bulk_trigger_historical_pull_response_200"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200",
-                                    "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "LinkBulkTriggerHistoricalPullResponse200",
-                                    "safeName": "LinkBulkTriggerHistoricalPullResponse200"
-                                  }
-                                }
+                                "name": "link_bulk_trigger_historical_pull_Response_200"
                               },
                               "value": {
                                 "jsonExample": true,
@@ -535,25 +304,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "link_bulk_trigger_historical_pull_Response_200",
-                            "camelCase": {
-                              "unsafeName": "linkBulkTriggerHistoricalPullResponse200",
-                              "safeName": "linkBulkTriggerHistoricalPullResponse200"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "link_bulk_trigger_historical_pull_response_200",
-                              "safeName": "link_bulk_trigger_historical_pull_response_200"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200",
-                              "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "LinkBulkTriggerHistoricalPullResponse200",
-                              "safeName": "LinkBulkTriggerHistoricalPullResponse200"
-                            }
-                          }
+                          "name": "link_bulk_trigger_historical_pull_Response_200"
                         },
                         "type": "named"
                       }
@@ -576,72 +327,15 @@
           },
           "audiences": [],
           "id": "endpoint_link.bulk_trigger_historical_pull",
-          "name": {
-            "originalName": "bulk_trigger_historical_pull",
-            "camelCase": {
-              "unsafeName": "bulkTriggerHistoricalPull",
-              "safeName": "bulkTriggerHistoricalPull"
-            },
-            "snakeCase": {
-              "unsafeName": "bulk_trigger_historical_pull",
-              "safeName": "bulk_trigger_historical_pull"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL",
-              "safeName": "BULK_TRIGGER_HISTORICAL_PULL"
-            },
-            "pascalCase": {
-              "unsafeName": "BulkTriggerHistoricalPull",
-              "safeName": "BulkTriggerHistoricalPull"
-            }
-          },
+          "name": "bulk_trigger_historical_pull",
           "requestBody": {
             "contentType": "application/json",
-            "name": {
-              "originalName": "link_bulk_trigger_historical_pull_Request",
-              "camelCase": {
-                "unsafeName": "linkBulkTriggerHistoricalPullRequest",
-                "safeName": "linkBulkTriggerHistoricalPullRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "link_bulk_trigger_historical_pull_request",
-                "safeName": "link_bulk_trigger_historical_pull_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_REQUEST",
-                "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "LinkBulkTriggerHistoricalPullRequest",
-                "safeName": "LinkBulkTriggerHistoricalPullRequest"
-              }
-            },
+            "name": "link_bulk_trigger_historical_pull_Request",
             "extendedProperties": [],
             "extends": [],
             "properties": [
               {
-                "name": {
-                  "name": {
-                    "originalName": "ids",
-                    "camelCase": {
-                      "unsafeName": "ids",
-                      "safeName": "ids"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "ids",
-                      "safeName": "ids"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "IDS",
-                      "safeName": "IDS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Ids",
-                      "safeName": "Ids"
-                    }
-                  },
-                  "wireValue": "ids"
-                },
+                "name": "ids",
                 "valueType": {
                   "container": {
                     "optional": {
@@ -687,51 +381,12 @@
             "requestBodies": [
               {
                 "contentType": "application/json",
-                "name": {
-                  "originalName": "link_bulk_trigger_historical_pull_Request",
-                  "camelCase": {
-                    "unsafeName": "linkBulkTriggerHistoricalPullRequest",
-                    "safeName": "linkBulkTriggerHistoricalPullRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "link_bulk_trigger_historical_pull_request",
-                    "safeName": "link_bulk_trigger_historical_pull_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_REQUEST",
-                    "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LinkBulkTriggerHistoricalPullRequest",
-                    "safeName": "LinkBulkTriggerHistoricalPullRequest"
-                  }
-                },
+                "name": "link_bulk_trigger_historical_pull_Request",
                 "extendedProperties": [],
                 "extends": [],
                 "properties": [
                   {
-                    "name": {
-                      "name": {
-                        "originalName": "ids",
-                        "camelCase": {
-                          "unsafeName": "ids",
-                          "safeName": "ids"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "ids",
-                          "safeName": "ids"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "IDS",
-                          "safeName": "IDS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Ids",
-                          "safeName": "Ids"
-                        }
-                      },
-                      "wireValue": "ids"
-                    },
+                    "name": "ids",
                     "valueType": {
                       "container": {
                         "optional": {
@@ -784,25 +439,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "link_bulk_trigger_historical_pull_Response_200",
-                    "camelCase": {
-                      "unsafeName": "linkBulkTriggerHistoricalPullResponse200",
-                      "safeName": "linkBulkTriggerHistoricalPullResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "link_bulk_trigger_historical_pull_response_200",
-                      "safeName": "link_bulk_trigger_historical_pull_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200",
-                      "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "LinkBulkTriggerHistoricalPullResponse200",
-                      "safeName": "LinkBulkTriggerHistoricalPullResponse200"
-                    }
-                  },
+                  "name": "link_bulk_trigger_historical_pull_Response_200",
                   "typeId": "link_bulk_trigger_historical_pull_Response_200",
                   "inline": false,
                   "type": "named"
@@ -862,25 +499,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "link_bulk_trigger_historical_pull_Response_200",
-                        "camelCase": {
-                          "unsafeName": "linkBulkTriggerHistoricalPullResponse200",
-                          "safeName": "linkBulkTriggerHistoricalPullResponse200"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "link_bulk_trigger_historical_pull_response_200",
-                          "safeName": "link_bulk_trigger_historical_pull_response_200"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200",
-                          "safeName": "LINK_BULK_TRIGGER_HISTORICAL_PULL_RESPONSE_200"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "LinkBulkTriggerHistoricalPullResponse200",
-                          "safeName": "LinkBulkTriggerHistoricalPullResponse200"
-                        }
-                      },
+                      "name": "link_bulk_trigger_historical_pull_Response_200",
                       "typeId": "link_bulk_trigger_historical_pull_Response_200",
                       "inline": false,
                       "type": "named"
@@ -934,67 +553,13 @@
   },
   "subpackages": {
     "subpackage_link": {
-      "name": {
-        "originalName": "link",
-        "camelCase": {
-          "unsafeName": "link",
-          "safeName": "link"
-        },
-        "snakeCase": {
-          "unsafeName": "link",
-          "safeName": "link"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "LINK",
-          "safeName": "LINK"
-        },
-        "pascalCase": {
-          "unsafeName": "Link",
-          "safeName": "Link"
-        }
-      },
+      "name": "link",
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "link",
-            "camelCase": {
-              "unsafeName": "link",
-              "safeName": "link"
-            },
-            "snakeCase": {
-              "unsafeName": "link",
-              "safeName": "link"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LINK",
-              "safeName": "LINK"
-            },
-            "pascalCase": {
-              "unsafeName": "Link",
-              "safeName": "Link"
-            }
-          }
+          "link"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "link",
-          "camelCase": {
-            "unsafeName": "link",
-            "safeName": "link"
-          },
-          "snakeCase": {
-            "unsafeName": "link",
-            "safeName": "link"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LINK",
-            "safeName": "LINK"
-          },
-          "pascalCase": {
-            "unsafeName": "Link",
-            "safeName": "Link"
-          }
-        }
+        "file": "link"
       },
       "service": "service_link",
       "types": [],
@@ -1014,47 +579,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Test spec for anyOf with const query parameter",
-    "camelCase": {
-      "unsafeName": "testSpecForAnyOfWithConstQueryParameter",
-      "safeName": "testSpecForAnyOfWithConstQueryParameter"
-    },
-    "snakeCase": {
-      "unsafeName": "test_spec_for_any_of_with_const_query_parameter",
-      "safeName": "test_spec_for_any_of_with_const_query_parameter"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TEST_SPEC_FOR_ANY_OF_WITH_CONST_QUERY_PARAMETER",
-      "safeName": "TEST_SPEC_FOR_ANY_OF_WITH_CONST_QUERY_PARAMETER"
-    },
-    "pascalCase": {
-      "unsafeName": "TestSpecForAnyOfWithConstQueryParameter",
-      "safeName": "TestSpecForAnyOfWithConstQueryParameter"
-    }
-  },
+  "apiName": "Test spec for anyOf with const query parameter",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

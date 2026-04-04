@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: optional
-  version: ''
+  version: ""
 paths:
   /send-optional-body:
     post:
@@ -10,7 +10,7 @@ paths:
         - Optional
       parameters: []
       responses:
-        '200':
+        "200":
           description: Id of the created resource
           content:
             application/json:
@@ -31,7 +31,7 @@ paths:
         - Optional
       parameters: []
       responses:
-        '200':
+        "200":
           description: Id of the created resource
           content:
             application/json:
@@ -42,7 +42,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendOptionalBodyRequest'
+              $ref: "#/components/schemas/SendOptionalBodyRequest"
               nullable: true
   /deploy/{actionId}/versions/{id}:
     post:
@@ -66,18 +66,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeployResponse'
+                $ref: "#/components/schemas/DeployResponse"
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeployParams'
+              $ref: "#/components/schemas/DeployParams"
               nullable: true
 components:
   schemas:

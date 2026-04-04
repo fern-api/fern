@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-single-property-endpoint
-  version: ''
+  version: ""
 paths:
   /{id}:
     get:
@@ -21,8 +21,8 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:

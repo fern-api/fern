@@ -5,6 +5,7 @@
 from .resources import (
     Conversation,
     CursorPages,
+    ListUsersAliasedDataPaginationResponse,
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersMixedTypePaginationResponse,
@@ -24,6 +25,7 @@ from .resources import (
     SingleFilterSearchRequestOperator,
     StartingAfterPaging,
     User,
+    UserList,
     UserListContainer,
     UserOptionalListContainer,
     UserOptionalListPage,
@@ -41,6 +43,7 @@ from .username_page import UsernamePage
 __all__ = [
     "Conversation",
     "CursorPages",
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
@@ -60,6 +63,7 @@ __all__ = [
     "SingleFilterSearchRequestOperator",
     "StartingAfterPaging",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",

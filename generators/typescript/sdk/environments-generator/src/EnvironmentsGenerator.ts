@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
@@ -11,6 +12,7 @@ export declare namespace EnvironmentsGenerator {
             environmentsConfig: FernIr.EnvironmentsConfig | undefined;
             environmentEnumName: string;
             environmentUrlsTypeName: string;
+            caseConverter: CaseConverter;
         }
     }
 }
@@ -19,7 +21,8 @@ export class EnvironmentsGenerator {
     public generateEnvironments({
         environmentEnumName,
         environmentUrlsTypeName,
-        environmentsConfig
+        environmentsConfig,
+        caseConverter
     }: EnvironmentsGenerator.generateEnvironments.Args): GeneratedEnvironments {
         if (
             environmentsConfig == null ||
@@ -50,7 +53,8 @@ export class EnvironmentsGenerator {
                     environments: multipleBaseUrlEnvironments,
                     environmentEnumName,
                     environmentUrlsTypeName,
-                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                    caseConverter
                 }),
             _other: () => {
                 throw new Error("Unknown environments: " + environmentsConfig.environments.type);

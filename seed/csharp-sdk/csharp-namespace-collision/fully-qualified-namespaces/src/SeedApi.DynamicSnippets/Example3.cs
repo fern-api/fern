@@ -1,4 +1,5 @@
 using SeedCsharpNamespaceCollision;
+using SeedCsharpNamespaceCollision.ScimConfiguration;
 
 namespace Usage;
 
@@ -11,25 +12,16 @@ public class Example3
             }
         );
 
-        await client.System.CreateTaskAsync(
-            new SeedCsharpNamespaceCollision.System.Task {
-                Name = "name",
-                User = new SeedCsharpNamespaceCollision.System.User {
-                    Line1 = "line1",
-                    Line2 = "line2",
-                    City = "city",
-                    State = "state",
-                    Zip = "zip",
-                    Country = "USA"
-                },
-                Owner = new SeedCsharpNamespaceCollision.System.User {
-                    Line1 = "line1",
-                    Line2 = "line2",
-                    City = "city",
-                    State = "state",
-                    Zip = "zip",
-                    Country = "USA"
+        await client.ScimConfiguration.CreateTokenAsync(
+            new ScimToken {
+                TokenId = "tokenId",
+                Token = "token",
+                Scopes = new List<string>(){
+                    "scopes",
+                    "scopes",
                 }
+                ,
+                CreatedAt = "createdAt"
             }
         );
     }

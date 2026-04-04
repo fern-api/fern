@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: java-custom-package-prefix
-  version: ''
+  version: ""
 paths:
   /movies/create-movie:
     post:
@@ -11,18 +11,18 @@ paths:
         - Imdb
       parameters: []
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovieId'
+                $ref: "#/components/schemas/MovieId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateMovieRequest'
+              $ref: "#/components/schemas/CreateMovieRequest"
   /movies/{movieId}:
     get:
       operationId: imdb_getMovie
@@ -33,20 +33,20 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '#/components/schemas/MovieId'
+            $ref: "#/components/schemas/MovieId"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
-        '404':
-          description: ''
+                $ref: "#/components/schemas/Movie"
+        "404":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovieId'
+                $ref: "#/components/schemas/MovieId"
 components:
   schemas:
     MovieId:
@@ -57,7 +57,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/MovieId'
+          $ref: "#/components/schemas/MovieId"
         title:
           type: string
         rating:

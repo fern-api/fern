@@ -80,12 +80,12 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
                         availability,
-                        explode: this.getExplodeForQueryParameter(),
-                        clientDefault: undefined
+                        explode: this.getExplodeForQueryParameter()
                     },
                     inlinedTypes
                 };
@@ -100,11 +100,11 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        availability,
-                        clientDefault: undefined
+                        availability
                     },
                     inlinedTypes
                 };
@@ -117,11 +117,11 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        explode: this.getExplodeForPathParameter(),
-                        clientDefault: undefined
+                        explode: this.getExplodeForPathParameter()
                     },
                     inlinedTypes
                 };

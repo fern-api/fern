@@ -6,6 +6,7 @@ import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
+import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -19,6 +20,7 @@ import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest
 import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
+import com.seed.pagination.resources.users.types.ListUsersAliasedDataPaginationResponse;
 import com.seed.pagination.resources.users.types.Order;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.WithCursor;
@@ -448,6 +450,29 @@ public class UsersWireTest {
         SyncPagingIterable<User> response = client.users()
                 .listWithOptionalData(
                         ListUsersOptionalDataRequest.builder().page(1).build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    @Test
+    public void testListWithAliasedData() throws Exception {
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
+        ListUsersAliasedDataPaginationResponse response = client.users()
+                .listWithAliasedData(ListUsersAliasedDataRequest.builder()
+                        .page(1)
+                        .perPage(1)
+                        .startingAfter("starting_after")
+                        .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

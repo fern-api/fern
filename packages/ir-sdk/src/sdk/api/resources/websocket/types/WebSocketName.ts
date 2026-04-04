@@ -2,4 +2,4 @@
 
 import type * as FernIr from "../../../index.js";
 
-export type WebSocketName = FernIr.Name;
+export type WebSocketName = FernIr.NameOrString;

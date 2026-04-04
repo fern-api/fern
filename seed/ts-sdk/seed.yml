@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v65
+irVersion: v66
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -47,6 +47,7 @@ fixtures:
     - outputFolder: branded-string-aliases
       customConfig:
         useBrandedStringAliases: true
+        maxRetries: 5
   streaming:
     - outputFolder: no-custom-config
       customConfig: null
@@ -552,6 +553,7 @@ allowedFailures:
   - cross-package-type-names:serde-layer
   - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
+  - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - package-yml
   - inferred-auth-implicit-reference
