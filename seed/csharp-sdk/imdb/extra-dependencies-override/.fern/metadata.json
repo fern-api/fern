@@ -4,7 +4,7 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "extra-dependencies": {
-      "OneOf": "3.0.263"
+      "PolySharp": "1.14.0"
     }
   },
   "originGitCommit": "DUMMY",
