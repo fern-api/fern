@@ -1,4 +1,3 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -9,8 +8,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { SubClientGenerator } from "./SubClientGenerator.js";
 import { WebSocketChannelGenerator } from "./WebSocketChannelGenerator.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
@@ -32,7 +29,7 @@ export class RootClientGenerator {
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.package = context.ir.rootPackage;
-        this.projectName = caseConverter.pascalSafe(context.ir.apiName);
+        this.projectName = this.context.case.pascalSafe(context.ir.apiName);
         this.environmentGenerator = new EnvironmentGenerator({ context });
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: this.package,
@@ -86,7 +83,7 @@ export class RootClientGenerator {
             moduleDoc.push("");
             const seenDocNames = new Set<string>();
             subpackages.forEach((subpackage) => {
-                const name = caseConverter.pascalSafe(subpackage.name);
+                const name = this.context.case.pascalSafe(subpackage.name);
                 const displayName = subpackage.displayName ?? name;
 
                 // Try to get service docs if the subpackage has a service
@@ -166,14 +163,14 @@ export class RootClientGenerator {
         const seen = new Set<string>();
         return subpackages
             .filter((subpackage) => {
-                const moduleName = caseConverter.snakeSafe(subpackage.name);
+                const moduleName = this.context.case.snakeSafe(subpackage.name);
                 if (seen.has(moduleName)) {
                     return false;
                 }
                 seen.add(moduleName);
                 return true;
             })
-            .map((subpackage) => `pub mod ${caseConverter.snakeSafe(subpackage.name)};`)
+            .map((subpackage) => `pub mod ${this.context.case.snakeSafe(subpackage.name)};`)
             .join("\n");
     }
 
@@ -184,7 +181,7 @@ export class RootClientGenerator {
         return subpackages
             .filter((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                const reExport = `${caseConverter.snakeSafe(subpackage.name)}::${clientName}`;
+                const reExport = `${this.context.case.snakeSafe(subpackage.name)}::${clientName}`;
                 if (seen.has(reExport)) {
                     return false;
                 }
@@ -193,7 +190,7 @@ export class RootClientGenerator {
             })
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                return `pub use ${caseConverter.snakeSafe(subpackage.name)}::${clientName};`;
+                return `pub use ${this.context.case.snakeSafe(subpackage.name)}::${clientName};`;
             })
             .join("\n");
     }

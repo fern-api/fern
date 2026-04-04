@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -9,7 +9,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 interface EndpointParameter {
     name: string;
@@ -160,7 +159,7 @@ export class SubClientGenerator {
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const serviceName = this.subpackage.displayName ?? caseConverter.pascalSafe(this.subpackage.name);
+        const serviceName = this.subpackage.displayName ?? this.context.case.pascalSafe(this.subpackage.name);
         moduleDoc.push(`${serviceName} service client`);
         moduleDoc.push("");
 
@@ -178,7 +177,7 @@ export class SubClientGenerator {
                 service.endpoints.slice(0, 10).forEach((endpoint) => {
                     const method = endpoint.method.toUpperCase();
                     const path = endpoint.path.head;
-                    const name = caseConverter.pascalSafe(endpoint.name);
+                    const name = this.context.case.pascalSafe(endpoint.name);
                     moduleDoc.push(`- \`${method} ${path}\` - ${name}`);
                 });
                 if (service.endpoints.length > 10) {
@@ -962,7 +961,7 @@ export class SubClientGenerator {
         }
 
         return {
-            name: caseConverter.snakeSafe(endpoint.name),
+            name: this.context.case.snakeSafe(endpoint.name),
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
@@ -1044,7 +1043,7 @@ export class SubClientGenerator {
 
     private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name));
+            const paramName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
             params.push({
                 name: paramName,
                 type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
@@ -1059,7 +1058,7 @@ export class SubClientGenerator {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
-                    const paramName = this.context.escapeRustKeyword(caseConverter.snakeSafe(pathParam.name));
+                    const paramName = this.context.escapeRustKeyword(this.context.case.snakeSafe(pathParam.name));
                     params.push({
                         name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
@@ -1134,11 +1133,11 @@ export class SubClientGenerator {
         // For inlined request bodies, use the name from the IR to ensure consistency
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             const inlinedRequestBody = endpoint.requestBody as FernIr.HttpRequestBody.InlinedRequestBody;
-            return caseConverter.pascalSafe(inlinedRequestBody.name);
+            return this.context.case.pascalSafe(inlinedRequestBody.name);
         }
 
         // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
-        const methodName = caseConverter.pascalSafe(endpoint.name);
+        const methodName = this.context.case.pascalSafe(endpoint.name);
         return `${methodName}Request`;
     }
 
@@ -1400,7 +1399,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
-        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(queryParam.name));
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
 
         if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
@@ -1521,7 +1520,7 @@ export class SubClientGenerator {
                 const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
-                    const escapedName = this.context.escapeRustKeyword(caseConverter.snakeSafe(pathParam.name));
+                    const escapedName = this.context.escapeRustKeyword(this.context.case.snakeSafe(pathParam.name));
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
                         escapedName
@@ -1879,7 +1878,7 @@ export class SubClientGenerator {
 
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
-        const baseName = caseConverter.snakeSafe(endpoint.name);
+        const baseName = this.context.case.snakeSafe(endpoint.name);
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -2329,7 +2328,7 @@ export class SubClientGenerator {
         endpoint.allPathParameters.forEach((pathParam) => {
             if (pathParam.docs) {
                 paramDocs.push({
-                    name: caseConverter.snakeSafe(pathParam.name),
+                    name: this.context.case.snakeSafe(pathParam.name),
                     description: pathParam.docs
                 });
             }
@@ -2339,7 +2338,7 @@ export class SubClientGenerator {
         endpoint.queryParameters.forEach((queryParam) => {
             if (queryParam.docs) {
                 paramDocs.push({
-                    name: caseConverter.snakeSafe(queryParam.name),
+                    name: this.context.case.snakeSafe(queryParam.name),
                     description: queryParam.docs
                 });
             }

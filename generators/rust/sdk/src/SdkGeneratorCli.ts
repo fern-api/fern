@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, CaseConverter } from "@fern-api/base-generator";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -31,8 +31,6 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 const execAsync = promisify(exec);
 
@@ -199,7 +197,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         context.logger.debug(
-            `Starting SDK generation for ${caseConverter.pascalSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+            `Starting SDK generation for ${context.case.pascalSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
         );
 
         const projectFiles = await this.generateProjectFiles(context);
@@ -386,7 +384,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Build module documentation
         const moduleDoc: string[] = [];
         const apiNameRaw = context.ir.apiName;
-        const apiName = context.ir.apiDisplayName ?? (apiNameRaw != null ? caseConverter.pascalSafe(apiNameRaw) : null) ?? "API";
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw != null ? context.case.pascalSafe(apiNameRaw) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         moduleDoc.push(`API client and types for the ${apiName}`);
@@ -527,7 +525,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Build module documentation
         const moduleDoc: string[] = [];
         const apiNameRaw2 = context.ir.apiName;
-        const apiName = context.ir.apiDisplayName ?? (apiNameRaw2 != null ? caseConverter.pascalSafe(apiNameRaw2) : null) ?? "API";
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw2 != null ? context.case.pascalSafe(apiNameRaw2) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         // Add main title
@@ -586,7 +584,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add all sub-clients
         subpackages.forEach((subpackage) => {
-            const subClientName = `${caseConverter.pascalSafe(subpackage.name)}Client`;
+            const subClientName = `${context.case.pascalSafe(subpackage.name)}Client`;
             clientExports.push(subClientName);
         });
 

@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -17,8 +17,6 @@ import {
     generateFieldAttributes,
     generateFieldType
 } from "../utils/structUtils.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 export class StructGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
@@ -168,7 +166,7 @@ export class StructGenerator {
         // When struct is transparent, skip field-level serde attributes (rename, default, etc.)
         // as they are incompatible with #[serde(transparent)]
         const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(caseConverter.snakeUnsafe(property.name));
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
 
         return rust.field({
             name: fieldName,
@@ -211,7 +209,7 @@ export class StructGenerator {
 
             fields.push(
                 rust.field({
-                    name: `${caseConverter.snakeUnsafe(parentType.name)}_fields`,
+                    name: `${this.context.case.snakeUnsafe(parentType.name)}_fields`,
                     type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                     visibility: PUBLIC,
                     attributes: [Attribute.serde.flatten()]
