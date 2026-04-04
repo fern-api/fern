@@ -1,6 +1,9 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { copyFile, rm } from "fs/promises";
 
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+
+const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
 
 /**
  * Executes generators natively on the host system using provided commands.
@@ -31,12 +34,27 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         outputPath,
         snippetPath,
         snippetTemplatePath,
+        licenseFilePath,
         context,
         inspect
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(
             `Executing generator ${generatorName} natively with commands: ${this.commands.join(" && ")}`
         );
+
+        // Copy license file to /tmp/LICENSE to match the Docker mount path that generators expect
+        let copiedLicense = false;
+        if (licenseFilePath != null) {
+            try {
+                await copyFile(licenseFilePath, LICENSE_MOUNT_PATH);
+                copiedLicense = true;
+                context.logger.debug(`Copied license file from ${licenseFilePath} to ${LICENSE_MOUNT_PATH}`);
+            } catch (e) {
+                context.logger.warn(
+                    `Failed to copy license file from ${licenseFilePath} to ${LICENSE_MOUNT_PATH}: ${e}`
+                );
+            }
+        }
 
         for (const command of this.commands) {
             const processedCommand = command
@@ -90,6 +108,15 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
 
             if (result.failed) {
                 throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);
+            }
+        }
+
+        // Clean up the copied license file
+        if (copiedLicense) {
+            try {
+                await rm(LICENSE_MOUNT_PATH, { force: true });
+            } catch {
+                // Best-effort cleanup
             }
         }
 
