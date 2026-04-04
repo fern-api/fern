@@ -929,9 +929,13 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         const result: string[] = [];
         // PolySharp always needs <IncludeAssets> and <PrivateAssets> metadata,
         // even when the user overrides the version via extra-dependencies.
-        const polySharpVersion = extraDepNames.has("polysharp")
-            ? extraDeps[Object.keys(extraDeps).find((n) => n.toLowerCase() === "polysharp")!]!
-            : "1.15.0";
+        let polySharpVersion = "1.15.0";
+        for (const [name, version] of Object.entries(extraDeps)) {
+            if (name.toLowerCase() === "polysharp") {
+                polySharpVersion = version;
+                break;
+            }
+        }
         result.push(`<PackageReference Include="PolySharp" Version="${polySharpVersion}">`);
         result.push(
             `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
