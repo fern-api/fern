@@ -4,7 +4,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { Eta } from "eta";
 import { createWriteStream, existsSync } from "fs";
-import { chmod, mkdir, readFile, writeFile } from "fs/promises";
+import { chmod, mkdir, readFile, rename, unlink, writeFile } from "fs/promises";
+import type { IncomingMessage } from "http";
 import https from "https";
 import { cloneDeep, isArray, mergeWith } from "lodash-es";
 import os from "os";
@@ -33,7 +34,7 @@ const PHP_CS_FIXER_DOWNLOAD_URL = `https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/
 
 let resolvedPhpCsFixerPath: string | undefined;
 
-async function resolvePhpCsFixer(): Promise<{ command: string; args: string[] }> {
+async function resolvePhpCsFixer(logger?: { debug: (msg: string) => void }): Promise<{ command: string; args: string[] }> {
     if (resolvedPhpCsFixerPath != null) {
         if (resolvedPhpCsFixerPath === "php-cs-fixer") {
             return { command: "php-cs-fixer", args: [] };
@@ -51,8 +52,8 @@ async function resolvePhpCsFixer(): Promise<{ command: string; args: string[] }>
             resolvedPhpCsFixerPath = "php-cs-fixer";
             return { command: "php-cs-fixer", args: [] };
         }
-    } catch {
-        // Not on PATH, fall through to download
+    } catch (error) {
+        logger?.debug(`php-cs-fixer not found on PATH, falling back to download: ${error}`);
     }
 
     // Download the phar to a cache directory
@@ -61,39 +62,46 @@ async function resolvePhpCsFixer(): Promise<{ command: string; args: string[] }>
 
     if (!existsSync(pharPath)) {
         await mkdir(cacheDir, { recursive: true });
-        await downloadFile(PHP_CS_FIXER_DOWNLOAD_URL, pharPath);
-        await chmod(pharPath, 0o755);
+        const tmpPath = pharPath + ".tmp";
+        try {
+            await downloadFile(PHP_CS_FIXER_DOWNLOAD_URL, tmpPath);
+            await chmod(tmpPath, 0o755);
+            await rename(tmpPath, pharPath);
+        } catch (error) {
+            // Clean up partial download so next attempt re-downloads
+            await unlink(tmpPath).catch(() => {});
+            throw error;
+        }
     }
 
     resolvedPhpCsFixerPath = pharPath;
     return { command: "php", args: [pharPath] };
 }
 
-function downloadFile(url: string, destPath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const makeRequest = (requestUrl: string) => {
-            https
-                .get(requestUrl, (response) => {
-                    if (
-                        response.statusCode != null &&
-                        response.statusCode >= 300 &&
-                        response.statusCode < 400 &&
-                        response.headers.location
-                    ) {
-                        makeRequest(response.headers.location);
-                        return;
-                    }
-                    if (response.statusCode != null && response.statusCode !== 200) {
-                        reject(new Error(`Failed to download ${requestUrl}: HTTP ${response.statusCode}`));
-                        return;
-                    }
-                    const fileStream = createWriteStream(destPath);
-                    pipeline(response, fileStream).then(resolve).catch(reject);
-                })
-                .on("error", reject);
-        };
-        makeRequest(url);
-    });
+async function downloadFile(url: string, destPath: string): Promise<void> {
+    let requestUrl = url;
+    for (;;) {
+        const response = await new Promise<IncomingMessage>((resolve, reject) => {
+            https.get(requestUrl, resolve).on("error", reject);
+        });
+        if (
+            response.statusCode != null &&
+            response.statusCode >= 300 &&
+            response.statusCode < 400 &&
+            response.headers.location
+        ) {
+            response.resume();
+            requestUrl = response.headers.location;
+            continue;
+        }
+        if (response.statusCode != null && response.statusCode !== 200) {
+            response.resume();
+            throw new Error(`Failed to download ${requestUrl}: HTTP ${response.statusCode}`);
+        }
+        const fileStream = createWriteStream(destPath);
+        await pipeline(response, fileStream);
+        return;
+    }
 }
 
 /**
@@ -300,7 +308,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.mkdir(absolutePathToDirectory);
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
-            const { command, args } = await resolvePhpCsFixer();
+            const { command, args } = await resolvePhpCsFixer(this.context.logger);
             await loggingExeca(this.context.logger, command, [...args, "fix", ".", "--no-interaction"], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToDirectory
