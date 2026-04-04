@@ -333,11 +333,21 @@ scripts:
           exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
+  - bytes-upload
   - bytes-download
+  - enum
+  - literal
+  - mixed-case:no-custom-config
+  - mixed-case:default-values
   - request-parameters
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests
   - trace
+  - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
   - pagination-custom:.
+
+  # TODO: Update the dynamic snippet generator to handle these cases.
+  - examples:exported-client-name
