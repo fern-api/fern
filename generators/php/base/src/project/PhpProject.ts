@@ -83,8 +83,12 @@ async function resolvePhpCsFixer(logger?: {
 }
 
 async function downloadFile(url: string, destPath: string): Promise<void> {
+    const MAX_REDIRECTS = 10;
     let requestUrl = url;
-    for (;;) {
+    for (let redirectCount = 0; ; redirectCount++) {
+        if (redirectCount > MAX_REDIRECTS) {
+            throw new Error(`Too many redirects (>${MAX_REDIRECTS}) while downloading ${url}`);
+        }
         const response = await new Promise<IncomingMessage>((resolve, reject) => {
             https.get(requestUrl, resolve).on("error", reject);
         });
