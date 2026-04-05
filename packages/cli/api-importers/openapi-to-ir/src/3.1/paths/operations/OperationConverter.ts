@@ -722,6 +722,11 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const result: Record<string, FernIr.V2HttpEndpointExample> = {};
         for (const [, mediaType] of Object.entries(resolvedRequestBody.content)) {
+            // Only synthesize for schemaless media types. Media types WITH schemas
+            // already have their examples handled by the normal schema-based pipeline.
+            if (mediaType.schema != null) {
+                continue;
+            }
             const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
                 mediaTypeObject: mediaType,
                 breadcrumbs: [...this.breadcrumbs, "requestBody"],
