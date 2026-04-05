@@ -135,6 +135,22 @@ export class OperationConverter extends AbstractOperationConverter {
             baseUrl
         });
 
+        // When there are no x-fern-examples but the request body has native OpenAPI
+        // examples (e.g. mediaType.example/examples without a schema), synthesize
+        // endpoint-level v2Examples so docs/code snippets can render the request body.
+        if (Object.keys(fernExamples.examples).length === 0 && Object.keys(fernExamples.streamExamples).length === 0) {
+            const nativeExamples = this.synthesizeEndpointExamplesFromNativeRequestBody({
+                httpPath: path,
+                httpMethod,
+                baseUrl
+            });
+            if (nativeExamples != null) {
+                for (const [name, example] of Object.entries(nativeExamples)) {
+                    fernExamples.examples[name] = example;
+                }
+            }
+        }
+
         const endpointLevelSecuritySchemes = new Set<string>(
             this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
@@ -674,6 +690,70 @@ export class OperationConverter extends AbstractOperationConverter {
             examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
             streamExamples: {}
         };
+    }
+
+    /**
+     * Synthesizes endpoint-level v2Examples from native OpenAPI request body
+     * examples (mediaType.example / mediaType.examples) when no x-fern-examples
+     * or x-code-samples extensions are present.
+     *
+     * This ensures that specs like Close's, which have native examples on
+     * schemaless request bodies, get rendered in docs and code snippets.
+     */
+    private synthesizeEndpointExamplesFromNativeRequestBody({
+        httpPath,
+        httpMethod,
+        baseUrl
+    }: {
+        httpPath: HttpPath;
+        httpMethod: FernIr.HttpMethod;
+        baseUrl: string | undefined;
+    }): Record<string, FernIr.V2HttpEndpointExample> | undefined {
+        if (this.operation.requestBody == null) {
+            return undefined;
+        }
+        const resolvedRequestBody = this.context.resolveMaybeReference<OpenAPIV3_1.RequestBodyObject>({
+            schemaOrReference: this.operation.requestBody,
+            breadcrumbs: [...this.breadcrumbs, "requestBody"]
+        });
+        if (resolvedRequestBody == null) {
+            return undefined;
+        }
+
+        const result: Record<string, FernIr.V2HttpEndpointExample> = {};
+        for (const [, mediaType] of Object.entries(resolvedRequestBody.content)) {
+            const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+                mediaTypeObject: mediaType,
+                breadcrumbs: [...this.breadcrumbs, "requestBody"],
+                defaultExampleName: "Example"
+            });
+            for (const [name, example] of namedExamples) {
+                const resolvedValue = this.context.resolveExampleWithValue(example);
+                if (resolvedValue != null) {
+                    result[name] = {
+                        displayName: undefined,
+                        request: {
+                            docs: undefined,
+                            endpoint: {
+                                method: httpMethod,
+                                path: this.buildExamplePath(httpPath, {})
+                            },
+                            baseUrl: undefined,
+                            environment: baseUrl,
+                            auth: undefined,
+                            pathParameters: {},
+                            queryParameters: {},
+                            headers: {},
+                            requestBody: resolvedValue
+                        },
+                        response: undefined,
+                        codeSamples: undefined
+                    };
+                }
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
     }
 
     private convertStreamConditionExamples({
