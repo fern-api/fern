@@ -35,7 +35,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload,
     cliVersion,
     ciSource,
-    requireEnvVars,
     deployerAuthor
 }: {
     organization: string;
@@ -51,7 +50,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload: boolean | undefined;
     cliVersion?: string;
     ciSource?: CISource;
-    requireEnvVars?: boolean;
     deployerAuthor?: { username?: string; email?: string };
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
@@ -67,13 +65,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.substituteEnvVars;
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
-        {
-            onError: (e) => {
-                if (requireEnvVars ?? true) {
-                    context.failAndThrow(e);
-                }
-            }
-        },
+        // Wrap in a closure for correct binding of `this` downstream
+        { onError: (e) => context.failAndThrow(e) },
         { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
 

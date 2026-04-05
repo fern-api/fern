@@ -56,13 +56,11 @@ export class LegacyDocsPublisher {
     public async publish({
         instanceUrl,
         preview,
-        skipUpload,
-        requireEnvVars
+        skipUpload
     }: {
         instanceUrl: string;
         preview: boolean;
         skipUpload?: boolean;
-        requireEnvVars?: boolean;
     }): Promise<LegacyDocsPublisher.PublishResult> {
         const taskContext = new TaskContextAdapter({ context: this.context, task: this.task });
         try {
@@ -78,8 +76,7 @@ export class LegacyDocsPublisher {
                 previewId: undefined,
                 disableTemplates: undefined,
                 skipUpload,
-                cliVersion: process.env.CLI_VERSION,
-                requireEnvVars
+                cliVersion: process.env.CLI_VERSION
             });
 
             if (taskContext.getResult() === TaskResult.Failure) {

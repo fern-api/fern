@@ -1,16 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.58.0
-  changelogEntry:
-    - summary: |
-        Add `--require-env-vars` flag to CLI v2 `sdk generate`, `sdk preview`,
-        `docs publish`, and `docs preview` commands. When set (the default),
-        undefined environment variables cause an error. Use
-        `--no-require-env-vars` to substitute empty strings for missing
-        variables instead.
-      type: feat
-  createdAt: "2026-04-02"
-  irVersion: 66
-
 - version: 4.57.0
   changelogEntry:
     - summary: |

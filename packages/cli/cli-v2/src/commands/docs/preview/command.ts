@@ -12,9 +12,6 @@ export declare namespace PreviewCommand {
         instance?: string;
         strict: boolean;
         "skip-upload": boolean;
-
-        /** Require all referenced environment variables to be defined */
-        "require-env-vars": boolean;
     }
 }
 
@@ -60,12 +57,6 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Skip uploading assets during preview generation"
-                })
-                .option("require-env-vars", {
-                    type: "boolean",
-                    default: true,
-                    description:
-                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 }),
         [addDeleteCommand]
     );
