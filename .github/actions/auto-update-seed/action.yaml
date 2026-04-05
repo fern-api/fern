@@ -5,7 +5,7 @@ description: Run seed and then automatically create and merge PR with changes
 # However, we don't need to validate git diff since we are always updating the seed
 inputs:
   generator-name:
-    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    description: Generator to use (e.g., go-sdk)
     required: true
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
@@ -71,7 +71,7 @@ runs:
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

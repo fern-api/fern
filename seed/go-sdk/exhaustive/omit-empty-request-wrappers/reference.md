@@ -1500,6 +1500,104 @@ client.Endpoints.Object.GetAndReturnWithUnknownField(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(request) -> *types.ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithDocumentedUnknownType{
+        DocumentedUnknownType: map[string]any{
+            "key": "value",
+        },
+    }
+client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(request) -> types.MapOfDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]types.DocumentedUnknownType{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
+client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `types.MapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
@@ -2203,6 +2301,64 @@ client.Endpoints.Params.UploadWithPath(
         context.TODO(),
         "upload-path",
         request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.GetWithPathAndErrors(Param) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.GetWithPath(
+        context.TODO(),
+        "param",
     )
 }
 ```

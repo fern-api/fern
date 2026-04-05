@@ -4,6 +4,7 @@ using SeedCsharpNamespaceCollision.Test.Utils;
 namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]

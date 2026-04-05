@@ -5,6 +5,7 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,7 +47,7 @@ public final class SearchResourcesRequest {
     /**
      * @return Maximum results to return
      */
-    @JsonProperty("limit")
+    @JsonIgnore
     public Optional<Integer> getLimit() {
         return limit;
     }
@@ -54,7 +55,7 @@ public final class SearchResourcesRequest {
     /**
      * @return Offset for pagination
      */
-    @JsonProperty("offset")
+    @JsonIgnore
     public Optional<Integer> getOffset() {
         return offset;
     }

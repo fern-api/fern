@@ -4,11 +4,12 @@ package basicauth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/basic-auth-environment-variables/fern"
 	core "github.com/basic-auth-environment-variables/fern/core"
 	internal "github.com/basic-auth-environment-variables/fern/internal"
 	option "github.com/basic-auth-environment-variables/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

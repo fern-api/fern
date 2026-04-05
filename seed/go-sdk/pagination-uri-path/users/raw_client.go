@@ -4,11 +4,12 @@ package users
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/pagination-uri-path/fern"
 	core "github.com/pagination-uri-path/fern/core"
 	internal "github.com/pagination-uri-path/fern/internal"
 	option "github.com/pagination-uri-path/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

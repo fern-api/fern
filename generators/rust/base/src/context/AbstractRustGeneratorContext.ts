@@ -19,6 +19,8 @@ export abstract class AbstractRustGeneratorContext<
     public readonly project: RustProject;
     public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
+    private readonly irUsesTypeCache = new Map<string, boolean>();
+    private readonly featureCache = new Map<string, boolean>();
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -75,16 +77,31 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
-        this.dependencyManager.add("percent-encoding", "2.3");
-        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
-        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
 
-        // Always include chrono and uuid for QueryBuilder support
-        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
-        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        // Conditionally include ordered-float only when floating-point sets are used
+        if (this.usesOrderedFloat()) {
+            this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        }
 
-        // Add base64 for encoding/decoding base64 fields in JSON
-        this.dependencyManager.add("base64", "0.22");
+        // Conditionally include num-bigint only when big integer types are used
+        if (this.usesBigInteger()) {
+            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include chrono only when datetime/date types are used
+        if (this.usesDateTime()) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include uuid only when UUID types are used
+        if (this.usesUuid()) {
+            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        }
+
+        // Conditionally include base64 only when base64 types are used
+        if (this.usesBase64()) {
+            this.dependencyManager.add("base64", "0.22");
+        }
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
 
@@ -130,8 +147,9 @@ export abstract class AbstractRustGeneratorContext<
         if (hasWebSocket) {
             this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
             this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
+            this.dependencyManager.add("rand", { version: "0.9", optional: true });
 
-            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding"]);
+            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding", "rand"]);
             autoDetectedDefaults.push("websocket");
         }
 
@@ -158,10 +176,31 @@ export abstract class AbstractRustGeneratorContext<
         }
     }
 
+    private cachedFeature(key: string, compute: () => boolean): boolean {
+        const cached = this.featureCache.get(key);
+        if (cached !== undefined) {
+            return cached;
+        }
+        const result = compute();
+        this.featureCache.set(key, result);
+        return result;
+    }
+
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
+        const cached = this.irUsesTypeCache.get(typeName);
+        if (cached !== undefined) {
+            return cached;
+        }
+
+        const result = this.computeIrUsesType(typeName);
+        this.irUsesTypeCache.set(typeName, result);
+        return result;
+    }
+
+    private computeIrUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -183,6 +222,19 @@ export abstract class AbstractRustGeneratorContext<
                     } else if (endpoint.requestBody.type === "reference") {
                         if (this.typeReferenceUsesBuiltin(endpoint.requestBody.requestBodyType, typeName, visited)) {
                             return true;
+                        }
+                    } else if (endpoint.requestBody.type === "fileUpload") {
+                        // File upload properties are implicitly base64-encoded bytes
+                        if (typeName === "BASE_64") {
+                            return true;
+                        }
+                        // Also check body properties within file upload requests
+                        for (const property of endpoint.requestBody.properties) {
+                            if (property.type === "bodyProperty") {
+                                if (this.typeReferenceUsesBuiltin(property.valueType, typeName, visited)) {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
@@ -353,6 +405,117 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR uses base64 types
+     */
+    public usesBase64(): boolean {
+        return this.irUsesType("BASE_64");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double)
+     */
+    public usesFloatingPoint(): boolean {
+        return this.irUsesType("FLOAT") || this.irUsesType("DOUBLE");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double) in sets,
+     * which requires ordered-float for Hash/Ord implementations.
+     */
+    public usesOrderedFloat(): boolean {
+        return this.cachedFeature("usesOrderedFloat", () => {
+            for (const typeDecl of Object.values(this.ir.types)) {
+                if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Check if a type shape uses floating point types inside sets
+     * (which requires OrderedFloat for Hash/Ord)
+     */
+    private typeShapeUsesOrderedFloat(shape: FernIr.Type): boolean {
+        return shape._visit({
+            alias: (alias: FernIr.AliasTypeDeclaration) =>
+                this.typeReferenceUsesOrderedFloat(alias.aliasOf),
+            enum: () => false,
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesOrderedFloat(property.valueType)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: FernIr.UnionTypeDeclaration) => {
+                for (const variant of union.types) {
+                    const uses = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesOrderedFloat(property.type),
+                        samePropertiesAsObject: () => false,
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (uses) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesOrderedFloat(member.type)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a floating-point type inside a set container
+     */
+    private typeReferenceUsesOrderedFloat(typeRef: FernIr.TypeReference): boolean {
+        return typeRef._visit({
+            primitive: () => false,
+            container: (container: FernIr.ContainerType) => {
+                return container._visit({
+                    list: () => false,
+                    set: (setType: FernIr.TypeReference) => {
+                        // Check if the set element type is a float/double
+                        return setType._visit({
+                            primitive: (primitive: FernIr.PrimitiveType) => {
+                                return primitive.v1 === "FLOAT" || primitive.v1 === "DOUBLE";
+                            },
+                            container: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(optional),
+                    nullable: (nullable: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(nullable),
+                    map: (map: FernIr.MapType) =>
+                        this.typeReferenceUsesOrderedFloat(map.keyType) ||
+                        this.typeReferenceUsesOrderedFloat(map.valueType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    /**
      * Get the datetime type to use for datetime primitives.
      * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
      * or "utc" for DateTime<Utc> - converts everything to UTC.
@@ -366,25 +529,39 @@ export abstract class AbstractRustGeneratorContext<
      * Check if IR has any file upload endpoints
      */
     public hasFileUploadEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+        return this.cachedFeature("hasFileUploadEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+            )
         );
     }
 
     /**
-     * Check if IR has any streaming endpoints
+     * Check if IR has any bytes (octet-stream) request body endpoints
      */
-    public hasWebSocketChannels(): boolean {
-        return (
-            this.customConfig.enableWebsockets &&
-            this.ir.websocketChannels != null &&
-            Object.keys(this.ir.websocketChannels).length > 0
+    public hasBytesEndpoints(): boolean {
+        return this.cachedFeature("hasBytesEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes")
+            )
         );
     }
 
+    public hasWebSocketChannels(): boolean {
+        return this.cachedFeature("hasWebSocketChannels", () => {
+            const websocketsEnabled = this.customConfig.enableWebsockets || this.customConfig.generateWebSocketClients === true;
+            return (
+                websocketsEnabled &&
+                this.ir.websocketChannels != null &&
+                Object.keys(this.ir.websocketChannels).length > 0
+            );
+        });
+    }
+
     public hasStreamingEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => {
+        return this.cachedFeature("hasStreamingEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
                 if (!endpoint.response?.body) {
                     return false;
                 }
@@ -398,6 +575,7 @@ export abstract class AbstractRustGeneratorContext<
                     _other: () => false
                 });
             })
+            )
         );
     }
 
@@ -575,6 +753,39 @@ export abstract class AbstractRustGeneratorContext<
         this.logger.debug(
             `Registered ${referencedRequestWithQueryCount} referenced request with query filenames and type names`
         );
+
+        // Priority 3.6: Bytes request body with query parameters
+        let bytesRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only bytes endpoints with query parameters
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerBytesRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerBytesRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Bytes request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    bytesRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${bytesRequestCount} bytes request filenames and type names`);
 
         // Priority 4: Client names (root client + all subpackage clients)
         let clientNameCount = 0;
@@ -1035,6 +1246,30 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get filename for bytes request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getFilenameForBytesRequestBody(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestFilenameOrThrow(endpointId);
+    }
+
+    /**
+     * Get module name for bytes request body from filename.
+     */
+    public getModuleNameForBytesRequestBody(endpointId: string): string {
+        const filename = this.getFilenameForBytesRequestBody(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for bytes request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getBytesRequestTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {
@@ -1096,15 +1331,34 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
+        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
+    }
+
+    /**
+     * Get the API key prefix from the IR auth schemes (e.g., "Token", "Bearer").
+     * Returns undefined if no prefix is configured.
+     */
+    public getApiKeyPrefix(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.prefix);
+    }
+
+    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
-                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
-                    return schemeAsUnion.name.wireValue;
+                const result = FernIr.AuthScheme._visit(scheme, {
+                    header: (header) => selector(header),
+                    bearer: () => undefined,
+                    basic: () => undefined,
+                    oauth: () => undefined,
+                    inferred: () => undefined,
+                    _other: () => undefined
+                });
+                if (result !== undefined) {
+                    return result;
                 }
             }
         }
-        return "api_key";
+        return undefined;
     }
 
     /**

@@ -10,6 +10,7 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { id: "id", movie_title: "movie_title", movie_rating: 1.1 };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/movies/create-movie")
@@ -32,6 +33,7 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", title: "title", rating: 1.1 };
+
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.imdb.getMovie("movie_id");
@@ -47,6 +49,7 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {

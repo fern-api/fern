@@ -11,8 +11,9 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 {
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
                 cursor: Some("cursor".to_string()),
+                ..Default::default()
             },
             None,
         )

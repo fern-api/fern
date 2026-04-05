@@ -162,6 +162,10 @@ fixtures:
     - customConfig:
         package-layout: flat
       outputFolder: flat-package-layout
+    - customConfig:
+        omit-fern-headers: true
+        maxRetries: 5
+      outputFolder: omit-fern-headers
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -310,6 +314,16 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  server-sent-event-examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: with-wire-tests
+    - customConfig: null
+      outputFolder: no-custom-config
+  server-sent-events-openapi:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true

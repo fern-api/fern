@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -77,7 +78,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 case "uri":
                 case "path":
                     this.context.logger.warn(
-                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
                     );
                     return;
                 default:
@@ -640,7 +641,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
+                return this.csharp.codeblock(`_client.Options.Environment.${this.case.pascalSafe(baseUrl.name)}`);
             }
         }
         return undefined;
@@ -796,7 +797,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(`>(${jsonString})`);
                     writer.popScope();
                     if (context.generation.settings.redactResponseBodyOnError) {
-                        writer.writeLine("catch (System.Text.Json.JsonException e)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, " e)");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",
@@ -805,7 +807,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         );
                         writer.popScope();
                     } else {
-                        writer.writeLine("catch (System.Text.Json.JsonException)");
+                        writer.write("catch (", context.System.Text.Json.JsonException, ")");
+                        writer.writeLine("");
                         writer.pushScope();
                         writer.writeStatement(
                             "throw new ",
@@ -1774,7 +1777,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {
@@ -1830,7 +1833,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return {
             code: this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
                 writer.writeLine(".Add(_client.Options.Headers)");

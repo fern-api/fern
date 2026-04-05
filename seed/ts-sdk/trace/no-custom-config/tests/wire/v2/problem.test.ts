@@ -27,6 +27,7 @@ describe("ProblemClient", () => {
                 variableTypes: [{ type: "integerType" }],
             },
         ];
+
         server
             .mockEndpoint()
             .get("/problems-v2/lightweight-problem-info")
@@ -389,6 +390,7 @@ describe("ProblemClient", () => {
                 isPublic: true,
             },
         ];
+
         server
             .mockEndpoint()
             .get("/problems-v2/problem-info")
@@ -1148,6 +1150,7 @@ describe("ProblemClient", () => {
             ],
             isPublic: true,
         };
+
         server
             .mockEndpoint()
             .get("/problems-v2/problem-info/problemId")
@@ -1618,6 +1621,7 @@ describe("ProblemClient", () => {
             ],
             isPublic: true,
         };
+
         server
             .mockEndpoint()
             .get("/problems-v2/problem-info/problemId/version/1")

@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import type { SetRequired } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -6,7 +7,7 @@ import {
     getTextOfTsNode,
     type PackageId
 } from "@fern-typescript/commons";
-import type { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
+import type { ChannelSignature, FileContext, GeneratedWebsocketImplementation } from "@fern-typescript/contexts";
 import {
     type ClassDeclarationStructure,
     type InterfaceDeclarationStructure,
@@ -32,6 +33,7 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        caseConverter: CaseConverter;
     }
 }
 
@@ -42,6 +44,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly HEADERS_PROPERTY_NAME = "headers";
     private static readonly HEADERS_VARIABLE_NAME = "_headers";
 
+    private static readonly PROTOCOLS_PROPERTY_NAME = "protocols";
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly CONNECTION_TIMEOUT_PROPERTY_NAME = "connectionTimeoutInSeconds";
     private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
@@ -59,6 +62,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly case: CaseConverter;
     public readonly channel: FernIr.WebSocketChannel;
 
     constructor({
@@ -72,7 +76,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
-        parameterNaming
+        parameterNaming,
+        caseConverter
     }: GeneratedDefaultWebsocketImplementation.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -85,9 +90,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.parameterNaming = parameterNaming;
+        this.case = caseConverter;
     }
 
-    public getSignature(context: SdkContext): ChannelSignature {
+    public getSignature(context: FileContext): ChannelSignature {
         const connectArgsInterface = this.generateConnectArgsInterface(context);
 
         return {
@@ -102,15 +108,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         };
     }
 
-    public getModuleStatement(context: SdkContext): InterfaceDeclarationStructure {
+    public getModuleStatement(context: FileContext): InterfaceDeclarationStructure {
         return this.generateConnectArgsInterface(context);
     }
 
-    public getClassStatements(context: SdkContext): ts.Statement[] {
+    public getClassStatements(context: FileContext): ts.Statement[] {
         return this.generateConnectMethodStatements(context);
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const connectArgsInterface = this.generateConnectArgsInterface(context);
 
         const serviceModule: ModuleDeclarationStructure = {
@@ -155,7 +161,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         context.sourceFile.addClass(serviceClass);
     }
 
-    private generateConnectArgsInterface(context: SdkContext): InterfaceDeclarationStructure {
+    private generateConnectArgsInterface(context: FileContext): InterfaceDeclarationStructure {
         const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
             kind: StructureKind.Interface,
             name: GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME,
@@ -183,11 +189,24 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }),
                 ...(this.channel.headers ?? []).map((header) => {
                     return {
-                        name: getPropertyKey(header.name.wireValue),
+                        name: getPropertyKey(getWireValue(header.name)),
                         type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                         hasQuestionToken: context.type.isOptional(header.valueType)
                     };
                 }),
+                {
+                    name: GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createUnionTypeNode([
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createArrayTypeNode(
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                            )
+                        ])
+                    ),
+                    hasQuestionToken: true,
+                    docs: ["WebSocket subprotocols to use for the connection."]
+                },
                 {
                     name: GeneratedDefaultWebsocketImplementation.ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
                     type: getTextOfTsNode(
@@ -245,13 +264,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 name: GeneratedDefaultWebsocketImplementation.GENERATED_VERSION_PROPERTY_NAME,
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: true,
-                docs: [`Override the ${header.name.wireValue} header`]
+                docs: [`Override the ${getWireValue(header.name)} header`]
             });
         }
         return requestOptions;
     }
 
-    private generateConnectMethodStatements(context: SdkContext): ts.Statement[] {
+    private generateConnectMethodStatements(context: FileContext): ts.Statement[] {
         const bindingElements: ts.BindingElement[] = [];
         const usedNames = new Set<string>();
         const pathParameterLocalNames = new Map<string, string>();
@@ -272,7 +291,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ]) {
             const propertyNames = this.getPropertyNameOfPathParameter(pathParameter);
             const localVarName = getNonConflictingName(propertyNames.safeName);
-            pathParameterLocalNames.set(pathParameter.name.originalName, localVarName);
+            pathParameterLocalNames.set(getOriginalName(pathParameter.name), localVarName);
 
             bindingElements.push(
                 ts.factory.createBindingElement(
@@ -289,7 +308,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         for (const queryParameter of this.channel.queryParameters ?? []) {
             const propertyNames = this.getPropertyNameOfQueryParameter(queryParameter);
             const localVarName = getNonConflictingName(propertyNames.safeName);
-            queryParameterLocalNames.set(queryParameter.name.wireValue, localVarName);
+            queryParameterLocalNames.set(getWireValue(queryParameter.name), localVarName);
 
             bindingElements.push(
                 ts.factory.createBindingElement(
@@ -301,6 +320,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
+
+        // Add protocols binding
+        bindingElements.push(
+            ts.factory.createBindingElement(
+                undefined,
+                undefined,
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME)
+            )
+        );
 
         // Add additional query parameters binding
         bindingElements.push(
@@ -419,11 +447,23 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
         }
+        // Include client-level default headers (this._options?.headers)
+        mergeHeaders.push(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createThis(),
+                    undefined,
+                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                "headers"
+            )
+        );
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {
                 return ts.factory.createPropertyAssignment(
-                    ts.factory.createStringLiteral(header.name.wireValue),
-                    this.getReferenceToArg(header.name.wireValue)
+                    ts.factory.createStringLiteral(getWireValue(header.name)),
+                    this.getReferenceToArg(getWireValue(header.name))
                 );
             })
         );
@@ -439,11 +479,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         }
         mergeHeaders.push(ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME));
 
-        if (mergeHeaders.length > 1) {
-            context.importsManager.addImportFromRoot("core/headers", {
-                namedImports: ["mergeHeaders"]
-            });
-        }
+        context.importsManager.addImportFromRoot("core/headers", {
+            namedImports: ["mergeHeaders"]
+        });
 
         return [
             destructuringStatement,
@@ -460,16 +498,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("unknown"))
                             ]),
-                            mergeHeaders.length > 1
-                                ? ts.factory.createCallExpression(
-                                      ts.factory.createIdentifier("mergeHeaders"),
-                                      undefined,
-                                      [...mergeHeaders]
-                                  )
-                                : ts.factory.createObjectLiteralExpression(
-                                      [ts.factory.createSpreadAssignment(mergeHeaders[0] as ts.Expression)],
-                                      false
-                                  )
+                            ts.factory.createCallExpression(ts.factory.createIdentifier("mergeHeaders"), undefined, [
+                                ...mergeHeaders
+                            ])
                         )
                     ],
                     ts.NodeFlags.Let
@@ -499,7 +530,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ];
     }
 
-    private getReferenceToWebsocket(context: SdkContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
+    private getReferenceToWebsocket(context: FileContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
 
         const url = buildUrl({
@@ -516,10 +547,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             omitUndefined: this.omitUndefined,
             parameterNaming: this.parameterNaming,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                const localVarName = pathParameterLocalNames.get(pathParameter.name.originalName);
+                const localVarName = pathParameterLocalNames.get(getOriginalName(pathParameter.name));
                 if (localVarName == null) {
                     throw new Error(
-                        `Could not find local variable name for path parameter: ${pathParameter.name.originalName}`
+                        `Could not find local variable name for path parameter: ${getOriginalName(pathParameter.name)}`
                     );
                 }
                 return ts.factory.createIdentifier(localVarName);
@@ -534,7 +565,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
             url: context.coreUtilities.urlUtils.join._invoke([baseUrl, url]),
-            protocols: ts.factory.createArrayLiteralExpression([]),
+            protocols: ts.factory.createBinaryExpression(
+                ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.PROTOCOLS_PROPERTY_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createArrayLiteralExpression([])
+            ),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
                     "debug",
@@ -586,7 +621,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         });
     }
 
-    private getEnvironment(channel: FernIr.WebSocketChannel, context: SdkContext): ts.Expression {
+    private getEnvironment(channel: FernIr.WebSocketChannel, context: FileContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -625,14 +660,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg));
     }
 
-    public getSocketTypeNode(context: SdkContext): ts.TypeNode {
+    public getSocketTypeNode(context: FileContext): ts.TypeNode {
         const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId);
         return reference.getTypeNode({
             isForComment: true
         });
     }
 
-    public getReferenceToSocket(context: SdkContext): ts.Expression {
+    public getReferenceToSocket(context: FileContext): ts.Expression {
         const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId);
         return reference.getExpression();
     }
@@ -648,19 +683,19 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_PRIVATE_MEMBER);
     }
 
-    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+    private getReferenceToBaseUrl(context: FileContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
         );
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
+    private getReferenceToEnvironment(context: FileContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
     }
 
-    public getBaseUrl(channel: FernIr.WebSocketChannel, context: SdkContext): ts.Expression {
+    public getBaseUrl(channel: FernIr.WebSocketChannel, context: FileContext): ts.Expression {
         const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
         const environment = this.getEnvironment(channel, context);
@@ -700,9 +735,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         );
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         const queryParameter = this.channel.queryParameters.find(
-            (queryParam) => queryParam.name.wireValue === queryParameterKey
+            (queryParam) => getWireValue(queryParam.name) === queryParameterKey
         );
         if (queryParameter == null) {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
@@ -717,14 +752,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValue): {
+    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValueOrString): {
         safeName: string;
         propertyName: string;
     } {
         return {
-            safeName: name.name.camelCase.safeName,
+            safeName: this.case.camelSafe(name),
             propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+                this.includeSerdeLayer && !this.retainOriginalCasing ? this.case.camelUnsafe(name) : getWireValue(name)
         };
     }
 
@@ -733,12 +768,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         propertyName: string;
     } {
         return {
-            safeName: pathParameter.name.camelCase.safeName,
+            safeName: this.case.camelSafe(pathParameter.name),
             propertyName: getParameterNameForPropertyPathParameterName({
                 pathParameterName: pathParameter.name,
                 retainOriginalCasing: this.retainOriginalCasing,
                 includeSerdeLayer: this.includeSerdeLayer,
-                parameterNaming: this.parameterNaming
+                parameterNaming: this.parameterNaming,
+                caseConverter: this.case
             })
         };
     }

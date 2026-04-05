@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+
 	fern "github.com/nullable-allof-extends/fern"
 	core "github.com/nullable-allof-extends/fern/core"
 	internal "github.com/nullable-allof-extends/fern/internal"

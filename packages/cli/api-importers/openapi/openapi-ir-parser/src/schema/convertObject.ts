@@ -48,6 +48,7 @@ export function convertObject({
     fullExamples,
     additionalProperties,
     availability,
+    encoding,
     source,
     minProperties,
     maxProperties
@@ -179,11 +180,39 @@ export function convertObject({
                 return property;
             });
 
+            // Merge base property schemas from referenced allOf parents into inline
+            // override properties. This handles cases like allOf narrowing array items
+            // without redeclaring type: array — the base schema's type/structure is
+            // carried forward so the property is correctly recognized.
+            // We build a new element to avoid mutating the parsed OpenAPI document.
+            let mergedAllOfElement = allOfElement;
+            if (allOfElement.properties != null) {
+                const mergedProperties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+                for (const [key, overridePropSchema] of Object.entries(allOfElement.properties)) {
+                    let merged: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject = overridePropSchema;
+                    if (!isReferenceObject(overridePropSchema)) {
+                        for (const otherAllOfElement of allOf) {
+                            if (otherAllOfElement === allOfElement || !isReferenceObject(otherAllOfElement)) {
+                                continue;
+                            }
+                            const resolvedParent = context.resolveSchemaReference(otherAllOfElement);
+                            const basePropSchema = resolvedParent.properties?.[key];
+                            if (basePropSchema != null && !isReferenceObject(basePropSchema)) {
+                                merged = { ...basePropSchema, ...overridePropSchema };
+                                break;
+                            }
+                        }
+                    }
+                    mergedProperties[key] = merged;
+                }
+                mergedAllOfElement = { ...allOfElement, properties: mergedProperties };
+            }
+
             // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
             // extract properties from each variant and make them optional.
             // This handles patterns like allOf + oneOf used for mutual exclusion (e.g. content vs templateId).
-            const variants = allOfElement.oneOf ?? allOfElement.anyOf;
-            if (variants != null && allOfElement.type == null && allOfElement.properties == null) {
+            const variants = mergedAllOfElement.oneOf ?? mergedAllOfElement.anyOf;
+            if (variants != null && mergedAllOfElement.type == null && mergedAllOfElement.properties == null) {
                 const seenKeys = new Set(inlinedParentProperties.map((p) => p.key));
                 for (const variantSchema of variants) {
                     const resolvedVariantSchema = isReferenceObject(variantSchema)
@@ -228,7 +257,15 @@ export function convertObject({
                     }
                 }
             } else {
-                const allOfSchema = convertSchema(allOfElement, false, false, context, breadcrumbs, source, namespace);
+                const allOfSchema = convertSchema(
+                    mergedAllOfElement,
+                    false,
+                    false,
+                    context,
+                    breadcrumbs,
+                    source,
+                    namespace
+                );
                 if (allOfSchema.type === "object") {
                     inlinedParentProperties.push(...allOfSchema.properties);
                 }
@@ -264,16 +301,7 @@ export function convertObject({
         }
     }
 
-    const filteredPropertiesToConvert = Object.fromEntries(
-        Object.entries(propertiesToConvert).filter(([_, propertySchema]) => {
-            if (!isReferenceObject(propertySchema) && (propertySchema.type as string) === "null") {
-                return false;
-            }
-            return true;
-        })
-    );
-
-    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(filteredPropertiesToConvert).map(
+    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
         ([propertyName, propertySchema]) => {
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
@@ -281,10 +309,14 @@ export function convertObject({
             const resolvedPropertySchema = isReferenceObject(propertySchema)
                 ? context.resolveSchemaReference(propertySchema)
                 : propertySchema;
-            const readonly = resolvedPropertySchema.readOnly;
-            const writeonly = resolvedPropertySchema.writeOnly;
+            const readonly =
+                ("readOnly" in propertySchema && propertySchema.readOnly === true) || resolvedPropertySchema.readOnly;
+            const writeonly =
+                ("writeOnly" in propertySchema && propertySchema.writeOnly === true) ||
+                resolvedPropertySchema.writeOnly;
 
-            const isRequired = allRequired.includes(propertyName) && !readonly;
+            const isRequired =
+                allRequired.includes(propertyName) && (!readonly || context.options.respectReadonlySchemas);
             const isPropertyOptional = !isRequired;
 
             const propertyNameOverride = getExtension<string | undefined>(
@@ -338,6 +370,22 @@ export function convertObject({
                     conflicts[parent.schemaId] = { differentSchema: false };
                 }
             }
+            // Apply top-level required to inlined allOf properties that may have been
+            // marked optional by their inline member's own (missing) required array.
+            if (
+                allRequired.includes(property.key) &&
+                (property.schema.type === "optional" || property.schema.type === "nullable")
+            ) {
+                const isPropertyReadonly = property.readonly;
+                const isRequired = !isPropertyReadonly || context.options.respectReadonlySchemas;
+                if (isRequired) {
+                    return {
+                        ...property,
+                        schema: property.schema.value,
+                        conflict: conflicts
+                    };
+                }
+            }
             return {
                 ...property,
                 conflict: conflicts
@@ -362,6 +410,7 @@ export function convertObject({
         fullExamples,
         additionalProperties,
         availability,
+        encoding,
         source,
         context,
         minProperties,
@@ -384,6 +433,7 @@ export function wrapObject({
     fullExamples,
     additionalProperties,
     availability,
+    encoding,
     source,
     context,
     minProperties,
@@ -403,6 +453,7 @@ export function wrapObject({
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
+    encoding: Encoding | undefined;
     source: Source;
     context: SchemaParserContext;
     minProperties: number | undefined;
@@ -421,6 +472,7 @@ export function wrapObject({
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
+        encoding,
         source,
         inline: undefined,
         minProperties,

@@ -101,36 +101,8 @@ export function generateRustTypeForTypeReference(
                         })
                     );
                 },
-                dateTime: () => {
-                    // Use DateTime<Utc> when "utc" config is set, otherwise DateTime<FixedOffset> (default)
-                    if (context.getDateTimeType() === "utc") {
-                        return rust.Type.reference(
-                            rust.reference({
-                                name: "DateTime",
-                                genericArgs: [
-                                    rust.Type.reference(
-                                        rust.reference({
-                                            name: "Utc"
-                                        })
-                                    )
-                                ]
-                            })
-                        );
-                    }
-                    // Default: DateTime<FixedOffset> - preserves original timezone
-                    return rust.Type.reference(
-                        rust.reference({
-                            name: "DateTime",
-                            genericArgs: [
-                                rust.Type.reference(
-                                    rust.reference({
-                                        name: "FixedOffset"
-                                    })
-                                )
-                            ]
-                        })
-                    );
-                },
+                dateTime: () => getDateTimeType(context),
+                dateTimeRfc2822: () => getDateTimeType(context),
                 base64: () => {
                     // Base64 represents binary data as Vec<u8>
                     return rust.Type.reference(
@@ -182,4 +154,14 @@ export function generateRustTypeForTypeReference(
         default:
             return assertNever(typeReference);
     }
+}
+
+function getDateTimeType(context: RustTypeGeneratorContext): rust.Type {
+    const tzName = context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset";
+    return rust.Type.reference(
+        rust.reference({
+            name: "DateTime",
+            genericArgs: [rust.Type.reference(rust.reference({ name: tzName }))]
+        })
+    );
 }

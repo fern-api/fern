@@ -46,6 +46,36 @@ paths:
                 value:
                   username: johndoe
                   email: john@example.com
+  /token:
+    post:
+      operationId: get_token
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Token issued successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+      summary: Get OAuth token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
 components:
   schemas:
     PostSubmitResponse:
@@ -57,5 +87,30 @@ components:
           nullable: true
         message:
           type: string
+          nullable: true
+    TokenRequest:
+      title: TokenRequest
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: Client identifier
+          example: client_id
+        client_secret:
+          type: string
+          description: Client secret
+          example: client_secret
+      required:
+        - client_id
+        - client_secret
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      properties:
+        access_token:
+          type: string
+          nullable: true
+        expires_in:
+          type: integer
           nullable: true
   securitySchemes: {}

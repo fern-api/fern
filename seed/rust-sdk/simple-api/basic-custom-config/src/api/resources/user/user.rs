@@ -13,11 +13,7 @@ impl UserClient {
         })
     }
 
-    pub async fn get(
-        &self,
-        id: &String,
-        options: Option<RequestOptions>,
-    ) -> Result<User, ApiError> {
+    pub async fn get(&self, id: &str, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/users/{}", id), None, None, options)
             .await

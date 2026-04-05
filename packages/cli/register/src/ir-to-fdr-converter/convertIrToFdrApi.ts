@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { convertAllAuthSchemes, convertAuth, PlaygroundConfig } from "./convertAuth.js";
 import { convertIrAvailability, convertPackage } from "./convertPackage.js";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape.js";
+import { getOriginalName, getWireValue } from "./nameUtils.js";
 
 export function convertIrToFdrApi({
     ir,
@@ -26,7 +27,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
-        apiName: apiNameOverride ?? ir.apiName.originalName,
+        apiName: apiNameOverride ?? getOriginalName(ir.apiName),
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,
@@ -34,7 +35,7 @@ export function convertIrToFdrApi({
             (header): FdrCjsSdk.api.v1.register.Header => ({
                 availability: convertIrAvailability(header.availability),
                 description: header.docs ?? undefined,
-                key: header.name.wireValue,
+                key: getWireValue(header.name),
                 type: convertTypeReference(header.valueType)
             })
         ),
@@ -44,7 +45,7 @@ export function convertIrToFdrApi({
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
             description: type.docs ?? undefined,
-            name: type.name.name.originalName,
+            name: getOriginalName(type.name.name),
             shape: convertTypeShape(type.shape),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
@@ -61,7 +62,7 @@ export function convertIrToFdrApi({
         fdrApi.subpackages[FdrCjsSdk.api.v1.SubpackageId(subpackageId)] = {
             subpackageId: FdrCjsSdk.api.v1.SubpackageId(subpackageId),
             displayName: service?.displayName ?? subpackage.displayName,
-            name: subpackage.name.originalName,
+            name: getOriginalName(subpackage.name),
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)
         };

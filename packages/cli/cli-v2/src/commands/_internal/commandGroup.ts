@@ -1,7 +1,7 @@
 import type { Argv } from "yargs";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 
-type CommandAdder = (cli: Argv<GlobalArgs>, parentPath?: string) => void;
+type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 
 /**
  * Registers a command group with subcommands.
@@ -22,7 +22,7 @@ export function commandGroup(
 ): void {
     cli.command(name, description, (yargs) => {
         for (const add of subcommands) {
-            add(yargs, name);
+            add(yargs);
         }
         return yargs
             .usage(description)

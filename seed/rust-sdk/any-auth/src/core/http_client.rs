@@ -1,11 +1,11 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
-use base64::Engine;
 use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
-use serde::de::{DeserializeOwned, Error as SerdeError};
+use serde::de::DeserializeOwned;
+
 use std::{
     pin::Pin,
     str::FromStr,
@@ -144,6 +144,16 @@ impl HttpClient {
         })
     }
 
+    /// Returns the configured base URL.
+    pub fn base_url(&self) -> &str {
+        &self.config.base_url
+    }
+
+    /// Returns a reference to the client configuration.
+    pub fn config(&self) -> &ClientConfig {
+        &self.config
+    }
+
     /// Execute a request with the given method, path, and options
     pub async fn execute_request<T>(
         &self,
@@ -188,71 +198,45 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
-    /// Execute a multipart/form-data request with the given method, path, and options
+    /// Execute a request with an explicit base URL override.
     ///
-    /// This method is used for file uploads using reqwest's built-in multipart support.
-    /// Note: Multipart requests are not retried because they cannot be cloned.
-    ///
-    /// # Example
-    /// ```no_run
-    /// let form = reqwest::multipart::Form::new()
-    ///     .part("file", reqwest::multipart::Part::bytes(vec![1, 2, 3]));
-    ///
-    /// let response: MyResponse = client.execute_multipart_request(
-    ///     Method::POST,
-    ///     "/upload",
-    ///     form,
-    ///     None,
-    ///     None,
-    /// ).await?;
-    /// ```
-    #[cfg(feature = "multipart")]
-    pub async fn execute_multipart_request<T>(
+    /// Used for multi-URL environments where different endpoints
+    /// resolve to different base URLs.
+    pub async fn execute_request_with_base_url<T>(
         &self,
+        base_url: &str,
         method: Method,
         path: &str,
-        form: reqwest::multipart::Form,
+        body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
     {
-        let url = join_url(&self.config.base_url, path);
+        let url = join_url(base_url, path);
         let mut request = self.client.request(method, &url);
 
-        // Apply query parameters if provided
         if let Some(params) = query_params {
             request = request.query(&params);
         }
 
-        // Apply additional query parameters from options
         if let Some(opts) = &options {
             if !opts.additional_query_params.is_empty() {
                 request = request.query(&opts.additional_query_params);
             }
         }
 
-        // Use reqwest's built-in multipart support
-        request = request.multipart(form);
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
 
-        // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options).await?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // Execute directly without retries (multipart requests cannot be cloned)
-        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
-
-        // Check response status
-        if !response.status().is_success() {
-            let status_code = response.status().as_u16();
-            let body = response.text().await.ok();
-            return Err(ApiError::from_response(status_code, body.as_deref()));
-        }
-
+        let response = self.execute_with_retries(req, &options).await?;
         self.parse_response(response).await
     }
 
@@ -270,9 +254,10 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
+            let header_value = key.to_string();
             headers.insert(
                 "X-API-Key",
-                key.parse().map_err(|_| ApiError::InvalidHeader)?,
+                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
             );
         }
 
@@ -434,61 +419,18 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
+        let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
+
+        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
+        if text.is_empty() {
+            return Err(ApiError::Http {
+                status,
+                message: String::new(),
+            });
+        }
+
         serde_json::from_str(&text).map_err(ApiError::Serialization)
-    }
-
-    /// Execute a request that returns a base64-encoded string and decode it to bytes
-    ///
-    /// This method is used for endpoints that return raw base64-encoded data as a JSON string.
-    /// The response is expected to be a JSON string (e.g., `"SGVsbG8gd29ybGQh"`) which is
-    /// decoded from base64 to raw bytes.
-    pub async fn execute_request_base64(
-        &self,
-        method: Method,
-        path: &str,
-        body: Option<serde_json::Value>,
-        query_params: Option<Vec<(String, String)>>,
-        options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ApiError> {
-        let url = join_url(&self.config.base_url, path);
-        let mut request = self.client.request(method, &url);
-
-        // Apply query parameters if provided
-        if let Some(params) = query_params {
-            request = request.query(&params);
-        }
-
-        // Apply additional query parameters from options
-        if let Some(opts) = &options {
-            if !opts.additional_query_params.is_empty() {
-                request = request.query(&opts.additional_query_params);
-            }
-        }
-
-        // Apply body if provided
-        if let Some(body) = body {
-            request = request.json(&body);
-        }
-
-        // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
-
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
-
-        // Parse response as JSON string and decode base64
-        let text = response.text().await.map_err(ApiError::Network)?;
-        let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
-        base64::engine::general_purpose::STANDARD
-            .decode(&base64_string)
-            .map_err(|e| {
-                ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e)))
-            })
     }
 
     /// Execute a request and return a streaming response (for large file downloads)
@@ -588,95 +530,40 @@ impl HttpClient {
         Ok(ByteStream::new(response))
     }
 
-    /// Execute a request and return an SSE stream
-    ///
-    /// This method returns an `SseStream<T>` that automatically parses
-    /// Server-Sent Events and deserializes the JSON data in each event.
-    ///
-    /// # SSE-Specific Headers
-    ///
-    /// This method automatically sets the following headers **after** applying custom headers,
-    /// which means these headers will override any user-supplied values:
-    /// - `Accept: text/event-stream` - Required for SSE protocol
-    /// - `Cache-Control: no-store` - Prevents caching of streaming responses
-    ///
-    /// This ensures proper SSE behavior even if custom headers are provided.
-    ///
-    /// # Example
-    /// ```no_run
-    /// use futures::StreamExt;
-    ///
-    /// let stream = client.execute_sse_request::<CompletionChunk>(
-    ///     Method::POST,
-    ///     "/stream",
-    ///     Some(serde_json::json!({"query": "Hello"})),
-    ///     None,
-    ///     None,
-    ///     Some("[[DONE]]".to_string()),
-    /// ).await?;
-    ///
-    /// let mut stream = std::pin::pin!(stream);
-    /// while let Some(chunk) = stream.next().await {
-    ///     let chunk = chunk?;
-    ///     println!("Received: {:?}", chunk);
-    /// }
-    /// ```
-    #[cfg(feature = "sse")]
-    pub async fn execute_sse_request<T>(
+    /// Execute a streaming request with an explicit base URL override.
+    pub async fn execute_stream_request_with_base_url(
         &self,
+        base_url: &str,
         method: Method,
         path: &str,
         body: Option<serde_json::Value>,
         query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
-        terminator: Option<String>,
-    ) -> Result<crate::SseStream<T>, ApiError>
-    where
-        T: DeserializeOwned + Send + 'static,
-    {
-        let url = join_url(&self.config.base_url, path);
+    ) -> Result<ByteStream, ApiError> {
+        let url = join_url(base_url, path);
         let mut request = self.client.request(method, &url);
 
-        // Apply query parameters if provided
         if let Some(params) = query_params {
             request = request.query(&params);
         }
 
-        // Apply additional query parameters from options
         if let Some(opts) = &options {
             if !opts.additional_query_params.is_empty() {
                 request = request.query(&opts.additional_query_params);
             }
         }
 
-        // Apply body if provided
         if let Some(body) = body {
             request = request.json(&body);
         }
 
-        // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
         self.apply_auth_headers(&mut req, &options).await?;
         self.apply_custom_headers(&mut req, &options)?;
 
-        // SSE-specific headers
-        req.headers_mut().insert(
-            "Accept",
-            "text/event-stream"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
-        );
-        req.headers_mut().insert(
-            "Cache-Control",
-            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
-        );
-
-        // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
 
-        // Return SSE stream
-        crate::SseStream::new(response, terminator).await
+        Ok(ByteStream::new(response))
     }
 }

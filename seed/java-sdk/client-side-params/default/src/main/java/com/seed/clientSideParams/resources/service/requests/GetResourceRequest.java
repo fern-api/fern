@@ -5,9 +5,9 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -36,7 +36,7 @@ public final class GetResourceRequest {
     /**
      * @return Include metadata in response
      */
-    @JsonProperty("include_metadata")
+    @JsonIgnore
     public Optional<Boolean> getIncludeMetadata() {
         return includeMetadata;
     }
@@ -44,7 +44,7 @@ public final class GetResourceRequest {
     /**
      * @return Response format
      */
-    @JsonProperty("format")
+    @JsonIgnore
     public Optional<String> getFormat() {
         return format;
     }

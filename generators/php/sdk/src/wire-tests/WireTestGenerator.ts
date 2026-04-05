@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -19,12 +19,14 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
     constructor({ context, ir }: { context: SdkGeneratorContext; ir: FernIr.IntermediateRepresentation }) {
         this.context = context;
+        this.case = context.case;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
             throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
@@ -128,6 +130,7 @@ export class WireTestGenerator {
             parameters: [],
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("parent::setUp()");
+                writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
 
                 // Build auth parameters
                 const authParams = this.buildAuthParamsForTest();
@@ -174,7 +177,7 @@ export class WireTestGenerator {
                                     name: "Environments"
                                 })
                             );
-                            writer.write(`::custom(${envValues.map((value) => `'${value}'`).join(", ")}),`);
+                            writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
                             if (authParams.length === 0) {
                                 writer.write("\n");
                                 writer.dedent();
@@ -190,7 +193,7 @@ export class WireTestGenerator {
                     }
                     writer.writeLine("options: [");
                     writer.indent();
-                    writer.writeLine("'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',");
+                    writer.writeLine("'baseUrl' => $wiremockUrl,");
                     writer.dedent();
                     writer.write("]");
                     if (authParams.length === 0) {
@@ -327,7 +330,7 @@ export class WireTestGenerator {
 
     private getTestMethodName(endpoint: FernIr.HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name
-        const endpointName = endpoint.name.camelCase.safeName;
+        const endpointName = this.case.camelSafe(endpoint.name);
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
@@ -336,8 +339,8 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+        const endpointName = this.case.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -458,7 +461,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+        return service.name.fernFilepath.allParts.map((part) => this.case.camelUnsafe(part)).join("_");
     }
 
     private isMultiUrlEnvironment(): boolean {
@@ -491,7 +494,7 @@ export class WireTestGenerator {
                     authParams.push("password: 'test-password'");
                 },
                 header: (header) => {
-                    const paramName = header.name.name.camelCase.safeName;
+                    const paramName = this.case.camelSafe(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 },
                 oauth: () => {
@@ -541,7 +544,7 @@ export class WireTestGenerator {
                 for (const property of requestBody.properties) {
                     const literal = this.context.maybeLiteral(property.valueType);
                     if (literal == null) {
-                        const paramName = this.context.getParameterName(property.name.name);
+                        const paramName = this.context.getParameterName(property.name);
                         authParams.push(`${paramName}: 'test-${paramName}'`);
                     }
                 }
@@ -551,7 +554,7 @@ export class WireTestGenerator {
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal == null) {
-                    const paramName = this.context.getParameterName(header.name.name);
+                    const paramName = this.context.getParameterName(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 }
             }

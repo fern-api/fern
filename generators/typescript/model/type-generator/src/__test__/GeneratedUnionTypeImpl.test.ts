@@ -1,6 +1,13 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
-import { casingsGenerator, createDeclaredTypeName, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    casingsGenerator,
+    createDeclaredTypeName,
+    createNameAndWireValue,
+    namedTypeRefNode,
+    primitiveTypeRefNode
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -15,46 +22,6 @@ function createFernFilepath(packageName = "types"): FernIr.FernFilepath {
         allParts: [casingsGenerator.generateName(packageName)],
         packagePath: [casingsGenerator.generateName(packageName)],
         file: casingsGenerator.generateName(packageName)
-    };
-}
-
-/**
- * Builds a TypeReferenceNode for a primitive type (non-optional).
- */
-function primitiveTypeRefNode(typeName: string): TypeReferenceNode {
-    const typeNode = ts.factory.createKeywordTypeNode(
-        typeName === "string"
-            ? ts.SyntaxKind.StringKeyword
-            : typeName === "number"
-              ? ts.SyntaxKind.NumberKeyword
-              : typeName === "boolean"
-                ? ts.SyntaxKind.BooleanKeyword
-                : ts.SyntaxKind.AnyKeyword
-    );
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
-    };
-}
-
-/**
- * Builds a TypeReferenceNode pointing to a named type reference.
- */
-function namedTypeRefNode(name: string): TypeReferenceNode {
-    const typeNode = ts.factory.createTypeReferenceNode(name);
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
     };
 }
 
@@ -178,9 +145,9 @@ function createMockBaseContext(opts?: {
                 return primitiveTypeRefNode("string");
             },
             getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => ({
-                getTypeNode: () => ts.factory.createTypeReferenceNode(typeName.name.pascalCase.unsafeName),
-                getExpression: () => ts.factory.createIdentifier(typeName.name.pascalCase.unsafeName),
-                getEntityName: () => ts.factory.createIdentifier(typeName.name.pascalCase.unsafeName)
+                getTypeNode: () => ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
+                getExpression: () => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name)),
+                getEntityName: () => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name))
             }),
             getTypeDeclaration: (typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => {
                 return {
@@ -211,7 +178,7 @@ function createMockBaseContext(opts?: {
                     type: "object",
                     generateStatements: () => [],
                     generateForInlineUnion: () => ({
-                        typeNode: ts.factory.createTypeReferenceNode(typeName.name.pascalCase.unsafeName),
+                        typeNode: ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
                         requestTypeNode: undefined,
                         responseTypeNode: undefined
                     }),
@@ -290,7 +257,8 @@ function createUnionGenerator(opts: {
         generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
         includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false,
         includeOtherInUnionTypes: opts.includeOtherInUnionTypes ?? false,
-        inline: opts.inline ?? false
+        inline: opts.inline ?? false,
+        caseConverter
     });
 }
 

@@ -1,10 +1,11 @@
 package example
 
 import (
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
+
+    client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    option "github.com/exhaustive/fern/option"
 )
 
 func do() {
@@ -16,12 +17,16 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithPathAndQuery{
-        Query: "query",
+    request := &endpoints.GetWithMultipleQuery{
+        Query: []string{
+            "query",
+        },
+        Number: []int{
+            1,
+        },
     }
-    client.Endpoints.Params.GetWithPathAndQuery(
+    client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
-        "param",
         request,
     )
 }

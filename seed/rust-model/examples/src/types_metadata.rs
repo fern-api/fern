@@ -4,6 +4,7 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum Metadata2 {
         #[serde(rename = "html")]
+        #[non_exhaustive]
         Html {
             value: String,
             extra: HashMap<String, String>,
@@ -11,6 +12,7 @@ pub enum Metadata2 {
         },
 
         #[serde(rename = "markdown")]
+        #[non_exhaustive]
         Markdown {
             value: String,
             extra: HashMap<String, String>,
@@ -19,6 +21,14 @@ pub enum Metadata2 {
 }
 
 impl Metadata2 {
+    pub fn html(value: String, extra: HashMap<String, String>, tags: HashSet<String>) -> Self {
+        Self::Html { value, extra, tags }
+    }
+
+    pub fn markdown(value: String, extra: HashMap<String, String>, tags: HashSet<String>) -> Self {
+        Self::Markdown { value, extra, tags }
+    }
+
     pub fn get_extra(&self) -> &HashMap<String, String> {
         match self {
                     Self::Html { extra, .. } => extra,
@@ -32,5 +42,4 @@ impl Metadata2 {
                     Self::Markdown { tags, .. } => tags,
                 }
     }
-
 }

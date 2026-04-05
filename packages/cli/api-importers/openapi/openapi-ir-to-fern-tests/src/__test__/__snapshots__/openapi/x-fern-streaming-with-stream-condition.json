@@ -145,6 +145,24 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ChatRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "query": {
+                "docs": "The chat message or question.",
+                "type": "string",
+              },
+              "stream_response": {
+                "default": false,
+                "docs": "Indicates whether the response should be streamed or not.",
+                "type": "optional<nullable<boolean>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ChatStreamedResponse": {
             "docs": "An individual event when the response is streamed.",
             "inline": undefined,
@@ -237,6 +255,17 @@
   source:
     openapi: ../openapi.yml
 types:
+  ChatRequest:
+    properties:
+      query:
+        type: string
+        docs: The chat message or question.
+      stream_response:
+        type: optional<nullable<boolean>>
+        docs: Indicates whether the response should be streamed or not.
+        default: false
+    source:
+      openapi: ../openapi.yml
   ChatFullResponse:
     docs: Full response to a chat question when the result is not streamed.
     properties:

@@ -75,7 +75,7 @@ class AbstractGenerator(ABC):
                                     update={"installation_token": ir_publish_config.token}
                                 )
 
-        python_version = "^3.8"
+        python_version = "^3.10"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
 
@@ -351,7 +351,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -367,7 +367,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -385,6 +385,14 @@ jobs:
             workflow_yaml += """
       - name: Test
         run: poetry run pytest -rP -n auto .
+"""
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -406,7 +414,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -443,7 +451,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -459,7 +467,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -477,6 +485,14 @@ jobs:
             workflow_yaml += """
       - name: Test
         run: poetry run pytest -rP -n auto .
+"""
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -497,7 +513,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: {ci_python_version}
+          python-version: "{ci_python_version}"
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1

@@ -199,4 +199,19 @@ public class AsyncParamsClient {
       RequestOptions requestOptions) {
     return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
   }
+
+  /**
+   * GET with path param that can throw errors
+   */
+  public CompletableFuture<String> getWithPathAndErrors(String param) {
+    return this.rawClient.getWithPathAndErrors(param).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path param that can throw errors
+   */
+  public CompletableFuture<String> getWithPathAndErrors(String param,
+      RequestOptions requestOptions) {
+    return this.rawClient.getWithPathAndErrors(param, requestOptions).thenApply(response -> response.body());
+  }
 }

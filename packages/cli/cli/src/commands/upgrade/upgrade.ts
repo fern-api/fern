@@ -343,6 +343,13 @@ export async function upgrade({
                 isLocalDev
             });
 
+            // If config version is "latest" or "*", the CLI is already running at the
+            // intended version so there are no migrations to run.
+            if (projectConfig.version === "latest" || projectConfig.version === "*") {
+                cliContext.logger.info("No upgrade available.");
+                return;
+            }
+
             // If config version differs from CLI version, run migrations to bring it up to date
             // Also run migrations if we detect a faulty upgrade (even if versions match)
             if (projectConfig.version !== cliContext.environment.packageVersion || hasFaultyUpgrade) {

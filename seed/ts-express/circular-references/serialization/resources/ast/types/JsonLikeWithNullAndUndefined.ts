@@ -11,7 +11,7 @@ export const JsonLikeWithNullAndUndefined: core.serialization.Schema<
     core.serialization.list(core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined).optionalNullable()),
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined).optionalNullable(),
+        core.serialization.lazy(() => serializers.JsonLikeWithNullAndUndefined),
     ),
     core.serialization.string().optionalNullable(),
     core.serialization.number().optionalNullable(),
@@ -21,7 +21,7 @@ export const JsonLikeWithNullAndUndefined: core.serialization.Schema<
 export declare namespace JsonLikeWithNullAndUndefined {
     export type Raw =
         | ((serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null | undefined)[]
-        | Record<string, (serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null | undefined>
+        | Record<string, (serializers.JsonLikeWithNullAndUndefined.Raw | null | undefined) | null>
         | ((string | null | undefined) | null | undefined)
         | ((number | null | undefined) | null | undefined)
         | ((boolean | null | undefined) | null | undefined);

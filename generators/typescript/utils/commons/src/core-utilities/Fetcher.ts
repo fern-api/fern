@@ -54,11 +54,13 @@ export interface Fetcher {
         TimeoutSdkError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "timeout";
+            cause: "cause";
         };
         UnknownError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "unknown";
             message: "errorMessage";
+            cause: "cause";
         };
     };
 
@@ -182,18 +184,18 @@ export const MANIFEST: CoreUtility.Manifest = {
         }
 
         if (streamType === "wrapper") {
-            dependencyManager.addDependency("readable-stream", "^4.5.2");
+            dependencyManager.addDependency("readable-stream", "^4.7.0");
         }
 
         if (streamType === "wrapper") {
-            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.23", {
                 type: DependencyType.DEV
             });
         }
-        dependencyManager.addDependency("webpack", "^5.97.1", {
+        dependencyManager.addDependency("webpack", "^5.105.4", {
             type: DependencyType.DEV
         });
-        dependencyManager.addDependency("ts-loader", "^9.5.1", {
+        dependencyManager.addDependency("ts-loader", "^9.5.4", {
             type: DependencyType.DEV
         });
     },
@@ -261,12 +263,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
-            _reasonLiteralValue: "timeout"
+            _reasonLiteralValue: "timeout",
+            cause: "cause"
         },
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
-            message: "errorMessage"
+            message: "errorMessage",
+            cause: "cause"
         }
     };
 

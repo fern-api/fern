@@ -21,7 +21,7 @@ export class SdkRootClientClassDeclarationReferencer extends AbstractSdkClientCl
     }
 
     public getExportedName(): string {
-        return `${this.namespaceExport}Client`;
+        return this.namingOverride ?? `${this.namespaceExport}Client`;
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options): Reference {

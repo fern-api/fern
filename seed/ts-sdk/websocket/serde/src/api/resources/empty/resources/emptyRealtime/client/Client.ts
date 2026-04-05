@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { EmptyRealtimeSocket } from "./Socket.js";
 
@@ -9,6 +10,8 @@ export declare namespace EmptyRealtimeClient {
     export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -32,15 +35,16 @@ export class EmptyRealtimeClient {
     }
 
     public async connect(args: EmptyRealtimeClient.ConnectArgs = {}): Promise<EmptyRealtimeSocket> {
-        const { queryParams, headers, debug, reconnectAttempts, connectionTimeoutInSeconds, abortSignal } = args;
-        const _headers: Record<string, unknown> = { ...headers };
+        const { protocols, queryParams, headers, debug, reconnectAttempts, connectionTimeoutInSeconds, abortSignal } =
+            args;
+        const _headers: Record<string, unknown> = mergeHeaders(this._options?.headers, headers);
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/empty/realtime/",
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: queryParams ?? {},
             headers: _headers,
             options: {

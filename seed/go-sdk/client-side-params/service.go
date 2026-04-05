@@ -479,8 +479,8 @@ type SearchResourcesRequest struct {
 	// Offset for pagination
 	Offset int `json:"-" url:"offset"`
 	// Search query text
-	Query   *string                `json:"query,omitempty" url:"-"`
-	Filters map[string]interface{} `json:"filters,omitempty" url:"-"`
+	Query   *string        `json:"query,omitempty" url:"-"`
+	Filters map[string]any `json:"filters,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -516,7 +516,7 @@ func (s *SearchResourcesRequest) SetQuery(query *string) {
 
 // SetFilters sets the Filters field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchResourcesRequest) SetFilters(filters map[string]interface{}) {
+func (s *SearchResourcesRequest) SetFilters(filters map[string]any) {
 	s.Filters = filters
 	s.require(searchResourcesRequestFieldFilters)
 }

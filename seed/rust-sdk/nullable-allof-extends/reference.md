@@ -85,7 +85,10 @@ async fn main() {
     client
         .create_test(
             &RootObject {
-                normal_object_fields: NormalObject { normal_field: None },
+                normal_object_fields: NormalObject {
+                    ..Default::default()
+                },
+                ..Default::default()
             },
             None,
         )

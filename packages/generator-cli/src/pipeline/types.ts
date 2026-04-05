@@ -44,6 +44,10 @@ export interface GithubStepConfig {
     commitMessage?: string;
     /** User-facing changelog entry for PR body. When present, used instead of commit message body. */
     changelogEntry?: string;
+    /** Structured PR description with Before/After code fences for breaking changes. Takes priority over changelogEntry for PR body. */
+    prDescription?: string;
+    /** One-sentence justification for WHY the version bump was chosen. Prepended to PR body when present. */
+    versionBumpReason?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
     /** Generator name for namespaced fern-generation-base tag */

@@ -21,9 +21,9 @@ client.complex().search(
             SearchRequestQuery.of(
                 SingleFilterSearchRequest
                     .builder()
-                    .field("field")
-                    .operator(SingleFilterSearchRequestOperator.EQUALS)
-                    .value("value")
+                    .field(Optional.of("field"))
+                    .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                    .value(Optional.of("value"))
                     .build()
             )
         )
@@ -1274,7 +1274,7 @@ client.users().listWithOffsetStepPagination(
     ListUsersOffsetStepPaginationRequest
         .builder()
         .page(1)
-        .limit(1)
+        .limit(3)
         .order(Order.ASC)
         .build()
 );
@@ -1589,6 +1589,72 @@ client.users().listWithOptionalData(
 <dd>
 
 **page:** `Optional<Integer>` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.listWithAliasedData() -> ListUsersAliasedDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listWithAliasedData(
+    ListUsersAliasedDataRequest
+        .builder()
+        .page(1)
+        .perPage(1)
+        .startingAfter("starting_after")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Optional<Integer>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `Optional<Integer>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `Optional<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
     
 </dd>
 </dl>

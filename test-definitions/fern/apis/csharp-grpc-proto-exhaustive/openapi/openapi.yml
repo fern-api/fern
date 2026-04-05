@@ -9,11 +9,6 @@ tags:
 paths:
   /foo:
     post:
-      tag: dataservice
-      x-fern-sdk-group-name:
-        - dataservice
-      x-fern-sdk-method-name: foo
-      operationId: foo
       responses:
         "200":
           content:

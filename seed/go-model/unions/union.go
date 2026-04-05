@@ -5,6 +5,7 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/unions/fern/internal"
 )
 

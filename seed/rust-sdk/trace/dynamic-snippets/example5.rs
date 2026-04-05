@@ -34,6 +34,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -46,17 +47,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                     TraceResponse {
                         submission_id: SubmissionId(
@@ -67,6 +73,7 @@ async fn main() {
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
+                            ..Default::default()
                         }),
                         stack: StackInformation {
                             num_stack_frames: 1,
@@ -79,17 +86,22 @@ async fn main() {
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
                                             DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
+                                        ..Default::default()
                                     },
                                 ],
+                                ..Default::default()
                             }),
+                            ..Default::default()
                         },
                         stdout: Some("stdout".to_string()),
+                        ..Default::default()
                     },
                 ],
             },

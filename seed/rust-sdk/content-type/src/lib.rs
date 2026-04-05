@@ -19,6 +19,7 @@
 //!             &PatchProxyRequest {
 //!                 application: Some("application".to_string()),
 //!                 require_auth: Some(true),
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -46,4 +47,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

@@ -1,9 +1,9 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
-    "experimental-readonly-constants": true,
+    "generate-literals": true,
     "experimental-enable-websockets": true
   },
   "originGitCommit": "DUMMY",

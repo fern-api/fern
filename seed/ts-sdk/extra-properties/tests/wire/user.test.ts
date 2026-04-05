@@ -15,6 +15,7 @@ describe("UserClient", () => {
             _version: "v1",
         };
         const rawResponseBody = { age: 30, location: "Wonderland", name: "Alice" };
+
         server
             .mockEndpoint()
             .post("/user")

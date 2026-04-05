@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
+import java.util.Arrays;
 
 public class Example32 {
     public static void main(String[] args) {
@@ -12,7 +13,9 @@ public class Example32 {
 
         client.endpoints()
                 .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
+                        .query(Arrays.asList("query"))
+                        .number(Arrays.asList(1))
+                        .build());
     }
 }

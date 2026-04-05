@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
@@ -13,6 +14,8 @@ export declare namespace RealtimeClient {
         model?: string;
         temperature?: number;
         languageCode?: string;
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -41,6 +44,7 @@ export class RealtimeClient {
             model,
             temperature,
             languageCode,
+            protocols,
             queryParams,
             headers,
             debug,
@@ -53,14 +57,14 @@ export class RealtimeClient {
             temperature,
             "language-code": languageCode,
         };
-        const _headers: Record<string, unknown> = { ...headers };
+        const _headers: Record<string, unknown> = mergeHeaders(this._options?.headers, headers);
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: {

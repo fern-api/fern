@@ -5,6 +5,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
+    hasDefaultImpl,
     isBase64Type,
     isBigIntType,
     isCollectionType,
@@ -130,6 +131,7 @@ function hasBigIntInType(typeRef: FernIr.TypeReference): boolean {
             bigInteger: () => true,
             date: () => false,
             dateTime: () => false,
+            dateTimeRfc2822: () => false,
             base64: () => false,
             uuid: () => false,
             _other: () => false
@@ -217,7 +219,8 @@ export function generateFieldType(
 
 export function generateFieldAttributes(
     property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty,
-    context?: ModelGeneratorContext
+    context?: ModelGeneratorContext,
+    options?: { skipSerialization?: boolean }
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
@@ -226,16 +229,26 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.rename(property.name.wireValue));
     }
 
-    // Add skip_serializing_if for optional fields to omit null values
+    // If the field is entirely skipped during serialization (e.g. query params sent
+    // separately from the request body), use skip_serializing instead of skip_serializing_if.
     const isOptional = isOptionalType(property.valueType);
-    if (isOptional) {
+    if (options?.skipSerialization) {
+        attributes.push(Attribute.serde.skipSerializing());
+    } else if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }
 
-    // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
-    // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
-    // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
-    if (context) {
+    // For non-optional fields with types that implement Default (primitives, containers),
+    // add #[serde(default)] so deserialization succeeds when the field is missing from JSON.
+    // This handles cases like deferred responses that return partial objects.
+    if (!isOptional && hasDefaultImpl(property.valueType, context)) {
+        attributes.push(Attribute.serde.default());
+    }
+
+    // Add custom serde with/format attributes for special types.
+    // Skip when the field is entirely excluded from serialization (e.g. query params or bytes body)
+    // since the with modules may not exist and aren't needed.
+    if (context && !options?.skipSerialization) {
         const dateTimeType = context.getDateTimeType();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
@@ -269,6 +282,16 @@ export function generateFieldAttributes(
                 attributes.push(Attribute.serde.with("crate::core::bigint_string::option"));
             } else {
                 attributes.push(Attribute.serde.with("crate::core::bigint_string"));
+            }
+        }
+
+        // Add number_serializers serde attribute for f64 fields to strip trailing .0 from whole numbers
+        if (isFloatingPointType(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with("crate::core::number_serializers::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::number_serializers"));
             }
         }
     }
@@ -360,4 +383,32 @@ export function writeStructUseStatements(
 
     // Add serde imports LAST
     writer.writeLine("use serde::{Deserialize, Serialize};");
+}
+
+/**
+ * Convert query parameters to object properties for inclusion in request structs.
+ * Returns both the properties and the set of field names (after keyword escaping)
+ * so callers can mark them with #[serde(skip_serializing)].
+ */
+export function convertQueryParametersToProperties(
+    queryParams: FernIr.QueryParameter[],
+    context: { escapeRustKeyword: (name: string) => string }
+): { properties: FernIr.ObjectProperty[]; fieldNames: Set<string> } {
+    const fieldNames = new Set<string>();
+    const properties = queryParams.map((queryParam) => {
+        let valueType = queryParam.valueType;
+        if (queryParam.allowMultiple) {
+            valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
+        }
+        fieldNames.add(context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName));
+        return {
+            name: queryParam.name,
+            valueType,
+            docs: queryParam.docs,
+            availability: queryParam.availability,
+            propertyAccess: undefined,
+            v2Examples: undefined
+        };
+    });
+    return { properties, fieldNames };
 }

@@ -1,0 +1,90 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "heartbeat",
+        "string_data",
+        "number_data",
+        "object_data"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "heartbeat"
+        }
+      },
+      "required": [
+        "event"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "string_data"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "number_data"
+        },
+        "data": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "object_data"
+        },
+        "data": {
+          "$ref": "#/definitions/ObjectPayloadWithEventField"
+        }
+      },
+      "required": [
+        "event",
+        "data"
+      ]
+    }
+  ],
+  "definitions": {
+    "ObjectPayloadWithEventField": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "event"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
@@ -34,6 +35,7 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly typeMapper: RubyTypeMapper;
     public readonly typesDirName: string = "types";
     public readonly typesModuleName: string = "Types";
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         ir: FernIr.IntermediateRepresentation,
@@ -44,6 +46,11 @@ export abstract class AbstractRubyGeneratorContext<
         super(config, generatorNotificationService);
         this.ir = ir;
         this.customConfig = customConfig;
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "ruby",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.typeMapper = new RubyTypeMapper(this);
         this.project = new RubyProject({ context: this });
     }
@@ -74,7 +81,7 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootPackageName(): string {
-        return this.ir.apiName.camelCase.safeName.toLowerCase();
+        return this.caseConverter.camelSafe(this.ir.apiName).toLowerCase();
     }
 
     public getVersionFromConfig(): string {
@@ -138,11 +145,11 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     protected snakeNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
-        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName);
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.snakeSafe(path));
     }
 
     protected pascalNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
-        return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
+        return typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path));
     }
 
     public abstract getAllTypeDeclarations(): FernIr.TypeDeclaration[];

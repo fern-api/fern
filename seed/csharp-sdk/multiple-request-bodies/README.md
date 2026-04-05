@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedApi)](https://nuget.org/packages/SeedApi)
+[![nuget shield](https://img.shields.io/nuget/v/Fernmultiple-request-bodies)](https://nuget.org/packages/Fernmultiple-request-bodies)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -27,7 +28,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedApi
+dotnet add package Fernmultiple-request-bodies
 ```
 
 ## Reference
@@ -43,6 +44,19 @@ using SeedApi;
 
 var client = new SeedApiClient("TOKEN");
 await client.UploadJsonDocumentAsync(new UploadDocumentRequest());
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedApi;
+
+var client = new SeedApiClient(new ClientOptions
+{
+    BaseUrl = SeedApiEnvironment.Default
+});
 ```
 
 ## Exception Handling

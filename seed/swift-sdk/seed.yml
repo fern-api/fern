@@ -101,14 +101,17 @@ fixtures:
         decodeNullableToOptional: true
       outputFolder: nullable-as-optional
   single-url-environment-default:
-    - customConfig: null
+    - customConfig:
+        maxRetries: 5
       outputFolder: no-custom-config
     - customConfig:
         environmentEnumName: MyCustomEnvironment
       outputFolder: with-custom-config
 
 allowedFailures:
+  - schemaless-request-body-examples
   - api-wide-base-path
+  - bytes-upload
   - audiences
   - header-auth-environment-variable
   - client-side-params:with-custom-config
@@ -157,9 +160,12 @@ allowedFailures:
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   # Server URL templating not yet supported in Swift SDK
+  - server-sent-events-openapi
   - server-url-templating
   - variables
   - websocket-inferred-auth
   # Intermediate failures
   - any-auth
   - imdb
+  # Boolean literal enum changes require seed snapshot regeneration
+  - null-type

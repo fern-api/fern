@@ -1,0 +1,395 @@
+{
+  "info": {
+    "name": "Schemaless Request Body Examples API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Create a new plant",
+      "request": {
+        "description": "Creates a plant with example JSON but no request body schema.",
+        "url": {
+          "raw": "{{baseUrl}}/plants",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "plants"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Venus Flytrap\",\n    \"species\": \"Dionaea muscipula\",\n    \"care\": {\n        \"light\": \"full sun\",\n        \"water\": \"distilled only\",\n        \"humidity\": \"high\"\n    },\n    \"tags\": [\n        \"carnivorous\",\n        \"tropical\"\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates a plant with example JSON but no request body schema.",
+            "url": {
+              "raw": "{{baseUrl}}/plants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Venus Flytrap\",\n    \"species\": \"Dionaea muscipula\",\n    \"care\": {\n        \"light\": \"full sun\",\n        \"water\": \"distilled only\",\n        \"humidity\": \"high\"\n    },\n    \"tags\": [\n        \"carnivorous\",\n        \"tropical\"\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully created",
+          "body": "{\n    \"id\": \"plant_123\",\n    \"name\": \"Venus Flytrap\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates a plant with example JSON but no request body schema.",
+            "url": {
+              "raw": "{{baseUrl}}/plants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"key\": \"value\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully created",
+          "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Update an existing plant",
+      "request": {
+        "description": "Updates a plant with example JSON but no request body schema.",
+        "url": {
+          "raw": "{{baseUrl}}/plants/:plantId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "plants",
+            ":plantId"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "plantId",
+              "description": null,
+              "value": "plantId"
+            }
+          ]
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Updated Venus Flytrap\",\n    \"care\": {\n        \"light\": \"partial shade\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Updates a plant with example JSON but no request body schema.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/:plantId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                ":plantId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "plantId",
+                  "description": null,
+                  "value": "plantId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Venus Flytrap\",\n    \"care\": {\n        \"light\": \"partial shade\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully updated",
+          "body": "{\n    \"id\": \"plant_123\",\n    \"name\": \"Updated Venus Flytrap\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Updates a plant with example JSON but no request body schema.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/:plantId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                ":plantId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "plantId",
+                  "description": null,
+                  "value": "plantId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"key\": \"value\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully updated",
+          "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Create a plant with both schema and example",
+      "request": {
+        "description": "A control endpoint that has both schema and example defined.",
+        "url": {
+          "raw": "{{baseUrl}}/plants/with-schema",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "plants",
+            "with-schema"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Sundew\",\n    \"species\": \"Drosera capensis\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "A control endpoint that has both schema and example defined.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/with-schema",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                "with-schema"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Sundew\",\n    \"species\": \"Drosera capensis\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully created",
+          "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "A control endpoint that has both schema and example defined.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/with-schema",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                "with-schema"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\",\n    \"species\": \"species\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successfully created",
+          "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

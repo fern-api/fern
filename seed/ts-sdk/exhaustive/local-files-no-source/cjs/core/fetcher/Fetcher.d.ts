@@ -38,10 +38,12 @@ export declare namespace Fetcher {
     }
     interface TimeoutError {
         reason: "timeout";
+        cause?: unknown;
     }
     interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+        cause?: unknown;
     }
 }
 export declare function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>>;

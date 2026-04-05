@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -88,6 +89,22 @@ public final class FunctionSignature {
     return Optional.empty();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof FunctionSignature && value.equals(((FunctionSignature) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @JsonValue
   private Value getValue() {
     return this.value;
@@ -126,6 +143,10 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class VoidValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private VoidFunctionSignature value;
 
     @JsonCreator(
@@ -168,6 +189,10 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class NonVoidValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private NonVoidFunctionSignature value;
 
     @JsonCreator(
@@ -210,6 +235,10 @@ public final class FunctionSignature {
   @JsonIgnoreProperties("type")
   private static final class VoidThatTakesActualResultValue implements Value {
     @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "type",
+        allowSetters = true
+    )
     private VoidFunctionSignatureThatTakesActualResult value;
 
     @JsonCreator(

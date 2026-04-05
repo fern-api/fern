@@ -23,21 +23,18 @@ jobs:
     if: ${{ inputs.version != null }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-tags: true
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "stable"
 
@@ -55,4 +52,4 @@ jobs:
           cd packages/snippets/core
           pnpm turbo run dist --filter=${{ env.PACKAGE_NAME }} -- ${{ inputs.version }}
           cd dist
-          npx -y npm@latest publish --access public --tag latest
+          npx -y npm@11 publish --access public --tag latest

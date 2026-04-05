@@ -33,12 +33,14 @@ export const BaseJavaCustomConfigSchema = z.object({
     "gradle-central-dependency-management": z.boolean().optional(),
     "output-directory": z.enum(["source-root", "project-root"]).optional(),
     "custom-interceptors": z.boolean().optional(),
+    "omit-fern-headers": z.boolean().optional(),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),
 
     // Deprecated.
-    "wrapped-aliases": z.boolean().optional()
+    "wrapped-aliases": z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;

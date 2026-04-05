@@ -43,12 +43,15 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    inferDefaultEnvironment: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    inferForwardCompatible: undefined,
+    coerceConstsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -169,6 +172,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        inferDefaultEnvironment: settings?.["infer-default-environment"],
         groupMultiApiEnvironments:
             settings != null && "group-multi-api-environments" in settings
                 ? settings["group-multi-api-environments"]
@@ -177,7 +181,9 @@ export function parseBaseApiDefinitionSettingsSchema(
             settings?.["remove-discriminants-from-schemas"]
         ),
         pathParameterOrder: settings?.["path-parameter-order"],
-        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
+        inferForwardCompatible: settings?.["infer-forward-compatible"],
+        coerceConstsTo: settings?.["coerce-consts-to"]
     };
 }
 
@@ -581,6 +587,34 @@ async function convertGroup({
     };
 }
 
+function getGeneratorNameAndImage(
+    generator: generatorsYml.GeneratorInvocationSchema,
+    context: TaskContext
+): {
+    normalizedName: string;
+    containerImage: string | undefined;
+} {
+    if ("image" in generator) {
+        // CustomGeneratorInvocationSchema — normalize the image name for IR version resolution
+        // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
+        // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
+        // org should not appear in custom registry paths.
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
+        return {
+            normalizedName: normalizedImageName,
+            containerImage: `${generator.image.registry}/${correctedImageName}`
+        };
+    }
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    return {
+        normalizedName,
+        containerImage: undefined
+    };
+}
+
 async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
@@ -600,13 +634,11 @@ async function convertGenerator({
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Warn and correct incorrect "fern-api/" org prefix in generators.yml
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
-    // Normalize the generator name by adding the default Docker org prefix if not present
-    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
         name: normalizedName,
+        containerImage,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({

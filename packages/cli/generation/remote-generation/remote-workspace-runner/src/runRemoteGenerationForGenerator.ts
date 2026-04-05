@@ -7,11 +7,12 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
@@ -39,8 +40,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -56,8 +59,10 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -72,7 +77,13 @@ export async function runRemoteGenerationForGenerator({
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
             { substituteAsEmpty: isPreview }
         );
 
@@ -166,7 +177,7 @@ export async function runRemoteGenerationForGenerator({
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
+        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
@@ -228,9 +239,7 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
-            );
+            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -259,6 +268,7 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview,
         fernignorePath,
+        skipFernignore,
         retryRateLimited
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
@@ -309,7 +319,7 @@ export async function runRemoteGenerationForGenerator({
             });
         } catch (error) {
             interactiveTaskContext.logger.warn(
-                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+                `Failed to upload dynamic IR for SDK generation: ${extractErrorMessage(error)}`
             );
         }
     }

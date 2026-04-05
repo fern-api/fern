@@ -3,12 +3,14 @@ import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 import { RubocopFile } from "./RubocopFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -103,7 +105,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
-        const githubCiContents = template(githubCiTemplate)({ enableWireTests });
+        const githubCiContents = eta.renderString(githubCiTemplate, { enableWireTests });
         await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
     }
 
@@ -139,7 +141,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     filename,
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
-                    customPagerClassName: this.rubyContext.customConfig.customPagerName
+                    customPagerClassName: this.rubyContext.customConfig.customPagerName,
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    maxRetries: this.rubyContext.customConfig.maxRetries
                 })
             );
         }
@@ -149,12 +153,16 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         filename,
         gemNamespace,
         rootFolderName,
-        customPagerClassName
+        customPagerClassName,
+        omitFernHeaders,
+        maxRetries
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
+        omitFernHeaders?: boolean;
+        maxRetries?: number;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -165,7 +173,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 variables: getTemplateVariables({
                     gemNamespace,
                     rootFolderName,
-                    customPagerClassName
+                    customPagerClassName,
+                    omitFernHeaders,
+                    maxRetries
                 })
             })
         );
@@ -210,17 +220,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getTemplateVariables({
     gemNamespace,
     rootFolderName,
-    customPagerClassName
+    customPagerClassName,
+    omitFernHeaders,
+    maxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
+    omitFernHeaders?: boolean;
+    maxRetries?: number;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -228,7 +242,9 @@ function getTemplateVariables({
         sdkName: gemNamespace.toLowerCase(),
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
-        custom_pager_class_name: customPagerClassName ?? "CustomPager"
+        custom_pager_class_name: customPagerClassName ?? "CustomPager",
+        omitFernHeaders: omitFernHeaders ?? false,
+        defaultMaxRetries: maxRetries ?? 2
     };
 }
 
@@ -263,11 +279,20 @@ class GemspecFile {
         return "\n" + dependencyLines.join("\n");
     }
 
+    private getBase64DependencyString(): string {
+        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+        if (!hasBasicAuth) {
+            return "";
+        }
+        return '\nspec.add_dependency "base64"';
+    }
+
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
         const extraDependenciesString = this.getExtraDependenciesString();
+        const base64DependencyString = this.getBase64DependencyString();
 
         return dedent`
             # frozen_string_literal: true
@@ -279,13 +304,13 @@ class GemspecFile {
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
             spec.name = "${gemName}"
-            spec.authors = ["${moduleName}"] 
+            spec.authors = ["${moduleName}"]
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
             spec.required_ruby_version = ">= 3.3.0"
             spec.metadata["rubygems_mfa_required"] = "true"
-            
+
             # Specify which files should be added to the gem when it is released.
             # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
             gemspec = File.basename(__FILE__)
@@ -298,7 +323,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-${extraDependenciesString}
+${base64DependencyString}${extraDependenciesString}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -582,12 +607,17 @@ class ModuleFile {
     private project: RubyProject;
     public readonly filePath: AbsoluteFilePath;
     public readonly fileName: string;
-    private readonly baseContents: string = dedent`
-        # frozen_string_literal: true
+    private get baseContents(): string {
+        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+        const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (hasBasicAuth) {
+            requires.push('"base64"');
+        }
+        return dedent`
+            # frozen_string_literal: true
 
-        require "json"
-        require "net/http"
-        require "securerandom"\n\n`;
+            ${requires.map((r) => `require ${r}`).join("\n")}\n\n`;
+    }
 
     public constructor({ context, project }: ModuleFile.Args) {
         this.context = context;

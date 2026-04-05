@@ -19,7 +19,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({
             context,
             serviceId,
@@ -47,6 +47,10 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
+            // Skip endpoints with unsupported pagination types
+            if (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") {
+                return undefined;
+            }
             const example = context.getExampleEndpointCallIfExists(endpoint);
             if (!example) {
                 // skip endpoints that don't have an example
@@ -182,6 +186,8 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
+    return (
+        service.displayName ?? service.name.fernFilepath.allParts.map((part) => context.case.pascalSafe(part)).join(" ")
+    );
 }

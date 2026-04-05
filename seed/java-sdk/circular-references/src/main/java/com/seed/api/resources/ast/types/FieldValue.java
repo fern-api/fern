@@ -82,6 +82,22 @@ public final class FieldValue {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof FieldValue && value.equals(((FieldValue) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -149,6 +165,7 @@ public final class FieldValue {
     @JsonIgnoreProperties("type")
     private static final class ObjectValueValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ObjectValue value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

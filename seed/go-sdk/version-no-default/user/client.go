@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+
 	fern "github.com/version-no-default/fern"
 	core "github.com/version-no-default/fern/core"
 	internal "github.com/version-no-default/fern/internal"

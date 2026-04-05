@@ -14,6 +14,7 @@ describe("ServiceClient", () => {
             exceptionMessage: "This component is unavailable!",
             exceptionStacktrace: "<logs>",
         };
+
         server
             .mockEndpoint()
             .get("/file/notification/notification-hsy129x")

@@ -29,7 +29,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
             namespace: "Usage",
             generation: this.generation,
             allNamespaceSegments: new Set(),
-            allTypeClassReferences: new Map()
+            allTypeClassReferences: new Map(),
+            // Snippets are user-facing code (READMEs, docs) — skip global:: qualifiers
+            // so the output looks clean. With empty allNamespaceSegments/allTypeClassReferences,
+            // the ambiguity and type-namespace conflict checks are already no-ops;
+            // this flag additionally suppresses the unconditional System prefix.
+            skipGlobalQualifier: true
         });
     }
 
@@ -47,7 +52,9 @@ export class EndpointSnippetGenerator extends WithGeneration {
             namespace: "Usage",
             generation: this.generation,
             allNamespaceSegments: new Set(),
-            allTypeClassReferences: new Map()
+            allTypeClassReferences: new Map(),
+            // See generateSnippet for rationale.
+            skipGlobalQualifier: true
         });
     }
 
@@ -108,7 +115,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         // before we add the method, we're going to make the class aware of the root client namespace
         // which can help when finding out if we're going to have an ambiguous type of some kind.
-        class_.addNamespaceReference(this.Types.RootClient.namespace);
+        class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
             name: "Do",
@@ -203,6 +210,37 @@ export class EndpointSnippetGenerator extends WithGeneration {
             );
         }
         this.context.errors.unscope();
+
+        if (this.settings.unifiedClientOptions) {
+            // In unified mode, all auth/header args become properties inside ClientOptions
+            const allClientOptionsArgs = [
+                ...authArgs.map((arg) => ({
+                    name: upperFirst(arg.name),
+                    assignment: arg.assignment
+                })),
+                ...headerArgs.map((arg) => ({
+                    name: upperFirst(arg.name),
+                    assignment: arg.assignment
+                })),
+                ...optionArgs.map((arg) => ({
+                    name: arg.name,
+                    assignment: arg.assignment
+                }))
+            ];
+            if (allClientOptionsArgs.length === 0) {
+                return [];
+            }
+            return [
+                {
+                    name: "clientOptions",
+                    assignment: this.csharp.instantiateClass({
+                        classReference: this.Types.ClientOptions,
+                        arguments_: allClientOptionsArgs,
+                        multiline: true
+                    })
+                }
+            ];
+        }
 
         if (optionArgs.length === 0) {
             return [...authArgs, ...headerArgs];
@@ -785,7 +823,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.Types.RootClient,
+            classReference: this.Types.RootClientForSnippets,
             arguments_,
             forceUseConstructor: true,
             multiline: true

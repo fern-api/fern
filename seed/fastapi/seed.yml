@@ -149,6 +149,7 @@ allowedFailures:
   - enum:no-custom-config
   - server-sent-events
   - server-sent-event-examples
+  - server-sent-events-openapi
   - streaming-parameter
   - any-auth
   - nullable-request-body

@@ -12,6 +12,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.username_cursor import UsernameCursor
+from .types.list_users_aliased_data_pagination_response import ListUsersAliasedDataPaginationResponse
 from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
@@ -916,6 +917,75 @@ class RawUsersClient:
                     page=page + 1,
                     request_options=request_options,
                 )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_with_aliased_data(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        per_page: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[User, ListUsersAliasedDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        per_page : typing.Optional[int]
+            Defaults to per page
+
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersAliasedDataPaginationResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users/aliased-data",
+            method="GET",
+            params={
+                "page": page,
+                "per_page": per_page,
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersAliasedDataPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersAliasedDataPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+                    _get_next = lambda: self.list_with_aliased_data(
+                        page=page,
+                        per_page=per_page,
+                        starting_after=_parsed_next,
+                        request_options=request_options,
+                    )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1858,6 +1928,78 @@ class AsyncRawUsersClient:
                         page=page + 1,
                         request_options=request_options,
                     )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_with_aliased_data(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        per_page: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[User, ListUsersAliasedDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        per_page : typing.Optional[int]
+            Defaults to per page
+
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersAliasedDataPaginationResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users/aliased-data",
+            method="GET",
+            params={
+                "page": page,
+                "per_page": per_page,
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersAliasedDataPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersAliasedDataPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                    _parsed_next = _parsed_response.page.next.starting_after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.list_with_aliased_data(
+                            page=page,
+                            per_page=per_page,
+                            starting_after=_parsed_next,
+                            request_options=request_options,
+                        )
 
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()

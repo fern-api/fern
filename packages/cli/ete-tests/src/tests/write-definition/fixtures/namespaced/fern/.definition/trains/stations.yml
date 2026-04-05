@@ -3,11 +3,17 @@ imports:
 types:
   GetStationsResponse:
     properties:
-      data: optional<list<trainsRoot.Station>>
-      links: optional<GetStationsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Station>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetStationsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetStationsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination

@@ -5,6 +5,7 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 interface EndpointParameter {
@@ -28,9 +29,11 @@ export class SubClientGenerator {
     private readonly subpackage: FernIr.Subpackage;
     private readonly service?: FernIr.HttpService;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
 
     constructor(context: SdkGeneratorContext, subpackage: FernIr.Subpackage) {
         this.context = context;
+        this.environmentGenerator = new EnvironmentGenerator({ context: this.context });
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -44,6 +47,13 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
+        // Skip generating HTTP client stubs for subpackages that only have a WebSocket
+        // channel and no HTTP service. The actual WebSocket functionality is handled by
+        // the WebSocketChannelGenerator which generates files in src/api/websocket/.
+        if (this.context.isWebSocketOnlySubpackage(this.subpackage)) {
+            return null;
+        }
+
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
         // If this subpackage has any children at all and is in a nested directory,
@@ -117,6 +127,23 @@ export class SubClientGenerator {
             rawDeclarations: [rustClient.toString()],
             imports: this.generateImports()
         };
+    }
+
+    /**
+     * Returns just the endpoint methods for this service, without the client struct wrapper.
+     * Used by RootClientGenerator to add root-level endpoint methods directly on the main client.
+     */
+    public getEndpointMethods(): rust.Client.SimpleMethod[] {
+        const endpoints = this.service?.endpoints || [];
+        return this.convertEndpointsToHttpMethods(endpoints);
+    }
+
+    /**
+     * Returns the imports required by this service's endpoint methods.
+     * Used by RootClientGenerator to merge root-level endpoint imports.
+     */
+    public getEndpointImports(): UseStatement[] {
+        return this.generateImports();
     }
 
     public generateModFile(): RustFile | null {
@@ -688,13 +715,12 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime parameter - use FixedOffset or Utc based on config
                         requiredTypes.add("DateTime");
-                        if (this.context.getDateTimeType() === "utc") {
-                            requiredTypes.add("Utc");
-                        } else {
-                            requiredTypes.add("FixedOffset");
-                        }
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
+                    },
+                    dateTimeRfc2822: () => {
+                        requiredTypes.add("DateTime");
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
                     },
                     base64: () => {
                         // String is built-in
@@ -802,6 +828,7 @@ export class SubClientGenerator {
                     bigInteger: () => false,
                     date: () => false,
                     dateTime: () => false,
+                    dateTimeRfc2822: () => false,
                     base64: () => false,
                     uuid: () => false,
                     _other: () => false
@@ -828,6 +855,21 @@ export class SubClientGenerator {
         return methods;
     }
 
+    /**
+     * Returns the URL method name for an endpoint's base URL, or undefined
+     * if no multi-URL resolution is needed (single-URL env or no baseUrl on endpoint).
+     */
+    private getEndpointUrlMethodName(endpoint: FernIr.HttpEndpoint): string | undefined {
+        if (!this.context.hasMultipleBaseUrls()) {
+            return undefined;
+        }
+        const baseUrlId = endpoint.baseUrl ?? undefined;
+        if (!baseUrlId) {
+            return undefined;
+        }
+        return this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+    }
+
     private generateHttpMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
@@ -849,6 +891,8 @@ export class SubClientGenerator {
         let typeParameter = "";
         let executeArgs = "";
 
+        const isBytesRequest = this.isBytesEndpoint(endpoint);
+
         if (isFileUpload) {
             // Use multipart request for file uploads
             executeMethod = "execute_multipart_request";
@@ -857,6 +901,18 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${multipartBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+        } else if (isBytesRequest) {
+            // Use bytes request for octet-stream endpoints
+            executeMethod = "execute_bytes_request";
+            const bytesBody = endpoint.queryParameters.length > 0
+                ? "Some(request.body.to_vec())"
+                : "Some(request.to_vec())";
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
             options,`;
         } else {
@@ -883,13 +939,31 @@ export class SubClientGenerator {
             }
         }
 
+        // Determine if this endpoint needs multi-URL resolution.
+        // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
+        const urlMethodName = this.getEndpointUrlMethodName(endpoint);
+        const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        let body: string;
+
+        if (urlMethodName && supportsBaseUrlOverride) {
+            // Multi-URL: resolve base URL at call time from environment
+            const baseUrlResolution =
+                `let base_url = self.http_client.config().environment.as_ref()\n` +
+                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            base_url,${executeArgs}
+        ).await`;
+        } else {
+            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+        ).await`;
+        }
+
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`,
+            body,
             docs: endpoint.docs
                 ? rust.docComment({
                       summary: endpoint.docs,
@@ -912,7 +986,8 @@ export class SubClientGenerator {
             let paramType = param.type.toString();
 
             if (param.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
 
             if (param.optional) {
@@ -926,7 +1001,8 @@ export class SubClientGenerator {
         if (requestBodyParam) {
             let paramType = requestBodyParam.type.toString();
             if (requestBodyParam.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -949,15 +1025,8 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            if (this.isBytesEndpoint(endpoint)) {
-                // BYTES + QUERY: bytes body can't hold query fields, add them separately
-                this.addRequestBodyParameter(endpoint, params);
-                this.addIndividualQueryParameters(endpoint, params);
-            } else {
-                // MIXED: Request body contains both body + query fields
-                this.addRequestBodyParameter(endpoint, params);
-                // Query params are now included in the request body struct
-            }
+            // Request body struct contains both body fields and query params
+            this.addRequestBodyParameter(endpoint, params);
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);
@@ -1033,7 +1102,15 @@ export class SubClientGenerator {
                     const requestTypeName = this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                bytes: () => {
+                    // If there are query parameters, use the generated request struct
+                    if (endpoint.queryParameters.length > 0) {
+                        const requestTypeName = this.context.getBytesRequestTypeName(endpoint.id);
+                        return rust.Type.reference(rust.reference({ name: requestTypeName }));
+                    }
+                    // No query params — use raw Vec<u8>
+                    return rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8));
+                },
                 _other: () => {
                     // Generate proper request type for unknown cases too
                     const requestTypeName = this.getRequestTypeName(endpoint);
@@ -1104,6 +1181,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1194,6 +1272,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1320,10 +1399,7 @@ export class SubClientGenerator {
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
         const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
-        if (endpoint && this.isBytesEndpoint(endpoint)) {
-            // BYTES body: query params are individual method parameters
-            return `${fieldName}.clone()`;
-        } else if (endpoint?.requestBody) {
+        if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
         } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
@@ -1411,6 +1487,12 @@ export class SubClientGenerator {
                 custom: () => {
                     /* no-op */
                 },
+                uri: () => {
+                    /* no-op */
+                },
+                path: () => {
+                    /* no-op */
+                },
                 _other: () => {
                     /* no-op */
                 }
@@ -1488,10 +1570,10 @@ export class SubClientGenerator {
         if (requestBodyParam && endpoint.requestBody) {
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
-                return "Some(serde_json::to_value(&request.body).unwrap_or_default())";
+                return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
             }
             // For other cases, serialize the whole request
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+            return "Some(serde_json::to_value(request).map_err(ApiError::Serialization)?)";
         }
         return "None";
     }
@@ -1625,6 +1707,7 @@ export class SubClientGenerator {
                             bigInteger: () => false,
                             date: () => false,
                             dateTime: () => false,
+                            dateTimeRfc2822: () => false,
                             base64: () => true,
                             uuid: () => false,
                             _other: () => false
@@ -1715,6 +1798,7 @@ export class SubClientGenerator {
                     bigInteger: () => true, // BigInt is large, pass by reference
                     date: () => true,
                     dateTime: () => true,
+                    dateTimeRfc2822: () => true,
                     base64: () => true, // Base64 strings are typically large
                     uuid: () => true,
                     _other: () => true
@@ -1839,6 +1923,8 @@ export class SubClientGenerator {
             offset: (offset) =>
                 this.generateOffsetPaginationLogic(endpoint, httpMethod, pathExpression, requestBody, offset),
             custom: (_custom) => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            uri: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            path: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             _other: () => {
                 throw new Error("Unknown pagination type");
             }
@@ -2074,6 +2160,8 @@ export class SubClientGenerator {
             cursor: (cursor) => this.generateGenericCursorExtraction(cursor),
             offset: (offset) => this.generateGenericOffsetExtraction(offset, isOffsetPagination),
             custom: () => this.generateGenericCustomExtraction(),
+            uri: () => this.generateGenericCustomExtraction(),
+            path: () => this.generateGenericCustomExtraction(),
             _other: () => this.generateGenericCustomExtraction()
         });
     }

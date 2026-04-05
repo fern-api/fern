@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
-    context "context"
 )
 
 func do() {
@@ -16,10 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.MustParseDateTime(
-        "2024-01-15T09:30:00Z",
-    )
-    client.Endpoints.Primitive.GetAndReturnDatetime(
+    request := 1
+    client.Endpoints.Primitive.GetAndReturnInt(
         context.TODO(),
         request,
     )

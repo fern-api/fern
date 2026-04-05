@@ -10,6 +10,7 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -50,6 +51,45 @@ $client->getToken(
     ]),
 );
 
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+This API uses multiple base URLs for different services. The SDK defaults to the `RegionalApiServer` environment.
+
+Available environments:
+- `Environments::RegionalApiServer()`
+
+Each environment provides multiple base URLs:
+  - `base`: The base base URL
+  - `auth`: The auth base URL
+
+To use a different environment, pass it to the client constructor:
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::Staging()
+);
+```
+
+You can also create a custom environment with your own URLs:
+
+```php
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::custom(
+        base: 'https://your-base-url.com',
+    auth: 'https://your-auth-url.com'
+    )
+);
+```
 ```
 
 ## Exception Handling

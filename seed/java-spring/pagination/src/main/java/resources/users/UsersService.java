@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
+import resources.users.types.ListUsersAliasedDataPaginationResponse;
 import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
 import resources.users.types.ListUsersMixedTypePaginationResponse;
@@ -144,4 +145,13 @@ public interface UsersService {
   )
   ListUsersOptionalDataPaginationResponse listWithOptionalData(
       @RequestParam("page") Optional<Integer> page);
+
+  @GetMapping(
+      value = "/aliased-data",
+      produces = "application/json"
+  )
+  ListUsersAliasedDataPaginationResponse listWithAliasedData(
+      @RequestParam("page") Optional<Integer> page,
+      @RequestParam("per_page") Optional<Integer> perPage,
+      @RequestParam("starting_after") Optional<String> startingAfter);
 }

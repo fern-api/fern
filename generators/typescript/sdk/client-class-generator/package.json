@@ -27,12 +27,14 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
+    "test:coverage": "vitest --passWithNoTests --run --coverage",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^65.3.0",
+    "@fern-fern/ir-sdk": "66.0.0-alpha.1",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
@@ -45,6 +47,7 @@
     "@fern-typescript/test-utils": "workspace:*",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

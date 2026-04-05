@@ -4,5 +4,5 @@ import type * as FernIr from "../../../index.js";
 
 export interface EnvironmentBaseUrlWithId {
     id: FernIr.EnvironmentBaseUrlId;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
 }

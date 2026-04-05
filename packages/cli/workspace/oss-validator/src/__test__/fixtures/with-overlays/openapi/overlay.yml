@@ -1,0 +1,11 @@
+overlay: 1.0.0
+info:
+  title: Add description to User schema
+  version: 1.0.0
+actions:
+  - target: "$.components.schemas.User"
+    update:
+      description: A user in the system
+  - target: "$.info"
+    update:
+      description: API for managing users

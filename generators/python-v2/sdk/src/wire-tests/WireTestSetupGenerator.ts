@@ -169,7 +169,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
@@ -384,6 +384,7 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
+_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
 _WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
 _PROJECT_NAME: str = "${projectName}"
 
@@ -410,8 +411,17 @@ def _get_wiremock_port() -> str:
 
 def _start_wiremock() -> None:
     """Starts the WireMock container using docker-compose."""
-    global _STARTED, _WIREMOCK_URL
+    global _STARTED, _EXTERNAL, _WIREMOCK_URL
     if _STARTED:
+        return
+
+    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
+    existing_url = os.environ.get("WIREMOCK_URL")
+    if existing_url:
+        _WIREMOCK_URL = existing_url
+        _EXTERNAL = True
+        _STARTED = True
+        print(f"\\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
         return
 
     print(f"\\nStarting WireMock container (project: {_PROJECT_NAME})...")
@@ -434,6 +444,10 @@ def _start_wiremock() -> None:
 
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
+    if _EXTERNAL:
+        # Container is managed externally; nothing to tear down.
+        return
+
     print("\\nStopping WireMock container...")
     subprocess.run(
         ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
@@ -450,6 +464,26 @@ def _is_xdist_worker(config: pytest.Config) -> bool:
     on the config object, while the controller process does not.
     """
     return hasattr(config, "workerinput")
+
+
+def _has_httpx_aiohttp() -> bool:
+    """Check if httpx_aiohttp is importable."""
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+    """Auto-skip @pytest.mark.aiohttp tests when httpx_aiohttp is not installed."""
+    if _has_httpx_aiohttp():
+        return
+    skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")
+    for item in items:
+        if "aiohttp" in item.keywords:
+            item.add_marker(skip_aiohttp)
 
 
 def pytest_configure(config: pytest.Config) -> None:

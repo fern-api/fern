@@ -25,6 +25,8 @@ export declare namespace GenerationRunner {
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
+        skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }
 }
 
@@ -44,7 +46,9 @@ export class GenerationRunner {
         outputVersionOverride,
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
-        inspect
+        inspect,
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -68,7 +72,9 @@ export class GenerationRunner {
                                 irVersionOverride,
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
-                                inspect
+                                inspect,
+                                skipFernignore,
+                                skipAutogenerationIfManualExamplesExist
                             });
 
                             interactiveTaskContext.logger.info(
@@ -119,7 +125,9 @@ export class GenerationRunner {
         irVersionOverride,
         outputVersionOverride,
         absolutePathToFernConfig,
-        inspect
+        inspect,
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -130,12 +138,16 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
+        skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
@@ -152,7 +164,8 @@ export class GenerationRunner {
             smartCasing: generatorInvocation.smartCasing,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
-                disabled: generatorInvocation.disableExamples
+                disabled: generatorInvocation.disableExamples,
+                skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
             },
             readme: generatorInvocation.readme,
             version: outputVersionOverride,
@@ -199,7 +212,8 @@ export class GenerationRunner {
             ir: rawIr,
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
-            absolutePathToSpecRepo: undefined
+            absolutePathToSpecRepo: undefined,
+            skipFernignore
         });
     }
 }

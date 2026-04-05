@@ -4,11 +4,12 @@ package object
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -315,6 +316,88 @@ func (r *RawClient) GetAndReturnWithUnknownField(
 		return nil, err
 	}
 	return &core.Response[*types.ObjectWithUnknownField]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
+	ctx context.Context,
+	request *types.ObjectWithDocumentedUnknownType,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithDocumentedUnknownType], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-with-documented-unknown-type"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithDocumentedUnknownType
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithDocumentedUnknownType]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetAndReturnMapOfDocumentedUnknownType(
+	ctx context.Context,
+	request types.MapOfDocumentedUnknownType,
+	opts ...option.RequestOption,
+) (*core.Response[types.MapOfDocumentedUnknownType], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-map-of-documented-unknown-type"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response types.MapOfDocumentedUnknownType
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[types.MapOfDocumentedUnknownType]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

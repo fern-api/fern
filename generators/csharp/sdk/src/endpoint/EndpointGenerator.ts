@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
@@ -27,33 +28,45 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         interface_: ast.Interface,
         {
             serviceId,
-            endpoint
+            endpoint,
+            grpcClientInfo
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
+            grpcClientInfo?: GrpcClientInfo;
         }
     ): void {
         if (this.hasPagination(endpoint)) {
             switch (endpoint.pagination.type) {
                 case "offset":
                 case "cursor":
-                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
-                    this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: true });
+                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint, grpcClientInfo });
+                    this.generateUnpagedInterfaceSignature(interface_, {
+                        serviceId,
+                        endpoint,
+                        isPrivate: true,
+                        grpcClientInfo
+                    });
                     break;
                 case "custom":
-                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
+                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint, grpcClientInfo });
                     break;
                 case "uri":
                 case "path":
                     this.context.logger.warn(
-                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
                     );
                     return;
                 default:
                     assertNever(endpoint.pagination);
             }
         } else {
-            this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: false });
+            this.generateUnpagedInterfaceSignature(interface_, {
+                serviceId,
+                endpoint,
+                isPrivate: false,
+                grpcClientInfo
+            });
         }
     }
 
@@ -62,11 +75,13 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         {
             serviceId,
             endpoint,
-            isPrivate
+            isPrivate,
+            grpcClientInfo
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
             isPrivate: boolean;
+            grpcClientInfo?: GrpcClientInfo;
         }
     ): void {
         if (isPrivate) {
@@ -77,7 +92,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             endpoint
         });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(this.getRequestOptionsParameter({ endpoint, grpcClientInfo }));
         parameters.push(
             this.csharp.parameter({
                 type: this.System.Threading.CancellationToken,
@@ -85,7 +100,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 initializer: "default"
             })
         );
-        const rawReturn = getEndpointReturnType({ context: this.context, endpoint });
+        const isGrpc = this.isGrpcEndpoint(grpcClientInfo, endpoint);
+        const rawReturn = getEndpointReturnType({ context: this.context, endpoint, isGrpc });
 
         // Check if this is a streaming endpoint (returns IAsyncEnumerable<T>)
         // Streaming endpoints use async iterators which return IAsyncEnumerable<T> directly, not Task<IAsyncEnumerable<T>>
@@ -107,6 +123,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         // For interface methods:
         // - Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
         // - WithRawResponseTask<T> is already task-like, don't wrap in Task<>
+        // - gRPC endpoints return Task<T> (no raw response support)
         // - Empty responses return Task
         let return_: ast.Type;
         if (isStreaming) {
@@ -116,8 +133,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             // WithRawResponseTask<T> is already task-like, use it directly
             return_ = rawReturn;
         } else if (rawReturn != null) {
-            // Other non-streaming endpoints (like HEAD requests that return HttpResponseHeaders)
-            return_ = rawReturn;
+            // gRPC and other non-streaming endpoints: wrap in Task<T>
+            return_ = this.System.Threading.Tasks.Task(rawReturn);
         } else {
             // Empty responses return Task
             return_ = this.System.Threading.Tasks.Task();
@@ -136,10 +153,12 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         interface_: ast.Interface,
         {
             serviceId,
-            endpoint
+            endpoint,
+            grpcClientInfo
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
+            grpcClientInfo?: GrpcClientInfo;
         }
     ): void {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({
@@ -147,7 +166,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             endpoint
         });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(this.getRequestOptionsParameter({ endpoint, grpcClientInfo }));
         parameters.push(
             this.csharp.parameter({
                 type: this.System.Threading.CancellationToken,
@@ -168,7 +187,21 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getRequestOptionsParameter({ endpoint }: { endpoint: HttpEndpoint }): ast.Parameter {
+    private getRequestOptionsParameter({
+        endpoint,
+        grpcClientInfo
+    }: {
+        endpoint: HttpEndpoint;
+        grpcClientInfo?: GrpcClientInfo;
+    }): ast.Parameter {
+        const isGrpc = this.isGrpcEndpoint(grpcClientInfo, endpoint);
+        if (isGrpc) {
+            return this.csharp.parameter({
+                type: this.Types.GrpcRequestOptions.asOptional(),
+                name: this.names.parameters.requestOptions,
+                initializer: "null"
+            });
+        }
         const isIdempotent = endpoint.idempotent;
         // Use concrete RequestOptions/IdempotentRequestOptions classes (public) instead of interfaces (internal)
         // to ensure interface methods have consistent accessibility

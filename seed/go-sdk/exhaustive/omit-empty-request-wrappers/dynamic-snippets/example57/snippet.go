@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
-    context "context"
 )
 
 func do() {
@@ -16,12 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        Body: "string",
+    request := map[string]any{
+        "key": "value",
     }
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )

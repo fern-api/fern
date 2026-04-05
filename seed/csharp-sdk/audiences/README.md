@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedAudiences)](https://nuget.org/packages/SeedAudiences)
+[![nuget shield](https://img.shields.io/nuget/v/Fernaudiences)](https://nuget.org/packages/Fernaudiences)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -27,7 +28,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedAudiences
+dotnet add package Fernaudiences
 ```
 
 ## Reference
@@ -50,6 +51,19 @@ await client.Foo.FindAsync(
         PrivateProperty = 1,
     }
 );
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedAudiences;
+
+var client = new SeedAudiencesClient(new ClientOptions
+{
+    BaseUrl = SeedAudiencesEnvironment.EnvironmentA
+});
 ```
 
 ## Exception Handling

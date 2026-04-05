@@ -112,7 +112,8 @@ export function parseAsyncAPIV2({
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
                     source,
-                    explode: undefined
+                    explode: undefined,
+                    clientDefault: undefined
                 });
             }
         }
@@ -145,7 +146,8 @@ export function parseAsyncAPIV2({
                             parameterNameOverride: undefined,
                             env: undefined,
                             availability: convertAvailability(resolvedSchema),
-                            source
+                            source,
+                            clientDefault: undefined
                         });
                         continue;
                     }
@@ -168,7 +170,8 @@ export function parseAsyncAPIV2({
                         parameterNameOverride: undefined,
                         env: undefined,
                         availability: convertAvailability(schema),
-                        source
+                        source,
+                        clientDefault: undefined
                     });
                 }
             }
@@ -198,7 +201,8 @@ export function parseAsyncAPIV2({
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
                             source,
-                            explode: undefined
+                            explode: undefined,
+                            clientDefault: undefined
                         });
                         continue;
                     }
@@ -221,7 +225,8 @@ export function parseAsyncAPIV2({
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
                         source,
-                        explode: undefined
+                        explode: undefined,
+                        clientDefault: undefined
                     });
                 }
             }
@@ -322,7 +327,10 @@ export function parseAsyncAPIV2({
                     origin: "client",
                     name: "publish",
                     body: convertSchemaWithExampleToSchema(publishSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName:
+                        channel.publish != null
+                            ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             if (subscribeSchema != null) {
@@ -330,7 +338,10 @@ export function parseAsyncAPIV2({
                     origin: "server",
                     name: "subscribe",
                     body: convertSchemaWithExampleToSchema(subscribeSchema),
-                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
+                    methodName:
+                        channel.subscribe != null
+                            ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME)
+                            : undefined
                 });
             }
             parsedChannels[channelPath] = {

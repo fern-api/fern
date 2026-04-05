@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/websocket-inferred-auth/fern"
 	core "github.com/websocket-inferred-auth/fern/core"
 	internal "github.com/websocket-inferred-auth/fern/internal"
 	option "github.com/websocket-inferred-auth/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

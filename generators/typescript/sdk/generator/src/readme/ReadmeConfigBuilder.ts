@@ -3,7 +3,7 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
@@ -14,22 +14,26 @@ export class ReadmeConfigBuilder {
     private readonly endpointSnippets: FernGeneratorExec.Endpoint[];
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly fetchSupport: "node-fetch" | "native";
+    private readonly allowCustomFetcher: boolean;
     private readonly generateSubpackageExports: boolean;
 
     constructor({
         endpointSnippets,
         fileResponseType,
         fetchSupport,
+        allowCustomFetcher,
         generateSubpackageExports
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         fetchSupport: "node-fetch" | "native";
+        allowCustomFetcher: boolean;
         generateSubpackageExports: boolean;
     }) {
         this.endpointSnippets = endpointSnippets;
         this.fileResponseType = fileResponseType;
         this.fetchSupport = fetchSupport;
+        this.allowCustomFetcher = allowCustomFetcher;
         this.generateSubpackageExports = generateSubpackageExports;
     }
 
@@ -38,7 +42,7 @@ export class ReadmeConfigBuilder {
         remote,
         featureConfig
     }: {
-        context: SdkContext;
+        context: FileContext;
         remote: FernGeneratorCli.Remote | undefined;
         featureConfig: FernGeneratorCli.FeatureConfig;
     }): FernGeneratorCli.ReadmeConfig {
@@ -46,6 +50,7 @@ export class ReadmeConfigBuilder {
             context,
             endpointSnippets: this.endpointSnippets,
             fileResponseType: this.fileResponseType,
+            allowCustomFetcher: this.allowCustomFetcher,
             generateSubpackageExports: this.generateSubpackageExports
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
@@ -81,13 +86,16 @@ export class ReadmeConfigBuilder {
                 description = authenticationDescription;
             }
 
+            // Features with description-only content (no code snippets) should still be rendered
+            const isDescriptionOnlyFeature = feature.id === "RUNTIME_COMPATIBILITY";
+
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
                 snippets: snippetForFeature === false ? [] : (snippetForFeature ?? []),
                 addendum: feature.addendum ? this.processTemplateText(feature.addendum) : undefined,
-                snippetsAreOptional: isAuthenticationWithDescription
+                snippetsAreOptional: isAuthenticationWithDescription || isDescriptionOnlyFeature
             });
         }
         return {
@@ -134,7 +142,7 @@ export class ReadmeConfigBuilder {
 }
 
 function getCustomSections(
-    context: SdkContext,
+    context: FileContext,
     generateSubpackageExports: boolean
 ): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;

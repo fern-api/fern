@@ -9,6 +9,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string", "string"];
         const rawResponseBody = ["string", "string"];
+
         server
             .mockEndpoint()
             .post("/container/list-of-primitives")
@@ -27,6 +28,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
         const rawResponseBody = [{ string: "string" }, { string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/list-of-objects")
@@ -59,6 +61,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string"];
         const rawResponseBody = ["string"];
+
         server
             .mockEndpoint()
             .post("/container/set-of-primitives")
@@ -77,6 +80,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }];
         const rawResponseBody = [{ string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/set-of-objects")
@@ -103,6 +107,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-prim")
@@ -125,6 +130,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: { string: "string" } };
         const rawResponseBody = { string: { string: "string" } };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-object")
@@ -151,6 +157,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: 1.1 };
         const rawResponseBody = { string: 1.1 };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-union")
@@ -173,6 +180,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/opt-objects")

@@ -5,6 +5,7 @@ package queryparameters
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/query-parameters/fern/internal"
 )
 

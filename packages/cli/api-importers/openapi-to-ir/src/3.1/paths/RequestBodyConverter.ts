@@ -8,6 +8,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -159,7 +160,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs: this.description,
+                    docs: this.description ?? convertedSchema.schema?.typeDeclaration.docs,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
@@ -216,7 +217,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
-                        const encoding = mediaTypeObject.encoding?.[property.name.wireValue];
+                        const encoding = mediaTypeObject.encoding?.[getWireValue(property.name)];
                         return this.convertRequestBodyProperty({ property, contentType, encoding });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
@@ -389,9 +390,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             properties: {
                 ...resolvedMediaTypeSchema.properties,
                 [this.streamingExtension.streamConditionProperty]: {
+                    ...streamConditionProperty,
                     type: "boolean",
-                    const: isStreaming,
-                    ...streamConditionProperty
+                    const: isStreaming
                 } as OpenAPIV3_1.SchemaObject
             },
             required: [...(resolvedMediaTypeSchema.required ?? []), this.streamingExtension.streamConditionProperty]
@@ -416,9 +417,11 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs: undefined,
+                    docs: this.description ?? convertedSchema.schema?.typeDeclaration.docs,
                     name: this.context.casingsGenerator.generateName(
-                        isStreaming ? `${this.schemaId}_streaming` : this.schemaId
+                        isStreaming
+                            ? (this.streamingExtension?.streamRequestName ?? `${this.schemaId}_streaming`)
+                            : this.schemaId
                     ),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
@@ -482,9 +485,11 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return false;
         }
 
-        const queryParameterNames = new Set(this.queryParameters.map((param) => param.name.wireValue.toLowerCase()));
+        const queryParameterNames = new Set(
+            this.queryParameters.map((param) => getWireValue(param.name).toLowerCase())
+        );
 
-        return bodyProperties.some((property) => queryParameterNames.has(property.name.wireValue.toLowerCase()));
+        return bodyProperties.some((property) => queryParameterNames.has(getWireValue(property.name).toLowerCase()));
     }
 }
 

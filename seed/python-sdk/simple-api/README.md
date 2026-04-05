@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -42,6 +43,19 @@ client = SeedSimpleApi(
 
 client.user.get(
     id="id",
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedSimpleApi
+from seed.environment import SeedSimpleApiEnvironment
+
+client = SeedSimpleApi(
+    environment=SeedSimpleApiEnvironment.PRODUCTION,
 )
 ```
 

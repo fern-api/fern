@@ -1,10 +1,11 @@
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export type PaginationResponseInfo =
     | CursorPaginationResponseInfo
     | OffsetPaginationResponseInfo
-    | CustomPaginationResponseInfo;
+    | CustomPaginationResponseInfo
+    | UriOrPathPaginationResponseInfo;
 
 export interface CursorPaginationResponseInfo {
     type: "cursor";
@@ -34,10 +35,19 @@ export interface CustomPaginationResponseInfo {
     loadPage: ts.Statement[];
 }
 
+export interface UriOrPathPaginationResponseInfo {
+    type: "uri" | "path";
+    responseType: ts.TypeNode;
+    itemType: ts.TypeNode;
+    getItems: ts.Expression;
+    hasNextPage: ts.Expression;
+    loadPage: ts.Statement[];
+}
+
 export interface GeneratedEndpointResponse {
-    getPaginationInfo: (context: SdkContext) => PaginationResponseInfo | undefined;
+    getPaginationInfo: (context: FileContext) => PaginationResponseInfo | undefined;
     getResponseVariableName: () => string;
-    getReturnResponseStatements: (context: SdkContext) => ts.Statement[];
-    getReturnType: (context: SdkContext) => ts.TypeNode;
-    getNamesOfThrownExceptions: (context: SdkContext) => string[];
+    getReturnResponseStatements: (context: FileContext) => ts.Statement[];
+    getReturnType: (context: FileContext) => ts.TypeNode;
+    getNamesOfThrownExceptions: (context: FileContext) => string[];
 }

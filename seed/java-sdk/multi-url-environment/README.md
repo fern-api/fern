@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:multi-url-environment'
+  implementation 'com.fern:multi-url-environment:0.0.1'
 }
 ```
 
@@ -217,7 +217,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-BootInstanceHttpResponse response = client.ec2().withRawResponse().bootInstance(...);
+SeedMultiUrlEnvironmentHttpResponse response = client.ec2().withRawResponse().bootInstance(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

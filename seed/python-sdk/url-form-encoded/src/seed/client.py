@@ -8,6 +8,7 @@ from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.post_submit_response import PostSubmitResponse
+from .types.token_response import TokenResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -118,6 +119,61 @@ class SeedApi:
         _response = self._raw_client.submit_form_data(username=username, email=email, request_options=request_options)
         return _response.data
 
+    def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenResponse:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+            Token issued successfully
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get_token(
+            client_id="client_id",
+            client_secret="client_secret",
+        )
+        """
+        _response = self._raw_client.get_token(
+            client_id=client_id, client_secret=client_secret, request_options=request_options
+        )
+        return _response.data
+
+
+def _make_default_async_client(
+    timeout: typing.Optional[float],
+    follow_redirects: typing.Optional[bool],
+) -> httpx.AsyncClient:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+    except ImportError:
+        pass
+    else:
+        if follow_redirects is not None:
+            return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
+        return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
+
+    if follow_redirects is not None:
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
+    return httpx.AsyncClient(timeout=timeout)
+
 
 class AsyncSeedApi:
     """
@@ -170,9 +226,7 @@ class AsyncSeedApi:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
+            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
         )
@@ -231,5 +285,50 @@ class AsyncSeedApi:
         """
         _response = await self._raw_client.submit_form_data(
             username=username, email=email, request_options=request_options
+        )
+        return _response.data
+
+    async def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenResponse:
+        """
+        Parameters
+        ----------
+        client_id : str
+            Client identifier
+
+        client_secret : str
+            Client secret
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+            Token issued successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.get_token(
+                client_id="client_id",
+                client_secret="client_secret",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_token(
+            client_id=client_id, client_secret=client_secret, request_options=request_options
         )
         return _response.data

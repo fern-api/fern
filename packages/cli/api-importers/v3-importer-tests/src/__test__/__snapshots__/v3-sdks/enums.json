@@ -12,25 +12,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ExampleResponse",
-          "camelCase": {
-            "unsafeName": "exampleResponse",
-            "safeName": "exampleResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "example_response",
-            "safeName": "example_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EXAMPLE_RESPONSE",
-            "safeName": "EXAMPLE_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ExampleResponse",
-            "safeName": "ExampleResponse"
-          }
-        }
+        "name": "ExampleResponse"
       },
       "shape": {
         "members": [
@@ -40,25 +22,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "StatusEnum",
-                "camelCase": {
-                  "unsafeName": "statusEnum",
-                  "safeName": "statusEnum"
-                },
-                "snakeCase": {
-                  "unsafeName": "status_enum",
-                  "safeName": "status_enum"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS_ENUM",
-                  "safeName": "STATUS_ENUM"
-                },
-                "pascalCase": {
-                  "unsafeName": "StatusEnum",
-                  "safeName": "StatusEnum"
-                }
-              },
+              "name": "StatusEnum",
               "typeId": "StatusEnum",
               "inline": false,
               "type": "named"
@@ -70,25 +34,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "PriorityEnum",
-                "camelCase": {
-                  "unsafeName": "priorityEnum",
-                  "safeName": "priorityEnum"
-                },
-                "snakeCase": {
-                  "unsafeName": "priority_enum",
-                  "safeName": "priority_enum"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PRIORITY_ENUM",
-                  "safeName": "PRIORITY_ENUM"
-                },
-                "pascalCase": {
-                  "unsafeName": "PriorityEnum",
-                  "safeName": "PriorityEnum"
-                }
-              },
+              "name": "PriorityEnum",
               "typeId": "PriorityEnum",
               "inline": false,
               "type": "named"
@@ -100,25 +46,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "ErrorCodeEnum",
-                "camelCase": {
-                  "unsafeName": "errorCodeEnum",
-                  "safeName": "errorCodeEnum"
-                },
-                "snakeCase": {
-                  "unsafeName": "error_code_enum",
-                  "safeName": "error_code_enum"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ERROR_CODE_ENUM",
-                  "safeName": "ERROR_CODE_ENUM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ErrorCodeEnum",
-                  "safeName": "ErrorCodeEnum"
-                }
-              },
+              "name": "ErrorCodeEnum",
               "typeId": "ErrorCodeEnum",
               "inline": false,
               "type": "named"
@@ -145,99 +73,18 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "StatusEnum",
-          "camelCase": {
-            "unsafeName": "statusEnum",
-            "safeName": "statusEnum"
-          },
-          "snakeCase": {
-            "unsafeName": "status_enum",
-            "safeName": "status_enum"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "STATUS_ENUM",
-            "safeName": "STATUS_ENUM"
-          },
-          "pascalCase": {
-            "unsafeName": "StatusEnum",
-            "safeName": "StatusEnum"
-          }
-        }
+        "name": "StatusEnum"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "ACTIVE",
-                "camelCase": {
-                  "unsafeName": "active",
-                  "safeName": "active"
-                },
-                "snakeCase": {
-                  "unsafeName": "active",
-                  "safeName": "active"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ACTIVE",
-                  "safeName": "ACTIVE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Active",
-                  "safeName": "Active"
-                }
-              },
-              "wireValue": "ACTIVE"
-            }
+            "name": "ACTIVE"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "INACTIVE",
-                "camelCase": {
-                  "unsafeName": "inactive",
-                  "safeName": "inactive"
-                },
-                "snakeCase": {
-                  "unsafeName": "inactive",
-                  "safeName": "inactive"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "INACTIVE",
-                  "safeName": "INACTIVE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Inactive",
-                  "safeName": "Inactive"
-                }
-              },
-              "wireValue": "INACTIVE"
-            }
+            "name": "INACTIVE"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "PENDING",
-                "camelCase": {
-                  "unsafeName": "pending",
-                  "safeName": "pending"
-                },
-                "snakeCase": {
-                  "unsafeName": "pending",
-                  "safeName": "pending"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PENDING",
-                  "safeName": "PENDING"
-                },
-                "pascalCase": {
-                  "unsafeName": "Pending",
-                  "safeName": "Pending"
-                }
-              },
-              "wireValue": "PENDING"
-            }
+            "name": "PENDING"
           }
         ],
         "type": "enum"
@@ -261,99 +108,18 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "PriorityEnum",
-          "camelCase": {
-            "unsafeName": "priorityEnum",
-            "safeName": "priorityEnum"
-          },
-          "snakeCase": {
-            "unsafeName": "priority_enum",
-            "safeName": "priority_enum"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PRIORITY_ENUM",
-            "safeName": "PRIORITY_ENUM"
-          },
-          "pascalCase": {
-            "unsafeName": "PriorityEnum",
-            "safeName": "PriorityEnum"
-          }
-        }
+        "name": "PriorityEnum"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "1",
-                "camelCase": {
-                  "unsafeName": "1",
-                  "safeName": "_1"
-                },
-                "snakeCase": {
-                  "unsafeName": "1",
-                  "safeName": "_1"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "1",
-                  "safeName": "_1"
-                },
-                "pascalCase": {
-                  "unsafeName": "1",
-                  "safeName": "_1"
-                }
-              },
-              "wireValue": "1"
-            }
+            "name": "1"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "2",
-                "camelCase": {
-                  "unsafeName": "2",
-                  "safeName": "_2"
-                },
-                "snakeCase": {
-                  "unsafeName": "2",
-                  "safeName": "_2"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "2",
-                  "safeName": "_2"
-                },
-                "pascalCase": {
-                  "unsafeName": "2",
-                  "safeName": "_2"
-                }
-              },
-              "wireValue": "2"
-            }
+            "name": "2"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "3",
-                "camelCase": {
-                  "unsafeName": "3",
-                  "safeName": "_3"
-                },
-                "snakeCase": {
-                  "unsafeName": "3",
-                  "safeName": "_3"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "3",
-                  "safeName": "_3"
-                },
-                "pascalCase": {
-                  "unsafeName": "3",
-                  "safeName": "_3"
-                }
-              },
-              "wireValue": "3"
-            }
+            "name": "3"
           }
         ],
         "type": "enum"
@@ -377,99 +143,18 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ErrorCodeEnum",
-          "camelCase": {
-            "unsafeName": "errorCodeEnum",
-            "safeName": "errorCodeEnum"
-          },
-          "snakeCase": {
-            "unsafeName": "error_code_enum",
-            "safeName": "error_code_enum"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR_CODE_ENUM",
-            "safeName": "ERROR_CODE_ENUM"
-          },
-          "pascalCase": {
-            "unsafeName": "ErrorCodeEnum",
-            "safeName": "ErrorCodeEnum"
-          }
-        }
+        "name": "ErrorCodeEnum"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "NOT_FOUND",
-                "camelCase": {
-                  "unsafeName": "notFound",
-                  "safeName": "notFound"
-                },
-                "snakeCase": {
-                  "unsafeName": "not_found",
-                  "safeName": "not_found"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NOT_FOUND",
-                  "safeName": "NOT_FOUND"
-                },
-                "pascalCase": {
-                  "unsafeName": "NotFound",
-                  "safeName": "NotFound"
-                }
-              },
-              "wireValue": "NOT_FOUND"
-            }
+            "name": "NOT_FOUND"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "UNAUTHORIZED",
-                "camelCase": {
-                  "unsafeName": "unauthorized",
-                  "safeName": "unauthorized"
-                },
-                "snakeCase": {
-                  "unsafeName": "unauthorized",
-                  "safeName": "unauthorized"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "UNAUTHORIZED",
-                  "safeName": "UNAUTHORIZED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Unauthorized",
-                  "safeName": "Unauthorized"
-                }
-              },
-              "wireValue": "UNAUTHORIZED"
-            }
+            "name": "UNAUTHORIZED"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "BAD_REQUEST",
-                "camelCase": {
-                  "unsafeName": "badRequest",
-                  "safeName": "badRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "bad_request",
-                  "safeName": "bad_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAD_REQUEST",
-                  "safeName": "BAD_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "BadRequest",
-                  "safeName": "BadRequest"
-                }
-              },
-              "wireValue": "BAD_REQUEST"
-            }
+            "name": "BAD_REQUEST"
           }
         ],
         "type": "enum"
@@ -483,6 +168,187 @@
         "userSpecifiedExamples": {},
         "autogeneratedExamples": {
           "ErrorCodeEnum_example_autogenerated": "NOT_FOUND"
+        }
+      }
+    },
+    "OpenEndedEnumResponse": {
+      "name": {
+        "typeId": "OpenEndedEnumResponse",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": "OpenEndedEnumResponse"
+      },
+      "shape": {
+        "properties": [
+          {
+            "name": "status",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": "OpenEndedStatus",
+                  "typeId": "OpenEndedStatus",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            },
+            "v2Examples": {
+              "userSpecifiedExamples": {},
+              "autogeneratedExamples": {
+                "OpenEndedEnumResponseStatus_example_autogenerated": "ACTIVE"
+              }
+            }
+          },
+          {
+            "name": "category",
+            "valueType": {
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": "OpenEndedCategory",
+                  "typeId": "OpenEndedCategory",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "optional"
+              },
+              "type": "container"
+            },
+            "v2Examples": {
+              "userSpecifiedExamples": {},
+              "autogeneratedExamples": {
+                "OpenEndedEnumResponseCategory_example_autogenerated": "BUG"
+              }
+            }
+          }
+        ],
+        "extends": [],
+        "extendedProperties": [],
+        "extraProperties": false,
+        "type": "object"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false,
+      "v2Examples": {
+        "userSpecifiedExamples": {},
+        "autogeneratedExamples": {
+          "OpenEndedEnumResponse_example_autogenerated": {}
+        }
+      }
+    },
+    "OpenEndedStatus": {
+      "name": {
+        "typeId": "OpenEndedStatus",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": "OpenEndedStatus"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": "ACTIVE"
+          },
+          {
+            "name": "INACTIVE"
+          }
+        ],
+        "forwardCompatible": true,
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "A status enum that explicitly allows unknown values",
+      "referencedTypes": {},
+      "inline": false,
+      "v2Examples": {
+        "userSpecifiedExamples": {},
+        "autogeneratedExamples": {
+          "OpenEndedStatus_example_autogenerated": "ACTIVE"
+        }
+      }
+    },
+    "OpenEndedCategory": {
+      "name": {
+        "typeId": "OpenEndedCategory",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": "OpenEndedCategory"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": "BUG"
+          },
+          {
+            "name": "FEATURE"
+          },
+          {
+            "name": "IMPROVEMENT"
+          }
+        ],
+        "forwardCompatible": true,
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "docs": "A category enum using anyOf for open-endedness",
+      "referencedTypes": {},
+      "inline": false,
+      "v2Examples": {
+        "userSpecifiedExamples": {},
+        "autogeneratedExamples": {
+          "OpenEndedCategory_example_autogenerated": "BUG"
+        }
+      }
+    },
+    "CategoryEnum": {
+      "name": {
+        "typeId": "CategoryEnum",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": "CategoryEnum"
+      },
+      "shape": {
+        "values": [
+          {
+            "name": "BUG"
+          },
+          {
+            "name": "FEATURE"
+          },
+          {
+            "name": "IMPROVEMENT"
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {},
+      "inline": false,
+      "v2Examples": {
+        "userSpecifiedExamples": {},
+        "autogeneratedExamples": {
+          "CategoryEnum_example_autogenerated": "BUG"
         }
       }
     }
@@ -519,7 +385,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "5d3905ed",
+                "id": "2d5afc73",
                 "url": "/example",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -538,28 +404,7 @@
                             "jsonExample": "ACTIVE",
                             "shape": {
                               "shape": {
-                                "value": {
-                                  "name": {
-                                    "originalName": "ACTIVE",
-                                    "camelCase": {
-                                      "unsafeName": "active",
-                                      "safeName": "active"
-                                    },
-                                    "snakeCase": {
-                                      "unsafeName": "active",
-                                      "safeName": "active"
-                                    },
-                                    "screamingSnakeCase": {
-                                      "unsafeName": "ACTIVE",
-                                      "safeName": "ACTIVE"
-                                    },
-                                    "pascalCase": {
-                                      "unsafeName": "Active",
-                                      "safeName": "Active"
-                                    }
-                                  },
-                                  "wireValue": "ACTIVE"
-                                },
+                                "value": "ACTIVE",
                                 "type": "enum"
                               },
                               "typeName": {
@@ -568,25 +413,7 @@
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "StatusEnum",
-                                  "camelCase": {
-                                    "unsafeName": "statusEnum",
-                                    "safeName": "statusEnum"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "status_enum",
-                                    "safeName": "status_enum"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "STATUS_ENUM",
-                                    "safeName": "STATUS_ENUM"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "StatusEnum",
-                                    "safeName": "StatusEnum"
-                                  }
-                                }
+                                "name": "StatusEnum"
                               },
                               "type": "named"
                             }
@@ -599,25 +426,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "ExampleResponse",
-                            "camelCase": {
-                              "unsafeName": "exampleResponse",
-                              "safeName": "exampleResponse"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "example_response",
-                              "safeName": "example_response"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "EXAMPLE_RESPONSE",
-                              "safeName": "EXAMPLE_RESPONSE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ExampleResponse",
-                              "safeName": "ExampleResponse"
-                            }
-                          }
+                          "name": "ExampleResponse"
                         },
                         "type": "named"
                       }
@@ -640,25 +449,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getExample",
-          "name": {
-            "originalName": "getExample",
-            "camelCase": {
-              "unsafeName": "getExample",
-              "safeName": "getExample"
-            },
-            "snakeCase": {
-              "unsafeName": "get_example",
-              "safeName": "get_example"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_EXAMPLE",
-              "safeName": "GET_EXAMPLE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetExample",
-              "safeName": "GetExample"
-            }
-          },
+          "name": "getExample",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -669,25 +460,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "ExampleResponse",
-                    "camelCase": {
-                      "unsafeName": "exampleResponse",
-                      "safeName": "exampleResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "example_response",
-                      "safeName": "example_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EXAMPLE_RESPONSE",
-                      "safeName": "EXAMPLE_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ExampleResponse",
-                      "safeName": "ExampleResponse"
-                    }
-                  },
+                  "name": "ExampleResponse",
                   "typeId": "ExampleResponse",
                   "inline": false,
                   "type": "named"
@@ -740,25 +513,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "ExampleResponse",
-                        "camelCase": {
-                          "unsafeName": "exampleResponse",
-                          "safeName": "exampleResponse"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "example_response",
-                          "safeName": "example_response"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "EXAMPLE_RESPONSE",
-                          "safeName": "EXAMPLE_RESPONSE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ExampleResponse",
-                          "safeName": "ExampleResponse"
-                        }
-                      },
+                      "name": "ExampleResponse",
                       "typeId": "ExampleResponse",
                       "inline": false,
                       "type": "named"
@@ -768,6 +523,263 @@
                       "userSpecifiedExamples": {},
                       "autogeneratedExamples": {
                         "getExampleExample": "ACTIVE"
+                      }
+                    },
+                    "type": "response"
+                  },
+                  "type": "json"
+                },
+                "docs": "Successful response"
+              }
+            ]
+          }
+        },
+        {
+          "displayName": "Get Open Ended Enum",
+          "method": "GET",
+          "path": {
+            "head": "/open-ended",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "responseHeaders": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [
+            {
+              "example": {
+                "id": "40f85bcd",
+                "url": "/open-ended",
+                "endpointHeaders": [],
+                "endpointPathParameters": [],
+                "queryParameters": [],
+                "servicePathParameters": [],
+                "serviceHeaders": [],
+                "rootPathParameters": [],
+                "response": {
+                  "value": {
+                    "value": {
+                      "jsonExample": {
+                        "status": "ACTIVE",
+                        "category": "BUG"
+                      },
+                      "shape": {
+                        "shape": {
+                          "properties": [
+                            {
+                              "name": "status",
+                              "originalTypeDeclaration": {
+                                "typeId": "OpenEndedEnumResponse",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": "OpenEndedEnumResponse"
+                              },
+                              "value": {
+                                "jsonExample": "ACTIVE",
+                                "shape": {
+                                  "container": {
+                                    "optional": {
+                                      "jsonExample": "ACTIVE",
+                                      "shape": {
+                                        "shape": {
+                                          "value": "ACTIVE",
+                                          "type": "enum"
+                                        },
+                                        "typeName": {
+                                          "typeId": "OpenEndedStatus",
+                                          "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": []
+                                          },
+                                          "name": "OpenEndedStatus"
+                                        },
+                                        "type": "named"
+                                      }
+                                    },
+                                    "valueType": {
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": []
+                                      },
+                                      "name": "OpenEndedStatus",
+                                      "typeId": "OpenEndedStatus",
+                                      "inline": false,
+                                      "type": "named"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": "category",
+                              "originalTypeDeclaration": {
+                                "typeId": "OpenEndedEnumResponse",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": "OpenEndedEnumResponse"
+                              },
+                              "value": {
+                                "jsonExample": "BUG",
+                                "shape": {
+                                  "container": {
+                                    "optional": {
+                                      "jsonExample": "BUG",
+                                      "shape": {
+                                        "shape": {
+                                          "value": "BUG",
+                                          "type": "enum"
+                                        },
+                                        "typeName": {
+                                          "typeId": "OpenEndedCategory",
+                                          "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": []
+                                          },
+                                          "name": "OpenEndedCategory"
+                                        },
+                                        "type": "named"
+                                      }
+                                    },
+                                    "valueType": {
+                                      "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": []
+                                      },
+                                      "name": "OpenEndedCategory",
+                                      "typeId": "OpenEndedCategory",
+                                      "inline": false,
+                                      "type": "named"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            }
+                          ],
+                          "type": "object"
+                        },
+                        "typeName": {
+                          "typeId": "OpenEndedEnumResponse",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": "OpenEndedEnumResponse"
+                        },
+                        "type": "named"
+                      }
+                    },
+                    "type": "body"
+                  },
+                  "type": "ok"
+                }
+              }
+            }
+          ],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/open-ended",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "audiences": [],
+          "id": "endpoint_.getOpenEndedEnum",
+          "name": "getOpenEndedEnum",
+          "v2RequestBodies": {},
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": "OpenEndedEnumResponse",
+                  "typeId": "OpenEndedEnumResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Successful response",
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "getOpenEndedEnumExample": {
+                      "status": "ACTIVE",
+                      "category": "BUG"
+                    }
+                  }
+                },
+                "type": "response"
+              },
+              "type": "json"
+            },
+            "docs": "Successful response"
+          },
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getOpenEndedEnumExample_200": {
+                "displayName": "getOpenEndedEnumExample",
+                "request": {
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/open-ended"
+                  },
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {}
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "status": "ACTIVE",
+                      "category": "BUG"
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            },
+            "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": "OpenEndedEnumResponse",
+                      "typeId": "OpenEndedEnumResponse",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "Successful response",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "getOpenEndedEnumExample": {
+                          "status": "ACTIVE",
+                          "category": "BUG"
+                        }
                       }
                     },
                     "type": "response"
@@ -806,7 +818,11 @@
       "ExampleResponse",
       "StatusEnum",
       "PriorityEnum",
-      "ErrorCodeEnum"
+      "ErrorCodeEnum",
+      "OpenEndedEnumResponse",
+      "OpenEndedStatus",
+      "OpenEndedCategory",
+      "CategoryEnum"
     ],
     "errors": [],
     "subpackages": [],
@@ -824,47 +840,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Example API",
-    "camelCase": {
-      "unsafeName": "exampleApi",
-      "safeName": "exampleApi"
-    },
-    "snakeCase": {
-      "unsafeName": "example_api",
-      "safeName": "example_api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "EXAMPLE_API",
-      "safeName": "EXAMPLE_API"
-    },
-    "pascalCase": {
-      "unsafeName": "ExampleApi",
-      "safeName": "ExampleApi"
-    }
-  },
+  "apiName": "Example API",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

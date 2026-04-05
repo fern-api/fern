@@ -2,8 +2,10 @@ import { fail } from "node:assert";
 import {
     AbstractFormatter,
     AbstractGeneratorContext,
+    CaseConverter,
     FernGeneratorExec,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    getOriginalName
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
@@ -46,6 +48,7 @@ type Namespace = string;
 export abstract class GeneratorContext extends AbstractGeneratorContext {
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     public readonly project: CsharpProject;
+    public readonly case: CaseConverter;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -55,6 +58,11 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         public readonly generation: Generation
     ) {
         super(config, generatorNotificationService);
+        this.case = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.project = new CsharpProject({
             context: this,
             name: this.generation.namespaces.root
@@ -78,6 +86,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
             ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
+
+        // Log deprecation warning if the old flag is used
+        if (this.customConfig["experimental-readonly-constants"] === true) {
+            this.logger.warn(
+                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead.'
+            );
+        }
     }
 
     /**
@@ -235,7 +250,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
             if (type.isReferenceType && !type.isOptional) {
-                const name = header.name.name.pascalCase.safeName;
+                const name = this.case.pascalSafe(header.name);
                 writer.write(name, " = ", type.defaultValue, ",");
                 writer.writeLine();
             }
@@ -653,7 +668,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return undefined;
     }
 
-    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+    public getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {
@@ -748,7 +763,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public getSubpackageClassReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
             origin: subpackage
         });
@@ -756,7 +771,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public getSubpackageInterfaceReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
-            name: `I${subpackage.name.pascalCase.unsafeName}Client`,
+            name: `I${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
             origin: this.model.explicit(subpackage, "Interface")
         });
@@ -794,15 +809,20 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ast.ClassReference {
+    public getRequestWrapperReference(
+        serviceId: ServiceId,
+        wrapper: FernIr.SdkRequestWrapper | FernIr.InlinedRequestBody
+    ): ast.ClassReference {
+        const wrapperName = "wrapperName" in wrapper ? wrapper.wrapperName : wrapper.name;
         return this.csharp.classReference({
-            origin: requestName,
+            name: this.case.pascalSafe(wrapperName),
+            origin: wrapper,
             namespace: this.getNamespaceForServiceId(serviceId)
         });
     }
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
-        return protobufService.name.originalName;
+        return getOriginalName(protobufService.name);
     }
 
     public getGrpcClientInfoForServiceId(serviceId: ServiceId): GrpcClientInfo | undefined {
@@ -812,7 +832,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
         const serviceName = this.getGrpcClientServiceName(protobufService);
         return {
-            privatePropertyName: `_${protobufService.name.camelCase.safeName}`,
+            privatePropertyName: `_${this.case.camelSafe(protobufService.name)}`,
             classReference: this.csharp.classReference({
                 origin: protobufService,
                 name: `${serviceName}.${serviceName}Client`,
@@ -833,7 +853,6 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // types that can get used
         this.Types.ReadOnlyAdditionalProperties();
         this.Types.JsonUtils;
-        this.Types.StringEnumSerializer;
         this.Types.IStringEnum;
 
         // start with the models
@@ -858,6 +877,18 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         this.csharp.classReference({
                             origin: this.model.explicit(typeDeclaration, "Values"),
                             enclosingType
+                        });
+
+                        // Register nested serializer class reference
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            enclosingType
+                        });
+                    } else {
+                        // Register companion serializer class reference for regular enums
+                        this.csharp.classReference({
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
+                            namespace: enclosingType.namespace
                         });
                     }
                 },
@@ -940,10 +971,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                         const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                         utd.types.map((type) => {
-                            type.discriminantValue.name.pascalCase.safeName;
-
                             this.csharp.classReference({
-                                origin: type.discriminantValue,
+                                origin: this.model.explicit(type, "Inner"),
                                 enclosingType
                             });
                         });
@@ -1000,7 +1029,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                             if (wrapper.wrapperName && subpackage.service) {
                                 const requestWrapperReference = this.getRequestWrapperReference(
                                     subpackage.service,
-                                    wrapper.wrapperName
+                                    wrapper
                                 );
                             }
                         },
@@ -1076,7 +1105,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
                 this.csharp.classReference({
                     origin: this.model.explicit(endpoint, "Test"),
-                    name: `${endpoint.name.pascalCase.safeName}Test`,
+                    name: `${this.case.pascalSafe(endpoint.name)}Test`,
 
                     namespace: this.namespaces.test
                 });

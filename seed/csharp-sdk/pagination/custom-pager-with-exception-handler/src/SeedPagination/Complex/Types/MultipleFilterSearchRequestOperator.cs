@@ -1,9 +1,12 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedPagination.Core;
 
 namespace SeedPagination;
 
-[JsonConverter(typeof(StringEnumSerializer<MultipleFilterSearchRequestOperator>))]
+[JsonConverter(
+    typeof(MultipleFilterSearchRequestOperator.MultipleFilterSearchRequestOperatorSerializer)
+)]
 [Serializable]
 public readonly record struct MultipleFilterSearchRequestOperator : IStringEnum
 {
@@ -52,6 +55,56 @@ public readonly record struct MultipleFilterSearchRequestOperator : IStringEnum
         value.Value;
 
     public static explicit operator MultipleFilterSearchRequestOperator(string value) => new(value);
+
+    internal class MultipleFilterSearchRequestOperatorSerializer
+        : JsonConverter<MultipleFilterSearchRequestOperator>
+    {
+        public override MultipleFilterSearchRequestOperator Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new MultipleFilterSearchRequestOperator(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            MultipleFilterSearchRequestOperator value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+
+        public override MultipleFilterSearchRequestOperator ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new MultipleFilterSearchRequestOperator(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            MultipleFilterSearchRequestOperator value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

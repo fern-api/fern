@@ -8,6 +8,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 
+import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
@@ -43,11 +44,11 @@ export class DynamicSnippetsJavaTestGenerator {
         requests
     }: {
         outputDir: AbsoluteFilePath;
-        requests: dynamic.EndpointSnippetRequest[];
+        requests: DynamicSnippetsTestRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
-        for (const [idx, request] of requests.entries()) {
+        for (const [idx, { endpointId, request }] of requests.entries()) {
             try {
                 const convertedRequest = convertDynamicEndpointSnippetRequest(request);
                 if (convertedRequest == null) {
@@ -58,7 +59,8 @@ export class DynamicSnippetsJavaTestGenerator {
                         fullStyleClassName: `Example${idx}`,
                         fullStylePackageName: "com.snippets"
                     } as Config,
-                    style: Style.Full
+                    style: Style.Full,
+                    endpointId
                 });
                 const dynamicSnippetFilePath = this.getTestFilePath({ absolutePathToOutputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });

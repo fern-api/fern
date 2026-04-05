@@ -17,6 +17,7 @@ async fn main() {
                     "map".to_string(),
                     HashMap::from([("map".to_string(), "map".to_string())]),
                 )]),
+                ..Default::default()
             },
             None,
         )

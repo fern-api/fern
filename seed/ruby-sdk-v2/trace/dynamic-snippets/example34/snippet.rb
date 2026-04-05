@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.v_2.problem.get_lightweight_problems
+client.v_2.v_3.problem.get_lightweight_problems

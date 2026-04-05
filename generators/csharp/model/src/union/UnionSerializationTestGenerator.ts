@@ -62,29 +62,15 @@ export class UnionSerializationTestGenerator extends FileGenerator<CSharpFile> {
             testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeLine("var expectedJson = ");
+                    writer.writeLine("var inputJson = ");
                     writer.writeTextStatement(this.convertToCSharpFriendlyJsonString(testInput.json));
-                    writer.write("var actualObj  = ");
-                    writer.writeNodeStatement(testInput.objectInstantiationSnippet);
-                    writer.write("var actualElement = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.Types.JsonUtils,
-                            method: "SerializeToElement",
-                            arguments_: [this.csharp.codeblock("actualObj")]
+                            on: this.Types.JsonAssert,
+                            method: "Roundtrips",
+                            generics: [this.classReference],
+                            arguments_: [this.csharp.codeblock("inputJson")]
                         })
-                    );
-                    writer.write("var expectedElement = ");
-                    writer.writeNodeStatement(
-                        this.csharp.invokeMethod({
-                            on: this.Types.JsonUtils,
-                            method: "Deserialize",
-                            generics: [this.System.Text.Json.JsonElement],
-                            arguments_: [this.csharp.codeblock("expectedJson")]
-                        })
-                    );
-                    writer.writeTextStatement(
-                        "Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer())"
                     );
                 }),
                 isAsync: false

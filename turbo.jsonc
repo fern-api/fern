@@ -113,6 +113,21 @@
                 "vitest.config.{js,mjs,mts,ts,cjs,cts}"
             ]
         },
+        "test:coverage": {
+            "dependsOn": ["^compile", "compile"],
+            "outputs": ["coverage/**"],
+            "inputs": [
+                "$TURBO_ROOT$/packages/configs/**",
+                "$TURBO_ROOT$/test-definitions-openapi/**",
+                "$TURBO_ROOT$/test-definitions/**",
+                "$TURBO_ROOT$/tsconfig.eslint.json",
+                "$TURBO_ROOT$/vitest.projects.config.ts",
+                "src/**",
+                "tests/**",
+                "tsconfig.json",
+                "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+            ]
+        },
         "dist:cli": {
             "outputs": ["dist/**"],
             "dependsOn": ["^compile", "compile"],
@@ -130,7 +145,7 @@
                 "$TURBO_ROOT$/shared/stylelintrc.shared.json",
                 "$TURBO_ROOT$/tsconfig.eslint.json"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:dev": {
             "outputs": ["dist/dev/**"],
@@ -149,7 +164,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:local": {
             "outputs": ["dist/local/**"],
@@ -168,7 +183,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist:cli:prod": {
             "outputs": ["dist/prod/**"],
@@ -187,7 +202,7 @@
                 "$TURBO_ROOT$/tsconfig.eslint.json",
                 "$TURBO_ROOT$/packages/configs/**"
             ],
-            "env": ["POSTHOG_API_KEY"]
+            "env": ["POSTHOG_API_KEY", "SENTRY_DSN"]
         },
         "dist": {
             "outputs": ["dist/**"],

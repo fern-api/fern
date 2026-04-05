@@ -17,7 +17,6 @@ env:
   TURBO_DAEMON: "false"
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
-  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 permissions:
   id-token: write # Required for OIDC
@@ -30,7 +29,7 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
       has_new_version: ${{ steps.get_version.outputs.has_new_version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -75,7 +74,7 @@ jobs:
     if: needs.check-version.outputs.has_new_version == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -90,19 +89,23 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
       - name: Publish generator-cli
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
         run: |
           cd packages/generator-cli/dist
-          pnpm publish --access public --tag latest --no-git-checks
+          pnpm publish --provenance --access public --tag latest --no-git-checks
 
   publish-sdks:
     needs: check-version
     if: needs.check-version.outputs.has_new_version == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: 📥 Install Fern
         run: npm install -g fern-api

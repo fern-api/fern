@@ -5,6 +5,7 @@ package undiscriminatedunionwithresponseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/undiscriminated-union-with-response-property/fern/internal"
 )
 

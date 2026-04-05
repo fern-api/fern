@@ -1,7 +1,9 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
-import { getNamespaceExport } from "@fern-api/typescript-base";
+import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
@@ -15,10 +17,8 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
-
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig.js";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema.js";
-
 export declare namespace SdkGeneratorCli {
     export interface Init {
         configOverrides?: Partial<SdkCustomConfig>;
@@ -42,12 +42,14 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
+            naming: parsed?.naming,
             outputEsm: parsed?.outputEsm ?? false,
             outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
-            shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
+            generateWebSocketClients:
+                parsed?.generateWebSocketClients ?? parsed?.shouldGenerateWebsocketClients ?? false,
             includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
@@ -99,7 +101,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formatter: parsed?.formatter ?? "biome",
             generateSubpackageExports: parsed?.generateSubpackageExports ?? true,
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
-            customPagerName: parsed?.customPagerName ?? "CustomPager"
+            customPagerName: parsed?.customPagerName ?? "CustomPager",
+            resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
+            maxRetries: parsed?.maxRetries
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -166,10 +170,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
-            namespaceExport: customConfig.namespaceExport
+            namespaceExport: customConfig.namespaceExport,
+            naming: customConfig.naming
+        });
+        const resolvedNaming = resolveNaming({
+            namespaceExport,
+            naming: customConfig.naming
         });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
+            naming: resolvedNaming,
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
@@ -178,7 +188,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             config: {
                 runScripts: !customConfig.noScripts,
                 organization: config.organization,
-                apiName: intermediateRepresentation.apiName.originalName,
+                apiName: getOriginalName(intermediateRepresentation.apiName),
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
                 originalReadmeFilepath:
@@ -196,7 +206,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 outputEsm: customConfig.outputEsm,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
-                shouldGenerateWebsocketClients: customConfig.shouldGenerateWebsocketClients,
+                generateWebSocketClients: customConfig.generateWebSocketClients,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
@@ -246,7 +256,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 linter: customConfig.linter,
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? true,
                 offsetSemantics: customConfig.offsetSemantics,
-                customPagerName: customConfig.customPagerName ?? "CustomPager"
+                customPagerName: customConfig.customPagerName ?? "CustomPager",
+                resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
+                maxRetries: customConfig.maxRetries
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -297,7 +309,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             } catch (error) {
                 // If we can't read the license file, we'll skip writing it
                 // This maintains backwards compatibility
-                logger.warn(`Failed to write LICENSE file: ${error instanceof Error ? error.message : String(error)}`);
+                logger.warn(`Failed to write LICENSE file: ${extractErrorMessage(error)}`);
             }
         }
     }
@@ -309,9 +321,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         try {
             await copyFile(dockerLicensePath, destinationPath);
         } catch (error) {
-            throw new Error(
-                `Could not copy license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
-            );
+            throw new Error(`Could not copy license file from ${dockerLicensePath}: ${extractErrorMessage(error)}`);
         }
     }
 

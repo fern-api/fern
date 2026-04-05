@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedTrace)](https://nuget.org/packages/SeedTrace)
+[![nuget shield](https://img.shields.io/nuget/v/Ferntrace)](https://nuget.org/packages/Ferntrace)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -28,7 +29,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedTrace
+dotnet add package Ferntrace
 ```
 
 ## Reference
@@ -47,6 +48,19 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
 );
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedTrace;
+
+var client = new SeedTraceClient(new ClientOptions
+{
+    BaseUrl = SeedTraceEnvironment.Prod
+});
 ```
 
 ## Exception Handling

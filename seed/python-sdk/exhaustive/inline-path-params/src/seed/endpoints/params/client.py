@@ -344,6 +344,36 @@ class ParamsClient:
         _response = self._raw_client.upload_with_path(param=param, request=request, request_options=request_options)
         return _response.data
 
+    def get_with_path_and_errors(self, *, param: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        GET with path param that can throw errors
+
+        Parameters
+        ----------
+        param : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_path_and_errors(
+            param="param",
+        )
+        """
+        _response = self._raw_client.get_with_path_and_errors(param=param, request_options=request_options)
+        return _response.data
+
 
 class AsyncParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -754,4 +784,44 @@ class AsyncParamsClient:
         _response = await self._raw_client.upload_with_path(
             param=param, request=request, request_options=request_options
         )
+        return _response.data
+
+    async def get_with_path_and_errors(
+        self, *, param: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        GET with path param that can throw errors
+
+        Parameters
+        ----------
+        param : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.params.get_with_path_and_errors(
+                param="param",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_with_path_and_errors(param=param, request_options=request_options)
         return _response.data

@@ -11,6 +11,7 @@ describe("CompletionsClient", () => {
         const rawRequestBody = { query: "foo" };
         const rawResponseBody =
             'event: completion\ndata: {"delta":"foo","tokens":1}\n\nevent: completion\ndata: {"delta":"bar","tokens":2}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream")
@@ -28,8 +29,14 @@ describe("CompletionsClient", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { delta: "foo", tokens: 1 },
-            { delta: "bar", tokens: 2 },
+            {
+                delta: "foo",
+                tokens: 1,
+            },
+            {
+                delta: "bar",
+                tokens: 2,
+            },
         ]);
     });
 
@@ -38,6 +45,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
         const rawResponseBody = "bad request";
+
         server
             .mockEndpoint()
             .post("/stream")
@@ -58,7 +66,9 @@ describe("CompletionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
-        const rawResponseBody = 'event: completion\ndata: {"content":"content"}\n\n';
+        const rawResponseBody =
+            'event: completion\ndata: {"event":"completion","content":"hello"}\n\nevent: error\ndata: {"event":"error","error":"something went wrong"}\n\n';
+
         server
             .mockEndpoint()
             .post("/stream-events")
@@ -75,7 +85,16 @@ describe("CompletionsClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ event: "completion", content: "content" }]);
+        expect(events).toEqual([
+            {
+                event: "completion",
+                content: "hello",
+            },
+            {
+                event: "error",
+                error: "something went wrong",
+            },
+        ]);
     });
 
     test("streamEvents (2)", async () => {
@@ -83,6 +102,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "" };
         const rawResponseBody = "bad request";
+
         server
             .mockEndpoint()
             .post("/stream-events")
@@ -94,6 +114,69 @@ describe("CompletionsClient", () => {
 
         await expect(async () => {
             return await client.completions.streamEvents({
+                query: "",
+            });
+        }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
+    });
+
+    test("streamEventsContextProtocol (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: completion\ndata: {"content":"hello"}\n\nevent: error\ndata: {"error":"something went wrong"}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.completions.streamEventsContextProtocol({
+            query: "query",
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                event: "completion",
+                ...{
+                    event: "completion",
+                    content: "hello",
+                },
+            },
+            {
+                event: "error",
+                ...{
+                    event: "error",
+                    error: "something went wrong",
+                },
+            },
+        ]);
+    });
+
+    test("streamEventsContextProtocol (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "" };
+        const rawResponseBody = "bad request";
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-context-protocol")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.completions.streamEventsContextProtocol({
                 query: "",
             });
         }).rejects.toThrow(SeedServerSentEvents.BadRequestError);

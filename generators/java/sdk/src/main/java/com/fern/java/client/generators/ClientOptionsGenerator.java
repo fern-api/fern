@@ -261,15 +261,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         Map<String, FieldSpec> apiPathParamFieldsForBuilder = getApiPathParamFieldsForBuilder();
         Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFieldsForMainClass);
 
-        String platformHeadersPutString = getPlatformHeadersEntries(
-                        generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                        generatorContext.getGeneratorConfig(),
-                        generatorContext.getIr())
-                .entrySet()
-                .stream()
-                .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
-                        .toString())
-                .collect(Collectors.joining(""));
+        String platformHeadersPutString = "";
+        if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
+            platformHeadersPutString = getPlatformHeadersEntries(
+                            generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
+                            generatorContext.getGeneratorConfig(),
+                            generatorContext.getIr())
+                    .entrySet()
+                    .stream()
+                    .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
+                            .toString())
+                    .collect(Collectors.joining(""));
+        }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
@@ -314,14 +317,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .collect(Collectors.toList()))
                 .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                 .addStatement("this.$L = new $T<>()", HEADERS_FIELD.name, HashMap.class)
-                .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
-                .addStatement(
-                        "this.$L.putAll(new $T<$T,$T>() {{$L}})",
-                        HEADERS_FIELD.name,
-                        HashMap.class,
-                        String.class,
-                        String.class,
-                        platformHeadersPutString)
+                .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name);
+        if (!platformHeadersPutString.isEmpty()) {
+            constructorBuilder.addStatement(
+                    "this.$L.putAll(new $T<$T,$T>() {{$L}})",
+                    HEADERS_FIELD.name,
+                    HashMap.class,
+                    String.class,
+                    String.class,
+                    platformHeadersPutString);
+        }
+        constructorBuilder
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
@@ -646,7 +652,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("new $T<>()", HashMap.class)
                         .build())
                 .addField(FieldSpec.builder(TypeName.INT, MAX_RETRIES_FIELD.name, Modifier.PRIVATE)
-                        .initializer("2")
+                        .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
@@ -710,7 +716,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(MethodSpec.methodBuilder(MAX_RETRIES_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
-                        .addJavadoc("Override the maximum number of retries. Defaults to 2 retries.")
+                        .addJavadoc("Override the maximum number of retries. Defaults to " + getDefaultMaxRetries()
+                                + " retries.")
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
@@ -1225,5 +1232,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .getCustomConfig()
                 .defaultTimeoutInSeconds()
                 .orElse(60);
+    }
+
+    private int getDefaultMaxRetries() {
+        return clientGeneratorContext.getCustomConfig().maxRetries().orElse(2);
     }
 }

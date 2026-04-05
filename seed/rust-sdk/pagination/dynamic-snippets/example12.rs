@@ -11,6 +11,12 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest { offset: Some(1) }, None)
+        .list_with_global_config(
+            &InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
+                offset: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

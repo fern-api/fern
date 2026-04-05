@@ -27,7 +27,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCu
         for (const environment of this.singleUrlEnvironments.environments) {
             class_.addStatement(
                 ruby.codeblock((writer) => {
-                    writer.write(`${environment.name.screamingSnakeCase.safeName} = "${environment.url}"`);
+                    writer.write(`${this.case.screamingSnakeSafe(environment.name)} = "${environment.url}"`);
                 })
             );
         }

@@ -744,12 +744,40 @@ channel:
       origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
+    auctions:
+      default: true
+      docs: Include auction events
+      type: optional<boolean>
+    bids:
+      default: true
+      docs: Include bids in change events
+      type: optional<boolean>
+    heartbeat:
+      default: false
+      docs: >-
+        Optionally add this parameter and set to true to receive a heartbeat
+        every 5 seconds
+      type: optional<boolean>
+    offers:
+      default: true
+      docs: Include asks in change events
+      type: optional<boolean>
     symbol:
       docs: >
         Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
       type: Symbol
+    top_of_book:
+      default: false
+      docs: >-
+        If absent or false, receive full order book depth; if present and true,
+        receive top of book only. Only applies to bids and offers.
+      type: optional<boolean>
+    trades:
+      default: true
+      docs: Include trade events
+      type: optional<boolean>
   url: public
 ",
         "name": "marketDataV1.yml",
@@ -838,8 +866,9 @@ channel:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
     base-properties: {}
-    context: data
-    discriminant: object
+    discriminant:
+      context: data
+      value: object
     docs: >-
       The payment source to take the payment from. This can be a card or a bank
       account. Some of these properties will be hidden on read to protect PII
@@ -1171,11 +1200,17 @@ types:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponse:
     properties:
-      data: optional<list<trainsRoot.Booking>>
-      links: optional<GetBookingsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Booking>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetBookingsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
@@ -1546,11 +1581,17 @@ service:
 types:
   GetStationsResponse:
     properties:
-      data: optional<list<trainsRoot.Station>>
-      links: optional<GetStationsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Station>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetStationsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetStationsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination
@@ -1662,11 +1703,17 @@ webhooks:
 types:
   GetTripsResponse:
     properties:
-      data: optional<list<trainsRoot.Trip>>
-      links: optional<GetTripsResponseLinks>
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<trainsRoot.Trip>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<GetTripsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponseLinks:
+    docs: A set of hypermedia links which serve as controls for the client.
     extends:
       - trainsRoot.LinksSelf
       - trainsRoot.LinksPagination

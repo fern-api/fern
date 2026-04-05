@@ -12,6 +12,7 @@ import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-r
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
@@ -34,9 +35,11 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     noReplay,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -55,9 +58,11 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -70,10 +75,24 @@ export async function generateWorkspace({
     }
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
-    if (groupNameOrDefault == null) {
-        return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+    if (groupName == null && groupNameOrDefault != null) {
+        context.logger.info(
+            chalk.dim(`Using default group '${groupNameOrDefault}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
         );
+    }
+    if (groupNameOrDefault == null) {
+        const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
+        const longestGroupName = Math.max(...groupNames.map((name) => name.length));
+        const currentArgs = process.argv.slice(2).join(" ");
+        const message =
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n` +
+            groupNames
+                .map((name) => {
+                    const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
+                    return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
+                })
+                .join("\n");
+        return context.failAndThrow(message);
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -138,9 +157,20 @@ export async function generateWorkspace({
                     ai,
                     replay,
                     noReplay,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    requireEnvVars,
+                    skipFernignore
                 });
             } else if (token != null) {
+                // Block custom images for remote generation — only trusted images can run on Fiddle
+                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+                if (customImageGenerators.length > 0) {
+                    const names = customImageGenerators.map((g) => g.name).join(", ");
+                    return context.failAndThrow(
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                            `The following generators use custom images: ${names}`
+                    );
+                }
                 await runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,
@@ -154,9 +184,11 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
                     validateWorkspace: true,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars
                 });
             }
         })

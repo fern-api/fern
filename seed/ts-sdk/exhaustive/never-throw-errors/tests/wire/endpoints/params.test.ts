@@ -9,6 +9,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPath("param");
@@ -25,6 +26,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithInlinePath({
@@ -114,6 +116,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .put("/params/path/param")
@@ -137,6 +140,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .put("/params/path/param")
@@ -150,6 +154,23 @@ describe("ParamsClient", () => {
             param: "param",
             body: "string",
         });
+        expect(response).toEqual({
+            body: "string",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getWithPathAndErrors", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = "string";
+
+        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.endpoints.params.getWithPathAndErrors("param");
         expect(response).toEqual({
             body: "string",
             ok: true,

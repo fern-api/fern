@@ -18,8 +18,8 @@ export class LocalTestRunner extends TestRunner {
         );
         const result = await runScript({
             commands: localConfig.buildCommand,
-            doNotPipeOutput: false,
-            logger: CONSOLE_LOGGER,
+            doNotPipeOutput: !this.shouldPipeOutput(),
+            logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
             workingDir
         });
         if (result.exitCode !== 0) {
@@ -55,7 +55,10 @@ export class LocalTestRunner extends TestRunner {
             shouldGenerateDynamicSnippetTests,
             inspect = false,
             license,
-            smartCasing
+            smartCasing,
+            organization,
+            absolutePathToFernConfig,
+            skipAutogenerationIfManualExamplesExist
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -83,8 +86,8 @@ export class LocalTestRunner extends TestRunner {
 
         await runNativeGenerationForSeed(
             {
-                organization: DUMMY_ORGANIZATION,
-                absolutePathToFernConfig: absolutePathToFernDefinition,
+                organization: organization ?? DUMMY_ORGANIZATION,
+                absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
                 workspace: fernWorkspace,
                 generatorGroup,
                 context: taskContext,
@@ -93,7 +96,8 @@ export class LocalTestRunner extends TestRunner {
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
-                ai: undefined
+                ai: undefined,
+                skipAutogenerationIfManualExamplesExist
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,

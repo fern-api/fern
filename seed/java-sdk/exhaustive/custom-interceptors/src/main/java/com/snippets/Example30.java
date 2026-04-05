@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 
 public class Example30 {
     public static void main(String[] args) {
@@ -12,6 +12,6 @@ public class Example30 {
 
         client.endpoints()
                 .params()
-                .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+                .getWithInlinePath("param", GetWithInlinePath.builder().build());
     }
 }

@@ -9,43 +9,42 @@ pub enum SearchRequestQuery {
 }
 
 impl SearchRequestQuery {
-    pub fn is_singlefiltersearchrequest(&self) -> bool {
+    pub fn is_single_filter_search_request(&self) -> bool {
         matches!(self, Self::SingleFilterSearchRequest(_))
     }
 
-    pub fn is_multiplefiltersearchrequest(&self) -> bool {
+    pub fn is_multiple_filter_search_request(&self) -> bool {
         matches!(self, Self::MultipleFilterSearchRequest(_))
     }
 
 
-    pub fn as_singlefiltersearchrequest(&self) -> Option<&SingleFilterSearchRequest> {
+    pub fn as_single_filter_search_request(&self) -> Option<&SingleFilterSearchRequest> {
         match self {
                     Self::SingleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_singlefiltersearchrequest(self) -> Option<SingleFilterSearchRequest> {
+    pub fn into_single_filter_search_request(self) -> Option<SingleFilterSearchRequest> {
         match self {
                     Self::SingleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_multiplefiltersearchrequest(&self) -> Option<&MultipleFilterSearchRequest> {
+    pub fn as_multiple_filter_search_request(&self) -> Option<&MultipleFilterSearchRequest> {
         match self {
                     Self::MultipleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_multiplefiltersearchrequest(self) -> Option<MultipleFilterSearchRequest> {
+    pub fn into_multiple_filter_search_request(self) -> Option<MultipleFilterSearchRequest> {
         match self {
                     Self::MultipleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for SearchRequestQuery {

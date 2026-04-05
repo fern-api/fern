@@ -1,5 +1,5 @@
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
-import { titleCase } from "@fern-api/core-utils";
+import { extractErrorMessage, titleCase } from "@fern-api/core-utils";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -38,7 +38,7 @@ export async function initializeDocs({
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
-                const errorMessage = writeError instanceof Error ? writeError.message : String(writeError);
+                const errorMessage = extractErrorMessage(writeError);
                 taskContext.logger.debug(`Encountered an error while writing docs configuration: ${errorMessage}`);
                 taskContext.logger.error(chalk.red("Failed to write docs configuration"));
                 throw writeError;

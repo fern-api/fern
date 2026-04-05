@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UploadFileRequest {
+    #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
@@ -27,5 +28,40 @@ impl UploadFileRequest {
         }
 
         form
+    }
+}
+
+impl UploadFileRequest {
+    pub fn builder() -> UploadFileRequestBuilder {
+        <UploadFileRequestBuilder as Default>::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct UploadFileRequestBuilder {
+    name: Option<String>,
+    file: Option<Vec<u8>>,
+}
+
+impl UploadFileRequestBuilder {
+    pub fn name(mut self, value: impl Into<String>) -> Self {
+        self.name = Some(value.into());
+        self
+    }
+
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`UploadFileRequest`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`name`](UploadFileRequestBuilder::name)
+    pub fn build(self) -> Result<UploadFileRequest, BuildError> {
+        Ok(UploadFileRequest {
+            name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
+            file: self.file,
+        })
     }
 }

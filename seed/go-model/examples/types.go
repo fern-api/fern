@@ -5,10 +5,11 @@ package examples
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	commons "github.com/examples/fern/commons"
 	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type Type struct {

@@ -115,3 +115,10 @@ func WithBasicAuth(username, password string) *core.BasicAuthOption {
 		Password: password,
 	}
 }
+
+// WithClientId sets the clientId auth request parameter.
+func WithClientId(clientId string) *core.ClientIdOption {
+	return &core.ClientIdOption{
+		ClientId: clientId,
+	}
+}

@@ -11,7 +11,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    private async Task<WithRawResponse<System.IO.Stream>> GetAsyncCore(
+    private async Task<WithRawResponse<global::System.IO.Stream>> GetAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,7 +37,7 @@ public partial class ServiceClient : IServiceClient
         if (response.StatusCode is >= 200 and < 400)
         {
             var stream = await response.Raw.Content.ReadAsStreamAsync();
-            return new WithRawResponse<System.IO.Stream>()
+            return new WithRawResponse<global::System.IO.Stream>()
             {
                 Data = stream,
                 RawResponse = new RawResponse()
@@ -60,11 +60,13 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    public WithRawResponseTask<System.IO.Stream> GetAsync(
+    public WithRawResponseTask<global::System.IO.Stream> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<System.IO.Stream>(GetAsyncCore(options, cancellationToken));
+        return new WithRawResponseTask<global::System.IO.Stream>(
+            GetAsyncCore(options, cancellationToken)
+        );
     }
 }

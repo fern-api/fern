@@ -87,12 +87,15 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
+    inferForwardCompatible: boolean | undefined;
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -154,6 +157,8 @@ export interface GeneratorInvocation {
     raw?: GeneratorInvocationSchema;
 
     name: string;
+    /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
+    containerImage: string | undefined;
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;

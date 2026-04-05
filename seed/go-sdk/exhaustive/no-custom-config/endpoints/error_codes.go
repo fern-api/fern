@@ -3,7 +3,15 @@
 package endpoints
 
 import (
+	fern "github.com/exhaustive/fern"
+	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	400: func(apiError *core.APIError) error {
+		return &fern.BadRequestBody{
+			APIError: apiError,
+		}
+	},
+}
