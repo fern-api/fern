@@ -56,6 +56,11 @@ export class NameRegistry {
                 const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(templateId);
                 return swift.Symbol.create(symbolId, templateId, { type: "class" });
             }
+            case "ClientConfig": {
+                const symbol = this.sourceStaticSymbolsByName.get(templateId);
+                assertDefined(symbol, `Source template symbol not found for name "${templateId}"`);
+                return symbol;
+            }
             default:
                 assertNever(templateId);
         }

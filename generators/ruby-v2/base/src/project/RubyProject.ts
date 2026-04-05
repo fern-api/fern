@@ -3,12 +3,14 @@ import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 import { RubocopFile } from "./RubocopFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -103,7 +105,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
-        const githubCiContents = template(githubCiTemplate)({ enableWireTests });
+        const githubCiContents = eta.renderString(githubCiTemplate, { enableWireTests });
         await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
     }
 
@@ -140,7 +142,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
-                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    maxRetries: this.rubyContext.customConfig.maxRetries
                 })
             );
         }
@@ -151,13 +154,15 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         gemNamespace,
         rootFolderName,
         customPagerClassName,
-        omitFernHeaders
+        omitFernHeaders,
+        maxRetries
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        maxRetries?: number;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -169,7 +174,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     gemNamespace,
                     rootFolderName,
                     customPagerClassName,
-                    omitFernHeaders
+                    omitFernHeaders,
+                    maxRetries
                 })
             })
         );
@@ -214,19 +220,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getTemplateVariables({
     gemNamespace,
     rootFolderName,
     customPagerClassName,
-    omitFernHeaders
+    omitFernHeaders,
+    maxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    maxRetries?: number;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -235,7 +243,8 @@ function getTemplateVariables({
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
-        omitFernHeaders: omitFernHeaders ?? false
+        omitFernHeaders: omitFernHeaders ?? false,
+        defaultMaxRetries: maxRetries ?? 2
     };
 }
 

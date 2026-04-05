@@ -1,4 +1,5 @@
 import { schemas } from "@fern-api/config";
+import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
@@ -15,6 +16,7 @@ export namespace SdkConfigConverter {
         lang: Language;
         image: string;
         version: string;
+        registry: string | undefined;
     }
 
     export type Result = Success | Failure;
@@ -129,6 +131,7 @@ export class SdkConfigConverter {
             name,
             lang: generatorInfo.lang,
             image: generatorInfo.image,
+            registry: generatorInfo.registry,
             version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
             sourceLocation: sourced.$loc,
@@ -181,11 +184,35 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
+
+        // If user specified an explicit image, normalize with the fernapi/ Docker Hub
+        // org prefix so that IR version resolution (which expects fully-qualified names
+        // like "fernapi/fern-typescript-sdk") works correctly.
+        if (target.image != null) {
+            if (typeof target.image === "string") {
+                return {
+                    lang,
+                    image: addDefaultDockerOrgIfNotPresent(target.image),
+                    version: target.version ?? "latest",
+                    registry: undefined
+                };
+            }
+            // Object form: { name, registry }
+            return {
+                lang,
+                image: addDefaultDockerOrgIfNotPresent(target.image.name),
+                version: target.version ?? "latest",
+                registry: target.image.registry
+            };
+        }
+
+        // Default: resolve from language
         const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
-            version: resolvedDockerImage.tag
+            version: resolvedDockerImage.tag,
+            registry: undefined
         };
     }
 
@@ -208,7 +235,8 @@ export class SdkConfigConverter {
             return target.lang;
         }
         if (target.image != null) {
-            return getLanguageFromImage({ image: target.image });
+            const imageName = typeof target.image === "string" ? target.image : target.image.name;
+            return getLanguageFromImage({ image: addDefaultDockerOrgIfNotPresent(imageName) });
         }
         const lang: Language = name as Language;
         if (LANGUAGES.includes(lang)) {

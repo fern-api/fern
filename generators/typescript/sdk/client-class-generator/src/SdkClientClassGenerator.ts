@@ -46,7 +46,7 @@ export declare namespace SdkClientClassGenerator {
 }
 
 export class SdkClientClassGenerator {
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly packageResolver: PackageResolver;
@@ -99,7 +99,7 @@ export class SdkClientClassGenerator {
         parameterNaming,
         offsetSemantics
     }: SdkClientClassGenerator.Init) {
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.packageResolver = packageResolver;
@@ -133,7 +133,7 @@ export class SdkClientClassGenerator {
         importsManager
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
-            caseConverter: this.caseConverter,
+            caseConverter: this.case,
             isRoot,
             importsManager,
             exportsManager: this.exportsManager,

@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -49,6 +49,7 @@ fixtures:
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
+        maxRetries: 5
   pagination-custom:
     - customConfig:
         customPagerName: FooPager

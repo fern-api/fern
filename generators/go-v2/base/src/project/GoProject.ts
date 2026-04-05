@@ -171,7 +171,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getRootAsIsFiles(),
             getPackageName: () => this.context.getRootPackageName(),
-            getImportPath: () => this.getRootImportPath()
+            getImportPath: () => this.getRootImportPath(),
+            templateVariables: {
+                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 1) + 1)
+            }
         });
     }
 

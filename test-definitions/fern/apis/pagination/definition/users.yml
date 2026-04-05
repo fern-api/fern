@@ -80,6 +80,19 @@ types:
       next_cursor: optional<string>
       data: list<User>
 
+  UserList:
+    type: list<User>
+    docs: A type alias for a list of users
+
+  ListUsersAliasedDataPaginationResponse:
+    properties:
+      hasNextPage: optional<boolean>
+      page: optional<Page>
+      total_count:
+        type: integer
+        docs: The totall number of /users
+      data: UserList
+
   Page:
     properties:
       page:
@@ -475,3 +488,26 @@ service:
                 per_page: 10
                 total_page: 1
               total_count: 0
+
+    listWithAliasedData:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: GET
+      path: /aliased-data
+      request:
+        name: ListUsersAliasedDataRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+          per_page:
+            type: optional<integer>
+            docs: Defaults to per page
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch
+              the next page of results.
+      response: ListUsersAliasedDataPaginationResponse

@@ -28,7 +28,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
-        this.discriminantPropertyName = unionDeclaration.discriminant.name.snakeCase.safeName;
+        this.discriminantPropertyName = this.case.snakeSafe(unionDeclaration.discriminant);
         this.classReference = this.context.typeMapper.convertToClassReference(this.typeDeclaration.name);
         this.unionMembers = this.unionDeclaration.types.map((type) => this.unionMemberFromUnionType(type));
     }
@@ -74,7 +74,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     private unionMemberFromUnionType(type: FernIr.SingleUnionType): UnionMember {
         return {
-            keyName: type.discriminantValue.name.screamingSnakeCase.safeName,
+            keyName: this.case.screamingSnakeSafe(type.discriminantValue),
             typeReference: this.typeReferenceFromUnionType(type)
         };
     }

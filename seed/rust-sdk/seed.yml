@@ -53,6 +53,7 @@ fixtures:
   imdb:
     - customConfig:
         clientName: ImdbClient
+        maxRetries: 5
       outputFolder: imdb
     - customConfig:
         crateName: custom_imdb_sdk

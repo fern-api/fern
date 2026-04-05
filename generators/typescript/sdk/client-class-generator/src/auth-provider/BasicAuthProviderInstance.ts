@@ -27,15 +27,27 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
     }
 
     public getSnippetProperties(context: FileContext): ts.ObjectLiteralElementLike[] {
-        return [
-            ts.factory.createPropertyAssignment(
-                getPropertyKey(context.case.camelSafe(this.authScheme.username)),
-                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.username)}`)
-            ),
-            ts.factory.createPropertyAssignment(
-                getPropertyKey(context.case.camelSafe(this.authScheme.password)),
-                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.password)}`)
-            )
-        ];
+        const properties: ts.ObjectLiteralElementLike[] = [];
+        if (this.authScheme.usernameOmit !== true) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    getPropertyKey(context.case.camelSafe(this.authScheme.username)),
+                    ts.factory.createStringLiteral(
+                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.username)}`
+                    )
+                )
+            );
+        }
+        if (this.authScheme.passwordOmit !== true) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    getPropertyKey(context.case.camelSafe(this.authScheme.password)),
+                    ts.factory.createStringLiteral(
+                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.password)}`
+                    )
+                )
+            );
+        }
+        return properties;
     }
 }

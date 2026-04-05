@@ -47,7 +47,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     noOptionalProperties: this.noOptionalProperties,
                     enableInlineTypes: this.enableInlineTypes,
                     generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-                    caseConverter: this.caseConverter
+                    caseConverter: this.case
                 })
         );
 
@@ -61,7 +61,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs({ context }),
             discriminant: this.includeSerdeLayer
-                ? this.caseConverter.camelUnsafe(this.shape.discriminant)
+                ? this.case.camelUnsafe(this.shape.discriminant)
                 : getWireValue(this.shape.discriminant),
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
@@ -75,7 +75,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             inline: this.inline,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -105,13 +105,13 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
     private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValueOrString): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.caseConverter.camelUnsafe(propertyName);
+            return this.case.camelUnsafe(propertyName);
         } else {
             return getWireValue(propertyName);
         }
@@ -160,7 +160,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                                     ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
                                         includeSerdeLayer: this.includeSerdeLayer,
                                         retainOriginalCasing: this.retainOriginalCasing,
-                                        caseConverter: this.caseConverter
+                                        caseConverter: this.case
                                     })
                                 ),
                                 context.type.getGeneratedExample(property).build(context, opts)
