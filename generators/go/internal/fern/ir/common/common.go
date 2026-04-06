@@ -218,6 +218,15 @@ func (n *Name) SetScreamingSnakeCase(screamingSnakeCase *SafeAndUnsafeString) {
 }
 
 func (n *Name) UnmarshalJSON(data []byte) error {
+	// Handle the v66 NameOrString undiscriminated union:
+	// If the JSON is a plain string, compute all casing variants from it.
+	// If the JSON is an object, unmarshal normally.
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		computed := nameFromString(s)
+		*n = *computed
+		return nil
+	}
 	type unmarshaler Name
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -305,6 +314,16 @@ func (n *NameAndWireValue) SetName(name *Name) {
 }
 
 func (n *NameAndWireValue) UnmarshalJSON(data []byte) error {
+	// Handle the v66 NameAndWireValueOrString undiscriminated union:
+	// If the JSON is a plain string, compute both wireValue and name from it.
+	// If the JSON is an object, unmarshal normally (note: the "name" field
+	// inside the object may itself be a string or object, handled by Name.UnmarshalJSON).
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		computed := nameAndWireValueFromString(s)
+		*n = *computed
+		return nil
+	}
 	type unmarshaler NameAndWireValue
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
