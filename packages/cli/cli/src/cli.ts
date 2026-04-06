@@ -2365,6 +2365,12 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 );
             }
 
+            if (token == null) {
+                cliContext.logger.warn(
+                    "No GitHub token found. Clone may fail for private repos. Set GITHUB_TOKEN or pass --token."
+                );
+            }
+
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
             if (argv.dryRun) {
                 cliContext.logger.info("(dry-run mode)");

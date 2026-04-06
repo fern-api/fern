@@ -301,6 +301,12 @@ void yargs(hideBin(process.argv))
                             process.exit(1);
                         }
 
+                        if (argv.token == null) {
+                            process.stderr.write(
+                                "warning: no GitHub token provided. Clone may fail for private repos. Pass --token or set GITHUB_TOKEN.\n"
+                            );
+                        }
+
                         try {
                             const result = await replayInit({
                                 githubRepo: argv.github,
