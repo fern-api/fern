@@ -114,14 +114,10 @@ export class Migrator {
             fernYml = singleApiResult.fernYml;
         }
 
-        // Migrate docs.yml if present.
+        // Point docs key at docs.yml via $ref if the file exists.
         const docsResult = await migrateDocsYml(fernDir);
-        warnings.push(...docsResult.warnings);
-        if (docsResult.docs != null) {
-            fernYml.docs = docsResult.docs as schemas.FernYmlSchema["docs"];
-        }
-        if (docsResult.absoluteFilePath != null) {
-            migratedFiles.push(docsResult.absoluteFilePath);
+        if (docsResult.docsRef != null) {
+            fernYml.docs = docsResult.docsRef as unknown as schemas.FernYmlSchema["docs"];
         }
 
         // Write fern.yml in the current working directory.
