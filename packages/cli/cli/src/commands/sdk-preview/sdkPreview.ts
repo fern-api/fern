@@ -14,7 +14,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
-import { getGithubRepository } from "./getGithubRepository.js";
+
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
@@ -29,7 +29,6 @@ interface SdkPreviewSuccess {
         package_name: string;
         registry_url: string;
         output_path?: string;
-        sdk_repo?: string;
     }>;
 }
 
@@ -202,8 +201,6 @@ export async function sdkPreview({
 
                 const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
 
-                const sdkRepo = getGithubRepository(generator);
-
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
                 const actualOutputPath =
                     absolutePathToOutput != null
@@ -218,8 +215,7 @@ export async function sdkPreview({
                     registry_url: PREVIEW_REGISTRY_URL,
                     ...(actualOutputPath != null && {
                         output_path: actualOutputPath
-                    }),
-                    ...(sdkRepo != null && { sdk_repo: sdkRepo })
+                    })
                 });
             }
         }
