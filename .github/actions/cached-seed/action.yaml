@@ -42,7 +42,16 @@ runs:
         username: ${{ inputs.dockerhub-username }}
         password: ${{ inputs.dockerhub-token }}
 
+    - name: Record pre-existing Docker images
+      shell: bash
+      run: docker images -q | sort > /tmp/docker-images-before.txt
+
+    - name: Clear stale Docker image cache
+      shell: bash
+      run: rm -rf /tmp/docker-cache
+
     - name: Cache Docker images
+      id: docker-cache
       uses: actions/cache@v4
       with:
         path: /tmp/docker-cache
@@ -51,13 +60,12 @@ runs:
           ${{ runner.os }}-docker-
 
     - name: Load cached Docker images
+      if: steps.docker-cache.outputs.cache-hit == 'true'
       shell: bash
       run: |
-        if [ -d /tmp/docker-cache ]; then
-          for f in /tmp/docker-cache/*.tar; do
-            [ -f "$f" ] && docker load -i "$f" || true
-          done
-        fi
+        for f in /tmp/docker-cache/*.tar; do
+          [ -f "$f" ] && docker load -i "$f" || true
+        done
 
     - name: Seed Test
       shell: bash
@@ -93,7 +101,9 @@ runs:
       shell: bash
       run: |
         mkdir -p /tmp/docker-cache
-        docker images --format '{{.Repository}}:{{.Tag}}' | grep -v '<none>' | while read -r img; do
+        comm -13 /tmp/docker-images-before.txt <(docker images -q | sort) | while read -r id; do
+          img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+          [ -z "$img" ] && continue
           fname=$(echo "$img" | tr '/:' '_')
           docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
         done
