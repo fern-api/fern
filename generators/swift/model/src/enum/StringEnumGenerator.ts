@@ -8,6 +8,7 @@ export declare namespace StringEnumGenerator {
         | {
               type: "ir";
               enumTypeDeclaration: FernIr.EnumTypeDeclaration;
+              caseConverter: CaseConverter;
           }
         | {
               type: "custom";
@@ -22,7 +23,6 @@ export declare namespace StringEnumGenerator {
         name: string;
         source: Source;
         docsContent?: string;
-        caseConverter?: CaseConverter;
     }
 }
 
@@ -30,13 +30,11 @@ export class StringEnumGenerator {
     private readonly name: string;
     private readonly source: StringEnumGenerator.Source;
     private readonly docsContent?: string;
-    private readonly caseConverter?: CaseConverter;
 
-    public constructor({ name, source, docsContent, caseConverter }: StringEnumGenerator.Args) {
+    public constructor({ name, source, docsContent }: StringEnumGenerator.Args) {
         this.name = name;
         this.source = source;
         this.docsContent = docsContent;
-        this.caseConverter = caseConverter;
     }
 
     public generate(): swift.EnumWithRawValues {
@@ -56,12 +54,8 @@ export class StringEnumGenerator {
             ],
             cases: visitDiscriminatedUnion(this.source, "type")._visit({
                 ir: (info) => {
-                    const caseConverter = this.caseConverter;
-                    if (caseConverter == null) {
-                        throw new Error("CaseConverter is required for IR source");
-                    }
                     return info.enumTypeDeclaration.values.map((val) => ({
-                        unsafeName: caseConverter.camelUnsafe(val.name),
+                        unsafeName: info.caseConverter.camelUnsafe(val.name),
                         rawValue: getWireValue(val.name),
                         docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
                     }));

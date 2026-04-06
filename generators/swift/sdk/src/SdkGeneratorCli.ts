@@ -508,9 +508,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new StringEnumGenerator({
                         name: symbol.name,
-                        source: { type: "ir", enumTypeDeclaration: etd },
-                        docsContent: typeDeclaration.docs,
-                        caseConverter: context.caseConverter
+                        source: { type: "ir", enumTypeDeclaration: etd, caseConverter: context.caseConverter },
+                        docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
