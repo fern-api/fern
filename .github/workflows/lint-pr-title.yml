@@ -43,7 +43,6 @@ jobs:
             ci
             lint
             spring
-            express
             openapi
             deps
             deps-dev

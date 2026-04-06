@@ -1,1 +1,0 @@
-export { SeedEndpointSecurityAuthError } from "./SeedEndpointSecurityAuthError";

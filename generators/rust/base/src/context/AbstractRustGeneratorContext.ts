@@ -1,4 +1,4 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition } from "../AsIs.js";
@@ -16,6 +16,7 @@ import {
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
+    public readonly case: CaseConverter;
     public readonly project: RustProject;
     public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
@@ -29,6 +30,11 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.case = new CaseConverter({
+            generationLanguage: customConfig.capitalizeInitialisms ? undefined : "rust",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
 
         // Detect illegal recursive type cycles before any generation
         // This will throw an error if the schema has cycles that cannot be represented in Rust
@@ -604,15 +610,15 @@ export abstract class AbstractRustGeneratorContext<
         let schemaTypeCount = 0;
         for (const [typeId, typeDeclaration] of Object.entries(ir.types)) {
             // Register filename
-            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-            const typeName = typeDeclaration.name.name.snakeCase.safeName;
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+            const typeName = this.case.snakeSafe(typeDeclaration.name.name);
             const fullPath = [...pathParts, typeName];
             const baseFilename = convertToSnakeCase(fullPath.join("_"));
 
             const registeredFilename = this.project.filenameRegistry.registerSchemaTypeFilename(typeId, baseFilename);
 
             // Register type name without path prefix
-            const baseTypeName = typeDeclaration.name.name.pascalCase.safeName;
+            const baseTypeName = this.case.pascalSafe(typeDeclaration.name.name);
 
             const registeredTypeName = this.project.filenameRegistry.registerSchemaTypeTypeName(typeId, baseTypeName);
 
@@ -633,7 +639,7 @@ export abstract class AbstractRustGeneratorContext<
         for (const service of Object.values(ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    const requestName = endpoint.requestBody.name.pascalCase.unsafeName;
+                    const requestName = this.case.pascalUnsafe(endpoint.requestBody.name);
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -666,7 +672,7 @@ export abstract class AbstractRustGeneratorContext<
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "fileUpload") {
                     // Use endpoint name to generate request type name (like TypeScript generator)
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -733,7 +739,7 @@ export abstract class AbstractRustGeneratorContext<
                 // Only endpoints with referenced body AND query parameters
                 if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
                     // Generate request type name like CreateUsernameReferencedRequest
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -768,7 +774,7 @@ export abstract class AbstractRustGeneratorContext<
             for (const endpoint of service.endpoints) {
                 // Only bytes endpoints with query parameters
                 if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -808,7 +814,7 @@ export abstract class AbstractRustGeneratorContext<
 
         // Register all subpackage clients
         for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
-            const baseClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const baseClientName = `${this.case.pascalSafe(subpackage.name)}Client`;
             const registeredClientName = this.project.filenameRegistry.registerClientName(subpackageId, baseClientName);
 
             if (registeredClientName !== baseClientName) {
@@ -908,7 +914,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback for initial registration phase (before project is created or registry is populated)
-        return this.customConfig.clientClassName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+        return this.customConfig.clientClassName ?? `${this.case.pascalSafe(this.ir.apiName)}Client`;
     }
 
     /**
@@ -944,12 +950,12 @@ export abstract class AbstractRustGeneratorContext<
     public getModulePathForType(typeNameSnake: string): string {
         // Find the type declaration in the IR
         for (const typeDeclaration of Object.values(this.ir.types)) {
-            if (typeDeclaration.name.name.snakeCase.unsafeName === typeNameSnake) {
+            if (this.case.snakeUnsafe(typeDeclaration.name.name) === typeNameSnake) {
                 // Use fernFilepath + type name for unique module names to prevent collisions
                 // E.g., "folder-a/Response" becomes "folder_a_response"
                 // E.g., "foo/ImportingType" becomes "foo_importing_type"
-                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-                const typeName = typeDeclaration.name.name.snakeCase.safeName;
+                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+                const typeName = this.case.snakeSafe(typeDeclaration.name.name);
                 const fullPath = [...pathParts, typeName];
                 // Join with underscore and then apply snake_case conversion to ensure proper formatting
                 // This handles cases like "union__key" -> "union_key"
@@ -971,31 +977,24 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique module path (fernFilepath parts + type name joined with underscores)
      */
-    public getModulePathForDeclaredType(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase?: { safeName: string }; snakeCase?: { unsafeName: string }; originalName?: string };
-    }): string {
-        // Extract the type name - can be from pascalCase or snakeCase
-        const typeName =
-            declaredTypeName.name.snakeCase?.unsafeName ||
-            declaredTypeName.name.originalName ||
-            declaredTypeName.name.pascalCase?.safeName ||
-            "";
+    public getModulePathForDeclaredType(declaredTypeName: FernIr.DeclaredTypeName): string {
+        // Extract the type name using case converter
+        const typeName = this.case.snakeUnsafe(declaredTypeName.name);
 
         // Try to find the exact type declaration in IR that matches both name and fernFilepath
         const typeDeclaration = Object.values(this.ir.types).find((type) => {
-            // Match by name (try different formats)
+            // Match by name
             const nameMatches =
-                type.name.name.snakeCase.unsafeName === typeName ||
-                type.name.name.pascalCase.safeName === typeName ||
-                type.name.name.originalName === typeName;
+                this.case.snakeUnsafe(type.name.name) === typeName ||
+                this.case.pascalSafe(type.name.name) === typeName ||
+                getOriginalName(type.name.name) === typeName;
 
             // Match by fernFilepath
             const pathMatches =
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        part.pascalCase.safeName === declaredTypeName.fernFilepath.allParts[idx]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 );
 
             return nameMatches && pathMatches;
@@ -1003,8 +1002,8 @@ export abstract class AbstractRustGeneratorContext<
 
         if (typeDeclaration) {
             // Use fernFilepath + type name for unique module names
-            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-            const typeNameSnake = typeDeclaration.name.name.snakeCase.safeName;
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+            const typeNameSnake = this.case.snakeSafe(typeDeclaration.name.name);
             const fullPath = [...pathParts, typeNameSnake];
             const rawName = fullPath.join("_");
             return convertToSnakeCase(rawName);
@@ -1021,18 +1020,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a filename for
      * @returns The unique filename (e.g., "foo_importing_type.rs")
      */
-    public getUniqueFilenameForType(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
-            name: { snakeCase: { safeName: string }; pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueFilenameForType(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${this.case.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1047,18 +1041,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a type name for
      * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
-    public getUniqueTypeNameForDeclaration(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-            name: { pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueTypeNameForDeclaration(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${this.case.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -1073,20 +1062,17 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique type name, or the base name if not found in IR
      */
-    public getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase: { safeName: string } };
-    }): string {
-        const baseTypeName = declaredTypeName.name.pascalCase.safeName;
+    public getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string {
+        const baseTypeName = this.case.pascalSafe(declaredTypeName.name);
 
         // Try to find the type declaration in IR
         const typeDeclaration = Object.values(this.ir.types).find(
             (type) =>
-                type.name.name.pascalCase.safeName === baseTypeName &&
+                this.case.pascalSafe(type.name.name) === baseTypeName &&
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        part.pascalCase.safeName === declaredTypeName.fernFilepath.allParts[idx]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 )
         );
 
@@ -1112,7 +1098,7 @@ export abstract class AbstractRustGeneratorContext<
 
     public getQueryRequestTypeName(endpoint: FernIr.HttpEndpoint, serviceId: string): string {
         // Generate query-specific request type name with service context to prevent collisions
-        const methodName = endpoint.name.pascalCase.safeName;
+        const methodName = this.case.pascalSafe(endpoint.name);
         const baseTypeName = `${methodName}QueryRequest`;
 
         // Find the subpackage that owns this service to get naming context
@@ -1132,7 +1118,7 @@ export abstract class AbstractRustGeneratorContext<
             // Check if this other service has an endpoint with the same name
             return otherService.endpoints.some(
                 (otherEndpoint) =>
-                    otherEndpoint.name.pascalCase.safeName === methodName &&
+                    this.case.pascalSafe(otherEndpoint.name) === methodName &&
                     otherEndpoint.queryParameters.length > 0 &&
                     !otherEndpoint.requestBody
             );
@@ -1140,7 +1126,7 @@ export abstract class AbstractRustGeneratorContext<
 
         if (hasCollision) {
             // Include full subpackage path to make it unique (e.g., auth/analytics → AuthAnalytics)
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
             const subpackagePrefix = pathParts.join("");
             return `${subpackagePrefix}${baseTypeName}`;
         }
@@ -1292,11 +1278,11 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "nested_no_auth_api.rs")
      */
     public getUniqueFilenameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Use the full fernFilepath to create unique filenames to prevent collisions
         // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
         return `${pathParts.join("_")}.rs`;
     }
 
@@ -1308,7 +1294,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique client name (e.g., "NestedNoAuthApiClient" or "BasicAuthClient2" if collision)
      */
     public getUniqueClientNameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Find the subpackage ID by matching fernFilepath
         const subpackageId = Object.entries(this.ir.subpackages).find(([, sp]) => {
@@ -1316,7 +1302,7 @@ export abstract class AbstractRustGeneratorContext<
                 sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
                 sp.fernFilepath.allParts.every(
                     (part, index) =>
-                        part.pascalCase.safeName === subpackage.fernFilepath.allParts[index]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(subpackage.fernFilepath.allParts[index]!)
                 )
             );
         })?.[0];
@@ -1330,7 +1316,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return pathParts.join("") + "Client";
     }
 
@@ -1339,7 +1325,7 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
-        return this.getFirstHeaderAuthValue((header) => header.name.wireValue) ?? "api_key";
+        return this.getFirstHeaderAuthValue((header) => getWireValue(header.name)) ?? "api_key";
     }
 
     /**
@@ -1383,7 +1369,7 @@ export abstract class AbstractRustGeneratorContext<
      */
     private generateDefaultCrateName(): string {
         const orgName = this.config.organization;
-        const apiName = this.ir.apiName.snakeCase.unsafeName;
+        const apiName = this.case.snakeUnsafe(this.ir.apiName);
         return generateDefaultCrateName(orgName, apiName);
     }
 }

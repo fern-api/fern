@@ -65,7 +65,7 @@ runs:
         "${{ inputs.sdk-name }}" == "php-model" || \
         "${{ inputs.sdk-name }}" == "ruby-sdk-v2" || \
         "${{ inputs.sdk-name }}" == "rust-model" || \
-        "${{ inputs.sdk-name }}" == "ts-express" ]]; then
+        false ]]; then
           echo "split-tests=false" >> $GITHUB_OUTPUT
         else
           echo "split-tests=true" >> $GITHUB_OUTPUT

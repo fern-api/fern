@@ -4,10 +4,7 @@ import { rust } from "@fern-api/rust-codegen";
 import { isFloatingPointType } from "../utils/primitiveTypeUtils.js";
 
 export interface RustTypeGeneratorContext {
-    getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase: { safeName: string } };
-    }): string;
+    getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string;
     /** DateTime type to use: "offset" for DateTime<FixedOffset> (default), "utc" for DateTime<Utc> */
     getDateTimeType(): "offset" | "utc";
 }
