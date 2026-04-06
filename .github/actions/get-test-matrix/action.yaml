@@ -60,7 +60,6 @@ runs:
         if [[ "${{inputs.package-alphabetically}}" == "false" || \
         "${{ inputs.sdk-name }}" == "fastapi" || \
         "${{ inputs.sdk-name }}" == "go-model" || \
-        "${{ inputs.sdk-name }}" == "java-spring" || \
         "${{ inputs.sdk-name }}" == "openapi" || \
         "${{ inputs.sdk-name }}" == "php-model" || \
         "${{ inputs.sdk-name }}" == "ruby-sdk-v2" || \

@@ -101,7 +101,6 @@ jobs:
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
       ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
@@ -207,7 +206,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -507,36 +506,6 @@ jobs:
         uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-model
-          generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
-  java-spring:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-spring != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: java-spring
           generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
@@ -1109,7 +1078,6 @@ jobs:
         openapi,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
         ts-express,
         go-model,
@@ -1138,7 +1106,6 @@ jobs:
             openapi,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
             ts-express,
                 go-model,
@@ -1159,7 +1126,6 @@ jobs:
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
       java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
       java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
-      java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
       ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
@@ -1215,7 +1181,6 @@ jobs:
             openapi,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
             ts-express,
                 go-model,
@@ -1256,10 +1221,6 @@ jobs:
       java-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-total-fixtures-count }}
       java-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures }}
       java-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures-count }}
-
-      java-spring-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-total-fixtures-count }}
-      java-spring-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures }}
-      java-spring-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures-count }}
 
       ts-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-total-fixtures-count }}
       ts-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures }}
@@ -1363,7 +1324,6 @@ jobs:
         openapi,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
         ts-express,
         go-model,
@@ -1390,7 +1350,6 @@ jobs:
             openapi,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
             ts-express,
                 go-model,

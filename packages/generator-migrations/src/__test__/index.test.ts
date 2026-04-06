@@ -106,20 +106,9 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Java Model migrations", () => {
         it("includes Java Model migration entries", () => {
-            const javaModelGenerators = ["fernapi/fern-java-model", "fernapi/fern-java-spring"];
-
-            for (const generatorName of javaModelGenerators) {
-                expect(migrations[generatorName]).toBeDefined();
-                expect(migrations[generatorName]?.migrations).toBeDefined();
-                expect(Array.isArray(migrations[generatorName]?.migrations)).toBe(true);
-            }
-        });
-
-        it("Java Model and Spring share the same migration module", () => {
-            const javaModelModule = migrations["fernapi/fern-java-model"];
-            const javaSpringModule = migrations["fernapi/fern-java-spring"];
-
-            expect(javaModelModule).toBe(javaSpringModule);
+            expect(migrations["fernapi/fern-java-model"]).toBeDefined();
+            expect(migrations["fernapi/fern-java-model"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-java-model"]?.migrations)).toBe(true);
         });
 
         it("Java Model migrations are in semver order", () => {
