@@ -4,7 +4,7 @@
   changelogEntry:
     - summary: |
         Internal CLI improvements.
-      type: feat
+      type: chore
   createdAt: "2026-04-06"
   irVersion: 66
 
