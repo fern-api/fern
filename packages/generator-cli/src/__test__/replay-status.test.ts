@@ -163,7 +163,8 @@ describe("replayStatus", { tags: ["slow"] }, () => {
             expect(result.initialized).toBe(true);
             expect(result.patches).toHaveLength(1);
 
-            const patch = result.patches[0]!;
+            const patch = result.patches[0];
+            expect(patch).toBeDefined();
             expect(patch.id).toBe("patch-test12345");
             expect(patch.message).toBe("feat: add custom method");
             expect(patch.author).toBe("Test User");

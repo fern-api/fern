@@ -196,7 +196,7 @@ describe("replayForget", { tags: ["slow"] }, () => {
         it("removes specific patch by ID", () => {
             const result = replayForget({ outputDir: repoPath, options: { patchIds: ["patch-aaa11111"] } });
             expect(result.removed).toHaveLength(1);
-            expect(result.removed[0]!.id).toBe("patch-aaa11111");
+            expect(result.removed[0]?.id).toBe("patch-aaa11111");
             expect(result.remaining).toBe(1);
         });
 
@@ -225,13 +225,13 @@ describe("replayForget", { tags: ["slow"] }, () => {
         it("matches patches by file path", () => {
             const result = replayForget({ outputDir: repoPath, options: { pattern: "src/helper.ts" } });
             expect(result.matched).toHaveLength(1);
-            expect(result.matched![0]!.id).toBe("patch-bbb22222");
+            expect(result.matched?.[0]?.id).toBe("patch-bbb22222");
         });
 
         it("matches patches by commit message substring", () => {
             const result = replayForget({ outputDir: repoPath, options: { pattern: "helper utility" } });
             expect(result.matched).toHaveLength(1);
-            expect(result.matched![0]!.id).toBe("patch-bbb22222");
+            expect(result.matched?.[0]?.id).toBe("patch-bbb22222");
         });
 
         it("returns notFound when no match", () => {
