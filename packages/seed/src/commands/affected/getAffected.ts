@@ -73,7 +73,7 @@ const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-
 const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
     "docker/seed/Dockerfile.java": ["java-sdk", "java-model"],
     "docker/seed/Dockerfile.ts": ["ts-sdk"],
-    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2", "fastapi"],
+    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2"],
     "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
     "docker/seed/Dockerfile.csharp": ["csharp-sdk", "csharp-model"],
     "docker/seed/Dockerfile.php": ["php-sdk", "php-model"]
@@ -88,7 +88,6 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "python-sdk": ["generators/python/", "generators/python-v2/"],
     pydantic: ["generators/python/", "generators/python-v2/"],
     "pydantic-v2": ["generators/python-v2/"],
-    fastapi: ["generators/python/", "generators/python-v2/"],
     "java-sdk": ["generators/java/", "generators/java-v2/"],
     "java-model": ["generators/java/", "generators/java-v2/"],
     "go-sdk": ["generators/go/", "generators/go-v2/"],
