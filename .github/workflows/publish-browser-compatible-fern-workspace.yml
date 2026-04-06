@@ -1,0 +1,75 @@
+name: Publish Browser Compatible Fern Workspace
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version to publish (e.g., 0.0.1)"
+        required: true
+        type: string
+
+env:
+  DO_NOT_TRACK: "1"
+  PACKAGE_NAME: "@fern-api/browser-compatible-fern-workspace"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Setup Node for npm publish
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing.
+      # Node 22 ships with npm 10.x which does not support OIDC.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
+      - name: Validate version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "::error::Invalid version format: $VERSION"
+            exit 1
+          fi
+
+      - name: Check version not already published
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null; then
+            echo "::error::Version ${VERSION} is already published"
+            exit 1
+          fi
+
+      - name: Build and publish
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          pnpm turbo run dist --filter="${PACKAGE_NAME}" -- "${VERSION}"
+
+          cd packages/cli/workspace/browser-compatible-fern-workspace/dist
+          echo "Publishing ${PACKAGE_NAME}@${VERSION}"
+          cat package.json
+          npm publish --provenance --access public --tag latest
+          echo "✓ Successfully published ${PACKAGE_NAME}@${VERSION}"

@@ -164,6 +164,7 @@ fixtures:
       outputFolder: flat-package-layout
     - customConfig:
         omit-fern-headers: true
+        maxRetries: 5
       outputFolder: omit-fern-headers
   java-custom-package-prefix:
     - customConfig:

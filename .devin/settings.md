@@ -8,7 +8,7 @@ PR titles are validated by CI (`.github/workflows/lint-pr-title.yml`) using [sem
 
 **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-**Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+**Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
 
 **Examples**:
 - `chore(docs): update guidelines`

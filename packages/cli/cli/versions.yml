@@ -12,6 +12,83 @@
   createdAt: "2026-04-02"
   irVersion: 66
 
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Make GitHub token optional for replay init. Public repos no longer require a token.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 66
+
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping request body examples when the request
+        body has no schema defined. Previously, endpoints with a JSON content
+        type but no schema were treated as having no request body at all,
+        causing valid example JSON to be lost. The importer now preserves the
+        request and its examples so they render in docs and code snippets.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        Remove deprecated `private` field from `DocsInstance` configuration.
+      type: chore
+  createdAt: "2026-04-04"
+  irVersion: 66
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Make the `fern api enrich` command public. This command merges an
+        AI examples overrides file into an OpenAPI spec, integrating
+        `x-fern-examples` into native OpenAPI example fields.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add `--email` flag to `fern login` for enterprise SSO support.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Add `agents.page-description-source` to `docs.yml` to control which
+        frontmatter field is preferred for one-line page descriptions in `llms.txt`.
+        Supports `description` and `subtitle`, and falls back to other supported
+        frontmatter fields when the preferred field is not present.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 4.59.0
+  changelogEntry:
+    - summary: |
+        Add support for pulling generator Docker images from custom container registries
+        during `fern generate --local` via a new `image: { name, registry }` field in
+        `generators.yml`. Custom image generators are blocked for remote generation and
+        skipped during auto-upgrade.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 4.58.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` on `x-fern-global-headers` entries. When a
+        global header includes `x-fern-default`, the value is carried through
+        to the IR `clientDefault` field so generators can emit optional
+        parameters with a default value (e.g. `version: Optional[str] = '2024-02-08'`).
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
 - version: 4.57.0
   changelogEntry:
     - summary: |

@@ -7,6 +7,9 @@ export abstract class AbstractFormatter {
     formatMultipleSync(contents: string[]): string[] {
         return contents.map((content) => this.formatSync(content));
     }
+    dispose(): void {
+        // no-op by default; subclasses may override to clean up resources
+    }
 }
 
 export class NopFormatter extends AbstractFormatter {

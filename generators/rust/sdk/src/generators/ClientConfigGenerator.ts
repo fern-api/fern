@@ -178,7 +178,7 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "max_retries",
-                        value: Expression.numberLiteral(3)
+                        value: Expression.numberLiteral(this.context.customConfig.maxRetries ?? 3)
                     },
                     {
                         name: "custom_headers",

@@ -39,12 +39,12 @@ export declare namespace TypeSchemaGenerator {
 export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
     private noOptionalProperties: boolean;
-    private caseConverter: CaseConverter;
+    private case: CaseConverter;
 
     constructor({ includeUtilsOnUnionMembers, noOptionalProperties, caseConverter }: TypeSchemaGenerator.Init) {
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.noOptionalProperties = noOptionalProperties;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public generateTypeSchema({
@@ -122,7 +122,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedTypeSchema,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             noOptionalProperties: this.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -146,7 +146,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -170,7 +170,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -194,7 +194,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 
@@ -218,7 +218,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 }

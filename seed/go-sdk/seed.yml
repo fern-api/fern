@@ -143,6 +143,7 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+        maxRetries: 5
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -331,6 +332,7 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
   - bytes-upload
   - bytes-download

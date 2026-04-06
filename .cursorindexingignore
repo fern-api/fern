@@ -34,8 +34,6 @@ seed/php-model/*
 !seed/php-model/seed.yml
 seed/php-sdk/*
 !seed/php-sdk/seed.yml
-seed/postman/*
-!seed/postman/seed.yml
 seed/pydantic/*
 !seed/pydantic/seed.yml
 seed/pydantic-v2/*
