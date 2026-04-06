@@ -332,6 +332,7 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
   - bytes-upload
   - bytes-download

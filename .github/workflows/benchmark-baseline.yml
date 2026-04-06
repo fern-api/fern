@@ -1,0 +1,337 @@
+name: Benchmark Baseline
+
+on:
+  # Runs nightly at 4:00 AM UTC
+  schedule:
+    - cron: "0 4 * * *"
+  # Allow manual triggers for ad-hoc baseline refreshes
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  # Fetch specs once and share via artifact (avoids 9x redundant downloads)
+  fetch-specs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/actions/fetch-benchmark-specs
+            benchmarks/fern/apis
+
+      - name: Fetch benchmark OpenAPI specs
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Upload specs as shared artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis/*/openapi.json
+          retention-days: 1
+
+  # Run generator-only benchmarks (--skip-scripts) for all SDK generators on main.
+  # This is the primary baseline that PR benchmarks compare against.
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [fetch-specs]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        generator:
+          [ts-sdk, python-sdk, java-sdk, go-sdk, csharp-sdk, ruby-sdk-v2, php-sdk, swift-sdk, rust-sdk]
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
+
+      - name: Run benchmark (generator-only)
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+          skip-scripts: "true"
+
+      - name: Upload baseline results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-baseline-${{ matrix.generator }}
+          path: benchmark-results/
+          retention-days: 7
+
+  # Run full E2E benchmarks (with build/test scripts) for informational purposes.
+  # These capture the complete customer-observable generation time including
+  # npm install, compilation, and test execution.
+  baseline-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    needs: [fetch-specs]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        generator:
+          [ts-sdk, python-sdk, java-sdk, go-sdk, csharp-sdk, ruby-sdk-v2, php-sdk, swift-sdk, rust-sdk]
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
+
+      - name: Run benchmark (full E2E)
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+
+      - name: Upload E2E results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-e2e-${{ matrix.generator }}
+          path: benchmark-results/
+          retention-days: 7
+
+  # Aggregate results into rolling 7-day history cache
+  save-baseline-cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [baseline, baseline-e2e]
+    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    steps:
+      - name: Download generator-only baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-baseline-*
+          path: todays-results
+          merge-multiple: true
+
+      - name: Download E2E baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-e2e-*
+          path: todays-e2e-results
+          merge-multiple: true
+
+      - name: Restore existing history cache
+        id: history-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: benchmark-baseline-results
+          # Prefix fallback finds the most recent history cache entry
+          key: benchmark-baseline-never-matches
+          restore-keys: benchmark-baseline-
+
+      - name: Append today's results and prune old entries
+        shell: bash
+        run: |
+          mkdir -p benchmark-baseline-results/history
+          TODAY=$(date -u +%Y-%m-%d)
+          RUN_DIR="benchmark-baseline-results/history/${TODAY}_${{ github.run_id }}"
+          mkdir -p "$RUN_DIR"
+
+          # Copy generator-only results (used for PR comparisons)
+          if [ -d todays-results ] && ls todays-results/*.jsonl 1>/dev/null 2>&1; then
+            for f in todays-results/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "$RUN_DIR/"
+            done
+          else
+            echo "::warning::No generator-only baseline results found. Removing empty history entry."
+            rm -rf "$RUN_DIR"
+            echo "SKIP_CACHE_SAVE=true" >> "$GITHUB_ENV"
+          fi
+
+          # Only proceed with E2E + metadata if generator-only results were found
+          if [ -d "$RUN_DIR" ]; then
+            # Copy full E2E results into a separate subdirectory (informational only)
+            if [ -d todays-e2e-results ] && ls todays-e2e-results/*.jsonl 1>/dev/null 2>&1; then
+              mkdir -p "$RUN_DIR/e2e"
+              for f in todays-e2e-results/*.jsonl; do
+                [ -f "$f" ] && cp "$f" "$RUN_DIR/e2e/"
+              done
+            fi
+
+            # Store metadata for this run
+            echo "{\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\"}" \
+              > "$RUN_DIR/_metadata.json"
+          fi
+
+          # Prune history older than 7 days
+          # Note: 'date -d' is GNU coreutils syntax (CI runs on Ubuntu; not portable to macOS)
+          CUTOFF=$(date -u -d '7 days ago' +%Y-%m-%d)
+          for dir in benchmark-baseline-results/history/*/; do
+            [ -d "$dir" ] || continue
+            DIR_DATE=$(basename "$dir" | cut -d_ -f1)
+            if [[ "$DIR_DATE" < "$CUTOFF" ]]; then
+              echo "Pruning old baseline: $dir (date: $DIR_DATE, cutoff: $CUTOFF)"
+              rm -rf "$dir"
+            fi
+          done
+
+          # Write top-level metadata summarizing the history
+          RUNS=$(ls -d benchmark-baseline-results/history/*/ 2>/dev/null | wc -l)
+          echo "{\"latest_timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\",\"total_runs\":${RUNS}}" \
+            > benchmark-baseline-results/_metadata.json
+
+          echo "Baseline history summary:"
+          cat benchmark-baseline-results/_metadata.json
+          echo "History entries:"
+          ls -la benchmark-baseline-results/history/
+
+      - name: Save baseline to cache
+        if: ${{ env.SKIP_CACHE_SAVE != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: benchmark-baseline-results
+          key: benchmark-baseline-${{ github.run_id }}
+
+  # Send benchmark results to PostHog for long-term trend analysis and dashboards.
+  # Uses the same PostHog project + API key as seed test metrics (seed.yml).
+  # Fire-and-forget: failures here never affect cache save or downstream jobs.
+  post-metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [baseline, baseline-e2e]
+    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    # No repo permissions needed — only makes outbound HTTPS calls to PostHog.
+    permissions: {}
+    steps:
+      - name: Download generator-only baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-baseline-*
+          path: baseline-results
+          merge-multiple: true
+
+      - name: Download E2E baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-e2e-*
+          path: e2e-results
+          merge-multiple: true
+
+      - name: Send benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          COMMIT_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::warning::POSTHOG_API_KEY not set, skipping metrics"
+            exit 0
+          fi
+
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          FAILED=0
+
+          send_event() {
+            local mode="$1" generator="$2" spec="$3" duration="$4" exit_code="$5" skipped="$6"
+            local payload
+            payload=$(jq -n \
+              --arg api_key "$POSTHOG_API_KEY" \
+              --arg event "benchmark-baseline-result" \
+              --arg distinct_id "fern-ci-benchmark" \
+              --arg timestamp "$TIMESTAMP" \
+              --arg generator "$generator" \
+              --arg spec "$spec" \
+              --argjson duration_seconds "$duration" \
+              --argjson exit_code "$exit_code" \
+              --argjson skipped "$skipped" \
+              --arg mode "$mode" \
+              --arg branch "main" \
+              --arg commit_sha "$COMMIT_SHA" \
+              --arg run_id "$RUN_ID" \
+              --arg run_url "$RUN_URL" \
+              '{
+                api_key: $api_key,
+                event: $event,
+                distinct_id: $distinct_id,
+                timestamp: $timestamp,
+                properties: {
+                  generator: $generator,
+                  spec: $spec,
+                  duration_seconds: $duration_seconds,
+                  exit_code: $exit_code,
+                  skipped: $skipped,
+                  mode: $mode,
+                  branch: $branch,
+                  commit_sha: $commit_sha,
+                  run_id: $run_id,
+                  run_url: $run_url
+                }
+              }')
+            if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+              -H "Content-Type: application/json" \
+              -d "$payload" 2>/dev/null; then
+              echo "::warning::Failed to send PostHog event for ${mode}/${generator}/${spec}"
+              FAILED=$((FAILED + 1))
+            else
+              SENT=$((SENT + 1))
+            fi
+          }
+
+          # Send generator-only results
+          for f in baseline-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              send_event "generator-only" "$gen" "$spec" "$dur" "$ec" "$skip"
+            done < "$f"
+          done
+
+          # Send E2E results
+          for f in e2e-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              send_event "e2e" "$gen" "$spec" "$dur" "$ec" "$skip"
+            done < "$f"
+          done
+
+          echo "PostHog metrics: ${SENT} sent, ${FAILED} failed"
+
+  log-rejection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: ${{ github.ref != 'refs/heads/main' }}
+    steps:
+      - name: Log rejection
+        run: echo "Benchmark baseline only runs on main. Current ref:${{ github.ref }}"

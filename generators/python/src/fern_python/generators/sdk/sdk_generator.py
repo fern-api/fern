@@ -110,12 +110,13 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
-                project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
+                project.add_dependency(dependency=AST.Dependency(name=dep, version=value), is_user_override=True)
             elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
                     dependency=AST.Dependency(
                         name=dep, version=value.version, optional=value.optional, python=value.python
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Merge user-defined extras with the built-in aiohttp extra
@@ -131,14 +132,17 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
-                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
+                project.add_dev_dependency(
+                    dependency=AST.Dependency(name=dep, version=bas_dep_value), is_user_override=True
+                )
             elif isinstance(bas_dep_value, BaseDependencyCustomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,
                         version=bas_dep_value.version,
                         extras=tuple(bas_dep_value.extras) if bas_dep_value.extras is not None else None,
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Export from root init

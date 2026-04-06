@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.1
+  changelogEntry:
+    - summary: |
+        Fix `module.imports` to merge with bundled default dependencies instead
+        of replacing them. Previously, specifying any custom module imports would
+        discard all default dependencies (uuid, testify, yaml). Now user-specified
+        versions correctly override individual bundled defaults while preserving
+        the rest, matching the v2 generator behavior.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 61
+
 - version: 1.33.0
   changelogEntry:
     - summary: |

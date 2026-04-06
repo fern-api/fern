@@ -123,7 +123,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 preview,
                 previewId,
                 editThisPage: maybeInstance.editThisPage,
-                isPrivate: maybeInstance.private,
                 disableTemplates,
                 skipUpload,
                 withAiExamples:

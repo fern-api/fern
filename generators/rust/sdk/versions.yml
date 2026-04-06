@@ -8,6 +8,17 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 0.31.1
+  changelogEntry:
+    - summary: |
+        Ensure extraDependencies overrides take precedence over bundled dependency
+        versions. Previously, conditional bundled deps (e.g., tokio-tungstenite,
+        reqwest-sse) were added after user overrides, reverting pinned versions.
+        Extra deps are now applied last so user-specified versions always win.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
 - version: 0.31.0
   changelogEntry:
     - summary: |

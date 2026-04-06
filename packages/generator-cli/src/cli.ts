@@ -296,11 +296,15 @@ void yargs(hideBin(process.argv))
                             });
                     },
                     async (argv) => {
-                        if (argv.github == null || argv.token == null) {
-                            process.stderr.write(
-                                "missing required arguments; please specify --github and --token flags\n"
-                            );
+                        if (argv.github == null) {
+                            process.stderr.write("missing required argument; please specify --github flag\n");
                             process.exit(1);
+                        }
+
+                        if (argv.token == null) {
+                            process.stderr.write(
+                                "warning: no GitHub token provided. Clone may fail for private repos. Pass --token or set GITHUB_TOKEN.\n"
+                            );
                         }
 
                         try {
