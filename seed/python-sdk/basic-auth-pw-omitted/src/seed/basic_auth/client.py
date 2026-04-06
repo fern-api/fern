@@ -44,7 +44,6 @@ class BasicAuthClient:
 
         client = SeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.get_with_basic_auth()
@@ -75,7 +74,6 @@ class BasicAuthClient:
 
         client = SeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.post_with_basic_auth(
@@ -122,7 +120,6 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -161,7 +158,6 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthPwOmitted(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
             base_url="https://yourhost.com/path/to/api",
         )
 
