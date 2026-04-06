@@ -19,7 +19,6 @@ updates:
       - "generators/ruby/**"
       - "generators/swift/**"
       - "generators/typescript/**"
-      - "generators/typescript/express/**"
       - "generators/typescript/model/**"
       - "generators/typescript/sdk/**"
       - "generators/typescript/utils/**"

@@ -71,7 +71,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_audiences::prelude::{*};
+use seed_audiences::prelude::*;
 
 let config = ClientConfig {
     base_url: Environment::EnvironmentA.url().to_string(),
@@ -103,7 +103,7 @@ match client.foo.find(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_audiences::prelude::{*};
+use seed_audiences::prelude::*;
 
 let request = FindRequest {
     ...

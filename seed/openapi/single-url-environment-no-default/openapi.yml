@@ -17,11 +17,11 @@ paths:
               schema:
                 type: string
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
 servers:

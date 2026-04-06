@@ -5,7 +5,7 @@ description: Run seed and then automatically create and merge PR with changes
 # However, we don't need to validate git diff since we are always updating the seed
 inputs:
   generator-name:
-    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    description: Generator to use (e.g., go-sdk)
     required: true
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)

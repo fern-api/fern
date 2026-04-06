@@ -8,8 +8,8 @@ import { ensureReplayFernignoreEntriesSync, REPLAY_FERNIGNORE_ENTRIES } from "./
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
     githubRepo: string;
-    /** GitHub token for clone (read access) */
-    token: string;
+    /** GitHub token for clone (read access). Optional for public repos. */
+    token?: string;
     /** Report what would happen but don't create PR */
     dryRun?: boolean;
     /** Max commits to scan for generation history */

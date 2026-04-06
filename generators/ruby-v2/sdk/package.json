@@ -53,7 +53,7 @@
     "@fern-api/ruby-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "catalog:",
-    "@fern-fern/ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "66.0.0",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "dedent": "catalog:",

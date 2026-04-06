@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantAsync(\n    new Dictionary<object, object?>()\n    {\n        {\n            \"care\",\n            new Dictionary<object, object?>()\n            {\n                { \"humidity\", \"high\" },\n                { \"light\", \"full sun\" },\n                { \"water\", \"distilled only\" },\n            }\n        },\n        { \"name\", \"Venus Flytrap\" },\n        { \"species\", \"Dionaea muscipula\" },\n        {\n            \"tags\",\n            new List<object?>() { \"carnivorous\", \"tropical\" }\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_.updatePlant"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdatePlantAsync(\n    new UpdatePlantRequest\n    {\n        PlantId = \"plantId\",\n        Body = new Dictionary<object, object?>()\n        {\n            {\n                \"care\",\n                new Dictionary<object, object?>() { { \"light\", \"partial shade\" } }\n            },\n            { \"name\", \"Updated Venus Flytrap\" },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants/with-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlantWithSchema"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantWithSchemaAsync(\n    new CreatePlantWithSchemaRequest { Name = \"Sundew\", Species = \"Drosera capensis\" }\n);\n"
+            }
+        }
+    ]
+}

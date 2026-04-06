@@ -927,6 +927,6 @@ components:
         - length
         - clients
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

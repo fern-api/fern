@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 // Mock function to create IR with specific environment configurations
 function createMockIR(environmentsConfig?: FernIr.EnvironmentsConfig): FernIr.IntermediateRepresentation {
@@ -129,6 +132,7 @@ function createEnvironmentBaseUrl(id: string, name: string): FernIr.EnvironmentB
 function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
         customConfig: {},
         hasEnvironments: () => ir.environments?.environments != null,
