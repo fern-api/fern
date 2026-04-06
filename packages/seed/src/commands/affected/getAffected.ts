@@ -71,7 +71,7 @@ const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-
  * all their fixtures to verify the updated Docker image works correctly.
  */
 const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
-    "docker/seed/Dockerfile.java": ["java-sdk", "java-model", "java-spring"],
+    "docker/seed/Dockerfile.java": ["java-sdk", "java-model"],
     "docker/seed/Dockerfile.ts": ["ts-sdk"],
     "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2"],
     "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
@@ -90,7 +90,6 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "pydantic-v2": ["generators/python-v2/"],
     "java-sdk": ["generators/java/", "generators/java-v2/"],
     "java-model": ["generators/java/", "generators/java-v2/"],
-    "java-spring": ["generators/java/", "generators/java-v2/"],
     "go-sdk": ["generators/go/", "generators/go-v2/"],
     "go-model": ["generators/go/", "generators/go-v2/"],
     "ruby-sdk": ["generators/ruby-v2/"],

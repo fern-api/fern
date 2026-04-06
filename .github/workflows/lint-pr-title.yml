@@ -42,11 +42,9 @@ jobs:
             seed
             ci
             lint
-            spring
             openapi
             deps
             deps-dev
-            fiber
             pydantic
             ai-search
             swift
