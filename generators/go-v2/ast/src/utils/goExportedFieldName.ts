@@ -74,8 +74,7 @@ function maybeGetPluralInitialism(word: string): string | undefined {
 function splitCamelWords(s: string): string[] {
     const result: string[] = [];
     let current = "";
-    for (let i = 0; i < s.length; i++) {
-        const ch = s[i]!;
+    for (const ch of s) {
         if (ch >= "A" && ch <= "Z") {
             if (current.length > 0) {
                 result.push(current);
@@ -93,8 +92,11 @@ function splitCamelWords(s: string): string[] {
 
 function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
     for (let i = 1; i < wordList.length; i++) {
-        const prev = wordList[i - 1]!;
-        const curr = wordList[i]!;
+        const prev = wordList[i - 1];
+        const curr = wordList[i];
+        if (prev == null || curr == null) {
+            continue;
+        }
         const prevIsInit = isCommonInitialism(prev) || maybeGetPluralInitialism(prev) != null;
         const currIsInit = isCommonInitialism(curr) || maybeGetPluralInitialism(curr) != null;
         if (prevIsInit && currIsInit) {
@@ -108,7 +110,7 @@ function upperFirst(s: string): string {
     if (s.length === 0) {
         return s;
     }
-    return s[0]!.toUpperCase() + s.slice(1);
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 /**
@@ -127,7 +129,7 @@ export function applyGoInitialisms(pascalName: string): string {
         return pascalName;
     }
     // Convert to camelCase first, then split into words (matching CasingsGenerator behavior)
-    const camelName = pascalName[0]!.toLowerCase() + pascalName.slice(1);
+    const camelName = pascalName.charAt(0).toLowerCase() + pascalName.slice(1);
     const camelWords = splitCamelWords(camelName);
     if (camelWords.length === 0) {
         return pascalName;

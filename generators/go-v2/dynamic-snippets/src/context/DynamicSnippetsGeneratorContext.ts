@@ -4,7 +4,13 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { applyGoInitialisms, type BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
+import {
+    applyGoInitialisms,
+    type BaseGoCustomConfigSchema,
+    go,
+    goExportedFieldName,
+    resolveRootImportPath
+} from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
@@ -66,8 +72,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getTestMethodName(endpoint: FernIr.dynamic.Endpoint): string {
         return (
-            endpoint.declaration.fernFilepath.allParts.map((name) => applyGoInitialisms(name.pascalCase.unsafeName)).join("") +
-            applyGoInitialisms(endpoint.declaration.name.pascalCase.unsafeName)
+            endpoint.declaration.fernFilepath.allParts
+                .map((name) => applyGoInitialisms(name.pascalCase.unsafeName))
+                .join("") + applyGoInitialisms(endpoint.declaration.name.pascalCase.unsafeName)
         );
     }
 
