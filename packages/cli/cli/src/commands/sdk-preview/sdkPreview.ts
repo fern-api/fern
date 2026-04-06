@@ -6,7 +6,7 @@ import {
     generatorsYml
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
-import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import fs from "fs/promises";
 import path from "path";
@@ -206,11 +206,10 @@ export async function sdkPreview({
                 const sdkRepo = getGithubRepository(generator);
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
-                // Mirror the subfolder logic in runLocalGenerationForWorkspace so
-                // the reported path matches the actual file location.
-                const subfolder = (generator.name.split("/").pop() ?? "sdk").replace(/[^a-zA-Z0-9-_]/g, "_");
                 const actualOutputPath =
-                    absolutePathToOutput != null ? path.join(absolutePathToOutput, subfolder) : undefined;
+                    absolutePathToOutput != null
+                        ? path.join(absolutePathToOutput, getGeneratorOutputSubfolder(generator.name))
+                        : undefined;
 
                 previews.push({
                     preview_id: previewId,
