@@ -29,7 +29,8 @@ export const DOCKER_IMAGE_TO_LANGUAGE: Record<string, Language> = {
     "fernapi/fern-swift-sdk": "swift",
     "fernapi/fern-typescript-sdk": "typescript",
     "fernapi/fern-typescript-express": "typescript",
-    "fernapi/fern-fastapi-server": "python"
+    "fernapi/fern-fastapi-server": "python",
+    "fernapi/fern-java-spring": "java"
 };
 
 /**
@@ -50,6 +51,7 @@ export const DOCKER_IMAGE_TO_GENERATOR_ID: Record<string, string> = {
     "fernapi/fern-java-sdk": "java-sdk",
     "fernapi/fern-java-model": "java-model",
     "java-model": "java-model",
+    "fernapi/fern-java-spring": "java-spring",
     "fernapi/fern-go-sdk": "go-sdk",
     "fernapi/fern-go-model": "go-model",
     "fernapi/fern-csharp-sdk": "csharp-sdk",

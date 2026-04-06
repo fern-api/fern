@@ -25,8 +25,9 @@ export const migrations: Record<string, MigrationModule> = {
     // C# SDK
     "fernapi/fern-csharp-sdk": csharpSdkMigrations,
 
-    // Java Model
+    // Java Model - both model and spring generators share the same migrations
     "fernapi/fern-java-model": javaModelMigrations,
+    "fernapi/fern-java-spring": javaModelMigrations,
 
     // Java SDK
     "fernapi/fern-java-sdk": javaSdkMigrations,

@@ -83,6 +83,8 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         case "fern-java-model":
         case "java-model":
             return "java-model";
+        case "fern-java-spring":
+            return "java-spring";
         // Go
         case "fern-go-sdk":
             return "go-sdk";

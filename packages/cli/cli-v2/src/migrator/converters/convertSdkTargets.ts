@@ -79,6 +79,7 @@ const DOCKER_IMAGE_TO_LANGUAGE: Record<string, schemas.SdkTargetLanguageSchema> 
     // Server stubs
     "fernapi/fern-typescript-express": "typescript",
     "fernapi/fern-fastapi-server": "python",
+    "fernapi/fern-java-spring": "java",
 
     // Legacy/alternative names
     "fernapi/fern-typescript-node-sdk": "typescript",

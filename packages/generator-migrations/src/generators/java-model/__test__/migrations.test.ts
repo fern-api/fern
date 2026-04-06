@@ -111,6 +111,19 @@ describe("Java Model Migrations", () => {
 
             expect(result).toBe(document);
         });
+
+        it("works with java-spring generator", () => {
+            const config = createBaseConfig("fernapi/fern-java-spring");
+
+            const result = migration_1_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                "disable-required-property-builder-checks": true
+            });
+        });
     });
 
     describe("migration module", () => {
