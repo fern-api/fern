@@ -15,7 +15,6 @@ generators=(
     java-sdk
     java-model
     ts-sdk
-    ts-express
     go-model
     go-sdk
     csharp-model

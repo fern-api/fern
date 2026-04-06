@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Internal CLI improvements and dependency updates.
+      type: feat
+  createdAt: "2026-04-06"
+  version: 0.9.0
+
+- changelogEntry:
+    - summary: |
         Make GitHub token optional for replay init. Public repos no longer require a token.
       type: fix
   createdAt: "2026-04-06"

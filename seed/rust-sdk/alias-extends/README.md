@@ -86,7 +86,7 @@ match client.extended_inline_request_body(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_alias_extends::prelude::{*};
+use seed_alias_extends::prelude::*;
 
 let request = InlinedChildRequest {
     ...

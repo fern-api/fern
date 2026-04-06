@@ -38,7 +38,7 @@ This file provides guidance to [Devin Review](https://docs.devin.ai/work-with-de
 ### PR Structure
 - PR titles must follow semantic commit format: `<type>(<scope>): <description>` where both type and scope are required.
 - Allowed types: `fix`, `feat`, `revert`, `break`, `chore`.
-- Allowed scopes: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`, `generator-cli`.
+- Allowed scopes: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`, `generator-cli`.
 
 ### Cross-Package Type Safety
 - When importing types across packages, watch for name collisions -- use namespace imports (`import * as X`) rather than direct imports when multiple packages export types with the same name.
