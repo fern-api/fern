@@ -8,6 +8,18 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 1.2.1
+  changelogEntry:
+    - summary: |
+        Fix rubocop not running in local mode by running `bundle install`
+        before `bundle exec rubocop -A` and clearing conflicting nix/devbox
+        Ruby environment variables. Previously, rubocop ran before dependencies
+        were installed and relied on a system-level rubocop that could be
+        broken or absent outside Docker.
+      type: fix
+  createdAt: "2026-04-04"
+  irVersion: 61
+
 - version: 1.2.0
   changelogEntry:
     - summary: |
