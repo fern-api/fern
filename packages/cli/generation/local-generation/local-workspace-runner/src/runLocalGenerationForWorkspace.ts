@@ -433,7 +433,7 @@ function resolveAbsolutePathToLocalPreview(
         return undefined;
     }
     const subfolderName = getGeneratorOutputSubfolder(generatorInvocation.name);
-    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+    return join(absolutePathToPreview, RelativeFilePath.of(subfolderName));
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
