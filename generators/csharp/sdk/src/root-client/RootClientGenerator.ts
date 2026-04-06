@@ -487,11 +487,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
                             }
                             isFirstBlock = false;
-                            // Omitted fields use empty string directly
-                            const usernameExpr = usernameOmitted ? `""` : `${usernameAccess}`;
-                            const passwordExpr = passwordOmitted ? `""` : `${passwordAccess}`;
+                            // Build credential string: omitted fields are empty, provided fields use interpolation
+                            const usernamePart = usernameOmitted ? "" : `{${usernameAccess}}`;
+                            const passwordPart = passwordOmitted ? "" : `{${passwordAccess}}`;
                             innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameExpr}}:{${passwordExpr}}"))}"`
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"` 
                             );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();

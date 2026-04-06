@@ -30,7 +30,7 @@ public partial class SeedBasicAuthPwOmittedClient : ISeedBasicAuthPwOmittedClien
         }
         var clientOptionsWithAuth = clientOptions.Clone();
         clientOptionsWithAuth.Headers["Authorization"] =
-            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{""}"))}";
+            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:"))}";
         _client = new RawClient(clientOptionsWithAuth);
         BasicAuth = new BasicAuthClient(_client);
     }
