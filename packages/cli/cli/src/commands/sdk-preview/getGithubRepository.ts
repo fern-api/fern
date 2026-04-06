@@ -8,7 +8,7 @@ import type { generatorsYml } from "@fern-api/configuration-loader";
 export function getGithubRepository(generator: generatorsYml.GeneratorInvocation): string | undefined {
     const github = generator.raw?.github;
     if (github != null && "repository" in github) {
-        return (github as { repository: string }).repository;
+        return github.repository;
     }
     return undefined;
 }

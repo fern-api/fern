@@ -8,6 +8,7 @@ import {
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
+import fs from "fs";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -89,7 +90,17 @@ export async function sdkPreview({
         cliContext.logger.info(`Preview ID: ${previewId}`);
 
         // 4. Resolve output path (opt-in, used by CI actions for SDK diffs)
+        //
+        // When --output is set, absolutePathToPreview becomes non-null in
+        // runLocalGenerationForWorkspace, which sets isPreview = true. This
+        // intentionally enables two preview-mode behaviors:
+        //   - Missing env vars are substituted as empty strings (instead of failing)
+        //   - Version availability checks are skipped
+        // Both are correct for CI preview runs where prod secrets aren't available.
         const absolutePathToOutput = output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
+        if (absolutePathToOutput != null) {
+            fs.mkdirSync(absolutePathToOutput, { recursive: true });
+        }
 
         // 5. Process each workspace
         for (const workspace of project.apiWorkspaces) {
@@ -194,14 +205,24 @@ export async function sdkPreview({
 
                 const sdkRepo = getGithubRepository(generator);
 
+                // The generator writes to <output>/<generator-name>/ (e.g. fern-typescript-sdk/).
+                // Report the actual subdirectory so CI consumers know the exact path.
+                const generatorSubfolder =
+                    generator.name
+                        .split("/")
+                        .pop()
+                        ?.replace(/[^a-zA-Z0-9-_]/g, "_") ?? "sdk";
+                const actualOutputPath =
+                    absolutePathToOutput != null ? path.join(absolutePathToOutput, generatorSubfolder) : undefined;
+
                 previews.push({
                     preview_id: previewId,
                     install: installCommand,
                     version: previewVersion,
                     package_name: previewPackageName,
                     registry_url: PREVIEW_REGISTRY_URL,
-                    ...(absolutePathToOutput != null && {
-                        output_path: absolutePathToOutput
+                    ...(actualOutputPath != null && {
+                        output_path: actualOutputPath
                     }),
                     ...(sdkRepo != null && { sdk_repo: sdkRepo })
                 });
