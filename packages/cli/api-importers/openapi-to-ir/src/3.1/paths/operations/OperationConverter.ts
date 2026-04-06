@@ -135,6 +135,22 @@ export class OperationConverter extends AbstractOperationConverter {
             baseUrl
         });
 
+        // When there are no x-fern-examples but the request body has native OpenAPI
+        // examples (e.g. mediaType.example/examples without a schema), synthesize
+        // endpoint-level v2Examples so docs/code snippets can render the request body.
+        if (Object.keys(fernExamples.examples).length === 0 && Object.keys(fernExamples.streamExamples).length === 0) {
+            const nativeExamples = this.synthesizeEndpointExamplesFromNativeRequestBody({
+                httpPath: path,
+                httpMethod,
+                baseUrl
+            });
+            if (nativeExamples != null) {
+                for (const [name, example] of Object.entries(nativeExamples)) {
+                    fernExamples.examples[name] = example;
+                }
+            }
+        }
+
         const endpointLevelSecuritySchemes = new Set<string>(
             this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
@@ -674,6 +690,123 @@ export class OperationConverter extends AbstractOperationConverter {
             examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
             streamExamples: {}
         };
+    }
+
+    /**
+     * Synthesizes endpoint-level v2Examples from native OpenAPI request body
+     * examples (mediaType.example / mediaType.examples) when no x-fern-examples
+     * or x-code-samples extensions are present.
+     *
+     * This ensures that specs like Close's, which have native examples on
+     * schemaless request bodies, get rendered in docs and code snippets.
+     *
+     * Also extracts native response examples from the operation's successful (2xx)
+     * responses so that the 200 response panel is preserved in docs.
+     */
+    private synthesizeEndpointExamplesFromNativeRequestBody({
+        httpPath,
+        httpMethod,
+        baseUrl
+    }: {
+        httpPath: HttpPath;
+        httpMethod: FernIr.HttpMethod;
+        baseUrl: string | undefined;
+    }): Record<string, FernIr.V2HttpEndpointExample> | undefined {
+        if (this.operation.requestBody == null) {
+            return undefined;
+        }
+        const resolvedRequestBody = this.context.resolveMaybeReference<OpenAPIV3_1.RequestBodyObject>({
+            schemaOrReference: this.operation.requestBody,
+            breadcrumbs: [...this.breadcrumbs, "requestBody"]
+        });
+        if (resolvedRequestBody == null) {
+            return undefined;
+        }
+
+        // Extract the first native response example from a successful (2xx) response
+        const responseExample = this.extractNativeResponseExample();
+
+        const result: Record<string, FernIr.V2HttpEndpointExample> = {};
+        for (const [, mediaType] of Object.entries(resolvedRequestBody.content)) {
+            // Only synthesize for schemaless media types. Media types WITH schemas
+            // already have their examples handled by the normal schema-based pipeline.
+            if (mediaType.schema != null) {
+                continue;
+            }
+            const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+                mediaTypeObject: mediaType,
+                breadcrumbs: [...this.breadcrumbs, "requestBody"],
+                defaultExampleName: "Example"
+            });
+            for (const [name, example] of namedExamples) {
+                const resolvedValue = this.context.resolveExampleWithValue(example);
+                if (resolvedValue != null) {
+                    result[name] = {
+                        displayName: undefined,
+                        request: {
+                            docs: undefined,
+                            endpoint: {
+                                method: httpMethod,
+                                path: this.buildExamplePath(httpPath, {})
+                            },
+                            baseUrl: undefined,
+                            environment: baseUrl,
+                            auth: undefined,
+                            pathParameters: {},
+                            queryParameters: {},
+                            headers: {},
+                            requestBody: resolvedValue
+                        },
+                        response: responseExample,
+                        codeSamples: undefined
+                    };
+                }
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    }
+
+    /**
+     * Extracts the first native example from the operation's successful (2xx) response.
+     * This is used to populate the response body in synthesized endpoint examples
+     * so that the 200 response panel is preserved in docs.
+     */
+    private extractNativeResponseExample(): FernIr.V2HttpEndpointResponse | undefined {
+        if (this.operation.responses == null) {
+            return undefined;
+        }
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            for (const [, responseMediaType] of Object.entries(resolvedResponse.content)) {
+                const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+                    mediaTypeObject: responseMediaType,
+                    breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                    defaultExampleName: "Example"
+                });
+                for (const [, example] of namedExamples) {
+                    const resolvedValue = this.context.resolveExampleWithValue(example);
+                    if (resolvedValue != null) {
+                        return {
+                            docs: undefined,
+                            statusCode: statusCodeNum,
+                            body: FernIr.V2HttpEndpointResponseBody.json(resolvedValue)
+                        };
+                    }
+                }
+            }
+        }
+        return undefined;
     }
 
     private convertStreamConditionExamples({

@@ -1,0 +1,66 @@
+name: Run SDK Generation Benchmark
+description: Run SDK generation for a single generator against benchmark specs and record timing
+
+inputs:
+  generator:
+    description: "Generator name (e.g. ts-sdk, python-sdk)"
+    required: true
+  skip-scripts:
+    description: "If true, skip post-generation build/test scripts (--skip-scripts). Measures generator-only time."
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Build seed CLI
+      shell: bash
+      run: pnpm seed:build
+
+    - name: Run benchmark for ${{ inputs.generator }}
+      shell: bash
+      run: |
+        GENERATOR="${{ inputs.generator }}"
+        RESULTS_DIR="benchmark-results"
+        mkdir -p "$RESULTS_DIR"
+
+        for SPEC in square; do
+          # Skip specs whose OAS file was not successfully fetched
+          if [ ! -f "benchmarks/fern/apis/${SPEC}/openapi.json" ]; then
+            echo "::warning::Skipping ${GENERATOR} x ${SPEC} — OpenAPI spec not available"
+            echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
+              >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
+            continue
+          fi
+
+          echo "::group::Benchmarking ${GENERATOR} against ${SPEC}"
+
+          # $EPOCHSECONDS requires bash 5+ (available on GitHub Actions Ubuntu runners)
+          START_TIME=$EPOCHSECONDS
+          EXIT_CODE=0
+
+          # Run generation (--skip-scripts omits post-gen build/test for cleaner signal)
+          SKIP_FLAG=""
+          if [ "${{ inputs.skip-scripts }}" = "true" ]; then
+            SKIP_FLAG="--skip-scripts"
+          fi
+          pnpm seed:local run \
+            --generator "${GENERATOR}" \
+            --path "benchmarks/fern/apis/${SPEC}" \
+            ${SKIP_FLAG} 2>&1 || EXIT_CODE=$?
+
+          END_TIME=$EPOCHSECONDS
+          DURATION=$(( END_TIME - START_TIME ))
+
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "::warning::Benchmark ${GENERATOR} x ${SPEC} exited with code ${EXIT_CODE} after ${DURATION}s"
+          fi
+
+          echo "Benchmark: ${GENERATOR} x ${SPEC} = ${DURATION}s (exit ${EXIT_CODE})"
+
+          # Write result as JSON (includes exit code so failures are distinguishable)
+          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
+            >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
+
+          echo "::endgroup::"
+        done
