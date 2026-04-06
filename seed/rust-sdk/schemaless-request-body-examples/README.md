@@ -78,7 +78,7 @@ match client.create_plant(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_api::prelude::{*};
+use seed_api::prelude::*;
 
 let request = CreatePlantWithSchemaRequest {
     ...
