@@ -491,7 +491,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const usernamePart = usernameOmitted ? "" : `{${usernameAccess}}`;
                             const passwordPart = passwordOmitted ? "" : `{${passwordAccess}}`;
                             innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"` 
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"`
                             );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
