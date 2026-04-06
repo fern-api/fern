@@ -67,7 +67,11 @@ const BASE_DEV_DEPENDENCIES: Dependency[] = [
     { name: "webmock" }
 ];
 
-const BASE_DEPENDENCIES: Dependency[] = [{ name: "base64" }];
+function hasBasicAuth(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth.schemes.some((s) => s.type === "basic");
+}
+
+const BASE_DEPENDENCIES: Dependency[] = [];
 
 /**
  * In memory representation of a Ruby project.
@@ -311,17 +315,22 @@ declare namespace GemspecFile {
 
 class GemspecFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private readonly baseDepdendencies: Dependency[];
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
+        this.baseDepdendencies = hasBasicAuth(context.ir)
+            ? [...BASE_DEPENDENCIES, { name: "base64" }]
+            : BASE_DEPENDENCIES;
     }
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
+
         const dependencies = mergedDependencies(
-            BASE_DEPENDENCIES,
+            this.baseDepdendencies,
             depsFromRecord(this.context.customConfig.extraDependencies)
         );
 
