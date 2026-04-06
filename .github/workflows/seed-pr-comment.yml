@@ -61,7 +61,6 @@ jobs:
             - [ ] Swift
             - [ ] Rust
             - [ ] OpenAPI
-            - [ ] Postman
 
             ---
             **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
@@ -123,7 +122,6 @@ jobs:
               'Swift': ['swift-sdk'],
               'Rust': ['rust-sdk', 'rust-model'],
               'OpenAPI': ['openapi'],
-              'Postman': ['postman']
             };
 
             // Generator to path mapping
@@ -148,7 +146,6 @@ jobs:
               'rust-sdk': 'generators/rust',
               'rust-model': 'generators/rust',
               'openapi': 'generators/openapi',
-              'postman': 'generators/postman'
             };
 
             // Parse checked languages

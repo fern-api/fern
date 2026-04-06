@@ -22,7 +22,6 @@ on:
           - swift
           - rust
           - openapi
-          - postman
       commit-on-failure:
         description: 'Commit successful seed changes even if some seed runs fail'
         required: false
@@ -143,7 +142,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        generator-name: [seed, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        generator-name: [seed, ruby-v2, openapi, python, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
               packages/seed/
@@ -168,10 +167,6 @@ jobs:
               seed/python-sdk/
               seed/fastapi/
             generator-name: python
-          - files: |
-              generators/postman/
-              seed/postman/
-            generator-name: postman
           - files: |
               generators/java/
               generators/java-v2/
@@ -215,7 +210,6 @@ jobs:
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
       python: ${{ steps.set-output.outputs.python-changes }}
-      postman: ${{ steps.set-output.outputs.postman-changes }}
       java: ${{ steps.set-output.outputs.java-changes }}
       typescript: ${{ steps.set-output.outputs.typescript-changes }}
       go: ${{ steps.set-output.outputs.go-changes }}
@@ -290,7 +284,6 @@ jobs:
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
       fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.create-dynamic-matrix.outputs.postman-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
       java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
@@ -324,7 +317,7 @@ jobs:
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -511,40 +504,6 @@ jobs:
         with:
           generator-name: openapi
           generator-path: generators/openapi
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  postman-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'postman') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.postman == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.postman != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: postman
-          generator-path: generators/postman
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -1044,7 +1003,6 @@ jobs:
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
-        postman-seed-update,
         java-sdk-seed-update,
         java-model-seed-update,
         java-spring-seed-update,
@@ -1131,7 +1089,6 @@ jobs:
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
-        postman-seed-update,
         java-sdk-seed-update,
         java-model-seed-update,
         java-spring-seed-update,
@@ -1158,7 +1115,6 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
             java-spring,
@@ -1185,8 +1141,6 @@ jobs:
             sdk-name: fastapi
           - language-name: openapi
             sdk-name: openapi
-          - language-name: postman
-            sdk-name: postman
           - language-name: java
             sdk-name: java-sdk
           - language-name: java

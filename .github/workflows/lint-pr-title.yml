@@ -40,7 +40,6 @@ jobs:
             php
             ruby
             seed
-            postman
             ci
             lint
             fastapi

@@ -104,8 +104,7 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "swift-sdk": ["generators/swift/"],
     "rust-sdk": ["generators/rust/"],
     "rust-model": ["generators/rust/"],
-    openapi: ["generators/openapi/"],
-    postman: ["generators/postman/"]
+    openapi: ["generators/openapi/"]
 };
 
 /**

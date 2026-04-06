@@ -48,8 +48,7 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("swift-sdk"),
     createGenerator("rust-sdk"),
     createGenerator("rust-model"),
-    createGenerator("openapi"),
-    createGenerator("postman")
+    createGenerator("openapi")
 ];
 
 // Standard set of fixtures
