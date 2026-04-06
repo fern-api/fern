@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { ErrorGenerator } from "../error/ErrorGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 // Mock function to create IR with specific error definitions
 function createMockIR(errors: Record<string, FernIr.ErrorDeclaration>): FernIr.IntermediateRepresentation {
@@ -62,6 +65,7 @@ function createErrorDeclaration(name: string, statusCode: number, type: "text" |
 function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
         customConfig: {},
         hasWebSocketChannels: () => false

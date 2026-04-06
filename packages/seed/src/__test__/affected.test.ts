@@ -29,14 +29,12 @@ function createGenerator(workspaceName: string): GeneratorWorkspace {
 // Standard set of generators used across tests
 const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("ts-sdk"),
-    createGenerator("ts-express"),
     createGenerator("python-sdk"),
     createGenerator("pydantic"),
     createGenerator("pydantic-v2"),
     createGenerator("fastapi"),
     createGenerator("java-sdk"),
     createGenerator("java-model"),
-    createGenerator("java-spring"),
     createGenerator("go-sdk"),
     createGenerator("go-model"),
     createGenerator("csharp-sdk"),
@@ -48,8 +46,7 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("swift-sdk"),
     createGenerator("rust-sdk"),
     createGenerator("rust-model"),
-    createGenerator("openapi"),
-    createGenerator("postman")
+    createGenerator("openapi")
 ];
 
 // Standard set of fixtures
@@ -292,7 +289,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["generators/typescript/src/index.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("ts-sdk");
-            expect(result.affectedGenerators).toContain("ts-express");
         });
 
         it("detects v2 generator source change affects same workspaces", () => {
@@ -351,10 +347,8 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(false);
             expect(result.affectedGenerators).toContain("java-sdk");
             expect(result.affectedGenerators).toContain("java-model");
-            expect(result.affectedGenerators).toContain("java-spring");
             expect(result.generatorsWithAllFixtures).toContain("java-sdk");
             expect(result.generatorsWithAllFixtures).toContain("java-model");
-            expect(result.generatorsWithAllFixtures).toContain("java-spring");
             expect(result.affectedGenerators).not.toContain("ts-sdk");
             expect(result.affectedGenerators).not.toContain("python-sdk");
         });
@@ -363,7 +357,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["docker/seed/Dockerfile.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("ts-sdk");
-            expect(result.affectedGenerators).toContain("ts-express");
             expect(result.affectedGenerators).not.toContain("java-sdk");
         });
 
@@ -793,7 +786,6 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("java-sdk");
         expect(names).toContain("java-model");
-        expect(names).toContain("java-spring");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("python-sdk");
 

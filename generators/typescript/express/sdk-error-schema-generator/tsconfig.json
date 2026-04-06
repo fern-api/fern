@@ -1,8 +1,0 @@
-{
-  "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": {
-    "outDir": "../express-error-schema-generator/lib",
-    "rootDir": "../express-error-schema-generator/src"
-  },
-  "include": ["../express-error-schema-generator/src"]
-}

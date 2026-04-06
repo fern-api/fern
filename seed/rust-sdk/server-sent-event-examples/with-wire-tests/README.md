@@ -86,7 +86,7 @@ match client.completions.stream(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_server_sent_events::prelude::{*};
+use seed_server_sent_events::prelude::*;
 
 let request = StreamCompletionRequest {
     ...

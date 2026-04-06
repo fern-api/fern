@@ -25,7 +25,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -99,12 +98,9 @@ jobs:
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
       fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.create-dynamic-matrix.outputs.postman-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -208,7 +204,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -453,36 +449,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  postman:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.postman != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: postman
-          generator-path: generators/postman
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -543,36 +509,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  java-spring:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-spring != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: java-spring
-          generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
   ts-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -603,37 +539,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
-
-  ts-express:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.ts-express != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: ts-express
-          generator-path: generators/typescript generators/typescript-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
 
   go-model:
     runs-on: ubuntu-latest
@@ -1138,12 +1043,9 @@ jobs:
         python-sdk,
         fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -1168,12 +1070,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -1190,12 +1089,9 @@ jobs:
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
       fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
-      postman-passing: ${{ steps.report-results.outputs.postman-passing }}
       java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
       java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
-      java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
-      ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
       go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
       csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
@@ -1247,12 +1143,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -1284,10 +1177,6 @@ jobs:
       openapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures }}
       openapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures-count }}
 
-      postman-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.postman-total-fixtures-count }}
-      postman-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures }}
-      postman-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures-count }}
-
       java-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-total-fixtures-count }}
       java-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures }}
       java-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures-count }}
@@ -1296,17 +1185,9 @@ jobs:
       java-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures }}
       java-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures-count }}
 
-      java-spring-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-total-fixtures-count }}
-      java-spring-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures }}
-      java-spring-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures-count }}
-
       ts-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-total-fixtures-count }}
       ts-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures }}
       ts-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures-count }}
-
-      ts-express-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-total-fixtures-count }}
-      ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
-      ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
 
 
       go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
@@ -1400,12 +1281,9 @@ jobs:
         python-sdk,
         fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -1428,12 +1306,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,

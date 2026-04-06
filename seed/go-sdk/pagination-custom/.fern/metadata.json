@@ -1,0 +1,11 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "customPagerName": "PayrocPager"
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "v0.0.1"
+}
