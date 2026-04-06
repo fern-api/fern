@@ -96,7 +96,6 @@ jobs:
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
       pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
@@ -204,7 +203,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -388,36 +387,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/poetry.lock"]'
-
-  fastapi:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.fastapi != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: fastapi
-          generator-path: generators/python generators/python-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -1041,7 +1010,6 @@ jobs:
         ruby-sdk-v2,
         pydantic,
         python-sdk,
-        fastapi,
         openapi,
         java-sdk,
         java-model,
@@ -1068,7 +1036,6 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
             java-sdk,
             java-model,
@@ -1087,7 +1054,6 @@ jobs:
       ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
       pydantic-passing: ${{ steps.report-results.outputs.pydantic-passing }}
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
-      fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
       java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
       java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
@@ -1141,7 +1107,6 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
             java-sdk,
             java-model,
@@ -1168,10 +1133,6 @@ jobs:
       python-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-total-fixtures-count }}
       python-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures }}
       python-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures-count }}
-
-      fastapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-total-fixtures-count }}
-      fastapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures }}
-      fastapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures-count }}
 
       openapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-total-fixtures-count }}
       openapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures }}
@@ -1279,7 +1240,6 @@ jobs:
         ruby-sdk-v2,
         pydantic,
         python-sdk,
-        fastapi,
         openapi,
         java-sdk,
         java-model,
@@ -1304,7 +1264,6 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
             java-sdk,
             java-model,
