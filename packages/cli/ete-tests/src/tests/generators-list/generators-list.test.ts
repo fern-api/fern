@@ -31,5 +31,5 @@ describe("fern generator list", () => {
         });
 
         expect(out.stdout).toMatchSnapshot();
-    }, 60_000);
+    }, 180_000);
 });

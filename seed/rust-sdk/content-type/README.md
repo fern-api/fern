@@ -88,7 +88,7 @@ match client.service.patch(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_content_types::prelude::{*};
+use seed_content_types::prelude::*;
 
 let request = PatchProxyRequest {
     ...

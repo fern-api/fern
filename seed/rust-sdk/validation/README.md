@@ -88,7 +88,7 @@ match client.create(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_validation::prelude::{*};
+use seed_validation::prelude::*;
 
 let request = CreateRequest {
     ...

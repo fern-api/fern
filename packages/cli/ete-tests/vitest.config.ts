@@ -6,12 +6,14 @@ export default defineConfig(
             // ETE tests spawn heavy child processes (Node CLI, Docker containers).
             // Running too many test files in parallel causes resource contention
             // and widespread timeouts on CI runners.
+            fileParallelism: false,
+            maxConcurrency: 3,
             poolOptions: {
                 threads: {
-                    maxThreads: 4
+                    maxThreads: 2
                 },
                 forks: {
-                    maxForks: 4
+                    maxForks: 2
                 }
             }
         }

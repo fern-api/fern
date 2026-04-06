@@ -1,0 +1,57 @@
+name: Fetch Benchmark Specs
+description: Download large public OpenAPI specs for SDK generation benchmarking
+
+outputs:
+  specs-fetched:
+    description: "Space-separated list of spec names that were successfully fetched"
+    value: ${{ steps.summary.outputs.specs-fetched }}
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch Square OpenAPI spec
+      id: fetch-square
+      shell: bash
+      run: |
+        # Pinned to a specific commit SHA for reproducibility.
+        # A live endpoint would be preferable but Square does not publish one.
+        FETCH_OK=false
+        for ATTEMPT in 1 2 3; do
+          echo "Attempt ${ATTEMPT}/3: Fetching Square OpenAPI spec..."
+          if curl -sSfL --retry 2 --retry-delay 5 \
+            "https://raw.githubusercontent.com/square/connect-api-specification/ba11c0a1f006b81dcd3633adb9090e9b2f03fef7/api.json" \
+            -o benchmarks/fern/apis/square/openapi.json; then
+            BYTES=$(wc -c < benchmarks/fern/apis/square/openapi.json)
+            echo "Downloaded Square OpenAPI spec (${BYTES} bytes)"
+            if [ "$BYTES" -ge 100000 ]; then
+              FETCH_OK=true
+              break
+            fi
+            echo "::warning::Square spec unexpectedly small (${BYTES} bytes) on attempt ${ATTEMPT}"
+          else
+            echo "::warning::curl failed on attempt ${ATTEMPT}"
+          fi
+          [ "$ATTEMPT" -lt 3 ] && sleep 5
+        done
+        if [ "$FETCH_OK" = "true" ]; then
+          echo "square-ok=true" >> $GITHUB_OUTPUT
+        else
+          echo "::warning::Failed to fetch Square spec after 3 attempts. Skipping Square benchmarks."
+          rm -f benchmarks/fern/apis/square/openapi.json
+          echo "square-ok=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Summarize fetched specs
+      id: summary
+      shell: bash
+      run: |
+        SPECS=""
+        if [ "${{ steps.fetch-square.outputs.square-ok }}" = "true" ]; then
+          SPECS="square"
+        fi
+        if [ -z "$SPECS" ]; then
+          echo "::error::No benchmark specs could be fetched. Benchmark will be skipped."
+          exit 1
+        fi
+        echo "specs-fetched=$SPECS" >> $GITHUB_OUTPUT
+        echo "Successfully fetched specs: $SPECS"

@@ -80,6 +80,9 @@ export namespace GeneratorPipeline {
 
         /** Ignore the .fernignore file and upload an empty one */
         skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
     }
 
     export interface Result {
@@ -151,7 +154,8 @@ export class GeneratorPipeline {
             outputPath: args.outputPath,
             containerEngine: args.containerEngine,
             token: args.token,
-            skipFernignore: args.skipFernignore
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {
@@ -188,7 +192,8 @@ export class GeneratorPipeline {
             preview: args.preview,
             outputPath: args.outputPath,
             fernignorePath: args.fernignorePath,
-            skipFernignore: args.skipFernignore
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {
