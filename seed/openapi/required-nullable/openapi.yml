@@ -36,7 +36,7 @@ paths:
         - name: required_nullable_baz
           in: query
           description: A required baz
-          required: false
+          required: true
           schema:
             type: string
             nullable: true
@@ -122,5 +122,6 @@ components:
           type: string
           example: required_bar
       required:
+        - nullable_required_bar
         - required_bar
   securitySchemes: {}

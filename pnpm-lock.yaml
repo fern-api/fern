@@ -1396,8 +1396,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.9.0
-        version: 53.9.0
+        specifier: 66.0.0
+        version: 66.0.0
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -2627,375 +2627,6 @@ importers:
       '@types/prettier2':
         specifier: 'catalog:'
         version: '@types/prettier@2.7.3'
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/cli:
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../../packages/cli/logger
-      '@fern-fern/generator-exec-sdk':
-        specifier: 'catalog:'
-        version: 0.0.1167
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/abstract-generator-cli':
-        specifier: workspace:*
-        version: link:../../utils/abstract-generator-cli
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      '@fern-typescript/express-generator':
-        specifier: workspace:*
-        version: link:../generator
-      '@types/lodash-es':
-        specifier: 'catalog:'
-        version: 4.17.12
-      lodash-es:
-        specifier: 'catalog:'
-        version: 4.18.1
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      zod:
-        specifier: 'catalog:'
-        version: 3.25.76
-
-  generators/typescript/express/express-endpoint-type-schemas-generator:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/abstract-schema-generator':
-        specifier: workspace:*
-        version: link:../../utils/abstract-schema-generator
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-error-generator:
-    dependencies:
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/abstract-error-class-generator':
-        specifier: workspace:*
-        version: link:../../utils/abstract-error-class-generator
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-error-schema-generator:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/abstract-schema-generator':
-        specifier: workspace:*
-        version: link:../../utils/abstract-schema-generator
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-inlined-request-body-generator:
-    dependencies:
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-inlined-request-body-schema-generator:
-    dependencies:
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/abstract-schema-generator':
-        specifier: workspace:*
-        version: link:../../utils/abstract-schema-generator
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-register-generator:
-    dependencies:
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      '@fern-typescript/resolvers':
-        specifier: workspace:*
-        version: link:../../utils/resolvers
-      lodash-es:
-        specifier: 'catalog:'
-        version: 4.18.1
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/lodash-es':
-        specifier: 'catalog:'
-        version: 4.17.12
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/express-service-generator:
-    dependencies:
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      '@fern-typescript/resolvers':
-        specifier: workspace:*
-        version: link:../../utils/resolvers
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/generator:
-    dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../../base
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../../packages/cli/logger
-      '@fern-fern/ir-sdk':
-        specifier: 66.0.0-alpha.1
-        version: 66.0.0-alpha.1
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      '@fern-typescript/express-endpoint-type-schemas-generator':
-        specifier: workspace:*
-        version: link:../express-endpoint-type-schemas-generator
-      '@fern-typescript/express-error-generator':
-        specifier: workspace:*
-        version: link:../express-error-generator
-      '@fern-typescript/express-error-schema-generator':
-        specifier: workspace:*
-        version: link:../express-error-schema-generator
-      '@fern-typescript/express-inlined-request-body-generator':
-        specifier: workspace:*
-        version: link:../express-inlined-request-body-generator
-      '@fern-typescript/express-inlined-request-schema-generator':
-        specifier: workspace:*
-        version: link:../express-inlined-request-body-schema-generator
-      '@fern-typescript/express-register-generator':
-        specifier: workspace:*
-        version: link:../express-register-generator
-      '@fern-typescript/express-service-generator':
-        specifier: workspace:*
-        version: link:../express-service-generator
-      '@fern-typescript/generic-express-error-generators':
-        specifier: workspace:*
-        version: link:../generic-express-error-generators
-      '@fern-typescript/resolvers':
-        specifier: workspace:*
-        version: link:../../utils/resolvers
-      '@fern-typescript/type-generator':
-        specifier: workspace:*
-        version: link:../../model/type-generator
-      '@fern-typescript/type-reference-converters':
-        specifier: workspace:*
-        version: link:../../model/type-reference-converters
-      '@fern-typescript/type-reference-example-generator':
-        specifier: workspace:*
-        version: link:../../model/type-reference-example-generator
-      '@fern-typescript/type-schema-generator':
-        specifier: workspace:*
-        version: link:../../model/type-schema-generator
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/typescript/express/generic-express-error-generators:
-    dependencies:
-      '@fern-typescript/abstract-error-class-generator':
-        specifier: workspace:*
-        version: link:../../utils/abstract-error-class-generator
-      '@fern-typescript/commons':
-        specifier: workspace:*
-        version: link:../../utils/commons
-      '@fern-typescript/contexts':
-        specifier: workspace:*
-        version: link:../../utils/contexts
-      ts-morph:
-        specifier: 'catalog:'
-        version: 27.0.2
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -8227,7 +7858,7 @@ importers:
         version: link:../commons/core-utils
       '@fern-api/replay':
         specifier: ^0.9.0
-        version: 0.9.0
+        version: 0.9.1
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9748,8 +9379,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.9.0':
-    resolution: {integrity: sha512-COO+pqSHe70fzFsV9cC7v9RVhxOk1MvBMWBlcbBS8KMlSfWn85EXIEzGih+kIh348KRTwGQXYmxcqrbcitijXA==}
+  '@fern-api/replay@0.9.1':
+    resolution: {integrity: sha512-RpK1UIO8qBfRL5TbyHsfDOCTyr2DPDI2XqBUDl3YOr4Mn+4EWS8C65R/k/UkJthn2KsCa57QxSvtWAxftpwljA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9780,9 +9411,6 @@ packages:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
-
-  '@fern-fern/ir-sdk@53.9.0':
-    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
 
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
@@ -12090,8 +11718,8 @@ packages:
     resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
     engines: {node: '>=8'}
 
-  defu@6.1.6:
-    resolution: {integrity: sha512-f8mefEW4WIVg4LckePx3mALjQSPQgFlg9U8yaPdlsbdYcHQyj9n2zL2LJEA52smeYxOvmd/nB7TpMtHGMTHcug==}
+  defu@6.1.4:
+    resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
 
   degenerator@5.0.1:
     resolution: {integrity: sha512-TllpMR/t0M5sqCXfj85i4XaAzxmS5tVA16dqvdkMwGmzI+dXLXnw3J+3Vdv7VKw+ThlTMboK6i9rnZ6Nntj5CQ==}
@@ -16715,7 +16343,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.9.0':
+  '@fern-api/replay@0.9.1':
     dependencies:
       minimatch: 10.2.4
       node-diff3: 3.2.0
@@ -16796,8 +16424,6 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
-
-  '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:
@@ -19205,7 +18831,7 @@ snapshots:
 
   define-lazy-prop@2.0.0: {}
 
-  defu@6.1.6: {}
+  defu@6.1.4: {}
 
   degenerator@5.0.1:
     dependencies:
@@ -22725,7 +22351,7 @@ snapshots:
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
-      defu: 6.1.6
+      defu: 6.1.4
       empathic: 2.0.0
       hookable: 6.0.1
       import-without-cache: 0.2.5
