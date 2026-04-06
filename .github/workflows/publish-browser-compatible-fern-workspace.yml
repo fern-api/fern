@@ -62,6 +62,9 @@ jobs:
             exit 1
           fi
 
+      - name: Compile dependencies
+        run: pnpm turbo run compile --filter="${PACKAGE_NAME}..."
+
       - name: Build and publish
         env:
           VERSION: ${{ inputs.version }}
