@@ -31,7 +31,7 @@ export abstract class AbstractRustGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.case = new CaseConverter({
-            generationLanguage: "rust",
+            generationLanguage: customConfig.capitalizeInitialisms ? undefined : "rust",
             keywords: ir.casingsConfig?.keywords,
             smartCasing: ir.casingsConfig?.smartCasing ?? true
         });
