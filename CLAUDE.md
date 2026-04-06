@@ -103,7 +103,7 @@ Fern is a CLI tool for API-first development that transforms API definitions int
 Language-specific generators that consume IR and produce outputs:
 - **Pattern**: Each language has `base/`, `ast/`, `model/`, `sdk/`, sometimes `server/`
 - **Supported**: TypeScript, Python, Java, Go, C#, Ruby, PHP, Rust, Swift
-- **Special**: OpenAPI export, Postman collections, TypeScript MCP servers
+- **Special**: OpenAPI export
 
 ### 4. Testing (`/seed/`)
 Comprehensive generator testing with Docker-based fixtures across all supported languages.
@@ -318,7 +318,7 @@ When creating pull requests in this repository:
 
    **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
 
    **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
 
