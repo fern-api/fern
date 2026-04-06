@@ -905,9 +905,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
           password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
-      - name: Record pre-existing Docker images
-        run: docker images -q | sort -u > /tmp/docker-images-before.txt
-
       - name: Clear stale Docker image cache
         run: rm -rf /tmp/docker-cache
 
@@ -926,6 +923,9 @@ jobs:
           for f in /tmp/docker-cache/*.tar; do
             [ -f "$f" ] && docker load -i "$f" || true
           done
+
+      - name: Record pre-existing Docker images
+        run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Download shared specs
         uses: actions/download-artifact@v4

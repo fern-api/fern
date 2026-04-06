@@ -42,10 +42,6 @@ runs:
         username: ${{ inputs.dockerhub-username }}
         password: ${{ inputs.dockerhub-token }}
 
-    - name: Record pre-existing Docker images
-      shell: bash
-      run: docker images -q | sort -u > /tmp/docker-images-before.txt
-
     - name: Clear stale Docker image cache
       shell: bash
       run: rm -rf /tmp/docker-cache
@@ -66,6 +62,10 @@ runs:
         for f in /tmp/docker-cache/*.tar; do
           [ -f "$f" ] && docker load -i "$f" || true
         done
+
+    - name: Record pre-existing Docker images
+      shell: bash
+      run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
     - name: Seed Test
       shell: bash
