@@ -249,6 +249,10 @@ jobs:
       - name: Save Docker images for cache
         if: always()
         run: |
+          if [ ! -f /tmp/docker-images-before.txt ]; then
+            echo "Skipping cache save: docker-images-before.txt not found"
+            exit 0
+          fi
           mkdir -p /tmp/docker-cache
           comm -13 /tmp/docker-images-before.txt <(docker images -q | sort) | while read -r id; do
             img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
