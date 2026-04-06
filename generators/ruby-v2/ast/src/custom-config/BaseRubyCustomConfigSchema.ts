@@ -11,11 +11,17 @@ export const BaseRubyCustomConfigSchema = z.object({
     enableWireTests: z.boolean().optional(),
     // Extra dependencies to add to the gemspec (e.g., { "my-gem": "~> 6.0" })
     extraDependencies: z.optional(
-        z.record(z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"))
+        z.record(
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"),
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines")
+        )
     ),
     // Extra dev dependencies to add to the Gemfile (e.g., { "my-gem": "~> 6.0" })
     extraDevDependencies: z.optional(
-        z.record(z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"))
+        z.record(
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"),
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines")
+        )
     ),
     // Paths to files that will be auto-loaded when the gem is required
     // (e.g., ["custom_integration", "sentry_integration"] will load lib/<gem>/custom_integration.rb
