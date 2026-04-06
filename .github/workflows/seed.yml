@@ -94,7 +94,6 @@ jobs:
     outputs:
       seed-infrastructure-changed: ${{ steps.detect-affected.outputs.seed-infrastructure-changed }}
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
       fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
@@ -204,7 +203,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -327,36 +326,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/Gemfile.lock"]'
-
-  pydantic:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.pydantic != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: pydantic
-          generator-path: generators/python generators/python-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -1039,7 +1008,6 @@ jobs:
     needs:
       [
         ruby-sdk-v2,
-        pydantic,
         python-sdk,
         fastapi,
         openapi,
@@ -1066,7 +1034,6 @@ jobs:
         job-name:
           [
             ruby-sdk-v2,
-            pydantic,
             python-sdk,
             fastapi,
             openapi,
@@ -1085,7 +1052,6 @@ jobs:
           ]
     outputs:
       ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
-      pydantic-passing: ${{ steps.report-results.outputs.pydantic-passing }}
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
       fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
@@ -1139,7 +1105,6 @@ jobs:
         seed-generator-alias:
           [
             ruby-sdk-v2,
-            pydantic,
             python-sdk,
             fastapi,
             openapi,
@@ -1160,10 +1125,6 @@ jobs:
       ruby-sdk-v2-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-total-fixtures-count }}
       ruby-sdk-v2-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures }}
       ruby-sdk-v2-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures-count }}
-
-      pydantic-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.pydantic-total-fixtures-count }}
-      pydantic-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.pydantic-allowed-failures }}
-      pydantic-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.pydantic-allowed-failures-count }}
 
       python-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-total-fixtures-count }}
       python-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures }}
@@ -1277,7 +1238,6 @@ jobs:
         setup,
         seed-test-results,
         ruby-sdk-v2,
-        pydantic,
         python-sdk,
         fastapi,
         openapi,
@@ -1302,7 +1262,6 @@ jobs:
         seed-generator-alias:
           [
             ruby-sdk-v2,
-            pydantic,
             python-sdk,
             fastapi,
             openapi,

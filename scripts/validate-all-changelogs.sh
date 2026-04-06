@@ -8,7 +8,6 @@ set -e
 # Run all validations in parallel and collect errors
 generators=(
     ruby-sdk-v2
-    pydantic
     python-sdk
     fastapi
     openapi

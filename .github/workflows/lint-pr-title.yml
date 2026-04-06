@@ -46,7 +46,6 @@ jobs:
             openapi
             deps
             deps-dev
-            pydantic
             ai-search
             swift
             rust

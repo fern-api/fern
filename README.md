@@ -113,7 +113,6 @@ Fern's model generators will output schemas or types defined in your OpenAPI spe
 
 | Generator ID                  | Latest Version                                                                                   | Changelog                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model` | ![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model) | [versions.yml](./generators/python/pydantic/versions.yml)                     |
 | `fernapi/fern-java-model`     | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-model)         | [versions.yml](./generators/java/model/versions.yml)                          |
 | `fernapi/fern-go-model`       | ![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model)             | [versions.yml](./generators/go/model/versions.yml)                            |
 

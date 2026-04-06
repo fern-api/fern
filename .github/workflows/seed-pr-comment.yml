@@ -112,7 +112,7 @@ jobs:
 
             // Language to generators mapping
             const languageMap = {
-              'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
+              'Python': ['python-sdk', 'pydantic-v2', 'fastapi'],
               'TypeScript': ['ts-sdk'],
               'Java': ['java-sdk', 'java-model'],
               'Go': ['go-sdk', 'go-model'],
@@ -127,7 +127,6 @@ jobs:
             // Generator to path mapping
             const generatorPathMap = {
               'python-sdk': 'generators/python',
-              'pydantic': 'generators/python',
               'pydantic-v2': 'generators/python-v2',
               'fastapi': 'generators/python',
               'ts-sdk': 'generators/typescript',

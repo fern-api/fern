@@ -161,7 +161,6 @@ jobs:
           - files: |
               generators/python/
               generators/python-v2/
-              seed/pydantic/
               seed/pydantic-v2/
               seed/python-sdk/
               seed/fastapi/
@@ -277,7 +276,6 @@ jobs:
     needs: [setup]
     outputs:
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
       fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
@@ -312,7 +310,7 @@ jobs:
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -363,40 +361,6 @@ jobs:
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  pydantic-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'python') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.pydantic != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: pydantic
-          generator-path: generators/python generators/python-v2
           allow-unexpected-failures: true
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
@@ -925,7 +889,6 @@ jobs:
         changes,
         setup,
         ruby-sdk-v2-seed-update,
-        pydantic-seed-update,
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
@@ -1010,7 +973,6 @@ jobs:
         changes,
         setup,
         ruby-sdk-v2-seed-update,
-        pydantic-seed-update,
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
@@ -1035,7 +997,6 @@ jobs:
         sdk-name:
           [
             ruby-sdk-v2,
-            pydantic,
             python-sdk,
             fastapi,
             openapi,
@@ -1055,8 +1016,6 @@ jobs:
         include:
           - language-name: ruby
             sdk-name: ruby-sdk-v2
-          - language-name: python
-            sdk-name: pydantic
           - language-name: python
             sdk-name: python-sdk
           - language-name: python

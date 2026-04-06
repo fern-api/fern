@@ -30,7 +30,6 @@ function createGenerator(workspaceName: string): GeneratorWorkspace {
 const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("ts-sdk"),
     createGenerator("python-sdk"),
-    createGenerator("pydantic"),
     createGenerator("pydantic-v2"),
     createGenerator("fastapi"),
     createGenerator("java-sdk"),
@@ -278,10 +277,8 @@ describe("detectAffected", () => {
 
             expect(result.allGeneratorsAffected).toBe(false);
             expect(result.affectedGenerators).toContain("python-sdk");
-            expect(result.affectedGenerators).toContain("pydantic");
             expect(result.affectedGenerators).toContain("fastapi");
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
-            expect(result.generatorsWithAllFixtures).toContain("pydantic");
             expect(result.generatorsWithAllFixtures).toContain("fastapi");
         });
 
@@ -295,10 +292,8 @@ describe("detectAffected", () => {
             const result = detectAffected(["generators/python-v2/src/generator.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("python-sdk");
-            expect(result.affectedGenerators).toContain("pydantic");
             expect(result.affectedGenerators).toContain("pydantic-v2");
             expect(result.affectedGenerators).toContain("fastapi");
-            // pydantic (non-v2) also maps to python-v2/ in GENERATOR_SOURCE_PATHS
         });
 
         it("does not include generators not in allGenerators list", () => {
@@ -306,7 +301,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["generators/python/src/some-file.ts"], limitedGenerators);
 
             expect(result.affectedGenerators).toEqual(["python-sdk"]);
-            expect(result.affectedGenerators).not.toContain("pydantic");
         });
     });
 
@@ -364,7 +358,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["docker/seed/Dockerfile.python"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("python-sdk");
-            expect(result.affectedGenerators).toContain("pydantic");
             expect(result.affectedGenerators).toContain("fastapi");
         });
 
@@ -418,7 +411,6 @@ describe("detectAffected", () => {
             expect(result.allFixturesAffected).toBe(false);
             // python generators should be in generatorsWithAllFixtures
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
-            expect(result.generatorsWithAllFixtures).toContain("pydantic");
             expect(result.generatorsWithAllFixtures).toContain("fastapi");
             // imdb should be in affectedFixtures
             expect(result.affectedFixtures).toContain("imdb");

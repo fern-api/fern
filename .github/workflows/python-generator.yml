@@ -46,26 +46,6 @@ jobs:
         with:
           version: 2.1.4
 
-      - name: Update models for testing
-        working-directory: ./generators/python
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: |
-          npm install -g fern-api
-
-          docker build -f ./pydantic/Dockerfile -t ferntest/fern-pydantic-model:0.0.0 .
-          cd tests/utils/example_models
-          fern generate --group dummy_types --local || true
-
-          cd ../typeddict_models
-          fern generate --group dummy_td_types --local || true
-
-          cd ../union_utils
-          fern generate --group dummy_union_types --local || true
-
-          cd ../unaliased_models
-          fern generate --group dummy_unaliased_types --local || true
-
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |
