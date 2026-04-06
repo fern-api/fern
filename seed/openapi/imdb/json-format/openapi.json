@@ -129,7 +129,7 @@
       }
     },
     "securitySchemes": {
-      "BearerAuth": {
+      "Bearer": {
         "type": "http",
         "scheme": "bearer"
       }

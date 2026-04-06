@@ -1369,8 +1369,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.9.0
-        version: 53.9.0
+        specifier: 66.0.0
+        version: 66.0.0
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -1727,21 +1727,6 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@22.19.17)(vite@7.3.1(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  generators/python-v2/fastapi:
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 22.19.17
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -9352,9 +9337,6 @@ packages:
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
 
-  '@fern-fern/ir-sdk@53.9.0':
-    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
-
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
 
@@ -16331,8 +16313,6 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
-
-  '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:

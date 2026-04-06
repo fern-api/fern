@@ -112,7 +112,7 @@ jobs:
 
             // Language to generators mapping
             const languageMap = {
-              'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
+              'Python': ['python-sdk', 'pydantic', 'pydantic-v2'],
               'TypeScript': ['ts-sdk'],
               'Java': ['java-sdk', 'java-model'],
               'Go': ['go-sdk', 'go-model'],
@@ -129,7 +129,6 @@ jobs:
               'python-sdk': 'generators/python',
               'pydantic': 'generators/python',
               'pydantic-v2': 'generators/python-v2',
-              'fastapi': 'generators/python',
               'ts-sdk': 'generators/typescript',
               'java-sdk': 'generators/java',
               'java-model': 'generators/java',

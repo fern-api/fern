@@ -32,7 +32,6 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("python-sdk"),
     createGenerator("pydantic"),
     createGenerator("pydantic-v2"),
-    createGenerator("fastapi"),
     createGenerator("java-sdk"),
     createGenerator("java-model"),
     createGenerator("go-sdk"),
@@ -279,10 +278,8 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(false);
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).toContain("pydantic");
-            expect(result.affectedGenerators).toContain("fastapi");
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
             expect(result.generatorsWithAllFixtures).toContain("pydantic");
-            expect(result.generatorsWithAllFixtures).toContain("fastapi");
         });
 
         it("detects typescript generator source change", () => {
@@ -297,7 +294,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).toContain("pydantic");
             expect(result.affectedGenerators).toContain("pydantic-v2");
-            expect(result.affectedGenerators).toContain("fastapi");
             // pydantic (non-v2) also maps to python-v2/ in GENERATOR_SOURCE_PATHS
         });
 
@@ -365,7 +361,6 @@ describe("detectAffected", () => {
 
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).toContain("pydantic");
-            expect(result.affectedGenerators).toContain("fastapi");
         });
 
         it("detects Dockerfile.go change affects Go generators", () => {
@@ -419,7 +414,6 @@ describe("detectAffected", () => {
             // python generators should be in generatorsWithAllFixtures
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
             expect(result.generatorsWithAllFixtures).toContain("pydantic");
-            expect(result.generatorsWithAllFixtures).toContain("fastapi");
             // imdb should be in affectedFixtures
             expect(result.affectedFixtures).toContain("imdb");
         });
@@ -598,7 +592,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "pydantic"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -617,7 +611,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "pydantic"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -687,7 +681,6 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
         expect(names).toContain("pydantic");
-        expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
 
         // Each python generator should run ALL fixtures
@@ -772,7 +765,6 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
         expect(names).toContain("pydantic");
-        expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("java-sdk");
     });

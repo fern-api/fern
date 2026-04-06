@@ -368,6 +368,4 @@ allowedFailures:
   - file-upload:package-name
   - file-upload-openapi
 
-  - pagination-custom:.
-
   # exhaustive fixtures now pass after fixing bytes endpoint wire test generation

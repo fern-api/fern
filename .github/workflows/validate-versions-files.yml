@@ -34,11 +34,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/python/sdk/versions.yml"
-      - name: Validate fastapi versions.yml
-        uses: dsanders11/json-schema-validate-action@v2.0.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/python/fastapi/versions.yml"
       - name: Validate pydantic versions.yml
         uses: dsanders11/json-schema-validate-action@v2.0.0
         with:
