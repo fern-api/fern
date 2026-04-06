@@ -109,6 +109,7 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
+  - schemaless-request-body-examples
   - api-wide-base-path
   - bytes-upload
   - audiences

@@ -19,6 +19,19 @@
   createdAt: "2026-04-02"
   irVersion: 65
 
+- version: 5.2.2
+  changelogEntry:
+    - summary: |
+        Fix `extra_dependencies` override behavior so user-specified dependency
+        versions reliably take precedence over bundled generator defaults.
+        Previously, bundled dependencies (e.g., pydantic, typing_extensions) added
+        during generation would overwrite customer version pins from
+        `extra_dependencies`. User overrides are now protected from being
+        overwritten by internal dependency additions.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
 - version: 5.2.1
   changelogEntry:
     - summary: |

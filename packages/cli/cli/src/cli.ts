@@ -2359,12 +2359,16 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 token = token ?? resolved.token;
             }
 
-            if (githubRepo == null || token == null) {
-                const hint =
-                    githubRepo != null
-                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
-                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
-                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
+            if (githubRepo == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github directly."
+                );
+            }
+
+            if (token == null) {
+                cliContext.logger.warn(
+                    "No GitHub token found. Clone may fail for private repos. Set GITHUB_TOKEN or pass --token."
+                );
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
