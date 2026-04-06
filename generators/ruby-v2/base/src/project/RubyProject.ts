@@ -315,11 +315,11 @@ declare namespace GemspecFile {
 
 class GemspecFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
-    private readonly baseDepdendencies: Dependency[];
+    private readonly baseDependencies: Dependency[];
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-        this.baseDepdendencies = hasBasicAuth(context.ir)
+        this.baseDependencies = hasBasicAuth(context.ir)
             ? [...BASE_DEPENDENCIES, { name: "base64" }]
             : BASE_DEPENDENCIES;
     }
@@ -330,7 +330,7 @@ class GemspecFile {
         const gemName = this.context.getGemName();
 
         const dependencies = mergedDependencies(
-            this.baseDepdendencies,
+            this.baseDependencies,
             depsFromRecord(this.context.customConfig.extraDependencies)
         );
 
