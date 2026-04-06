@@ -45,25 +45,31 @@ jobs:
         run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Validate version
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          if [[ ! "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
-            echo "::error::Invalid version format: ${{ inputs.version }}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "::error::Invalid version format: $VERSION"
             exit 1
           fi
 
       - name: Check version not already published
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          if npm view "${{ env.PACKAGE_NAME }}@${{ inputs.version }}" version 2>/dev/null; then
-            echo "::error::Version ${{ inputs.version }} is already published"
+          if npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null; then
+            echo "::error::Version ${VERSION} is already published"
             exit 1
           fi
 
       - name: Build and publish
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          pnpm turbo run dist --filter=${{ env.PACKAGE_NAME }} -- ${{ inputs.version }}
+          pnpm turbo run dist --filter="${PACKAGE_NAME}" -- "${VERSION}"
 
           cd packages/cli/workspace/browser-compatible-fern-workspace/dist
-          echo "Publishing ${{ env.PACKAGE_NAME }}@${{ inputs.version }}"
+          echo "Publishing ${PACKAGE_NAME}@${VERSION}"
           cat package.json
           npm publish --provenance --access public --tag latest
-          echo "✓ Successfully published ${{ env.PACKAGE_NAME }}@${{ inputs.version }}"
+          echo "✓ Successfully published ${PACKAGE_NAME}@${VERSION}"
