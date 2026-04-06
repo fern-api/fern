@@ -19,12 +19,45 @@ const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
 
-interface BundledDevDependency {
+interface Dependency {
     name: string;
     versionConstraint?: string;
 }
 
-const BUNDLED_DEV_DEPENDENCIES: BundledDevDependency[] = [
+function depToGemfileString(dep: Dependency): string {
+    return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
+}
+
+function depToGemspecString(dep: Dependency): string {
+    return dep.versionConstraint != null
+        ? `spec.add_dependency "${dep.name}", "${dep.versionConstraint}"`
+        : `spec.add_dependency "${dep.name}"`;
+}
+
+function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
+    const deps = Object.entries(record ?? {});
+        if (deps == null || deps.length === 0) {
+            return [];
+        }
+
+        return deps.map(([packageName, versionConstraint]) => ({
+            name: packageName,
+            versionConstraint
+        }));
+}
+
+function mergedDependencies(baseDeps: Dependency[], overrideDeps: Dependency[]): Dependency[] {
+    const mergedDeps: Record<string, string | undefined> = {};
+    baseDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    overrideDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    return depsFromRecord(mergedDeps);
+}
+
+const BASE_DEV_DEPENDENCIES: Dependency[] = [
     { name: "minitest", versionConstraint: "~> 5.16" },
     { name: "minitest-rg" },
     { name: "pry" },
@@ -32,6 +65,10 @@ const BUNDLED_DEV_DEPENDENCIES: BundledDevDependency[] = [
     { name: "rubocop", versionConstraint: "~> 1.21" },
     { name: "rubocop-minitest" },
     { name: "webmock" }
+];
+
+const BASE_DEPENDENCIES: Dependency[] = [
+    { name: "base64" }
 ];
 
 /**
@@ -281,38 +318,11 @@ class GemspecFile {
         this.context = context;
     }
 
-    private getExtraDependenciesString(): string {
-        const extraDependencies = this.context.customConfig.extraDependencies;
-        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDependencies).map(
-            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
-    }
-
-    private getBase64DependencyString(): string {
-        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
-        if (!hasBasicAuth) {
-            return "";
-        }
-        // Skip bundled base64 dep if user overrides it via extraDependencies
-        const extraDependencies = this.context.customConfig.extraDependencies;
-        if (extraDependencies != null && "base64" in extraDependencies) {
-            return "";
-        }
-        return '\nspec.add_dependency "base64"';
-    }
-
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
-        const extraDependenciesString = this.getExtraDependenciesString();
-        const base64DependencyString = this.getBase64DependencyString();
+        const dependencies = mergedDependencies(BASE_DEPENDENCIES, depsFromRecord(this.context.customConfig.extraDependencies));
 
         return dedent`
             # frozen_string_literal: true
@@ -343,7 +353,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-${base64DependencyString}${extraDependenciesString}
+            ${dependencies.map(depToGemspecString).join("\n            ")}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -406,43 +416,8 @@ class Gemfile {
         this.context = context;
     }
 
-    private getExtraDevDependenciesString(): string {
-        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
-        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
-            return "";
-        }
-
-        // Only include extra dev deps that don't override bundled ones (those are handled inline)
-        const bundledDevDeps = new Set(BUNDLED_DEV_DEPENDENCIES.map((d) => d.name));
-        const nonOverrideDeps = Object.entries(extraDevDependencies).filter(
-            ([packageName]) => !bundledDevDeps.has(packageName)
-        );
-
-        if (nonOverrideDeps.length === 0) {
-            return "";
-        }
-
-        const dependencyLines = nonOverrideDeps.map(
-            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
-    }
-
-    private getBundledDevDependencyLine(dep: BundledDevDependency): string {
-        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
-        // If user overrides this bundled dep, use their version constraint
-        if (extraDevDependencies != null && dep.name in extraDevDependencies) {
-            return `gem "${dep.name}", "${extraDevDependencies[dep.name]}"`;
-        }
-        return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
-    }
-
     public async toString(): Promise<string> {
-        const extraDevDependenciesString = this.getExtraDevDependenciesString();
-
-        const bundledLines = BUNDLED_DEV_DEPENDENCIES.map((dep) => this.getBundledDevDependencyLine(dep));
-        const bundledDepsString = bundledLines.join("\n        ");
+        const devDependencies = mergedDependencies(BASE_DEV_DEPENDENCIES, depsFromRecord(this.context.customConfig.extraDevDependencies));
 
         return dedent`
             # frozen_string_literal: true
@@ -452,8 +427,8 @@ class Gemfile {
                 gemspec
 
                 group :test, :development do
-                ${bundledDepsString}
-${extraDevDependenciesString}
+
+                ${devDependencies.map(depToGemfileString).join("\n                ")}
             end
 
             # Load custom Gemfile configuration if it exists
