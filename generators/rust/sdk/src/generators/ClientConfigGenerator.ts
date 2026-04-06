@@ -119,7 +119,7 @@ export class ClientConfigGenerator {
     }
 
     private generateDefaultImpl() {
-        const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
+        const userAgent = `${this.context.case.pascalSafe(this.context.ir.apiName)} Rust SDK`;
         const environmentEnumName = this.context.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 

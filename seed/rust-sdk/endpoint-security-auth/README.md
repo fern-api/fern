@@ -90,7 +90,7 @@ match client.auth.get_token(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_endpoint_security_auth::prelude::{*};
+use seed_endpoint_security_auth::prelude::*;
 
 let request = GetTokenRequest {
     ...

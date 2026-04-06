@@ -14,5 +14,5 @@ pub mod types;
 pub mod websocket;
 
 pub use resources::{EmptyClient, WebsocketClient};
-pub use types::{*};
+pub use types::*;
 

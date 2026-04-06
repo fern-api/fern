@@ -88,7 +88,7 @@ match client.user.create_user(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_extra_properties::prelude::{*};
+use seed_extra_properties::prelude::*;
 
 let request = CreateUserRequest {
     ...

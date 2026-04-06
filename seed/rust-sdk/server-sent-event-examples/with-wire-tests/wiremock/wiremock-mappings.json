@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "07afdcff-a307-475a-b81a-89ebf2b474b2",
-      "name": "stream - default",
+      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "name": "stream - Stream completions",
       "request": {
         "urlPathTemplate": "/stream",
         "method": "POST"
@@ -14,7 +14,7 @@
           "Content-Type": "text/event-stream"
         }
       },
-      "uuid": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,8 +27,8 @@
       }
     },
     {
-      "id": "d0acface-0fd3-4ca6-8c2f-81036e0eeb38",
-      "name": "streamEvents - default",
+      "id": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
+      "name": "streamEvents - Stream events",
       "request": {
         "urlPathTemplate": "/stream-events",
         "method": "POST"
@@ -40,7 +40,7 @@
           "Content-Type": "text/event-stream"
         }
       },
-      "uuid": "d0acface-0fd3-4ca6-8c2f-81036e0eeb38",
+      "uuid": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -53,8 +53,8 @@
       }
     },
     {
-      "id": "bf2e5c87-d1df-438e-8dba-b6a50ad7d46c",
-      "name": "streamEventsContextProtocol - default",
+      "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
+      "name": "streamEventsContextProtocol - Stream events context protocol",
       "request": {
         "urlPathTemplate": "/stream-events-context-protocol",
         "method": "POST"
@@ -66,7 +66,7 @@
           "Content-Type": "text/event-stream"
         }
       },
-      "uuid": "bf2e5c87-d1df-438e-8dba-b6a50ad7d46c",
+      "uuid": "0913bb86-4b39-4c8a-9875-111a5210a147",
       "persistent": true,
       "priority": 3,
       "metadata": {

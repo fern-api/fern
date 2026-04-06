@@ -44,11 +44,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/python/pydantic/versions.yml"
-      - name: Validate ts-express versions.yml
-        uses: dsanders11/json-schema-validate-action@v2.0.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/typescript/express/versions.yml"
       - name: Validate ts-sdk versions.yml
         uses: dsanders11/json-schema-validate-action@v2.0.0
         with:

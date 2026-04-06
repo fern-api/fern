@@ -29,7 +29,6 @@ function createGenerator(workspaceName: string): GeneratorWorkspace {
 // Standard set of generators used across tests
 const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("ts-sdk"),
-    createGenerator("ts-express"),
     createGenerator("python-sdk"),
     createGenerator("pydantic"),
     createGenerator("pydantic-v2"),
@@ -291,7 +290,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["generators/typescript/src/index.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("ts-sdk");
-            expect(result.affectedGenerators).toContain("ts-express");
         });
 
         it("detects v2 generator source change affects same workspaces", () => {
@@ -362,7 +360,6 @@ describe("detectAffected", () => {
             const result = detectAffected(["docker/seed/Dockerfile.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("ts-sdk");
-            expect(result.affectedGenerators).toContain("ts-express");
             expect(result.affectedGenerators).not.toContain("java-sdk");
         });
 
