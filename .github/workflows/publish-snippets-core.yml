@@ -34,23 +34,21 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
-          cache: false
-
-      - name: Cache Go modules and binaries
+      - name: Cache protoc-gen-openapi binary
         uses: actions/cache@v4
         with:
-          path: |
-            ~/go/pkg/mod
-            ~/go/bin
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+          path: ~/.fern/bin/protoc-gen-openapi
+          key: protoc-gen-openapi-v0.1.13-${{ runner.os }}-${{ runner.arch }}
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+        run: |
+          mkdir -p "$HOME/.fern/bin"
+          if [ ! -x "$HOME/.fern/bin/protoc-gen-openapi" ]; then
+            curl -fsSL -o "$HOME/.fern/bin/protoc-gen-openapi" \
+              "https://github.com/fern-api/protoc-gen-openapi/releases/download/v0.1.13/protoc-gen-openapi-linux-amd64"
+            chmod +x "$HOME/.fern/bin/protoc-gen-openapi"
+          fi
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=${{ env.PACKAGE_NAME }}
