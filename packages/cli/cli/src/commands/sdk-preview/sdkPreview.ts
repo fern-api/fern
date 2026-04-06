@@ -1,8 +1,11 @@
 import { getPackageNameFromGeneratorConfig } from "@fern-api/api-workspace-commons";
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { generatorsYml } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -21,6 +24,8 @@ interface SdkPreviewSuccess {
         version: string;
         package_name: string;
         registry_url: string;
+        output_path?: string;
+        sdk_repo?: string;
     }>;
 }
 
@@ -36,13 +41,15 @@ export async function sdkPreview({
     groupName,
     generatorFilter,
     apiName,
-    json
+    json,
+    output
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
     generatorFilter: string | undefined;
     apiName: string | undefined;
     json: boolean;
+    output: string | undefined;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
@@ -77,7 +84,11 @@ export async function sdkPreview({
         const previewId = await getPreviewId();
         cliContext.logger.info(`Preview ID: ${previewId}`);
 
-        // 4. Process each workspace
+        // 4. Resolve output path (opt-in, used by CI actions for SDK diffs)
+        const absolutePathToOutput =
+            output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
+
+        // 5. Process each workspace
         for (const workspace of project.apiWorkspaces) {
             if (workspace.generatorsConfiguration == null) {
                 cliContext.logger.warn(
@@ -152,8 +163,10 @@ export async function sdkPreview({
                 // Run generation locally via Docker. We use local generation (not remote/Fiddle)
                 // because we programmatically override the output config, which requires direct
                 // control over the generator invocation. Docker must be installed.
-                // absolutePathToPreview is undefined — this is NOT preview-to-disk mode,
-                // we want the generator to actually publish to the preview registry.
+                //
+                // When --output is provided (CI mode), absolutePathToPreview is set so the
+                // generator also writes files to disk for SDK diff workflows.
+                // When not provided (interactive CLI), only registry publishing occurs.
                 await cliContext.runTaskForWorkspace(workspace, async (context) => {
                     await runLocalGenerationForWorkspace({
                         token,
@@ -163,7 +176,7 @@ export async function sdkPreview({
                         version: previewVersion,
                         keepDocker: false,
                         context,
-                        absolutePathToPreview: undefined,
+                        absolutePathToPreview: absolutePathToOutput,
                         runner: undefined,
                         inspect: false,
                         ai: workspace.generatorsConfiguration?.ai,
@@ -176,12 +189,18 @@ export async function sdkPreview({
 
                 const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
 
+                const sdkRepo = getGithubRepository(generator);
+
                 previews.push({
                     preview_id: previewId,
                     install: installCommand,
                     version: previewVersion,
                     package_name: previewPackageName,
-                    registry_url: PREVIEW_REGISTRY_URL
+                    registry_url: PREVIEW_REGISTRY_URL,
+                    ...(absolutePathToOutput != null && {
+                        output_path: absolutePathToOutput
+                    }),
+                    ...(sdkRepo != null && { sdk_repo: sdkRepo })
                 });
             }
         }
@@ -198,7 +217,7 @@ export async function sdkPreview({
         throw error;
     }
 
-    // 5. Output result
+    // 6. Output result
     if (json) {
         const result: SdkPreviewResult = {
             status: "success",
@@ -215,4 +234,17 @@ export async function sdkPreview({
             cliContext.logger.info(`  Install: ${preview.install}`);
         }
     }
+}
+
+/**
+ * Extracts the GitHub repository (e.g., "acme/ts-sdk") from a generator's
+ * configuration. Returns undefined if no GitHub config or if using
+ * self-hosted mode (which uses `uri` instead of `repository`).
+ */
+function getGithubRepository(generator: generatorsYml.GeneratorInvocation): string | undefined {
+    const github = generator.raw?.github;
+    if (github != null && "repository" in github) {
+        return (github as { repository: string }).repository;
+    }
+    return undefined;
 }
