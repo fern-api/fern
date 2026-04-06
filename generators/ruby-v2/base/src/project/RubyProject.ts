@@ -34,6 +34,16 @@ function depToGemspecString(dep: Dependency): string {
         : `spec.add_dependency "${dep.name}"`;
 }
 
+function sanitizeRubyStringValue(value: string, field: string): string {
+    if (/["\r\n\\]/.test(value)) {
+        throw new Error(
+            `Invalid character in ${field} "${value}": values used in Ruby string ` +
+                `literals cannot contain unescaped quotes, backslashes, or newlines.`
+        );
+    }
+    return value;
+}
+
 function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
     const deps = Object.entries(record ?? {});
     if (deps == null || deps.length === 0) {
@@ -41,8 +51,9 @@ function depsFromRecord(record: Record<string, string | undefined> | undefined):
     }
 
     return deps.map(([packageName, versionConstraint]) => ({
-        name: packageName,
-        versionConstraint
+        name: sanitizeRubyStringValue(packageName, "package name"),
+        versionConstraint:
+            versionConstraint != null ? sanitizeRubyStringValue(versionConstraint, "version constraint") : undefined
     }));
 }
 
@@ -715,7 +726,9 @@ class ModuleFile {
         const requirePaths = this.context.customConfig?.requirePaths;
         if (requirePaths != null && requirePaths.length > 0) {
             const rootFolder = this.context.getRootFolderName();
-            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const pathsArray = requirePaths
+                .map((p) => `"${rootFolder}/${sanitizeRubyStringValue(p, "require path")}"`)
+                .join(", ");
             const requirePathsHook = `
 
 # Load user-defined files if present (e.g., for Sentry integration)
