@@ -56,7 +56,6 @@ runs:
           ${{ runner.os }}-docker-${{ inputs.generator-name }}-
 
     - name: Load cached Docker images
-      if: steps.docker-cache.outputs.cache-hit == 'true'
       shell: bash
       run: |
         for f in /tmp/docker-cache/*.tar; do

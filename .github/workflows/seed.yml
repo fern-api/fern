@@ -885,7 +885,6 @@ jobs:
             ${{ runner.os }}-docker-${{ matrix.generator }}-
 
       - name: Load cached Docker images
-        if: steps.docker-cache.outputs.cache-hit == 'true'
         run: |
           for f in /tmp/docker-cache/*.tar; do
             [ -f "$f" ] && docker load -i "$f" || true
