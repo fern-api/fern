@@ -5,8 +5,8 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import fs from "fs/promises";
 import path from "path";
@@ -97,7 +97,7 @@ export async function sdkPreview({
         //   - Missing env vars are substituted as empty strings (instead of failing)
         //   - Version availability checks are skipped
         // Both are correct for CI preview runs where prod secrets aren't available.
-        const absolutePathToOutput = output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
+        const absolutePathToOutput = output != null ? AbsoluteFilePath.of(resolve(cwd(), output)) : undefined;
         if (absolutePathToOutput != null) {
             await fs.mkdir(absolutePathToOutput, { recursive: true });
         }
@@ -206,12 +206,11 @@ export async function sdkPreview({
                 const sdkRepo = getGithubRepository(generator);
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
-                // Use the same subfolder logic as runLocalGenerationForWorkspace so
+                // Mirror the subfolder logic in runLocalGenerationForWorkspace so
                 // the reported path matches the actual file location.
+                const subfolder = (generator.name.split("/").pop() ?? "sdk").replace(/[^a-zA-Z0-9-_]/g, "_");
                 const actualOutputPath =
-                    absolutePathToOutput != null
-                        ? path.join(absolutePathToOutput, getGeneratorOutputSubfolder(generator.name))
-                        : undefined;
+                    absolutePathToOutput != null ? path.join(absolutePathToOutput, subfolder) : undefined;
 
                 previews.push({
                     preview_id: previewId,

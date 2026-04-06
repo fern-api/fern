@@ -45,4 +45,9 @@ describe("getGithubRepository", () => {
         const generator = {} as generatorsYml.GeneratorInvocation;
         expect(getGithubRepository(generator)).toBeUndefined();
     });
+
+    it("returns undefined when repository is not a string", () => {
+        const generator = makeGenerator({ repository: 123 });
+        expect(getGithubRepository(generator)).toBeUndefined();
+    });
 });
