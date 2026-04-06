@@ -10,7 +10,6 @@ generators=(
     ruby-sdk-v2
     pydantic
     python-sdk
-    fastapi
     openapi
     java-sdk
     java-model
