@@ -43,20 +43,20 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
-      - name: Cache protoc-gen-openapi binary
+      - name: Cache Fern bin dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.fern/bin/protoc-gen-openapi
-          key: protoc-gen-openapi-v0.1.13-${{ runner.os }}-${{ runner.arch }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - name: Install protoc-gen-openapi
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
         run: |
-          mkdir -p "$HOME/.fern/bin"
-          if [ ! -x "$HOME/.fern/bin/protoc-gen-openapi" ]; then
-            curl -fsSL -o "$HOME/.fern/bin/protoc-gen-openapi" \
-              "https://github.com/fern-api/protoc-gen-openapi/releases/download/v0.1.13/protoc-gen-openapi-linux-amd64"
-            chmod +x "$HOME/.fern/bin/protoc-gen-openapi"
-          fi
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
           echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: Fern check
