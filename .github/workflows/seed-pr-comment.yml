@@ -114,7 +114,7 @@ jobs:
             const languageMap = {
               'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
               'TypeScript': ['ts-sdk'],
-              'Java': ['java-sdk', 'java-model', 'java-spring'],
+              'Java': ['java-sdk', 'java-model'],
               'Go': ['go-sdk', 'go-model'],
               'Ruby': ['ruby-sdk-v2'],
               'C#': ['csharp-sdk', 'csharp-model'],
@@ -132,7 +132,6 @@ jobs:
               'fastapi': 'generators/python',
               'ts-sdk': 'generators/typescript',
               'java-sdk': 'generators/java',
-              'java-spring': 'generators/java',
               'java-model': 'generators/java',
               'go-sdk': 'generators/go',
               'go-model': 'generators/go',

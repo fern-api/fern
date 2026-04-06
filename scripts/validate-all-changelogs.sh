@@ -14,7 +14,6 @@ generators=(
     openapi
     java-sdk
     java-model
-    java-spring
     ts-sdk
     go-model
     go-sdk

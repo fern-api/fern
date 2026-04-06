@@ -35,7 +35,6 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("fastapi"),
     createGenerator("java-sdk"),
     createGenerator("java-model"),
-    createGenerator("java-spring"),
     createGenerator("go-sdk"),
     createGenerator("go-model"),
     createGenerator("csharp-sdk"),
@@ -348,10 +347,8 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(false);
             expect(result.affectedGenerators).toContain("java-sdk");
             expect(result.affectedGenerators).toContain("java-model");
-            expect(result.affectedGenerators).toContain("java-spring");
             expect(result.generatorsWithAllFixtures).toContain("java-sdk");
             expect(result.generatorsWithAllFixtures).toContain("java-model");
-            expect(result.generatorsWithAllFixtures).toContain("java-spring");
             expect(result.affectedGenerators).not.toContain("ts-sdk");
             expect(result.affectedGenerators).not.toContain("python-sdk");
         });
@@ -789,7 +786,6 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("java-sdk");
         expect(names).toContain("java-model");
-        expect(names).toContain("java-spring");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("python-sdk");
 
