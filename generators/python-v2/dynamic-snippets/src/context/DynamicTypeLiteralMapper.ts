@@ -415,10 +415,27 @@ export class DynamicTypeLiteralMapper {
         if (enumValue == null) {
             return python.TypeInstantiation.nop();
         }
-        return python.TypeInstantiation.str(enumValue);
+        const enumType = this.context.customConfig.pydantic_config?.enum_type;
+        if (enumType === "python_enums" || enumType === "forward_compatible_python_enums") {
+            const classReference = this.context.getTypeClassReference(enum_.declaration);
+            const memberName = enumValue.name.screamingSnakeCase.safeName;
+            return python.TypeInstantiation.reference(
+                python.accessAttribute({
+                    lhs: classReference,
+                    rhs: python.codeBlock(memberName)
+                })
+            );
+        }
+        return python.TypeInstantiation.str(enumValue.wireValue);
     }
 
-    private getEnumValue({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
+    private getEnumValue({
+        enum_,
+        value
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+    }): FernIr.dynamic.NameAndWireValue | undefined {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -434,7 +451,7 @@ export class DynamicTypeLiteralMapper {
             });
             return undefined;
         }
-        return value;
+        return enumValue;
     }
 
     private convertUndiscriminatedUnion({
@@ -585,6 +602,17 @@ export class DynamicTypeLiteralMapper {
                 const firstValue = named.values[0];
                 if (firstValue == null) {
                     return python.TypeInstantiation.nop();
+                }
+                const enumType = this.context.customConfig.pydantic_config?.enum_type;
+                if (enumType === "python_enums" || enumType === "forward_compatible_python_enums") {
+                    const classReference = this.context.getTypeClassReference(named.declaration);
+                    const memberName = firstValue.name.screamingSnakeCase.safeName;
+                    return python.TypeInstantiation.reference(
+                        python.accessAttribute({
+                            lhs: classReference,
+                            rhs: python.codeBlock(memberName)
+                        })
+                    );
                 }
                 return python.TypeInstantiation.str(firstValue.wireValue);
             }
