@@ -172,6 +172,28 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Cache Docker images
+        uses: actions/cache@v4
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile*') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Load cached Docker images
+        run: |
+          if [ -d /tmp/docker-cache ]; then
+            for f in /tmp/docker-cache/*.tar; do
+              [ -f "$f" ] && docker load -i "$f" || true
+            done
+          fi
+
       - name: Build CLI for install-dependencies
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
@@ -216,6 +238,15 @@ jobs:
           else
             echo "No snapshot changes to commit"
           fi
+
+      - name: Save Docker images for cache
+        if: always()
+        run: |
+          mkdir -p /tmp/docker-cache
+          docker images --format '{{.Repository}}:{{.Tag}}' | grep -v '<none>' | while read -r img; do
+            fname=$(echo "$img" | tr '/:' '_')
+            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
+          done
 
       - name: Ensure no changes to git-tracked files
         if: ${{ !github.event.inputs.update_snapshots }}
