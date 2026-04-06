@@ -1,7 +1,10 @@
 import { getPackageNameFromGeneratorConfig } from "@fern-api/api-workspace-commons";
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { generatorsYml } from "@fern-api/configuration-loader";
+import {
+    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
@@ -11,6 +14,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
+import { getGithubRepository } from "./getGithubRepository.js";
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
@@ -85,8 +89,7 @@ export async function sdkPreview({
         cliContext.logger.info(`Preview ID: ${previewId}`);
 
         // 4. Resolve output path (opt-in, used by CI actions for SDK diffs)
-        const absolutePathToOutput =
-            output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
+        const absolutePathToOutput = output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
 
         // 5. Process each workspace
         for (const workspace of project.apiWorkspaces) {
@@ -234,17 +237,4 @@ export async function sdkPreview({
             cliContext.logger.info(`  Install: ${preview.install}`);
         }
     }
-}
-
-/**
- * Extracts the GitHub repository (e.g., "acme/ts-sdk") from a generator's
- * configuration. Returns undefined if no GitHub config or if using
- * self-hosted mode (which uses `uri` instead of `repository`).
- */
-function getGithubRepository(generator: generatorsYml.GeneratorInvocation): string | undefined {
-    const github = generator.raw?.github;
-    if (github != null && "repository" in github) {
-        return (github as { repository: string }).repository;
-    }
-    return undefined;
 }
