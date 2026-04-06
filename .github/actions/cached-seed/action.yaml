@@ -44,7 +44,7 @@ runs:
 
     - name: Record pre-existing Docker images
       shell: bash
-      run: docker images -q | sort > /tmp/docker-images-before.txt
+      run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
     - name: Clear stale Docker image cache
       shell: bash
@@ -55,9 +55,9 @@ runs:
       uses: actions/cache@v4
       with:
         path: /tmp/docker-cache
-        key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile*') }}
+        key: ${{ runner.os }}-docker-${{ inputs.generator-name }}-${{ hashFiles('**/Dockerfile*') }}
         restore-keys: |
-          ${{ runner.os }}-docker-
+          ${{ runner.os }}-docker-${{ inputs.generator-name }}-
 
     - name: Load cached Docker images
       if: steps.docker-cache.outputs.cache-hit == 'true'
@@ -105,7 +105,7 @@ runs:
           exit 0
         fi
         mkdir -p /tmp/docker-cache
-        comm -13 /tmp/docker-images-before.txt <(docker images -q | sort) | while read -r id; do
+        comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
           img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
           [ -z "$img" ] && continue
           fname=$(echo "$img" | tr '/:' '_')
