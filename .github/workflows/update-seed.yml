@@ -372,8 +372,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic-seed-update:
     runs-on: ubuntu-latest
@@ -408,8 +408,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk-seed-update:
     runs-on: Seed
@@ -444,8 +444,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   fastapi-seed-update:
     runs-on: ubuntu-latest
@@ -480,8 +480,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   openapi-seed-update:
     runs-on: ubuntu-latest
@@ -516,8 +516,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk-seed-update:
     runs-on: Seed
@@ -552,8 +552,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model-seed-update:
     runs-on: ubuntu-latest
@@ -588,8 +588,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-spring-seed-update:
     runs-on: ubuntu-latest
@@ -624,8 +624,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   typescript-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -660,8 +660,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   typescript-express-seed-update:
     runs-on: ubuntu-latest
@@ -696,8 +696,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
 
   go-model-seed-update:
@@ -733,8 +733,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -769,8 +769,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model-seed-update:
     runs-on: ubuntu-latest
@@ -805,8 +805,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -841,8 +841,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model-seed-update:
     runs-on: ubuntu-latest
@@ -877,8 +877,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -913,8 +913,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -949,8 +949,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model-seed-update:
     runs-on: ubuntu-latest
@@ -985,8 +985,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -1021,8 +1021,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
