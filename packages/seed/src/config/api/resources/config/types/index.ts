@@ -16,6 +16,8 @@ export * from "./ReadmeEndpoint.js";
 export * from "./ReadmeEndpointObject.js";
 export * from "./Script.js";
 export * from "./ScriptCommands.js";
+export * from "./ScriptsByEnvironment.js";
+export * from "./ScriptsConfiguration.js";
 export * from "./ScriptCommandsByPhase.js";
 export * from "./SeedWorkspaceConfiguration.js";
 export * from "./SkipScripts.js";
