@@ -286,7 +286,9 @@ describe("convertSdkTargetsFromRaw", () => {
         const target = result.sdks.targets["typescript"];
         expect(target).toBeDefined();
         expect(target?.image).toBeDefined();
-        expect(target?.image?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(typeof target?.image).toBe("object");
+        const img = target?.image as { name: string; registry: string } | undefined;
+        expect(img?.name).toBe("fernapi/fern-typescript-sdk");
     });
 
     it("warns when generator has no name or image", () => {
