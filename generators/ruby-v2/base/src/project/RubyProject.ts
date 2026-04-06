@@ -36,14 +36,14 @@ function depToGemspecString(dep: Dependency): string {
 
 function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
     const deps = Object.entries(record ?? {});
-        if (deps == null || deps.length === 0) {
-            return [];
-        }
+    if (deps == null || deps.length === 0) {
+        return [];
+    }
 
-        return deps.map(([packageName, versionConstraint]) => ({
-            name: packageName,
-            versionConstraint
-        }));
+    return deps.map(([packageName, versionConstraint]) => ({
+        name: packageName,
+        versionConstraint
+    }));
 }
 
 function mergedDependencies(baseDeps: Dependency[], overrideDeps: Dependency[]): Dependency[] {
@@ -67,9 +67,7 @@ const BASE_DEV_DEPENDENCIES: Dependency[] = [
     { name: "webmock" }
 ];
 
-const BASE_DEPENDENCIES: Dependency[] = [
-    { name: "base64" }
-];
+const BASE_DEPENDENCIES: Dependency[] = [{ name: "base64" }];
 
 /**
  * In memory representation of a Ruby project.
@@ -322,7 +320,10 @@ class GemspecFile {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
-        const dependencies = mergedDependencies(BASE_DEPENDENCIES, depsFromRecord(this.context.customConfig.extraDependencies));
+        const dependencies = mergedDependencies(
+            BASE_DEPENDENCIES,
+            depsFromRecord(this.context.customConfig.extraDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
@@ -417,7 +418,10 @@ class Gemfile {
     }
 
     public async toString(): Promise<string> {
-        const devDependencies = mergedDependencies(BASE_DEV_DEPENDENCIES, depsFromRecord(this.context.customConfig.extraDevDependencies));
+        const devDependencies = mergedDependencies(
+            BASE_DEV_DEPENDENCIES,
+            depsFromRecord(this.context.customConfig.extraDevDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
