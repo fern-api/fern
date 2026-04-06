@@ -29,7 +29,7 @@ export class RootClientGenerator {
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.package = context.ir.rootPackage;
-        this.projectName = context.ir.apiName.pascalCase.safeName;
+        this.projectName = this.context.case.pascalSafe(context.ir.apiName);
         this.environmentGenerator = new EnvironmentGenerator({ context });
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: this.package,
@@ -83,7 +83,7 @@ export class RootClientGenerator {
             moduleDoc.push("");
             const seenDocNames = new Set<string>();
             subpackages.forEach((subpackage) => {
-                const name = subpackage.name.pascalCase.safeName;
+                const name = this.context.case.pascalSafe(subpackage.name);
                 const displayName = subpackage.displayName ?? name;
 
                 // Try to get service docs if the subpackage has a service
@@ -163,14 +163,14 @@ export class RootClientGenerator {
         const seen = new Set<string>();
         return subpackages
             .filter((subpackage) => {
-                const moduleName = subpackage.name.snakeCase.safeName;
+                const moduleName = this.context.case.snakeSafe(subpackage.name);
                 if (seen.has(moduleName)) {
                     return false;
                 }
                 seen.add(moduleName);
                 return true;
             })
-            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
+            .map((subpackage) => `pub mod ${this.context.case.snakeSafe(subpackage.name)};`)
             .join("\n");
     }
 
@@ -181,7 +181,7 @@ export class RootClientGenerator {
         return subpackages
             .filter((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                const reExport = `${subpackage.name.snakeCase.safeName}::${clientName}`;
+                const reExport = `${this.context.case.snakeSafe(subpackage.name)}::${clientName}`;
                 if (seen.has(reExport)) {
                     return false;
                 }
@@ -190,7 +190,7 @@ export class RootClientGenerator {
             })
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                return `pub use ${subpackage.name.snakeCase.safeName}::${clientName};`;
+                return `pub use ${this.context.case.snakeSafe(subpackage.name)}::${clientName};`;
             })
             .join("\n");
     }

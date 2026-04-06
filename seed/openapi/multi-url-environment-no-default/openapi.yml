@@ -16,7 +16,7 @@ paths:
         - url: https://ec2.aws.com
         - url: https://staging.ec2.aws.com
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -45,7 +45,7 @@ paths:
         - url: https://s3.aws.com
         - url: https://staging.s3.aws.com
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -60,6 +60,6 @@ paths:
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

@@ -24,7 +24,7 @@
   "files": ["bin", "dist", "lib"],
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/replay": "^0.8.0",
+    "@fern-api/replay": "^0.9.0",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",
     "tmp-promise": "catalog:"

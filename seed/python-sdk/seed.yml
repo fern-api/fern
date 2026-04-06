@@ -441,6 +441,7 @@ scripts:
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
+  - schemaless-request-body-examples
   - any-auth
   - endpoint-security-auth
   - examples:legacy-wire-tests

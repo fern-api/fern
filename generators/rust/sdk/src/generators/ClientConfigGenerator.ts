@@ -119,7 +119,7 @@ export class ClientConfigGenerator {
     }
 
     private generateDefaultImpl() {
-        const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
+        const userAgent = `${this.context.case.pascalSafe(this.context.ir.apiName)} Rust SDK`;
         const environmentEnumName = this.context.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 
@@ -178,7 +178,7 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "max_retries",
-                        value: Expression.numberLiteral(3)
+                        value: Expression.numberLiteral(this.context.customConfig.maxRetries ?? 3)
                     },
                     {
                         name: "custom_headers",

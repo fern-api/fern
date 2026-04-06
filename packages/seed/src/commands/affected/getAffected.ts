@@ -71,9 +71,9 @@ const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-
  * all their fixtures to verify the updated Docker image works correctly.
  */
 const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
-    "docker/seed/Dockerfile.java": ["java-sdk", "java-model", "java-spring"],
-    "docker/seed/Dockerfile.ts": ["ts-sdk", "ts-express"],
-    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2", "fastapi"],
+    "docker/seed/Dockerfile.java": ["java-sdk", "java-model"],
+    "docker/seed/Dockerfile.ts": ["ts-sdk"],
+    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2"],
     "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
     "docker/seed/Dockerfile.csharp": ["csharp-sdk", "csharp-model"],
     "docker/seed/Dockerfile.php": ["php-sdk", "php-model"]
@@ -85,14 +85,11 @@ const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
  */
 const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "ts-sdk": ["generators/typescript/", "generators/typescript-v2/"],
-    "ts-express": ["generators/typescript/", "generators/typescript-v2/"],
     "python-sdk": ["generators/python/", "generators/python-v2/"],
     pydantic: ["generators/python/", "generators/python-v2/"],
     "pydantic-v2": ["generators/python-v2/"],
-    fastapi: ["generators/python/", "generators/python-v2/"],
     "java-sdk": ["generators/java/", "generators/java-v2/"],
     "java-model": ["generators/java/", "generators/java-v2/"],
-    "java-spring": ["generators/java/", "generators/java-v2/"],
     "go-sdk": ["generators/go/", "generators/go-v2/"],
     "go-model": ["generators/go/", "generators/go-v2/"],
     "ruby-sdk": ["generators/ruby-v2/"],
@@ -104,8 +101,7 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "swift-sdk": ["generators/swift/"],
     "rust-sdk": ["generators/rust/"],
     "rust-model": ["generators/rust/"],
-    openapi: ["generators/openapi/"],
-    postman: ["generators/postman/"]
+    openapi: ["generators/openapi/"]
 };
 
 /**

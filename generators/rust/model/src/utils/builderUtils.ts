@@ -70,7 +70,7 @@ export function collectBuilderFieldsFromProperties(
         // Check if the bare type is String for impl Into usage
         const useImplInto = isStringType(bareTypeRef);
 
-        const name = context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const name = context.escapeRustKeyword(context.case.snakeUnsafe(property.name));
 
         return {
             name,
@@ -92,7 +92,7 @@ export function collectBuilderFieldsFromExtends(
 ): BuilderFieldInfo[] {
     return extends_.map((parentType) => {
         const parentTypeName = context.getUniqueTypeNameForReference(parentType);
-        const name = `${parentType.name.snakeCase.unsafeName}_fields`;
+        const name = `${context.case.snakeUnsafe(parentType.name)}_fields`;
 
         return {
             name,
