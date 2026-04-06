@@ -21,6 +21,10 @@ func TestNameFromString(t *testing.T) {
 		{"getUrl", "getUrl", "getURL", "GetURL", "get_url", "GET_URL"},
 		{"user_name", "user_name", "userName", "UserName", "user_name", "USER_NAME"},
 		{"type", "type", "type_", "Type", "type_", "TYPE"},
+		// Uppercase runs followed by lowercase (the splitWords bug fix)
+		{"myAPIKey", "myAPIKey", "myAPIKey", "MyAPIKey", "my_api_key", "MY_API_KEY"},
+		{"XMLParsing", "XMLParsing", "xmlParsing", "XMLParsing", "xml_parsing", "XML_PARSING"},
+		{"getHTTPSConnection", "getHTTPSConnection", "getHTTPSConnection", "GetHTTPSConnection", "get_https_connection", "GET_HTTPS_CONNECTION"},
 	}
 
 	for _, tt := range tests {

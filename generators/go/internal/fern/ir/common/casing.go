@@ -155,11 +155,11 @@ func splitWords(s string) []string {
 			if len(current) > 0 {
 				// Look ahead: if next char is lowercase, this uppercase starts a new word
 				// But if current is all uppercase and next is uppercase too, continue the run
-				if i+1 < len(runes) && unicode.IsLower(runes[i+1]) && len(current) > 0 {
-					// If previous chars were uppercase run (like "HTTP"), split before this char
+				if i+1 < len(runes) && unicode.IsLower(runes[i+1]) {
+					// If previous chars were uppercase run (like "HTTP"), flush entire run
 					if unicode.IsUpper(current[len(current)-1]) && len(current) > 1 {
-						words = append(words, string(current[:len(current)-1]))
-						current = current[len(current)-1:]
+						words = append(words, string(current))
+						current = current[:0]
 					} else if unicode.IsUpper(current[len(current)-1]) {
 						// Single uppercase char before this - keep it as part of current
 					} else {
