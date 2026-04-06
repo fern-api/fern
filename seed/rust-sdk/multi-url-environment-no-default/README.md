@@ -70,7 +70,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_multi_url_environment_no_default::prelude::*;
+use seed_multi_url_environment_no_default::prelude::{*};
 
 let config = ClientConfig {
     base_url: Environment::Production.url().to_string(),
@@ -102,7 +102,7 @@ match client.ec_2.boot_instance(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_multi_url_environment_no_default::prelude::*;
+use seed_multi_url_environment_no_default::prelude::{*};
 
 let request = BootInstanceRequest {
     ...

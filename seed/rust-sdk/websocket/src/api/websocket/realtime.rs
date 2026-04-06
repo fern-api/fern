@@ -1,6 +1,6 @@
 use crate::{ApiError, WebSocketClient, WebSocketMessage, WebSocketOptions, QueryBuilder};
 use tokio::sync::{mpsc};
-use crate::prelude::*;
+use crate::prelude::{*};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]

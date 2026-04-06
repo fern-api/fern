@@ -81,7 +81,7 @@ match client.union_.get(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::prelude::{*};
 
 let request = PaymentRequest {
     ...
