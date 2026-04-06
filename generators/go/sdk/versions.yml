@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.2
+  changelogEntry:
+    - summary: |
+        Fix custom pager interface to use `*int` instead of `*float64` for
+        `GetLimit()` and `GetCount()` return types. These fields represent
+        integer pagination values (page size and total count) and should match
+        the `*int` getters generated on concrete response types when the spec
+        defines them as `type: integer`.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 61
+
 - version: 1.33.1
   changelogEntry:
     - summary: |
@@ -10,7 +22,6 @@
       type: fix
   createdAt: "2026-04-03"
   irVersion: 61
-
 - version: 1.33.0
   changelogEntry:
     - summary: |

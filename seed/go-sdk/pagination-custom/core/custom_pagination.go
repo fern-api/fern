@@ -12,7 +12,7 @@ type CustomPaginatedLink interface {
 }
 
 // CustomPaginatedResponse is an interface that all paginated response types must implement.
-// This allows different concrete types with different Data and Links types to be used with {{ .CustomPagerName }}.
+// This allows different concrete types with different Data and Links types to be used with PayrocPager.
 // D is the type of the Data field (e.g., []*SecureTokenWithAccountType)
 // L is the concrete link type (e.g., *Link) that implements CustomPaginatedLink
 type CustomPaginatedResponse[D any, L CustomPaginatedLink] interface {
@@ -28,23 +28,23 @@ type CustomPaginatedResponse[D any, L CustomPaginatedLink] interface {
 // It should make an HTTP request to the href URL and return the parsed response.
 type PageFetcher[T CustomPaginatedResponse[D, L], D any, L CustomPaginatedLink] func(ctx context.Context, href string) (T, error)
 
-// {{ .CustomPagerName }} is a generic pager for custom pagination endpoints.
+// PayrocPager is a generic pager for custom pagination endpoints.
 // It provides bidirectional navigation through pages of results.
 // T should be a pointer type (e.g., *SomeResponseType) that implements CustomPaginatedResponse[D, L].
 // D is the type of the data slice (e.g., []*SecureTokenWithAccountType).
 // L is the concrete link type (e.g., *Link) that implements CustomPaginatedLink.
-type {{ .CustomPagerName }}[T CustomPaginatedResponse[D, L], D any, L CustomPaginatedLink] struct {
+type PayrocPager[T CustomPaginatedResponse[D, L], D any, L CustomPaginatedLink] struct {
 	current T
 	fetcher PageFetcher[T, D, L]
 }
 
-// New{{ .CustomPagerName }} creates a new custom pager with the given initial response
+// NewPayrocPager creates a new custom pager with the given initial response
 // and a fetcher function to retrieve additional pages.
-func New{{ .CustomPagerName }}[T CustomPaginatedResponse[D, L], D any, L CustomPaginatedLink](
+func NewPayrocPager[T CustomPaginatedResponse[D, L], D any, L CustomPaginatedLink](
 	initial T,
 	fetcher PageFetcher[T, D, L],
-) *{{ .CustomPagerName }}[T, D, L] {
-	return &{{ .CustomPagerName }}[T, D, L]{
+) *PayrocPager[T, D, L] {
+	return &PayrocPager[T, D, L]{
 		current: initial,
 		fetcher: fetcher,
 	}
@@ -52,7 +52,7 @@ func New{{ .CustomPagerName }}[T CustomPaginatedResponse[D, L], D any, L CustomP
 
 // HasNextPage returns true if there is a next page available.
 // It checks both the hasMore field and the presence of a "next" link.
-func (p *{{ .CustomPagerName }}[T, D, L]) HasNextPage() bool {
+func (p *PayrocPager[T, D, L]) HasNextPage() bool {
 	// First check the hasMore field if available
 	if hasMore := p.current.GetHasMore(); hasMore != nil && *hasMore {
 		return true
@@ -71,7 +71,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) HasNextPage() bool {
 
 // GetNextPage fetches the next page of results.
 // It finds the "next" link and uses the fetcher to retrieve the page.
-func (p *{{ .CustomPagerName }}[T, D, L]) GetNextPage(ctx context.Context) (T, error) {
+func (p *PayrocPager[T, D, L]) GetNextPage(ctx context.Context) (T, error) {
 	var zero T
 	if p.fetcher == nil {
 		return zero, errors.New("pager fetcher not configured")
@@ -101,7 +101,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) GetNextPage(ctx context.Context) (T, e
 
 // HasPrevPage returns true if there is a previous page available.
 // It checks for the presence of a "previous" link.
-func (p *{{ .CustomPagerName }}[T, D, L]) HasPrevPage() bool {
+func (p *PayrocPager[T, D, L]) HasPrevPage() bool {
 	links := p.current.GetLinks()
 	for _, link := range links {
 		if link.GetRel() == "previous" {
@@ -114,7 +114,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) HasPrevPage() bool {
 
 // GetPrevPage fetches the previous page of results.
 // It finds the "previous" link and uses the fetcher to retrieve the page.
-func (p *{{ .CustomPagerName }}[T, D, L]) GetPrevPage(ctx context.Context) (T, error) {
+func (p *PayrocPager[T, D, L]) GetPrevPage(ctx context.Context) (T, error) {
 	var zero T
 	if p.fetcher == nil {
 		return zero, errors.New("pager fetcher not configured")
@@ -143,7 +143,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) GetPrevPage(ctx context.Context) (T, e
 }
 
 // Current returns the current page response.
-func (p *{{ .CustomPagerName }}[T, D, L]) Current() T {
+func (p *PayrocPager[T, D, L]) Current() T {
 	return p.current
 }
 
@@ -151,7 +151,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) Current() T {
 // This works with all Go versions and can be used with range loops.
 // The iterator will yield the current page and continue fetching next pages
 // until no more pages are available or the context is cancelled.
-func (p *{{ .CustomPagerName }}[T, D, L]) Iter(ctx context.Context) <-chan T {
+func (p *PayrocPager[T, D, L]) Iter(ctx context.Context) <-chan T {
 	ch := make(chan T)
 	go func() {
 		defer close(ch)
@@ -179,7 +179,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) Iter(ctx context.Context) <-chan T {
 // This allows using the pager with range loops: for page := range pager.Seq(ctx) { ... }
 // The iterator will yield the current page and continue fetching next pages
 // until no more pages are available or the context is cancelled.
-func (p *{{ .CustomPagerName }}[T, D, L]) Seq(ctx context.Context) func(yield func(T) bool) {
+func (p *PayrocPager[T, D, L]) Seq(ctx context.Context) func(yield func(T) bool) {
 	return func(yield func(T) bool) {
 		current := p.current
 		for {
@@ -205,7 +205,7 @@ func (p *{{ .CustomPagerName }}[T, D, L]) Seq(ctx context.Context) func(yield fu
 
 // ForEach iterates through all pages and calls the provided function for each page.
 // If the function returns false, iteration stops early.
-func (p *{{ .CustomPagerName }}[T, D, L]) ForEach(ctx context.Context, fn func(T) bool) {
+func (p *PayrocPager[T, D, L]) ForEach(ctx context.Context, fn func(T) bool) {
 	current := p.current
 	for {
 		select {
