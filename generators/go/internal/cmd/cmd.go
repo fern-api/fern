@@ -388,7 +388,7 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 
 func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.OutputMode) (*generator.ModuleConfig, error) {
 	githubConfig, ok := outputMode.(*writer.GithubConfig)
-	if !ok && customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+	if !ok && isEmptyModuleConfig(customConfig.Module) {
 		// Neither a GitHub configuration nor a module configuration were provided.
 		return nil, nil
 	}
@@ -396,7 +396,7 @@ func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.
 	if ok {
 		modulePath = strings.TrimPrefix(githubConfig.RepoURL, "https://")
 	}
-	if customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+	if isEmptyModuleConfig(customConfig.Module) {
 		// A GitHub configuration was provided, so the module config should use
 		// the GitHub configuration's repository url.
 		return &generator.ModuleConfig{
@@ -421,6 +421,12 @@ func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.
 		Version: customConfig.Module.Version, // If not specified, defaults to the Go command's current version.
 		Imports: imports,
 	}, nil
+}
+
+// isEmptyModuleConfig returns true if the given module config is nil
+// or contains only zero-value fields.
+func isEmptyModuleConfig(m *moduleConfig) bool {
+	return m == nil || (m.Path == "" && m.Version == "" && len(m.Imports) == 0)
 }
 
 func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, error) {

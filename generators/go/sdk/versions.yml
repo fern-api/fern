@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.2
+  changelogEntry:
+    - summary: |
+        Fix operator precedence bug in `moduleConfigFromCustomConfig` guard
+        conditions. The `&&`/`||` precedence caused the `(&moduleConfig{})`
+        pointer-equality check to be evaluated as a separate disjunct, which
+        was always false (comparing distinct pointer addresses). Replaced with
+        a value-equality helper `isEmptyModuleConfig` that correctly detects
+        nil or zero-value module configs.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 61
+
 - version: 1.33.1
   changelogEntry:
     - summary: |
@@ -10,7 +23,6 @@
       type: fix
   createdAt: "2026-04-03"
   irVersion: 61
-
 - version: 1.33.0
   changelogEntry:
     - summary: |
