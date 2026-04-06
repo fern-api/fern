@@ -456,8 +456,8 @@ describe("resolveAffectedGenerators", () => {
         const affected: AffectedResult = {
             allGeneratorsAffected: false,
             allFixturesAffected: false,
-            affectedGenerators: ["python-sdk", "pydantic"],
-            generatorsWithAllFixtures: ["python-sdk", "pydantic"],
+            affectedGenerators: ["python-sdk", "fastapi"],
+            generatorsWithAllFixtures: ["python-sdk", "fastapi"],
             affectedFixtures: [],
             summary: []
         };
@@ -465,7 +465,7 @@ describe("resolveAffectedGenerators", () => {
         const result = resolveAffectedGenerators(affected, ALL_GENERATORS);
 
         expect(result).toHaveLength(2);
-        expect(result.map((g) => g.workspaceName)).toEqual(["python-sdk", "pydantic"]);
+        expect(result.map((g) => g.workspaceName)).toEqual(["python-sdk", "fastapi"]);
     });
 
     it("returns empty array when no generators match", () => {
@@ -590,7 +590,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "fastapi"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -599,9 +599,9 @@ describe("resolveAffectedFixtures", () => {
             const pythonResult = resolveAffectedFixtures(affected, ALL_FIXTURES, "python-sdk");
             expect(pythonResult).toEqual(ALL_FIXTURES);
 
-            // pydantic also gets ALL fixtures (source changed)
-            const pydanticResult = resolveAffectedFixtures(affected, ALL_FIXTURES, "pydantic");
-            expect(pydanticResult).toEqual(ALL_FIXTURES);
+            // fastapi also gets ALL fixtures (source changed)
+            const fastapiResult = resolveAffectedFixtures(affected, ALL_FIXTURES, "fastapi");
+            expect(fastapiResult).toEqual(ALL_FIXTURES);
         });
 
         it("generator whose source did NOT change gets only changed fixtures", () => {
@@ -609,7 +609,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "fastapi"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -645,8 +645,8 @@ describe("resolveAffectedFixtures", () => {
                 totalTests += fixtures.length;
             }
 
-            // Full cross-product would be 21 generators * 6 fixtures = 126
-            // Precise union: python-sdk gets 6, other 20 generators get 1 each = 26
+            // Full cross-product would be 20 generators * 6 fixtures = 120
+            // Precise union: python-sdk gets 6, other 19 generators get 1 each = 25
             const fullCrossProduct = ALL_GENERATORS.length * ALL_FIXTURES.length;
             expect(totalTests).toBeLessThan(fullCrossProduct);
             expect(totalTests).toBe(ALL_FIXTURES.length + (ALL_GENERATORS.length - 1));
@@ -678,7 +678,6 @@ describe("end-to-end scenario tests", () => {
         const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
-        expect(names).toContain("pydantic");
         expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
 
@@ -763,7 +762,6 @@ describe("end-to-end scenario tests", () => {
         const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
-        expect(names).toContain("pydantic");
         expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("java-sdk");
