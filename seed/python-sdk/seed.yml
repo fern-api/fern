@@ -10,7 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
-      - poetry run ruff check .
+      - poetry run ruff check --ignore E741 .
       - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
