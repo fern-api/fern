@@ -1399,8 +1399,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.9.0
-        version: 53.9.0
+        specifier: 66.0.0
+        version: 66.0.0
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -7846,7 +7846,7 @@ importers:
         version: link:../commons/core-utils
       '@fern-api/replay':
         specifier: ^0.9.0
-        version: 0.9.0
+        version: 0.9.1
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9367,8 +9367,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.9.0':
-    resolution: {integrity: sha512-COO+pqSHe70fzFsV9cC7v9RVhxOk1MvBMWBlcbBS8KMlSfWn85EXIEzGih+kIh348KRTwGQXYmxcqrbcitijXA==}
+  '@fern-api/replay@0.9.1':
+    resolution: {integrity: sha512-RpK1UIO8qBfRL5TbyHsfDOCTyr2DPDI2XqBUDl3YOr4Mn+4EWS8C65R/k/UkJthn2KsCa57QxSvtWAxftpwljA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9399,9 +9399,6 @@ packages:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
-
-  '@fern-fern/ir-sdk@53.9.0':
-    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
 
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
@@ -11709,8 +11706,8 @@ packages:
     resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
     engines: {node: '>=8'}
 
-  defu@6.1.6:
-    resolution: {integrity: sha512-f8mefEW4WIVg4LckePx3mALjQSPQgFlg9U8yaPdlsbdYcHQyj9n2zL2LJEA52smeYxOvmd/nB7TpMtHGMTHcug==}
+  defu@6.1.4:
+    resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
 
   degenerator@5.0.1:
     resolution: {integrity: sha512-TllpMR/t0M5sqCXfj85i4XaAzxmS5tVA16dqvdkMwGmzI+dXLXnw3J+3Vdv7VKw+ThlTMboK6i9rnZ6Nntj5CQ==}
@@ -16334,7 +16331,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.9.0':
+  '@fern-api/replay@0.9.1':
     dependencies:
       minimatch: 10.2.4
       node-diff3: 3.2.0
@@ -16415,8 +16412,6 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
-
-  '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:
@@ -18824,7 +18819,7 @@ snapshots:
 
   define-lazy-prop@2.0.0: {}
 
-  defu@6.1.6: {}
+  defu@6.1.4: {}
 
   degenerator@5.0.1:
     dependencies:
@@ -22344,7 +22339,7 @@ snapshots:
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
-      defu: 6.1.6
+      defu: 6.1.4
       empathic: 2.0.0
       hookable: 6.0.1
       import-without-cache: 0.2.5

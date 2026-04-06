@@ -7,6 +7,15 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 2.56.6
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Ensure extra-dependencies overrides take precedence over bundled dependency
+        versions, preventing duplicate PackageReference entries in generated .csproj files.
+  irVersion: 65
+  createdAt: "2026-04-03"
+
 - version: 2.56.5
   changelogEntry:
     - summary: |

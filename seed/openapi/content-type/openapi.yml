@@ -25,6 +25,9 @@ paths:
                 require_auth:
                   type: boolean
                   nullable: true
+              required:
+                - application
+                - require_auth
   /complex/{id}:
     patch:
       description: |-
@@ -121,6 +124,9 @@ paths:
                 active:
                   type: boolean
                   nullable: true
+              required:
+                - instructions
+                - active
   /optional-merge-patch-test:
     patch:
       description: >-
@@ -162,6 +168,7 @@ paths:
                   nullable: true
               required:
                 - requiredField
+                - nullableString
   /regular/{id}:
     patch:
       description: Regular PATCH endpoint without merge-patch semantics

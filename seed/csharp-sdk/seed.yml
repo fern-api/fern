@@ -186,6 +186,10 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
     - customConfig:
+        extra-dependencies:
+          PolySharp: "1.14.0"
+      outputFolder: extra-dependencies-override
+    - customConfig:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
