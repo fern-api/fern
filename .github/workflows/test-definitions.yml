@@ -39,10 +39,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - uses: bufbuild/buf-setup-action@v1.50.0
-        with:
-          github_token: ${{ github.token }}
-
       - name: Cache Fern bin dependencies
         uses: actions/cache@v4
         with:
