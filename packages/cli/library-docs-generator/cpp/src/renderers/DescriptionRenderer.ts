@@ -12,6 +12,7 @@ import type {
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
+import { escapeMdxText } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // Module-level context for current page path
@@ -511,9 +512,9 @@ function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
             if (block.title) {
                 if (options?.titledSectionHeadingLevel) {
                     const hashes = "#".repeat(options.titledSectionHeadingLevel);
-                    lines.push(`${hashes} ${block.title}`);
+                    lines.push(`${hashes} ${escapeMdxText(block.title)}`);
                 } else {
-                    lines.push(`**${block.title}**`);
+                    lines.push(`**${escapeMdxText(block.title)}**`);
                 }
                 lines.push("");
             }

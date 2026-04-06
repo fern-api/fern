@@ -21,23 +21,7 @@ import { getCommonQualifiers, getOverloadSpecificQualifiers, renderBadges } from
 import { renderDescriptionBlocksDeduped, renderSeeAlso, renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { renderMethodParams, renderMethodTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock, renderCodeBlock, renderSignatureCodeBlock } from "./SignatureRenderer.js";
-import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
-
-// ---------------------------------------------------------------------------
-// MDX heading escaping
-// ---------------------------------------------------------------------------
-
-/**
- * Escape `<` in method/operator names for safe use in MDX headings.
- *
- * In MDX, a bare `<` in heading text is parsed as a JSX tag opening,
- * causing parse errors for operators like `operator<<`. We escape `<` to
- * `&lt;` but leave `>` and other characters alone since they don't trigger
- * JSX tag parsing in heading context.
- */
-function escapeNameForHeading(name: string): string {
-    return name.replace(/</g, "&lt;");
-}
+import { escapeMdxText, isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // Custom anchor ID generation
@@ -1127,7 +1111,7 @@ export function renderSingleMethod(
     }
 
     const lines: string[] = [];
-    const displayName = escapeNameForHeading(func.name);
+    const displayName = escapeMdxText(func.name);
 
     lines.push(`### ${displayName} [#${methodAnchorId(func.name)}]`);
     lines.push("");
@@ -1288,7 +1272,7 @@ export function renderOverloadedMethod(
     }
 
     const lines: string[] = [];
-    const displayName = escapeNameForHeading(funcs[0]?.name ?? "");
+    const displayName = escapeMdxText(funcs[0]?.name ?? "");
     const commonQuals = getCommonQualifiers(funcs);
 
     if (!options.skipHeading) {
@@ -1417,7 +1401,7 @@ export function renderDestructor(func: CppFunctionIr, ownerClass: CppClassIr, ct
     const className = getShortName(ownerClass.path);
     lines.push("### Destructor [#destructor]");
     lines.push("");
-    lines.push(`### ~${className}`);
+    lines.push(`### ~${escapeMdxText(className)}`);
     lines.push("");
 
     const content = renderMethodContent(func, ownerClass, ctx);

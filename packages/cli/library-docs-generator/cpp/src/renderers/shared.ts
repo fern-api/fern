@@ -201,13 +201,48 @@ export function renderDocstringExamples(
 }
 
 // ---------------------------------------------------------------------------
+// MDX text escaping (angle brackets)
+// ---------------------------------------------------------------------------
+
+/**
+ * Escape angle brackets in raw IR strings entering MDX prose context
+ * (headings, bold text, table cells, etc.) to prevent MDX from
+ * interpreting C++ template syntax like `<int>` as JSX tags.
+ */
+export function escapeMdxText(text: string): string {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\{/g, "&#123;").replace(/\}/g, "&#125;");
+}
+
+// ---------------------------------------------------------------------------
 // Markdown table escaping (3h)
 // ---------------------------------------------------------------------------
 
 /**
  * Escape content for use inside a markdown table cell.
- * Replaces pipe characters with `\|` to prevent breaking the table layout.
+ *
+ * Handles all table-cell hazards: angle brackets (`<`, `>`), curly braces
+ * (`{`, `}`), pipe characters (`|`), and newlines.
+ *
+ * Backtick-wrapped spans (inline code) are left untouched so that type
+ * names like `vector<int>` render correctly inside code formatting.
  */
 export function escapeTableCell(content: string): string {
-    return content.replace(/\|/g, "\\|");
+    // Split on backtick-delimited spans (double then single) to preserve code spans.
+    const parts = content.split(/(``[^`]*``|`[^`]*`)/);
+    return parts
+        .map((part, i) => {
+            // Odd-indexed parts are inside backticks -- only escape pipe and newline
+            if (i % 2 === 1) {
+                return part.replace(/\|/g, "\\|").replace(/\n/g, " ");
+            }
+            // Even-indexed parts are outside backticks -- escape all hazards
+            return part
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\{/g, "&#123;")
+                .replace(/\}/g, "&#125;")
+                .replace(/\|/g, "\\|")
+                .replace(/\n/g, " ");
+        })
+        .join("");
 }
