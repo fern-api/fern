@@ -27,8 +27,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - name: Install
         uses: ./.github/actions/install
@@ -48,8 +46,15 @@ jobs:
 
       - name: Validate version
         run: |
-          if [[ ! "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+          if [[ ! "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
             echo "::error::Invalid version format: ${{ inputs.version }}"
+            exit 1
+          fi
+
+      - name: Check version not already published
+        run: |
+          if npm view "${{ env.PACKAGE_NAME }}@${{ inputs.version }}" version 2>/dev/null; then
+            echo "::error::Version ${{ inputs.version }} is already published"
             exit 1
           fi
 
