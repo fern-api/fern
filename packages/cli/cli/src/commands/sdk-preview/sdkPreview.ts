@@ -5,11 +5,10 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import fs from "fs/promises";
-import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -208,7 +207,7 @@ export async function sdkPreview({
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
                 const actualOutputPath =
                     absolutePathToOutput != null
-                        ? path.join(absolutePathToOutput, getGeneratorOutputSubfolder(generator.name))
+                        ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
                         : undefined;
 
                 previews.push({

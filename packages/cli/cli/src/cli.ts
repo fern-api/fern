@@ -2188,8 +2188,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 })
                 .option("output", {
                     type: "string",
-                    description:
-                        "Directory to write generated SDK files (in addition to publishing). Enables preview mode: missing env vars resolve to empty strings and version checks are skipped."
+                    description: "Directory to write generated SDK files in addition to publishing"
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
