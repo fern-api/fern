@@ -838,7 +838,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)
@@ -865,7 +865,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)
@@ -1819,7 +1819,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)
@@ -1846,7 +1846,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)
@@ -2800,7 +2800,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)
@@ -2827,7 +2827,7 @@ func do() {
 		option.WithToken(
 			"<YOUR_API_KEY>",
 		),
-		option.WithTenantId(
+		option.WithTenantID(
 			"my-tenant-id",
 		),
 	)

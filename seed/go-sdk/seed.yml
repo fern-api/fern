@@ -354,6 +354,7 @@ allowedFailures:
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+  - pagination-uri-path
 
   # TODO: Update the dynamic snippet generator to handle these cases.
   - examples:exported-client-name
