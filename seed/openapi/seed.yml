@@ -52,5 +52,4 @@ fixtures:
               Operand: 
                 type: null     
       outputFolder: custom-overrides
-allowedFailures:
-  - server-sent-events-openapi
+allowedFailures: []

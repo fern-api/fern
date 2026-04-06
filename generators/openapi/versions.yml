@@ -4,6 +4,11 @@
     - summary: |
         Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
       type: feat
+    - summary: |
+        Fix security scheme names in the generated OpenAPI spec to use the casing configuration from the IR
+        instead of hardcoded names. Scheme names now reflect the original key from the Fern definition,
+        pascal-cased.
+      type: fix
   createdAt: "2026-04-01"
   irVersion: 66
 

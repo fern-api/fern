@@ -12,8 +12,6 @@ import { convertObject } from "./convertObject.js";
 
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: undefined, keywords: undefined, smartCasing: true });
-
 export function convertServices({
     ir,
     httpServices,
@@ -22,7 +20,8 @@ export function convertServices({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode
+    mode,
+    caseConverter
 }: {
     ir: FernIr.IntermediateRepresentation;
     httpServices: FernIr.HttpService[];
@@ -32,6 +31,7 @@ export function convertServices({
     security: OpenAPIV3.SecurityRequirementObject[];
     environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
+    caseConverter: CaseConverter;
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
     httpServices.forEach((httpService) => {
@@ -45,7 +45,8 @@ export function convertServices({
                 errorDiscriminationStrategy,
                 security,
                 environments,
-                mode
+                mode,
+                caseConverter
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
@@ -72,7 +73,8 @@ function convertHttpEndpoint({
     security,
     environments,
     mode,
-    ir
+    ir,
+    caseConverter
 }: {
     ir: FernIr.IntermediateRepresentation;
     httpEndpoint: FernIr.HttpEndpoint;
@@ -83,6 +85,7 @@ function convertHttpEndpoint({
     security: OpenAPIV3.SecurityRequirementObject[];
     environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
+    caseConverter: CaseConverter;
 }): ConvertedHttpEndpoint {
     let fullPath = urlJoin(
         ir.basePath != null ? convertHttpPathToString(ir.basePath) : "",

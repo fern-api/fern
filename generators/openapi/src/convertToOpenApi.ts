@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -17,6 +17,11 @@ export function convertToOpenApi({
     ir: FernIr.IntermediateRepresentation;
     mode: Mode;
 }): OpenAPIV3.Document | undefined {
+    const caseConverter = new CaseConverter({
+        generationLanguage: undefined,
+        keywords: undefined,
+        smartCasing: ir.casingsConfig?.smartCasing ?? true
+    });
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
     const typesByName: Record<string, FernIr.TypeDeclaration> = {};
@@ -43,7 +48,7 @@ export function convertToOpenApi({
         errorsByName[getErrorTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
-    const security = constructEndpointSecurity(ir.auth);
+    const security = constructEndpointSecurity(ir.auth, caseConverter);
 
     const paths = convertServices({
         ir,
@@ -53,7 +58,8 @@ export function convertToOpenApi({
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
         environments: ir.environments ?? undefined,
-        mode
+        mode,
+        caseConverter
     });
 
     const info: OpenAPIV3.InfoObject = {
@@ -70,7 +76,7 @@ export function convertToOpenApi({
         paths,
         components: {
             schemas,
-            securitySchemes: constructSecuritySchemes(ir.auth)
+            securitySchemes: constructSecuritySchemes(ir.auth, caseConverter)
         }
     };
 

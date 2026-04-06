@@ -183,4 +183,7 @@ components:
           type: string
       required:
         - receiveText3
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuthScheme:
+      type: http
+      scheme: bearer
