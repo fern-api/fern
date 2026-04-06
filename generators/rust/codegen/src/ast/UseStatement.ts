@@ -30,18 +30,14 @@ export class UseStatement extends AstNode {
         writer.write(this.path);
 
         if (this.items && this.items.length > 0) {
-            if (this.items.length === 1 && this.items[0] === "*") {
-                writer.write("::*");
-            } else {
-                writer.write("::{");
-                this.items.forEach((item, index) => {
-                    if (index > 0) {
-                        writer.write(", ");
-                    }
-                    writer.write(item);
-                });
-                writer.write("}");
-            }
+            writer.write("::{");
+            this.items.forEach((item, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writer.write(item);
+            });
+            writer.write("}");
         }
 
         writer.write(";");
