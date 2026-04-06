@@ -511,16 +511,6 @@
             }
           ]
         },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "edit-this-page": {
           "oneOf": [
             {
@@ -4377,6 +4367,13 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
     "docs.AgentsConfig": {
       "type": "object",
       "properties": {
@@ -4384,6 +4381,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
             },
             {
               "type": "null"

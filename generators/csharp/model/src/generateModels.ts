@@ -38,7 +38,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 if (context.generation.settings.generateLiterals) {
                     const resolvedType = aliasDeclaration.resolvedType;
                     if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
-                        const rawStructName = typeDeclaration.name.name.pascalCase.safeName;
+                        const rawStructName = context.case.pascalSafe(typeDeclaration.name.name);
                         const namespace = context.getNamespaceForTypeId(typeId);
                         const directory = context.getDirectoryForTypeId(typeId);
                         // Register the name through the name registry so the raw file uses the

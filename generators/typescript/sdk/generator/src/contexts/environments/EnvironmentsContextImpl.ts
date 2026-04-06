@@ -26,7 +26,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         intermediateRepresentation,
@@ -43,7 +43,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public getGeneratedEnvironments(): GeneratedEnvironments {
@@ -51,7 +51,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
             environmentEnumName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentsEnum(),
             environmentUrlsTypeName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentUrls(),
             environmentsConfig: this.intermediateRepresentation.environments ?? undefined,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 

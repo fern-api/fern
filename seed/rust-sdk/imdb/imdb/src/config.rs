@@ -26,7 +26,7 @@ impl Default for ClientConfig {
             client_id: None,
             client_secret: None,
             timeout: Duration::from_secs(60),
-            max_retries: 3,
+            max_retries: 5,
             custom_headers: HashMap::from([
                 ("X-Fern-Language".to_string(), "Rust".to_string()),
                 ("X-Fern-SDK-Name".to_string(), "seed_api".to_string()),

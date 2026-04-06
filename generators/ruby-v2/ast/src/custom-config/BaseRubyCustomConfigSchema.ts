@@ -24,7 +24,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
     // - "disabled": disables the cop entirely
-    rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional()
+    rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

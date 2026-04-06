@@ -50,6 +50,7 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager = new RustDependencyManager();
         this.addBaseDependencies();
         this.detectAndAddFeatureDependencies();
+        this.applyExtraDependencies();
 
         this.project = new RustProject({
             context: this,
@@ -104,7 +105,14 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+    }
 
+    /**
+     * Apply extra dependencies from config, overriding any bundled versions.
+     * Called after all bundled deps (base + conditional) are registered so
+     * user-specified versions always take precedence.
+     */
+    private applyExtraDependencies(): void {
         const extraDeps = this.customConfig.extraDependencies ?? {};
         for (const [name, versionOrSpec] of Object.entries(extraDeps)) {
             if (typeof versionOrSpec === "string") {

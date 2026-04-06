@@ -347,12 +347,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
-    private validatePrimitive(primitive: FernIr.PrimitiveTypeV1, value: unknown): boolean {
+    private validatePrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1, value: unknown): boolean {
         switch (primitive) {
             case "STRING":
             case "UUID":
             case "DATE":
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
             case "BASE_64":
             case "BIG_INTEGER":
                 return typeof value === "string";
@@ -371,7 +372,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
-    private validateNamedType(typeId: FernIr.TypeId, value: unknown): boolean {
+    private validateNamedType(typeId: FernIr.dynamic.TypeId, value: unknown): boolean {
         const namedType = this.ir.types[typeId];
         if (!namedType) {
             return false;

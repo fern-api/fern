@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -120,8 +121,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         if (basicAuthScheme == null) {
                             continue;
                         }
-                        const usernameName = basicAuthScheme.username.snakeCase.safeName;
-                        const passwordName = basicAuthScheme.password.snakeCase.safeName;
+                        const usernameName = this.case.snakeSafe(basicAuthScheme.username);
+                        const passwordName = this.case.snakeSafe(basicAuthScheme.password);
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
                             if (i === 0) {
                                 writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
@@ -188,7 +189,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // Get the auth service/endpoint info to determine the auth client class
         const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
-        const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
+        const firstPart = service?.name?.fernFilepath?.packagePath[0];
+        const subpackageId = firstPart != null ? this.case.pascalSafe(firstPart) : "Auth";
 
         // Get the token endpoint to check its baseUrl
         const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
@@ -328,7 +330,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: scheme.name.name.snakeCase.safeName,
+                        name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -343,7 +345,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "basic": {
                     const usernameParam = ruby.parameters.keyword({
-                        name: scheme.username.snakeCase.safeName,
+                        name: this.case.snakeSafe(scheme.username),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.usernameEnvVar != null
@@ -355,7 +357,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     parameters.push(usernameParam);
                     const passwordParam = ruby.parameters.keyword({
-                        name: scheme.password.snakeCase.safeName,
+                        name: this.case.snakeSafe(scheme.password),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.passwordEnvVar != null
@@ -419,7 +421,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            snakeName: property.name.name.snakeCase.unsafeName,
+                            snakeName: this.case.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType)
                         });
                     }
@@ -431,7 +433,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const literal = this.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        snakeName: header.name.name.snakeCase.unsafeName,
+                        snakeName: this.case.snakeUnsafe(header.name),
                         isOptional: this.isOptional(header.valueType)
                     });
                 }
@@ -484,8 +486,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     break;
                 case "header": {
-                    const headerParamName = header.name.name.snakeCase.safeName;
-                    const headerName = header.name.wireValue;
+                    const headerParamName = this.case.snakeSafe(header.name);
+                    const headerName = getWireValue(header.name);
                     const headerValue =
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
                     headers.push({
@@ -509,12 +511,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: subpackage.name.snakeCase.safeName,
+            name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    modules: [rootModule.name, this.case.pascalSafe(subpackage.name)],
                     fullyQualified: true
                 })
             ),
@@ -522,16 +524,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client)`
                         );
                     }

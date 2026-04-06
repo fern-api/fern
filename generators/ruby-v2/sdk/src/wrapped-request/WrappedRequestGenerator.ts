@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -31,7 +32,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         const properties: FernIr.ObjectProperty[] = [];
 
         const class_ = ruby.class_({
-            name: this.wrapper.wrapperName.pascalCase.safeName,
+            name: this.case.pascalSafe(this.wrapper.wrapperName),
             superclass: this.context.getModelClassReference()
         });
 
@@ -40,7 +41,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ...pathParameter,
                 name: {
                     name: pathParameter.name,
-                    wireValue: pathParameter.name.originalName
+                    wireValue: getOriginalName(pathParameter.name)
                 },
                 propertyAccess: undefined,
                 availability: undefined
@@ -68,7 +69,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 properties.push({
                     name: {
                         name: this.wrapper.bodyKey,
-                        wireValue: this.wrapper.bodyKey.originalName
+                        wireValue: getOriginalName(this.wrapper.bodyKey)
                     },
                     valueType: reference.requestBodyType,
                     propertyAccess: undefined,
@@ -104,7 +105,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
             directory: this.getFilepath(),
-            filename: `${this.wrapper.wrapperName.snakeCase.safeName}.rb`,
+            filename: `${this.case.snakeSafe(this.wrapper.wrapperName)}.rb`,
             customConfig: this.context.customConfig
         });
     }
@@ -115,7 +116,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             [
                 "lib",
                 this.context.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName),
+                ...subpackage.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
                 "types"
             ].join("/")
         );

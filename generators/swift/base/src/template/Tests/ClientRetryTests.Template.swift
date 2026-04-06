@@ -117,10 +117,7 @@ import Testing
     @Test func testMaxRetriesExhausted() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+<%= maxRetriesExhaustedStubResponses %>
         ])
 
 <%= clientDeclaration %>
@@ -128,7 +125,7 @@ import Testing
 <%= endpointCallMaxRetriesExhausted %>
             Issue.record("Expected error to be thrown")
         } catch {
-            try #require(stub.getRequestCount() == 3)
+            try #require(stub.getRequestCount() == <%= defaultMaxRetries + 1 %>)
         }
     }
 

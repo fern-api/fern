@@ -1989,3 +1989,83 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_aliased_data</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersAliasedDataPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_aliased_data(
+            &ListWithAliasedDataQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Option<i64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

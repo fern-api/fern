@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -16,6 +17,7 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
     private classReference: php.ClassReference;
     private subpackage: FernIr.Subpackage;
     private serviceId: FernIr.ServiceId | undefined;
@@ -23,6 +25,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
         this.serviceId = serviceId;
@@ -85,7 +88,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         parameters: [],
                         return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
                         body: php.codeblock((writer) => {
-                            writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+                            writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
                         })
                     })
                 );
@@ -150,7 +153,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)

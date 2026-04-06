@@ -35,7 +35,7 @@ export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
             const field = php.field({
                 type: convertedType,
-                name: this.context.getPropertyName(property.name.name),
+                name: this.context.getPropertyName(property.name),
                 access: this.context.getPropertyAccess(),
                 docs: property.docs,
                 attributes: this.context.phpAttributeMapper.convert({
@@ -44,10 +44,10 @@ export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 })
             });
             if (includeGetter) {
-                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
             }
             if (includeSetter) {
-                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name, field }));
             }
             clazz.addField(field);
         }
