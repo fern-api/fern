@@ -12,6 +12,7 @@ from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ....types.username_cursor import UsernameCursor
+from ..types.list_users_aliased_data_pagination_response import ListUsersAliasedDataPaginationResponse
 from ..types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from ..types.list_users_extended_response import ListUsersExtendedResponse
 from ..types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
@@ -132,6 +133,15 @@ class AbstractUsersService(AbstractFernService):
         self, *, page: typing.Optional[int] = None
     ) -> ListUsersOptionalDataPaginationResponse: ...
 
+    @abc.abstractmethod
+    def list_with_aliased_data(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        per_page: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+    ) -> ListUsersAliasedDataPaginationResponse: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -154,6 +164,7 @@ class AbstractUsersService(AbstractFernService):
         cls.__init_list_usernames_with_optional_response(router=router)
         cls.__init_list_with_global_config(router=router)
         cls.__init_list_with_optional_data(router=router)
+        cls.__init_list_with_aliased_data(router=router)
 
     @classmethod
     def __init_list_with_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
@@ -921,4 +932,69 @@ class AbstractUsersService(AbstractFernService):
             response_model=None,
             description=AbstractUsersService.list_with_optional_data.__doc__,
             **get_route_args(cls.list_with_optional_data, default_tag="users"),
+        )(wrapper)
+
+    @classmethod
+    def __init_list_with_aliased_data(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_with_aliased_data)
+        type_hints = typing.get_type_hints(cls.list_with_aliased_data)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "page":
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
+                )
+            elif parameter_name == "per_page":
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            resolved_annotation, fastapi.Query(description="Defaults to per page")
+                        ],
+                        default=None,
+                    )
+                )
+            elif parameter_name == "starting_after":
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            resolved_annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
+                    )
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.list_with_aliased_data, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.list_with_aliased_data)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersAliasedDataPaginationResponse:
+            try:
+                return cls.list_with_aliased_data(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_with_aliased_data' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(
+            path="/users/aliased-data",
+            response_model=None,
+            description=AbstractUsersService.list_with_aliased_data.__doc__,
+            **get_route_args(cls.list_with_aliased_data, default_tag="users"),
         )(wrapper)

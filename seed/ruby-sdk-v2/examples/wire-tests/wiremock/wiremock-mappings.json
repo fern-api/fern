@@ -92,7 +92,7 @@
         }
       },
       "response": {
-        "status": 404,
+        "status": 200,
         "body": "\"A file with that name was not found!\"",
         "headers": {
           "Content-Type": "application/json"
@@ -111,8 +111,8 @@
       }
     },
     {
-      "id": "4aacd535-e762-40b1-a861-e1deadc7f244",
-      "name": "check - default",
+      "id": "ce3bbb3f-b9ec-4f36-801c-f2a047201463",
+      "name": "check - Example0",
       "request": {
         "urlPathTemplate": "/check/{id}",
         "method": "GET",
@@ -129,7 +129,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4aacd535-e762-40b1-a861-e1deadc7f244",
+      "uuid": "ce3bbb3f-b9ec-4f36-801c-f2a047201463",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -142,8 +142,8 @@
       }
     },
     {
-      "id": "7873dd63-c1f7-4365-9e31-0d78291c4fcc",
-      "name": "ping - default",
+      "id": "693eae56-0081-4c61-9b8b-1bacf7598867",
+      "name": "ping - Example0",
       "request": {
         "urlPathTemplate": "/ping",
         "method": "GET"
@@ -155,7 +155,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "7873dd63-c1f7-4365-9e31-0d78291c4fcc",
+      "uuid": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -230,15 +230,7 @@
       "name": "getMetadata - default",
       "request": {
         "urlPathTemplate": "/metadata",
-        "method": "GET",
-        "queryParameters": {
-          "shallow": {
-            "equalTo": "false"
-          },
-          "tag": {
-            "equalTo": "development"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,

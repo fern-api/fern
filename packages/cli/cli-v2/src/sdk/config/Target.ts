@@ -9,6 +9,8 @@ export interface Target {
     api: string;
     /** Resolved Docker image reference (e.g., "fernapi/fern-typescript-sdk") */
     image: string;
+    /** Custom container registry URL (e.g., "ghcr.io/myorg"). When set, Docker pulls use `registry/image:version`. */
+    registry: string | undefined;
     /** Target language */
     lang: Language;
     /** SDK version to generate */

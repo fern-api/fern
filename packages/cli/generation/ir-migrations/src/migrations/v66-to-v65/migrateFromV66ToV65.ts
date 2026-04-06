@@ -32,15 +32,15 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUBY_SDK]: "1.3.0-rc.0",
+        [GeneratorName.CSHARP_MODEL]: "0.9.0-rc.0",
+        [GeneratorName.CSHARP_SDK]: "2.57.0-rc.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.PHP_MODEL]: "0.1.0-rc.0",
+        [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
+        [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.32.0-rc.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {

@@ -25,7 +25,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -99,12 +98,9 @@ jobs:
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
       fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.create-dynamic-matrix.outputs.postman-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -114,9 +110,17 @@ jobs:
       swift-sdk: ${{ steps.create-dynamic-matrix.outputs.swift-sdk-test-matrix }}
       rust-model: ${{ steps.create-dynamic-matrix.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
+      benchmark-generators: ${{ steps.create-dynamic-matrix.outputs.benchmark-generators }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          # fetch-depth: 2 ensures the merge commit's parents are available.
+          # For PRs, HEAD is a merge commit; HEAD~1 is the base branch tip.
+          # Without this, HEAD^1/HEAD^2 are not resolvable in a shallow clone
+          # and the affected detection falls back to diffing against the
+          # (potentially stale) event payload SHA.
+          fetch-depth: 2
 
       - name: Install
         uses: ./.github/actions/install
@@ -136,13 +140,21 @@ jobs:
         run: |
           # Determine base ref for affected detection.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Use the PR base SHA from the event payload and fetch only that
-            # specific commit. This is much faster than `git fetch --deepen=1`
-            # which negotiates the entire repo graph (~4 min on this repo).
-            BASE_REF="${{ github.event.pull_request.base.sha }}"
-            echo "Using PR base SHA: $BASE_REF"
-            # Fetch just the base commit so git diff can reach it
-            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
+            # CI checks out pull/N/merge — a merge commit whose first parent
+            # is the exact main tip used to create the merge ref. Using HEAD^1
+            # instead of base.sha avoids a race where main advances between the
+            # webhook event and the merge ref computation, which caused unrelated
+            # generators to run (e.g. go-model on PHP-only PRs).
+            # NOTE: fetch-depth: 2 (above) ensures HEAD^1/HEAD^2 are available.
+            if git rev-parse --verify HEAD^2 >/dev/null 2>&1; then
+              BASE_REF=$(git rev-parse HEAD^1)
+              echo "Using merge commit first parent: $BASE_REF"
+            else
+              # Fallback: not a merge commit (shouldn't happen for PRs, but be safe)
+              BASE_REF="${{ github.event.pull_request.base.sha }}"
+              echo "Using PR base SHA (fallback): $BASE_REF"
+              git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
+            fi
           else
             # For push/dispatch/workflow_call: use last successful run SHA
             LAST_SUCCESS_SHA=$(gh api \
@@ -192,7 +204,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -257,6 +269,33 @@ jobs:
               fi
             fi
           done
+
+          # Build list of affected SDK generators for benchmarking.
+          # When ALL_GENERATORS_AFFECTED is true (e.g. core/shared package changes),
+          # all 9 SDK generators will be benchmarked.
+          SDK_GENERATORS="ts-sdk python-sdk java-sdk go-sdk csharp-sdk php-sdk ruby-sdk-v2 swift-sdk rust-sdk"
+          BENCHMARK_LIST="[]"
+          for GEN in $SDK_GENERATORS; do
+            IS_AFFECTED=false
+            if [[ "$ALL_GENERATORS_AFFECTED" == "true" ]]; then
+              IS_AFFECTED=true
+            else
+              if echo "$AFFECTED_JSON" | jq -e --arg gen "$GEN" '.generators | index($gen)' > /dev/null 2>&1; then
+                IS_AFFECTED=true
+              fi
+            fi
+            if [[ "$IS_AFFECTED" == "true" ]]; then
+              BENCHMARK_LIST=$(echo "$BENCHMARK_LIST" | jq -c --arg gen "$GEN" '. + [{"generator": $gen}]')
+            fi
+          done
+
+          if [[ "$BENCHMARK_LIST" == "[]" ]]; then
+            echo "benchmark-generators=" >> $GITHUB_OUTPUT
+            echo "No SDK generators affected for benchmarking"
+          else
+            echo "benchmark-generators=$BENCHMARK_LIST" >> $GITHUB_OUTPUT
+            echo "Benchmark generators: $BENCHMARK_LIST"
+          fi
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -410,36 +449,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  postman:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.postman != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: postman
-          generator-path: generators/postman
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -500,36 +509,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  java-spring:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-spring != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: java-spring
-          generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
   ts-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -560,37 +539,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
-
-  ts-express:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.ts-express != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: ts-express
-          generator-path: generators/typescript generators/typescript-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
 
   go-model:
     runs-on: ubuntu-latest
@@ -862,6 +810,228 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
+  # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
+  # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
+  # Baseline timings come from the nightly benchmark-baseline.yml workflow (cached).
+  #
+  # Specs are fetched once in benchmark-setup and shared via artifact to avoid redundant downloads.
+  benchmark-setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [get-all-test-matrices]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && github.event.pull_request.draft == false
+      }}
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/actions/fetch-benchmark-specs
+            benchmarks/fern/apis
+
+      - name: Fetch benchmark OpenAPI specs
+        uses: ./.github/actions/fetch-benchmark-specs
+
+      - name: Upload specs as shared artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis/*/openapi.json
+          retention-days: 1
+
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [get-all-test-matrices, benchmark-setup]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && github.event.pull_request.draft == false
+      }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.benchmark-generators) }}
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
+
+      - name: Run benchmark (PR branch, generator-only)
+        uses: ./.github/actions/run-benchmark
+        with:
+          generator: ${{ matrix.generator }}
+          skip-scripts: "true"
+
+      - name: Upload PR results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-pr-${{ matrix.generator }}
+          path: benchmark-results/
+          retention-days: 5
+
+  benchmark-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [benchmark]
+    if: >-
+      ${{
+        always() && !cancelled()
+        && github.event_name == 'pull_request'
+        && needs.benchmark.result != 'skipped'
+      }}
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Download all PR benchmark artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-pr-*
+          path: benchmark-pr-results
+          merge-multiple: true
+
+      - name: Restore baseline from nightly cache
+        id: baseline-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: benchmark-baseline-results
+          # Intentionally non-matching key forces prefix fallback via restore-keys,
+          # which returns the most recently saved nightly baseline cache entry.
+          key: benchmark-baseline-never-matches
+          restore-keys: benchmark-baseline-
+
+      - name: Check baseline availability
+        shell: bash
+        run: |
+          if [ "${{ steps.baseline-cache.outputs.cache-hit }}" != "true" ] && [ ! -d benchmark-baseline-results ]; then
+            echo "::warning::No cached baseline found. Report will show N/A for main timings."
+            echo "Run the benchmark-baseline workflow manually to generate initial baselines."
+            mkdir -p benchmark-baseline-results
+          else
+            echo "Baseline cache restored successfully"
+            if [ -f benchmark-baseline-results/_metadata.json ]; then
+              echo "Baseline metadata:"
+              cat benchmark-baseline-results/_metadata.json
+            fi
+            ls -la benchmark-baseline-results/
+          fi
+
+      - name: Generate benchmark report
+        id: report
+        shell: bash
+        run: |
+          # Extract baseline timestamp for the report footer
+          BASELINE_TS=""
+          if [ -f benchmark-baseline-results/_metadata.json ]; then
+            BASELINE_TS=$(cat benchmark-baseline-results/_metadata.json | jq -r '.latest_timestamp // .timestamp // empty')
+          fi
+          export BASELINE_TIMESTAMP="$BASELINE_TS"
+
+          REPORT=$(bash .github/scripts/format-benchmark-report.sh \
+            benchmark-pr-results \
+            benchmark-baseline-results)
+          # Write to file for the comment action (printf avoids echo mangling special chars)
+          printf '%s\n' "$REPORT" > benchmark-comment.md
+          echo "Generated benchmark report"
+
+      - name: Post or update PR comment
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: benchmark-comment.md
+          comment-tag: sdk-benchmark-results
+
+      # PostHog step runs after the PR comment is posted so that comment generation
+      # is never affected by PostHog failures. Fire-and-forget: all errors suppressed.
+      - name: Send PR benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          PR_BRANCH: ${{ github.head_ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::notice::POSTHOG_API_KEY not set, skipping PR benchmark metrics"
+            exit 0
+          fi
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          FAILED=0
+          for f in benchmark-pr-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              gen=$(echo "$line" | jq -r '.generator')
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              payload=$(jq -n \
+                --arg api_key "$POSTHOG_API_KEY" \
+                --arg event "benchmark-pr-result" \
+                --arg distinct_id "fern-ci-benchmark" \
+                --arg timestamp "$TIMESTAMP" \
+                --arg generator "$gen" \
+                --arg spec "$spec" \
+                --argjson duration_seconds "$dur" \
+                --argjson exit_code "$ec" \
+                --argjson skipped "$skip" \
+                --arg mode "generator-only" \
+                --arg branch "$PR_BRANCH" \
+                --argjson pr_number "$PR_NUMBER" \
+                --arg commit_sha "$PR_SHA" \
+                --arg run_id "$RUN_ID" \
+                --arg run_url "$RUN_URL" \
+                '{
+                  api_key: $api_key,
+                  event: $event,
+                  distinct_id: $distinct_id,
+                  timestamp: $timestamp,
+                  properties: {
+                    generator: $generator,
+                    spec: $spec,
+                    duration_seconds: $duration_seconds,
+                    exit_code: $exit_code,
+                    skipped: $skipped,
+                    mode: $mode,
+                    branch: $branch,
+                    pr_number: $pr_number,
+                    commit_sha: $commit_sha,
+                    run_id: $run_id,
+                    run_url: $run_url
+                  }
+                }')
+              if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+                -H "Content-Type: application/json" \
+                -d "$payload" 2>/dev/null; then
+                FAILED=$((FAILED + 1))
+              else
+                SENT=$((SENT + 1))
+              fi
+            done < "$f"
+          done
+          echo "PostHog PR metrics: ${SENT} sent, ${FAILED} failed"
+
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
     runs-on: ubuntu-latest
@@ -873,12 +1043,9 @@ jobs:
         python-sdk,
         fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -903,12 +1070,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -925,12 +1089,9 @@ jobs:
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
       fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
-      postman-passing: ${{ steps.report-results.outputs.postman-passing }}
       java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
       java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
-      java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
-      ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
       go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
       csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
@@ -982,12 +1143,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -1019,10 +1177,6 @@ jobs:
       openapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures }}
       openapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures-count }}
 
-      postman-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.postman-total-fixtures-count }}
-      postman-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures }}
-      postman-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures-count }}
-
       java-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-total-fixtures-count }}
       java-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures }}
       java-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures-count }}
@@ -1031,17 +1185,9 @@ jobs:
       java-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures }}
       java-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures-count }}
 
-      java-spring-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-total-fixtures-count }}
-      java-spring-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures }}
-      java-spring-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures-count }}
-
       ts-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-total-fixtures-count }}
       ts-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures }}
       ts-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures-count }}
-
-      ts-express-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-total-fixtures-count }}
-      ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
-      ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
 
 
       go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
@@ -1135,12 +1281,9 @@ jobs:
         python-sdk,
         fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -1163,12 +1306,9 @@ jobs:
             python-sdk,
             fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,

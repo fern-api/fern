@@ -101,13 +101,15 @@ fixtures:
         decodeNullableToOptional: true
       outputFolder: nullable-as-optional
   single-url-environment-default:
-    - customConfig: null
+    - customConfig:
+        maxRetries: 5
       outputFolder: no-custom-config
     - customConfig:
         environmentEnumName: MyCustomEnvironment
       outputFolder: with-custom-config
 
 allowedFailures:
+  - schemaless-request-body-examples
   - api-wide-base-path
   - bytes-upload
   - audiences

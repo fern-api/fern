@@ -34,7 +34,7 @@ export class EndpointErrorUnionGenerator {
     private readonly noOptionalProperties: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         intermediateRepresentation,
@@ -53,7 +53,7 @@ export class EndpointErrorUnionGenerator {
         this.noOptionalProperties = noOptionalProperties;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public generateEndpointErrorUnion({
@@ -70,7 +70,7 @@ export class EndpointErrorUnionGenerator {
             noOptionalProperties: this.noOptionalProperties,
             enableInlineTypes: this.enableInlineTypes,
             generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter: this.case
         });
     }
 }

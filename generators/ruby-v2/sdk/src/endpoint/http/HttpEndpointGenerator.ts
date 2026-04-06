@@ -1,3 +1,4 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -21,9 +22,11 @@ export const ERROR_CLASS_VN = "error_class";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
+        this.case = context.caseConverter;
     }
 
     public generate({ endpoint, serviceId }: HttpEndpointGenerator.GenerateArgs): ruby.Method[] {
@@ -111,7 +114,7 @@ export class HttpEndpointGenerator {
                 case "custom": {
                     const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
                     // Use snakeCase.safeName for Ruby method calls
-                    const itemField = endpoint.pagination.results.property.name.name.snakeCase.safeName;
+                    const itemField = this.case.snakeSafe(endpoint.pagination.results.property.name);
                     requestStatements = [
                         ...requestStatements,
                         ruby.invokeMethod({
@@ -149,20 +152,20 @@ export class HttpEndpointGenerator {
                                     name: "cursor_field",
                                     // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.next.property.name.name.snakeCase.safeName}`
+                                        `:${this.case.snakeSafe(endpoint.pagination.next.property.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                        `:${this.case.snakeSafe(endpoint.pagination.results.property.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
                                 })
                             ],
@@ -170,7 +173,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_cursor`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_cursor`
                                     ),
                                     ...requestStatements
                                 ]
@@ -191,14 +194,14 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "initial_page",
                                     value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"]`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: ruby.codeblock(
-                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                        `:${this.case.snakeSafe(endpoint.pagination.results.property.name)}`
                                     )
                                 }),
                                 ruby.keywordArgument({
@@ -206,7 +209,7 @@ export class HttpEndpointGenerator {
                                     // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(
-                                              `:${endpoint.pagination.hasNextPage.property.name.name.snakeCase.safeName}`
+                                              `:${this.case.snakeSafe(endpoint.pagination.hasNextPage.property.name)}`
                                           )
                                         : ruby.nilValue()
                                 }),
@@ -219,13 +222,19 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${endpoint.pagination.page.property.name.wireValue}"] = next_page`
+                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_page`
                                     ),
                                     ...requestStatements
                                 ]
                             ]
                         })
                     ];
+                    break;
+                case "uri":
+                case "path":
+                    this.context.logger.warn(
+                        `Pagination type "${endpoint.pagination.type}" is not supported by the Ruby SDK generator. Endpoint "${getOriginalName(endpoint.name)}" will be generated without pagination.`
+                    );
                     break;
                 default:
                     assertNever(endpoint.pagination);
@@ -235,7 +244,7 @@ export class HttpEndpointGenerator {
         statements.push(...requestStatements);
 
         return ruby.method({
-            name: endpoint.name.snakeCase.safeName,
+            name: this.case.snakeSafe(endpoint.name),
             docstring: enhancedDocstring,
             returnType,
             parameters: {
@@ -342,13 +351,13 @@ export class HttpEndpointGenerator {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[pathParam.name.originalName] = `${PARAMS_VN}[:${parameterName}]`;
+            pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
         }
         return pathParameterReferences;
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
-        return pathParameter.name.snakeCase.safeName;
+        return this.case.snakeSafe(pathParameter.name);
     }
 
     private loadResponseBodyFromJson({
@@ -398,19 +407,19 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
-            const paramName = pathParam.name.snakeCase.safeName;
+            const paramName = this.case.snakeSafe(pathParam.name);
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = queryParam.name.name.snakeCase.safeName;
+            const paramName = this.case.snakeSafe(queryParam.name);
             const typeString = this.typeReferenceToYardString(queryParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
         for (const headerParam of endpoint.headers) {
-            const paramName = headerParam.name.name.snakeCase.safeName;
+            const paramName = this.case.snakeSafe(headerParam.name);
             const typeString = this.typeReferenceToYardString(headerParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }

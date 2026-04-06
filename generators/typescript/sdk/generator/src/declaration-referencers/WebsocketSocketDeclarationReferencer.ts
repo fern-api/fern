@@ -24,10 +24,10 @@ export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClass
 
     public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
-        if (this.caseConverter.pascalSafe(subpackage.name) !== this.namespaceExport) {
-            return `${this.caseConverter.pascalSafe(subpackage.name)}Socket`;
+        if (this.case.pascalSafe(subpackage.name) !== this.namespaceExport) {
+            return `${this.case.pascalSafe(subpackage.name)}Socket`;
         } else {
-            return `${this.caseConverter.pascalUnsafe(subpackage.name)}Socket`;
+            return `${this.case.pascalUnsafe(subpackage.name)}Socket`;
         }
     }
 

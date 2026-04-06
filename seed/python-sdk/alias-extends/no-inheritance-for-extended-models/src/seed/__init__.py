@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import AliasType, Child, Parent
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedAliasExtends, SeedAliasExtends
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AliasType": ".types",
     "AsyncSeedAliasExtends": ".client",
     "Child": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Parent": ".types",
     "SeedAliasExtends": ".client",
     "__version__": ".version",
@@ -40,4 +43,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AliasType", "AsyncSeedAliasExtends", "Child", "Parent", "SeedAliasExtends", "__version__"]
+__all__ = [
+    "AliasType",
+    "AsyncSeedAliasExtends",
+    "Child",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "Parent",
+    "SeedAliasExtends",
+    "__version__",
+]

@@ -83,7 +83,7 @@ match client.endpoints.container.get_and_return_list_of_primitives(None)?.await 
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_exhaustive::prelude::{*};
+use seed_exhaustive::prelude::*;
 
 let request = PostWithObjectBody {
     ...

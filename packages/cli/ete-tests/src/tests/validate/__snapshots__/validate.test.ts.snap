@@ -29,5 +29,5 @@ exports[`validate > simple 1`] = `
         path: other.yml -> types -> MyType
         issue: Type MissingType is not defined.
 
-Found 2 errors and 0 warnings in"
+Found 2 errors and 0 warnings in __ELAPSED__ seconds."
 `;

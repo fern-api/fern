@@ -28,6 +28,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "lodash-es"
+  - "lodash"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -37,6 +39,11 @@ trustPolicy: no-downgrade
 # Older versions that lost attestation are unlikely to be supply chain attacks;
 # attacks target the install window immediately after compromise.
 trustPolicyIgnoreAfter: 1440
+
+# Exclude @fern-api/replay from trust checks — it's first-party but published
+# without npm provenance attestation.
+trustPolicyExclude:
+  - "@fern-api/replay"
 
 # Block transitive dependencies from using exotic sources (git repos, tarball URLs).
 # Only direct dependencies may use non-registry sources.
@@ -55,7 +62,7 @@ catalog:
   "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
-  "@fern-api/generator-cli": 0.8.0
+  "@fern-api/generator-cli": 0.8.1
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
   "@fern-fern/docs-config": 0.0.80
@@ -182,8 +189,8 @@ catalog:
   jwks-rsa: ^3.1.0
   knip: ^5.84.1
   latest-version: ^9.0.0
-  lodash: ^4.17.23
-  lodash-es: ^4.17.21
+  lodash: ^4.18.1
+  lodash-es: ^4.18.1
   mdast-util-from-markdown: ^2.0.3
   mdast-util-gfm: ^3.0.0
   mdast-util-math: ^3.0.0

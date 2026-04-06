@@ -91,6 +91,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
         const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv;
         const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv;
 
@@ -99,7 +101,6 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(stringType);
 
-        // For env var fallback: prop?: Supplier<T> | undefined
         const usernamePropertyType = hasUsernameEnv
             ? ts.factory.createUnionTypeNode([
                   supplierType,
@@ -114,22 +115,31 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
               ])
             : supplierType;
 
-        return [
-            {
+        // When omit is true, the field is completely removed from the end-user API.
+        // Internally, the omitted field is treated as an empty string.
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
+
+        if (!usernameOmit) {
+            properties.push({
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(context.case.camelSafe(this.authScheme.username)),
                 hasQuestionToken: isUsernameOptional,
                 type: getTextOfTsNode(usernamePropertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
-            },
-            {
+            });
+        }
+
+        if (!passwordOmit) {
+            properties.push({
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(context.case.camelSafe(this.authScheme.password)),
                 hasQuestionToken: isPasswordOptional,
                 type: getTextOfTsNode(passwordPropertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
-            }
-        ];
+            });
+        }
+
+        return properties;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -249,11 +259,20 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
 
         const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
         const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
 
-        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) && (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+        // Per-field checks: omittable fields are always satisfied, required fields must be present
+        const usernameCheck = usernameOmit
+            ? "true"
+            : `options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}`;
+        const passwordCheck = passwordOmit
+            ? "true"
+            : `options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck}`;
+        return `return (${usernameCheck}) && (${passwordCheck});`;
     }
 
     private generateGetAuthRequestStatements(context: FileContext): string {
@@ -261,6 +280,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const passwordVar = context.case.camelUnsafe(this.authScheme.password);
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
 
         // Build property access chain based on shouldUseWrapper
         const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
@@ -308,67 +329,66 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         );
         const passwordSupplierGetCode = getTextOfTsNode(passwordSupplierGetCall);
 
-        const usernameEnvFallback =
-            usernameEnvVar != null
-                ? `\n            (${usernameSupplierGetCode}) ??\n            process.env?.[ENV_USERNAME]`
-                : usernameSupplierGetCode;
+        // When a field is omitted, use empty string directly instead of reading from options
+        const usernameEnvFallback = usernameOmit
+            ? '""'
+            : usernameEnvVar != null
+              ? `\n            (${usernameSupplierGetCode}) ??\n            process.env?.[ENV_USERNAME]`
+              : usernameSupplierGetCode;
 
-        const passwordEnvFallback =
-            passwordEnvVar != null
-                ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
-                : passwordSupplierGetCode;
+        const passwordEnvFallback = passwordOmit
+            ? '""'
+            : passwordEnvVar != null
+              ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
+              : passwordSupplierGetCode;
 
-        if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if credentials are missing
-            return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            return { headers: {} };
-        }
+        // Build per-field null checks based on individual omit flags.
+        // Interleave declaration and null-check to preserve short-circuit evaluation:
+        // if username is null, the password supplier is never evaluated.
+        const buildNullChecks = (errorAction: string): string => {
+            const lines: string[] = [];
+            lines.push(`const ${usernameVar} = ${usernameEnvFallback};`);
+            if (!usernameOmit) {
+                lines.push(
+                    `if (${usernameVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME`)} }`
+                );
+            }
+            lines.push(`const ${passwordVar} = ${passwordEnvFallback};`);
+            if (!passwordOmit) {
+                lines.push(
+                    `if (${passwordVar} == null) { ${errorAction.replace("__MSG__", `${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD`)} }`
+                );
+            }
+            return lines.map((l) => `        ${l}`).join("\n");
+        };
 
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
-            return { headers: {} };
-        }
-
-        const authHeader = ${getTextOfTsNode(
+        const authHeaderCode = getTextOfTsNode(
             context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
                 ts.factory.createIdentifier(usernameVar),
                 ts.factory.createIdentifier(passwordVar)
             )
-        )};
+        );
+
+        if (this.neverThrowErrors) {
+            const errorAction = "return { headers: {} };";
+            return `
+${buildNullChecks(errorAction)}
+
+        const authHeader = ${authHeaderCode};
 
         return {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
         } else {
-            // When neverThrowErrors is false, throw an error if credentials are missing
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
-
+            const errorAction = `throw new ${errorConstructor}({ message: __MSG__ });`;
             return `
-        const ${usernameVar} = ${usernameEnvFallback};
-        if (${usernameVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
-            });
-        }
+${buildNullChecks(errorAction)}
 
-        const ${passwordVar} = ${passwordEnvFallback};
-        if (${passwordVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
-            });
-        }
-
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createIdentifier(usernameVar),
-                ts.factory.createIdentifier(passwordVar)
-            )
-        )};
+        const authHeader = ${authHeaderCode};
 
         return {
             headers: authHeader != null ? { Authorization: authHeader } : {},
@@ -384,37 +404,59 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             "BasicAuth";
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
+        const usernameOmit = this.authScheme.usernameOmit === true;
+        const passwordOmit = this.authScheme.passwordOmit === true;
 
         const statements: (string | WriterFunction | StatementStructures)[] = [
             `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
             `export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;`
         ];
 
-        // Add AUTH_CONFIG_ERROR_MESSAGE constants for username and password
-        if (usernameEnvVar != null) {
-            statements.push(
-                `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client, or set the '\${ENV_USERNAME}' environment variable\` as const;`
-            );
-        } else {
-            statements.push(
-                `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;`
-            );
+        // Add AUTH_CONFIG_ERROR_MESSAGE constants only for non-omitted fields
+        if (!usernameOmit) {
+            if (usernameEnvVar != null) {
+                statements.push(
+                    `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client, or set the '\${ENV_USERNAME}' environment variable\` as const;`
+                );
+            } else {
+                statements.push(
+                    `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;`
+                );
+            }
         }
 
-        if (passwordEnvVar != null) {
-            statements.push(
-                `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client, or set the '\${ENV_PASSWORD}' environment variable\` as const;`
-            );
-        } else {
-            statements.push(
-                `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;`
-            );
+        if (!passwordOmit) {
+            if (passwordEnvVar != null) {
+                statements.push(
+                    `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client, or set the '\${ENV_PASSWORD}' environment variable\` as const;`
+                );
+            } else {
+                statements.push(
+                    `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;`
+                );
+            }
         }
 
-        // Generate AuthOptions type based on keepIfWrapper
-        const usernamePropertyDef = `[USERNAME_PARAM]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type}`;
-        const passwordPropertyDef = `[PASSWORD_PARAM]${authOptionsProperties[1]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[1]?.type}`;
-        const propertyDefs = `${usernamePropertyDef}; ${passwordPropertyDef}`;
+        // Generate AuthOptions type based on keepIfWrapper — omitted fields are excluded
+        // Use computed property keys ([USERNAME_PARAM], [PASSWORD_PARAM]) instead of literal names
+        const computedPropertyDefs: string[] = [];
+        if (!usernameOmit) {
+            const isUsernameOptional = !this.isAuthMandatory || usernameEnvVar != null;
+            const optMark = isUsernameOptional ? "?" : "";
+            const usernameType = authOptionsProperties.find(
+                (p) => p.name === getPropertyKey(context.case.camelSafe(this.authScheme.username))
+            )?.type;
+            computedPropertyDefs.push(`[USERNAME_PARAM]${optMark}: ${usernameType}`);
+        }
+        if (!passwordOmit) {
+            const isPasswordOptional = !this.isAuthMandatory || passwordEnvVar != null;
+            const optMark = isPasswordOptional ? "?" : "";
+            const passwordType = authOptionsProperties.find(
+                (p) => p.name === getPropertyKey(context.case.camelSafe(this.authScheme.password))
+            )?.type;
+            computedPropertyDefs.push(`[PASSWORD_PARAM]${optMark}: ${passwordType}`);
+        }
+        const propertyDefs = computedPropertyDefs.join("; ");
 
         // When wrapped (multiple auth schemes), the wrapper property should be optional
         // When not wrapped, individual fields already have their own ?: markers based on env vars
