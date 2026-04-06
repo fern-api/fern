@@ -416,6 +416,15 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
+/**
+ * Derives a filesystem-safe subfolder name from a generator name.
+ * e.g. "fernapi/fern-typescript-sdk" → "fern-typescript-sdk"
+ */
+export function getGeneratorOutputSubfolder(generatorName: string): string {
+    const baseName = generatorName.split("/").pop() ?? "sdk";
+    return baseName.replace(/[^a-zA-Z0-9-_]/g, "_");
+}
+
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
     generatorInvocation: generatorsYml.GeneratorInvocation
@@ -423,9 +432,7 @@ function resolveAbsolutePathToLocalPreview(
     if (absolutePathToPreview == null) {
         return undefined;
     }
-    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
-    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
-
+    const subfolderName = getGeneratorOutputSubfolder(generatorInvocation.name);
     return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
 }
 

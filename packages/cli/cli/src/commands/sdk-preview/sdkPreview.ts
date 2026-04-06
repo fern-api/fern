@@ -6,9 +6,9 @@ import {
     generatorsYml
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -99,7 +99,7 @@ export async function sdkPreview({
         // Both are correct for CI preview runs where prod secrets aren't available.
         const absolutePathToOutput = output != null ? AbsoluteFilePath.of(path.resolve(output)) : undefined;
         if (absolutePathToOutput != null) {
-            fs.mkdirSync(absolutePathToOutput, { recursive: true });
+            await fs.mkdir(absolutePathToOutput, { recursive: true });
         }
 
         // 5. Process each workspace
@@ -205,15 +205,13 @@ export async function sdkPreview({
 
                 const sdkRepo = getGithubRepository(generator);
 
-                // The generator writes to <output>/<generator-name>/ (e.g. fern-typescript-sdk/).
-                // Report the actual subdirectory so CI consumers know the exact path.
-                const generatorSubfolder =
-                    generator.name
-                        .split("/")
-                        .pop()
-                        ?.replace(/[^a-zA-Z0-9-_]/g, "_") ?? "sdk";
+                // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
+                // Use the same subfolder logic as runLocalGenerationForWorkspace so
+                // the reported path matches the actual file location.
                 const actualOutputPath =
-                    absolutePathToOutput != null ? path.join(absolutePathToOutput, generatorSubfolder) : undefined;
+                    absolutePathToOutput != null
+                        ? path.join(absolutePathToOutput, getGeneratorOutputSubfolder(generator.name))
+                        : undefined;
 
                 previews.push({
                     preview_id: previewId,
