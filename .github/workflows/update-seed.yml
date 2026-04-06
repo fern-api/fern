@@ -178,7 +178,6 @@ jobs:
               generators/typescript/
               generators/typescript-v2/
               seed/ts-sdk/
-              seed/ts-express/
             generator-name: typescript
           - files: |
               generators/go/
@@ -288,7 +287,6 @@ jobs:
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
       java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -317,7 +315,7 @@ jobs:
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi java-sdk java-model java-spring ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -644,41 +642,6 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  typescript-express-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'typescript') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.ts-express != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: ts-express
-          generator-path: generators/typescript generators/typescript-v2
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
 
   go-model-seed-update:
     runs-on: ubuntu-latest
@@ -1119,7 +1082,6 @@ jobs:
             java-model,
             java-spring,
             ts-sdk,
-            ts-express,
             go-model,
             go-sdk,
             csharp-model,
@@ -1149,8 +1111,6 @@ jobs:
             sdk-name: java-spring
           - language-name: typescript
             sdk-name: ts-sdk
-          - language-name: typescript
-            sdk-name: ts-express
           - language-name: go
             sdk-name: go-model
           - language-name: go

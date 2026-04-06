@@ -44,7 +44,6 @@ jobs:
             lint
             fastapi
             spring
-            express
             openapi
             deps
             deps-dev

@@ -52,7 +52,5 @@ seed/rust-sdk/*
 !seed/rust-sdk/seed.yml
 seed/swift-sdk/*
 !seed/swift-sdk/seed.yml
-seed/ts-express/*
-!seed/ts-express/seed.yml
 seed/ts-sdk/*
 !seed/ts-sdk/seed.yml
