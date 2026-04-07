@@ -18,20 +18,31 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = ListUsernamesRequestCustom.Builder.class)
-public final class ListUsernamesRequestCustom {
+@JsonDeserialize(builder = ListWithCustomPagerRequest.Builder.class)
+public final class ListWithCustomPagerRequest {
+    private final Optional<Integer> limit;
+
     private final Optional<String> startingAfter;
 
     private final Map<String, Object> additionalProperties;
 
-    private ListUsernamesRequestCustom(Optional<String> startingAfter, Map<String, Object> additionalProperties) {
+    private ListWithCustomPagerRequest(
+            Optional<Integer> limit, Optional<String> startingAfter, Map<String, Object> additionalProperties) {
+        this.limit = limit;
         this.startingAfter = startingAfter;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return The cursor used for pagination in order to fetch
-     * the next page of results.
+     * @return The maximum number of results to return.
+     */
+    @JsonIgnore
+    public Optional<Integer> getLimit() {
+        return limit;
+    }
+
+    /**
+     * @return The cursor used for pagination.
      */
     @JsonIgnore
     public Optional<String> getStartingAfter() {
@@ -41,7 +52,7 @@ public final class ListUsernamesRequestCustom {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ListUsernamesRequestCustom && equalTo((ListUsernamesRequestCustom) other);
+        return other instanceof ListWithCustomPagerRequest && equalTo((ListWithCustomPagerRequest) other);
     }
 
     @JsonAnyGetter
@@ -49,13 +60,13 @@ public final class ListUsernamesRequestCustom {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ListUsernamesRequestCustom other) {
-        return startingAfter.equals(other.startingAfter);
+    private boolean equalTo(ListWithCustomPagerRequest other) {
+        return limit.equals(other.limit) && startingAfter.equals(other.startingAfter);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.startingAfter);
+        return Objects.hash(this.limit, this.startingAfter);
     }
 
     @java.lang.Override
@@ -69,6 +80,8 @@ public final class ListUsernamesRequestCustom {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<Integer> limit = Optional.empty();
+
         private Optional<String> startingAfter = Optional.empty();
 
         @JsonAnySetter
@@ -76,14 +89,28 @@ public final class ListUsernamesRequestCustom {
 
         private Builder() {}
 
-        public Builder from(ListUsernamesRequestCustom other) {
+        public Builder from(ListWithCustomPagerRequest other) {
+            limit(other.getLimit());
             startingAfter(other.getStartingAfter());
             return this;
         }
 
         /**
-         * <p>The cursor used for pagination in order to fetch
-         * the next page of results.</p>
+         * <p>The maximum number of results to return.</p>
+         */
+        @JsonSetter(value = "limit", nulls = Nulls.SKIP)
+        public Builder limit(Optional<Integer> limit) {
+            this.limit = limit;
+            return this;
+        }
+
+        public Builder limit(Integer limit) {
+            this.limit = Optional.ofNullable(limit);
+            return this;
+        }
+
+        /**
+         * <p>The cursor used for pagination.</p>
          */
         @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
         public Builder startingAfter(Optional<String> startingAfter) {
@@ -96,8 +123,8 @@ public final class ListUsernamesRequestCustom {
             return this;
         }
 
-        public ListUsernamesRequestCustom build() {
-            return new ListUsernamesRequestCustom(startingAfter, additionalProperties);
+        public ListWithCustomPagerRequest build() {
+            return new ListWithCustomPagerRequest(limit, startingAfter, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {
