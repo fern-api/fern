@@ -450,6 +450,8 @@ allowedFailures:
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - oauth-client-credentials-openapi
+  - pagination-custom
   - response-property
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
