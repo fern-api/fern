@@ -6,8 +6,9 @@ import (
 )
 
 func TestNameFromStringNoSmartCasing(t *testing.T) {
-	// Default: smartCasing=false (matches seed test behavior)
+	// Explicitly set smartCasing=false
 	resetCasingConfig()
+	ConfigureCasing(false, "", nil)
 
 	tests := []struct {
 		input         string
@@ -105,8 +106,8 @@ func TestNameFromStringSmartCasing(t *testing.T) {
 }
 
 func TestNameUnmarshalJSONString(t *testing.T) {
+	// smartCasing=true (default): initialisms applied
 	resetCasingConfig()
-	// Default smartCasing=false: no initialisms
 	data, _ := json.Marshal("userId")
 	var n Name
 	if err := n.UnmarshalJSON(data); err != nil {
@@ -115,8 +116,9 @@ func TestNameUnmarshalJSONString(t *testing.T) {
 	if n.OriginalName != "userId" {
 		t.Errorf("OriginalName: got %q, want %q", n.OriginalName, "userId")
 	}
-	if n.CamelCase == nil || n.CamelCase.UnsafeName != "userId" {
-		t.Errorf("CamelCase.UnsafeName: got %v, want %q", n.CamelCase, "userId")
+	// smartCasing=true with no language set still applies initialisms
+	if n.CamelCase == nil || n.CamelCase.UnsafeName != "userID" {
+		t.Errorf("CamelCase.UnsafeName: got %v, want %q", n.CamelCase, "userID")
 	}
 }
 
@@ -168,8 +170,9 @@ func TestNameAndWireValueUnmarshalJSONObjectWithStringName(t *testing.T) {
 }
 
 func TestKeywordSanitization(t *testing.T) {
-	// No language set, no keywords => no sanitization (matches TS getKeywords returning undefined)
+	// No language set, no keywords => no keyword sanitization (matches TS getKeywords returning undefined)
 	resetCasingConfig()
+	ConfigureCasing(false, "", nil)
 	n := nameFromString("type")
 	if n.CamelCase.SafeName != "type" {
 		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "type")

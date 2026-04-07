@@ -17,7 +17,9 @@ type casingConfig struct {
 }
 
 var (
-	casingCfg     casingConfig
+	// casingCfg defaults to smartCasing=true, matching the latest CLI behavior.
+	// ConfigureCasing overrides this with the IR's actual casingsConfig values.
+	casingCfg     = casingConfig{smartCasing: true}
 	casingCfgOnce sync.Once
 	// casingCfgSet tracks whether ConfigureCasing has been called.
 	casingCfgSet bool
@@ -57,7 +59,7 @@ func ConfigureCasing(smartCasing bool, generationLanguage string, keywords []str
 
 // resetCasingConfig resets the casing configuration for testing.
 func resetCasingConfig() {
-	casingCfg = casingConfig{}
+	casingCfg = casingConfig{smartCasing: true}
 	casingCfgOnce = sync.Once{}
 	casingCfgSet = false
 }
