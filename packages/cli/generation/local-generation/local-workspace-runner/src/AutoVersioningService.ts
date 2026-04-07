@@ -3,6 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
 import { readdir, readFile, stat, writeFile } from "fs/promises";
 import { extname, join } from "path";
+import semver from "semver";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -768,7 +769,6 @@ export class AutoVersioningService {
      * @return The latest semver version from git tags, or undefined if no valid tags found
      */
     public async getLatestVersionFromGitTags(workingDirectory: string): Promise<string | undefined> {
-        const SEMVER_TAG_PATTERN = /^v?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
         try {
             // Use ls-remote to query tags from the remote directly.
             // This works even with shallow clones (--depth 1) which don't fetch
@@ -776,7 +776,7 @@ export class AutoVersioningService {
             const result = await loggingExeca(
                 this.logger,
                 "git",
-                ["ls-remote", "--tags", "--sort=-v:refname", "origin"],
+                ["ls-remote", "--tags", "origin"],
                 {
                     cwd: workingDirectory,
                     doNotPipeOutput: true
@@ -800,11 +800,16 @@ export class AutoVersioningService {
                     tags.push(trimmed.substring(lastSlash + 1));
                 }
             }
-            for (const tag of tags) {
-                if (SEMVER_TAG_PATTERN.test(tag)) {
-                    this.logger.info(`Found latest version from git tags: ${tag}`);
-                    return tag;
-                }
+            // Use semver library for sorting instead of git's versioncmp,
+            // which disagrees with semver for pre-release tags (git sorts
+            // v1.0.0-beta after v1.0.0, but semver says v1.0.0 > v1.0.0-beta).
+            const validTags = tags
+                .filter((tag) => semver.valid(tag) != null)
+                .sort((a, b) => semver.rcompare(a, b));
+            if (validTags.length > 0) {
+                const latest = validTags[0]!;
+                this.logger.info(`Found latest version from git tags: ${latest}`);
+                return latest;
             }
             this.logger.info("No valid semver tags found in repository");
             return undefined;
