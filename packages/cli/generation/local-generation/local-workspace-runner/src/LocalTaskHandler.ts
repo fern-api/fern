@@ -244,6 +244,18 @@ export class LocalTaskHandler {
                     `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
             );
 
+            // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
+            // try git tags before falling back to initial version
+            if (previousVersion == null) {
+                const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                    this.absolutePathToLocalOutput
+                );
+                if (tagVersion != null) {
+                    this.context.logger.info(`No previous version from diff; using git tag: ${tagVersion}`);
+                    previousVersion = tagVersion;
+                }
+            }
+
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
                 this.context.logger.info(
