@@ -210,8 +210,12 @@ export class WireTestGenerator {
                     authParams.push(`${this.case.snakeSafe(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
-                    authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
-                    authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                    if (!scheme.usernameOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
+                    }
+                    if (!scheme.passwordOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                    }
                     break;
                 case "oauth":
                     authParams.push('client_id: "test-client-id"');
