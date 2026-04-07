@@ -412,7 +412,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "InvalidTypeError",
+        "displayName": "invalidType",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -510,7 +510,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "OneOfDiscriminatedA",
+        "displayName": "variantA",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -577,7 +577,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "OneOfDiscriminatedB",
+        "displayName": "variantB",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -669,11 +669,11 @@
           {
             "availability": undefined,
             "discriminantValue": "validation",
-            "displayName": "ValidationError",
+            "displayName": "validation",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "ValidationError",
+              "displayName": "validation",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -687,11 +687,11 @@
           {
             "availability": undefined,
             "discriminantValue": "invalidType",
-            "displayName": "InvalidTypeError",
+            "displayName": "invalidType",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "InvalidTypeError",
+              "displayName": "invalidType",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -724,7 +724,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "ValidationError",
+        "displayName": "validation",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -846,11 +846,11 @@
           {
             "availability": undefined,
             "discriminantValue": "variantA",
-            "displayName": "OneOfDiscriminatedA",
+            "displayName": "variantA",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "OneOfDiscriminatedA",
+              "displayName": "variantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -864,11 +864,11 @@
           {
             "availability": undefined,
             "discriminantValue": "variantB",
-            "displayName": "OneOfDiscriminatedB",
+            "displayName": "variantB",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "OneOfDiscriminatedB",
+              "displayName": "variantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

@@ -44,10 +44,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 

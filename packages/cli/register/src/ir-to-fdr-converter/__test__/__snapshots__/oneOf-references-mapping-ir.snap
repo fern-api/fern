@@ -797,11 +797,11 @@
           {
             "availability": undefined,
             "discriminantValue": "user",
-            "displayName": "UserEvent",
+            "displayName": "user",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "UserEvent",
+              "displayName": "user",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -815,11 +815,11 @@
           {
             "availability": undefined,
             "discriminantValue": "system",
-            "displayName": "SystemEvent",
+            "displayName": "system",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "SystemEvent",
+              "displayName": "system",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -833,11 +833,11 @@
           {
             "availability": undefined,
             "discriminantValue": "error",
-            "displayName": "ErrorEvent",
+            "displayName": "error",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "ErrorEvent",
+              "displayName": "error",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

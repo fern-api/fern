@@ -98,10 +98,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
@@ -143,10 +140,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.name;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.name ?? displayNameOverride;
         }
 
@@ -185,10 +179,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.messageId ?? resolvedReference.value.name;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride;
         }
 
