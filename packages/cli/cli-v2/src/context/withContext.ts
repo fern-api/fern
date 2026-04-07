@@ -1,5 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
-import { FernCliError } from "@fern-api/task-context";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
 import { CliError } from "../errors/CliError.js";
@@ -90,9 +90,7 @@ function handleError(context: Context, error: unknown): void {
         return;
     }
 
-    if (error instanceof FernCliError) {
-        // FernCliError is thrown by failAndThrow() after logging the error
-        // message via the TaskContext logger. No additional output needed.
+    if (error instanceof TaskAbortSignal) {
         return;
     }
 
@@ -119,24 +117,18 @@ function handleError(context: Context, error: unknown): void {
  *
  * Only unexpected/internal errors are reported. User-facing errors
  * (validation, auth, CLI usage) are not bugs and should not be tracked.
- *
- * TODO: FernCliError is currently excluded because it loses context --
- * it's a blank marker error thrown by failAndThrow() after logging.
- * Many FernCliError instances originate from shared packages and represent
- * server-side failures (e.g. API registration, protobuf upload) that
- * *should* be reported. A refactoring is needed to make FernCliError
- * carry its original cause/code so we can distinguish reportable
- * server failures from user config errors.
  */
 function shouldReportToSentry(error: unknown): boolean {
+    if (error instanceof TaskAbortSignal) {
+        return false;
+    }
     if (error instanceof CliError) {
         return error.code === "INTERNAL_ERROR";
     }
     if (
         error instanceof ValidationError ||
         error instanceof SourcedValidationError ||
-        error instanceof KeyringUnavailableError ||
-        error instanceof FernCliError
+        error instanceof KeyringUnavailableError
     ) {
         return false;
     }

@@ -3,11 +3,11 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
-    FernCliError,
     Finishable,
     InteractiveTaskContext,
     PosthogEvent,
     Startable,
+    TaskAbortSignal,
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
@@ -77,7 +77,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
         this.finish();
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
