@@ -6,9 +6,10 @@ import pydantic
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class UsernamePage(UniversalBaseModel):
-    after: typing.Optional[str] = None
-    data: typing.List[str]
+class Link(UniversalBaseModel):
+    rel: str
+    method: str
+    href: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
