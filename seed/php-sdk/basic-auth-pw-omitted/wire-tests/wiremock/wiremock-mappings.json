@@ -8,7 +8,7 @@
         "method": "GET",
         "headers": {
           "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
           }
         }
       },
@@ -40,7 +40,7 @@
         "method": "POST",
         "headers": {
           "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
           }
         }
       },

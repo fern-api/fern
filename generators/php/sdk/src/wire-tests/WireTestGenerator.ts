@@ -489,9 +489,13 @@ export class WireTestGenerator {
                 bearer: () => {
                     authParams.push("token: 'test-token'");
                 },
-                basic: () => {
-                    authParams.push("username: 'test-user'");
-                    authParams.push("password: 'test-password'");
+                basic: (basicScheme) => {
+                    if (!basicScheme.usernameOmit) {
+                        authParams.push("username: 'test-username'");
+                    }
+                    if (!basicScheme.passwordOmit) {
+                        authParams.push("password: 'test-password'");
+                    }
                 },
                 header: (header) => {
                     const paramName = this.case.camelSafe(header.name);
