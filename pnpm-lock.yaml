@@ -620,7 +620,7 @@ overrides:
   ts-essentials: ^10.1.1
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
-  vite: 7.3.2
+  vite: ^7.3.2
   yauzl: ^3.2.1
   brace-expansion: '>=5.0.5'
   path-to-regexp@~0.1.12: 0.1.13
@@ -10955,7 +10955,7 @@ packages:
     resolution: {integrity: sha512-evxREh+Hork43+Y4IOhTo+h5lGmVRyjqI739Rz4RlUPqwrkFFDF6EMvOOYjTx4E8Tl6gyCLRL8Mu7Ry12a13Tw==}
     peerDependencies:
       msw: ^2.4.9
-      vite: 7.3.2
+      vite: ^7.3.2
     peerDependenciesMeta:
       msw:
         optional: true
@@ -14787,7 +14787,7 @@ packages:
       '@vitest/ui': 4.1.0
       happy-dom: '*'
       jsdom: '*'
-      vite: 7.3.2
+      vite: ^7.3.2
     peerDependenciesMeta:
       '@edge-runtime/vm':
         optional: true
