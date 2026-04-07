@@ -803,9 +803,7 @@ export class AutoVersioningService {
             // Use semver library for sorting instead of git's versioncmp,
             // which disagrees with semver for pre-release tags (git sorts
             // v1.0.0-beta after v1.0.0, but semver says v1.0.0 > v1.0.0-beta).
-            const validTags = tags
-                .filter((tag) => semver.valid(tag) != null)
-                .sort((a, b) => semver.rcompare(a, b));
+            const validTags = tags.filter((tag) => semver.valid(tag) != null).sort((a, b) => semver.rcompare(a, b));
             if (validTags.length > 0) {
                 const latest = validTags[0]!;
                 this.logger.info(`Found latest version from git tags: ${latest}`);
