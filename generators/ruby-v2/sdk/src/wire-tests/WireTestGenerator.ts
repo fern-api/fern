@@ -352,6 +352,19 @@ export class WireTestGenerator {
             lines.push(`      query_params: ${queryParamsCode},`);
             lines.push(`      expected: 1`);
             lines.push(`    )`);
+
+            // Verify Authorization header when basic auth is configured
+            const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
+            if (expectedAuthHeader != null) {
+                lines.push(``);
+                lines.push(`    verify_authorization_header(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                lines.push(`    )`);
+            }
+
             lines.push("  end");
 
             return lines;
@@ -534,6 +547,23 @@ export class WireTestGenerator {
             out[key] = mapping;
         }
         return out;
+    }
+
+    /**
+     * Builds the expected Authorization header value for basic auth.
+     * Returns the full header value (e.g., "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk")
+     * or null if no basic auth scheme is configured.
+     */
+    private buildExpectedAuthorizationHeader(): string | null {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "basic") {
+                const username = scheme.usernameOmit ? "" : "test-username";
+                const password = scheme.passwordOmit ? "" : "test-password";
+                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                return `Basic ${encoded}`;
+            }
+        }
+        return null;
     }
 
     private toPascalCase(str: string): string {
