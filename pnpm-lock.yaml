@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.8.1
-      version: 0.8.1
+      specifier: 0.9.1
+      version: 0.9.1
     '@fern-api/venus-api-sdk':
       specifier: 0.17.3-3-gf696595
       version: 0.17.3-3-gf696595
@@ -656,7 +656,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.8.1
+        version: 0.9.1
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0-rc.5
@@ -722,7 +722,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.8.1
+        version: 0.9.1
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -1761,21 +1761,6 @@ importers:
         specifier: 'catalog:'
         version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
-  generators/python-v2/fastapi:
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@types/node':
-        specifier: 'catalog:'
-        version: 18.15.3
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-      vitest:
-        specifier: 'catalog:'
-        version: 4.1.0(@opentelemetry/api@1.9.0)(@types/node@18.15.3)(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
   generators/python-v2/formatter:
     devDependencies:
       '@fern-api/base-generator':
@@ -2465,7 +2450,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.8.1
+        version: 0.9.1
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9367,17 +9352,12 @@ packages:
   '@fern-api/fdr-sdk@0.145.12-b50d999d1':
     resolution: {integrity: sha512-qTHoosyHoHFqXM/ZcHjdiAw5tByBo1mxcfMLkId9qZ4LRSw/hJmybQEa00k7dstirNnG5DvBta6Kwq74F8NfjQ==}
 
-  '@fern-api/generator-cli@0.8.1':
-    resolution: {integrity: sha512-cnAyuWGMeEa1zhkj+B1/b0fov89II4hWsx9DFJXT+ltRtfFnb7qGL2/LOiumcg/Gx3ce/20oMEhtkdrVmKbsNw==}
+  '@fern-api/generator-cli@0.9.1':
+    resolution: {integrity: sha512-FT/xhmlUt1BK/Jg/bUtYnvJiigLNZzb5j/Or07byAGDewKJNRaVetMPUT07zTIKgncqaORkYrHAP2JzddzA8Vw==}
     hasBin: true
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
-
-  '@fern-api/replay@0.8.0':
-    resolution: {integrity: sha512-NMuVNGoGGTFLE63WMGL19jKulnQ1XcKe5son94WCt3md3sWGMNRQz+rIE9riaK1wTlnIbrd5v6aJ8t2ZQT/wrQ==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   '@fern-api/replay@0.9.1':
     resolution: {integrity: sha512-RpK1UIO8qBfRL5TbyHsfDOCTyr2DPDI2XqBUDl3YOr4Mn+4EWS8C65R/k/UkJthn2KsCa57QxSvtWAxftpwljA==}
@@ -16320,9 +16300,9 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.8.1':
+  '@fern-api/generator-cli@0.9.1':
     dependencies:
-      '@fern-api/replay': 0.8.0
+      '@fern-api/replay': 0.9.1
       '@octokit/rest': 22.0.1
       es-toolkit: 1.45.1
       tmp-promise: 3.0.3
@@ -16333,15 +16313,6 @@ snapshots:
     dependencies:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
-
-  '@fern-api/replay@0.8.0':
-    dependencies:
-      minimatch: 10.2.4
-      node-diff3: 3.2.0
-      simple-git: 3.33.0
-      yaml: 2.8.3
-    transitivePeerDependencies:
-      - supports-color
 
   '@fern-api/replay@0.9.1':
     dependencies:
