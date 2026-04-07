@@ -1581,6 +1581,7 @@
               },
               "name": "PetOwner",
               "typeId": "PetOwner",
+              "displayName": "PetOwner",
               "inline": false,
               "type": "named"
             },
@@ -4210,6 +4211,7 @@
               },
               "name": "testChannel_sendMessage",
               "typeId": "testChannel_sendMessage",
+              "displayName": "testChannel_sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -4228,6 +4230,7 @@
               },
               "name": "testChannel_sendMessage2",
               "typeId": "testChannel_sendMessage2",
+              "displayName": "testChannel_sendMessage2",
               "inline": false,
               "type": "named"
             },
